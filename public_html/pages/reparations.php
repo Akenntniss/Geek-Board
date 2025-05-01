@@ -4377,11 +4377,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <!-- Modal pour la relance client -->
 <div class="modal fade" id="relanceClientModal" tabindex="-1" aria-labelledby="relanceClientModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content" style="border-radius: 16px; overflow: hidden; box-shadow: 0 8px 32px rgba(30, 144, 255, 0.3);">
             <div class="modal-header" style="background: linear-gradient(135deg, rgba(30, 144, 255, 0.8) 0%, rgba(0, 77, 155, 0.8) 100%); color: white;">
                 <h5 class="modal-title" id="relanceClientModalLabel" style="text-shadow: 0 0 10px rgba(30, 144, 255, 0.7);">
-                    <i class="fas fa-bell me-2"></i><span id="modalTitle">Relance des clients</span>
+                    <i class="fas fa-bell me-2"></i>Relance des clients
                 </h5>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fermer"></button>
             </div>
@@ -4596,7 +4596,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Afficher un indicateur de chargement
         previewResultsBody.innerHTML = `
             <tr>
-                <td colspan="5" class="text-center py-3">
+                <td colspan="${filterType === 'commande' ? 3 : 5}" class="text-center py-3">
                     <div class="spinner-border spinner-border-sm text-primary" role="status">
                         <span class="visually-hidden">Chargement...</span>
                     </div>
@@ -4625,6 +4625,26 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Mettre à jour l'aperçu
                 if (data.clients && data.clients.length > 0) {
                     previewResultsBody.innerHTML = '';
+                    
+                    // Adapter les en-têtes du tableau selon le filtre
+                    const tableHeadRow = document.querySelector('#previewResults table thead tr');
+                    if (tableHeadRow) {
+                        if (filterType === 'commande') {
+                            tableHeadRow.innerHTML = `
+                                <th>Sélection</th>
+                                <th>Client</th>
+                                <th>Pièce</th>
+                            `;
+                        } else {
+                            tableHeadRow.innerHTML = `
+                                <th>Sélection</th>
+                                <th>Client</th>
+                                <th>Appareil</th>
+                                <th>Statut</th>
+                                <th>Terminé depuis</th>
+                            `;
+                        }
+                    }
                     
                     // Ajouter chaque client à la liste
                     data.clients.forEach(client => {
@@ -4668,17 +4688,31 @@ document.addEventListener('DOMContentLoaded', function() {
                             deviceInfo += ` ${client.marque}`;
                         }
                         
-                        row.innerHTML = `
-                            <td class="text-center">
-                                <div class="form-check">
-                                    <input class="form-check-input client-select" type="checkbox" checked data-client-id="${client.id}">
-                                </div>
-                            </td>
-                            <td>${client.client_nom} ${client.client_prenom}</td>
-                            <td>${deviceInfo}</td>
-                            <td><span class="badge bg-${statusClass}">${statusText}</span></td>
-                            <td>${client.days_since} jours</td>
-                        `;
+                        // Définir le contenu de la ligne selon le type de filtre
+                        if (filterType === 'commande') {
+                            row.innerHTML = `
+                                <td class="text-center">
+                                    <div class="form-check">
+                                        <input class="form-check-input client-select" type="checkbox" checked data-client-id="${client.id}">
+                                    </div>
+                                </td>
+                                <td>${client.client_nom} ${client.client_prenom}</td>
+                                <td>${deviceInfo}</td>
+                            `;
+                        } else {
+                            row.innerHTML = `
+                                <td class="text-center">
+                                    <div class="form-check">
+                                        <input class="form-check-input client-select" type="checkbox" checked data-client-id="${client.id}">
+                                    </div>
+                                </td>
+                                <td>${client.client_nom} ${client.client_prenom}</td>
+                                <td>${deviceInfo}</td>
+                                <td><span class="badge bg-${statusClass}">${statusText}</span></td>
+                                <td>${client.days_since} jours</td>
+                            `;
+                        }
+                        
                         previewResultsBody.appendChild(row);
                     });
                     
@@ -4694,7 +4728,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Afficher l'erreur
                 previewResultsBody.innerHTML = `
                     <tr>
-                        <td colspan="5" class="text-center py-3 text-danger">
+                        <td colspan="${filterType === 'commande' ? 3 : 5}" class="text-center py-3 text-danger">
                             <i class="fas fa-exclamation-triangle me-1"></i>
                             ${data.message || 'Une erreur est survenue lors de la recherche des clients.'}
                         </td>
@@ -4707,7 +4741,7 @@ document.addEventListener('DOMContentLoaded', function() {
             console.error('Erreur:', error);
             previewResultsBody.innerHTML = `
                 <tr>
-                    <td colspan="5" class="text-center py-3 text-danger">
+                    <td colspan="${filterType === 'commande' ? 3 : 5}" class="text-center py-3 text-danger">
                         <i class="fas fa-exclamation-triangle me-1"></i>
                         Une erreur est survenue lors de la communication avec le serveur.
                     </td>
