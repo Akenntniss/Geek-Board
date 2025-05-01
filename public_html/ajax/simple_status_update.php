@@ -2,14 +2,19 @@
 // Définir le type de contenu comme JSON
 header('Content-Type: application/json');
 
+// Définir le chemin de base pour les inclusions
+$root_path = realpath(__DIR__ . '/..');
+define('BASE_PATH', $root_path);
+
 // Désactiver l'affichage des erreurs pour les réponses JSON propres
 ini_set('display_errors', 0);
 error_reporting(E_ALL);
 
 // Créer un fichier de log pour le débogage
-$logFile = __DIR__ . '/simple_status_update.log';
-file_put_contents($logFile, "--- Simple status update request ---\n", FILE_APPEND);
+$logFile = __DIR__ . '/specific_status_update.log';
+file_put_contents($logFile, "--- Nouvelle tentative de mise à jour simplifiée du statut ---\n", FILE_APPEND);
 file_put_contents($logFile, "Date: " . date('Y-m-d H:i:s') . "\n", FILE_APPEND);
+file_put_contents($logFile, "BASE_PATH: " . BASE_PATH . "\n", FILE_APPEND);
 file_put_contents($logFile, "POST data: " . print_r($_POST, true) . "\n", FILE_APPEND);
 
 try {
@@ -39,9 +44,19 @@ try {
         throw new Exception('Connexion à la base de données non disponible');
     }
     
-    // Mise à jour simplifiée du statut avec PDO
-    $stmt = $pdo->prepare("UPDATE reparations SET statut_id = ? WHERE id = ?");
-    $result = $stmt->execute([$status_id, $repair_id]);
+    // Récupérer le code du statut
+    $stmt = $pdo->prepare("SELECT code FROM statuts WHERE id = ?");
+    $stmt->execute([$status_id]);
+    $status_code = $stmt->fetchColumn();
+    
+    if (!$status_code) {
+        file_put_contents($logFile, "ERREUR: Code de statut non trouvé pour l'ID $status_id\n", FILE_APPEND);
+        throw new Exception("Code de statut non trouvé pour l'ID $status_id");
+    }
+    
+    // Mise à jour des deux colonnes: statut_id et statut
+    $stmt = $pdo->prepare("UPDATE reparations SET statut_id = ?, statut = ?, date_modification = NOW() WHERE id = ?");
+    $result = $stmt->execute([$status_id, $status_code, $repair_id]);
     
     if (!$result) {
         file_put_contents($logFile, "ERREUR de mise à jour: " . implode(", ", $stmt->errorInfo()) . "\n", FILE_APPEND);
@@ -54,6 +69,42 @@ try {
         // Ne pas lancer d'exception, juste un avertissement dans le log
     } else {
         file_put_contents($logFile, "Mise à jour réussie: " . $stmt->rowCount() . " ligne(s) affectée(s)\n", FILE_APPEND);
+        
+        // Récupérer le statut précédent pour le journal
+        $stmt_prev = $pdo->prepare("SELECT statut FROM reparation_logs WHERE reparation_id = ? AND action_type = 'statut' ORDER BY date_creation DESC LIMIT 1");
+        $stmt_prev->execute([$repair_id]);
+        $previous_status = $stmt_prev->fetchColumn();
+        
+        if (!$previous_status) {
+            // Si aucun statut précédent dans les logs, essayer de trouver une valeur par défaut
+            $previous_status = 'inconnu';
+        }
+        
+        // Récupérer l'ID de l'utilisateur qui fait la modification
+        $user_id = isset($_POST['user_id']) ? intval($_POST['user_id']) : 1; // Utiliser admin par défaut si non spécifié
+        
+        // Insérer un enregistrement dans reparation_logs
+        try {
+            $stmt_log = $pdo->prepare("
+                INSERT INTO reparation_logs (
+                    reparation_id, employe_id, action_type, statut_avant, statut_apres, details
+                ) VALUES (?, ?, 'statut', ?, ?, ?)
+            ");
+            
+            $details = "Mise à jour simplifiée du statut";
+            $stmt_log->execute([
+                $repair_id, 
+                $user_id, 
+                $previous_status, 
+                $status_code,
+                $details
+            ]);
+            
+            file_put_contents($logFile, "Log enregistré dans la table reparation_logs\n", FILE_APPEND);
+        } catch (Exception $e) {
+            file_put_contents($logFile, "ERREUR lors de l'enregistrement du log: " . $e->getMessage() . "\n", FILE_APPEND);
+            // Ne pas bloquer le processus en cas d'erreur d'enregistrement du log
+        }
     }
     
     // Récupérer les informations sur le statut pour l'affichage du badge

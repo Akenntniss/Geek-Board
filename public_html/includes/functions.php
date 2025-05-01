@@ -783,7 +783,7 @@ function send_sms($recipient, $message, $gateway_url = null) {
     global $pdo; // S'assurer que la variable $pdo est accessible
 
     // Créer un fichier de log dans un dossier accessible
-    $log_dir = BASE_PATH . '/logs';
+    $log_dir = BASE_PATH . '/logs/sms';
     if (!is_dir($log_dir)) {
         mkdir($log_dir, 0755, true);
     }
@@ -797,54 +797,11 @@ function send_sms($recipient, $message, $gateway_url = null) {
     try {
         $log("=== ENVOI SMS DÉMARRÉ ===");
         $log("Destinataire: $recipient");
-        
-        // Vérifier si le message contient des variables non remplacées
-        $patterns = [
-            '/\[CLIENT_NOM\]/',
-            '/\[CLIENT_PRENOM\]/',
-            '/\[CLIENT_TELEPHONE\]/',
-            '/\[REPARATION_ID\]/',
-            '/\[APPAREIL_TYPE\]/',
-            '/\[APPAREIL_MARQUE\]/',
-            '/\[APPAREIL_MODELE\]/',
-            '/\[DATE_RECEPTION\]/',
-            '/\[DATE_FIN_PREVUE\]/',
-            '/\[PRIX\]/'
-        ];
-        
-        $has_unreplaced_vars = false;
-        foreach ($patterns as $pattern) {
-            if (preg_match($pattern, $message)) {
-                $has_unreplaced_vars = true;
-                $matched_var = preg_replace('/[\[\]\/]/', '', $pattern);
-                $log("ATTENTION! Variable non remplacée détectée: " . $matched_var);
-            }
-        }
-        
-        if ($has_unreplaced_vars) {
-            $log("ALERTE: Le message contient des variables qui n'ont pas été remplacées!");
-            $log("Message brut avec variables non remplacées: " . $message);
-            
-            // Remplacer les variables non remplacées par des valeurs par défaut pour éviter d'envoyer un message avec des variables
-            $message = preg_replace('/\[CLIENT_NOM\]/', '[Nom client]', $message);
-            $message = preg_replace('/\[CLIENT_PRENOM\]/', '[Prénom client]', $message);
-            $message = preg_replace('/\[CLIENT_TELEPHONE\]/', '[Téléphone]', $message);
-            $message = preg_replace('/\[REPARATION_ID\]/', '[ID réparation]', $message);
-            $message = preg_replace('/\[APPAREIL_TYPE\]/', '[Type appareil]', $message);
-            $message = preg_replace('/\[APPAREIL_MARQUE\]/', '[Marque]', $message);
-            $message = preg_replace('/\[APPAREIL_MODELE\]/', '[Modèle]', $message);
-            $message = preg_replace('/\[DATE_RECEPTION\]/', '[Date réception]', $message);
-            $message = preg_replace('/\[DATE_FIN_PREVUE\]/', '[Date prévue]', $message);
-            $message = preg_replace('/\[PRIX\]/', '[Prix]', $message);
-            
-            $log("Message après remplacement des variables par défaut: " . $message);
-        }
-        
         $log("Message: " . substr($message, 0, 30) . "...");
         
         // Vérification des paramètres
         if (empty($recipient) || empty($message)) {
-            $log("Erreur: Paramètres manquants");
+            $log("Erreur: Paramètres manquants (destinataire ou message vide)");
             return ['success' => false, 'message' => 'Paramètres manquants'];
         }
         
@@ -888,7 +845,7 @@ function send_sms($recipient, $message, $gateway_url = null) {
             'phoneNumbers' => [$recipient]
         ]);
         
-        $log("Données JSON: $sms_data");
+        $log("Données JSON à envoyer: $sms_data");
         
         // Envoi du SMS via l'API SMS Gateway
         $curl = curl_init($url);
@@ -962,7 +919,7 @@ function send_sms($recipient, $message, $gateway_url = null) {
                 $log("Erreur d'enregistrement du SMS dans la BDD: " . $e->getMessage());
             }
         } else {
-            $log("ERREUR: Connexion à la base de données non disponible ($pdo)");
+            $log("AVERTISSEMENT: Connexion à la base de données non disponible");
         }
         
         // Traitement de la réponse

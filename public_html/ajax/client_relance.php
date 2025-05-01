@@ -68,15 +68,15 @@ try {
     if ($filterType === 'commande') {
         // Pour les commandes, chercher dans la table commandes_pieces
         $sql = "
-            SELECT cp.id, cp.client_id, cp.statut, cp.piece AS type_appareil, 
-                   cp.fournisseur as marque, cp.reference as modele, 
-                   cp.date_reception as date_modification, c.nom as client_nom, c.prenom as client_prenom, 
+            SELECT cp.id, cp.client_id, cp.statut, cp.nom_piece AS type_appareil, 
+                   f.nom as marque, cp.reference as modele, 
+                   cp.date_modification as date_modification, c.nom as client_nom, c.prenom as client_prenom, 
                    c.telephone, c.email,
-                   DATEDIFF(NOW(), cp.date_reception) as days_since
+                   DATEDIFF(NOW(), cp.date_modification) as days_since
             FROM commandes_pieces cp
             JOIN clients c ON cp.client_id = c.id
+            LEFT JOIN fournisseurs f ON cp.fournisseur_id = f.id
             WHERE cp.statut = 'recue'
-            AND cp.date_reception IS NOT NULL
         ";
     } else {
         // Pour les réparations, utiliser la requête d'origine
@@ -183,7 +183,7 @@ foreach ($clients as $client) {
     // Adapter le message en fonction du type de notification (commande ou réparation)
     if ($filterType === 'commande') {
         // Message pour les commandes reçues
-        $message = "Bonjour [CLIENT_PRENOM] [CLIENT_NOM], votre commande pour [APPAREIL_TYPE] [APPAREIL_MODELE] est arrivée et disponible dans notre boutique. A bientôt !";
+        $message = "Bonjour [CLIENT_PRENOM] [CLIENT_NOM], votre commande de pièce \"[APPAREIL_TYPE]\" ([APPAREIL_MODELE]) est disponible dans notre boutique. A bientôt !";
     } elseif ($filterType === 'reparation') {
         // Message pour les réparations terminées
         $message = "Bonjour [CLIENT_PRENOM] [CLIENT_NOM], votre [APPAREIL_TYPE] [APPAREIL_MARQUE] [APPAREIL_MODELE] est réparé et disponible dans notre boutique. A bientôt !";
