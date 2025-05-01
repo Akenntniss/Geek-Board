@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="192px" height="192px" viewBox="0 0 192 192" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4361EE"/>
+      <stop offset="100%" style="stop-color:#805AD5"/>
+    </linearGradient>
+  </defs>
+  <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+    <rect fill="#FFFFFF" x="0" y="0" width="192" height="192" rx="40"></rect>
+    <g transform="translate(46, 46)">
+      <rect fill="url(#bgGradient)" x="0" y="0" width="100" height="100" rx="25"></rect>
+      <text font-family="Arial-BoldMT, Arial" font-size="40" font-weight="bold" fill="#FFFFFF">
+        <tspan x="17" y="65">MD</tspan>
+      </text>
+    </g>
+  </g>
+</svg> 

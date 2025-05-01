@@ -1,0 +1,485 @@
+--- Nouvelle requête ---
+POST data: Array
+(
+    [reparation_id] => 37
+    [prix_reparation] => 88
+)
+
+Config path: 
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+Exception: Erreur dans update_reparation.php: Fichiers de configuration introuvables
+--- Nouvelle requête ---
+POST data: Array
+(
+    [reparation_id] => 37
+    [prix_reparation] => 55
+)
+
+Config path: 
+Functions path: 
+Exception: Erreur dans update_reparation.php: Fichiers de configuration introuvables
+--- Nouvelle requête ---
+POST data: Array
+(
+    [reparation_id] => 37
+    [prix_reparation] => 55
+)
+
+Config path: 
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+Current directory: /home/u139954273/domains/mdgeek.top/public_html/ajax
+Exception: Erreur dans update_reparation.php: Fichiers de configuration introuvables. Chemins tentés :  et /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+--- Nouvelle requête ---
+POST data: Array
+(
+    [reparation_id] => 37
+    [prix_reparation] => 88
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+Current directory: /home/u139954273/domains/mdgeek.top/public_html/ajax
+ID: 37, Prix: 88
+Requête préparée
+Exécution réussie
+Réponse: Array
+(
+    [success] => 1
+    [message] => Prix mis à jour avec succès
+    [data] => Array
+        (
+            [prix_reparation] => 88.00
+        )
+
+)
+
+--- Nouvelle requête ---
+POST data: Array
+(
+    [reparation_id] => 37
+    [notes_techniques] => khgf
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+Current directory: /home/u139954273/domains/mdgeek.top/public_html/ajax
+ID: 37, Prix: 0
+Requête préparée
+Exécution réussie
+Réponse: Array
+(
+    [success] => 1
+    [message] => Prix mis à jour avec succès
+    [data] => Array
+        (
+            [prix_reparation] => 0.00
+        )
+
+)
+
+--- Nouvelle requête ---
+POST data: Array
+(
+    [reparation_id] => 37
+    [type_appareil] => Téléphone
+    [marque] => 
+    [modele] => asd
+    [numero_serie] => 
+    [statut] => en_attente
+    [prix_reparation] => 0.00
+    [date_fin_prevue] => 
+    [description_probleme] => asd
+    [notes_techniques] => buk
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+Current directory: /home/u139954273/domains/mdgeek.top/public_html/ajax
+ID: 37, Prix: 0
+Requête préparée
+Exécution réussie
+Exception: Erreur dans update_reparation.php: Aucune réparation mise à jour
+--- Nouvelle requête ---
+POST data: Array
+(
+    [reparation_id] => 37
+    [notes_techniques] => njhgghj
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+Current directory: /home/u139954273/domains/mdgeek.top/public_html/ajax
+ID: 37, Prix: 0
+Requête préparée
+Exécution réussie
+Exception: Erreur dans update_reparation.php: Aucune réparation mise à jour
+--- Nouvelle requête ---
+POST data: Array
+(
+    [reparation_id] => 37
+    [notes_techniques] => gbkj
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+Current directory: /home/u139954273/domains/mdgeek.top/public_html/ajax
+ID: 37, Prix: 0
+Requête préparée
+Exécution réussie
+Exception: Erreur dans update_reparation.php: Aucune réparation mise à jour
+--- Nouvelle requête ---
+POST data: Array
+(
+    [reparation_id] => 37
+    [notes_techniques] => nli
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+Current directory: /home/u139954273/domains/mdgeek.top/public_html/ajax
+ID: 37, Prix: 0
+Requête préparée
+Exécution réussie
+Réponse: Array
+(
+    [success] => 1
+    [message] => Mise à jour effectuée avec succès
+    [data] => Array
+        (
+            [notes_techniques] => nli
+        )
+
+)
+
+--- Nouvelle requête ---
+POST data: Array
+(
+    [reparation_id] => 35
+    [prix_reparation] => 52
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+Current directory: /home/u139954273/domains/mdgeek.top/public_html/ajax
+ID: 35, Prix: 52
+Requête préparée
+Exécution réussie
+Réponse: Array
+(
+    [success] => 1
+    [message] => Mise à jour effectuée avec succès
+    [data] => Array
+        (
+            [prix_reparation] => 52.00
+        )
+
+)
+
+--- Nouvelle requête ---
+POST data: Array
+(
+    [reparation_id] => 35
+    [prix_reparation] => 90
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+Current directory: /home/u139954273/domains/mdgeek.top/public_html/ajax
+ID: 35, Prix: 90
+Requête préparée
+Exécution réussie
+Réponse: Array
+(
+    [success] => 1
+    [message] => Prix mis à jour avec succès
+    [data] => Array
+        (
+            [prix_reparation] => 90.00
+        )
+
+)
+
+--- Nouvelle requête ---
+POST data: Array
+(
+    [reparation_id] => 35
+    [notes_techniques] => bk
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+Current directory: /home/u139954273/domains/mdgeek.top/public_html/ajax
+ID: 35, Prix: 0
+Requête préparée
+Exécution réussie
+Réponse: Array
+(
+    [success] => 1
+    [message] => Prix mis à jour avec succès
+    [data] => Array
+        (
+            [prix_reparation] => 0.00
+        )
+
+)
+
+--- Nouvelle requête ---
+POST data: Array
+(
+    [reparation_id] => 492
+    [marque] => 
+    [modele] => iPad A1822
+    [numero_serie] => undefined
+    [status] => en_attente_accord_client
+    [prix_reparation] => 50.00
+    [date_fin_prevue] => 
+    [description_probleme] => Restore
+    [notes_techniques] => 
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+Current directory: /home/u139954273/domains/mdgeek.top/public_html/ajax
+--- Nouvelle requête ---
+POST data: Array
+(
+    [reparation_id] => 492
+    [marque] => 
+    [modele] => iPad A1822
+    [numero_serie] => undefined
+    [status] => en_attente_accord_client
+    [prix_reparation] => 50.00
+    [date_fin_prevue] => 
+    [description_probleme] => Restore 2
+    [notes_techniques] => 
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+Current directory: /home/u139954273/domains/mdgeek.top/public_html/ajax
+--- Nouvelle requête ---
+POST data: Array
+(
+    [reparation_id] => 492
+    [marque] => 
+    [modele] => iPad A1822
+    [numero_serie] => undefined
+    [status] => en_attente_accord_client
+    [prix_reparation] => 50.00
+    [date_fin_prevue] => 
+    [description_probleme] => Restore
+    [notes_techniques] => 
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+Current directory: /home/u139954273/domains/mdgeek.top/public_html/ajax
+--- Nouvelle requête ---
+POST data: Array
+(
+    [reparation_id] => 511
+    [type_appareil] => Trottinette
+    [marque] => 
+    [modele] => Dualtron Togo
+    [numero_serie] => undefined
+    [status] => nouvelle_intervention
+    [prix_reparation] => 0.00
+    [date_fin_prevue] => 
+    [description_probleme] => diag guidon
+    [notes_techniques] => 
+)
+
+Date: 2025-04-08 12:31:29
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+Current directory: /home/u139954273/domains/mdgeek.top/public_html/ajax
+SQL: UPDATE reparations SET type_appareil = ?, modele = ?, numero_serie = ?, description_probleme = ?, prix_reparation = ?, statut = ? WHERE id = ?
+Params: Array
+(
+    [0] => Trottinette
+    [1] => Dualtron Togo
+    [2] => undefined
+    [3] => diag guidon
+    [4] => 0.00
+    [5] => nouvelle_intervention
+    [6] => 511
+)
+
+Exception: Erreur dans update_reparation.php: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'numero_serie' in 'SET'
+--- Nouvelle requête ---
+POST data: Array
+(
+    [reparation_id] => 511
+    [type_appareil] => Trottinette
+    [marque] => 
+    [modele] => Dualtron Togo
+    [numero_serie] => undefined
+    [status] => nouvelle_intervention
+    [prix_reparation] => 0.00
+    [date_fin_prevue] => 
+    [description_probleme] => diag guidon
+    [notes_techniques] => 
+)
+
+Date: 2025-04-08 12:38:11
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+Current directory: /home/u139954273/domains/mdgeek.top/public_html/ajax
+Colonnes de la table reparations: Array
+(
+    [0] => id
+    [1] => client_id
+    [2] => type_appareil
+    [3] => marque
+    [4] => modele
+    [5] => description_probleme
+    [6] => date_reception
+    [7] => date_modification
+    [8] => date_fin_prevue
+    [9] => statut
+    [10] => statut_id
+    [11] => statut_categorie
+    [12] => signature
+    [13] => prix
+    [14] => notes_techniques
+    [15] => photo_appareil
+    [16] => mot_de_passe
+    [17] => etat_esthetique
+    [18] => prix_reparation
+    [19] => photos
+    [20] => urgent
+    [21] => commande_requise
+    [22] => archive
+    [23] => employe_id
+)
+
+SQL: UPDATE reparations SET type_appareil = ?, modele = ?, imei = ?, description_probleme = ?, prix_reparation = ?, statut = ? WHERE id = ?
+Params: Array
+(
+    [0] => Trottinette
+    [1] => Dualtron Togo
+    [2] => undefined
+    [3] => diag guidon
+    [4] => 0.00
+    [5] => nouvelle_intervention
+    [6] => 511
+)
+
+Exception: Erreur dans update_reparation.php: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'imei' in 'SET'
+--- Nouvelle requête ---
+POST data: Array
+(
+    [reparation_id] => 511
+    [type_appareil] => Console
+    [marque] => 
+    [modele] => Dualtron Togo
+    [numero_serie] => undefined
+    [status] => nouvelle_intervention
+    [prix_reparation] => 0.00
+    [date_fin_prevue] => 
+    [description_probleme] => diag guidon
+    [notes_techniques] => 
+)
+
+Date: 2025-04-08 12:38:16
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+Current directory: /home/u139954273/domains/mdgeek.top/public_html/ajax
+Colonnes de la table reparations: Array
+(
+    [0] => id
+    [1] => client_id
+    [2] => type_appareil
+    [3] => marque
+    [4] => modele
+    [5] => description_probleme
+    [6] => date_reception
+    [7] => date_modification
+    [8] => date_fin_prevue
+    [9] => statut
+    [10] => statut_id
+    [11] => statut_categorie
+    [12] => signature
+    [13] => prix
+    [14] => notes_techniques
+    [15] => photo_appareil
+    [16] => mot_de_passe
+    [17] => etat_esthetique
+    [18] => prix_reparation
+    [19] => photos
+    [20] => urgent
+    [21] => commande_requise
+    [22] => archive
+    [23] => employe_id
+)
+
+SQL: UPDATE reparations SET type_appareil = ?, modele = ?, imei = ?, description_probleme = ?, prix_reparation = ?, statut = ? WHERE id = ?
+Params: Array
+(
+    [0] => Console
+    [1] => Dualtron Togo
+    [2] => undefined
+    [3] => diag guidon
+    [4] => 0.00
+    [5] => nouvelle_intervention
+    [6] => 511
+)
+
+Exception: Erreur dans update_reparation.php: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'imei' in 'SET'
+--- Nouvelle requête ---
+POST data: Array
+(
+    [reparation_id] => 510
+    [marque] => 
+    [modele] => samsung J3 2016
+    [numero_serie] => undefined
+    [status] => nouvelle_commande
+    [prix_reparation] => 60.00
+    [date_fin_prevue] => 
+    [description_probleme] => LCD a remplacer
+    [notes_techniques] => 
+)
+
+Date: 2025-04-08 12:44:06
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+Current directory: /home/u139954273/domains/mdgeek.top/public_html/ajax
+Colonnes de la table reparations: Array
+(
+    [0] => id
+    [1] => client_id
+    [2] => type_appareil
+    [3] => marque
+    [4] => modele
+    [5] => description_probleme
+    [6] => date_reception
+    [7] => date_modification
+    [8] => date_fin_prevue
+    [9] => statut
+    [10] => statut_id
+    [11] => statut_categorie
+    [12] => signature
+    [13] => prix
+    [14] => notes_techniques
+    [15] => photo_appareil
+    [16] => mot_de_passe
+    [17] => etat_esthetique
+    [18] => prix_reparation
+    [19] => photos
+    [20] => urgent
+    [21] => commande_requise
+    [22] => archive
+    [23] => employe_id
+)
+
+SQL: UPDATE reparations SET notes_techniques = ?, modele = ?, description_probleme = ?, prix_reparation = ?, statut = ? WHERE id = ?
+Params: Array
+(
+    [0] => Numéro de série: undefined
+    [1] => samsung J3 2016
+    [2] => LCD a remplacer
+    [3] => 60.00
+    [4] => nouvelle_commande
+    [5] => 510
+)
+

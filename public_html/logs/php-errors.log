@@ -1,0 +1,2037 @@
+[17-Apr-2025 23:50:42 UTC] Tentative 1 de connexion à la base de données
+[17-Apr-2025 23:50:42 UTC] Connexion à la base de données réussie
+[17-Apr-2025 23:50:43 UTC] Tentative 1 de connexion à la base de données
+[17-Apr-2025 23:50:43 UTC] Connexion à la base de données réussie
+[17-Apr-2025 23:50:43 UTC] === ENVOI SMS DÉMARRÉ ===
+[17-Apr-2025 23:50:43 UTC] Destinataire: 33622009900
+[17-Apr-2025 23:50:43 UTC] Message: ., votre Ninebot G30 est prêt...
+[17-Apr-2025 23:50:43 UTC] URL API: https://api.sms-gate.app/3rdparty/v1/message
+[17-Apr-2025 23:50:43 UTC] Utilisateur: -GCB75
+[17-Apr-2025 23:50:43 UTC] Numéro formaté: +33622009900
+[17-Apr-2025 23:50:43 UTC] Données JSON: {"message":"., votre Ninebot G30 est pr\u00eat ! Il vous attend pour retrouver une vie normale. \ud83e\udd73\r\n\ud83e\uddfe Suivi : http:\/\/Mdgeek.top\/suivi.php?id=598\r\nMaison du Geek \u2013 08 95 79 59 33","phoneNumbers":["+33622009900"]}
+[17-Apr-2025 23:50:43 UTC] Exécution de la requête cURL...
+[17-Apr-2025 23:50:44 UTC] Code HTTP: 202
+[17-Apr-2025 23:50:44 UTC] Temps: 426 ms
+[17-Apr-2025 23:50:44 UTC] Réponse: {"id":"kBr0h2a7oInmpfzOZ9sMh","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33622009900","state":"Pending"}],"states":null}
+[17-Apr-2025 23:50:44 UTC] SMS enregistré dans la base de données, ID: 201
+[17-Apr-2025 23:50:44 UTC] === ENVOI SMS RÉUSSI ===
+[17-Apr-2025 23:51:27 UTC] Tentative 1 de connexion à la base de données
+[17-Apr-2025 23:51:27 UTC] Connexion à la base de données réussie
+[17-Apr-2025 23:51:27 UTC] Tentative 1 de connexion à la base de données
+[17-Apr-2025 23:51:27 UTC] Connexion à la base de données réussie
+[17-Apr-2025 23:52:08 UTC] Tentative 1 de connexion à la base de données
+[17-Apr-2025 23:52:08 UTC] Connexion à la base de données réussie
+[17-Apr-2025 23:52:17 UTC] Tentative 1 de connexion à la base de données
+[17-Apr-2025 23:52:17 UTC] Connexion à la base de données réussie
+[17-Apr-2025 23:52:17 UTC] === ENVOI SMS DÉMARRÉ ===
+[17-Apr-2025 23:52:17 UTC] Destinataire: 33782962906
+[17-Apr-2025 23:52:17 UTC] Message: Nous avons tout essayé pour s...
+[17-Apr-2025 23:52:17 UTC] URL API: https://api.sms-gate.app/3rdparty/v1/message
+[17-Apr-2025 23:52:17 UTC] Utilisateur: -GCB75
+[17-Apr-2025 23:52:17 UTC] Numéro formaté: +33782962906
+[17-Apr-2025 23:52:17 UTC] Données JSON: {"message":"Nous avons tout essay\u00e9 pour sauver votre sa (), mais pour des raisons techniques, nous avons d\u00fb annuler la r\u00e9paration.\r\n\ud83d\udcc4 D\u00e9tails : http:\/\/Mdgeek.top\/suivi.php?id=611\r\nMaison du Geek \u2013 08 95 79 59 33","phoneNumbers":["+33782962906"]}
+[17-Apr-2025 23:52:17 UTC] Exécution de la requête cURL...
+[17-Apr-2025 23:52:18 UTC] Code HTTP: 202
+[17-Apr-2025 23:52:18 UTC] Temps: 317 ms
+[17-Apr-2025 23:52:18 UTC] Réponse: {"id":"LD9Zzwa4hck7ifUI5SH_y","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33782962906","state":"Pending"}],"states":null}
+[17-Apr-2025 23:52:18 UTC] SMS enregistré dans la base de données, ID: 202
+[17-Apr-2025 23:52:18 UTC] === ENVOI SMS RÉUSSI ===
+[17-Apr-2025 23:53:00 UTC] Tentative 1 de connexion à la base de données
+[17-Apr-2025 23:53:00 UTC] Connexion à la base de données réussie
+[17-Apr-2025 23:53:00 UTC] Tentative 1 de connexion à la base de données
+[17-Apr-2025 23:53:00 UTC] Connexion à la base de données réussie
+[17-Apr-2025 23:53:03 UTC] Tentative 1 de connexion à la base de données
+[17-Apr-2025 23:53:03 UTC] Connexion à la base de données réussie
+[17-Apr-2025 23:53:05 UTC] Tentative 1 de connexion à la base de données
+[17-Apr-2025 23:53:05 UTC] Connexion à la base de données réussie
+[17-Apr-2025 23:53:07 UTC] Tentative 1 de connexion à la base de données
+[17-Apr-2025 23:53:07 UTC] Connexion à la base de données réussie
+[17-Apr-2025 23:53:07 UTC] === ENVOI SMS DÉMARRÉ ===
+[17-Apr-2025 23:53:07 UTC] Destinataire: 33782962906
+[17-Apr-2025 23:53:07 UTC] Message: Bonjour saber, votre dossier 6...
+[17-Apr-2025 23:53:07 UTC] URL API: https://api.sms-gate.app/3rdparty/v1/message
+[17-Apr-2025 23:53:07 UTC] Utilisateur: -GCB75
+[17-Apr-2025 23:53:07 UTC] Numéro formaté: +33782962906
+[17-Apr-2025 23:53:07 UTC] Données JSON: {"message":"Bonjour saber, votre dossier 611 au sujet de votre sa est en attente de validation par un responsable technique. Nous vous tenons inform\u00e9 tr\u00e8s bient\u00f4t.\r\n\ud83d\udcf2 Suivi : http:\/\/Mdgeek.top\/suivi.php?id=611\r\nMaison du Geek \u2013 08 95 79 59 33","phoneNumbers":["+33782962906"]}
+[17-Apr-2025 23:53:07 UTC] Exécution de la requête cURL...
+[17-Apr-2025 23:53:07 UTC] Code HTTP: 202
+[17-Apr-2025 23:53:07 UTC] Temps: 328 ms
+[17-Apr-2025 23:53:07 UTC] Réponse: {"id":"DI-A8zgYzK4ZKGwMxF_cs","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33782962906","state":"Pending"}],"states":null}
+[17-Apr-2025 23:53:07 UTC] SMS enregistré dans la base de données, ID: 203
+[17-Apr-2025 23:53:07 UTC] === ENVOI SMS RÉUSSI ===
+[17-Apr-2025 23:53:12 UTC] Tentative 1 de connexion à la base de données
+[17-Apr-2025 23:53:12 UTC] Connexion à la base de données réussie
+[17-Apr-2025 23:53:12 UTC] Tentative 1 de connexion à la base de données
+[17-Apr-2025 23:53:12 UTC] Connexion à la base de données réussie
+[17-Apr-2025 23:53:14 UTC] Tentative 1 de connexion à la base de données
+[17-Apr-2025 23:53:14 UTC] Connexion à la base de données réussie
+[17-Apr-2025 23:53:17 UTC] Tentative 1 de connexion à la base de données
+[17-Apr-2025 23:53:17 UTC] Connexion à la base de données réussie
+[17-Apr-2025 23:53:17 UTC] === ENVOI SMS DÉMARRÉ ===
+[17-Apr-2025 23:53:17 UTC] Destinataire: 33782962906
+[17-Apr-2025 23:53:17 UTC] Message: Bonjour, saber, votre devis po...
+[17-Apr-2025 23:53:17 UTC] URL API: https://api.sms-gate.app/3rdparty/v1/message
+[17-Apr-2025 23:53:17 UTC] Utilisateur: -GCB75
+[17-Apr-2025 23:53:17 UTC] Numéro formaté: +33782962906
+[17-Apr-2025 23:53:17 UTC] Données JSON: {"message":"Bonjour, saber, votre devis pour le sa est disponible. \r\nConsultez-le ici :\r\n\ud83d\udcc4 http:\/\/Mdgeek.top\/suivi.php?id=611\r\nUne question ? Appelez-nous au 04 93 46 71 63\r\nMAISON DU GEEK","phoneNumbers":["+33782962906"]}
+[17-Apr-2025 23:53:17 UTC] Exécution de la requête cURL...
+[17-Apr-2025 23:53:18 UTC] Code HTTP: 202
+[17-Apr-2025 23:53:18 UTC] Temps: 311 ms
+[17-Apr-2025 23:53:18 UTC] Réponse: {"id":"VrxuxzzeNpp7J7Ah48OH9","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33782962906","state":"Pending"}],"states":null}
+[17-Apr-2025 23:53:18 UTC] SMS enregistré dans la base de données, ID: 204
+[17-Apr-2025 23:53:18 UTC] === ENVOI SMS RÉUSSI ===
+[17-Apr-2025 23:55:39 UTC] Tentative 1 de connexion à la base de données
+[17-Apr-2025 23:55:39 UTC] Connexion à la base de données réussie
+[17-Apr-2025 23:55:39 UTC] Tentative 1 de connexion à la base de données
+[17-Apr-2025 23:55:39 UTC] Connexion à la base de données réussie
+[18-Apr-2025 00:00:41 UTC] Tentative 1 de connexion à la base de données
+[18-Apr-2025 00:00:41 UTC] Connexion à la base de données réussie
+[18-Apr-2025 00:08:29 UTC] Tentative 1 de connexion à la base de données
+[18-Apr-2025 00:08:29 UTC] Connexion à la base de données réussie
+[18-Apr-2025 00:08:29 UTC] Tentative 1 de connexion à la base de données
+[18-Apr-2025 00:08:29 UTC] Connexion à la base de données réussie
+[18-Apr-2025 00:10:05 UTC] Tentative 1 de connexion à la base de données
+[18-Apr-2025 00:10:05 UTC] Connexion à la base de données réussie
+[18-Apr-2025 00:10:07 UTC] Tentative 1 de connexion à la base de données
+[18-Apr-2025 00:10:07 UTC] Connexion à la base de données réussie
+[18-Apr-2025 00:10:07 UTC] === ENVOI SMS DÉMARRÉ ===
+[18-Apr-2025 00:10:07 UTC] Destinataire: 33782962906
+[18-Apr-2025 00:10:07 UTC] Message: saber, votre as est prêt ! Il...
+[18-Apr-2025 00:10:07 UTC] URL API: https://api.sms-gate.app/3rdparty/v1/message
+[18-Apr-2025 00:10:07 UTC] Utilisateur: -GCB75
+[18-Apr-2025 00:10:07 UTC] Numéro formaté: +33782962906
+[18-Apr-2025 00:10:07 UTC] Données JSON: {"message":"saber, votre as est pr\u00eat ! Il vous attend pour retrouver une vie normale. \ud83e\udd73\r\n\ud83e\uddfe Suivi : http:\/\/Mdgeek.top\/suivi.php?id=614\r\nMaison du Geek \u2013 08 95 79 59 33","phoneNumbers":["+33782962906"]}
+[18-Apr-2025 00:10:07 UTC] Exécution de la requête cURL...
+[18-Apr-2025 00:10:08 UTC] Code HTTP: 202
+[18-Apr-2025 00:10:08 UTC] Temps: 351 ms
+[18-Apr-2025 00:10:08 UTC] Réponse: {"id":"51PcyJ4SkreOwu59xwk83","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33782962906","state":"Pending"}],"states":null}
+[18-Apr-2025 00:10:08 UTC] SMS enregistré dans la base de données, ID: 209
+[18-Apr-2025 00:10:08 UTC] === ENVOI SMS RÉUSSI ===
+[18-Apr-2025 00:10:19 UTC] Tentative 1 de connexion à la base de données
+[18-Apr-2025 00:10:19 UTC] Connexion à la base de données réussie
+[18-Apr-2025 00:10:19 UTC] Tentative 1 de connexion à la base de données
+[18-Apr-2025 00:10:19 UTC] Connexion à la base de données réussie
+[18-Apr-2025 00:10:40 UTC] Tentative 1 de connexion à la base de données
+[18-Apr-2025 00:10:40 UTC] Connexion à la base de données réussie
+[18-Apr-2025 00:10:57 UTC] Tentative 1 de connexion à la base de données
+[18-Apr-2025 00:10:57 UTC] Connexion à la base de données réussie
+[18-Apr-2025 00:10:57 UTC] === ENVOI SMS DÉMARRÉ ===
+[18-Apr-2025 00:10:57 UTC] Destinataire: 33782962906
+[18-Apr-2025 00:10:57 UTC] Message: Bonjour saber, votre dossier 6...
+[18-Apr-2025 00:10:57 UTC] URL API: https://api.sms-gate.app/3rdparty/v1/message
+[18-Apr-2025 00:10:57 UTC] Utilisateur: -GCB75
+[18-Apr-2025 00:10:57 UTC] Numéro formaté: +33782962906
+[18-Apr-2025 00:10:57 UTC] Données JSON: {"message":"Bonjour saber, votre dossier 614 au sujet de votre as est en attente de validation par un responsable technique. Nous vous tenons inform\u00e9 tr\u00e8s bient\u00f4t.\r\n\ud83d\udcf2 Suivi : http:\/\/Mdgeek.top\/suivi.php?id=614\r\nMaison du Geek \u2013 08 95 79 59 33","phoneNumbers":["+33782962906"]}
+[18-Apr-2025 00:10:57 UTC] Exécution de la requête cURL...
+[18-Apr-2025 00:10:58 UTC] Code HTTP: 202
+[18-Apr-2025 00:10:58 UTC] Temps: 310 ms
+[18-Apr-2025 00:10:58 UTC] Réponse: {"id":"qNLF1tbZgxGxoW8aKmsJn","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33782962906","state":"Pending"}],"states":null}
+[18-Apr-2025 00:10:58 UTC] SMS enregistré dans la base de données, ID: 210
+[18-Apr-2025 00:10:58 UTC] === ENVOI SMS RÉUSSI ===
+[18-Apr-2025 00:36:43 UTC] Tentative 1 de connexion à la base de données
+[18-Apr-2025 00:36:43 UTC] Connexion à la base de données réussie
+[18-Apr-2025 00:36:43 UTC] Tentative 1 de connexion à la base de données
+[18-Apr-2025 00:36:43 UTC] Connexion à la base de données réussie
+[18-Apr-2025 00:36:45 UTC] Tentative 1 de connexion à la base de données
+[18-Apr-2025 00:36:45 UTC] Connexion à la base de données réussie
+[18-Apr-2025 00:36:47 UTC] Tentative 1 de connexion à la base de données
+[18-Apr-2025 00:36:47 UTC] Connexion à la base de données réussie
+[18-Apr-2025 00:36:47 UTC] === ENVOI SMS DÉMARRÉ ===
+[18-Apr-2025 00:36:47 UTC] Destinataire: 33782962906
+[18-Apr-2025 00:36:47 UTC] Message: saber, votre as est prêt ! Il...
+[18-Apr-2025 00:36:47 UTC] URL API: https://api.sms-gate.app/3rdparty/v1/message
+[18-Apr-2025 00:36:47 UTC] Utilisateur: -GCB75
+[18-Apr-2025 00:36:47 UTC] Numéro formaté: +33782962906
+[18-Apr-2025 00:36:47 UTC] Données JSON: {"message":"saber, votre as est pr\u00eat ! Il vous attend pour retrouver une vie normale. \ud83e\udd73\r\n\ud83e\uddfe Suivi : http:\/\/Mdgeek.top\/suivi.php?id=614\r\nMaison du Geek \u2013 08 95 79 59 33","phoneNumbers":["+33782962906"]}
+[18-Apr-2025 00:36:47 UTC] Exécution de la requête cURL...
+[18-Apr-2025 00:36:47 UTC] Code HTTP: 202
+[18-Apr-2025 00:36:47 UTC] Temps: 225 ms
+[18-Apr-2025 00:36:47 UTC] Réponse: {"id":"7ZpfEWdfGAlLbJRkLoiEZ","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33782962906","state":"Pending"}],"states":null}
+[18-Apr-2025 00:36:47 UTC] SMS enregistré dans la base de données, ID: 211
+[18-Apr-2025 00:36:47 UTC] === ENVOI SMS RÉUSSI ===
+[18-Apr-2025 00:41:44 UTC] Tentative 1 de connexion à la base de données
+[18-Apr-2025 00:41:44 UTC] Connexion à la base de données réussie
+[18-Apr-2025 00:41:44 UTC] Tentative 1 de connexion à la base de données
+[18-Apr-2025 00:41:44 UTC] Connexion à la base de données réussie
+[18-Apr-2025 01:38:32 UTC] Tentative 1 de connexion à la base de données
+[18-Apr-2025 01:38:32 UTC] Connexion à la base de données réussie
+[18-Apr-2025 01:38:32 UTC] Tentative 1 de connexion à la base de données
+[18-Apr-2025 01:38:32 UTC] Connexion à la base de données réussie
+[18-Apr-2025 01:38:45 UTC] Tentative 1 de connexion à la base de données
+[18-Apr-2025 01:38:45 UTC] Connexion à la base de données réussie
+[18-Apr-2025 01:38:45 UTC] Tentative 1 de connexion à la base de données
+[18-Apr-2025 01:38:45 UTC] Connexion à la base de données réussie
+[18-Apr-2025 01:38:50 UTC] Tentative 1 de connexion à la base de données
+[18-Apr-2025 01:38:50 UTC] Connexion à la base de données réussie
+[18-Apr-2025 01:39:31 UTC] Tentative 1 de connexion à la base de données
+[18-Apr-2025 01:39:31 UTC] Connexion à la base de données réussie
+[18-Apr-2025 01:39:32 UTC] === ENVOI SMS DÉMARRÉ ===
+[18-Apr-2025 01:39:32 UTC] Destinataire: 33782962906
+[18-Apr-2025 01:39:32 UTC] Message: Nous avons tout essayé pour s...
+[18-Apr-2025 01:39:32 UTC] URL API: https://api.sms-gate.app/3rdparty/v1/message
+[18-Apr-2025 01:39:32 UTC] Utilisateur: -GCB75
+[18-Apr-2025 01:39:32 UTC] Numéro formaté: +33782962906
+[18-Apr-2025 01:39:32 UTC] Données JSON: {"message":"Nous avons tout essay\u00e9 pour sauver votre iphone 8 (), mais pour des raisons techniques, nous avons d\u00fb annuler la r\u00e9paration.\r\n\ud83d\udcc4 D\u00e9tails : http:\/\/Mdgeek.top\/suivi.php?id=615\r\nMaison du Geek \u2013 08 95 79 59 33","phoneNumbers":["+33782962906"]}
+[18-Apr-2025 01:39:32 UTC] Exécution de la requête cURL...
+[18-Apr-2025 01:39:32 UTC] Code HTTP: 202
+[18-Apr-2025 01:39:32 UTC] Temps: 312 ms
+[18-Apr-2025 01:39:32 UTC] Réponse: {"id":"3ANNJzBpmkWRy1EEHDYCo","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33782962906","state":"Pending"}],"states":null}
+[18-Apr-2025 01:39:32 UTC] SMS enregistré dans la base de données, ID: 221
+[18-Apr-2025 01:39:32 UTC] === ENVOI SMS RÉUSSI ===
+[18-Apr-2025 09:00:47 UTC] Tentative 1 de connexion à la base de données
+[18-Apr-2025 09:00:47 UTC] Connexion à la base de données réussie
+[18-Apr-2025 09:00:47 UTC] Tentative 1 de connexion à la base de données
+[18-Apr-2025 09:00:47 UTC] Connexion à la base de données réussie
+[18-Apr-2025 09:00:47 UTC] Tentative 1 de connexion à la base de données
+[18-Apr-2025 09:00:47 UTC] Connexion à la base de données réussie
+[18-Apr-2025 09:00:47 UTC] Tentative 1 de connexion à la base de données
+[18-Apr-2025 09:00:47 UTC] Connexion à la base de données réussie
+[18-Apr-2025 09:00:47 UTC] Tentative 1 de connexion à la base de données
+[18-Apr-2025 09:00:47 UTC] Connexion à la base de données réussie
+[18-Apr-2025 09:00:47 UTC] Tentative 1 de connexion à la base de données
+[18-Apr-2025 09:00:47 UTC] Connexion à la base de données réussie
+[18-Apr-2025 09:00:47 UTC] Tentative 1 de connexion à la base de données
+[18-Apr-2025 09:00:47 UTC] Connexion à la base de données réussie
+[18-Apr-2025 09:00:47 UTC] Tentative 1 de connexion à la base de données
+[18-Apr-2025 09:00:47 UTC] Connexion à la base de données réussie
+[18-Apr-2025 09:00:47 UTC] Tentative 1 de connexion à la base de données
+[18-Apr-2025 09:00:47 UTC] Connexion à la base de données réussie
+[18-Apr-2025 09:00:47 UTC] Tentative 1 de connexion à la base de données
+[18-Apr-2025 09:00:47 UTC] Connexion à la base de données réussie
+[18-Apr-2025 09:00:47 UTC] Tentative 1 de connexion à la base de données
+[18-Apr-2025 09:00:47 UTC] Connexion à la base de données réussie
+[18-Apr-2025 09:00:47 UTC] Tentative 1 de connexion à la base de données
+[18-Apr-2025 09:00:47 UTC] Connexion à la base de données réussie
+[18-Apr-2025 09:00:47 UTC] Tentative 1 de connexion à la base de données
+[18-Apr-2025 09:00:47 UTC] Connexion à la base de données réussie
+[18-Apr-2025 09:00:47 UTC] Tentative 1 de connexion à la base de données
+[18-Apr-2025 09:00:47 UTC] Connexion à la base de données réussie
+[18-Apr-2025 09:00:47 UTC] Tentative 1 de connexion à la base de données
+[18-Apr-2025 09:00:47 UTC] Connexion à la base de données réussie
+[18-Apr-2025 09:00:47 UTC] Tentative 1 de connexion à la base de données
+[18-Apr-2025 09:00:47 UTC] Connexion à la base de données réussie
+[18-Apr-2025 09:00:47 UTC] Tentative 1 de connexion à la base de données
+[18-Apr-2025 09:00:47 UTC] Connexion à la base de données réussie
+[18-Apr-2025 09:00:47 UTC] Tentative 1 de connexion à la base de données
+[18-Apr-2025 09:00:47 UTC] Connexion à la base de données réussie
+[18-Apr-2025 09:44:54 UTC] Tentative 1 de connexion à la base de données
+[18-Apr-2025 09:44:54 UTC] Connexion à la base de données réussie
+[18-Apr-2025 09:44:54 UTC] Session restaurée pour l'utilisateur 2 via token
+[18-Apr-2025 09:44:54 UTC] Tentative 1 de connexion à la base de données
+[18-Apr-2025 09:44:54 UTC] Connexion à la base de données réussie
+[18-Apr-2025 11:57:17 UTC] Tentative 1 de connexion à la base de données
+[18-Apr-2025 11:57:17 UTC] Connexion à la base de données réussie
+[18-Apr-2025 11:57:17 UTC] Tentative 1 de connexion à la base de données
+[18-Apr-2025 11:57:17 UTC] Connexion à la base de données réussie
+[18-Apr-2025 11:57:20 UTC] Tentative 1 de connexion à la base de données
+[18-Apr-2025 11:57:20 UTC] Connexion à la base de données réussie
+[18-Apr-2025 11:57:39 UTC] Tentative 1 de connexion à la base de données
+[18-Apr-2025 11:57:39 UTC] Connexion à la base de données réussie
+[18-Apr-2025 11:57:39 UTC] === ENVOI SMS DÉMARRÉ ===
+[18-Apr-2025 11:57:39 UTC] Destinataire: 33782962906
+[18-Apr-2025 11:57:39 UTC] Message: saber, votre DSF est prêt ! I...
+[18-Apr-2025 11:57:39 UTC] URL API: https://api.sms-gate.app/3rdparty/v1/message
+[18-Apr-2025 11:57:39 UTC] Utilisateur: -GCB75
+[18-Apr-2025 11:57:39 UTC] Numéro formaté: +33782962906
+[18-Apr-2025 11:57:39 UTC] Données JSON: {"message":"saber, votre DSF est pr\u00eat ! Il vous attend pour retrouver une vie normale. \ud83e\udd73\r\n\ud83e\uddfe Suivi : http:\/\/Mdgeek.top\/suivi.php?id=616\r\nMaison du Geek \u2013 08 95 79 59 33","phoneNumbers":["+33782962906"]}
+[18-Apr-2025 11:57:39 UTC] Exécution de la requête cURL...
+[18-Apr-2025 11:57:39 UTC] Code HTTP: 202
+[18-Apr-2025 11:57:39 UTC] Temps: 431 ms
+[18-Apr-2025 11:57:39 UTC] Réponse: {"id":"OVLAmpdGhKym_yAG1AACf","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33782962906","state":"Pending"}],"states":null}
+[18-Apr-2025 11:57:39 UTC] SMS enregistré dans la base de données, ID: 226
+[18-Apr-2025 11:57:39 UTC] === ENVOI SMS RÉUSSI ===
+[18-Apr-2025 12:40:53 UTC] Tentative 1 de connexion à la base de données
+[18-Apr-2025 12:40:53 UTC] Connexion à la base de données réussie
+[18-Apr-2025 12:40:53 UTC] Session restaurée pour l'utilisateur 3 via token
+[18-Apr-2025 12:40:53 UTC] Tentative 1 de connexion à la base de données
+[18-Apr-2025 12:40:53 UTC] Connexion à la base de données réussie
+[18-Apr-2025 13:16:30 UTC] Tentative 1 de connexion à la base de données
+[18-Apr-2025 13:16:30 UTC] Connexion à la base de données réussie
+[18-Apr-2025 13:16:30 UTC] Tentative 1 de connexion à la base de données
+[18-Apr-2025 13:16:30 UTC] Connexion à la base de données réussie
+[18-Apr-2025 14:32:53 UTC] Tentative 1 de connexion à la base de données
+[18-Apr-2025 14:32:53 UTC] Connexion à la base de données réussie
+[18-Apr-2025 14:32:53 UTC] Session restaurée pour l'utilisateur 1 via token
+[18-Apr-2025 14:32:53 UTC] Tentative 1 de connexion à la base de données
+[18-Apr-2025 14:32:53 UTC] Connexion à la base de données réussie
+[18-Apr-2025 14:35:57 UTC] Tentative 1 de connexion à la base de données
+[18-Apr-2025 14:35:57 UTC] Connexion à la base de données réussie
+[18-Apr-2025 14:35:57 UTC] Tentative 1 de connexion à la base de données
+[18-Apr-2025 14:35:57 UTC] Connexion à la base de données réussie
+[18-Apr-2025 14:35:57 UTC] Tentative 1 de connexion à la base de données
+[18-Apr-2025 14:35:57 UTC] Connexion à la base de données réussie
+[18-Apr-2025 14:35:57 UTC] Tentative 1 de connexion à la base de données
+[18-Apr-2025 14:35:57 UTC] Connexion à la base de données réussie
+[18-Apr-2025 14:35:59 UTC] Tentative 1 de connexion à la base de données
+[18-Apr-2025 14:35:59 UTC] Connexion à la base de données réussie
+[18-Apr-2025 14:35:59 UTC] Tentative 1 de connexion à la base de données
+[18-Apr-2025 14:35:59 UTC] Connexion à la base de données réussie
+[18-Apr-2025 14:41:43 UTC] Tentative 1 de connexion à la base de données
+[18-Apr-2025 14:41:43 UTC] Connexion à la base de données réussie
+[18-Apr-2025 14:41:43 UTC] Tentative 1 de connexion à la base de données
+[18-Apr-2025 14:41:43 UTC] Connexion à la base de données réussie
+[18-Apr-2025 15:45:10 UTC] Tentative 1 de connexion à la base de données
+[18-Apr-2025 15:45:10 UTC] Connexion à la base de données réussie
+[18-Apr-2025 15:45:10 UTC] Session restaurée pour l'utilisateur 2 via token
+[18-Apr-2025 15:45:10 UTC] Tentative 1 de connexion à la base de données
+[18-Apr-2025 15:45:10 UTC] Connexion à la base de données réussie
+[18-Apr-2025 23:27:31 UTC] Tentative 1 de connexion à la base de données
+[18-Apr-2025 23:27:31 UTC] Connexion à la base de données réussie
+[18-Apr-2025 23:27:31 UTC] PHP Deprecated:  Constant FILTER_SANITIZE_STRING is deprecated in /home/u139954273/domains/mdgeek.top/public_html/ajax/update_tache_status.php on line 33
+[18-Apr-2025 23:27:37 UTC] Tentative 1 de connexion à la base de données
+[18-Apr-2025 23:27:37 UTC] Connexion à la base de données réussie
+[18-Apr-2025 23:27:37 UTC] PHP Deprecated:  Constant FILTER_SANITIZE_STRING is deprecated in /home/u139954273/domains/mdgeek.top/public_html/ajax/update_tache_status.php on line 33
+[18-Apr-2025 23:37:55 UTC] Tentative 1 de connexion à la base de données
+[18-Apr-2025 23:37:55 UTC] Connexion à la base de données réussie
+[18-Apr-2025 23:38:02 UTC] Tentative 1 de connexion à la base de données
+[18-Apr-2025 23:38:02 UTC] Connexion à la base de données réussie
+[18-Apr-2025 23:38:07 UTC] Tentative 1 de connexion à la base de données
+[18-Apr-2025 23:38:07 UTC] Connexion à la base de données réussie
+[18-Apr-2025 23:38:07 UTC] === ENVOI SMS DÉMARRÉ ===
+[18-Apr-2025 23:38:07 UTC] Destinataire: 33622009900
+[18-Apr-2025 23:38:07 UTC] Message: Bonjour ., votre dossier 622 a...
+[18-Apr-2025 23:38:07 UTC] URL API: https://api.sms-gate.app/3rdparty/v1/message
+[18-Apr-2025 23:38:07 UTC] Utilisateur: -GCB75
+[18-Apr-2025 23:38:07 UTC] Numéro formaté: +33622009900
+[18-Apr-2025 23:38:07 UTC] Données JSON: {"message":"Bonjour ., votre dossier 622 au sujet de votre Boitier fire stick est en attente de validation par un responsable technique. Nous vous tenons inform\u00e9 tr\u00e8s bient\u00f4t.\r\n\ud83d\udcf2 Suivi : http:\/\/Mdgeek.top\/suivi.php?id=622\r\nMaison du Geek \u2013 08 95 79 59 33","phoneNumbers":["+33622009900"]}
+[18-Apr-2025 23:38:07 UTC] Exécution de la requête cURL...
+[18-Apr-2025 23:38:07 UTC] Code HTTP: 202
+[18-Apr-2025 23:38:07 UTC] Temps: 433 ms
+[18-Apr-2025 23:38:07 UTC] Réponse: {"id":"1ZHpeSwfq91aISuto05Dd","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33622009900","state":"Pending"}],"states":null}
+[18-Apr-2025 23:38:07 UTC] SMS enregistré dans la base de données, ID: 242
+[18-Apr-2025 23:38:07 UTC] === ENVOI SMS RÉUSSI ===
+[18-Apr-2025 23:38:11 UTC] Tentative 1 de connexion à la base de données
+[18-Apr-2025 23:38:11 UTC] Connexion à la base de données réussie
+[18-Apr-2025 23:38:11 UTC] Tentative 1 de connexion à la base de données
+[18-Apr-2025 23:38:11 UTC] Connexion à la base de données réussie
+[18-Apr-2025 23:38:12 UTC] Tentative 1 de connexion à la base de données
+[18-Apr-2025 23:38:12 UTC] Connexion à la base de données réussie
+[18-Apr-2025 23:38:17 UTC] Tentative 1 de connexion à la base de données
+[18-Apr-2025 23:38:17 UTC] Connexion à la base de données réussie
+[18-Apr-2025 23:38:21 UTC] Tentative 1 de connexion à la base de données
+[18-Apr-2025 23:38:21 UTC] Connexion à la base de données réussie
+[18-Apr-2025 23:38:21 UTC] === ENVOI SMS DÉMARRÉ ===
+[18-Apr-2025 23:38:21 UTC] Destinataire: 33614341278
+[18-Apr-2025 23:38:21 UTC] Message: Bonjour Sav, votre dossier 623...
+[18-Apr-2025 23:38:21 UTC] URL API: https://api.sms-gate.app/3rdparty/v1/message
+[18-Apr-2025 23:38:21 UTC] Utilisateur: -GCB75
+[18-Apr-2025 23:38:21 UTC] Numéro formaté: +33614341278
+[18-Apr-2025 23:38:21 UTC] Données JSON: {"message":"Bonjour Sav, votre dossier 623 au sujet de votre Saber est en attente de validation par un responsable technique. Nous vous tenons inform\u00e9 tr\u00e8s bient\u00f4t.\r\n\ud83d\udcf2 Suivi : http:\/\/Mdgeek.top\/suivi.php?id=623\r\nMaison du Geek \u2013 08 95 79 59 33","phoneNumbers":["+33614341278"]}
+[18-Apr-2025 23:38:21 UTC] Exécution de la requête cURL...
+[18-Apr-2025 23:38:21 UTC] Code HTTP: 202
+[18-Apr-2025 23:38:21 UTC] Temps: 310 ms
+[18-Apr-2025 23:38:21 UTC] Réponse: {"id":"CwjobuybAkfIgMD97Bn1I","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33614341278","state":"Pending"}],"states":null}
+[18-Apr-2025 23:38:21 UTC] SMS enregistré dans la base de données, ID: 243
+[18-Apr-2025 23:38:21 UTC] === ENVOI SMS RÉUSSI ===
+[18-Apr-2025 23:47:53 UTC] Démarrage de update_status.php
+[18-Apr-2025 23:47:53 UTC] Tentative 1 de connexion à la base de données
+[18-Apr-2025 23:47:53 UTC] Connexion à la base de données réussie
+[18-Apr-2025 23:47:53 UTC] Paramètres reçus: id=106, statut=recue
+[18-Apr-2025 23:47:53 UTC] Requête SQL: UPDATE commandes_pieces SET statut = :statut WHERE id = :id avec statut=recue et id=106
+[18-Apr-2025 23:47:53 UTC] Exécution de la requête: réussie
+[18-Apr-2025 23:47:53 UTC] Commande 106 mise à jour avec le statut recue
+[18-Apr-2025 23:47:57 UTC] Démarrage de update_status.php
+[18-Apr-2025 23:47:57 UTC] Tentative 1 de connexion à la base de données
+[18-Apr-2025 23:47:57 UTC] Connexion à la base de données réussie
+[18-Apr-2025 23:47:57 UTC] Paramètres reçus: id=107, statut=recue
+[18-Apr-2025 23:47:57 UTC] Requête SQL: UPDATE commandes_pieces SET statut = :statut WHERE id = :id avec statut=recue et id=107
+[18-Apr-2025 23:47:57 UTC] Exécution de la requête: réussie
+[18-Apr-2025 23:47:57 UTC] Commande 107 mise à jour avec le statut recue
+[18-Apr-2025 23:47:59 UTC] Démarrage de update_status.php
+[18-Apr-2025 23:47:59 UTC] Tentative 1 de connexion à la base de données
+[18-Apr-2025 23:47:59 UTC] Connexion à la base de données réussie
+[18-Apr-2025 23:47:59 UTC] Paramètres reçus: id=105, statut=recue
+[18-Apr-2025 23:47:59 UTC] Requête SQL: UPDATE commandes_pieces SET statut = :statut WHERE id = :id avec statut=recue et id=105
+[18-Apr-2025 23:47:59 UTC] Exécution de la requête: réussie
+[18-Apr-2025 23:47:59 UTC] Commande 105 mise à jour avec le statut recue
+[18-Apr-2025 23:51:43 UTC] Tentative 1 de connexion à la base de données
+[18-Apr-2025 23:51:43 UTC] Connexion à la base de données réussie
+[18-Apr-2025 23:51:43 UTC] Requête reçue dans update_commande_status.php
+[18-Apr-2025 23:51:43 UTC] PHP Notice:  session_start(): Ignoring session_start() because a session is already active in /home/u139954273/domains/mdgeek.top/public_html/ajax/update_commande_status.php on line 21
+[18-Apr-2025 23:51:43 UTC] Erreur: utilisateur non connecté dans update_commande_status.php
+[18-Apr-2025 23:53:11 UTC] Tentative 1 de connexion à la base de données
+[18-Apr-2025 23:53:11 UTC] Connexion à la base de données réussie
+[18-Apr-2025 23:53:11 UTC] PHP Deprecated:  Constant FILTER_SANITIZE_STRING is deprecated in /home/u139954273/domains/mdgeek.top/public_html/ajax/update_tache_status.php on line 33
+[18-Apr-2025 23:53:17 UTC] Tentative 1 de connexion à la base de données
+[18-Apr-2025 23:53:17 UTC] Connexion à la base de données réussie
+[18-Apr-2025 23:53:17 UTC] PHP Deprecated:  Constant FILTER_SANITIZE_STRING is deprecated in /home/u139954273/domains/mdgeek.top/public_html/ajax/update_tache_status.php on line 33
+[18-Apr-2025 23:53:38 UTC] Tentative 1 de connexion à la base de données
+[18-Apr-2025 23:53:38 UTC] Connexion à la base de données réussie
+[18-Apr-2025 23:53:38 UTC] Requête reçue dans update_commande_status.php
+[18-Apr-2025 23:53:38 UTC] PHP Notice:  session_start(): Ignoring session_start() because a session is already active in /home/u139954273/domains/mdgeek.top/public_html/ajax/update_commande_status.php on line 21
+[18-Apr-2025 23:53:38 UTC] Données JSON reçues: {"commande_id":"","new_status":"recue"}
+[18-Apr-2025 23:53:38 UTC] Mise à jour du statut: commande_id=0, new_status=recue
+[18-Apr-2025 23:53:38 UTC] Vérification du statut: recue, valides: en_attente, commande, recue, annulee, urgent
+[18-Apr-2025 23:53:38 UTC] Préparation de la requête UPDATE pour commande_id=0 et statut=recue
+[18-Apr-2025 23:53:38 UTC] Résultat de l'exécution de la requête: succès, lignes affectées: 0
+[18-Apr-2025 23:53:38 UTC] Aucune ligne affectée pour commande_id=0 et statut=recue
+[18-Apr-2025 23:53:44 UTC] Tentative 1 de connexion à la base de données
+[18-Apr-2025 23:53:44 UTC] Connexion à la base de données réussie
+[18-Apr-2025 23:53:44 UTC] Requête reçue dans update_commande_status.php
+[18-Apr-2025 23:53:44 UTC] PHP Notice:  session_start(): Ignoring session_start() because a session is already active in /home/u139954273/domains/mdgeek.top/public_html/ajax/update_commande_status.php on line 21
+[18-Apr-2025 23:53:44 UTC] Données JSON reçues: {"commande_id":"","new_status":"annulee"}
+[18-Apr-2025 23:53:44 UTC] Mise à jour du statut: commande_id=0, new_status=annulee
+[18-Apr-2025 23:53:44 UTC] Vérification du statut: annulee, valides: en_attente, commande, recue, annulee, urgent
+[18-Apr-2025 23:53:44 UTC] Préparation de la requête UPDATE pour commande_id=0 et statut=annulee
+[18-Apr-2025 23:53:44 UTC] Résultat de l'exécution de la requête: succès, lignes affectées: 0
+[18-Apr-2025 23:53:44 UTC] Aucune ligne affectée pour commande_id=0 et statut=annulee
+[18-Apr-2025 23:58:13 UTC] Tentative 1 de connexion à la base de données
+[18-Apr-2025 23:58:13 UTC] Connexion à la base de données réussie
+[18-Apr-2025 23:58:13 UTC] Requête reçue dans update_commande_status.php
+[18-Apr-2025 23:58:13 UTC] PHP Notice:  session_start(): Ignoring session_start() because a session is already active in /home/u139954273/domains/mdgeek.top/public_html/ajax/update_commande_status.php on line 21
+[18-Apr-2025 23:58:13 UTC] Erreur: utilisateur non connecté dans update_commande_status.php
+[19-Apr-2025 00:02:16 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 00:02:16 UTC] Connexion à la base de données réussie
+[19-Apr-2025 00:02:16 UTC] Requête reçue dans update_commande_status.php
+[19-Apr-2025 00:02:16 UTC] Erreur: utilisateur non connecté dans update_commande_status.php
+[19-Apr-2025 00:02:32 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 00:02:32 UTC] Connexion à la base de données réussie
+[19-Apr-2025 00:02:32 UTC] Requête reçue dans update_commande_status.php
+[19-Apr-2025 00:02:32 UTC] Erreur: utilisateur non connecté dans update_commande_status.php
+[19-Apr-2025 00:04:14 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 00:04:14 UTC] Connexion à la base de données réussie
+[19-Apr-2025 00:04:14 UTC] Requête reçue dans update_commande_status.php
+[19-Apr-2025 00:04:14 UTC] SESSION: Array
+(
+    [pwa_mode] => 
+)
+
+[19-Apr-2025 00:04:14 UTC] Données JSON reçues: {"commande_id":"105","new_status":"annulee"}
+[19-Apr-2025 00:04:14 UTC] Mise à jour du statut: commande_id=105, new_status=annulee
+[19-Apr-2025 00:04:14 UTC] Vérification du statut: annulee, valides: en_attente, commande, recue, annulee, urgent
+[19-Apr-2025 00:04:14 UTC] Préparation de la requête UPDATE pour commande_id=105 et statut=annulee
+[19-Apr-2025 00:04:14 UTC] Résultat de l'exécution de la requête: succès, lignes affectées: 1
+[19-Apr-2025 00:05:10 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 00:05:10 UTC] Connexion à la base de données réussie
+[19-Apr-2025 00:05:10 UTC] Requête reçue dans update_commande_status.php
+[19-Apr-2025 00:05:10 UTC] SESSION: Array
+(
+    [pwa_mode] => 
+)
+
+[19-Apr-2025 00:05:10 UTC] Données JSON reçues: {"commande_id":"105","new_status":"urgent"}
+[19-Apr-2025 00:05:10 UTC] Mise à jour du statut: commande_id=105, new_status=urgent
+[19-Apr-2025 00:05:10 UTC] Vérification du statut: urgent, valides: en_attente, commande, recue, annulee, urgent
+[19-Apr-2025 00:05:10 UTC] Préparation de la requête UPDATE pour commande_id=105 et statut=urgent
+[19-Apr-2025 00:05:10 UTC] Résultat de l'exécution de la requête: succès, lignes affectées: 1
+[19-Apr-2025 00:05:24 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 00:05:24 UTC] Connexion à la base de données réussie
+[19-Apr-2025 00:05:24 UTC] Requête reçue dans update_commande_status.php
+[19-Apr-2025 00:05:24 UTC] SESSION: Array
+(
+    [pwa_mode] => 
+)
+
+[19-Apr-2025 00:05:24 UTC] Données JSON reçues: {"commande_id":"105","new_status":"recue"}
+[19-Apr-2025 00:05:24 UTC] Mise à jour du statut: commande_id=105, new_status=recue
+[19-Apr-2025 00:05:24 UTC] Vérification du statut: recue, valides: en_attente, commande, recue, annulee, urgent
+[19-Apr-2025 00:05:24 UTC] Préparation de la requête UPDATE pour commande_id=105 et statut=recue
+[19-Apr-2025 00:05:24 UTC] Résultat de l'exécution de la requête: succès, lignes affectées: 1
+[19-Apr-2025 00:05:43 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 00:05:43 UTC] Connexion à la base de données réussie
+[19-Apr-2025 00:05:43 UTC] Requête reçue dans update_commande_status.php
+[19-Apr-2025 00:05:43 UTC] SESSION: Array
+(
+    [pwa_mode] => 
+)
+
+[19-Apr-2025 00:05:43 UTC] Données JSON reçues: {"commande_id":"103","new_status":"recue"}
+[19-Apr-2025 00:05:43 UTC] Mise à jour du statut: commande_id=103, new_status=recue
+[19-Apr-2025 00:05:43 UTC] Vérification du statut: recue, valides: en_attente, commande, recue, annulee, urgent
+[19-Apr-2025 00:05:43 UTC] Préparation de la requête UPDATE pour commande_id=103 et statut=recue
+[19-Apr-2025 00:05:43 UTC] Résultat de l'exécution de la requête: succès, lignes affectées: 1
+[19-Apr-2025 00:05:52 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 00:05:52 UTC] Connexion à la base de données réussie
+[19-Apr-2025 00:05:52 UTC] Requête reçue dans update_commande_status.php
+[19-Apr-2025 00:05:52 UTC] SESSION: Array
+(
+    [pwa_mode] => 
+)
+
+[19-Apr-2025 00:05:52 UTC] Données JSON reçues: {"commande_id":"102","new_status":"recue"}
+[19-Apr-2025 00:05:52 UTC] Mise à jour du statut: commande_id=102, new_status=recue
+[19-Apr-2025 00:05:52 UTC] Vérification du statut: recue, valides: en_attente, commande, recue, annulee, urgent
+[19-Apr-2025 00:05:52 UTC] Préparation de la requête UPDATE pour commande_id=102 et statut=recue
+[19-Apr-2025 00:05:52 UTC] Résultat de l'exécution de la requête: succès, lignes affectées: 1
+[19-Apr-2025 00:06:00 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 00:06:00 UTC] Connexion à la base de données réussie
+[19-Apr-2025 00:06:00 UTC] Requête reçue dans update_commande_status.php
+[19-Apr-2025 00:06:00 UTC] SESSION: Array
+(
+    [pwa_mode] => 
+)
+
+[19-Apr-2025 00:06:00 UTC] Données JSON reçues: {"commande_id":"101","new_status":"recue"}
+[19-Apr-2025 00:06:00 UTC] Mise à jour du statut: commande_id=101, new_status=recue
+[19-Apr-2025 00:06:00 UTC] Vérification du statut: recue, valides: en_attente, commande, recue, annulee, urgent
+[19-Apr-2025 00:06:00 UTC] Préparation de la requête UPDATE pour commande_id=101 et statut=recue
+[19-Apr-2025 00:06:00 UTC] Résultat de l'exécution de la requête: succès, lignes affectées: 1
+[19-Apr-2025 00:06:13 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 00:06:13 UTC] Connexion à la base de données réussie
+[19-Apr-2025 00:06:13 UTC] Requête reçue dans update_commande_status.php
+[19-Apr-2025 00:06:13 UTC] SESSION: Array
+(
+    [pwa_mode] => 
+)
+
+[19-Apr-2025 00:06:13 UTC] Données JSON reçues: {"commande_id":"102","new_status":"commande"}
+[19-Apr-2025 00:06:13 UTC] Mise à jour du statut: commande_id=102, new_status=commande
+[19-Apr-2025 00:06:13 UTC] Vérification du statut: commande, valides: en_attente, commande, recue, annulee, urgent
+[19-Apr-2025 00:06:13 UTC] Préparation de la requête UPDATE pour commande_id=102 et statut=commande
+[19-Apr-2025 00:06:13 UTC] Résultat de l'exécution de la requête: succès, lignes affectées: 1
+[19-Apr-2025 00:07:12 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 00:07:12 UTC] Connexion à la base de données réussie
+[19-Apr-2025 00:07:12 UTC] Requête reçue dans update_commande_status.php
+[19-Apr-2025 00:07:12 UTC] SESSION: Array
+(
+    [pwa_mode] => 
+)
+
+[19-Apr-2025 00:07:12 UTC] Données JSON reçues: {"commande_id":"108","new_status":"en_attente"}
+[19-Apr-2025 00:07:12 UTC] Mise à jour du statut: commande_id=108, new_status=en_attente
+[19-Apr-2025 00:07:12 UTC] Vérification du statut: en_attente, valides: en_attente, commande, recue, annulee, urgent
+[19-Apr-2025 00:07:12 UTC] Préparation de la requête UPDATE pour commande_id=108 et statut=en_attente
+[19-Apr-2025 00:07:12 UTC] Résultat de l'exécution de la requête: succès, lignes affectées: 1
+[19-Apr-2025 00:08:22 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 00:08:22 UTC] Connexion à la base de données réussie
+[19-Apr-2025 00:13:35 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 00:13:35 UTC] Connexion à la base de données réussie
+[19-Apr-2025 00:13:35 UTC] Requête reçue dans update_commande_status.php
+[19-Apr-2025 00:13:35 UTC] SESSION: Array
+(
+    [pwa_mode] => 
+)
+
+[19-Apr-2025 00:13:35 UTC] Données JSON reçues: {"commande_id":"108","new_status":"en_attente"}
+[19-Apr-2025 00:13:35 UTC] Mise à jour du statut: commande_id=108, new_status=en_attente
+[19-Apr-2025 00:13:35 UTC] Vérification du statut: en_attente, valides: en_attente, commande, recue, annulee, urgent
+[19-Apr-2025 00:13:35 UTC] Préparation de la requête UPDATE pour commande_id=108 et statut=en_attente
+[19-Apr-2025 00:13:35 UTC] Résultat de l'exécution de la requête: succès, lignes affectées: 1
+[19-Apr-2025 00:13:40 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 00:13:40 UTC] Connexion à la base de données réussie
+[19-Apr-2025 00:18:23 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 00:18:23 UTC] Connexion à la base de données réussie
+[19-Apr-2025 00:18:23 UTC] Requête reçue dans update_commande_field.php
+[19-Apr-2025 00:18:23 UTC] Mise à jour de la commande: ID=108, Champ=nom_piece, Valeur=Amazon Fire TV Stick HD (Nouvelle génération) | TV gratuite et en direct, télécommande vocale Alexa, contrôle de la maison connectée, streaming HD
+[19-Apr-2025 00:18:30 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 00:18:30 UTC] Connexion à la base de données réussie
+[19-Apr-2025 00:18:30 UTC] Requête reçue dans update_commande_field.php
+[19-Apr-2025 00:18:30 UTC] Mise à jour de la commande: ID=108, Champ=prix_estime, Valeur=29.99
+[19-Apr-2025 00:19:42 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 00:19:42 UTC] Connexion à la base de données réussie
+[19-Apr-2025 00:19:42 UTC] Requête reçue dans update_commande_status.php
+[19-Apr-2025 00:19:42 UTC] SESSION: Array
+(
+    [pwa_mode] => 
+)
+
+[19-Apr-2025 00:19:42 UTC] Données JSON reçues: {"commande_id":"107","new_status":"annulee"}
+[19-Apr-2025 00:19:42 UTC] Mise à jour du statut: commande_id=107, new_status=annulee
+[19-Apr-2025 00:19:42 UTC] Vérification du statut: annulee, valides: en_attente, commande, recue, annulee, urgent
+[19-Apr-2025 00:19:42 UTC] Préparation de la requête UPDATE pour commande_id=107 et statut=annulee
+[19-Apr-2025 00:19:42 UTC] Résultat de l'exécution de la requête: succès, lignes affectées: 1
+[19-Apr-2025 00:19:58 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 00:19:58 UTC] Connexion à la base de données réussie
+[19-Apr-2025 00:19:58 UTC] Requête reçue dans update_commande_status.php
+[19-Apr-2025 00:19:58 UTC] SESSION: Array
+(
+    [pwa_mode] => 
+)
+
+[19-Apr-2025 00:19:58 UTC] Données JSON reçues: {"commande_id":"107","new_status":"recue"}
+[19-Apr-2025 00:19:58 UTC] Mise à jour du statut: commande_id=107, new_status=recue
+[19-Apr-2025 00:19:58 UTC] Vérification du statut: recue, valides: en_attente, commande, recue, annulee, urgent
+[19-Apr-2025 00:19:58 UTC] Préparation de la requête UPDATE pour commande_id=107 et statut=recue
+[19-Apr-2025 00:19:58 UTC] Résultat de l'exécution de la requête: succès, lignes affectées: 1
+[19-Apr-2025 09:22:40 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 09:22:40 UTC] Connexion à la base de données réussie
+[19-Apr-2025 09:22:40 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 09:22:40 UTC] Connexion à la base de données réussie
+[19-Apr-2025 09:46:34 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 09:46:34 UTC] Connexion à la base de données réussie
+[19-Apr-2025 09:46:34 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 09:46:34 UTC] Connexion à la base de données réussie
+[19-Apr-2025 09:47:06 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 09:47:06 UTC] Connexion à la base de données réussie
+[19-Apr-2025 09:47:06 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 09:47:06 UTC] Connexion à la base de données réussie
+[19-Apr-2025 09:56:41 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 09:56:41 UTC] Connexion à la base de données réussie
+[19-Apr-2025 09:58:57 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 09:58:57 UTC] Connexion à la base de données réussie
+[19-Apr-2025 09:58:57 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 09:58:57 UTC] Connexion à la base de données réussie
+[19-Apr-2025 09:58:57 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 09:58:57 UTC] Connexion à la base de données réussie
+[19-Apr-2025 09:58:57 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 09:58:57 UTC] Connexion à la base de données réussie
+[19-Apr-2025 09:59:25 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 09:59:25 UTC] Connexion à la base de données réussie
+[19-Apr-2025 09:59:25 UTC] === ENVOI SMS DÉMARRÉ ===
+[19-Apr-2025 09:59:25 UTC] Destinataire: +39 340 076 0220
+[19-Apr-2025 09:59:25 UTC] Message: Bonjour Ludovic, votre dossier...
+[19-Apr-2025 09:59:25 UTC] URL API: https://api.sms-gate.app/3rdparty/v1/message
+[19-Apr-2025 09:59:25 UTC] Utilisateur: -GCB75
+[19-Apr-2025 09:59:25 UTC] Numéro formaté: +393400760220
+[19-Apr-2025 09:59:25 UTC] Données JSON: {"message":"Bonjour Ludovic, votre dossier 618 au sujet de votre Ninebot est en attente de validation par un responsable technique. Nous vous tenons inform\u00e9 tr\u00e8s bient\u00f4t.\r\n\ud83d\udcf2 Suivi : http:\/\/Mdgeek.top\/suivi.php?id=618\r\nMaison du Geek \u2013 08 95 79 59 33","phoneNumbers":["+393400760220"]}
+[19-Apr-2025 09:59:25 UTC] Exécution de la requête cURL...
+[19-Apr-2025 09:59:26 UTC] Code HTTP: 202
+[19-Apr-2025 09:59:26 UTC] Temps: 311 ms
+[19-Apr-2025 09:59:26 UTC] Réponse: {"id":"HMiUJv7LDGujnDpc6Y-SW","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+393400760220","state":"Pending"}],"states":null}
+[19-Apr-2025 09:59:26 UTC] SMS enregistré dans la base de données, ID: 247
+[19-Apr-2025 09:59:26 UTC] === ENVOI SMS RÉUSSI ===
+[19-Apr-2025 09:59:31 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 09:59:31 UTC] Connexion à la base de données réussie
+[19-Apr-2025 09:59:31 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 09:59:31 UTC] Connexion à la base de données réussie
+[19-Apr-2025 09:59:31 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 09:59:31 UTC] Connexion à la base de données réussie
+[19-Apr-2025 09:59:31 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 09:59:31 UTC] Connexion à la base de données réussie
+[19-Apr-2025 09:59:31 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 09:59:31 UTC] Connexion à la base de données réussie
+[19-Apr-2025 09:59:31 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 09:59:31 UTC] Connexion à la base de données réussie
+[19-Apr-2025 09:59:31 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 09:59:31 UTC] Connexion à la base de données réussie
+[19-Apr-2025 09:59:31 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 09:59:31 UTC] Connexion à la base de données réussie
+[19-Apr-2025 09:59:31 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 09:59:31 UTC] Connexion à la base de données réussie
+[19-Apr-2025 09:59:31 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 09:59:32 UTC] Connexion à la base de données réussie
+[19-Apr-2025 09:59:32 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 09:59:32 UTC] Connexion à la base de données réussie
+[19-Apr-2025 09:59:32 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 09:59:32 UTC] Connexion à la base de données réussie
+[19-Apr-2025 09:59:32 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 09:59:32 UTC] Connexion à la base de données réussie
+[19-Apr-2025 09:59:32 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 09:59:32 UTC] Connexion à la base de données réussie
+[19-Apr-2025 09:59:32 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 09:59:32 UTC] Connexion à la base de données réussie
+[19-Apr-2025 09:59:32 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 09:59:32 UTC] Connexion à la base de données réussie
+[19-Apr-2025 09:59:32 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 09:59:32 UTC] Connexion à la base de données réussie
+[19-Apr-2025 09:59:32 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 09:59:32 UTC] Connexion à la base de données réussie
+[19-Apr-2025 09:59:32 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 09:59:32 UTC] Connexion à la base de données réussie
+[19-Apr-2025 09:59:32 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 09:59:32 UTC] Connexion à la base de données réussie
+[19-Apr-2025 09:59:32 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 09:59:32 UTC] Connexion à la base de données réussie
+[19-Apr-2025 09:59:32 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 09:59:32 UTC] Connexion à la base de données réussie
+[19-Apr-2025 09:59:32 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 09:59:32 UTC] Connexion à la base de données réussie
+[19-Apr-2025 09:59:32 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 09:59:32 UTC] Connexion à la base de données réussie
+[19-Apr-2025 09:59:32 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 09:59:32 UTC] Connexion à la base de données réussie
+[19-Apr-2025 09:59:32 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 09:59:32 UTC] Connexion à la base de données réussie
+[19-Apr-2025 09:59:32 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 09:59:32 UTC] Connexion à la base de données réussie
+[19-Apr-2025 09:59:32 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 09:59:32 UTC] Connexion à la base de données réussie
+[19-Apr-2025 09:59:32 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 09:59:32 UTC] Connexion à la base de données réussie
+[19-Apr-2025 09:59:32 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 09:59:32 UTC] Connexion à la base de données réussie
+[19-Apr-2025 09:59:32 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 09:59:32 UTC] Connexion à la base de données réussie
+[19-Apr-2025 09:59:32 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 09:59:32 UTC] Connexion à la base de données réussie
+[19-Apr-2025 10:00:06 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 10:00:06 UTC] Connexion à la base de données réussie
+[19-Apr-2025 10:00:06 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 10:00:06 UTC] Connexion à la base de données réussie
+[19-Apr-2025 10:00:15 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 10:00:15 UTC] Connexion à la base de données réussie
+[19-Apr-2025 10:00:15 UTC] === ENVOI SMS DÉMARRÉ ===
+[19-Apr-2025 10:00:15 UTC] Destinataire: +33614064572
+[19-Apr-2025 10:00:15 UTC] Message: sebastien, votre wispeed t855 ...
+[19-Apr-2025 10:00:15 UTC] URL API: https://api.sms-gate.app/3rdparty/v1/message
+[19-Apr-2025 10:00:15 UTC] Utilisateur: -GCB75
+[19-Apr-2025 10:00:15 UTC] Numéro formaté: +33614064572
+[19-Apr-2025 10:00:15 UTC] Données JSON: {"message":"sebastien, votre wispeed t855 est pr\u00eat ! Il vous attend pour retrouver une vie normale. \ud83e\udd73\r\n\ud83e\uddfe Suivi : http:\/\/Mdgeek.top\/suivi.php?id=627\r\nMaison du Geek \u2013 08 95 79 59 33","phoneNumbers":["+33614064572"]}
+[19-Apr-2025 10:00:15 UTC] Exécution de la requête cURL...
+[19-Apr-2025 10:00:16 UTC] Code HTTP: 202
+[19-Apr-2025 10:00:16 UTC] Temps: 310 ms
+[19-Apr-2025 10:00:16 UTC] Réponse: {"id":"6FYFNSjVFPOTIhhwQmbV8","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33614064572","state":"Pending"}],"states":null}
+[19-Apr-2025 10:00:16 UTC] SMS enregistré dans la base de données, ID: 248
+[19-Apr-2025 10:00:16 UTC] === ENVOI SMS RÉUSSI ===
+[19-Apr-2025 10:00:19 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 10:00:19 UTC] Connexion à la base de données réussie
+[19-Apr-2025 10:00:19 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 10:00:19 UTC] Connexion à la base de données réussie
+[19-Apr-2025 10:00:22 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 10:00:22 UTC] Connexion à la base de données réussie
+[19-Apr-2025 10:00:22 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 10:00:22 UTC] Connexion à la base de données réussie
+[19-Apr-2025 10:00:23 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 10:00:23 UTC] Connexion à la base de données réussie
+[19-Apr-2025 10:00:23 UTC] === ENVOI SMS DÉMARRÉ ===
+[19-Apr-2025 10:00:23 UTC] Destinataire: 33782962906
+[19-Apr-2025 10:00:23 UTC] Message: saber, votre iPhone 8 est prê...
+[19-Apr-2025 10:00:23 UTC] URL API: https://api.sms-gate.app/3rdparty/v1/message
+[19-Apr-2025 10:00:23 UTC] Utilisateur: -GCB75
+[19-Apr-2025 10:00:23 UTC] Numéro formaté: +33782962906
+[19-Apr-2025 10:00:23 UTC] Données JSON: {"message":"saber, votre iPhone 8 est pr\u00eat ! Il vous attend pour retrouver une vie normale. \ud83e\udd73\r\n\ud83e\uddfe Suivi : http:\/\/Mdgeek.top\/suivi.php?id=626\r\nMaison du Geek \u2013 08 95 79 59 33","phoneNumbers":["+33782962906"]}
+[19-Apr-2025 10:00:23 UTC] Exécution de la requête cURL...
+[19-Apr-2025 10:00:24 UTC] Code HTTP: 202
+[19-Apr-2025 10:00:24 UTC] Temps: 311 ms
+[19-Apr-2025 10:00:24 UTC] Réponse: {"id":"H_RakXLR48-d6N94AUl78","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33782962906","state":"Pending"}],"states":null}
+[19-Apr-2025 10:00:24 UTC] SMS enregistré dans la base de données, ID: 249
+[19-Apr-2025 10:00:24 UTC] === ENVOI SMS RÉUSSI ===
+[19-Apr-2025 10:06:18 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 10:06:18 UTC] Connexion à la base de données réussie
+[19-Apr-2025 10:06:18 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 10:06:18 UTC] Connexion à la base de données réussie
+[19-Apr-2025 10:16:53 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 10:16:53 UTC] Connexion à la base de données réussie
+[19-Apr-2025 10:16:53 UTC] Session restaurée pour l'utilisateur 1 via token
+[19-Apr-2025 10:16:53 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 10:16:53 UTC] Connexion à la base de données réussie
+[19-Apr-2025 11:40:27 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 11:40:27 UTC] Connexion à la base de données réussie
+[19-Apr-2025 12:28:39 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 12:28:39 UTC] Connexion à la base de données réussie
+[19-Apr-2025 12:28:39 UTC] Session restaurée pour l'utilisateur 2 via token
+[19-Apr-2025 12:28:39 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 12:28:39 UTC] Connexion à la base de données réussie
+[19-Apr-2025 13:23:28 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 13:23:28 UTC] Connexion à la base de données réussie
+[19-Apr-2025 13:23:54 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 13:23:54 UTC] Connexion à la base de données réussie
+[19-Apr-2025 13:24:07 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 13:24:07 UTC] Connexion à la base de données réussie
+[19-Apr-2025 13:24:23 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 13:24:23 UTC] Connexion à la base de données réussie
+[19-Apr-2025 13:24:23 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 13:24:23 UTC] Connexion à la base de données réussie
+[19-Apr-2025 13:24:23 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 13:24:23 UTC] Connexion à la base de données réussie
+[19-Apr-2025 13:24:23 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 13:24:23 UTC] Connexion à la base de données réussie
+[19-Apr-2025 13:24:23 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 13:24:23 UTC] Connexion à la base de données réussie
+[19-Apr-2025 13:24:23 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 13:24:23 UTC] Connexion à la base de données réussie
+[19-Apr-2025 13:24:28 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 13:24:28 UTC] Connexion à la base de données réussie
+[19-Apr-2025 13:24:28 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 13:24:28 UTC] Connexion à la base de données réussie
+[19-Apr-2025 13:24:28 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 13:24:28 UTC] Connexion à la base de données réussie
+[19-Apr-2025 13:24:28 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 13:24:28 UTC] Connexion à la base de données réussie
+[19-Apr-2025 13:24:28 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 13:24:28 UTC] Connexion à la base de données réussie
+[19-Apr-2025 13:24:28 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 13:24:28 UTC] Connexion à la base de données réussie
+[19-Apr-2025 13:24:28 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 13:24:28 UTC] Connexion à la base de données réussie
+[19-Apr-2025 13:24:28 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 13:24:28 UTC] Connexion à la base de données réussie
+[19-Apr-2025 13:24:28 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 13:24:28 UTC] Connexion à la base de données réussie
+[19-Apr-2025 13:24:28 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 13:24:28 UTC] Connexion à la base de données réussie
+[19-Apr-2025 13:24:30 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 13:24:30 UTC] Connexion à la base de données réussie
+[19-Apr-2025 13:24:30 UTC] === ENVOI SMS DÉMARRÉ ===
+[19-Apr-2025 13:24:30 UTC] Destinataire: 33682366934
+[19-Apr-2025 13:24:30 UTC] Message: Bonjour ..., votre dossier 592...
+[19-Apr-2025 13:24:30 UTC] URL API: https://api.sms-gate.app/3rdparty/v1/message
+[19-Apr-2025 13:24:30 UTC] Utilisateur: -GCB75
+[19-Apr-2025 13:24:30 UTC] Numéro formaté: +33682366934
+[19-Apr-2025 13:24:30 UTC] Données JSON: {"message":"Bonjour ..., votre dossier 592 au sujet de votre TOUR PC est en attente de validation par un responsable technique. Nous vous tenons inform\u00e9 tr\u00e8s bient\u00f4t.\r\n\ud83d\udcf2 Suivi : http:\/\/Mdgeek.top\/suivi.php?id=592\r\nMaison du Geek \u2013 08 95 79 59 33","phoneNumbers":["+33682366934"]}
+[19-Apr-2025 13:24:30 UTC] Exécution de la requête cURL...
+[19-Apr-2025 13:24:30 UTC] Code HTTP: 202
+[19-Apr-2025 13:24:30 UTC] Temps: 216 ms
+[19-Apr-2025 13:24:30 UTC] Réponse: {"id":"2uCZ3MQLO2pRQ5Knqiyb5","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33682366934","state":"Pending"}],"states":null}
+[19-Apr-2025 13:24:30 UTC] SMS enregistré dans la base de données, ID: 252
+[19-Apr-2025 13:24:30 UTC] === ENVOI SMS RÉUSSI ===
+[19-Apr-2025 13:24:42 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 13:24:42 UTC] Connexion à la base de données réussie
+[19-Apr-2025 13:42:56 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 13:42:56 UTC] Connexion à la base de données réussie
+[19-Apr-2025 13:42:56 UTC] PHP Deprecated:  Constant FILTER_SANITIZE_STRING is deprecated in /home/u139954273/domains/mdgeek.top/public_html/ajax/update_tache_status.php on line 33
+[19-Apr-2025 13:43:44 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 13:43:44 UTC] Connexion à la base de données réussie
+[19-Apr-2025 13:43:44 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 13:43:44 UTC] Connexion à la base de données réussie
+[19-Apr-2025 13:43:45 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 13:43:45 UTC] Connexion à la base de données réussie
+[19-Apr-2025 13:43:47 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 13:43:47 UTC] Connexion à la base de données réussie
+[19-Apr-2025 13:43:47 UTC] === ENVOI SMS DÉMARRÉ ===
+[19-Apr-2025 13:43:47 UTC] Destinataire: 33614341278
+[19-Apr-2025 13:43:47 UTC] Message: Bonjour Sav, votre dossier 623...
+[19-Apr-2025 13:43:47 UTC] URL API: https://api.sms-gate.app/3rdparty/v1/message
+[19-Apr-2025 13:43:47 UTC] Utilisateur: -GCB75
+[19-Apr-2025 13:43:47 UTC] Numéro formaté: +33614341278
+[19-Apr-2025 13:43:47 UTC] Données JSON: {"message":"Bonjour Sav, votre dossier 623 au sujet de votre Saber est en attente de validation par un responsable technique. Nous vous tenons inform\u00e9 tr\u00e8s bient\u00f4t.\r\n\ud83d\udcf2 Suivi : http:\/\/Mdgeek.top\/suivi.php?id=623\r\nMaison du Geek \u2013 08 95 79 59 33","phoneNumbers":["+33614341278"]}
+[19-Apr-2025 13:43:47 UTC] Exécution de la requête cURL...
+[19-Apr-2025 13:43:47 UTC] Code HTTP: 202
+[19-Apr-2025 13:43:47 UTC] Temps: 338 ms
+[19-Apr-2025 13:43:47 UTC] Réponse: {"id":"z1xmvJ3rj5I32xaocIyrN","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33614341278","state":"Pending"}],"states":null}
+[19-Apr-2025 13:43:47 UTC] SMS enregistré dans la base de données, ID: 253
+[19-Apr-2025 13:43:47 UTC] === ENVOI SMS RÉUSSI ===
+[19-Apr-2025 13:50:42 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 13:50:42 UTC] Connexion à la base de données réussie
+[19-Apr-2025 13:50:45 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 13:50:45 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 13:50:45 UTC] Connexion à la base de données réussie
+[19-Apr-2025 13:50:45 UTC] Connexion à la base de données réussie
+[19-Apr-2025 13:50:45 UTC] Session restaurée pour l'utilisateur 3 via token
+[19-Apr-2025 13:51:45 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 13:51:45 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 13:51:45 UTC] Connexion à la base de données réussie
+[19-Apr-2025 13:51:45 UTC] Connexion à la base de données réussie
+[19-Apr-2025 13:52:26 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 13:52:26 UTC] Connexion à la base de données réussie
+[19-Apr-2025 13:52:26 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 13:52:26 UTC] Connexion à la base de données réussie
+[19-Apr-2025 13:52:26 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 13:52:26 UTC] Connexion à la base de données réussie
+[19-Apr-2025 13:52:26 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 13:52:26 UTC] Connexion à la base de données réussie
+[19-Apr-2025 13:52:31 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 13:52:31 UTC] Connexion à la base de données réussie
+[19-Apr-2025 13:52:31 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 13:52:31 UTC] Connexion à la base de données réussie
+[19-Apr-2025 14:39:29 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 14:39:29 UTC] Connexion à la base de données réussie
+[19-Apr-2025 14:39:29 UTC] Requête reçue dans update_commande_field.php
+[19-Apr-2025 14:39:29 UTC] Mise à jour de la commande: ID=110, Champ=nom_piece, Valeur=DUALTRON TOGO | AR SUSPENSION SCREW / Visserie moteur
+[19-Apr-2025 14:39:41 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 14:39:41 UTC] Connexion à la base de données réussie
+[19-Apr-2025 14:39:41 UTC] Requête reçue dans update_commande_field.php
+[19-Apr-2025 14:39:41 UTC] Mise à jour de la commande: ID=110, Champ=nom_piece, Valeur=DUALTRON TOGO | AR SUSPENSION SCREW / Visserie dualtron mini  moteur
+[19-Apr-2025 15:27:47 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 15:27:47 UTC] Connexion à la base de données réussie
+[19-Apr-2025 15:27:51 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 15:27:51 UTC] Connexion à la base de données réussie
+[19-Apr-2025 15:27:54 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 15:27:54 UTC] Connexion à la base de données réussie
+[19-Apr-2025 15:27:54 UTC] === ENVOI SMS DÉMARRÉ ===
+[19-Apr-2025 15:27:54 UTC] Destinataire: 33664995745
+[19-Apr-2025 15:27:54 UTC] Message: Franck, votre iPad A2297 est p...
+[19-Apr-2025 15:27:54 UTC] URL API: https://api.sms-gate.app/3rdparty/v1/message
+[19-Apr-2025 15:27:54 UTC] Utilisateur: -GCB75
+[19-Apr-2025 15:27:54 UTC] Numéro formaté: +33664995745
+[19-Apr-2025 15:27:54 UTC] Données JSON: {"message":"Franck, votre iPad A2297 est pr\u00eat ! Il vous attend pour retrouver une vie normale. \ud83e\udd73\r\n\ud83e\uddfe Suivi : http:\/\/Mdgeek.top\/suivi.php?id=589\r\nMaison du Geek \u2013 08 95 79 59 33","phoneNumbers":["+33664995745"]}
+[19-Apr-2025 15:27:54 UTC] Exécution de la requête cURL...
+[19-Apr-2025 15:27:54 UTC] Code HTTP: 202
+[19-Apr-2025 15:27:54 UTC] Temps: 303 ms
+[19-Apr-2025 15:27:54 UTC] Réponse: {"id":"MB-iFwl8HdD_8bZJQyZWy","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33664995745","state":"Pending"}],"states":null}
+[19-Apr-2025 15:27:54 UTC] SMS enregistré dans la base de données, ID: 254
+[19-Apr-2025 15:27:54 UTC] === ENVOI SMS RÉUSSI ===
+[19-Apr-2025 15:28:24 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 15:28:24 UTC] Connexion à la base de données réussie
+[19-Apr-2025 15:28:24 UTC] Session restaurée pour l'utilisateur 1 via token
+[19-Apr-2025 15:32:13 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 15:32:13 UTC] Connexion à la base de données réussie
+[19-Apr-2025 15:32:13 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 15:32:13 UTC] Connexion à la base de données réussie
+[19-Apr-2025 15:33:15 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 15:33:15 UTC] Connexion à la base de données réussie
+[19-Apr-2025 15:33:15 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 15:33:15 UTC] Connexion à la base de données réussie
+[19-Apr-2025 15:36:24 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 15:36:24 UTC] Connexion à la base de données réussie
+[19-Apr-2025 15:41:19 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 15:41:19 UTC] Connexion à la base de données réussie
+[19-Apr-2025 15:41:25 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 15:41:25 UTC] Connexion à la base de données réussie
+[19-Apr-2025 15:41:25 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 15:41:25 UTC] Connexion à la base de données réussie
+[19-Apr-2025 17:06:22 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 17:06:22 UTC] Connexion à la base de données réussie
+[19-Apr-2025 17:06:22 UTC] Requête reçue dans update_commande_field.php
+[19-Apr-2025 17:06:22 UTC] Mise à jour de la commande: ID=104, Champ=nom_piece, Valeur=Rehausse Potence / pneu wattiz 100/55-6.5/ support ey4
+[19-Apr-2025 17:21:22 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 17:21:22 UTC] Connexion à la base de données réussie
+[19-Apr-2025 17:21:22 UTC] Requête reçue dans update_commande_field.php
+[19-Apr-2025 17:21:22 UTC] Mise à jour de la commande: ID=104, Champ=nom_piece, Valeur=Rehausse Potence / pneu wattiz 100/55-6.5/ support ey4/ amortisseur de direction
+[19-Apr-2025 17:21:22 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 17:21:22 UTC] Connexion à la base de données réussie
+[19-Apr-2025 17:21:22 UTC] Requête reçue dans update_commande_field.php
+[19-Apr-2025 17:21:22 UTC] Mise à jour de la commande: ID=104, Champ=nom_piece, Valeur=Rehausse Potence / pneu wattiz 100/55-6.5/ support ey4/ amortisseur de direction
+[19-Apr-2025 17:21:22 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 17:21:22 UTC] Connexion à la base de données réussie
+[19-Apr-2025 17:21:22 UTC] Requête reçue dans update_commande_field.php
+[19-Apr-2025 17:21:22 UTC] Mise à jour de la commande: ID=104, Champ=nom_piece, Valeur=Rehausse Potence / pneu wattiz 100/55-6.5/ support ey4/ amortisseur de direction
+[19-Apr-2025 22:17:17 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 22:17:17 UTC] Connexion à la base de données réussie
+[19-Apr-2025 22:17:17 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 22:17:17 UTC] Connexion à la base de données réussie
+[19-Apr-2025 22:17:37 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 22:17:37 UTC] Connexion à la base de données réussie
+[19-Apr-2025 22:17:37 UTC] PHP Fatal error:  Uncaught Error: Undefined constant "BASE_PATH" in /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php:783
+Stack trace:
+#0 /home/u139954273/domains/mdgeek.top/public_html/ajax/repair_assignment.php(258): send_sms()
+#1 /home/u139954273/domains/mdgeek.top/public_html/ajax/repair_assignment.php(393): completeActiveRepair()
+#2 {main}
+  thrown in /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php on line 783
+[19-Apr-2025 22:17:40 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 22:17:40 UTC] Connexion à la base de données réussie
+[19-Apr-2025 22:17:40 UTC] PHP Fatal error:  Uncaught Error: Undefined constant "BASE_PATH" in /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php:783
+Stack trace:
+#0 /home/u139954273/domains/mdgeek.top/public_html/ajax/repair_assignment.php(258): send_sms()
+#1 /home/u139954273/domains/mdgeek.top/public_html/ajax/repair_assignment.php(393): completeActiveRepair()
+#2 {main}
+  thrown in /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php on line 783
+[19-Apr-2025 22:18:30 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 22:18:30 UTC] Connexion à la base de données réussie
+[19-Apr-2025 22:18:58 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 22:18:59 UTC] Connexion à la base de données réussie
+[19-Apr-2025 22:19:00 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 22:19:00 UTC] Connexion à la base de données réussie
+[19-Apr-2025 22:19:00 UTC] PHP Fatal error:  Uncaught Error: Undefined constant "BASE_PATH" in /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php:783
+Stack trace:
+#0 /home/u139954273/domains/mdgeek.top/public_html/ajax/repair_assignment.php(258): send_sms()
+#1 /home/u139954273/domains/mdgeek.top/public_html/ajax/repair_assignment.php(393): completeActiveRepair()
+#2 {main}
+  thrown in /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php on line 783
+[19-Apr-2025 22:21:33 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 22:21:33 UTC] Connexion à la base de données réussie
+[19-Apr-2025 22:23:48 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 22:23:48 UTC] Connexion à la base de données réussie
+[19-Apr-2025 22:23:48 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 22:23:48 UTC] Connexion à la base de données réussie
+[19-Apr-2025 22:23:51 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 22:23:51 UTC] Connexion à la base de données réussie
+[19-Apr-2025 22:23:59 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 22:23:59 UTC] Connexion à la base de données réussie
+[19-Apr-2025 22:24:04 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 22:24:04 UTC] Connexion à la base de données réussie
+[19-Apr-2025 22:26:23 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 22:26:23 UTC] Connexion à la base de données réussie
+[19-Apr-2025 22:26:38 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 22:26:38 UTC] Connexion à la base de données réussie
+[19-Apr-2025 22:26:59 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 22:26:59 UTC] Connexion à la base de données réussie
+[19-Apr-2025 22:29:04 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 22:29:04 UTC] Connexion à la base de données réussie
+[19-Apr-2025 22:29:09 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 22:29:09 UTC] Connexion à la base de données réussie
+[19-Apr-2025 22:29:16 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 22:29:16 UTC] Connexion à la base de données réussie
+[19-Apr-2025 22:29:16 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 22:29:16 UTC] Connexion à la base de données réussie
+[19-Apr-2025 22:29:18 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 22:29:18 UTC] Connexion à la base de données réussie
+[19-Apr-2025 22:29:24 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 22:29:24 UTC] Connexion à la base de données réussie
+[19-Apr-2025 22:29:34 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 22:29:34 UTC] Connexion à la base de données réussie
+[19-Apr-2025 22:29:41 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 22:29:41 UTC] Connexion à la base de données réussie
+[19-Apr-2025 22:29:41 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 22:29:41 UTC] Connexion à la base de données réussie
+[19-Apr-2025 22:29:44 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 22:29:44 UTC] Connexion à la base de données réussie
+[19-Apr-2025 22:29:50 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 22:29:50 UTC] Connexion à la base de données réussie
+[19-Apr-2025 22:30:19 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 22:30:19 UTC] Connexion à la base de données réussie
+[19-Apr-2025 22:30:19 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 22:30:19 UTC] Connexion à la base de données réussie
+[19-Apr-2025 22:30:21 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 22:30:21 UTC] Connexion à la base de données réussie
+[19-Apr-2025 22:30:25 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 22:30:25 UTC] Connexion à la base de données réussie
+[19-Apr-2025 22:31:58 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 22:31:58 UTC] Connexion à la base de données réussie
+[19-Apr-2025 22:31:58 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 22:31:58 UTC] Connexion à la base de données réussie
+[19-Apr-2025 22:32:00 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 22:32:00 UTC] Connexion à la base de données réussie
+[19-Apr-2025 22:32:26 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 22:32:26 UTC] Connexion à la base de données réussie
+[19-Apr-2025 22:32:40 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 22:32:40 UTC] Connexion à la base de données réussie
+[19-Apr-2025 22:32:45 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 22:32:45 UTC] Connexion à la base de données réussie
+[19-Apr-2025 22:32:45 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 22:32:45 UTC] Connexion à la base de données réussie
+[19-Apr-2025 22:32:46 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 22:32:46 UTC] Connexion à la base de données réussie
+[19-Apr-2025 22:33:08 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 22:33:08 UTC] Connexion à la base de données réussie
+[19-Apr-2025 22:33:52 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 22:33:52 UTC] Connexion à la base de données réussie
+[19-Apr-2025 22:36:42 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 22:36:42 UTC] Connexion à la base de données réussie
+[19-Apr-2025 22:36:51 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 22:36:51 UTC] Connexion à la base de données réussie
+[19-Apr-2025 22:37:13 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 22:37:13 UTC] Connexion à la base de données réussie
+[19-Apr-2025 22:37:13 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 22:37:14 UTC] Connexion à la base de données réussie
+[19-Apr-2025 22:37:15 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 22:37:15 UTC] Connexion à la base de données réussie
+[19-Apr-2025 22:38:34 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 22:38:34 UTC] Connexion à la base de données réussie
+[19-Apr-2025 22:49:01 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 22:49:01 UTC] Connexion à la base de données réussie
+[19-Apr-2025 22:49:03 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 22:49:03 UTC] Connexion à la base de données réussie
+[19-Apr-2025 22:49:09 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 22:49:09 UTC] Connexion à la base de données réussie
+[19-Apr-2025 22:49:19 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 22:49:19 UTC] Connexion à la base de données réussie
+[19-Apr-2025 22:51:11 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 22:51:11 UTC] Connexion à la base de données réussie
+[19-Apr-2025 22:51:13 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 22:51:13 UTC] Connexion à la base de données réussie
+[19-Apr-2025 22:52:57 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 22:52:57 UTC] Connexion à la base de données réussie
+[19-Apr-2025 22:52:59 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 22:52:59 UTC] Connexion à la base de données réussie
+[19-Apr-2025 22:53:24 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 22:53:24 UTC] Connexion à la base de données réussie
+[19-Apr-2025 22:59:29 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 22:59:29 UTC] Connexion à la base de données réussie
+[19-Apr-2025 22:59:49 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 22:59:49 UTC] Connexion à la base de données réussie
+[19-Apr-2025 22:59:49 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 22:59:49 UTC] Connexion à la base de données réussie
+[19-Apr-2025 23:00:09 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 23:00:09 UTC] Connexion à la base de données réussie
+[19-Apr-2025 23:04:06 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 23:04:06 UTC] Connexion à la base de données réussie
+[19-Apr-2025 23:31:43 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 23:31:43 UTC] Connexion à la base de données réussie
+[19-Apr-2025 23:31:51 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 23:31:51 UTC] Connexion à la base de données réussie
+[19-Apr-2025 23:31:58 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 23:31:58 UTC] Connexion à la base de données réussie
+[19-Apr-2025 23:32:26 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 23:32:26 UTC] Connexion à la base de données réussie
+[19-Apr-2025 23:32:46 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 23:32:46 UTC] Connexion à la base de données réussie
+[19-Apr-2025 23:32:58 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 23:32:58 UTC] Connexion à la base de données réussie
+[19-Apr-2025 23:32:58 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 23:32:58 UTC] Connexion à la base de données réussie
+[19-Apr-2025 23:33:21 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 23:33:21 UTC] Connexion à la base de données réussie
+[19-Apr-2025 23:33:35 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 23:33:35 UTC] Connexion à la base de données réussie
+[19-Apr-2025 23:33:39 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 23:33:39 UTC] Connexion à la base de données réussie
+[19-Apr-2025 23:33:46 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 23:33:46 UTC] Connexion à la base de données réussie
+[19-Apr-2025 23:33:48 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 23:33:48 UTC] Connexion à la base de données réussie
+[19-Apr-2025 23:33:54 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 23:33:54 UTC] Connexion à la base de données réussie
+[19-Apr-2025 23:33:54 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 23:33:54 UTC] Connexion à la base de données réussie
+[19-Apr-2025 23:33:55 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 23:33:55 UTC] Connexion à la base de données réussie
+[19-Apr-2025 23:33:57 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 23:33:57 UTC] Connexion à la base de données réussie
+[19-Apr-2025 23:34:08 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 23:34:08 UTC] Connexion à la base de données réussie
+[19-Apr-2025 23:34:08 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 23:34:08 UTC] Connexion à la base de données réussie
+[19-Apr-2025 23:34:10 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 23:34:10 UTC] Connexion à la base de données réussie
+[19-Apr-2025 23:34:35 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 23:34:35 UTC] Connexion à la base de données réussie
+[19-Apr-2025 23:37:55 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 23:37:55 UTC] Connexion à la base de données réussie
+[19-Apr-2025 23:37:55 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 23:37:55 UTC] Connexion à la base de données réussie
+[19-Apr-2025 23:37:57 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 23:37:57 UTC] Connexion à la base de données réussie
+[19-Apr-2025 23:38:29 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 23:38:29 UTC] Connexion à la base de données réussie
+[19-Apr-2025 23:39:00 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 23:39:00 UTC] Connexion à la base de données réussie
+[19-Apr-2025 23:39:00 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 23:39:00 UTC] Connexion à la base de données réussie
+[19-Apr-2025 23:39:02 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 23:39:02 UTC] Connexion à la base de données réussie
+[19-Apr-2025 23:39:03 UTC] Tentative 1 de connexion à la base de données
+[19-Apr-2025 23:39:03 UTC] Connexion à la base de données réussie
+[20-Apr-2025 01:45:06 UTC] Tentative 1 de connexion à la base de données
+[20-Apr-2025 01:45:06 UTC] Connexion à la base de données réussie
+[20-Apr-2025 16:34:27 UTC] Tentative 1 de connexion à la base de données
+[20-Apr-2025 16:34:27 UTC] Connexion à la base de données réussie
+[20-Apr-2025 16:34:27 UTC] Tentative 1 de connexion à la base de données
+[20-Apr-2025 16:34:27 UTC] Session restaurée pour l'utilisateur 1 via token
+[20-Apr-2025 16:34:27 UTC] Connexion à la base de données réussie
+[20-Apr-2025 16:34:50 UTC] Tentative 1 de connexion à la base de données
+[20-Apr-2025 16:34:50 UTC] Connexion à la base de données réussie
+[20-Apr-2025 16:34:51 UTC] Tentative 1 de connexion à la base de données
+[20-Apr-2025 16:34:51 UTC] Connexion à la base de données réussie
+[21-Apr-2025 10:55:48 UTC] Tentative 1 de connexion à la base de données
+[21-Apr-2025 10:55:48 UTC] Tentative 1 de connexion à la base de données
+[21-Apr-2025 10:55:48 UTC] Connexion à la base de données réussie
+[21-Apr-2025 10:55:48 UTC] Connexion à la base de données réussie
+[21-Apr-2025 10:55:48 UTC] Session restaurée pour l'utilisateur 1 via token
+[21-Apr-2025 10:55:48 UTC] Tentative 1 de connexion à la base de données
+[21-Apr-2025 10:55:48 UTC] Connexion à la base de données réussie
+[21-Apr-2025 10:55:48 UTC] Tentative 1 de connexion à la base de données
+[21-Apr-2025 10:55:48 UTC] Connexion à la base de données réussie
+[21-Apr-2025 14:03:38 UTC] Tentative 1 de connexion à la base de données
+[21-Apr-2025 14:03:38 UTC] Connexion à la base de données réussie
+[21-Apr-2025 14:04:42 UTC] Tentative 1 de connexion à la base de données
+[21-Apr-2025 14:04:42 UTC] Connexion à la base de données réussie
+[21-Apr-2025 14:04:58 UTC] Tentative 1 de connexion à la base de données
+[21-Apr-2025 14:04:58 UTC] Connexion à la base de données réussie
+[21-Apr-2025 14:05:19 UTC] Tentative 1 de connexion à la base de données
+[21-Apr-2025 14:05:19 UTC] Connexion à la base de données réussie
+[21-Apr-2025 18:24:42 UTC] Tentative 1 de connexion à la base de données
+[21-Apr-2025 18:24:42 UTC] Connexion à la base de données réussie
+[21-Apr-2025 18:24:42 UTC] Tentative 1 de connexion à la base de données
+[21-Apr-2025 18:24:42 UTC] Connexion à la base de données réussie
+[21-Apr-2025 18:25:22 UTC] Tentative 1 de connexion à la base de données
+[21-Apr-2025 18:25:22 UTC] Tentative 1 de connexion à la base de données
+[21-Apr-2025 18:25:22 UTC] Connexion à la base de données réussie
+[21-Apr-2025 18:25:22 UTC] Connexion à la base de données réussie
+[21-Apr-2025 18:30:55 UTC] Tentative 1 de connexion à la base de données
+[21-Apr-2025 18:30:55 UTC] Connexion à la base de données réussie
+[21-Apr-2025 21:56:38 UTC] Tentative 1 de connexion à la base de données
+[21-Apr-2025 21:56:38 UTC] Connexion à la base de données réussie
+[21-Apr-2025 22:17:20 UTC] Tentative 1 de connexion à la base de données
+[21-Apr-2025 22:17:20 UTC] Connexion à la base de données réussie
+[21-Apr-2025 22:22:27 UTC] Tentative 1 de connexion à la base de données
+[21-Apr-2025 22:22:27 UTC] Connexion à la base de données réussie
+[21-Apr-2025 22:24:58 UTC] Tentative 1 de connexion à la base de données
+[21-Apr-2025 22:24:58 UTC] Connexion à la base de données réussie
+[22-Apr-2025 00:15:14 UTC] Tentative 1 de connexion à la base de données
+[22-Apr-2025 00:15:14 UTC] Connexion à la base de données réussie
+[22-Apr-2025 00:15:14 UTC] Session restaurée pour l'utilisateur 1 via token
+[22-Apr-2025 00:15:14 UTC] Tentative 1 de connexion à la base de données
+[22-Apr-2025 00:15:14 UTC] Connexion à la base de données réussie
+[22-Apr-2025 00:21:16 UTC] Tentative 1 de connexion à la base de données
+[22-Apr-2025 00:21:16 UTC] Connexion à la base de données réussie
+[22-Apr-2025 00:21:16 UTC] Tentative 1 de connexion à la base de données
+[22-Apr-2025 00:21:16 UTC] Connexion à la base de données réussie
+[22-Apr-2025 00:50:36 UTC] Tentative 1 de connexion à la base de données
+[22-Apr-2025 00:50:36 UTC] Connexion à la base de données réussie
+[22-Apr-2025 00:50:42 UTC] Tentative 1 de connexion à la base de données
+[22-Apr-2025 00:50:42 UTC] Connexion à la base de données réussie
+[22-Apr-2025 00:52:33 UTC] Tentative 1 de connexion à la base de données
+[22-Apr-2025 00:52:33 UTC] Connexion à la base de données réussie
+[22-Apr-2025 00:52:47 UTC] Tentative 1 de connexion à la base de données
+[22-Apr-2025 00:52:47 UTC] Connexion à la base de données réussie
+[22-Apr-2025 00:52:52 UTC] Tentative 1 de connexion à la base de données
+[22-Apr-2025 00:52:52 UTC] Connexion à la base de données réussie
+[22-Apr-2025 01:01:30 UTC] Tentative 1 de connexion à la base de données
+[22-Apr-2025 01:01:30 UTC] Connexion à la base de données réussie
+[22-Apr-2025 01:01:30 UTC] PHP Deprecated:  Constant FILTER_SANITIZE_STRING is deprecated in /home/u139954273/domains/mdgeek.top/public_html/ajax/update_tache_status.php on line 33
+[22-Apr-2025 01:01:49 UTC] Tentative 1 de connexion à la base de données
+[22-Apr-2025 01:01:50 UTC] Connexion à la base de données réussie
+[22-Apr-2025 01:01:50 UTC] PHP Deprecated:  Constant FILTER_SANITIZE_STRING is deprecated in /home/u139954273/domains/mdgeek.top/public_html/ajax/update_tache_status.php on line 33
+[22-Apr-2025 09:27:15 UTC] Démarrage de update_status.php
+[22-Apr-2025 09:27:15 UTC] Tentative 1 de connexion à la base de données
+[22-Apr-2025 09:27:15 UTC] Connexion à la base de données réussie
+[22-Apr-2025 09:27:15 UTC] Paramètres reçus: id=115, statut=urgent
+[22-Apr-2025 09:27:15 UTC] Requête SQL: UPDATE commandes_pieces SET statut = :statut WHERE id = :id avec statut=urgent et id=115
+[22-Apr-2025 09:27:15 UTC] Exécution de la requête: réussie
+[22-Apr-2025 09:27:15 UTC] Commande 115 mise à jour avec le statut urgent
+[22-Apr-2025 09:27:18 UTC] Démarrage de update_status.php
+[22-Apr-2025 09:27:18 UTC] Tentative 1 de connexion à la base de données
+[22-Apr-2025 09:27:18 UTC] Connexion à la base de données réussie
+[22-Apr-2025 09:27:18 UTC] Paramètres reçus: id=115, statut=recue
+[22-Apr-2025 09:27:18 UTC] Requête SQL: UPDATE commandes_pieces SET statut = :statut WHERE id = :id avec statut=recue et id=115
+[22-Apr-2025 09:27:18 UTC] Exécution de la requête: réussie
+[22-Apr-2025 09:27:18 UTC] Commande 115 mise à jour avec le statut recue
+[22-Apr-2025 09:27:20 UTC] Démarrage de update_status.php
+[22-Apr-2025 09:27:20 UTC] Tentative 1 de connexion à la base de données
+[22-Apr-2025 09:27:20 UTC] Connexion à la base de données réussie
+[22-Apr-2025 09:27:20 UTC] Paramètres reçus: id=116, statut=recue
+[22-Apr-2025 09:27:20 UTC] Requête SQL: UPDATE commandes_pieces SET statut = :statut WHERE id = :id avec statut=recue et id=116
+[22-Apr-2025 09:27:20 UTC] Exécution de la requête: réussie
+[22-Apr-2025 09:27:20 UTC] Commande 116 mise à jour avec le statut recue
+[22-Apr-2025 09:30:40 UTC] Tentative 1 de connexion à la base de données
+[22-Apr-2025 09:30:40 UTC] Connexion à la base de données réussie
+[22-Apr-2025 09:58:36 UTC] Tentative 1 de connexion à la base de données
+[22-Apr-2025 09:58:36 UTC] Connexion à la base de données réussie
+[22-Apr-2025 09:58:36 UTC] Requête reçue dans update_commande_status.php
+[22-Apr-2025 09:58:36 UTC] SESSION: Array
+(
+    [pwa_mode] => 
+)
+
+[22-Apr-2025 09:58:36 UTC] Données JSON reçues: {"commande_id":"110","new_status":"commande"}
+[22-Apr-2025 09:58:36 UTC] Mise à jour du statut: commande_id=110, new_status=commande
+[22-Apr-2025 09:58:36 UTC] Vérification du statut: commande, valides: en_attente, commande, recue, annulee, urgent
+[22-Apr-2025 09:58:36 UTC] Préparation de la requête UPDATE pour commande_id=110 et statut=commande
+[22-Apr-2025 09:58:36 UTC] Résultat de l'exécution de la requête: succès, lignes affectées: 1
+[22-Apr-2025 10:15:45 UTC] Tentative 1 de connexion à la base de données
+[22-Apr-2025 10:15:45 UTC] Connexion à la base de données réussie
+[22-Apr-2025 10:15:45 UTC] Session restaurée pour l'utilisateur 2 via token
+[22-Apr-2025 10:16:13 UTC] Tentative 1 de connexion à la base de données
+[22-Apr-2025 10:16:13 UTC] Connexion à la base de données réussie
+[22-Apr-2025 10:16:13 UTC] Tentative 1 de connexion à la base de données
+[22-Apr-2025 10:16:13 UTC] Connexion à la base de données réussie
+[22-Apr-2025 10:16:13 UTC] Tentative 1 de connexion à la base de données
+[22-Apr-2025 10:16:13 UTC] Connexion à la base de données réussie
+[22-Apr-2025 10:16:13 UTC] Tentative 1 de connexion à la base de données
+[22-Apr-2025 10:16:13 UTC] Connexion à la base de données réussie
+[22-Apr-2025 10:16:13 UTC] Tentative 1 de connexion à la base de données
+[22-Apr-2025 10:16:13 UTC] Connexion à la base de données réussie
+[22-Apr-2025 10:16:13 UTC] Tentative 1 de connexion à la base de données
+[22-Apr-2025 10:16:13 UTC] Connexion à la base de données réussie
+[22-Apr-2025 10:16:13 UTC] Tentative 1 de connexion à la base de données
+[22-Apr-2025 10:16:13 UTC] Connexion à la base de données réussie
+[22-Apr-2025 10:16:13 UTC] Tentative 1 de connexion à la base de données
+[22-Apr-2025 10:16:13 UTC] Connexion à la base de données réussie
+[22-Apr-2025 10:16:16 UTC] Tentative 1 de connexion à la base de données
+[22-Apr-2025 10:16:16 UTC] Connexion à la base de données réussie
+[22-Apr-2025 10:16:42 UTC] Tentative 1 de connexion à la base de données
+[22-Apr-2025 10:16:42 UTC] Connexion à la base de données réussie
+[22-Apr-2025 10:16:42 UTC] Tentative 1 de connexion à la base de données
+[22-Apr-2025 10:16:42 UTC] Connexion à la base de données réussie
+[22-Apr-2025 10:16:42 UTC] Tentative 1 de connexion à la base de données
+[22-Apr-2025 10:16:42 UTC] Connexion à la base de données réussie
+[22-Apr-2025 10:16:47 UTC] Tentative 1 de connexion à la base de données
+[22-Apr-2025 10:16:47 UTC] Connexion à la base de données réussie
+[22-Apr-2025 10:16:54 UTC] Tentative 1 de connexion à la base de données
+[22-Apr-2025 10:16:54 UTC] Connexion à la base de données réussie
+[22-Apr-2025 10:16:54 UTC] Tentative 1 de connexion à la base de données
+[22-Apr-2025 10:16:54 UTC] Connexion à la base de données réussie
+[22-Apr-2025 10:16:54 UTC] Tentative 1 de connexion à la base de données
+[22-Apr-2025 10:16:54 UTC] Connexion à la base de données réussie
+[22-Apr-2025 10:16:54 UTC] Tentative 1 de connexion à la base de données
+[22-Apr-2025 10:16:54 UTC] Connexion à la base de données réussie
+[22-Apr-2025 10:16:54 UTC] Tentative 1 de connexion à la base de données
+[22-Apr-2025 10:16:54 UTC] Connexion à la base de données réussie
+[22-Apr-2025 10:16:54 UTC] Tentative 1 de connexion à la base de données
+[22-Apr-2025 10:16:54 UTC] Connexion à la base de données réussie
+[22-Apr-2025 10:16:54 UTC] Tentative 1 de connexion à la base de données
+[22-Apr-2025 10:16:54 UTC] Connexion à la base de données réussie
+[22-Apr-2025 10:16:54 UTC] Tentative 1 de connexion à la base de données
+[22-Apr-2025 10:16:54 UTC] Connexion à la base de données réussie
+[22-Apr-2025 10:20:10 UTC] Tentative 1 de connexion à la base de données
+[22-Apr-2025 10:20:10 UTC] Connexion à la base de données réussie
+[22-Apr-2025 10:20:10 UTC] Session restaurée pour l'utilisateur 1 via token
+[22-Apr-2025 10:20:10 UTC] Tentative 1 de connexion à la base de données
+[22-Apr-2025 10:20:10 UTC] Connexion à la base de données réussie
+[22-Apr-2025 10:21:02 UTC] Tentative 1 de connexion à la base de données
+[22-Apr-2025 10:21:02 UTC] Connexion à la base de données réussie
+[22-Apr-2025 10:21:02 UTC] Tentative 1 de connexion à la base de données
+[22-Apr-2025 10:21:02 UTC] Connexion à la base de données réussie
+[22-Apr-2025 10:21:23 UTC] Tentative 1 de connexion à la base de données
+[22-Apr-2025 10:21:23 UTC] Connexion à la base de données réussie
+[22-Apr-2025 10:21:23 UTC] Tentative 1 de connexion à la base de données
+[22-Apr-2025 10:21:23 UTC] Connexion à la base de données réussie
+[22-Apr-2025 10:22:18 UTC] Tentative 1 de connexion à la base de données
+[22-Apr-2025 10:22:18 UTC] Connexion à la base de données réussie
+[22-Apr-2025 10:22:18 UTC] Tentative 1 de connexion à la base de données
+[22-Apr-2025 10:22:18 UTC] Connexion à la base de données réussie
+[22-Apr-2025 13:44:54 UTC] Démarrage de update_status.php
+[22-Apr-2025 13:44:54 UTC] Tentative 1 de connexion à la base de données
+[22-Apr-2025 13:44:54 UTC] Connexion à la base de données réussie
+[22-Apr-2025 13:44:54 UTC] Paramètres reçus: id=117, statut=recue
+[22-Apr-2025 13:44:54 UTC] Requête SQL: UPDATE commandes_pieces SET statut = :statut WHERE id = :id avec statut=recue et id=117
+[22-Apr-2025 13:44:54 UTC] Exécution de la requête: réussie
+[22-Apr-2025 13:44:54 UTC] Commande 117 mise à jour avec le statut recue
+[22-Apr-2025 13:44:57 UTC] Démarrage de update_status.php
+[22-Apr-2025 13:44:57 UTC] Tentative 1 de connexion à la base de données
+[22-Apr-2025 13:44:57 UTC] Connexion à la base de données réussie
+[22-Apr-2025 13:44:57 UTC] Paramètres reçus: id=118, statut=recue
+[22-Apr-2025 13:44:57 UTC] Requête SQL: UPDATE commandes_pieces SET statut = :statut WHERE id = :id avec statut=recue et id=118
+[22-Apr-2025 13:44:57 UTC] Exécution de la requête: réussie
+[22-Apr-2025 13:44:57 UTC] Commande 118 mise à jour avec le statut recue
+[22-Apr-2025 14:26:55 UTC] Tentative 1 de connexion à la base de données
+[22-Apr-2025 14:26:55 UTC] Connexion à la base de données réussie
+[22-Apr-2025 14:26:55 UTC] Requête reçue dans update_commande_status.php
+[22-Apr-2025 14:26:55 UTC] SESSION: Array
+(
+    [pwa_mode] => 
+    [user_id] => 1
+    [username] => admin
+    [role] => admin
+    [full_name] => Administrateur
+)
+
+[22-Apr-2025 14:26:55 UTC] Données JSON reçues: {"commande_id":"108","new_status":"commande"}
+[22-Apr-2025 14:26:55 UTC] Mise à jour du statut: commande_id=108, new_status=commande
+[22-Apr-2025 14:26:55 UTC] Vérification du statut: commande, valides: en_attente, commande, recue, annulee, urgent
+[22-Apr-2025 14:26:55 UTC] Préparation de la requête UPDATE pour commande_id=108 et statut=commande
+[22-Apr-2025 14:26:55 UTC] Résultat de l'exécution de la requête: succès, lignes affectées: 1
+[22-Apr-2025 14:27:02 UTC] Tentative 1 de connexion à la base de données
+[22-Apr-2025 14:27:02 UTC] Connexion à la base de données réussie
+[22-Apr-2025 14:27:02 UTC] Requête reçue dans update_commande_status.php
+[22-Apr-2025 14:27:02 UTC] SESSION: Array
+(
+    [pwa_mode] => 
+    [user_id] => 1
+    [username] => admin
+    [role] => admin
+    [full_name] => Administrateur
+)
+
+[22-Apr-2025 14:27:02 UTC] Données JSON reçues: {"commande_id":"100","new_status":"commande"}
+[22-Apr-2025 14:27:02 UTC] Mise à jour du statut: commande_id=100, new_status=commande
+[22-Apr-2025 14:27:02 UTC] Vérification du statut: commande, valides: en_attente, commande, recue, annulee, urgent
+[22-Apr-2025 14:27:02 UTC] Préparation de la requête UPDATE pour commande_id=100 et statut=commande
+[22-Apr-2025 14:27:02 UTC] Résultat de l'exécution de la requête: succès, lignes affectées: 1
+[22-Apr-2025 15:19:53 UTC] Tentative 1 de connexion à la base de données
+[22-Apr-2025 15:19:53 UTC] Connexion à la base de données réussie
+[22-Apr-2025 15:19:53 UTC] Tentative 1 de connexion à la base de données
+[22-Apr-2025 15:19:53 UTC] Connexion à la base de données réussie
+[22-Apr-2025 16:06:14 UTC] Tentative 1 de connexion à la base de données
+[22-Apr-2025 16:06:14 UTC] Connexion à la base de données réussie
+[22-Apr-2025 16:06:14 UTC] Tentative 1 de connexion à la base de données
+[22-Apr-2025 16:06:14 UTC] Connexion à la base de données réussie
+[22-Apr-2025 16:12:23 UTC] Tentative 1 de connexion à la base de données
+[22-Apr-2025 16:12:23 UTC] Connexion à la base de données réussie
+[22-Apr-2025 16:12:23 UTC] Tentative 1 de connexion à la base de données
+[22-Apr-2025 16:12:23 UTC] Connexion à la base de données réussie
+[22-Apr-2025 16:15:26 UTC] Tentative 1 de connexion à la base de données
+[22-Apr-2025 16:15:26 UTC] Connexion à la base de données réussie
+[22-Apr-2025 16:15:26 UTC] Tentative 1 de connexion à la base de données
+[22-Apr-2025 16:15:26 UTC] Connexion à la base de données réussie
+[22-Apr-2025 16:16:20 UTC] Tentative 1 de connexion à la base de données
+[22-Apr-2025 16:16:20 UTC] Connexion à la base de données réussie
+[22-Apr-2025 16:16:20 UTC] Session restaurée pour l'utilisateur 2 via token
+[22-Apr-2025 16:16:20 UTC] Tentative 1 de connexion à la base de données
+[22-Apr-2025 16:16:20 UTC] Connexion à la base de données réussie
+[22-Apr-2025 16:16:20 UTC] Tentative 1 de connexion à la base de données
+[22-Apr-2025 16:16:20 UTC] Connexion à la base de données réussie
+[22-Apr-2025 16:16:20 UTC] Tentative 1 de connexion à la base de données
+[22-Apr-2025 16:16:20 UTC] Connexion à la base de données réussie
+[22-Apr-2025 16:17:13 UTC] Tentative 1 de connexion à la base de données
+[22-Apr-2025 16:17:13 UTC] Connexion à la base de données réussie
+[22-Apr-2025 16:17:13 UTC] Session restaurée pour l'utilisateur 1 via token
+[22-Apr-2025 16:17:13 UTC] Tentative 1 de connexion à la base de données
+[22-Apr-2025 16:17:13 UTC] Connexion à la base de données réussie
+[22-Apr-2025 16:17:41 UTC] Tentative 1 de connexion à la base de données
+[22-Apr-2025 16:17:41 UTC] Connexion à la base de données réussie
+[22-Apr-2025 16:17:42 UTC] Tentative 1 de connexion à la base de données
+[22-Apr-2025 16:17:42 UTC] Connexion à la base de données réussie
+[22-Apr-2025 16:18:00 UTC] Tentative 1 de connexion à la base de données
+[22-Apr-2025 16:18:00 UTC] Connexion à la base de données réussie
+[22-Apr-2025 16:18:00 UTC] Tentative 1 de connexion à la base de données
+[22-Apr-2025 16:18:00 UTC] Connexion à la base de données réussie
+[22-Apr-2025 16:18:34 UTC] Tentative 1 de connexion à la base de données
+[22-Apr-2025 16:18:34 UTC] Connexion à la base de données réussie
+[22-Apr-2025 16:18:34 UTC] Tentative 1 de connexion à la base de données
+[22-Apr-2025 16:18:34 UTC] Connexion à la base de données réussie
+[22-Apr-2025 16:18:35 UTC] Tentative 1 de connexion à la base de données
+[22-Apr-2025 16:18:35 UTC] Connexion à la base de données réussie
+[22-Apr-2025 16:18:51 UTC] Tentative 1 de connexion à la base de données
+[22-Apr-2025 16:18:51 UTC] Connexion à la base de données réussie
+[22-Apr-2025 16:18:52 UTC] Tentative 1 de connexion à la base de données
+[22-Apr-2025 16:18:52 UTC] Connexion à la base de données réussie
+[22-Apr-2025 16:24:18 UTC] Tentative 1 de connexion à la base de données
+[22-Apr-2025 16:24:18 UTC] Connexion à la base de données réussie
+[22-Apr-2025 16:24:19 UTC] Tentative 1 de connexion à la base de données
+[22-Apr-2025 16:24:19 UTC] Connexion à la base de données réussie
+[22-Apr-2025 16:33:24 UTC] Tentative 1 de connexion à la base de données
+[22-Apr-2025 16:33:24 UTC] Connexion à la base de données réussie
+[22-Apr-2025 16:33:25 UTC] Tentative 1 de connexion à la base de données
+[22-Apr-2025 16:33:25 UTC] Connexion à la base de données réussie
+[22-Apr-2025 16:48:29 UTC] Tentative 1 de connexion à la base de données
+[22-Apr-2025 16:48:29 UTC] Connexion à la base de données réussie
+[22-Apr-2025 16:48:29 UTC] Requête reçue dans update_commande_field.php
+[22-Apr-2025 16:48:29 UTC] Mise à jour de la commande: ID=104, Champ=nom_piece, Valeur=Rehausse Potence / pneu wattiz 100/55-6.5/ support ey4/ amortisseur de direction/ plaquette avant-arrière 
+[22-Apr-2025 16:48:29 UTC] Tentative 1 de connexion à la base de données
+[22-Apr-2025 16:48:29 UTC] Connexion à la base de données réussie
+[22-Apr-2025 16:48:29 UTC] Requête reçue dans update_commande_field.php
+[22-Apr-2025 16:48:29 UTC] Mise à jour de la commande: ID=104, Champ=nom_piece, Valeur=Rehausse Potence / pneu wattiz 100/55-6.5/ support ey4/ amortisseur de direction/ plaquette avant-arrière 
+[22-Apr-2025 16:48:29 UTC] Tentative 1 de connexion à la base de données
+[22-Apr-2025 16:48:29 UTC] Connexion à la base de données réussie
+[22-Apr-2025 16:48:29 UTC] Requête reçue dans update_commande_field.php
+[22-Apr-2025 16:48:29 UTC] Mise à jour de la commande: ID=104, Champ=nom_piece, Valeur=Rehausse Potence / pneu wattiz 100/55-6.5/ support ey4/ amortisseur de direction/ plaquette avant-arrière 
+[22-Apr-2025 18:29:21 UTC] Tentative 1 de connexion à la base de données
+[22-Apr-2025 18:29:21 UTC] Connexion à la base de données réussie
+[22-Apr-2025 18:29:21 UTC] Tentative 1 de connexion à la base de données
+[22-Apr-2025 18:29:21 UTC] Connexion à la base de données réussie
+[22-Apr-2025 18:29:26 UTC] Tentative 1 de connexion à la base de données
+[22-Apr-2025 18:29:26 UTC] Connexion à la base de données réussie
+[22-Apr-2025 18:29:54 UTC] Tentative 1 de connexion à la base de données
+[22-Apr-2025 18:29:54 UTC] Connexion à la base de données réussie
+[22-Apr-2025 22:40:57 UTC] Tentative 1 de connexion à la base de données
+[22-Apr-2025 22:40:57 UTC] Connexion à la base de données réussie
+[22-Apr-2025 22:40:57 UTC] Requête reçue dans update_commande_status.php
+[22-Apr-2025 22:40:57 UTC] SESSION: Array
+(
+    [pwa_mode] => 
+)
+
+[22-Apr-2025 22:40:57 UTC] Données JSON reçues: {"commande_id":"162","new_status":"commande"}
+[22-Apr-2025 22:40:57 UTC] Mise à jour du statut: commande_id=162, new_status=commande
+[22-Apr-2025 22:40:57 UTC] Vérification du statut: commande, valides: en_attente, commande, recue, annulee, urgent
+[22-Apr-2025 22:40:57 UTC] Préparation de la requête UPDATE pour commande_id=162 et statut=commande
+[22-Apr-2025 22:40:57 UTC] Résultat de l'exécution de la requête: succès, lignes affectées: 1
+[22-Apr-2025 22:41:01 UTC] Tentative 1 de connexion à la base de données
+[22-Apr-2025 22:41:01 UTC] Connexion à la base de données réussie
+[22-Apr-2025 22:41:01 UTC] Requête reçue dans update_commande_status.php
+[22-Apr-2025 22:41:01 UTC] SESSION: Array
+(
+    [pwa_mode] => 
+)
+
+[22-Apr-2025 22:41:01 UTC] Données JSON reçues: {"commande_id":"154","new_status":"commande"}
+[22-Apr-2025 22:41:01 UTC] Mise à jour du statut: commande_id=154, new_status=commande
+[22-Apr-2025 22:41:01 UTC] Vérification du statut: commande, valides: en_attente, commande, recue, annulee, urgent
+[22-Apr-2025 22:41:01 UTC] Préparation de la requête UPDATE pour commande_id=154 et statut=commande
+[22-Apr-2025 22:41:01 UTC] Résultat de l'exécution de la requête: succès, lignes affectées: 1
+[22-Apr-2025 22:41:04 UTC] Tentative 1 de connexion à la base de données
+[22-Apr-2025 22:41:04 UTC] Connexion à la base de données réussie
+[22-Apr-2025 22:41:04 UTC] Requête reçue dans update_commande_status.php
+[22-Apr-2025 22:41:04 UTC] SESSION: Array
+(
+    [pwa_mode] => 
+)
+
+[22-Apr-2025 22:41:04 UTC] Données JSON reçues: {"commande_id":"112","new_status":"commande"}
+[22-Apr-2025 22:41:04 UTC] Mise à jour du statut: commande_id=112, new_status=commande
+[22-Apr-2025 22:41:04 UTC] Vérification du statut: commande, valides: en_attente, commande, recue, annulee, urgent
+[22-Apr-2025 22:41:04 UTC] Préparation de la requête UPDATE pour commande_id=112 et statut=commande
+[22-Apr-2025 22:41:04 UTC] Résultat de l'exécution de la requête: succès, lignes affectées: 1
+[22-Apr-2025 22:47:12 UTC] Tentative 1 de connexion à la base de données
+[22-Apr-2025 22:47:12 UTC] Connexion à la base de données réussie
+[22-Apr-2025 22:47:12 UTC] PHP Deprecated:  Constant FILTER_SANITIZE_STRING is deprecated in /home/u139954273/domains/mdgeek.top/public_html/ajax/update_tache_status.php on line 33
+[22-Apr-2025 22:47:18 UTC] Tentative 1 de connexion à la base de données
+[22-Apr-2025 22:47:18 UTC] Connexion à la base de données réussie
+[22-Apr-2025 22:47:18 UTC] PHP Deprecated:  Constant FILTER_SANITIZE_STRING is deprecated in /home/u139954273/domains/mdgeek.top/public_html/ajax/update_tache_status.php on line 33
+[23-Apr-2025 01:19:26 UTC] Tentative 1 de connexion à la base de données
+[23-Apr-2025 01:19:26 UTC] Connexion à la base de données réussie
+[23-Apr-2025 01:19:26 UTC] Session restaurée pour l'utilisateur 1 via token
+[23-Apr-2025 01:19:26 UTC] Tentative 1 de connexion à la base de données
+[23-Apr-2025 01:19:26 UTC] Connexion à la base de données réussie
+[23-Apr-2025 01:24:41 UTC] Tentative 1 de connexion à la base de données
+[23-Apr-2025 01:24:41 UTC] Connexion à la base de données réussie
+[23-Apr-2025 01:24:50 UTC] Tentative 1 de connexion à la base de données
+[23-Apr-2025 01:24:50 UTC] Connexion à la base de données réussie
+[23-Apr-2025 01:24:52 UTC] Tentative 1 de connexion à la base de données
+[23-Apr-2025 01:24:52 UTC] Connexion à la base de données réussie
+[23-Apr-2025 01:30:24 UTC] Tentative 1 de connexion à la base de données
+[23-Apr-2025 01:30:24 UTC] Connexion à la base de données réussie
+[23-Apr-2025 01:30:24 UTC] Tentative 1 de connexion à la base de données
+[23-Apr-2025 01:30:24 UTC] Connexion à la base de données réussie
+[23-Apr-2025 01:33:18 UTC] Tentative 1 de connexion à la base de données
+[23-Apr-2025 01:33:18 UTC] Connexion à la base de données réussie
+[23-Apr-2025 01:33:22 UTC] Tentative 1 de connexion à la base de données
+[23-Apr-2025 01:33:22 UTC] Connexion à la base de données réussie
+[23-Apr-2025 01:33:30 UTC] Tentative 1 de connexion à la base de données
+[23-Apr-2025 01:33:30 UTC] Connexion à la base de données réussie
+[23-Apr-2025 01:36:12 UTC] Tentative 1 de connexion à la base de données
+[23-Apr-2025 01:36:12 UTC] Connexion à la base de données réussie
+[23-Apr-2025 01:36:18 UTC] Tentative 1 de connexion à la base de données
+[23-Apr-2025 01:36:18 UTC] Connexion à la base de données réussie
+[23-Apr-2025 01:36:34 UTC] Tentative 1 de connexion à la base de données
+[23-Apr-2025 01:36:34 UTC] Connexion à la base de données réussie
+[23-Apr-2025 01:36:41 UTC] Tentative 1 de connexion à la base de données
+[23-Apr-2025 01:36:41 UTC] Connexion à la base de données réussie
+[23-Apr-2025 01:36:57 UTC] Tentative 1 de connexion à la base de données
+[23-Apr-2025 01:36:57 UTC] Connexion à la base de données réussie
+[23-Apr-2025 01:37:00 UTC] Tentative 1 de connexion à la base de données
+[23-Apr-2025 01:37:00 UTC] Connexion à la base de données réussie
+[23-Apr-2025 01:37:04 UTC] Tentative 1 de connexion à la base de données
+[23-Apr-2025 01:37:04 UTC] Connexion à la base de données réussie
+[23-Apr-2025 01:37:08 UTC] Tentative 1 de connexion à la base de données
+[23-Apr-2025 01:37:08 UTC] Connexion à la base de données réussie
+[23-Apr-2025 01:37:20 UTC] Tentative 1 de connexion à la base de données
+[23-Apr-2025 01:37:20 UTC] Connexion à la base de données réussie
+[23-Apr-2025 01:37:25 UTC] Tentative 1 de connexion à la base de données
+[23-Apr-2025 01:37:25 UTC] Connexion à la base de données réussie
+[23-Apr-2025 01:37:38 UTC] Tentative 1 de connexion à la base de données
+[23-Apr-2025 01:37:38 UTC] Connexion à la base de données réussie
+[23-Apr-2025 01:38:39 UTC] Tentative 1 de connexion à la base de données
+[23-Apr-2025 01:38:39 UTC] Connexion à la base de données réussie
+[23-Apr-2025 01:40:30 UTC] Tentative 1 de connexion à la base de données
+[23-Apr-2025 01:40:30 UTC] Connexion à la base de données réussie
+[23-Apr-2025 01:41:05 UTC] Tentative 1 de connexion à la base de données
+[23-Apr-2025 01:41:05 UTC] Connexion à la base de données réussie
+[23-Apr-2025 01:41:09 UTC] Tentative 1 de connexion à la base de données
+[23-Apr-2025 01:41:09 UTC] Connexion à la base de données réussie
+[23-Apr-2025 01:52:57 UTC] Tentative 1 de connexion à la base de données
+[23-Apr-2025 01:52:57 UTC] Connexion à la base de données réussie
+[23-Apr-2025 01:53:00 UTC] Tentative 1 de connexion à la base de données
+[23-Apr-2025 01:53:00 UTC] Connexion à la base de données réussie
+[23-Apr-2025 01:53:12 UTC] Tentative 1 de connexion à la base de données
+[23-Apr-2025 01:53:12 UTC] Connexion à la base de données réussie
+[23-Apr-2025 01:53:12 UTC] Tentative 1 de connexion à la base de données
+[23-Apr-2025 01:53:12 UTC] Connexion à la base de données réussie
+[23-Apr-2025 01:53:14 UTC] Tentative 1 de connexion à la base de données
+[23-Apr-2025 01:53:14 UTC] Connexion à la base de données réussie
+[23-Apr-2025 01:53:19 UTC] Tentative 1 de connexion à la base de données
+[23-Apr-2025 01:53:19 UTC] Connexion à la base de données réussie
+[23-Apr-2025 01:54:31 UTC] Tentative 1 de connexion à la base de données
+[23-Apr-2025 01:54:31 UTC] Connexion à la base de données réussie
+[23-Apr-2025 01:54:31 UTC] Tentative 1 de connexion à la base de données
+[23-Apr-2025 01:54:31 UTC] Connexion à la base de données réussie
+[23-Apr-2025 01:54:34 UTC] Tentative 1 de connexion à la base de données
+[23-Apr-2025 01:54:34 UTC] Connexion à la base de données réussie
+[23-Apr-2025 01:57:18 UTC] Tentative 1 de connexion à la base de données
+[23-Apr-2025 01:57:18 UTC] Connexion à la base de données réussie
+[23-Apr-2025 01:58:06 UTC] Tentative 1 de connexion à la base de données
+[23-Apr-2025 01:58:06 UTC] Connexion à la base de données réussie
+[23-Apr-2025 01:59:50 UTC] Tentative 1 de connexion à la base de données
+[23-Apr-2025 01:59:50 UTC] Connexion à la base de données réussie
+[23-Apr-2025 02:01:19 UTC] Tentative 1 de connexion à la base de données
+[23-Apr-2025 02:01:19 UTC] Connexion à la base de données réussie
+[23-Apr-2025 02:03:35 UTC] Tentative 1 de connexion à la base de données
+[23-Apr-2025 02:03:35 UTC] Connexion à la base de données réussie
+[23-Apr-2025 02:03:35 UTC] Tentative 1 de connexion à la base de données
+[23-Apr-2025 02:03:35 UTC] Connexion à la base de données réussie
+[23-Apr-2025 02:03:49 UTC] Tentative 1 de connexion à la base de données
+[23-Apr-2025 02:03:49 UTC] Connexion à la base de données réussie
+[23-Apr-2025 02:04:09 UTC] Tentative 1 de connexion à la base de données
+[23-Apr-2025 02:04:09 UTC] Connexion à la base de données réussie
+[23-Apr-2025 02:04:09 UTC] Tentative 1 de connexion à la base de données
+[23-Apr-2025 02:04:09 UTC] Connexion à la base de données réussie
+[23-Apr-2025 02:04:10 UTC] Tentative 1 de connexion à la base de données
+[23-Apr-2025 02:04:10 UTC] Connexion à la base de données réussie
+[23-Apr-2025 02:05:19 UTC] Tentative 1 de connexion à la base de données
+[23-Apr-2025 02:05:19 UTC] Connexion à la base de données réussie
+[23-Apr-2025 08:30:32 UTC] Tentative 1 de connexion à la base de données
+[23-Apr-2025 08:30:32 UTC] Connexion à la base de données réussie
+[23-Apr-2025 08:30:40 UTC] Tentative 1 de connexion à la base de données
+[23-Apr-2025 08:30:40 UTC] Connexion à la base de données réussie
+[23-Apr-2025 08:30:47 UTC] Tentative 1 de connexion à la base de données
+[23-Apr-2025 08:30:47 UTC] Connexion à la base de données réussie
+[23-Apr-2025 08:30:47 UTC] Tentative 1 de connexion à la base de données
+[23-Apr-2025 08:30:47 UTC] Connexion à la base de données réussie
+[23-Apr-2025 08:48:25 UTC] Tentative 1 de connexion à la base de données
+[23-Apr-2025 08:48:25 UTC] Connexion à la base de données réussie
+[23-Apr-2025 08:48:26 UTC] Tentative 1 de connexion à la base de données
+[23-Apr-2025 08:48:26 UTC] Connexion à la base de données réussie
+[23-Apr-2025 08:50:53 UTC] Tentative 1 de connexion à la base de données
+[23-Apr-2025 08:50:53 UTC] Connexion à la base de données réussie
+[23-Apr-2025 08:50:53 UTC] Tentative 1 de connexion à la base de données
+[23-Apr-2025 08:50:53 UTC] Connexion à la base de données réussie
+[23-Apr-2025 08:50:54 UTC] Tentative 1 de connexion à la base de données
+[23-Apr-2025 08:50:54 UTC] Connexion à la base de données réussie
+[23-Apr-2025 08:50:55 UTC] Tentative 1 de connexion à la base de données
+[23-Apr-2025 08:50:55 UTC] Connexion à la base de données réussie
+[23-Apr-2025 08:52:01 UTC] Tentative 1 de connexion à la base de données
+[23-Apr-2025 08:52:01 UTC] Connexion à la base de données réussie
+[23-Apr-2025 08:52:01 UTC] Session restaurée pour l'utilisateur 1 via token
+[23-Apr-2025 08:52:10 UTC] Tentative 1 de connexion à la base de données
+[23-Apr-2025 08:52:10 UTC] Connexion à la base de données réussie
+[23-Apr-2025 08:52:10 UTC] Tentative 1 de connexion à la base de données
+[23-Apr-2025 08:52:10 UTC] Connexion à la base de données réussie
+[23-Apr-2025 08:52:41 UTC] Tentative 1 de connexion à la base de données
+[23-Apr-2025 08:52:41 UTC] Connexion à la base de données réussie
+[23-Apr-2025 08:52:42 UTC] Tentative 1 de connexion à la base de données
+[23-Apr-2025 08:52:42 UTC] Connexion à la base de données réussie
+[23-Apr-2025 09:30:49 UTC] Tentative 1 de connexion à la base de données
+[23-Apr-2025 09:30:49 UTC] Tentative 1 de connexion à la base de données
+[23-Apr-2025 09:30:49 UTC] Connexion à la base de données réussie
+[23-Apr-2025 09:30:49 UTC] Connexion à la base de données réussie
+[23-Apr-2025 09:30:49 UTC] Session restaurée pour l'utilisateur 1 via token
+[23-Apr-2025 09:30:49 UTC] Tentative 1 de connexion à la base de données
+[23-Apr-2025 09:30:49 UTC] Tentative 1 de connexion à la base de données
+[23-Apr-2025 09:30:49 UTC] Connexion à la base de données réussie
+[23-Apr-2025 09:30:49 UTC] Connexion à la base de données réussie
+[23-Apr-2025 09:49:45 UTC] Tentative 1 de connexion à la base de données
+[23-Apr-2025 09:49:45 UTC] Tentative 1 de connexion à la base de données
+[23-Apr-2025 09:49:45 UTC] Connexion à la base de données réussie
+[23-Apr-2025 09:49:45 UTC] Connexion à la base de données réussie
+[23-Apr-2025 09:49:45 UTC] Tentative 1 de connexion à la base de données
+[23-Apr-2025 09:49:45 UTC] Connexion à la base de données réussie
+[23-Apr-2025 09:49:45 UTC] Tentative 1 de connexion à la base de données
+[23-Apr-2025 09:49:45 UTC] Connexion à la base de données réussie
+[23-Apr-2025 10:09:15 UTC] Tentative 1 de connexion à la base de données
+[23-Apr-2025 10:09:15 UTC] Connexion à la base de données réussie
+[23-Apr-2025 10:09:15 UTC] Tentative 1 de connexion à la base de données
+[23-Apr-2025 10:09:15 UTC] Connexion à la base de données réussie
+[23-Apr-2025 10:09:17 UTC] Tentative 1 de connexion à la base de données
+[23-Apr-2025 10:09:17 UTC] Connexion à la base de données réussie
+[23-Apr-2025 10:09:21 UTC] Tentative 1 de connexion à la base de données
+[23-Apr-2025 10:09:21 UTC] Connexion à la base de données réussie
+[23-Apr-2025 10:11:33 UTC] Tentative 1 de connexion à la base de données
+[23-Apr-2025 10:11:33 UTC] Connexion à la base de données réussie
+[23-Apr-2025 10:11:33 UTC] Tentative 1 de connexion à la base de données
+[23-Apr-2025 10:11:33 UTC] Connexion à la base de données réussie
+[23-Apr-2025 11:17:11 UTC] Tentative 1 de connexion à la base de données
+[23-Apr-2025 11:17:11 UTC] Connexion à la base de données réussie
+[23-Apr-2025 11:17:16 UTC] Tentative 1 de connexion à la base de données
+[23-Apr-2025 11:17:16 UTC] Connexion à la base de données réussie
+[23-Apr-2025 11:17:23 UTC] Tentative 1 de connexion à la base de données
+[23-Apr-2025 11:17:23 UTC] Connexion à la base de données réussie
+[23-Apr-2025 11:17:23 UTC] Tentative 1 de connexion à la base de données
+[23-Apr-2025 11:17:23 UTC] Connexion à la base de données réussie
+[23-Apr-2025 11:17:26 UTC] Tentative 1 de connexion à la base de données
+[23-Apr-2025 11:17:26 UTC] Connexion à la base de données réussie
+[23-Apr-2025 11:17:29 UTC] Tentative 1 de connexion à la base de données
+[23-Apr-2025 11:17:29 UTC] Connexion à la base de données réussie
+[23-Apr-2025 15:34:51 UTC] Tentative 1 de connexion à la base de données
+[23-Apr-2025 15:34:51 UTC] Connexion à la base de données réussie
+[23-Apr-2025 15:34:51 UTC] Session restaurée pour l'utilisateur 1 via token
+[23-Apr-2025 15:34:51 UTC] Tentative 1 de connexion à la base de données
+[23-Apr-2025 15:34:51 UTC] Connexion à la base de données réussie
+[24-Apr-2025 10:53:39 UTC] Tentative 1 de connexion à la base de données
+[24-Apr-2025 10:53:39 UTC] Connexion à la base de données réussie
+[24-Apr-2025 10:53:39 UTC] Tentative 1 de connexion à la base de données
+[24-Apr-2025 10:53:39 UTC] Connexion à la base de données réussie
+[24-Apr-2025 10:53:41 UTC] Tentative 1 de connexion à la base de données
+[24-Apr-2025 10:53:41 UTC] Connexion à la base de données réussie
+[24-Apr-2025 10:53:41 UTC] Tentative 1 de connexion à la base de données
+[24-Apr-2025 10:53:41 UTC] Connexion à la base de données réussie
+[24-Apr-2025 10:53:42 UTC] Tentative 1 de connexion à la base de données
+[24-Apr-2025 10:53:42 UTC] Connexion à la base de données réussie
+[25-Apr-2025 08:23:29 UTC] Tentative 1 de connexion à la base de données
+[25-Apr-2025 08:23:29 UTC] Connexion à la base de données réussie
+[25-Apr-2025 08:23:29 UTC] Tentative 1 de connexion à la base de données
+[25-Apr-2025 08:23:29 UTC] Session restaurée pour l'utilisateur 1 via token
+[25-Apr-2025 08:23:29 UTC] Connexion à la base de données réussie
+[25-Apr-2025 08:23:29 UTC] Tentative 1 de connexion à la base de données
+[25-Apr-2025 08:23:29 UTC] Tentative 1 de connexion à la base de données
+[25-Apr-2025 08:23:29 UTC] Connexion à la base de données réussie
+[25-Apr-2025 08:23:29 UTC] Connexion à la base de données réussie
+[25-Apr-2025 10:56:39 UTC] Tentative 1 de connexion à la base de données
+[25-Apr-2025 10:56:39 UTC] Connexion à la base de données réussie
+[25-Apr-2025 10:56:39 UTC] Tentative 1 de connexion à la base de données
+[25-Apr-2025 10:56:39 UTC] Connexion à la base de données réussie
+[25-Apr-2025 10:56:40 UTC] Tentative 1 de connexion à la base de données
+[25-Apr-2025 10:56:40 UTC] Connexion à la base de données réussie
+[25-Apr-2025 10:56:42 UTC] Tentative 1 de connexion à la base de données
+[25-Apr-2025 10:56:42 UTC] Connexion à la base de données réussie
+[25-Apr-2025 11:16:06 UTC] Tentative 1 de connexion à la base de données
+[25-Apr-2025 11:16:06 UTC] Connexion à la base de données réussie
+[25-Apr-2025 11:16:06 UTC] Requête reçue dans update_commande_status.php
+[25-Apr-2025 11:16:06 UTC] SESSION: Array
+(
+    [pwa_mode] => 1
+    [user_id] => 1
+    [username] => admin
+    [role] => admin
+    [full_name] => Administrateur
+)
+
+[25-Apr-2025 11:16:06 UTC] Données JSON reçues: {"commande_id":"167","new_status":"recue"}
+[25-Apr-2025 11:16:06 UTC] Mise à jour du statut: commande_id=167, new_status=recue
+[25-Apr-2025 11:16:06 UTC] Vérification du statut: recue, valides: en_attente, commande, recue, annulee, urgent
+[25-Apr-2025 11:16:06 UTC] Préparation de la requête UPDATE pour commande_id=167 et statut=recue
+[25-Apr-2025 11:16:06 UTC] Résultat de l'exécution de la requête: succès, lignes affectées: 1
+[25-Apr-2025 11:16:06 UTC] Tentative 1 de connexion à la base de données
+[25-Apr-2025 11:16:06 UTC] Connexion à la base de données réussie
+[25-Apr-2025 11:16:06 UTC] Requête reçue dans update_commande_status.php
+[25-Apr-2025 11:16:06 UTC] SESSION: Array
+(
+    [pwa_mode] => 1
+    [user_id] => 1
+    [username] => admin
+    [role] => admin
+    [full_name] => Administrateur
+)
+
+[25-Apr-2025 11:16:06 UTC] Données JSON reçues: {"commande_id":"167","new_status":"recue"}
+[25-Apr-2025 11:16:06 UTC] Mise à jour du statut: commande_id=167, new_status=recue
+[25-Apr-2025 11:16:06 UTC] Vérification du statut: recue, valides: en_attente, commande, recue, annulee, urgent
+[25-Apr-2025 11:16:06 UTC] Préparation de la requête UPDATE pour commande_id=167 et statut=recue
+[25-Apr-2025 11:16:06 UTC] Résultat de l'exécution de la requête: succès, lignes affectées: 0
+[25-Apr-2025 11:16:06 UTC] Aucune ligne affectée pour commande_id=167 et statut=recue
+[25-Apr-2025 11:16:06 UTC] Tentative 1 de connexion à la base de données
+[25-Apr-2025 11:16:06 UTC] Connexion à la base de données réussie
+[25-Apr-2025 11:16:06 UTC] Requête reçue dans update_commande_status.php
+[25-Apr-2025 11:16:06 UTC] SESSION: Array
+(
+    [pwa_mode] => 1
+    [user_id] => 1
+    [username] => admin
+    [role] => admin
+    [full_name] => Administrateur
+)
+
+[25-Apr-2025 11:16:06 UTC] Données JSON reçues: {"commande_id":"167","new_status":"recue"}
+[25-Apr-2025 11:16:06 UTC] Mise à jour du statut: commande_id=167, new_status=recue
+[25-Apr-2025 11:16:06 UTC] Vérification du statut: recue, valides: en_attente, commande, recue, annulee, urgent
+[25-Apr-2025 11:16:06 UTC] Préparation de la requête UPDATE pour commande_id=167 et statut=recue
+[25-Apr-2025 11:16:06 UTC] Résultat de l'exécution de la requête: succès, lignes affectées: 0
+[25-Apr-2025 11:16:06 UTC] Aucune ligne affectée pour commande_id=167 et statut=recue
+[25-Apr-2025 11:16:14 UTC] Tentative 1 de connexion à la base de données
+[25-Apr-2025 11:16:14 UTC] Connexion à la base de données réussie
+[25-Apr-2025 11:16:14 UTC] Requête reçue dans update_commande_status.php
+[25-Apr-2025 11:16:14 UTC] SESSION: Array
+(
+    [pwa_mode] => 1
+    [user_id] => 1
+    [username] => admin
+    [role] => admin
+    [full_name] => Administrateur
+)
+
+[25-Apr-2025 11:16:14 UTC] Données JSON reçues: {"commande_id":"166","new_status":"recue"}
+[25-Apr-2025 11:16:14 UTC] Mise à jour du statut: commande_id=166, new_status=recue
+[25-Apr-2025 11:16:14 UTC] Vérification du statut: recue, valides: en_attente, commande, recue, annulee, urgent
+[25-Apr-2025 11:16:14 UTC] Préparation de la requête UPDATE pour commande_id=166 et statut=recue
+[25-Apr-2025 11:16:14 UTC] Résultat de l'exécution de la requête: succès, lignes affectées: 1
+[25-Apr-2025 11:16:14 UTC] Tentative 1 de connexion à la base de données
+[25-Apr-2025 11:16:14 UTC] Connexion à la base de données réussie
+[25-Apr-2025 11:16:14 UTC] Requête reçue dans update_commande_status.php
+[25-Apr-2025 11:16:14 UTC] SESSION: Array
+(
+    [pwa_mode] => 1
+    [user_id] => 1
+    [username] => admin
+    [role] => admin
+    [full_name] => Administrateur
+)
+
+[25-Apr-2025 11:16:14 UTC] Données JSON reçues: {"commande_id":"166","new_status":"recue"}
+[25-Apr-2025 11:16:14 UTC] Mise à jour du statut: commande_id=166, new_status=recue
+[25-Apr-2025 11:16:14 UTC] Vérification du statut: recue, valides: en_attente, commande, recue, annulee, urgent
+[25-Apr-2025 11:16:14 UTC] Préparation de la requête UPDATE pour commande_id=166 et statut=recue
+[25-Apr-2025 11:16:14 UTC] Résultat de l'exécution de la requête: succès, lignes affectées: 0
+[25-Apr-2025 11:16:14 UTC] Aucune ligne affectée pour commande_id=166 et statut=recue
+[25-Apr-2025 11:16:14 UTC] Tentative 1 de connexion à la base de données
+[25-Apr-2025 11:16:14 UTC] Connexion à la base de données réussie
+[25-Apr-2025 11:16:14 UTC] Requête reçue dans update_commande_status.php
+[25-Apr-2025 11:16:14 UTC] SESSION: Array
+(
+    [pwa_mode] => 1
+    [user_id] => 1
+    [username] => admin
+    [role] => admin
+    [full_name] => Administrateur
+)
+
+[25-Apr-2025 11:16:14 UTC] Données JSON reçues: {"commande_id":"166","new_status":"recue"}
+[25-Apr-2025 11:16:14 UTC] Mise à jour du statut: commande_id=166, new_status=recue
+[25-Apr-2025 11:16:14 UTC] Vérification du statut: recue, valides: en_attente, commande, recue, annulee, urgent
+[25-Apr-2025 11:16:14 UTC] Préparation de la requête UPDATE pour commande_id=166 et statut=recue
+[25-Apr-2025 11:16:14 UTC] Résultat de l'exécution de la requête: succès, lignes affectées: 0
+[25-Apr-2025 11:16:14 UTC] Aucune ligne affectée pour commande_id=166 et statut=recue
+[25-Apr-2025 11:16:19 UTC] Tentative 1 de connexion à la base de données
+[25-Apr-2025 11:16:19 UTC] Connexion à la base de données réussie
+[25-Apr-2025 11:16:19 UTC] Requête reçue dans update_commande_status.php
+[25-Apr-2025 11:16:19 UTC] SESSION: Array
+(
+    [pwa_mode] => 1
+    [user_id] => 1
+    [username] => admin
+    [role] => admin
+    [full_name] => Administrateur
+)
+
+[25-Apr-2025 11:16:19 UTC] Données JSON reçues: {"commande_id":"165","new_status":"recue"}
+[25-Apr-2025 11:16:19 UTC] Mise à jour du statut: commande_id=165, new_status=recue
+[25-Apr-2025 11:16:19 UTC] Vérification du statut: recue, valides: en_attente, commande, recue, annulee, urgent
+[25-Apr-2025 11:16:19 UTC] Préparation de la requête UPDATE pour commande_id=165 et statut=recue
+[25-Apr-2025 11:16:19 UTC] Résultat de l'exécution de la requête: succès, lignes affectées: 1
+[25-Apr-2025 11:16:19 UTC] Tentative 1 de connexion à la base de données
+[25-Apr-2025 11:16:19 UTC] Connexion à la base de données réussie
+[25-Apr-2025 11:16:19 UTC] Requête reçue dans update_commande_status.php
+[25-Apr-2025 11:16:19 UTC] SESSION: Array
+(
+    [pwa_mode] => 1
+    [user_id] => 1
+    [username] => admin
+    [role] => admin
+    [full_name] => Administrateur
+)
+
+[25-Apr-2025 11:16:19 UTC] Données JSON reçues: {"commande_id":"165","new_status":"recue"}
+[25-Apr-2025 11:16:19 UTC] Mise à jour du statut: commande_id=165, new_status=recue
+[25-Apr-2025 11:16:19 UTC] Vérification du statut: recue, valides: en_attente, commande, recue, annulee, urgent
+[25-Apr-2025 11:16:19 UTC] Préparation de la requête UPDATE pour commande_id=165 et statut=recue
+[25-Apr-2025 11:16:19 UTC] Résultat de l'exécution de la requête: succès, lignes affectées: 0
+[25-Apr-2025 11:16:19 UTC] Aucune ligne affectée pour commande_id=165 et statut=recue
+[25-Apr-2025 11:16:19 UTC] Tentative 1 de connexion à la base de données
+[25-Apr-2025 11:16:19 UTC] Connexion à la base de données réussie
+[25-Apr-2025 11:16:19 UTC] Requête reçue dans update_commande_status.php
+[25-Apr-2025 11:16:19 UTC] SESSION: Array
+(
+    [pwa_mode] => 1
+    [user_id] => 1
+    [username] => admin
+    [role] => admin
+    [full_name] => Administrateur
+)
+
+[25-Apr-2025 11:16:19 UTC] Données JSON reçues: {"commande_id":"165","new_status":"recue"}
+[25-Apr-2025 11:16:19 UTC] Mise à jour du statut: commande_id=165, new_status=recue
+[25-Apr-2025 11:16:19 UTC] Vérification du statut: recue, valides: en_attente, commande, recue, annulee, urgent
+[25-Apr-2025 11:16:19 UTC] Préparation de la requête UPDATE pour commande_id=165 et statut=recue
+[25-Apr-2025 11:16:19 UTC] Résultat de l'exécution de la requête: succès, lignes affectées: 0
+[25-Apr-2025 11:16:19 UTC] Aucune ligne affectée pour commande_id=165 et statut=recue
+[25-Apr-2025 11:16:24 UTC] Tentative 1 de connexion à la base de données
+[25-Apr-2025 11:16:24 UTC] Connexion à la base de données réussie
+[25-Apr-2025 11:16:24 UTC] Requête reçue dans update_commande_status.php
+[25-Apr-2025 11:16:24 UTC] SESSION: Array
+(
+    [pwa_mode] => 1
+    [user_id] => 1
+    [username] => admin
+    [role] => admin
+    [full_name] => Administrateur
+)
+
+[25-Apr-2025 11:16:24 UTC] Données JSON reçues: {"commande_id":"162","new_status":"recue"}
+[25-Apr-2025 11:16:24 UTC] Mise à jour du statut: commande_id=162, new_status=recue
+[25-Apr-2025 11:16:24 UTC] Vérification du statut: recue, valides: en_attente, commande, recue, annulee, urgent
+[25-Apr-2025 11:16:24 UTC] Préparation de la requête UPDATE pour commande_id=162 et statut=recue
+[25-Apr-2025 11:16:24 UTC] Résultat de l'exécution de la requête: succès, lignes affectées: 1
+[25-Apr-2025 11:16:24 UTC] Tentative 1 de connexion à la base de données
+[25-Apr-2025 11:16:24 UTC] Connexion à la base de données réussie
+[25-Apr-2025 11:16:24 UTC] Requête reçue dans update_commande_status.php
+[25-Apr-2025 11:16:24 UTC] SESSION: Array
+(
+    [pwa_mode] => 1
+    [user_id] => 1
+    [username] => admin
+    [role] => admin
+    [full_name] => Administrateur
+)
+
+[25-Apr-2025 11:16:24 UTC] Données JSON reçues: {"commande_id":"162","new_status":"recue"}
+[25-Apr-2025 11:16:24 UTC] Mise à jour du statut: commande_id=162, new_status=recue
+[25-Apr-2025 11:16:24 UTC] Vérification du statut: recue, valides: en_attente, commande, recue, annulee, urgent
+[25-Apr-2025 11:16:24 UTC] Préparation de la requête UPDATE pour commande_id=162 et statut=recue
+[25-Apr-2025 11:16:24 UTC] Résultat de l'exécution de la requête: succès, lignes affectées: 0
+[25-Apr-2025 11:16:24 UTC] Aucune ligne affectée pour commande_id=162 et statut=recue
+[25-Apr-2025 11:16:24 UTC] Tentative 1 de connexion à la base de données
+[25-Apr-2025 11:16:24 UTC] Connexion à la base de données réussie
+[25-Apr-2025 11:16:24 UTC] Requête reçue dans update_commande_status.php
+[25-Apr-2025 11:16:24 UTC] SESSION: Array
+(
+    [pwa_mode] => 1
+    [user_id] => 1
+    [username] => admin
+    [role] => admin
+    [full_name] => Administrateur
+)
+
+[25-Apr-2025 11:16:24 UTC] Données JSON reçues: {"commande_id":"162","new_status":"recue"}
+[25-Apr-2025 11:16:24 UTC] Mise à jour du statut: commande_id=162, new_status=recue
+[25-Apr-2025 11:16:24 UTC] Vérification du statut: recue, valides: en_attente, commande, recue, annulee, urgent
+[25-Apr-2025 11:16:24 UTC] Préparation de la requête UPDATE pour commande_id=162 et statut=recue
+[25-Apr-2025 11:16:24 UTC] Résultat de l'exécution de la requête: succès, lignes affectées: 0
+[25-Apr-2025 11:16:24 UTC] Aucune ligne affectée pour commande_id=162 et statut=recue
+[25-Apr-2025 11:16:29 UTC] Tentative 1 de connexion à la base de données
+[25-Apr-2025 11:16:29 UTC] Connexion à la base de données réussie
+[25-Apr-2025 11:16:29 UTC] Requête reçue dans update_commande_status.php
+[25-Apr-2025 11:16:29 UTC] SESSION: Array
+(
+    [pwa_mode] => 1
+    [user_id] => 1
+    [username] => admin
+    [role] => admin
+    [full_name] => Administrateur
+)
+
+[25-Apr-2025 11:16:29 UTC] Données JSON reçues: {"commande_id":"154","new_status":"recue"}
+[25-Apr-2025 11:16:29 UTC] Mise à jour du statut: commande_id=154, new_status=recue
+[25-Apr-2025 11:16:29 UTC] Vérification du statut: recue, valides: en_attente, commande, recue, annulee, urgent
+[25-Apr-2025 11:16:29 UTC] Préparation de la requête UPDATE pour commande_id=154 et statut=recue
+[25-Apr-2025 11:16:29 UTC] Résultat de l'exécution de la requête: succès, lignes affectées: 1
+[25-Apr-2025 11:16:29 UTC] Tentative 1 de connexion à la base de données
+[25-Apr-2025 11:16:29 UTC] Connexion à la base de données réussie
+[25-Apr-2025 11:16:29 UTC] Requête reçue dans update_commande_status.php
+[25-Apr-2025 11:16:29 UTC] SESSION: Array
+(
+    [pwa_mode] => 1
+    [user_id] => 1
+    [username] => admin
+    [role] => admin
+    [full_name] => Administrateur
+)
+
+[25-Apr-2025 11:16:29 UTC] Données JSON reçues: {"commande_id":"154","new_status":"recue"}
+[25-Apr-2025 11:16:29 UTC] Mise à jour du statut: commande_id=154, new_status=recue
+[25-Apr-2025 11:16:29 UTC] Vérification du statut: recue, valides: en_attente, commande, recue, annulee, urgent
+[25-Apr-2025 11:16:29 UTC] Préparation de la requête UPDATE pour commande_id=154 et statut=recue
+[25-Apr-2025 11:16:29 UTC] Résultat de l'exécution de la requête: succès, lignes affectées: 0
+[25-Apr-2025 11:16:29 UTC] Aucune ligne affectée pour commande_id=154 et statut=recue
+[25-Apr-2025 11:16:29 UTC] Tentative 1 de connexion à la base de données
+[25-Apr-2025 11:16:29 UTC] Connexion à la base de données réussie
+[25-Apr-2025 11:16:29 UTC] Requête reçue dans update_commande_status.php
+[25-Apr-2025 11:16:29 UTC] SESSION: Array
+(
+    [pwa_mode] => 1
+    [user_id] => 1
+    [username] => admin
+    [role] => admin
+    [full_name] => Administrateur
+)
+
+[25-Apr-2025 11:16:29 UTC] Données JSON reçues: {"commande_id":"154","new_status":"recue"}
+[25-Apr-2025 11:16:29 UTC] Mise à jour du statut: commande_id=154, new_status=recue
+[25-Apr-2025 11:16:29 UTC] Vérification du statut: recue, valides: en_attente, commande, recue, annulee, urgent
+[25-Apr-2025 11:16:29 UTC] Préparation de la requête UPDATE pour commande_id=154 et statut=recue
+[25-Apr-2025 11:16:29 UTC] Résultat de l'exécution de la requête: succès, lignes affectées: 0
+[25-Apr-2025 11:16:29 UTC] Aucune ligne affectée pour commande_id=154 et statut=recue
+[25-Apr-2025 11:16:34 UTC] Tentative 1 de connexion à la base de données
+[25-Apr-2025 11:16:34 UTC] Connexion à la base de données réussie
+[25-Apr-2025 11:16:34 UTC] Requête reçue dans update_commande_status.php
+[25-Apr-2025 11:16:34 UTC] SESSION: Array
+(
+    [pwa_mode] => 1
+    [user_id] => 1
+    [username] => admin
+    [role] => admin
+    [full_name] => Administrateur
+)
+
+[25-Apr-2025 11:16:34 UTC] Données JSON reçues: {"commande_id":"112","new_status":"recue"}
+[25-Apr-2025 11:16:34 UTC] Mise à jour du statut: commande_id=112, new_status=recue
+[25-Apr-2025 11:16:34 UTC] Vérification du statut: recue, valides: en_attente, commande, recue, annulee, urgent
+[25-Apr-2025 11:16:34 UTC] Préparation de la requête UPDATE pour commande_id=112 et statut=recue
+[25-Apr-2025 11:16:34 UTC] Résultat de l'exécution de la requête: succès, lignes affectées: 1
+[25-Apr-2025 11:16:34 UTC] Tentative 1 de connexion à la base de données
+[25-Apr-2025 11:16:34 UTC] Connexion à la base de données réussie
+[25-Apr-2025 11:16:34 UTC] Requête reçue dans update_commande_status.php
+[25-Apr-2025 11:16:34 UTC] SESSION: Array
+(
+    [pwa_mode] => 1
+    [user_id] => 1
+    [username] => admin
+    [role] => admin
+    [full_name] => Administrateur
+)
+
+[25-Apr-2025 11:16:34 UTC] Données JSON reçues: {"commande_id":"112","new_status":"recue"}
+[25-Apr-2025 11:16:34 UTC] Mise à jour du statut: commande_id=112, new_status=recue
+[25-Apr-2025 11:16:34 UTC] Vérification du statut: recue, valides: en_attente, commande, recue, annulee, urgent
+[25-Apr-2025 11:16:34 UTC] Préparation de la requête UPDATE pour commande_id=112 et statut=recue
+[25-Apr-2025 11:16:34 UTC] Résultat de l'exécution de la requête: succès, lignes affectées: 0
+[25-Apr-2025 11:16:34 UTC] Aucune ligne affectée pour commande_id=112 et statut=recue
+[25-Apr-2025 11:16:34 UTC] Tentative 1 de connexion à la base de données
+[25-Apr-2025 11:16:34 UTC] Connexion à la base de données réussie
+[25-Apr-2025 11:16:34 UTC] Requête reçue dans update_commande_status.php
+[25-Apr-2025 11:16:34 UTC] SESSION: Array
+(
+    [pwa_mode] => 1
+    [user_id] => 1
+    [username] => admin
+    [role] => admin
+    [full_name] => Administrateur
+)
+
+[25-Apr-2025 11:16:34 UTC] Données JSON reçues: {"commande_id":"112","new_status":"recue"}
+[25-Apr-2025 11:16:34 UTC] Mise à jour du statut: commande_id=112, new_status=recue
+[25-Apr-2025 11:16:34 UTC] Vérification du statut: recue, valides: en_attente, commande, recue, annulee, urgent
+[25-Apr-2025 11:16:34 UTC] Préparation de la requête UPDATE pour commande_id=112 et statut=recue
+[25-Apr-2025 11:16:34 UTC] Résultat de l'exécution de la requête: succès, lignes affectées: 0
+[25-Apr-2025 11:16:34 UTC] Aucune ligne affectée pour commande_id=112 et statut=recue
+[25-Apr-2025 11:16:40 UTC] Tentative 1 de connexion à la base de données
+[25-Apr-2025 11:16:40 UTC] Connexion à la base de données réussie
+[25-Apr-2025 11:16:40 UTC] Requête reçue dans update_commande_status.php
+[25-Apr-2025 11:16:40 UTC] SESSION: Array
+(
+    [pwa_mode] => 1
+    [user_id] => 1
+    [username] => admin
+    [role] => admin
+    [full_name] => Administrateur
+)
+
+[25-Apr-2025 11:16:40 UTC] Données JSON reçues: {"commande_id":"110","new_status":"recue"}
+[25-Apr-2025 11:16:40 UTC] Mise à jour du statut: commande_id=110, new_status=recue
+[25-Apr-2025 11:16:40 UTC] Vérification du statut: recue, valides: en_attente, commande, recue, annulee, urgent
+[25-Apr-2025 11:16:40 UTC] Préparation de la requête UPDATE pour commande_id=110 et statut=recue
+[25-Apr-2025 11:16:40 UTC] Résultat de l'exécution de la requête: succès, lignes affectées: 1
+[25-Apr-2025 11:16:40 UTC] Tentative 1 de connexion à la base de données
+[25-Apr-2025 11:16:40 UTC] Connexion à la base de données réussie
+[25-Apr-2025 11:16:40 UTC] Requête reçue dans update_commande_status.php
+[25-Apr-2025 11:16:40 UTC] SESSION: Array
+(
+    [pwa_mode] => 1
+    [user_id] => 1
+    [username] => admin
+    [role] => admin
+    [full_name] => Administrateur
+)
+
+[25-Apr-2025 11:16:40 UTC] Données JSON reçues: {"commande_id":"110","new_status":"recue"}
+[25-Apr-2025 11:16:40 UTC] Mise à jour du statut: commande_id=110, new_status=recue
+[25-Apr-2025 11:16:40 UTC] Vérification du statut: recue, valides: en_attente, commande, recue, annulee, urgent
+[25-Apr-2025 11:16:40 UTC] Préparation de la requête UPDATE pour commande_id=110 et statut=recue
+[25-Apr-2025 11:16:40 UTC] Résultat de l'exécution de la requête: succès, lignes affectées: 0
+[25-Apr-2025 11:16:40 UTC] Aucune ligne affectée pour commande_id=110 et statut=recue
+[25-Apr-2025 11:16:40 UTC] Tentative 1 de connexion à la base de données
+[25-Apr-2025 11:16:40 UTC] Connexion à la base de données réussie
+[25-Apr-2025 11:16:40 UTC] Requête reçue dans update_commande_status.php
+[25-Apr-2025 11:16:40 UTC] SESSION: Array
+(
+    [pwa_mode] => 1
+    [user_id] => 1
+    [username] => admin
+    [role] => admin
+    [full_name] => Administrateur
+)
+
+[25-Apr-2025 11:16:40 UTC] Données JSON reçues: {"commande_id":"110","new_status":"recue"}
+[25-Apr-2025 11:16:40 UTC] Mise à jour du statut: commande_id=110, new_status=recue
+[25-Apr-2025 11:16:40 UTC] Vérification du statut: recue, valides: en_attente, commande, recue, annulee, urgent
+[25-Apr-2025 11:16:40 UTC] Préparation de la requête UPDATE pour commande_id=110 et statut=recue
+[25-Apr-2025 11:16:40 UTC] Résultat de l'exécution de la requête: succès, lignes affectées: 0
+[25-Apr-2025 11:16:40 UTC] Aucune ligne affectée pour commande_id=110 et statut=recue
+[25-Apr-2025 11:16:57 UTC] Tentative 1 de connexion à la base de données
+[25-Apr-2025 11:16:57 UTC] Connexion à la base de données réussie
+[25-Apr-2025 11:16:57 UTC] Requête reçue dans update_commande_status.php
+[25-Apr-2025 11:16:57 UTC] SESSION: Array
+(
+    [pwa_mode] => 1
+    [user_id] => 1
+    [username] => admin
+    [role] => admin
+    [full_name] => Administrateur
+)
+
+[25-Apr-2025 11:16:57 UTC] Données JSON reçues: {"commande_id":"102","new_status":"recue"}
+[25-Apr-2025 11:16:57 UTC] Mise à jour du statut: commande_id=102, new_status=recue
+[25-Apr-2025 11:16:57 UTC] Vérification du statut: recue, valides: en_attente, commande, recue, annulee, urgent
+[25-Apr-2025 11:16:57 UTC] Préparation de la requête UPDATE pour commande_id=102 et statut=recue
+[25-Apr-2025 11:16:57 UTC] Résultat de l'exécution de la requête: succès, lignes affectées: 1
+[25-Apr-2025 11:16:57 UTC] Tentative 1 de connexion à la base de données
+[25-Apr-2025 11:16:57 UTC] Connexion à la base de données réussie
+[25-Apr-2025 11:16:57 UTC] Requête reçue dans update_commande_status.php
+[25-Apr-2025 11:16:57 UTC] SESSION: Array
+(
+    [pwa_mode] => 1
+    [user_id] => 1
+    [username] => admin
+    [role] => admin
+    [full_name] => Administrateur
+)
+
+[25-Apr-2025 11:16:57 UTC] Données JSON reçues: {"commande_id":"102","new_status":"recue"}
+[25-Apr-2025 11:16:57 UTC] Mise à jour du statut: commande_id=102, new_status=recue
+[25-Apr-2025 11:16:57 UTC] Vérification du statut: recue, valides: en_attente, commande, recue, annulee, urgent
+[25-Apr-2025 11:16:57 UTC] Préparation de la requête UPDATE pour commande_id=102 et statut=recue
+[25-Apr-2025 11:16:57 UTC] Résultat de l'exécution de la requête: succès, lignes affectées: 0
+[25-Apr-2025 11:16:57 UTC] Aucune ligne affectée pour commande_id=102 et statut=recue
+[25-Apr-2025 11:16:57 UTC] Tentative 1 de connexion à la base de données
+[25-Apr-2025 11:16:57 UTC] Connexion à la base de données réussie
+[25-Apr-2025 11:16:57 UTC] Requête reçue dans update_commande_status.php
+[25-Apr-2025 11:16:57 UTC] SESSION: Array
+(
+    [pwa_mode] => 1
+    [user_id] => 1
+    [username] => admin
+    [role] => admin
+    [full_name] => Administrateur
+)
+
+[25-Apr-2025 11:16:57 UTC] Données JSON reçues: {"commande_id":"102","new_status":"recue"}
+[25-Apr-2025 11:16:57 UTC] Mise à jour du statut: commande_id=102, new_status=recue
+[25-Apr-2025 11:16:57 UTC] Vérification du statut: recue, valides: en_attente, commande, recue, annulee, urgent
+[25-Apr-2025 11:16:57 UTC] Préparation de la requête UPDATE pour commande_id=102 et statut=recue
+[25-Apr-2025 11:16:57 UTC] Résultat de l'exécution de la requête: succès, lignes affectées: 0
+[25-Apr-2025 11:16:57 UTC] Aucune ligne affectée pour commande_id=102 et statut=recue
+[25-Apr-2025 13:04:32 UTC] Tentative 1 de connexion à la base de données
+[25-Apr-2025 13:04:32 UTC] Connexion à la base de données réussie
+[25-Apr-2025 13:04:32 UTC] Tentative 1 de connexion à la base de données
+[25-Apr-2025 13:04:32 UTC] Connexion à la base de données réussie
+[25-Apr-2025 13:04:32 UTC] Tentative 1 de connexion à la base de données
+[25-Apr-2025 13:04:32 UTC] Connexion à la base de données réussie
+[25-Apr-2025 13:04:32 UTC] Tentative 1 de connexion à la base de données
+[25-Apr-2025 13:04:32 UTC] Connexion à la base de données réussie
+[25-Apr-2025 16:11:04 UTC] Tentative 1 de connexion à la base de données
+[25-Apr-2025 16:11:04 UTC] Connexion à la base de données réussie
+[25-Apr-2025 16:11:04 UTC] Tentative 1 de connexion à la base de données
+[25-Apr-2025 16:11:04 UTC] Connexion à la base de données réussie
+[25-Apr-2025 16:11:07 UTC] Tentative 1 de connexion à la base de données
+[25-Apr-2025 16:11:07 UTC] Connexion à la base de données réussie
+[25-Apr-2025 16:11:09 UTC] Tentative 1 de connexion à la base de données
+[25-Apr-2025 16:11:09 UTC] Connexion à la base de données réussie

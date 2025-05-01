@@ -1,0 +1,697 @@
+/* 
+ * Fichier CSS responsive pour l'application de Gestion des Réparations
+ * Contient les styles spécifiques à chaque taille d'écran
+ */
+
+/* ========================================
+   VARIABLES RESPONSIVE
+   ======================================== */
+:root {
+    /* Points de rupture */
+    --breakpoint-xs: 0;
+    --breakpoint-sm: 576px;
+    --breakpoint-md: 768px;
+    --breakpoint-lg: 992px;
+    --breakpoint-xl: 1200px;
+    --breakpoint-xxl: 1400px;
+}
+
+/* ========================================
+   STYLES DE BASE RESPONSIVE
+   ======================================== */
+html {
+    font-size: 16px;
+}
+
+@media (max-width: 768px) {
+    html {
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 576px) {
+    html {
+        font-size: 14px;
+    }
+}
+
+/* ========================================
+   STYLES POUR SMARTPHONES (< 768px)
+   ======================================== */
+@media (max-width: 768px) {
+    /* Typographie */
+    h1, .h1 {
+        font-size: 2rem;
+    }
+    
+    h2, .h2 {
+        font-size: 1.75rem;
+    }
+    
+    h3, .h3 {
+        font-size: 1.5rem;
+    }
+    
+    h4, .h4 {
+        font-size: 1.25rem;
+    }
+    
+    h5, .h5 {
+        font-size: 1.125rem;
+    }
+    
+    /* Espacement */
+    .container, .container-fluid {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+    
+    /* Cartes */
+    .card {
+        margin-bottom: 1rem;
+    }
+    
+    .card-header {
+        padding: 1rem;
+    }
+    
+    .card-body {
+        padding: 1rem;
+    }
+    
+    .card-footer {
+        padding: 1rem;
+    }
+    
+    /* Tableaux */
+    .table th, .table td {
+        padding: 0.75rem;
+    }
+    
+    /* Formulaires */
+    .form-control, .form-select {
+        padding: 0.625rem 0.875rem;
+    }
+    
+    /* Boutons */
+    .btn {
+        padding: 0.5rem 1rem;
+    }
+    
+    .btn-lg {
+        padding: 0.75rem 1.5rem;
+    }
+    
+    /* Masquer les colonnes non essentielles dans les tableaux */
+    .table .d-none-mobile {
+        display: none !important;
+    }
+    
+    /* Afficher les vues mobiles */
+    .mobile-view {
+        display: block !important;
+    }
+    
+    .desktop-view {
+        display: none !important;
+    }
+    
+    /* Ajuster la barre de navigation */
+    .navbar {
+        padding: 0.5rem 1rem;
+    }
+    
+    .navbar-brand {
+        font-size: 1.25rem;
+    }
+    
+    /* Ajuster les marges des conteneurs */
+    .container, .container-fluid {
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+    }
+    
+    /* Optimiser les formulaires */
+    .form-group, .mb-3 {
+        margin-bottom: 0.75rem;
+    }
+    
+    /* Ajuster les boutons d'action */
+    .action-buttons .btn {
+        padding: 0.375rem 0.75rem;
+        font-size: 0.875rem;
+    }
+    
+    /* Optimiser les modales */
+    .modal-header {
+        padding: 0.75rem 1rem;
+    }
+    
+    .modal-body {
+        padding: 1rem;
+    }
+    
+    .modal-footer {
+        padding: 0.75rem 1rem;
+    }
+    
+    /* Optimiser les alertes */
+    .alert {
+        padding: 0.75rem 1rem;
+    }
+    
+    /* Ajuster les badges */
+    .badge {
+        font-size: 0.7em;
+    }
+    
+    /* Optimiser les cartes de statistiques */
+    .stat-card .stat-value {
+        font-size: 2rem;
+    }
+    
+    .stat-card .stat-icon {
+        font-size: 2rem;
+    }
+    
+    /* Optimiser les cartes mobiles */
+    .mobile-card-view {
+        margin-bottom: 0.75rem;
+    }
+    
+    .mobile-card-view .card-body {
+        padding: 0.875rem;
+    }
+    
+    /* Optimiser la pagination */
+    .pagination .page-link {
+        padding: 0.375rem 0.75rem;
+    }
+}
+
+/* ========================================
+   STYLES POUR TABLETTES (768px - 991px)
+   ======================================== */
+@media (min-width: 768px) and (max-width: 992px) {
+    /* Typographie */
+    h1, .h1 {
+        font-size: 2.25rem;
+    }
+    
+    h2, .h2 {
+        font-size: 1.875rem;
+    }
+    
+    /* Cartes */
+    .card {
+        margin-bottom: 1.25rem;
+    }
+    
+    /* Tableaux */
+    .table-sm td, .table-sm th {
+        padding: 0.5rem;
+    }
+    
+    /* Optimiser les formulaires */
+    .form-group, .mb-3 {
+        margin-bottom: 1rem;
+    }
+    
+    /* Ajuster les boutons */
+    .btn {
+        padding: 0.5625rem 1.125rem;
+    }
+    
+    /* Optimiser les cartes de statistiques */
+    .stat-card .stat-value {
+        font-size: 2.25rem;
+    }
+    
+    /* Ajuster les marges des conteneurs */
+    .container, .container-fluid {
+        padding-left: 1.25rem;
+        padding-right: 1.25rem;
+    }
+}
+
+/* ========================================
+   STYLES POUR GRANDES TABLETTES (992px - 1199px)
+   ======================================== */
+@media (min-width: 992px) and (max-width: 1199.98px) {
+    /* Typographie */
+    h1, .h1 {
+        font-size: 2.375rem;
+    }
+    
+    /* Cartes */
+    .card {
+        margin-bottom: 1.5rem;
+    }
+    
+    /* Tableaux */
+    .table th, .table td {
+        padding: 0.875rem;
+    }
+    
+    /* Optimiser les formulaires */
+    .form-group, .mb-3 {
+        margin-bottom: 1.25rem;
+    }
+}
+
+/* ========================================
+   STYLES POUR DESKTOP (≥ 1200px)
+   ======================================== */
+@media (min-width: 1200px) {
+    /* Typographie */
+    h1, .h1 {
+        font-size: 2.5rem;
+    }
+    
+    /* Cartes */
+    .card {
+        margin-bottom: 1.5rem;
+    }
+    
+    /* Tableaux */
+    .table th, .table td {
+        padding: 1rem;
+    }
+    
+    /* Optimiser les formulaires */
+    .form-group, .mb-3 {
+        margin-bottom: 1.5rem;
+    }
+    
+    /* Effets de survol avancés */
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-lg);
+    }
+    
+    .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+    }
+    
+    /* Optimiser les cartes de statistiques */
+    .stat-card:hover {
+        transform: translateY(-7px) scale(1.02);
+        box-shadow: var(--shadow-xl);
+    }
+    
+    /* Améliorer les transitions */
+    .card, .btn, .form-control, .form-select {
+        transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    /* Styles pour le menu PC en haut de page */
+    body {
+        padding-top: 60px !important; /* Espace pour le menu PC */
+        padding-bottom: 0 !important; /* Pas d'espace pour le dock mobile */
+    }
+
+    /* Cacher le dock mobile sur grand écran */
+    #mobile-dock {
+        display: none !important;
+    }
+}
+
+/* ========================================
+   STYLES SPÉCIFIQUES AUX APPAREILS
+   ======================================== */
+
+/* Styles pour les smartphones */
+.smartphone .extended-info {
+    display: none !important;
+}
+
+.smartphone .btn-group .btn {
+    padding: 0.375rem 0.75rem;
+    font-size: 0.875rem;
+}
+
+.smartphone .table-sm td, .smartphone .table-sm th {
+    padding: 0.375rem 0.5rem;
+    font-size: 0.875rem;
+}
+
+.smartphone .form-control, .smartphone .form-select {
+    font-size: 0.9375rem;
+}
+
+.smartphone .card-title {
+    font-size: 1.125rem;
+}
+
+/* Styles pour les tablettes */
+.tablet .extended-info {
+    display: none !important;
+}
+
+.tablet .btn-group .btn {
+    padding: 0.4375rem 0.875rem;
+    font-size: 0.9375rem;
+}
+
+.tablet .table-sm td, .tablet .table-sm th {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.9375rem;
+}
+
+/* Styles pour les grandes tablettes */
+.large-tablet .btn-group .btn {
+    padding: 0.5rem 1rem;
+}
+
+/* Styles pour les ordinateurs de bureau */
+.desktop .extended-info {
+    display: table-cell !important;
+}
+
+.desktop .card-3d-effect {
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+}
+
+.desktop .card-3d-effect:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: var(--shadow-xl);
+}
+
+/* ========================================
+   ANIMATIONS RESPONSIVES
+   ======================================== */
+
+/* Animations pour les appareils mobiles (plus légères) */
+@media (max-width: 768px) {
+    .fade-in-up {
+        animation-duration: 0.4s;
+    }
+    
+    .staggered-animation > * {
+        animation-duration: 0.4s;
+    }
+    
+    /* Réduire les délais d'animation pour les appareils mobiles */
+    .staggered-animation > *:nth-child(1) { animation-delay: 0.03s; }
+    .staggered-animation > *:nth-child(2) { animation-delay: 0.06s; }
+    .staggered-animation > *:nth-child(3) { animation-delay: 0.09s; }
+    .staggered-animation > *:nth-child(4) { animation-delay: 0.12s; }
+    .staggered-animation > *:nth-child(5) { animation-delay: 0.15s; }
+    .staggered-animation > *:nth-child(6) { animation-delay: 0.18s; }
+    .staggered-animation > *:nth-child(7) { animation-delay: 0.21s; }
+    .staggered-animation > *:nth-child(8) { animation-delay: 0.24s; }
+    .staggered-animation > *:nth-child(9) { animation-delay: 0.27s; }
+    .staggered-animation > *:nth-child(10) { animation-delay: 0.3s; }
+}
+
+/* ========================================
+   COMPOSANTS RESPONSIVES SPÉCIFIQUES
+   ======================================== */
+
+/* Barre de recherche mobile */
+@media (max-width: 768px) {
+    .mobile-search-container {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        padding: 0.75rem;
+        background-color: var(--gray-100);
+        margin-bottom: 1rem;
+        box-shadow: var(--shadow);
+    }
+}
+
+/* Cartes mobiles */
+@media (max-width: 768px) {
+    .mobile-cards-container {
+        display: block !important;
+    }
+    
+    .table-responsive.d-none {
+        display: none !important;
+    }
+    
+    .mobile-card-view {
+        display: block !important;
+    }
+    
+    .mobile-card-view .card-title {
+        font-size: 1.125rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+    }
+    
+    .mobile-card-view .card-text p {
+        margin-bottom: 0.5rem;
+        font-size: 0.9375rem;
+    }
+    
+    .mobile-card-view .card-text p strong {
+        display: inline-block;
+        width: 40%;
+        color: var(--gray-700);
+    }
+    
+    .mobile-card-view .action-buttons {
+        margin-top: 0.75rem;
+        padding-top: 0.75rem;
+        border-top: 1px solid var(--gray-200);
+    }
+    
+    .mobile-card-view .status-field {
+        background-color: var(--gray-100);
+        padding: 0.5rem;
+        border-radius: var(--radius-sm);
+        margin-top: 0.75rem;
+    }
+    
+    .mobile-card-view .status-field strong {
+        color: var(--gray-800);
+    }
+}
+
+/* ========================================
+   OPTIMISATIONS POUR LES APPAREILS À HAUTE DENSITÉ DE PIXELS
+   ======================================== */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    /* Optimiser les bordures fines */
+    .border, .border-top, .border-right, .border-bottom, .border-left {
+        border-width: 0.5px !important;
+    }
+    
+    /* Optimiser les ombres */
+    .shadow-sm {
+        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.03) !important;
+    }
+    
+    .shadow {
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.07), 0 1px 2px 0 rgba(0, 0, 0, 0.04) !important;
+    }
+}
+
+/* ========================================
+   OPTIMISATIONS POUR L'ORIENTATION
+   ======================================== */
+@media (orientation: portrait) and (max-width: 767.98px) {
+    /* Optimisations pour les smartphones en mode portrait */
+    .row {
+        margin-left: -0.5rem;
+        margin-right: -0.5rem;
+    }
+    
+    .col, [class*="col-"] {
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+    }
+    
+    /* Optimiser les cartes de statistiques */
+    .stat-card {
+        margin-bottom: 1rem;
+    }
+    
+    .stat-card .stat-value {
+        font-size: 1.75rem;
+    }
+    
+    .stat-card .stat-icon {
+        font-size: 1.75rem;
+    }
+}
+
+@media (orientation: landscape) and (max-width: 767.98px) {
+    /* Optimisations pour les smartphones en mode paysage */
+    .container, .container-fluid {
+        max-width: 100%;
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+    }
+    
+    /* Optimiser les formulaires */
+    .form-group, .mb-3 {
+        margin-bottom: 0.5rem;
+    }
+    
+    /* Optimiser les cartes */
+    .card {
+        margin-bottom: 0.75rem;
+    }
+    
+    .card-header {
+        padding: 0.75rem 1rem;
+    }
+    
+    .card-body {
+        padding: 0.75rem 1rem;
+    }
+    
+    .card-footer {
+        padding: 0.75rem 1rem;
+    }
+}
+
+/* ========================================
+   OPTIMISATIONS POUR L'IMPRESSION
+   ======================================== */
+@media print {
+    /* Masquer les éléments non imprimables */
+    .no-print, .mobile-search-container {
+        display: none !important;
+    }
+    
+    /* Optimiser les tableaux pour l'impression */
+    .table {
+        width: 100% !important;
+        border-collapse: collapse !important;
+    }
+    
+    .table th, .table td {
+        background-color: white !important;
+        border: 1px solid #ddd !important;
+    }
+    
+    /* Afficher les URL des liens */
+    a[href]:after {
+        content: " (" attr(href) ")";
+        font-size: 0.8em;
+        font-weight: normal;
+    }
+    
+    /* Ne pas afficher les URL pour certains liens */
+    a[href^="#"]:after, a[href^="javascript:"]:after {
+        content: "";
+    }
+    
+    /* Forcer le fond blanc et le texte noir */
+    body {
+        background-color: white !important;
+        color: black !important;
+    }
+    
+    /* Optimiser les marges */
+    @page {
+        margin: 1.5cm;
+    }
+    
+    /* Éviter les sauts de page à l'intérieur des éléments */
+    h1, h2, h3, h4, h5, h6, img, .card, .table {
+        page-break-inside: avoid;
+    }
+    
+    /* Forcer les sauts de page après certains éléments */
+    h1, h2, h3, .page-break-after {
+        page-break-after: always;
+    }
+}
+
+/* ========================================
+   OPTIMISATIONS POUR L'ACCESSIBILITÉ
+   ======================================== */
+@media (prefers-reduced-motion: reduce) {
+    /* Désactiver les animations pour les utilisateurs qui préfèrent moins de mouvement */
+    *, ::before, ::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+    
+    .fade-in, .fade-in-up, .slide-in-up, .slide-in-left, .slide-in-right,
+    .staggered-animation > * {
+        animation: none !important;
+        opacity: 1 !important;
+        transform: none !important;
+    }
+    
+    .pulse, .spin {
+        animation: none !important;
+    }
+}
+
+/* ========================================
+   OPTIMISATIONS POUR LE MODE SOMBRE SYSTÈME
+   ======================================== */
+@media (prefers-color-scheme: dark) {
+    /* Appliquer le thème sombre si l'utilisateur a activé le mode sombre système */
+    :root:not([data-theme]) {
+        --primary: #6366f1;
+        --primary-light: #818cf8;
+        --primary-dark: #4f46e5;
+        --secondary: #38bdf8;
+        --success: #34d399;
+        --warning: #fbbf24;
+        --danger: #f87171;
+        --info: #60a5fa;
+        --light: #1f2937;
+        --dark: #f9fafb;
+        --gray-50: #374151;
+        --gray-100: #1f2937;
+        --gray-200: #1a1e2c;
+        --gray-300: #374151;
+        --gray-400: #4b5563;
+        --gray-500: #6b7280;
+        --gray-600: #9ca3af;
+        --gray-700: #d1d5db;
+        --gray-800: #e5e7eb;
+        --gray-900: #f3f4f6;
+    }
+    
+    :root:not([data-theme]) body {
+        background-color: #111827;
+        color: #e5e7eb;
+    }
+    
+    :root:not([data-theme]) .card {
+        background-color: #1f2937;
+        border-color: #374151;
+    }
+    
+    :root:not([data-theme]) .card-header {
+        background-color: #1a1e2c;
+        border-bottom-color: #374151;
+    }
+    
+    :root:not([data-theme]) .table {
+        color: #e5e7eb;
+    }
+    
+    :root:not([data-theme]) .table th {
+        background-color: #1a1e2c;
+        color: #d1d5db;
+    }
+    
+    :root:not([data-theme]) .table td {
+        border-top-color: #374151;
+    }
+    
+    :root:not([data-theme]) .form-control {
+        background-color: #1f2937;
+        border-color: #4b5563;
+        color: #e5e7eb;
+    }
+    
+    :root:not([data-theme]) .form-control:focus {
+        border-color: var(--primary-light);
+        background-color: #1a1e2c;
+    }
+}

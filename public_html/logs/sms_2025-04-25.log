@@ -1,0 +1,22 @@
+[2025-04-25 17:31:36] === TRAITEMENT REQUÊTE SMS ===
+[2025-04-25 17:31:36] Données reçues: {"client_id":"438","telephone":"33620130967","template":"","message":"Bonjour, nous avons re\u00e7u la vitre pour votre cam\u00e9ra de votre t\u00e9l\u00e9phone.\r\nVous pouvez passer quand vous voulez.\r\nLa Maison Du Geek"}
+[2025-04-25 17:31:36] Envoi du SMS au numéro: 33620130967
+[2025-04-25 17:31:36] Numéro formaté: +33620130967
+[2025-04-25 17:31:36] Données JSON: {"message":"Bonjour, nous avons re\u00e7u la vitre pour votre cam\u00e9ra de votre t\u00e9l\u00e9phone.\r\nVous pouvez passer quand vous voulez.\r\nLa Maison Du Geek","phoneNumbers":["+33620130967"]}
+[2025-04-25 17:31:36] Exécution de la requête cURL...
+[2025-04-25 17:31:37] Code HTTP: 202
+[2025-04-25 17:31:37] Réponse: {"id":"FtSmH-qv8QuPZPNCv9mSb","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33620130967","state":"Pending"}],"states":null}
+[2025-04-25 17:31:37] Envoi SMS réussi
+[2025-04-25 17:31:37] Erreur lors de l'enregistrement du SMS: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'client_id' in 'INSERT INTO'
+[2025-04-25 17:31:37] Résultat final: {"success":true,"message":"SMS envoy\u00e9 avec succ\u00e8s","response":{"id":"FtSmH-qv8QuPZPNCv9mSb","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33620130967","state":"Pending"}],"states":null}}
+[2025-04-25 17:33:13] === TRAITEMENT REQUÊTE SMS ===
+[2025-04-25 17:33:13] Données reçues: {"client_id":"423","telephone":"33753607252","template":"","message":"Bonjour,\r\nNous avons re\u00e7u le kit de freins pour votre Trotinette.\r\n\r\n\bNous conservons votre kit de freins jusqu'au 10 Mai. Passee ce delais nous seront contraint de retourner les produits a notre fournisseur.\r\n\r\nCordialement\r\nMaison Du Geek"}
+[2025-04-25 17:33:13] Envoi du SMS au numéro: 33753607252
+[2025-04-25 17:33:13] Numéro formaté: +33753607252
+[2025-04-25 17:33:13] Données JSON: {"message":"Bonjour,\r\nNous avons re\u00e7u le kit de freins pour votre Trotinette.\r\n\r\n\bNous conservons votre kit de freins jusqu'au 10 Mai. Passee ce delais nous seront contraint de retourner les produits a notre fournisseur.\r\n\r\nCordialement\r\nMaison Du Geek","phoneNumbers":["+33753607252"]}
+[2025-04-25 17:33:13] Exécution de la requête cURL...
+[2025-04-25 17:33:13] Code HTTP: 202
+[2025-04-25 17:33:13] Réponse: {"id":"6S5ldN88Y6YQ4L9wOu9Ho","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33753607252","state":"Pending"}],"states":null}
+[2025-04-25 17:33:13] Envoi SMS réussi
+[2025-04-25 17:33:13] Erreur lors de l'enregistrement du SMS: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'client_id' in 'INSERT INTO'
+[2025-04-25 17:33:13] Résultat final: {"success":true,"message":"SMS envoy\u00e9 avec succ\u00e8s","response":{"id":"6S5ldN88Y6YQ4L9wOu9Ho","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33753607252","state":"Pending"}],"states":null}}

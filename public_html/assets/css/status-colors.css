@@ -1,0 +1,133 @@
+/**
+ * Couleurs personnalisées pour les statuts des réparations
+ */
+
+/* Nouvelles couleurs pour les badges */
+.badge.bg-info-light {
+    background-color: #8ecdf5;
+    color: #0a3b5a;
+}
+
+.badge.bg-primary-dark {
+    background-color: #0c47a1;
+    color: #ffffff;
+}
+
+.badge.bg-danger-light {
+    background-color: #ff8a80;
+    color: #7f0000;
+}
+
+.badge.bg-orange {
+    background-color: #ff9800;
+    color: #ffffff;
+}
+
+.badge.bg-orange-red {
+    background-color: #e65100;
+    color: #ffffff;
+}
+
+.badge.bg-brown {
+    background-color: #795548;
+    color: #ffffff;
+}
+
+/* Styles pour les boutons avec ces mêmes couleurs */
+.btn.btn-info-light {
+    background-color: #8ecdf5;
+    border-color: #8ecdf5;
+    color: #0a3b5a;
+}
+
+.btn.btn-primary-dark {
+    background-color: #0c47a1;
+    border-color: #0c47a1;
+    color: #ffffff;
+}
+
+.btn.btn-danger-light {
+    background-color: #ff8a80;
+    border-color: #ff8a80;
+    color: #7f0000;
+}
+
+.btn.btn-orange {
+    background-color: #ff9800;
+    border-color: #ff9800;
+    color: #ffffff;
+}
+
+.btn.btn-orange-red {
+    background-color: #e65100;
+    border-color: #e65100;
+    color: #ffffff;
+}
+
+.btn.btn-brown {
+    background-color: #795548;
+    border-color: #795548;
+    color: #ffffff;
+}
+
+/* Hover states pour les boutons */
+.btn.btn-info-light:hover {
+    background-color: #64b5f6;
+    border-color: #64b5f6;
+}
+
+.btn.btn-primary-dark:hover {
+    background-color: #083378;
+    border-color: #083378;
+}
+
+.btn.btn-danger-light:hover {
+    background-color: #ff5252;
+    border-color: #ff5252;
+}
+
+.btn.btn-orange:hover {
+    background-color: #fb8c00;
+    border-color: #fb8c00;
+}
+
+.btn.btn-orange-red:hover {
+    background-color: #d84315;
+    border-color: #d84315;
+}
+
+.btn.btn-brown:hover {
+    background-color: #5d4037;
+    border-color: #5d4037;
+}
+
+/* Styles pour les arrière-plans de tableaux et cartes */
+.bg-info-light {
+    background-color: #8ecdf5 !important;
+    color: #0a3b5a !important;
+}
+
+.bg-primary-dark {
+    background-color: #0c47a1 !important;
+    color: #ffffff !important;
+}
+
+.bg-danger-light {
+    background-color: #ff8a80 !important;
+    color: #7f0000 !important;
+}
+
+.bg-orange {
+    background-color: #ff9800 !important;
+    color: #ffffff !important;
+}
+
+.bg-orange-red {
+    background-color: #e65100 !important;
+    color: #ffffff !important;
+}
+
+.bg-brown {
+    background-color: #795548 !important;
+    color: #ffffff !important;
+} 

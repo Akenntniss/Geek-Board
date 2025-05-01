@@ -1,0 +1,22 @@
+[2025-04-22 00:47:04] === DÉBUT TRAITEMENT DEVIS ===
+[2025-04-22 00:47:04] Session ID: ujochs8r2p3jvln0mm48kv64jv
+[2025-04-22 00:47:04] Session name: PHPSESSID
+[2025-04-22 00:47:04] User ID in session: 1
+[2025-04-22 00:47:04] Remember token cookie: Absent
+[2025-04-22 00:47:04] MDGEEK_SESSION cookie: Présent
+[2025-04-22 00:47:04] --- COOKIES ---
+[2025-04-22 00:47:04] Cookie pwa_mode: true
+[2025-04-22 00:47:04] Cookie MDGEEK_SESSION: lnvfqdajri2gvcf547jbjokn1b
+[2025-04-22 00:47:04] Cookie mdgeek_remember: b28aec1b0773f007e856a7f274f9aa7615d4a1c82fc517cda965b6aa8b3088b5
+[2025-04-22 00:47:04] Cookie PHPSESSID: ujochs8r2p3jvln0mm48kv64jv
+[2025-04-22 00:47:04] --- HEADERS ---
+[2025-04-22 00:47:04] Header Host: mdgeek.top
+[2025-04-22 00:47:04] Header Content-Length: 546
+[2025-04-22 00:47:04] Header Content-Type: multipart/form-data; boundary=----WebKitFormBoundary8jWzmR1PDBwMwfhm
+[2025-04-22 00:47:04] Header origin: https://mdgeek.top
+[2025-04-22 00:47:04] Header Referer: https://mdgeek.top/index.php?page=statut_rapide&id=636
+[2025-04-22 00:47:04] Header Cookie: pwa_mode=true; MDGEEK_SESSION=lnvfqdajri2gvcf547jbjokn1b; mdgeek_remember=b28aec1b0773f007e856a7f274f9aa7615d4a1c82fc517cda965b6aa8b3088b5; PHPSESSID=ujochs8r2p3jvln0mm48kv64jv
+[2025-04-22 00:47:04] Paramètres reçus:
+[2025-04-22 00:47:04] - reparation_id: 636
+[2025-04-22 00:47:04] - montant: 79
+[2025-04-22 00:47:04] - update_prix: Oui

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1125px" height="2436px" viewBox="0 0 1125 2436" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4361EE"/>
+      <stop offset="100%" style="stop-color:#805AD5"/>
+    </linearGradient>
+    <linearGradient id="textGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFFFFF"/>
+      <stop offset="100%" style="stop-color:#F0F0F0"/>
+    </linearGradient>
+  </defs>
+  <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+    <rect fill="url(#bgGradient)" x="0" y="0" width="1125" height="2436"></rect>
+    
+    <g transform="translate(363, 1068)">
+      <rect fill="url(#bgGradient)" x="0" y="0" width="400" height="400" rx="100"></rect>
+      <text font-family="Arial-BoldMT, Arial" font-size="140" font-weight="bold" fill="url(#textGradient)">
+        <tspan x="80" y="220">MD</tspan>
+      </text>
+      <path d="M270,170 L350,170 C355.523,170 360,174.477 360,180 L360,280 C360,285.523 355.523,290 350,290 L270,290 C264.477,290 260,285.523 260,280 L260,180 C260,174.477 264.477,170 270,170 Z" stroke="#FFFFFF" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="280" y1="200" x2="330" y2="200" stroke="#FFFFFF" stroke-width="8" stroke-linecap="round"/>
+      <line x1="280" y1="230" x2="330" y2="230" stroke="#FFFFFF" stroke-width="8" stroke-linecap="round"/>
+      <line x1="280" y1="260" x2="330" y2="260" stroke="#FFFFFF" stroke-width="8" stroke-linecap="round"/>
+    </g>
+    
+    <text font-family="Arial-BoldMT, Arial" font-size="50" font-weight="bold" fill="#FFFFFF" text-anchor="middle">
+      <tspan x="562.5" y="1600">MD Geek</tspan>
+    </text>
+    
+    <text font-family="Arial, Arial" font-size="30" font-weight="normal" fill="rgba(255,255,255,0.8)" text-anchor="middle">
+      <tspan x="562.5" y="1650">Gestion des Réparations</tspan>
+    </text>
+  </g>
+</svg> 

@@ -1,0 +1,130 @@
+@media (max-width: 767px) {
+    body {
+        padding-top: 135px;
+        padding-bottom: 80px;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    /* Optimisations spécifiques au formulaire de rachat */
+    .rachat-form-group {
+        margin-bottom: 1rem;
+        padding: 1rem;
+    }
+
+    .rachat-form-group .form-label {
+        font-size: 0.9rem;
+    }
+
+    .rachat-form-group .form-control,
+    .rachat-form-group .form-select {
+        font-size: 14px;
+        padding: 10px 12px;
+    }
+
+    #signatureCanvas {
+        width: 100% !important;
+        height: 150px !important;
+    }
+
+    .loading-spinner {
+        width: 2rem;
+        height: 2rem;
+    }
+
+    .btn-primary {
+        width: 100%;
+        padding: 12px;
+        font-size: 1rem;
+    }
+
+    /* Éléments de navigation adaptés aux doigts */
+    .top-nav, .bottom-nav {
+        height: 60px;
+        padding: 0 10px;
+    }
+
+    .nav-link {
+        padding: 18px 24px;
+        min-height: 56px;
+        font-size: 16px;
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        border-radius: 12px;
+        margin: 4px 2px;
+    }
+
+    .nav-link:active {
+        transform: scale(0.96);
+        background: rgba(0,0,0,0.05);
+    }
+
+    /* Boutons optimisés mobile */
+    .btn {
+        min-height: 56px;
+        padding: 18px 28px;
+        font-size: 16px;
+        border-radius: 14px;
+        letter-spacing: 0.5px;
+    }
+
+    .btn:active {
+        transform: scale(0.96);
+        opacity: 0.9;
+    }
+
+    /* Images chargées lazy par défaut */
+    img {
+        max-width: 100%;
+        height: auto;
+        aspect-ratio: 16/9;
+    }
+
+    /* Cartes tactiles */
+    .card {
+        margin: 12px 6px;
+        border-radius: 16px;
+        transition: transform 0.2s ease;
+    }
+
+    .card:active {
+        transform: translateY(2px);
+    }
+
+    /* Menu mobile animé */
+    .mobile-menu {
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+}
+
+/* Styles pour le module de rachat */
+.table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+#searchRachat {
+    border-radius: 20px;
+    padding: 12px 20px;
+    border: 1px solid #dee2e6;
+}
+
+#rachatsList tr {
+    transition: background-color 0.2s;
+}
+
+#rachatsList tr:hover {
+    background-color: #f8f9fa;
+}
+
+.modal-content {
+    border-radius: 15px;
+}
+
+@media (max-width: 768px) {
+    .modal-body .row {
+        flex-direction: column;
+    }
+    
+    #searchRachat {
+        margin-bottom: 15px;
+    }
+}

@@ -1,0 +1,31 @@
+/**
+ * Ajustements spécifiques pour les iPhones avec Dynamic Island
+ * Ajoute un décalage supplémentaire pour éviter que le contenu soit caché par la Dynamic Island
+ */
+
+/* Styles pour les iPhones avec Dynamic Island */
+body.ios-dynamic-island .top-nav {
+    /* Augmente le padding supérieur de 10px supplémentaires */
+    padding-top: calc(env(safe-area-inset-top) + 10px) !important;
+    background-color: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    /* Augmente la hauteur pour accommoder le padding */
+    height: calc(70px + env(safe-area-inset-top) + 10px) !important;
+}
+
+/* Ajustement des éléments dans le header pour Dynamic Island */
+body.ios-dynamic-island .mobile-brand,
+body.ios-dynamic-island .mobile-menu-toggle,
+body.ios-dynamic-island .top-nav-right {
+    /* Déplace les éléments vers le bas pour qu'ils soient accessibles */
+    transform: translateY(10px) !important;
+}
+
+/* Ajustement pour les boutons spécifiques */
+body.ios-dynamic-island .mobile-menu-toggle,
+body.ios-dynamic-island a.brand {
+    /* S'assure que ces éléments sont bien visibles et cliquables */
+    z-index: 1010 !important;
+    position: relative !important;
+} 

@@ -1,0 +1,159 @@
+/**
+ * Corrections spécifiques pour tablettes
+ * Ce fichier contient des corrections pour les problèmes d'interface sur tablettes
+ */
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+    /* Correction pour la barre latérale qui cache le contenu */
+    .sidebar {
+        position: fixed !important;
+        left: 0 !important;
+        top: 0 !important;
+        height: 100vh !important;
+        overflow-y: auto !important;
+        background-color: #fff !important;
+        z-index: 1050 !important;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1) !important;
+        width: 220px !important;
+        transform: translateX(0) !important;
+        transition: width 0.3s ease, transform 0.3s ease !important;
+    }
+    
+    /* Style forcé pour la barre latérale réduite */
+    .sidebar.sidebar-collapsed {
+        width: 60px !important;
+    }
+    
+    /* Correction pour le contenu principal */
+    main {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        width: calc(100% - 220px) !important;
+        margin-left: 220px !important;
+        transition: margin-left 0.3s ease, width 0.3s ease !important;
+    }
+    
+    /* Correction pour le contenu principal quand la barre est réduite */
+    body.sidebar-collapsed-mode main {
+        width: calc(100% - 60px) !important;
+        margin-left: 60px !important;
+    }
+    
+    /* Forcer le contenu à rester en place dès le chargement initial */
+    .main-container, .container-fluid, main {
+        transition: none !important;
+    }
+    
+    /* Empêcher le décalage du contenu de la page Clients */
+    body:not(.page-loaded) main {
+        margin-left: 220px !important;
+        width: calc(100% - 220px) !important;
+    }
+    
+    /* Correction pour les tableaux qui débordent */
+    .table-responsive {
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+        max-width: 100% !important;
+    }
+    
+    /* Optimisation de la lisibilité des tableaux */
+    .table th,
+    .table td {
+        white-space: nowrap !important;
+        font-size: 0.85rem !important;
+    }
+    
+    /* Correction pour les boutons qui se chevauchent */
+    .btn-group > .btn,
+    .action-buttons > .btn {
+        margin: 3px !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+    
+    /* Amélioration des boutons pour les écrans tactiles */
+    .btn {
+        padding: 0.4rem 0.8rem !important;
+        min-height: 38px !important;
+        margin-bottom: 5px !important;
+    }
+    
+    /* Correction du bouton toggle de la barre latérale */
+    .sidebar-toggle {
+        position: absolute !important;
+        top: 15px !important;
+        right: 10px !important;
+        z-index: 1060 !important;
+        display: flex !important;
+        width: 32px !important;
+        height: 32px !important;
+        border-radius: 50% !important;
+        align-items: center !important;
+        justify-content: center !important;
+        background-color: rgba(67, 97, 238, 0.1) !important;
+        border: none !important;
+        cursor: pointer !important;
+    }
+    
+    /* Fixer la position du contenu de la page Clients */
+    body[data-page="clients"] .container-fluid,
+    body[data-page="clients"] main {
+        margin-left: 220px !important;
+        width: calc(100% - 220px) !important;
+        transition: none !important;
+    }
+    
+    /* Empêcher le contenu de glisser sous la barre latérale */
+    .table-responsive table {
+        min-width: calc(100% - 220px) !important;
+    }
+    
+    /* Cache les éléments de navigation non essentiels sur les pages spécifiques */
+    .page-content-header {
+        padding: 15px !important;
+        margin-bottom: 15px !important;
+    }
+    
+    /* Correction des marges pour assurer l'espacement correct */
+    .container-fluid, .row, .col, .col-12 {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+    
+    /* Correction des modales pour tablettes */
+    .modal-dialog {
+        margin: 10px auto !important;
+        max-width: 95% !important;
+    }
+    
+    /* Ajustement des cartes statistiques */
+    .stats-card {
+        margin-bottom: 15px !important;
+    }
+    
+    /* Optimization des icons pour faciliter le toucher */
+    .btn i, .nav-link i {
+        font-size: 1rem !important;
+    }
+    
+    /* Correction pour le bouton flottant d'action */
+    .floating-action-button {
+        position: fixed !important;
+        bottom: 20px !important;
+        right: 20px !important;
+        width: 56px !important;
+        height: 56px !important;
+        border-radius: 50% !important;
+        background-color: #4361ee !important;
+        color: white !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25) !important;
+        z-index: 1050 !important;
+    }
+} 

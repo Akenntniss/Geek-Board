@@ -1,0 +1,87 @@
+{
+  "name": "GeekBoard",
+  "short_name": "GeekBoard",
+  "description": "Application de gestion des réparations et tâches pour professionnels",
+  "start_url": "/index.php?pwa=1",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0078e8",
+  "icons": [
+    {
+      "src": "assets/images/pwa-icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/images/pwa-icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/images/pwa-icons/icon-180x180.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/images/pwa-icons/icon-167x167.png",
+      "sizes": "167x167",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/images/pwa-icons/icon-152x152.png",
+      "sizes": "152x152",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "orientation": "portrait",
+  "scope": "/",
+  "lang": "fr-FR",
+  "dir": "ltr",
+  "prefer_related_applications": false,
+  "display_override": [
+    "standalone",
+    "window-controls-overlay"
+  ],
+  "categories": ["productivity", "business", "utilities"],
+  "shortcuts": [
+    {
+      "name": "Ajouter une réparation",
+      "short_name": "Nouvelle réparation",
+      "description": "Créer une nouvelle fiche de réparation",
+      "url": "/index.php?page=add_repair",
+      "icons": [{ "src": "assets/images/pwa-icons/icon-96x96.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "Tableau de bord",
+      "short_name": "Dashboard",
+      "description": "Voir le tableau de bord",
+      "url": "/index.php?page=dashboard",
+      "icons": [{ "src": "assets/images/pwa-icons/icon-96x96.png", "sizes": "96x96" }]
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "assets/screenshots/dashboard.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "platform": "wide",
+      "label": "Tableau de bord GeekBoard"
+    },
+    {
+      "src": "assets/screenshots/mobile.png",
+      "sizes": "750x1334",
+      "type": "image/png",
+      "platform": "narrow",
+      "label": "Version mobile GeekBoard"
+    }
+  ],
+  "permissions": [
+    "notifications"
+  ],
+  "gcm_sender_id": "103953800507"
+}

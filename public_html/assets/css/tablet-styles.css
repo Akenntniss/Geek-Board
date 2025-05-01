@@ -1,0 +1,211 @@
+/**
+ * Styles spécifiques pour les tablettes
+ * Optimisations pour les écrans entre 768px et 991.98px
+ */
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+    /* Styles pour la barre latérale */
+    .sidebar {
+        display: block !important; /* Forcer l'affichage */
+        width: 220px !important;
+        position: fixed !important;
+        top: 0;
+        left: 0;
+        height: 100vh !important;
+        z-index: 1030;
+        overflow-y: auto;
+        transition: width 0.3s ease;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        background-color: #fff !important;
+    }
+    
+    /* Barre latérale réduite */
+    .sidebar.sidebar-collapsed {
+        width: 60px !important;
+    }
+    
+    /* Améliorer la navigation dans la barre latérale */
+    .sidebar .nav-link {
+        padding: 0.7rem 1rem;
+        font-size: 0.9rem;
+        margin-bottom: 0.4rem;
+        border-radius: 6px;
+        margin-left: 0.5rem;
+        margin-right: 0.5rem;
+    }
+    
+    .sidebar .nav-link i {
+        font-size: 1rem;
+        width: 24px;
+        text-align: center;
+        margin-right: 10px;
+    }
+    
+    /* Contenu principal */
+    main {
+        width: calc(100% - 220px) !important;
+        margin-left: 220px !important;
+        transition: margin-left 0.3s ease, width 0.3s ease;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+    
+    .main-container {
+        padding: 0.75rem !important;
+    }
+    
+    /* Contenu principal lorsque la barre latérale est réduite */
+    body.sidebar-collapsed-mode main {
+        width: calc(100% - 60px) !important;
+        margin-left: 60px !important;
+    }
+    
+    /* Gestion des cards */
+    .card {
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        margin-bottom: 1rem;
+    }
+    
+    .card-header {
+        padding: 0.75rem 1rem;
+    }
+    
+    .card-body {
+        padding: 1rem;
+    }
+    
+    /* Optimisation des tableaux */
+    .table-responsive {
+        border-radius: 8px;
+        overflow: hidden;
+    }
+    
+    .table th {
+        background-color: #f8f9fa;
+        padding: 0.75rem 0.5rem;
+        font-size: 0.85rem;
+        white-space: nowrap;
+    }
+    
+    .table td {
+        padding: 0.75rem 0.5rem;
+        font-size: 0.85rem;
+    }
+    
+    /* Formulaires */
+    .form-control, .form-select {
+        height: 38px;
+        font-size: 0.9rem;
+    }
+    
+    textarea.form-control {
+        height: auto;
+    }
+    
+    /* Boutons */
+    .btn {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.9rem;
+        border-radius: 6px;
+        min-height: 38px;
+    }
+    
+    /* Optimisation pour les écrans tactiles */
+    .form-check-input {
+        width: 1.2rem;
+        height: 1.2rem;
+    }
+    
+    /* Bouton pour réduire/élargir la barre latérale */
+    .sidebar-toggle {
+        position: absolute !important;
+        top: 15px !important;
+        right: 10px !important;
+        z-index: 1031;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: rgba(67, 97, 238, 0.1);
+        color: #4361ee;
+        border: none;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    
+    .sidebar-toggle:hover, .sidebar-toggle:active {
+        background-color: rgba(67, 97, 238, 0.2);
+        transform: scale(1.1);
+    }
+    
+    /* Z-index élevé pour que la barre latérale soit toujours au-dessus */
+    .tablet-device .sidebar {
+        z-index: 1050 !important;
+    }
+    
+    /* Optimisation spécifique pour les tableaux larges */
+    .tablet-device .table-responsive {
+        max-width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: thin;
+    }
+    
+    .tablet-device .table-responsive::-webkit-scrollbar {
+        height: 6px;
+    }
+    
+    .tablet-device .table-responsive::-webkit-scrollbar-thumb {
+        background-color: rgba(0, 0, 0, 0.2);
+        border-radius: 3px;
+    }
+    
+    /* Ajustements pour les statistiques et cartes */
+    .stats-card {
+        padding: 0.75rem;
+    }
+    
+    .stats-card .card-value {
+        font-size: 1.5rem;
+    }
+    
+    /* Améliorations des marges et espacements */
+    .container-fluid {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+    
+    .row {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+    
+    /* Style spécifique pour les modales sur tablette */
+    .modal-dialog {
+        max-width: 90% !important;
+        margin: 1rem auto !important;
+    }
+    
+    /* Optimisation des actions rapides */
+    .action-buttons .btn {
+        padding: 0.4rem 0.6rem;
+        margin-right: 0.25rem;
+    }
+    
+    /* Amélioration de la lisibilité des badges */
+    .badge {
+        font-size: 0.8rem !important;
+        padding: 0.4em 0.6em !important;
+    }
+    
+    /* Optimisation du bouton d'ajout flottant */
+    .floating-action-button {
+        width: 56px !important;
+        height: 56px !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+    }
+} 

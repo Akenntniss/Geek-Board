@@ -1,0 +1,173 @@
+/* Styles complémentaires pour le modal de recherche universelle futuriste */
+
+/* Styles spécifiques pour la barre de recherche */
+.futuristic-modal .search-input {
+    background-color: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(30, 144, 255, 0.2);
+    color: var(--text-color, #fff);
+    transition: all 0.3s ease;
+}
+
+.light-mode .futuristic-modal .search-input {
+    background-color: rgba(255, 255, 255, 0.9);
+    color: #0a1629;
+}
+
+.futuristic-modal .search-input:focus {
+    box-shadow: 0 0 15px rgba(30, 144, 255, 0.4);
+    border-color: rgba(30, 144, 255, 0.6);
+}
+
+/* Styliser l'icône de recherche */
+.futuristic-modal .input-group-text {
+    background-color: rgba(30, 144, 255, 0.1);
+    border: 1px solid rgba(30, 144, 255, 0.2);
+    color: var(--text-color, #fff);
+}
+
+.light-mode .futuristic-modal .input-group-text {
+    background-color: rgba(30, 144, 255, 0.05);
+    color: #0a1629;
+}
+
+/* Styles pour les boutons d'onglets */
+.futuristic-modal #rechercheBtns .btn {
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.futuristic-modal #rechercheBtns .btn-primary {
+    background: linear-gradient(135deg, #1e90ff, #0066cc);
+    border: none;
+    box-shadow: 0 4px 10px rgba(30, 144, 255, 0.3);
+}
+
+.futuristic-modal #rechercheBtns .btn-outline-primary {
+    border: 1px solid rgba(30, 144, 255, 0.4);
+    color: var(--text-color, #fff);
+    background-color: rgba(30, 144, 255, 0.05);
+}
+
+.light-mode .futuristic-modal #rechercheBtns .btn-outline-primary {
+    color: #0a1629;
+}
+
+.futuristic-modal #rechercheBtns .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(30, 144, 255, 0.4);
+}
+
+/* Styles pour les badges dans les boutons */
+.futuristic-modal #rechercheBtns .badge {
+    background-color: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Styles pour les tableaux de résultats */
+.futuristic-modal .result-container .card {
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(30, 144, 255, 0.2);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.light-mode .futuristic-modal .result-container .card {
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+.futuristic-modal .table {
+    color: var(--text-color, #fff);
+}
+
+.light-mode .futuristic-modal .table {
+    color: #0a1629;
+}
+
+.futuristic-modal .table thead {
+    background-color: rgba(30, 144, 255, 0.1);
+    border-bottom: 1px solid rgba(30, 144, 255, 0.2);
+}
+
+.light-mode .futuristic-modal .table thead {
+    background-color: rgba(30, 144, 255, 0.05);
+}
+
+.futuristic-modal .table tbody tr {
+    transition: all 0.3s ease;
+    border-bottom: 1px solid rgba(30, 144, 255, 0.1);
+}
+
+.futuristic-modal .table tbody tr:hover {
+    background-color: rgba(30, 144, 255, 0.1);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Style pour le bouton de recherche */
+.futuristic-modal #btn-recherche-avancee {
+    background: linear-gradient(135deg, #1e90ff, #0066cc);
+    border: none;
+    border-radius: 0 8px 8px 0;
+    padding: 0.6rem 1.5rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(30, 144, 255, 0.3);
+}
+
+.futuristic-modal #btn-recherche-avancee:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(30, 144, 255, 0.4);
+}
+
+/* Style pour le message de texte sous la barre de recherche */
+.futuristic-modal .text-muted {
+    color: rgba(255, 255, 255, 0.7) !important;
+}
+
+.light-mode .futuristic-modal .text-muted {
+    color: rgba(10, 22, 41, 0.7) !important;
+}
+
+/* Style pour le message "aucun résultat" */
+.futuristic-modal #aucun_resultat_trouve {
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(30, 144, 255, 0.2);
+}
+
+.light-mode .futuristic-modal #aucun_resultat_trouve {
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+/* Adapter les actions dans les tableaux */
+.futuristic-modal .btn-sm {
+    border-radius: 6px;
+    transition: all 0.3s ease;
+}
+
+.futuristic-modal .btn-primary.btn-sm {
+    background: linear-gradient(135deg, #1e90ff, #0066cc);
+    border: none;
+    box-shadow: 0 2px 5px rgba(30, 144, 255, 0.3);
+}
+
+.futuristic-modal .btn-primary.btn-sm:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(30, 144, 255, 0.4);
+}
+
+/* Effet de fade in pour les résultats */
+.futuristic-modal .recherche-resultats.fade-in {
+    animation: fade-in-results 0.5s forwards ease-out;
+}
+
+@keyframes fade-in-results {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+} 

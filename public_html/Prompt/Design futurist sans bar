@@ -1,0 +1,43 @@
+  Créez un modal au design futuriste avec une palette de couleurs bleu, adapté aux modes clair et sombre :
+
+1. Apparence générale :
+   - Fond semi-transparent (rgba(13, 17, 28, 0.9) pour mode sombre, rgba(255, 255, 255, 0.95) pour mode clair)
+   - Bordures arrondies (16px)
+   - Effet de flou (backdrop-filter: blur(16px))
+   - Ombre portée bleue (0 8px 32px rgba(30, 144, 255, 0.3))
+   - Animation d'entrée avec zoom (scale et translateY)
+
+2. En-tête :
+   - Dégradé bleu (rgba(30, 144, 255, 0.3) à rgba(0, 77, 155, 0.3) pour mode sombre, plus clair pour mode jour)
+   - Bordure inférieure animée avec dégradé bleu
+   - Titre avec ombre de texte bleue (text-shadow: 0 0 10px rgba(30, 144, 255, 0.7))
+
+3. Corps :
+   - Fond légèrement transparent
+   - Formulaires avec champs stylisés (coins arrondis, bordures fines)
+   - Animation d'apparition séquentielle des éléments
+
+4. Champs de formulaire :
+   - Fond légèrement transparent (rgba(255, 255, 255, 0.05) en mode sombre, plus clair en mode jour)
+   - Bordures fines qui s'illuminent au focus
+   - Effets de survol avec lueur bleue
+   - Barre de progression au focus (highlight-bar avec dégradé bleu)
+
+5. Boutons :
+   - Bouton principal avec dégradé bleu (#1e90ff à #0066cc)
+   - Effet de survol avec élévation et ombre
+   - Animation de succès (changement de couleur vers vert)
+   - Effet de pulsation pour certaines icônes
+
+6. Animations et effets :
+   - Particules flottantes bleues en arrière-plan
+   - Effet de pulsation radiale
+   - Animation de secousse en cas d'erreur
+   - Effet holographique pendant le traitement
+
+7. Adaptations en mode clair :
+   - Texte sombre sur fond clair
+   - Contraste adapté pour garantir la lisibilité
+   - Effets visuels adoucis mais conservés
+
+Assurez-vous que l'interface reste fonctionnelle et accessible, tout en offrant une expérience visuelle immersive rappelant les interfaces high-tech des films de science-fiction.

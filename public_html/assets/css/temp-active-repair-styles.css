@@ -1,0 +1,43 @@
+/* Styles spécifiques pour le modal "Réparation active" */
+/* À déplacer vers active-repair-modal.css */
+
+.dark-mode #activeRepairModal .alert-warning {
+    display: none;
+}
+
+.dark-mode #activeRepairModal .alert-blue {
+    background-color: rgba(30, 144, 255, 0.1);
+    border-color: rgba(30, 144, 255, 0.3);
+    color: #f0f8ff;
+}
+
+.dark-mode #activeRepairModal .active-repair-message {
+    color: #f8f9fa;
+    font-weight: 600;
+    text-shadow: 0px 0px 1px rgba(0, 0, 0, 0.5);
+}
+
+.dark-mode #activeRepairModal .alert-blue .fa-info-circle {
+    color: #1e90ff;
+}
+
+.dark-mode #activeRepairModal .alert-blue #activeRepairId {
+    background: linear-gradient(135deg, #1e90ff, #0066cc);
+    color: #ffffff;
+    font-weight: bold;
+    border: none;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Style pour le bouton "Fermer" dans le footer */
+.dark-mode #activeRepairModal .modal-footer .futuristic-btn-outline {
+    color: #1e90ff;
+    border-color: rgba(30, 144, 255, 0.4);
+    background-color: transparent;
+}
+
+.dark-mode #activeRepairModal .modal-footer .futuristic-btn-outline:hover {
+    background-color: rgba(30, 144, 255, 0.1);
+    color: #ffffff;
+    border-color: rgba(30, 144, 255, 0.6);
+} 

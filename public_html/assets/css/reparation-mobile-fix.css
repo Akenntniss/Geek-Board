@@ -1,0 +1,43 @@
+/* 
+ * Corrections spécifiques pour la page réparation en format mobile et PWA
+ * Déplace le contenu de la page vers le haut de 30px
+ */
+
+/* Media query pour cibler les appareils mobiles et PWA */
+@media (max-width: 768px) {
+    /* Sélecteur générique pour le conteneur principal de la page réparation */
+    body.page-reparation .main-content,
+    body.page-reparation .container,
+    body.page-reparation .container-fluid,
+    body.page-reparation #content-wrapper,
+    body.page-reparation #cards-view,
+    body.page-reparation #table-view {
+        margin-top: -1px;
+        position: relative;
+    }
+
+    /* Ajustement pour les éléments qui pourraient être affectés par ce changement */
+    body.page-reparation .navbar + .container,
+    body.page-reparation .navbar + .container-fluid {
+        padding-top: 30px; /* Compenser le déplacement vers le haut */
+    }
+
+    /* S'assurer que les boutons d'action et cartes restent accessibles */
+    body.page-reparation .mobile-card-view {
+        position: relative;
+        z-index: 1;
+    }
+}
+
+/* Spécifiquement pour la Progressive Web App */
+@media (display-mode: standalone), (display-mode: fullscreen), (display-mode: minimal-ui) {
+    body.page-reparation .main-content,
+    body.page-reparation .container,
+    body.page-reparation .container-fluid,
+    body.page-reparation #content-wrapper,
+    body.page-reparation #cards-view,
+    body.page-reparation #table-view {
+        margin-top: -30px;
+        position: relative;
+    }
+} 

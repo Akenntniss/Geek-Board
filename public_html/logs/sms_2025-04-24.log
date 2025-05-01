@@ -1,0 +1,22 @@
+[2025-04-24 10:54:10] === TRAITEMENT REQUÊTE SMS ===
+[2025-04-24 10:54:10] Données reçues: {"client_id":"458","telephone":"+33627532376","template":"","message":"Bonjour,\r\n\r\nSuite \u00e0 un probl\u00e8me technique, notre boutique sera ferm\u00e9 aujourd\u2019hui.\r\n\r\nMaison du geek"}
+[2025-04-24 10:54:10] Envoi du SMS au numéro: +33627532376
+[2025-04-24 10:54:10] Numéro formaté: +33627532376
+[2025-04-24 10:54:10] Données JSON: {"message":"Bonjour,\r\n\r\nSuite \u00e0 un probl\u00e8me technique, notre boutique sera ferm\u00e9 aujourd\u2019hui.\r\n\r\nMaison du geek","phoneNumbers":["+33627532376"]}
+[2025-04-24 10:54:10] Exécution de la requête cURL...
+[2025-04-24 10:54:10] Code HTTP: 202
+[2025-04-24 10:54:10] Réponse: {"id":"irwzth0wzGw-NdwW-IO9a","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33627532376","state":"Pending"}],"states":null}
+[2025-04-24 10:54:10] Envoi SMS réussi
+[2025-04-24 10:54:10] Erreur lors de l'enregistrement du SMS: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'client_id' in 'INSERT INTO'
+[2025-04-24 10:54:10] Résultat final: {"success":true,"message":"SMS envoy\u00e9 avec succ\u00e8s","response":{"id":"irwzth0wzGw-NdwW-IO9a","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33627532376","state":"Pending"}],"states":null}}
+[2025-04-24 10:54:10] === TRAITEMENT REQUÊTE SMS ===
+[2025-04-24 10:54:10] Données reçues: {"client_id":"458","telephone":"+33627532376","template":"","message":"Bonjour,\r\n\r\nSuite \u00e0 un probl\u00e8me technique, notre boutique sera ferm\u00e9 aujourd\u2019hui.\r\n\r\nMaison du geek"}
+[2025-04-24 10:54:10] Envoi du SMS au numéro: +33627532376
+[2025-04-24 10:54:10] Numéro formaté: +33627532376
+[2025-04-24 10:54:10] Données JSON: {"message":"Bonjour,\r\n\r\nSuite \u00e0 un probl\u00e8me technique, notre boutique sera ferm\u00e9 aujourd\u2019hui.\r\n\r\nMaison du geek","phoneNumbers":["+33627532376"]}
+[2025-04-24 10:54:10] Exécution de la requête cURL...
+[2025-04-24 10:54:11] Code HTTP: 202
+[2025-04-24 10:54:11] Réponse: {"id":"xWpKN08zufRYMNGnIGzR-","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33627532376","state":"Pending"}],"states":null}
+[2025-04-24 10:54:11] Envoi SMS réussi
+[2025-04-24 10:54:11] Erreur lors de l'enregistrement du SMS: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'client_id' in 'INSERT INTO'
+[2025-04-24 10:54:11] Résultat final: {"success":true,"message":"SMS envoy\u00e9 avec succ\u00e8s","response":{"id":"xWpKN08zufRYMNGnIGzR-","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33627532376","state":"Pending"}],"states":null}}

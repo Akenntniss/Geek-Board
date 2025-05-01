@@ -1,0 +1,419 @@
+/* Styles futuristes pour le modal "réparation active" */
+.futuristic-modal {
+    background-color: rgba(13, 17, 28, 0.9);
+    border-radius: 16px;
+    backdrop-filter: blur(16px);
+    box-shadow: 0 8px 32px rgba(30, 144, 255, 0.3);
+    border: 1px solid rgba(30, 144, 255, 0.2);
+    overflow: hidden;
+    animation: modalFadeIn 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.futuristic-header {
+    background: linear-gradient(90deg, rgba(30, 144, 255, 0.3) 0%, rgba(0, 77, 155, 0.3) 100%);
+    border-bottom: 2px solid transparent;
+    position: relative;
+    overflow: hidden;
+    padding: 1rem 1.5rem;
+}
+
+.futuristic-header::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, #1e90ff, #004d9b, #1e90ff);
+    background-size: 200% 100%;
+    animation: gradient-shift 3s ease infinite;
+}
+
+.futuristic-body {
+    background-color: rgba(13, 17, 28, 0.7);
+    padding: 1.5rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.futuristic-footer {
+    background-color: rgba(13, 17, 28, 0.8);
+    border-top: 1px solid rgba(30, 144, 255, 0.2);
+}
+
+.futuristic-card {
+    background-color: rgba(30, 40, 60, 0.4);
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(30, 144, 255, 0.15);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden;
+    border: 1px solid rgba(30, 144, 255, 0.15);
+}
+
+.futuristic-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(30, 144, 255, 0.25);
+}
+
+.futuristic-card-header {
+    background: linear-gradient(90deg, rgba(30, 144, 255, 0.2) 0%, rgba(0, 77, 155, 0.2) 100%);
+    color: #ffffff;
+    border-bottom: 1px solid rgba(30, 144, 255, 0.2);
+    font-weight: 600;
+    padding: 0.75rem 1.25rem;
+}
+
+.futuristic-card-body {
+    background-color: rgba(20, 30, 50, 0.3);
+    color: #f0f8ff;
+    padding: 1.25rem;
+}
+
+.futuristic-alert {
+    background-color: rgba(30, 144, 255, 0.1);
+    border: 1px solid rgba(30, 144, 255, 0.3);
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(30, 144, 255, 0.15);
+    color: #f0f8ff;
+    padding: 1rem;
+}
+
+.futuristic-title {
+    color: #f0f8ff;
+    text-shadow: 0 0 10px rgba(30, 144, 255, 0.7);
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    margin-bottom: 1.5rem;
+}
+
+.futuristic-subtitle {
+    color: #e0f0ff;
+    text-shadow: 0 0 8px rgba(30, 144, 255, 0.6);
+    font-weight: 500;
+    letter-spacing: 0.3px;
+}
+
+/* Boutons futuristes */
+.futuristic-btn-primary {
+    background: linear-gradient(135deg, #1e90ff, #0066cc);
+    border: none;
+    color: white;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(30, 144, 255, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.futuristic-btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(30, 144, 255, 0.5);
+}
+
+.futuristic-btn-primary:active {
+    transform: translateY(1px);
+}
+
+.futuristic-btn-primary::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: rgba(255, 255, 255, 0.1);
+    transform: rotate(45deg);
+    transition: all 0.3s ease;
+    opacity: 0;
+}
+
+.futuristic-btn-primary:hover::after {
+    opacity: 1;
+    top: -30%;
+    left: -30%;
+}
+
+.futuristic-btn-success {
+    background: linear-gradient(135deg, #2ecc71, #27ae60);
+    border: none;
+    color: white;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(46, 204, 113, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.futuristic-btn-success:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(46, 204, 113, 0.5);
+}
+
+.futuristic-btn-danger {
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    border: none;
+    color: white;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(231, 76, 60, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.futuristic-btn-danger:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(231, 76, 60, 0.5);
+}
+
+.futuristic-btn-info {
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    border: none;
+    color: white;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(52, 152, 219, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.futuristic-btn-info:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(52, 152, 219, 0.5);
+}
+
+.futuristic-btn-warning {
+    background: linear-gradient(135deg, #f39c12, #d35400);
+    border: none;
+    color: white;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(243, 156, 18, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.futuristic-btn-warning:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(243, 156, 18, 0.5);
+}
+
+.futuristic-btn-secondary {
+    background: linear-gradient(135deg, #7f8c8d, #576574);
+    border: none;
+    color: white;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(127, 140, 141, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.futuristic-btn-secondary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(127, 140, 141, 0.5);
+}
+
+.futuristic-btn-outline {
+    background-color: transparent;
+    border: 1px solid rgba(30, 144, 255, 0.4);
+    color: #1e90ff;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 5px rgba(30, 144, 255, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.futuristic-btn-outline:hover {
+    background-color: rgba(30, 144, 255, 0.1);
+    border-color: rgba(30, 144, 255, 0.6);
+    box-shadow: 0 0 10px rgba(30, 144, 255, 0.3);
+    color: #ffffff;
+}
+
+/* Effets spéciaux */
+.bg-blue-gradient {
+    background: linear-gradient(135deg, #1e90ff, #0066cc);
+}
+
+.text-blue-glow {
+    color: #1e90ff;
+    text-shadow: 0 0 10px rgba(30, 144, 255, 0.7);
+}
+
+.pulse-icon {
+    animation: pulse 2s infinite;
+}
+
+/* Animations */
+@keyframes pulse {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.7;
+        transform: scale(1.05);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes gradient-shift {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+@keyframes modalFadeIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.95) translateY(10px);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* Animation d'apparition séquentielle */
+.reveal-sequence {
+    position: relative;
+}
+
+.reveal-item {
+    animation: reveal 0.5s ease-out both;
+    opacity: 0;
+}
+
+.reveal-sequence .reveal-item:nth-child(1) { animation-delay: 0.1s; }
+.reveal-sequence .reveal-item:nth-child(2) { animation-delay: 0.2s; }
+.reveal-sequence .reveal-item:nth-child(3) { animation-delay: 0.3s; }
+.reveal-sequence .reveal-item:nth-child(4) { animation-delay: 0.4s; }
+.reveal-sequence .reveal-item:nth-child(5) { animation-delay: 0.5s; }
+.reveal-sequence .reveal-item:nth-child(6) { animation-delay: 0.6s; }
+
+@keyframes reveal {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Particules flottantes */
+.particles-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.particles-container::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: radial-gradient(circle at 50% 50%, rgba(30, 144, 255, 0.1) 0%, transparent 40%),
+                      radial-gradient(circle at 80% 10%, rgba(30, 144, 255, 0.1) 0%, transparent 30%);
+}
+
+/* Adaptations pour le mode clair */
+@media (prefers-color-scheme: light) {
+    .futuristic-modal {
+        background-color: rgba(255, 255, 255, 0.95);
+        box-shadow: 0 8px 32px rgba(30, 144, 255, 0.2);
+    }
+    
+    .futuristic-header {
+        background: linear-gradient(90deg, rgba(30, 144, 255, 0.2) 0%, rgba(0, 77, 155, 0.2) 100%);
+    }
+    
+    .futuristic-body {
+        background-color: rgba(255, 255, 255, 0.9);
+    }
+    
+    .futuristic-footer {
+        background-color: rgba(250, 250, 250, 0.9);
+    }
+    
+    .futuristic-card {
+        background-color: rgba(240, 248, 255, 0.7);
+        box-shadow: 0 4px 16px rgba(30, 144, 255, 0.1);
+    }
+    
+    .futuristic-card-header {
+        color: #104e8b;
+    }
+    
+    .futuristic-card-body {
+        background-color: rgba(240, 248, 255, 0.5);
+        color: #333;
+    }
+    
+    .futuristic-alert {
+        background-color: rgba(30, 144, 255, 0.05);
+        color: #104e8b;
+    }
+    
+    .futuristic-title, .futuristic-subtitle {
+        color: #104e8b;
+    }
+}
+
+/* Mode sombre spécifique */
+.dark-mode #activeRepairModal .alert-warning {
+    display: none;
+}
+
+.dark-mode #activeRepairModal .alert-blue {
+    background-color: rgba(30, 144, 255, 0.1);
+    border-color: rgba(30, 144, 255, 0.3);
+    color: #f0f8ff;
+}
+
+.dark-mode #activeRepairModal .active-repair-message {
+    color: #f8f9fa;
+    font-weight: 600;
+    text-shadow: 0px 0px 1px rgba(0, 0, 0, 0.5);
+}
+
+.dark-mode #activeRepairModal .alert-blue .fa-info-circle {
+    color: #1e90ff;
+}
+
+.dark-mode #activeRepairModal .alert-blue #activeRepairId {
+    background: linear-gradient(135deg, #1e90ff, #0066cc);
+    color: #ffffff;
+    font-weight: bold;
+    border: none;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Style pour le bouton "Fermer" dans le footer */
+.dark-mode #activeRepairModal .modal-footer .futuristic-btn-outline {
+    color: #1e90ff;
+    border-color: rgba(30, 144, 255, 0.4);
+    background-color: transparent;
+}
+
+.dark-mode #activeRepairModal .modal-footer .futuristic-btn-outline:hover {
+    background-color: rgba(30, 144, 255, 0.1);
+    color: #ffffff;
+    border-color: rgba(30, 144, 255, 0.6);
+} 

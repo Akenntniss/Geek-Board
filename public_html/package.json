@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "@popperjs/core": "^2.11.8",
+    "bootstrap": "^5.3.5",
+    "bootstrap-icons": "^1.11.3",
+    "signature_pad": "^5.0.7"
+  }
+}

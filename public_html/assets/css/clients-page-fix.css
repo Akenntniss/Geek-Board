@@ -1,0 +1,80 @@
+/**
+ * Corrections spécifiques pour la page Clients
+ * Résout le problème de décalage après le chargement initial
+ */
+
+/* Styles pour la page Clients sur tous les appareils */
+body[data-page="clients"] .container-fluid,
+body[data-page="clients"] .main-container {
+    transition: none !important;
+}
+
+/* Corrections spécifiques pour tablettes */
+@media (min-width: 768px) and (max-width: 991.98px) {
+    /* Forcer la position correcte dès le début */
+    body[data-page="clients"] main {
+        margin-left: 220px !important;
+        width: calc(100% - 220px) !important;
+        transition: none !important;
+    }
+    
+    /* Empêcher tout décalage du contenu */
+    body[data-page="clients"] .container-fluid,
+    body[data-page="clients"] .main-container {
+        margin-left: 0 !important;
+        padding-left: 0 !important;
+        transition: none !important;
+    }
+    
+    /* S'assurer que le tableau est bien visible et ne passe pas sous la barre latérale */
+    body[data-page="clients"] .table-responsive {
+        max-width: calc(100% - 20px) !important;
+        margin: 0 auto !important;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+    }
+    
+    body[data-page="clients"] .table {
+        width: 100% !important;
+        min-width: auto !important;
+    }
+    
+    /* Forcer l'affichage correct de la barre latérale */
+    body[data-page="clients"] .sidebar {
+        display: block !important;
+        width: 220px !important;
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        height: 100vh !important;
+        z-index: 1030 !important;
+        transition: none !important;
+    }
+    
+    /* Forcer le style lorsque la barre latérale est réduite */
+    body[data-page="clients"].sidebar-collapsed-mode .sidebar {
+        width: 60px !important;
+    }
+    
+    body[data-page="clients"].sidebar-collapsed-mode main {
+        margin-left: 60px !important;
+        width: calc(100% - 60px) !important;
+    }
+    
+    /* Désactiver toutes les transitions pour éviter les décalages */
+    body[data-page="clients"] * {
+        animation-duration: 0s !important;
+        transition-duration: 0s !important;
+    }
+    
+    /* Réactiver les transitions seulement après que la page soit complètement chargée */
+    body[data-page="clients"].page-loaded * {
+        animation-duration: unset !important;
+        transition-duration: unset !important;
+    }
+    
+    body[data-page="clients"].page-loaded .sidebar,
+    body[data-page="clients"].page-loaded main {
+        transition: width 0.3s ease, margin-left 0.3s ease !important;
+    }
+} 

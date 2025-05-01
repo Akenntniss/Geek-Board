@@ -1,0 +1,517 @@
+[2025-04-18 01:14:52] ====== DÉBUT DEBUG SMS DEVIS ======
+[2025-04-18 01:14:52] Template ID: 8
+[2025-04-18 01:14:52] Template nom: En cours de diagnostique
+[2025-04-18 01:14:52] Template contenu brut: 🔬 En cours de diagnostic
+[CLIENT_PRENOM], notre labo décortique votre [APPAREIL_MODELE]. On analyse chaque pixel pour trouver la panne.
+🔎 Suivi : http://Mdgeek.top/suivi.php?id=[REPARATION_ID]
+Maison du Geek – 08 95 79 59 33
+[2025-04-18 01:14:52] Réparation ID: 614
+[2025-04-18 01:14:52] Variables à remplacer:
+[2025-04-18 01:14:52]   [CLIENT_NOM] => 'guezguez'
+[2025-04-18 01:14:52]   [CLIENT_PRENOM] => 'saber'
+[2025-04-18 01:14:52]   [CLIENT_TELEPHONE] => '33782962906'
+[2025-04-18 01:14:52]   [REPARATION_ID] => '614'
+[2025-04-18 01:14:52]   [APPAREIL_TYPE] => 'Trottinette'
+[2025-04-18 01:14:52]   [APPAREIL_MARQUE] => ''
+[2025-04-18 01:14:52]   [APPAREIL_MODELE] => 'as'
+[2025-04-18 01:14:52]   [DATE_RECEPTION] => '18/04/2025'
+[2025-04-18 01:14:52]   [DATE_FIN_PREVUE] => 'Non définie'
+[2025-04-18 01:14:52]   [PRIX] => '1,00'
+[2025-04-18 01:14:52] Message avant remplacement: 🔬 En cours de diagnostic
+[CLIENT_PRENOM], notre labo décortique votre [APPAREIL_MODELE]. On analyse chaque pixel pour trouver la panne.
+🔎 Suivi : http://Mdgeek.top/suivi.php?id=[REPARATION_ID]
+Maison du Geek – 08 95 79 59 33
+[2025-04-18 01:14:52] Remplacement de '[CLIENT_NOM]' par 'guezguez': AUCUN CHANGEMENT
+[2025-04-18 01:14:52] Remplacement de '[CLIENT_PRENOM]' par 'saber': OK
+[2025-04-18 01:14:52] Remplacement de '[CLIENT_TELEPHONE]' par '33782962906': AUCUN CHANGEMENT
+[2025-04-18 01:14:52] Remplacement de '[REPARATION_ID]' par '614': OK
+[2025-04-18 01:14:52] Remplacement de '[APPAREIL_TYPE]' par 'Trottinette': AUCUN CHANGEMENT
+[2025-04-18 01:14:52] Remplacement de '[APPAREIL_MARQUE]' par '': AUCUN CHANGEMENT
+[2025-04-18 01:14:52] Remplacement de '[APPAREIL_MODELE]' par 'as': OK
+[2025-04-18 01:14:52] Remplacement de '[DATE_RECEPTION]' par '18/04/2025': AUCUN CHANGEMENT
+[2025-04-18 01:14:52] Remplacement de '[DATE_FIN_PREVUE]' par 'Non définie': AUCUN CHANGEMENT
+[2025-04-18 01:14:52] Remplacement de '[PRIX]' par '1,00': AUCUN CHANGEMENT
+[2025-04-18 01:14:52] Message final après remplacement: 🔬 En cours de diagnostic
+saber, notre labo décortique votre as. On analyse chaque pixel pour trouver la panne.
+🔎 Suivi : http://Mdgeek.top/suivi.php?id=614
+Maison du Geek – 08 95 79 59 33
+[2025-04-18 01:14:52] Tentative d'envoi SMS à 33782962906
+[2025-04-18 01:14:53] Résultat de l'envoi: SUCCÈS
+[2025-04-18 01:14:53] ====== FIN DEBUG SMS DEVIS ======
+[2025-04-18 01:15:00] ====== DÉBUT DEBUG SMS DEVIS ======
+[2025-04-18 01:15:00] Template ID: 8
+[2025-04-18 01:15:00] Template nom: En cours de diagnostique
+[2025-04-18 01:15:00] Template contenu brut: 🔬 En cours de diagnostic
+[CLIENT_PRENOM], notre labo décortique votre [APPAREIL_MODELE]. On analyse chaque pixel pour trouver la panne.
+🔎 Suivi : http://Mdgeek.top/suivi.php?id=[REPARATION_ID]
+Maison du Geek – 08 95 79 59 33
+[2025-04-18 01:15:00] Réparation ID: 614
+[2025-04-18 01:15:00] Variables à remplacer:
+[2025-04-18 01:15:00]   [CLIENT_NOM] => 'guezguez'
+[2025-04-18 01:15:00]   [CLIENT_PRENOM] => 'saber'
+[2025-04-18 01:15:00]   [CLIENT_TELEPHONE] => '33782962906'
+[2025-04-18 01:15:00]   [REPARATION_ID] => '614'
+[2025-04-18 01:15:00]   [APPAREIL_TYPE] => 'Trottinette'
+[2025-04-18 01:15:00]   [APPAREIL_MARQUE] => ''
+[2025-04-18 01:15:00]   [APPAREIL_MODELE] => 'as'
+[2025-04-18 01:15:00]   [DATE_RECEPTION] => '18/04/2025'
+[2025-04-18 01:15:00]   [DATE_FIN_PREVUE] => 'Non définie'
+[2025-04-18 01:15:00]   [PRIX] => '1,00'
+[2025-04-18 01:15:00] Message avant remplacement: 🔬 En cours de diagnostic
+[CLIENT_PRENOM], notre labo décortique votre [APPAREIL_MODELE]. On analyse chaque pixel pour trouver la panne.
+🔎 Suivi : http://Mdgeek.top/suivi.php?id=[REPARATION_ID]
+Maison du Geek – 08 95 79 59 33
+[2025-04-18 01:15:00] Remplacement de '[CLIENT_NOM]' par 'guezguez': AUCUN CHANGEMENT
+[2025-04-18 01:15:00] Remplacement de '[CLIENT_PRENOM]' par 'saber': OK
+[2025-04-18 01:15:00] Remplacement de '[CLIENT_TELEPHONE]' par '33782962906': AUCUN CHANGEMENT
+[2025-04-18 01:15:00] Remplacement de '[REPARATION_ID]' par '614': OK
+[2025-04-18 01:15:00] Remplacement de '[APPAREIL_TYPE]' par 'Trottinette': AUCUN CHANGEMENT
+[2025-04-18 01:15:00] Remplacement de '[APPAREIL_MARQUE]' par '': AUCUN CHANGEMENT
+[2025-04-18 01:15:00] Remplacement de '[APPAREIL_MODELE]' par 'as': OK
+[2025-04-18 01:15:00] Remplacement de '[DATE_RECEPTION]' par '18/04/2025': AUCUN CHANGEMENT
+[2025-04-18 01:15:00] Remplacement de '[DATE_FIN_PREVUE]' par 'Non définie': AUCUN CHANGEMENT
+[2025-04-18 01:15:00] Remplacement de '[PRIX]' par '1,00': AUCUN CHANGEMENT
+[2025-04-18 01:15:00] Message final après remplacement: 🔬 En cours de diagnostic
+saber, notre labo décortique votre as. On analyse chaque pixel pour trouver la panne.
+🔎 Suivi : http://Mdgeek.top/suivi.php?id=614
+Maison du Geek – 08 95 79 59 33
+[2025-04-18 01:15:00] Tentative d'envoi SMS à 33782962906
+[2025-04-18 01:15:00] Résultat de l'envoi: SUCCÈS
+[2025-04-18 01:15:00] ====== FIN DEBUG SMS DEVIS ======
+[2025-04-18 01:15:13] ====== DÉBUT DEBUG SMS DEVIS ======
+[2025-04-18 01:15:13] Template ID: 8
+[2025-04-18 01:15:13] Template nom: En cours de diagnostique
+[2025-04-18 01:15:13] Template contenu brut: 🔬 En cours de diagnostic
+[CLIENT_PRENOM], notre labo décortique votre [APPAREIL_MODELE]. On analyse chaque pixel pour trouver la panne.
+🔎 Suivi : http://Mdgeek.top/suivi.php?id=[REPARATION_ID]
+Maison du Geek – 08 95 79 59 33
+[2025-04-18 01:15:13] Réparation ID: 614
+[2025-04-18 01:15:13] Variables à remplacer:
+[2025-04-18 01:15:13]   [CLIENT_NOM] => 'guezguez'
+[2025-04-18 01:15:13]   [CLIENT_PRENOM] => 'saber'
+[2025-04-18 01:15:13]   [CLIENT_TELEPHONE] => '33782962906'
+[2025-04-18 01:15:13]   [REPARATION_ID] => '614'
+[2025-04-18 01:15:13]   [APPAREIL_TYPE] => 'Trottinette'
+[2025-04-18 01:15:13]   [APPAREIL_MARQUE] => ''
+[2025-04-18 01:15:13]   [APPAREIL_MODELE] => 'as'
+[2025-04-18 01:15:13]   [DATE_RECEPTION] => '18/04/2025'
+[2025-04-18 01:15:13]   [DATE_FIN_PREVUE] => 'Non définie'
+[2025-04-18 01:15:13]   [PRIX] => '1,00'
+[2025-04-18 01:15:13] Message avant remplacement: 🔬 En cours de diagnostic
+[CLIENT_PRENOM], notre labo décortique votre [APPAREIL_MODELE]. On analyse chaque pixel pour trouver la panne.
+🔎 Suivi : http://Mdgeek.top/suivi.php?id=[REPARATION_ID]
+Maison du Geek – 08 95 79 59 33
+[2025-04-18 01:15:13] Remplacement de '[CLIENT_NOM]' par 'guezguez': AUCUN CHANGEMENT
+[2025-04-18 01:15:13] Remplacement de '[CLIENT_PRENOM]' par 'saber': OK
+[2025-04-18 01:15:13] Remplacement de '[CLIENT_TELEPHONE]' par '33782962906': AUCUN CHANGEMENT
+[2025-04-18 01:15:13] Remplacement de '[REPARATION_ID]' par '614': OK
+[2025-04-18 01:15:13] Remplacement de '[APPAREIL_TYPE]' par 'Trottinette': AUCUN CHANGEMENT
+[2025-04-18 01:15:13] Remplacement de '[APPAREIL_MARQUE]' par '': AUCUN CHANGEMENT
+[2025-04-18 01:15:13] Remplacement de '[APPAREIL_MODELE]' par 'as': OK
+[2025-04-18 01:15:13] Remplacement de '[DATE_RECEPTION]' par '18/04/2025': AUCUN CHANGEMENT
+[2025-04-18 01:15:13] Remplacement de '[DATE_FIN_PREVUE]' par 'Non définie': AUCUN CHANGEMENT
+[2025-04-18 01:15:13] Remplacement de '[PRIX]' par '1,00': AUCUN CHANGEMENT
+[2025-04-18 01:15:13] Message final après remplacement: 🔬 En cours de diagnostic
+saber, notre labo décortique votre as. On analyse chaque pixel pour trouver la panne.
+🔎 Suivi : http://Mdgeek.top/suivi.php?id=614
+Maison du Geek – 08 95 79 59 33
+[2025-04-18 01:15:13] Tentative d'envoi SMS à 33782962906
+[2025-04-18 01:15:13] Résultat de l'envoi: SUCCÈS
+[2025-04-18 01:15:13] ====== FIN DEBUG SMS DEVIS ======
+[2025-04-18 01:15:17] ====== DÉBUT DEBUG SMS GARDIENNAGE ======
+[2025-04-18 01:15:17] Template ID: 12
+[2025-04-18 01:15:17] Template nom: Gardiennage
+[2025-04-18 01:15:17] Template contenu brut: [CLIENT_PRENOM], ton [APPAREIL_MODELE] t’attend toujours ! ⏳ Frais de gardiennage en cours. Après 90j, l’appareil pourra être recyclé.
+📦 Suivi : http://Mdgeek.top/suivi.php?id=[REPARATION_ID]
+Maison du Geek – 08 95 79 59 33
+[2025-04-18 01:15:17] Réparation ID: 614
+[2025-04-18 01:15:17] Variables à remplacer:
+[2025-04-18 01:15:17]   [CLIENT_NOM] => 'guezguez'
+[2025-04-18 01:15:17]   [CLIENT_PRENOM] => 'saber'
+[2025-04-18 01:15:17]   [CLIENT_TELEPHONE] => '33782962906'
+[2025-04-18 01:15:17]   [REPARATION_ID] => '614'
+[2025-04-18 01:15:17]   [APPAREIL_TYPE] => 'Trottinette'
+[2025-04-18 01:15:17]   [APPAREIL_MARQUE] => ''
+[2025-04-18 01:15:17]   [APPAREIL_MODELE] => 'as'
+[2025-04-18 01:15:17]   [DATE_RECEPTION] => '18/04/2025'
+[2025-04-18 01:15:17]   [DATE_FIN_PREVUE] => 'Non définie'
+[2025-04-18 01:15:17]   [PRIX] => '1,00'
+[2025-04-18 01:15:17] Message avant remplacement: [CLIENT_PRENOM], ton [APPAREIL_MODELE] t’attend toujours ! ⏳ Frais de gardiennage en cours. Après 90j, l’appareil pourra être recyclé.
+📦 Suivi : http://Mdgeek.top/suivi.php?id=[REPARATION_ID]
+Maison du Geek – 08 95 79 59 33
+[2025-04-18 01:15:17] Remplacement de '[CLIENT_NOM]' par 'guezguez': AUCUN CHANGEMENT
+[2025-04-18 01:15:17] Remplacement de '[CLIENT_PRENOM]' par 'saber': OK
+[2025-04-18 01:15:17] Remplacement de '[CLIENT_TELEPHONE]' par '33782962906': AUCUN CHANGEMENT
+[2025-04-18 01:15:17] Remplacement de '[REPARATION_ID]' par '614': OK
+[2025-04-18 01:15:17] Remplacement de '[APPAREIL_TYPE]' par 'Trottinette': AUCUN CHANGEMENT
+[2025-04-18 01:15:17] Remplacement de '[APPAREIL_MARQUE]' par '': AUCUN CHANGEMENT
+[2025-04-18 01:15:17] Remplacement de '[APPAREIL_MODELE]' par 'as': OK
+[2025-04-18 01:15:17] Remplacement de '[DATE_RECEPTION]' par '18/04/2025': AUCUN CHANGEMENT
+[2025-04-18 01:15:17] Remplacement de '[DATE_FIN_PREVUE]' par 'Non définie': AUCUN CHANGEMENT
+[2025-04-18 01:15:17] Remplacement de '[PRIX]' par '1,00': AUCUN CHANGEMENT
+[2025-04-18 01:15:17] Message final après remplacement: saber, ton as t’attend toujours ! ⏳ Frais de gardiennage en cours. Après 90j, l’appareil pourra être recyclé.
+📦 Suivi : http://Mdgeek.top/suivi.php?id=614
+Maison du Geek – 08 95 79 59 33
+[2025-04-18 01:15:17] Tentative d'envoi SMS à 33782962906
+[2025-04-18 01:15:17] Résultat de l'envoi: SUCCÈS
+[2025-04-18 01:15:17] ====== FIN DEBUG SMS GARDIENNAGE ======
+[2025-04-18 01:16:03] ====== DÉBUT DEBUG SMS GARDIENNAGE ======
+[2025-04-18 01:16:03] Template ID: 12
+[2025-04-18 01:16:03] Template nom: Gardiennage
+[2025-04-18 01:16:03] Template contenu brut: [CLIENT_PRENOM], ton [APPAREIL_MODELE] t’attend toujours ! ⏳ Frais de gardiennage en cours. Après 90j, l’appareil pourra être recyclé.
+📦 Suivi : http://Mdgeek.top/suivi.php?id=[REPARATION_ID]
+Maison du Geek – 08 95 79 59 33
+[2025-04-18 01:16:03] Réparation ID: 614
+[2025-04-18 01:16:03] Variables à remplacer:
+[2025-04-18 01:16:03]   [CLIENT_NOM] => 'guezguez'
+[2025-04-18 01:16:03]   [CLIENT_PRENOM] => 'saber'
+[2025-04-18 01:16:03]   [CLIENT_TELEPHONE] => '33782962906'
+[2025-04-18 01:16:03]   [REPARATION_ID] => '614'
+[2025-04-18 01:16:03]   [APPAREIL_TYPE] => 'Trottinette'
+[2025-04-18 01:16:03]   [APPAREIL_MARQUE] => ''
+[2025-04-18 01:16:03]   [APPAREIL_MODELE] => 'as'
+[2025-04-18 01:16:03]   [DATE_RECEPTION] => '18/04/2025'
+[2025-04-18 01:16:03]   [DATE_FIN_PREVUE] => 'Non définie'
+[2025-04-18 01:16:03]   [PRIX] => '1,00'
+[2025-04-18 01:16:03] Message avant remplacement: [CLIENT_PRENOM], ton [APPAREIL_MODELE] t’attend toujours ! ⏳ Frais de gardiennage en cours. Après 90j, l’appareil pourra être recyclé.
+📦 Suivi : http://Mdgeek.top/suivi.php?id=[REPARATION_ID]
+Maison du Geek – 08 95 79 59 33
+[2025-04-18 01:16:03] Remplacement de '[CLIENT_NOM]' par 'guezguez': AUCUN CHANGEMENT
+[2025-04-18 01:16:03] Remplacement de '[CLIENT_PRENOM]' par 'saber': OK
+[2025-04-18 01:16:03] Remplacement de '[CLIENT_TELEPHONE]' par '33782962906': AUCUN CHANGEMENT
+[2025-04-18 01:16:03] Remplacement de '[REPARATION_ID]' par '614': OK
+[2025-04-18 01:16:03] Remplacement de '[APPAREIL_TYPE]' par 'Trottinette': AUCUN CHANGEMENT
+[2025-04-18 01:16:03] Remplacement de '[APPAREIL_MARQUE]' par '': AUCUN CHANGEMENT
+[2025-04-18 01:16:03] Remplacement de '[APPAREIL_MODELE]' par 'as': OK
+[2025-04-18 01:16:03] Remplacement de '[DATE_RECEPTION]' par '18/04/2025': AUCUN CHANGEMENT
+[2025-04-18 01:16:03] Remplacement de '[DATE_FIN_PREVUE]' par 'Non définie': AUCUN CHANGEMENT
+[2025-04-18 01:16:03] Remplacement de '[PRIX]' par '1,00': AUCUN CHANGEMENT
+[2025-04-18 01:16:03] Message final après remplacement: saber, ton as t’attend toujours ! ⏳ Frais de gardiennage en cours. Après 90j, l’appareil pourra être recyclé.
+📦 Suivi : http://Mdgeek.top/suivi.php?id=614
+Maison du Geek – 08 95 79 59 33
+[2025-04-18 01:16:03] Tentative d'envoi SMS à 33782962906
+[2025-04-18 01:16:03] Résultat de l'envoi: SUCCÈS
+[2025-04-18 01:16:03] ====== FIN DEBUG SMS GARDIENNAGE ======
+[2025-04-18 01:16:24] ====== DÉBUT DEBUG SMS DEVIS ======
+[2025-04-18 01:16:24] Template ID: 8
+[2025-04-18 01:16:24] Template nom: En cours de diagnostique
+[2025-04-18 01:16:24] Template contenu brut: 🔬 En cours de diagnostic
+[CLIENT_PRENOM], notre labo décortique votre [APPAREIL_MODELE]. On analyse chaque pixel pour trouver la panne.
+🔎 Suivi : http://Mdgeek.top/suivi.php?id=[REPARATION_ID]
+Maison du Geek – 08 95 79 59 33
+[2025-04-18 01:16:24] Réparation ID: 614
+[2025-04-18 01:16:24] Variables à remplacer:
+[2025-04-18 01:16:24]   [CLIENT_NOM] => 'guezguez'
+[2025-04-18 01:16:24]   [CLIENT_PRENOM] => 'saber'
+[2025-04-18 01:16:24]   [CLIENT_TELEPHONE] => '33782962906'
+[2025-04-18 01:16:24]   [REPARATION_ID] => '614'
+[2025-04-18 01:16:24]   [APPAREIL_TYPE] => 'Trottinette'
+[2025-04-18 01:16:24]   [APPAREIL_MARQUE] => ''
+[2025-04-18 01:16:24]   [APPAREIL_MODELE] => 'as'
+[2025-04-18 01:16:24]   [DATE_RECEPTION] => '18/04/2025'
+[2025-04-18 01:16:24]   [DATE_FIN_PREVUE] => 'Non définie'
+[2025-04-18 01:16:24]   [PRIX] => '1,00'
+[2025-04-18 01:16:24] Message avant remplacement: 🔬 En cours de diagnostic
+[CLIENT_PRENOM], notre labo décortique votre [APPAREIL_MODELE]. On analyse chaque pixel pour trouver la panne.
+🔎 Suivi : http://Mdgeek.top/suivi.php?id=[REPARATION_ID]
+Maison du Geek – 08 95 79 59 33
+[2025-04-18 01:16:24] Remplacement de '[CLIENT_NOM]' par 'guezguez': AUCUN CHANGEMENT
+[2025-04-18 01:16:24] Remplacement de '[CLIENT_PRENOM]' par 'saber': OK
+[2025-04-18 01:16:24] Remplacement de '[CLIENT_TELEPHONE]' par '33782962906': AUCUN CHANGEMENT
+[2025-04-18 01:16:24] Remplacement de '[REPARATION_ID]' par '614': OK
+[2025-04-18 01:16:24] Remplacement de '[APPAREIL_TYPE]' par 'Trottinette': AUCUN CHANGEMENT
+[2025-04-18 01:16:24] Remplacement de '[APPAREIL_MARQUE]' par '': AUCUN CHANGEMENT
+[2025-04-18 01:16:24] Remplacement de '[APPAREIL_MODELE]' par 'as': OK
+[2025-04-18 01:16:24] Remplacement de '[DATE_RECEPTION]' par '18/04/2025': AUCUN CHANGEMENT
+[2025-04-18 01:16:24] Remplacement de '[DATE_FIN_PREVUE]' par 'Non définie': AUCUN CHANGEMENT
+[2025-04-18 01:16:24] Remplacement de '[PRIX]' par '1,00': AUCUN CHANGEMENT
+[2025-04-18 01:16:24] Message final après remplacement: 🔬 En cours de diagnostic
+saber, notre labo décortique votre as. On analyse chaque pixel pour trouver la panne.
+🔎 Suivi : http://Mdgeek.top/suivi.php?id=614
+Maison du Geek – 08 95 79 59 33
+[2025-04-18 01:16:24] Tentative d'envoi SMS à 33782962906
+[2025-04-18 01:16:24] Résultat de l'envoi: SUCCÈS
+[2025-04-18 01:16:24] ====== FIN DEBUG SMS DEVIS ======
+[2025-04-18 01:38:42] ====== DÉBUT DEBUG SMS ======
+[2025-04-18 01:38:42] Template ID: 2
+[2025-04-18 01:38:42] Template nom: Réparation terminée
+[2025-04-18 01:38:42] Template contenu brut: [CLIENT_PRENOM], votre [APPAREIL_MODELE] est prêt ! Il vous attend pour retrouver une vie normale. 🥳
+🧾 Suivi : http://Mdgeek.top/suivi.php?id=[REPARATION_ID]
+Maison du Geek – 08 95 79 59 33
+[2025-04-18 01:38:42] Réparation ID: 616
+[2025-04-18 01:38:42] Variables à remplacer:
+[2025-04-18 01:38:42]   [CLIENT_NOM] => 'guezguez'
+[2025-04-18 01:38:42]   [CLIENT_PRENOM] => 'saber'
+[2025-04-18 01:38:42]   [CLIENT_TELEPHONE] => '33782962906'
+[2025-04-18 01:38:42]   [REPARATION_ID] => '616'
+[2025-04-18 01:38:42]   [APPAREIL_TYPE] => 'Informatique'
+[2025-04-18 01:38:42]   [APPAREIL_MARQUE] => ''
+[2025-04-18 01:38:42]   [APPAREIL_MODELE] => 'DSF'
+[2025-04-18 01:38:42]   [DATE_RECEPTION] => '18/04/2025'
+[2025-04-18 01:38:42]   [DATE_FIN_PREVUE] => 'Non définie'
+[2025-04-18 01:38:42]   [PRIX] => '1,00'
+[2025-04-18 01:38:42] Message avant remplacement: [CLIENT_PRENOM], votre [APPAREIL_MODELE] est prêt ! Il vous attend pour retrouver une vie normale. 🥳
+🧾 Suivi : http://Mdgeek.top/suivi.php?id=[REPARATION_ID]
+Maison du Geek – 08 95 79 59 33
+[2025-04-18 01:38:42] Remplacement de '[CLIENT_NOM]' par 'guezguez': AUCUN CHANGEMENT
+[2025-04-18 01:38:42] Remplacement de '[CLIENT_PRENOM]' par 'saber': OK
+[2025-04-18 01:38:42] Remplacement de '[CLIENT_TELEPHONE]' par '33782962906': AUCUN CHANGEMENT
+[2025-04-18 01:38:42] Remplacement de '[REPARATION_ID]' par '616': OK
+[2025-04-18 01:38:42] Remplacement de '[APPAREIL_TYPE]' par 'Informatique': AUCUN CHANGEMENT
+[2025-04-18 01:38:42] Remplacement de '[APPAREIL_MARQUE]' par '': AUCUN CHANGEMENT
+[2025-04-18 01:38:42] Remplacement de '[APPAREIL_MODELE]' par 'DSF': OK
+[2025-04-18 01:38:42] Remplacement de '[DATE_RECEPTION]' par '18/04/2025': AUCUN CHANGEMENT
+[2025-04-18 01:38:42] Remplacement de '[DATE_FIN_PREVUE]' par 'Non définie': AUCUN CHANGEMENT
+[2025-04-18 01:38:42] Remplacement de '[PRIX]' par '1,00': AUCUN CHANGEMENT
+[2025-04-18 01:38:42] Message final après remplacement: saber, votre DSF est prêt ! Il vous attend pour retrouver une vie normale. 🥳
+🧾 Suivi : http://Mdgeek.top/suivi.php?id=616
+Maison du Geek – 08 95 79 59 33
+[2025-04-18 01:38:42] Tentative d'envoi SMS à 33782962906
+[2025-04-18 01:38:42] Résultat de l'envoi: SUCCÈS
+[2025-04-18 01:38:42] ====== FIN DEBUG SMS ======
+[2025-04-18 09:49:32] ====== DÉBUT DEBUG SMS ======
+[2025-04-18 09:49:32] Template ID: 2
+[2025-04-18 09:49:32] Template nom: Réparation terminée
+[2025-04-18 09:49:32] Template contenu brut: [CLIENT_PRENOM], votre [APPAREIL_MODELE] est prêt ! Il vous attend pour retrouver une vie normale. 🥳
+🧾 Suivi : http://Mdgeek.top/suivi.php?id=[REPARATION_ID]
+Maison du Geek – 08 95 79 59 33
+[2025-04-18 09:49:32] Réparation ID: 587
+[2025-04-18 09:49:32] Variables à remplacer:
+[2025-04-18 09:49:32]   [CLIENT_NOM] => 'isabella'
+[2025-04-18 09:49:32]   [CLIENT_PRENOM] => '...'
+[2025-04-18 09:49:32]   [CLIENT_TELEPHONE] => '33745187098'
+[2025-04-18 09:49:32]   [REPARATION_ID] => '587'
+[2025-04-18 09:49:32]   [APPAREIL_TYPE] => 'Trottinette'
+[2025-04-18 09:49:32]   [APPAREIL_MARQUE] => ''
+[2025-04-18 09:49:32]   [APPAREIL_MODELE] => 'Xiaomi M365'
+[2025-04-18 09:49:32]   [DATE_RECEPTION] => '16/04/2025'
+[2025-04-18 09:49:32]   [DATE_FIN_PREVUE] => 'Non définie'
+[2025-04-18 09:49:32]   [PRIX] => '40,00'
+[2025-04-18 09:49:32] Message avant remplacement: [CLIENT_PRENOM], votre [APPAREIL_MODELE] est prêt ! Il vous attend pour retrouver une vie normale. 🥳
+🧾 Suivi : http://Mdgeek.top/suivi.php?id=[REPARATION_ID]
+Maison du Geek – 08 95 79 59 33
+[2025-04-18 09:49:32] Remplacement de '[CLIENT_NOM]' par 'isabella': AUCUN CHANGEMENT
+[2025-04-18 09:49:32] Remplacement de '[CLIENT_PRENOM]' par '...': OK
+[2025-04-18 09:49:32] Remplacement de '[CLIENT_TELEPHONE]' par '33745187098': AUCUN CHANGEMENT
+[2025-04-18 09:49:32] Remplacement de '[REPARATION_ID]' par '587': OK
+[2025-04-18 09:49:32] Remplacement de '[APPAREIL_TYPE]' par 'Trottinette': AUCUN CHANGEMENT
+[2025-04-18 09:49:32] Remplacement de '[APPAREIL_MARQUE]' par '': AUCUN CHANGEMENT
+[2025-04-18 09:49:32] Remplacement de '[APPAREIL_MODELE]' par 'Xiaomi M365': OK
+[2025-04-18 09:49:32] Remplacement de '[DATE_RECEPTION]' par '16/04/2025': AUCUN CHANGEMENT
+[2025-04-18 09:49:32] Remplacement de '[DATE_FIN_PREVUE]' par 'Non définie': AUCUN CHANGEMENT
+[2025-04-18 09:49:32] Remplacement de '[PRIX]' par '40,00': AUCUN CHANGEMENT
+[2025-04-18 09:49:32] Message final après remplacement: ..., votre Xiaomi M365 est prêt ! Il vous attend pour retrouver une vie normale. 🥳
+🧾 Suivi : http://Mdgeek.top/suivi.php?id=587
+Maison du Geek – 08 95 79 59 33
+[2025-04-18 09:49:32] Tentative d'envoi SMS à 33745187098
+[2025-04-18 09:49:32] Résultat de l'envoi: SUCCÈS
+[2025-04-18 09:49:32] ====== FIN DEBUG SMS ======
+[2025-04-18 13:13:28] ====== DÉBUT DEBUG SMS ======
+[2025-04-18 13:13:28] Template ID: 2
+[2025-04-18 13:13:28] Template nom: Réparation terminée
+[2025-04-18 13:13:28] Template contenu brut: [CLIENT_PRENOM], votre [APPAREIL_MODELE] est prêt ! Il vous attend pour retrouver une vie normale. 🥳
+🧾 Suivi : http://Mdgeek.top/suivi.php?id=[REPARATION_ID]
+Maison du Geek – 08 95 79 59 33
+[2025-04-18 13:13:28] Réparation ID: 617
+[2025-04-18 13:13:28] Variables à remplacer:
+[2025-04-18 13:13:28]   [CLIENT_NOM] => 'vaz da veiga'
+[2025-04-18 13:13:28]   [CLIENT_PRENOM] => 'Alexandra'
+[2025-04-18 13:13:28]   [CLIENT_TELEPHONE] => '+33745345479'
+[2025-04-18 13:13:28]   [REPARATION_ID] => '617'
+[2025-04-18 13:13:28]   [APPAREIL_TYPE] => 'Informatique'
+[2025-04-18 13:13:28]   [APPAREIL_MARQUE] => ''
+[2025-04-18 13:13:28]   [APPAREIL_MODELE] => 'iPhone 12'
+[2025-04-18 13:13:28]   [DATE_RECEPTION] => '18/04/2025'
+[2025-04-18 13:13:28]   [DATE_FIN_PREVUE] => 'Non définie'
+[2025-04-18 13:13:28]   [PRIX] => '50,00'
+[2025-04-18 13:13:28] Message avant remplacement: [CLIENT_PRENOM], votre [APPAREIL_MODELE] est prêt ! Il vous attend pour retrouver une vie normale. 🥳
+🧾 Suivi : http://Mdgeek.top/suivi.php?id=[REPARATION_ID]
+Maison du Geek – 08 95 79 59 33
+[2025-04-18 13:13:28] Remplacement de '[CLIENT_NOM]' par 'vaz da veiga': AUCUN CHANGEMENT
+[2025-04-18 13:13:28] Remplacement de '[CLIENT_PRENOM]' par 'Alexandra': OK
+[2025-04-18 13:13:28] Remplacement de '[CLIENT_TELEPHONE]' par '+33745345479': AUCUN CHANGEMENT
+[2025-04-18 13:13:28] Remplacement de '[REPARATION_ID]' par '617': OK
+[2025-04-18 13:13:28] Remplacement de '[APPAREIL_TYPE]' par 'Informatique': AUCUN CHANGEMENT
+[2025-04-18 13:13:28] Remplacement de '[APPAREIL_MARQUE]' par '': AUCUN CHANGEMENT
+[2025-04-18 13:13:28] Remplacement de '[APPAREIL_MODELE]' par 'iPhone 12': OK
+[2025-04-18 13:13:28] Remplacement de '[DATE_RECEPTION]' par '18/04/2025': AUCUN CHANGEMENT
+[2025-04-18 13:13:28] Remplacement de '[DATE_FIN_PREVUE]' par 'Non définie': AUCUN CHANGEMENT
+[2025-04-18 13:13:28] Remplacement de '[PRIX]' par '50,00': AUCUN CHANGEMENT
+[2025-04-18 13:13:28] Message final après remplacement: Alexandra, votre iPhone 12 est prêt ! Il vous attend pour retrouver une vie normale. 🥳
+🧾 Suivi : http://Mdgeek.top/suivi.php?id=617
+Maison du Geek – 08 95 79 59 33
+[2025-04-18 13:13:28] Tentative d'envoi SMS à +33745345479
+[2025-04-18 13:13:29] Résultat de l'envoi: SUCCÈS
+[2025-04-18 13:13:29] ====== FIN DEBUG SMS ======
+[2025-04-18 13:53:00] ====== DÉBUT DEBUG SMS ======
+[2025-04-18 13:53:00] Template ID: 11
+[2025-04-18 13:53:00] Template nom: Restitué
+[2025-04-18 13:53:00] Template contenu brut: 🎉 [CLIENT_PRENOM],
+Ton [APPAREIL_MODELE] est de retour à la maison ! On espère qu’il est content 🤓
+💬 Laisse-nous un petit avis !
+⭐ https://g.page/r/Ce-HHwKZjezIEB0/review
+🏠 Maison du Geek
+📞 08 95 79 59 33
+
+[2025-04-18 13:53:00] Réparation ID: 617
+[2025-04-18 13:53:00] Variables à remplacer:
+[2025-04-18 13:53:00]   [CLIENT_NOM] => 'vaz da veiga'
+[2025-04-18 13:53:00]   [CLIENT_PRENOM] => 'Alexandra'
+[2025-04-18 13:53:00]   [CLIENT_TELEPHONE] => '+33745345479'
+[2025-04-18 13:53:00]   [REPARATION_ID] => '617'
+[2025-04-18 13:53:00]   [APPAREIL_TYPE] => 'Informatique'
+[2025-04-18 13:53:00]   [APPAREIL_MARQUE] => ''
+[2025-04-18 13:53:00]   [APPAREIL_MODELE] => 'iPhone 12'
+[2025-04-18 13:53:00]   [DATE_RECEPTION] => '18/04/2025'
+[2025-04-18 13:53:00]   [DATE_FIN_PREVUE] => 'Non définie'
+[2025-04-18 13:53:00]   [PRIX] => '50,00'
+[2025-04-18 13:53:00] Message avant remplacement: 🎉 [CLIENT_PRENOM],
+Ton [APPAREIL_MODELE] est de retour à la maison ! On espère qu’il est content 🤓
+💬 Laisse-nous un petit avis !
+⭐ https://g.page/r/Ce-HHwKZjezIEB0/review
+🏠 Maison du Geek
+📞 08 95 79 59 33
+
+[2025-04-18 13:53:00] Remplacement de '[CLIENT_NOM]' par 'vaz da veiga': AUCUN CHANGEMENT
+[2025-04-18 13:53:00] Remplacement de '[CLIENT_PRENOM]' par 'Alexandra': OK
+[2025-04-18 13:53:00] Remplacement de '[CLIENT_TELEPHONE]' par '+33745345479': AUCUN CHANGEMENT
+[2025-04-18 13:53:00] Remplacement de '[REPARATION_ID]' par '617': AUCUN CHANGEMENT
+[2025-04-18 13:53:00] Remplacement de '[APPAREIL_TYPE]' par 'Informatique': AUCUN CHANGEMENT
+[2025-04-18 13:53:00] Remplacement de '[APPAREIL_MARQUE]' par '': AUCUN CHANGEMENT
+[2025-04-18 13:53:00] Remplacement de '[APPAREIL_MODELE]' par 'iPhone 12': OK
+[2025-04-18 13:53:00] Remplacement de '[DATE_RECEPTION]' par '18/04/2025': AUCUN CHANGEMENT
+[2025-04-18 13:53:00] Remplacement de '[DATE_FIN_PREVUE]' par 'Non définie': AUCUN CHANGEMENT
+[2025-04-18 13:53:00] Remplacement de '[PRIX]' par '50,00': AUCUN CHANGEMENT
+[2025-04-18 13:53:00] Message final après remplacement: 🎉 Alexandra,
+Ton iPhone 12 est de retour à la maison ! On espère qu’il est content 🤓
+💬 Laisse-nous un petit avis !
+⭐ https://g.page/r/Ce-HHwKZjezIEB0/review
+🏠 Maison du Geek
+📞 08 95 79 59 33
+
+[2025-04-18 13:53:00] Tentative d'envoi SMS à +33745345479
+[2025-04-18 13:53:00] Résultat de l'envoi: SUCCÈS
+[2025-04-18 13:53:00] ====== FIN DEBUG SMS ======
+[2025-04-18 14:32:58] ====== DÉBUT DEBUG SMS ======
+[2025-04-18 14:32:58] Template ID: 2
+[2025-04-18 14:32:58] Template nom: Réparation terminée
+[2025-04-18 14:32:58] Template contenu brut: [CLIENT_PRENOM], votre [APPAREIL_MODELE] est prêt ! Il vous attend pour retrouver une vie normale. 🥳
+🧾 Suivi : http://Mdgeek.top/suivi.php?id=[REPARATION_ID]
+Maison du Geek – 08 95 79 59 33
+[2025-04-18 14:32:58] Réparation ID: 623
+[2025-04-18 14:32:58] Variables à remplacer:
+[2025-04-18 14:32:58]   [CLIENT_NOM] => 'Client'
+[2025-04-18 14:32:58]   [CLIENT_PRENOM] => 'Sav'
+[2025-04-18 14:32:58]   [CLIENT_TELEPHONE] => '33614341278'
+[2025-04-18 14:32:58]   [REPARATION_ID] => '623'
+[2025-04-18 14:32:58]   [APPAREIL_TYPE] => 'Trottinette'
+[2025-04-18 14:32:58]   [APPAREIL_MARQUE] => ''
+[2025-04-18 14:32:58]   [APPAREIL_MODELE] => 'Saber'
+[2025-04-18 14:32:58]   [DATE_RECEPTION] => '18/04/2025'
+[2025-04-18 14:32:58]   [DATE_FIN_PREVUE] => 'Non définie'
+[2025-04-18 14:32:58]   [PRIX] => '30,00'
+[2025-04-18 14:32:58] Message avant remplacement: [CLIENT_PRENOM], votre [APPAREIL_MODELE] est prêt ! Il vous attend pour retrouver une vie normale. 🥳
+🧾 Suivi : http://Mdgeek.top/suivi.php?id=[REPARATION_ID]
+Maison du Geek – 08 95 79 59 33
+[2025-04-18 14:32:58] Remplacement de '[CLIENT_NOM]' par 'Client': AUCUN CHANGEMENT
+[2025-04-18 14:32:58] Remplacement de '[CLIENT_PRENOM]' par 'Sav': OK
+[2025-04-18 14:32:58] Remplacement de '[CLIENT_TELEPHONE]' par '33614341278': AUCUN CHANGEMENT
+[2025-04-18 14:32:58] Remplacement de '[REPARATION_ID]' par '623': OK
+[2025-04-18 14:32:58] Remplacement de '[APPAREIL_TYPE]' par 'Trottinette': AUCUN CHANGEMENT
+[2025-04-18 14:32:58] Remplacement de '[APPAREIL_MARQUE]' par '': AUCUN CHANGEMENT
+[2025-04-18 14:32:58] Remplacement de '[APPAREIL_MODELE]' par 'Saber': OK
+[2025-04-18 14:32:58] Remplacement de '[DATE_RECEPTION]' par '18/04/2025': AUCUN CHANGEMENT
+[2025-04-18 14:32:58] Remplacement de '[DATE_FIN_PREVUE]' par 'Non définie': AUCUN CHANGEMENT
+[2025-04-18 14:32:58] Remplacement de '[PRIX]' par '30,00': AUCUN CHANGEMENT
+[2025-04-18 14:32:58] Message final après remplacement: Sav, votre Saber est prêt ! Il vous attend pour retrouver une vie normale. 🥳
+🧾 Suivi : http://Mdgeek.top/suivi.php?id=623
+Maison du Geek – 08 95 79 59 33
+[2025-04-18 14:32:58] Tentative d'envoi SMS à 33614341278
+[2025-04-18 14:32:59] Résultat de l'envoi: SUCCÈS
+[2025-04-18 14:32:59] ====== FIN DEBUG SMS ======
+[2025-04-18 15:01:45] ====== DÉBUT DEBUG SMS ======
+[2025-04-18 15:01:45] Template ID: 11
+[2025-04-18 15:01:45] Template nom: Restitué
+[2025-04-18 15:01:45] Template contenu brut: 🎉 [CLIENT_PRENOM],
+Ton [APPAREIL_MODELE] est de retour à la maison ! On espère qu’il est content 🤓
+💬 Laisse-nous un petit avis !
+⭐ https://g.page/r/Ce-HHwKZjezIEB0/review
+🏠 Maison du Geek
+📞 08 95 79 59 33
+
+[2025-04-18 15:01:45] Réparation ID: 623
+[2025-04-18 15:01:45] Variables à remplacer:
+[2025-04-18 15:01:45]   [CLIENT_NOM] => 'Client'
+[2025-04-18 15:01:45]   [CLIENT_PRENOM] => 'Sav'
+[2025-04-18 15:01:45]   [CLIENT_TELEPHONE] => '33614341278'
+[2025-04-18 15:01:45]   [REPARATION_ID] => '623'
+[2025-04-18 15:01:45]   [APPAREIL_TYPE] => 'Trottinette'
+[2025-04-18 15:01:45]   [APPAREIL_MARQUE] => ''
+[2025-04-18 15:01:45]   [APPAREIL_MODELE] => 'Saber'
+[2025-04-18 15:01:45]   [DATE_RECEPTION] => '18/04/2025'
+[2025-04-18 15:01:45]   [DATE_FIN_PREVUE] => 'Non définie'
+[2025-04-18 15:01:45]   [PRIX] => '30,00'
+[2025-04-18 15:01:45] Message avant remplacement: 🎉 [CLIENT_PRENOM],
+Ton [APPAREIL_MODELE] est de retour à la maison ! On espère qu’il est content 🤓
+💬 Laisse-nous un petit avis !
+⭐ https://g.page/r/Ce-HHwKZjezIEB0/review
+🏠 Maison du Geek
+📞 08 95 79 59 33
+
+[2025-04-18 15:01:45] Remplacement de '[CLIENT_NOM]' par 'Client': AUCUN CHANGEMENT
+[2025-04-18 15:01:45] Remplacement de '[CLIENT_PRENOM]' par 'Sav': OK
+[2025-04-18 15:01:45] Remplacement de '[CLIENT_TELEPHONE]' par '33614341278': AUCUN CHANGEMENT
+[2025-04-18 15:01:45] Remplacement de '[REPARATION_ID]' par '623': AUCUN CHANGEMENT
+[2025-04-18 15:01:45] Remplacement de '[APPAREIL_TYPE]' par 'Trottinette': AUCUN CHANGEMENT
+[2025-04-18 15:01:45] Remplacement de '[APPAREIL_MARQUE]' par '': AUCUN CHANGEMENT
+[2025-04-18 15:01:45] Remplacement de '[APPAREIL_MODELE]' par 'Saber': OK
+[2025-04-18 15:01:45] Remplacement de '[DATE_RECEPTION]' par '18/04/2025': AUCUN CHANGEMENT
+[2025-04-18 15:01:45] Remplacement de '[DATE_FIN_PREVUE]' par 'Non définie': AUCUN CHANGEMENT
+[2025-04-18 15:01:45] Remplacement de '[PRIX]' par '30,00': AUCUN CHANGEMENT
+[2025-04-18 15:01:45] Message final après remplacement: 🎉 Sav,
+Ton Saber est de retour à la maison ! On espère qu’il est content 🤓
+💬 Laisse-nous un petit avis !
+⭐ https://g.page/r/Ce-HHwKZjezIEB0/review
+🏠 Maison du Geek
+📞 08 95 79 59 33
+
+[2025-04-18 15:01:45] Tentative d'envoi SMS à 33614341278
+[2025-04-18 15:01:45] Résultat de l'envoi: SUCCÈS
+[2025-04-18 15:01:45] ====== FIN DEBUG SMS ======
+[2025-04-18 15:45:16] ====== DÉBUT DEBUG SMS ======
+[2025-04-18 15:45:16] Template ID: 2
+[2025-04-18 15:45:16] Template nom: Réparation terminée
+[2025-04-18 15:45:16] Template contenu brut: [CLIENT_PRENOM], votre [APPAREIL_MODELE] est prêt ! Il vous attend pour retrouver une vie normale. 🥳
+🧾 Suivi : http://Mdgeek.top/suivi.php?id=[REPARATION_ID]
+Maison du Geek – 08 95 79 59 33
+[2025-04-18 15:45:16] Réparation ID: 624
+[2025-04-18 15:45:16] Variables à remplacer:
+[2025-04-18 15:45:16]   [CLIENT_NOM] => 'Mike'
+[2025-04-18 15:45:16]   [CLIENT_PRENOM] => '.....'
+[2025-04-18 15:45:16]   [CLIENT_TELEPHONE] => '33641991850'
+[2025-04-18 15:45:16]   [REPARATION_ID] => '624'
+[2025-04-18 15:45:16]   [APPAREIL_TYPE] => 'Trottinette'
+[2025-04-18 15:45:16]   [APPAREIL_MARQUE] => ''
+[2025-04-18 15:45:16]   [APPAREIL_MODELE] => 'xiaomi m365'
+[2025-04-18 15:45:16]   [DATE_RECEPTION] => '18/04/2025'
+[2025-04-18 15:45:16]   [DATE_FIN_PREVUE] => 'Non définie'
+[2025-04-18 15:45:16]   [PRIX] => '50,00'
+[2025-04-18 15:45:16] Message avant remplacement: [CLIENT_PRENOM], votre [APPAREIL_MODELE] est prêt ! Il vous attend pour retrouver une vie normale. 🥳
+🧾 Suivi : http://Mdgeek.top/suivi.php?id=[REPARATION_ID]
+Maison du Geek – 08 95 79 59 33
+[2025-04-18 15:45:16] Remplacement de '[CLIENT_NOM]' par 'Mike': AUCUN CHANGEMENT
+[2025-04-18 15:45:16] Remplacement de '[CLIENT_PRENOM]' par '.....': OK
+[2025-04-18 15:45:16] Remplacement de '[CLIENT_TELEPHONE]' par '33641991850': AUCUN CHANGEMENT
+[2025-04-18 15:45:16] Remplacement de '[REPARATION_ID]' par '624': OK
+[2025-04-18 15:45:16] Remplacement de '[APPAREIL_TYPE]' par 'Trottinette': AUCUN CHANGEMENT
+[2025-04-18 15:45:16] Remplacement de '[APPAREIL_MARQUE]' par '': AUCUN CHANGEMENT
+[2025-04-18 15:45:16] Remplacement de '[APPAREIL_MODELE]' par 'xiaomi m365': OK
+[2025-04-18 15:45:16] Remplacement de '[DATE_RECEPTION]' par '18/04/2025': AUCUN CHANGEMENT
+[2025-04-18 15:45:16] Remplacement de '[DATE_FIN_PREVUE]' par 'Non définie': AUCUN CHANGEMENT
+[2025-04-18 15:45:16] Remplacement de '[PRIX]' par '50,00': AUCUN CHANGEMENT
+[2025-04-18 15:45:16] Message final après remplacement: ....., votre xiaomi m365 est prêt ! Il vous attend pour retrouver une vie normale. 🥳
+🧾 Suivi : http://Mdgeek.top/suivi.php?id=624
+Maison du Geek – 08 95 79 59 33
+[2025-04-18 15:45:16] Tentative d'envoi SMS à 33641991850
+[2025-04-18 15:45:16] Résultat de l'envoi: SUCCÈS
+[2025-04-18 15:45:16] ====== FIN DEBUG SMS ======

@@ -1,0 +1,20 @@
+{
+  "host": "191.96.63.138",
+  "user": "u139954273.mdgeek.top",
+  "password": "Merguez01$",
+  "port": 21,
+  "secure": false,
+  "root": "/",
+  "name": "FTP 2Server",
+  "ignoreCertificateErrors": true,
+  "rejectUnauthorized": false,
+  "showFileActions": true,
+  "compareTimestamps": true,
+  "language": "en",
+  "ui": {
+    "newerLocalColor": "#0066cc",
+    "remoteOnlyColor": "#ff6b6b",
+    "showIcons": true,
+    "dateFormat": "EU"
+  }
+}

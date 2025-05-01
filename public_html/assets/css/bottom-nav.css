@@ -1,0 +1,227 @@
+/* Dock de Navigation (Mobile) */
+:root {
+    --bottom-nav-height: 75px;
+    --bottom-nav-bg: #ffffff;
+    --bottom-nav-border-color: #e0e0e0;
+    --bottom-nav-link-color: #6c757d;
+    --bottom-nav-link-active-color: #4a6cf7;
+    --bottom-nav-icon-size: 22px;
+    --bottom-nav-label-size: 11px;
+    --add-button-size: 60px;
+    --add-button-bg: linear-gradient(135deg, #4a6cf7, #6b8eff);
+    --add-button-color: #ffffff;
+    --more-menu-bg: #ffffff;
+    --more-menu-overlay-bg: rgba(0, 0, 0, 0.5);
+}
+
+/* Masquer le dock sur les écrans larges */
+@media (min-width: 992px) {
+    .bottom-nav,
+    .mobile-more-menu,
+    .mobile-more-menu-overlay {
+        display: none !important;
+    }
+}
+
+/* Styles de base pour le dock */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: var(--bottom-nav-height);
+    background-color: var(--bottom-nav-bg);
+    border-top: 1px solid var(--bottom-nav-border-color);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    z-index: 1000;
+    padding-bottom: env(safe-area-inset-bottom); /* Pour iPhone X et + */
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+}
+
+/* Styles des liens du dock */
+.bottom-nav-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+    text-decoration: none;
+    color: var(--bottom-nav-link-color);
+    font-size: var(--bottom-nav-label-size);
+    font-weight: 500;
+    height: 100%;
+    text-align: center;
+    transition: color 0.2s ease;
+    position: relative; /* Pour les indicateurs actifs */
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px 0; /* Ajustement du padding vertical */
+}
+
+.bottom-nav-link i {
+    font-size: var(--bottom-nav-icon-size);
+    margin-bottom: 4px;
+    transition: transform 0.2s ease;
+}
+
+.bottom-nav-link span {
+    line-height: 1.2;
+}
+
+/* Style du lien actif */
+.bottom-nav-link.active {
+    color: var(--bottom-nav-link-active-color);
+}
+
+.bottom-nav-link.active i {
+    transform: scale(1.1);
+}
+
+/* Style du bouton Ajouter (+) */
+.add-repair-btn {
+    position: relative;
+    width: var(--add-button-size);
+    height: var(--add-button-size);
+    background: var(--add-button-bg);
+    color: var(--add-button-color);
+    border-radius: 50%;
+    margin-top: -25px; /* Pour le faire dépasser */
+    box-shadow: 0 4px 15px rgba(74, 108, 247, 0.4);
+    border: 3px solid white;
+    flex-grow: 0; /* Ne pas laisser grandir */
+    flex-shrink: 0;
+    padding: 0;
+}
+
+.add-repair-btn i {
+    font-size: 28px;
+    margin-bottom: 0;
+}
+
+.add-repair-btn span {
+    display: none; /* Masquer le texte "Ajouter" */
+}
+
+/* Styles pour le bouton "Plus" */
+.more-btn i {
+    /* Optionnel : style spécifique pour l'icône "Plus" */
+}
+
+/* Styles pour le menu "Plus" mobile */
+.mobile-more-menu {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: var(--more-menu-bg);
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+    box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.1);
+    z-index: 1010;
+    transform: translateY(100%);
+    transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    visibility: hidden;
+    padding: 1rem 1rem calc(1rem + env(safe-area-inset-bottom)); /* Ajouter padding pour safe area */
+    max-height: 70vh;
+    overflow-y: auto;
+}
+
+.mobile-more-menu.active {
+    transform: translateY(0);
+    visibility: visible;
+}
+
+.mobile-more-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding: 0 0.5rem;
+}
+
+.mobile-more-header h5 {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #333;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    font-size: 1.8rem;
+    color: #aaa;
+    cursor: pointer;
+    padding: 0 5px;
+    line-height: 1;
+}
+
+.mobile-more-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+    gap: 1rem;
+}
+
+.mobile-more-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 0.75rem 0.5rem;
+    border-radius: 12px;
+    background-color: #f8f9fa;
+    color: #444;
+    text-decoration: none;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.mobile-more-item:hover {
+    background-color: #e9ecef;
+    transform: translateY(-3px);
+}
+
+.mobile-more-item i {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--bottom-nav-link-active-color);
+}
+
+.mobile-more-item span {
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+/* Overlay pour fermer le menu */
+.mobile-more-menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--more-menu-overlay-bg);
+    z-index: 1005;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.mobile-more-menu-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Ajustement du contenu principal pour laisser de la place au dock */
+@media (max-width: 991.98px) {
+    body {
+        /* Ajoute un padding en bas égal à la hauteur du dock */
+        padding-bottom: calc(var(--bottom-nav-height) + env(safe-area-inset-bottom));
+    }
+    .main-content {
+        margin-left: 0; /* Pas de marge latérale sur mobile */
+        padding: 1rem; /* Ajustement du padding mobile */
+        width: 100%; /* Prend toute la largeur */
+    }
+} 

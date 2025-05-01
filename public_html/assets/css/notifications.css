@@ -1,0 +1,192 @@
+/* Styles pour le système de notifications */
+
+.notifications-icon {
+    position: relative;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.notifications-badge {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background-color: #dc3545;
+    color: white;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    font-size: 0.7rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.notifications-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 350px;
+    max-height: 400px;
+    overflow-y: auto;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    z-index: 1050;
+    display: none;
+}
+
+.notifications-dropdown.show {
+    display: block;
+}
+
+.notifications-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 15px;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.notifications-title {
+    font-weight: 600;
+    margin: 0;
+}
+
+.mark-all-read {
+    font-size: 0.8rem;
+    color: #4361ee;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0;
+}
+
+.notifications-list {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.notification-item {
+    padding: 12px 15px;
+    border-bottom: 1px solid #f0f2f5;
+    transition: background-color 0.2s;
+}
+
+.notification-item:last-child {
+    border-bottom: none;
+}
+
+.notification-item:hover {
+    background-color: #f8f9fa;
+}
+
+.notification-item.unread {
+    background-color: #f0f7ff;
+}
+
+.notification-content {
+    display: flex;
+    align-items: flex-start;
+}
+
+.notification-icon {
+    margin-right: 12px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: #e9ecef;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.notification-icon i {
+    color: #4361ee;
+    font-size: 1rem;
+}
+
+.notification-text {
+    flex: 1;
+}
+
+.notification-message {
+    margin: 0 0 5px 0;
+    font-size: 0.9rem;
+    color: #212529;
+}
+
+.notification-time {
+    font-size: 0.75rem;
+    color: #6c757d;
+}
+
+.notifications-footer {
+    padding: 12px 15px;
+    text-align: center;
+    border-top: 1px solid #e9ecef;
+}
+
+.view-all-link {
+    color: #4361ee;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.view-all-link:hover {
+    text-decoration: underline;
+}
+
+/* Styles pour les différents types de notifications */
+.notification-reparation .notification-icon {
+    background-color: #e8f5e9;
+}
+
+.notification-reparation .notification-icon i {
+    color: #4caf50;
+}
+
+.notification-commande .notification-icon {
+    background-color: #e3f2fd;
+}
+
+.notification-commande .notification-icon i {
+    color: #2196f3;
+}
+
+.notification-diagnostic .notification-icon {
+    background-color: #fff8e1;
+}
+
+.notification-diagnostic .notification-icon i {
+    color: #ffc107;
+}
+
+.notification-tache .notification-icon {
+    background-color: #f3e5f5;
+}
+
+.notification-tache .notification-icon i {
+    color: #9c27b0;
+}
+
+/* Animation pour les nouvelles notifications */
+@keyframes notification-pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.notifications-badge.has-new {
+    animation: notification-pulse 1s infinite;
+}

@@ -1,0 +1,112 @@
+[2025-04-21 23:15:16] Vérification des chemins :
+[2025-04-21 23:15:16] Config path: /home/u139954273/domains/mdgeek.top/public_html/ajax/../config/database.php
+[2025-04-21 23:15:16] Functions path: /home/u139954273/domains/mdgeek.top/public_html/ajax/../includes/functions.php
+[2025-04-21 23:15:16] Traitement de la réparation ID: 634
+[2025-04-21 23:15:16] Envoi du SMS au numéro: 33782962906
+[2025-04-21 23:15:16] Contenu du message: Bonjour [CLIENT_PRENOM], votre dossier [REPARATION_ID] au sujet de votre [APPAREIL_MODELE] est en attente de validation par un responsable technique. Nous vous tenons informé très bientôt.
+📲 Suivi : http://Mdgeek.top/suivi.php?id=[REPARATION_ID]
+Maison du Geek – 08 95 79 59 33
+[2025-04-21 23:21:24] Vérification des chemins :
+[2025-04-21 23:21:24] Config path: /home/u139954273/domains/mdgeek.top/public_html/ajax/../config/database.php
+[2025-04-21 23:21:24] Functions path: /home/u139954273/domains/mdgeek.top/public_html/ajax/../includes/functions.php
+[2025-04-21 23:21:24] Traitement de la réparation ID: 634
+[2025-04-21 23:21:24] Exception: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u139954273_Vscodetest.appareils' doesn't exist
+[2025-04-21 23:21:31] Vérification des chemins :
+[2025-04-21 23:21:31] Config path: /home/u139954273/domains/mdgeek.top/public_html/ajax/../config/database.php
+[2025-04-21 23:21:31] Functions path: /home/u139954273/domains/mdgeek.top/public_html/ajax/../includes/functions.php
+[2025-04-21 23:21:31] Traitement de la réparation ID: 634
+[2025-04-21 23:21:31] Exception: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u139954273_Vscodetest.appareils' doesn't exist
+[2025-04-21 23:24:57] Vérification des chemins :
+[2025-04-21 23:24:57] Config path: /home/u139954273/domains/mdgeek.top/public_html/ajax/../config/database.php
+[2025-04-21 23:24:57] Functions path: /home/u139954273/domains/mdgeek.top/public_html/ajax/../includes/functions.php
+[2025-04-21 23:24:57] Traitement de la réparation ID: 634
+[2025-04-21 23:24:57] Envoi du SMS au numéro: +33782962906
+[2025-04-21 23:24:57] Contenu du message après remplacement des variables: 😔 saber,
+On a tout tenté pour réparer ton Test, mais pour raisons techniques, on a dû annuler la réparation.
+🔍 Détails : http://Mdgeek.top/suivi.php?id=634
+📞 Une Question ?  08 95 79 59 33
+🏠 Maison du Geek
+[2025-04-21 23:27:29] Début du script
+[2025-04-21 23:27:29] Vérification des chemins :
+[2025-04-21 23:27:29] Config path: /home/u139954273/domains/mdgeek.top/public_html/ajax/../config/database.php - Existe: Oui
+[2025-04-21 23:27:29] Functions path: /home/u139954273/domains/mdgeek.top/public_html/ajax/../includes/functions.php - Existe: Oui
+[2025-04-21 23:27:29] Fichier de configuration inclus avec succès
+[2025-04-21 23:27:29] Connexion à la base de données établie
+[2025-04-21 23:27:29] Fichier de fonctions inclus avec succès
+[2025-04-21 23:27:29] Fonction send_sms trouvée
+[2025-04-21 23:27:29] Données POST reçues: Array
+(
+    [action] => send_sms
+    [reparation_id] => 634
+    [message_type] => custom
+    [message] => asdasd
+)
+
+[2025-04-21 23:27:37] Début du script
+[2025-04-21 23:27:37] Vérification des chemins :
+[2025-04-21 23:27:37] Config path: /home/u139954273/domains/mdgeek.top/public_html/ajax/../config/database.php - Existe: Oui
+[2025-04-21 23:27:37] Functions path: /home/u139954273/domains/mdgeek.top/public_html/ajax/../includes/functions.php - Existe: Oui
+[2025-04-21 23:27:37] Fichier de configuration inclus avec succès
+[2025-04-21 23:27:37] Connexion à la base de données établie
+[2025-04-21 23:27:37] Fichier de fonctions inclus avec succès
+[2025-04-21 23:27:37] Fonction send_sms trouvée
+[2025-04-21 23:27:37] Données POST reçues: Array
+(
+    [action] => send_sms
+    [reparation_id] => 634
+    [message_type] => predefined
+    [template_id] => 13
+)
+
+[2025-04-21 23:30:31] Début du script
+[2025-04-21 23:30:31] Vérification des chemins :
+[2025-04-21 23:30:31] Config path: /home/u139954273/domains/mdgeek.top/public_html/ajax/../config/database.php - Existe: Oui
+[2025-04-21 23:30:31] Functions path: /home/u139954273/domains/mdgeek.top/public_html/ajax/../includes/functions.php - Existe: Oui
+[2025-04-21 23:30:31] Fichier de configuration inclus avec succès
+[2025-04-21 23:30:31] Connexion à la base de données établie
+[2025-04-21 23:30:31] Fichier de fonctions inclus avec succès
+[2025-04-21 23:30:31] Fonction send_sms trouvée
+[2025-04-21 23:30:31] Données POST reçues: Array
+(
+    [action] => send_sms
+    [reparation_id] => 634
+    [message_type] => predefined
+    [template_id] => 13
+)
+
+[2025-04-21 23:31:23] Début du script
+[2025-04-21 23:31:23] Vérification des chemins :
+[2025-04-21 23:31:23] Config path: /home/u139954273/domains/mdgeek.top/public_html/ajax/../config/database.php - Existe: Oui
+[2025-04-21 23:31:23] Functions path: /home/u139954273/domains/mdgeek.top/public_html/ajax/../includes/functions.php - Existe: Oui
+[2025-04-21 23:31:23] Fichier de configuration inclus avec succès
+[2025-04-21 23:31:23] Connexion à la base de données établie
+[2025-04-21 23:31:23] Fichier de fonctions inclus avec succès
+[2025-04-21 23:31:23] Fonction send_sms trouvée
+[2025-04-21 23:31:23] Données POST reçues: Array
+(
+    [action] => send_sms
+    [reparation_id] => 634
+    [message_type] => predefined
+    [template_id] => 9
+)
+
+[2025-04-21 23:44:19] === TRAITEMENT REQUÊTE SMS ===
+[2025-04-21 23:44:19] Données reçues: {"action":"send_sms","client_id":"414","reparation_id":"635","message":"Bonjour [CLIENT_PRENOM], nous vous rappelons votre rendez-vous pour votre [APPAREIL_TYPE] [APPAREIL_MODELE]. \u00c0 bient\u00f4t, l'\u00e9quipe MD GEEK"}
+[2025-04-21 23:44:19] Erreur: Données manquantes (téléphone ou message)
+[2025-04-21 23:44:30] === TRAITEMENT REQUÊTE SMS ===
+[2025-04-21 23:44:30] Données reçues: {"action":"send_sms","client_id":"414","reparation_id":"635","message":"Bonjour [CLIENT_PRENOM], ncvous vous rappelons votre rendez-vous pour votre [APPAREIL_TYPE] [APPAREIL_MODELE]. \u00c0 bient\u00f4t, l'\u00e9quipe MD GEEK"}
+[2025-04-21 23:44:30] Erreur: Données manquantes (téléphone ou message)
+[2025-04-21 23:46:40] === TRAITEMENT REQUÊTE SMS ===
+[2025-04-21 23:46:40] Données reçues: {"action":"send_sms","client_id":"414","reparation_id":"635","message":"Bonjour [CLIENT_PRENOM], nous vous rappelons votre rendez-vous pour votre [APPAREIL_TYPE] [APPAREIL_MODELE]. \u00c0 bient\u00f4t, l'\u00e9quipe MD GEEK","telephone":"33782962906"}
+[2025-04-21 23:46:40] Variables à remplacer trouvées: [CLIENT_PRENOM], [APPAREIL_TYPE], [APPAREIL_MODELE]
+[2025-04-21 23:46:40] Données récupérées - Client: Oui, Réparation: Oui
+[2025-04-21 23:46:40] Message après remplacement des variables: Bonjour saber, nous vous rappelons votre rendez-vous pour votre Informatique Test. À bientôt, l'équipe MD GEEK
+[2025-04-21 23:46:40] Envoi du SMS au numéro: 33782962906
+[2025-04-21 23:46:40] Numéro formaté: +33782962906
+[2025-04-21 23:46:40] Données JSON: {"message":"Bonjour saber, nous vous rappelons votre rendez-vous pour votre Informatique Test. \u00c0 bient\u00f4t, l'\u00e9quipe MD GEEK","phoneNumbers":["+33782962906"]}
+[2025-04-21 23:46:40] Exécution de la requête cURL...
+[2025-04-21 23:46:41] Code HTTP: 202
+[2025-04-21 23:46:41] Réponse: {"id":"ggiPlQHNRxiV838AOaruh","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33782962906","state":"Pending"}],"states":null}
+[2025-04-21 23:46:41] Envoi SMS réussi
+[2025-04-21 23:46:41] Erreur lors de l'enregistrement du SMS: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'client_id' in 'INSERT INTO'
+[2025-04-21 23:46:41] Résultat final: {"success":true,"message":"SMS envoy\u00e9 avec succ\u00e8s","response":{"id":"ggiPlQHNRxiV838AOaruh","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33782962906","state":"Pending"}],"states":null}}

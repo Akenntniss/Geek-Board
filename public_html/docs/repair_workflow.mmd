@@ -1,0 +1,28 @@
+flowchart TD
+    Start([Nouvelle Réparation]) --> Reception[Réception de l'appareil]
+    Reception --> Diagnostic[Diagnostic Initial]
+    
+    Diagnostic --> EnAttente{En Attente}
+    EnAttente -->|Accord Client| EnCours[En Cours de Réparation]
+    EnAttente -->|Attente Pièces| CommandePieces[Commande de Pièces]
+    EnAttente -->|Attente Responsable| AttResp[Validation Responsable]
+    
+    CommandePieces --> Reception_Pieces[Réception Pièces]
+    Reception_Pieces --> EnCours
+    
+    EnCours --> Intervention[Intervention Technique]
+    Intervention --> NouveauDiag{Nouveau Diagnostic Requis?}
+    NouveauDiag -->|Oui| Diagnostic
+    NouveauDiag -->|Non| FinIntervention[Fin d'Intervention]
+    
+    FinIntervention --> Termine[Réparation Terminée]
+    Termine --> Livre([Appareil Livré])
+    
+    EnAttente -->|Annulation| Annule([Réparation Annulée])
+    
+    style Start fill:#87CEEB
+    style Livre fill:#98FB98
+    style Annule fill:#FFB6C1
+    style EnAttente fill:#FFE4B5
+    style EnCours fill:#87CEFA
+    style Termine fill:#90EE90

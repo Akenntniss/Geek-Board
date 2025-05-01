@@ -1,0 +1,701 @@
+/* Styles pour les modales */
+.modal-content {
+    border-radius: 16px;
+    overflow: hidden;
+    border: none;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.1), 0 0 0 1px rgba(0,0,0,0.02);
+}
+
+.modal-header.bg-gradient-primary {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    border-bottom: none;
+    padding: 1.5rem;
+}
+
+.modal-header .modal-title {
+    font-weight: 600;
+    color: white;
+}
+
+.modal-body {
+    min-height: 150px;
+    padding: 1.5rem;
+}
+
+.modal-footer {
+    border-top: 1px solid rgba(0,0,0,0.05);
+    padding: 1rem 1.5rem;
+}
+
+.card {
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.25s ease;
+    border: none;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+}
+
+.form-control, .form-select {
+    border-radius: 8px;
+    padding: 0.6rem 1rem;
+    border-color: #e2e8f0;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    transition: all 0.2s ease;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: var(--primary-light);
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+}
+
+/* Boutons de statut */
+.status-btn {
+    border-radius: 10px;
+    padding: 0.6rem 1rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border: 2px solid #e2e8f0;
+    background-color: white;
+    color: #64748b;
+}
+
+.status-btn[data-status="en_attente"] {
+    border-color: #fef9c3;
+    color: #ca8a04;
+}
+
+.status-btn[data-status="en_attente"].active {
+    background-color: #fef9c3;
+    color: #ca8a04;
+    border-color: #ca8a04;
+}
+
+.status-btn[data-status="en_cours"] {
+    border-color: #dcfce7;
+    color: #16a34a;
+}
+
+.status-btn[data-status="en_cours"].active {
+    background-color: #dcfce7;
+    color: #16a34a;
+    border-color: #16a34a;
+}
+
+.status-btn[data-status="livree"] {
+    border-color: #e0e7ff;
+    color: #4f46e5;
+}
+
+.status-btn[data-status="livree"].active {
+    background-color: #e0e7ff;
+    color: #4f46e5;
+    border-color: #4f46e5;
+}
+
+.status-btn[data-status="annulee"] {
+    border-color: #fee2e2;
+    color: #dc2626;
+}
+
+.status-btn[data-status="annulee"].active {
+    background-color: #fee2e2;
+    color: #dc2626;
+    border-color: #dc2626;
+}
+
+.status-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.icon-warning {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: #fee2e2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+}
+
+/* Animation des modales */
+.fade-in {
+    animation: fadeIn 0.2s ease forwards;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Style pour les boutons dans les modales */
+.modal-footer .btn {
+    border-radius: 8px;
+    padding: 0.6rem 1.25rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.modal-footer .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.modal-footer .btn:active {
+    transform: translateY(0);
+}
+
+/* Styles spécifiques pour la vue en cartes */
+#cards-view {
+    background-color: #f1f5f9;
+    background-image: 
+        radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.03) 0%, transparent 25%),
+        linear-gradient(rgba(59, 130, 246, 0.015) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(59, 130, 246, 0.015) 1px, transparent 1px);
+    background-size: 60px 60px, 20px 20px, 20px 20px;
+    background-position: 0 0, 10px 10px, 10px 10px;
+    padding: 25px;
+    border-radius: 16px;
+    min-height: 300px;
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.02);
+    position: relative;
+}
+
+#cards-view::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.5), rgba(255,255,255,0.2));
+    pointer-events: none;
+    border-radius: 16px;
+}
+
+#cards-view .row {
+    margin: 0 -12px;
+    position: relative;
+    z-index: 1;
+}
+
+#cards-view .col-md-6.col-lg-4.col-xl-3 {
+    padding: 12px;
+}
+
+.dashboard-card.repair-row {
+    height: auto;
+    transition: all var(--transition-speed) cubic-bezier(0.22, 1, 0.36, 1);
+    cursor: pointer;
+    border: none;
+    border-radius: var(--card-radius);
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    overflow: hidden;
+    position: relative;
+    background: white;
+}
+
+.dashboard-card.repair-row:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(59, 130, 246, 0.15), 0 0 0 1px rgba(59, 130, 246, 0.05);
+}
+
+/* Animation d'apparition des cartes */
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translate3d(0, 15px, 0); }
+    to { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+
+.col-md-6.col-lg-4.col-xl-3 {
+    animation: fadeInUp 0.3s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.col-md-6.col-lg-4.col-xl-3:nth-child(1) { animation-delay: 0.05s; }
+.col-md-6.col-lg-4.col-xl-3:nth-child(2) { animation-delay: 0.1s; }
+.col-md-6.col-lg-4.col-xl-3:nth-child(3) { animation-delay: 0.15s; }
+.col-md-6.col-lg-4.col-xl-3:nth-child(4) { animation-delay: 0.2s; }
+.col-md-6.col-lg-4.col-xl-3:nth-child(5) { animation-delay: 0.25s; }
+.col-md-6.col-lg-4.col-xl-3:nth-child(6) { animation-delay: 0.3s; }
+.col-md-6.col-lg-4.col-xl-3:nth-child(7) { animation-delay: 0.35s; }
+.col-md-6.col-lg-4.col-xl-3:nth-child(8) { animation-delay: 0.4s; }
+
+/* Transitions entre les vues */
+#table-view, #cards-view {
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+#table-view.d-none, #cards-view.d-none {
+    display: none !important;
+}
+
+/* Styles spécifiques pour la vue cartes */
+.toggle-view {
+    position: relative;
+    overflow: hidden;
+    background-color: #fff;
+    color: #666;
+    font-weight: 600;
+    border: 2px solid #d1d5db;
+    transition: all 0.3s ease;
+    padding: 0.5rem 1rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.toggle-view:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.toggle-view.active {
+    background-color: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.toggle-view.active:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.25);
+}
+
+/* Support pour le mode nuit */
+@media (prefers-color-scheme: dark) {
+    .toggle-view {
+        background-color: #3a4b5c;
+        color: #ffffff;
+        border-color: #4d6174;
+        box-shadow: 0 0 10px rgba(0,0,0,0.2);
+        font-weight: bold;
+    }
+    
+    .toggle-view.active {
+        background-color: #2196f3;
+        color: white;
+        border-color: #1976d2;
+        box-shadow: 0 0 15px rgba(33, 150, 243, 0.5);
+    }
+
+    /* Hover state pour plus de visibilité */
+    .toggle-view:hover {
+        background-color: #4d6174;
+        border-color: #5d7186;
+        transform: translateY(-2px);
+    }
+    
+    .toggle-view.active:hover {
+        background-color: #1e88e5;
+        border-color: #1565c0;
+    }
+}
+
+/* Styles améliorés pour les boutons de la carte */
+.dashboard-card .card-footer .btn {
+    font-weight: 600;
+    padding: 0.6rem 0.7rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 5px;
+}
+
+.dashboard-card .card-footer .btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.dashboard-card .card-footer .btn-success {
+    background: linear-gradient(135deg, #28a745, #20c997);
+    border: none;
+}
+
+.dashboard-card .card-footer .btn-primary {
+    background: linear-gradient(135deg, #3b82f6, #4f46e5);
+    border: none;
+}
+
+.dashboard-card .card-footer .btn-info {
+    background: linear-gradient(135deg, #0dcaf0, #0ea5e9);
+    border: none;
+    color: white;
+}
+
+.dashboard-card .card-footer .btn-soft-danger {
+    background: linear-gradient(135deg, #dc3545, #ef4444);
+    border: none;
+    color: white;
+}
+
+/* Styles spécifiques pour le champ de notes techniques */
+.notes-techniques {
+    font-family: "Consolas", monospace;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+@media (prefers-color-scheme: dark) {
+    .notes-techniques {
+        background-color: #2d3748 !important;
+        color: #ffffff !important;
+        border-color: #4a5568 !important;
+    }
+    
+    .notes-techniques::placeholder {
+        color: #cbd5e0 !important;
+        opacity: 0.8;
+    }
+}
+
+/* Styles améliorés pour le modal de devis par SMS */
+#devisConfirmModal .message-type-option {
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border-radius: 12px;
+    background-color: #f8f9fa;
+    border: 2px solid #e2e8f0;
+    height: 140px;
+    position: relative;
+    overflow: hidden;
+}
+
+#devisConfirmModal .message-type-option:hover {
+    background-color: #f1f5f9;
+    border-color: #cbd5e0;
+    transform: translateY(-4px);
+    box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+}
+
+#devisConfirmModal .message-type-option .form-check-input {
+    width: 1.3rem;
+    height: 1.3rem;
+    margin-bottom: 0.5rem;
+}
+
+#devisConfirmModal .message-type-option label {
+    height: 100%;
+}
+
+#devisConfirmModal .message-type-option strong {
+    font-size: 1.05rem;
+    font-weight: 600;
+}
+
+#devisConfirmModal .message-type-option .option-icon {
+    transition: all 0.3s ease;
+    color: #64748b;
+}
+
+#devisConfirmModal .message-type-option.active {
+    background-color: #eef2ff;
+    border-color: #4f46e5;
+    box-shadow: 0 8px 15px rgba(79, 70, 229, 0.15);
+}
+
+#devisConfirmModal .message-type-option.active .option-icon {
+    color: #4f46e5;
+    transform: scale(1.2);
+}
+
+#devisConfirmModal .message-type-option::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, #4f46e5, #6366f1);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+#devisConfirmModal .message-type-option.active::before {
+    opacity: 1;
+}
+
+#devisConfirmModal .example-text {
+    font-size: 0.85rem;
+    margin-top: -0.25rem;
+    margin-bottom: 0.5rem;
+    color: #6c757d;
+}
+
+#devisConfirmModal .notes-techniques {
+    font-family: "Consolas", "Monaco", monospace;
+    font-size: 1.05rem;
+    line-height: 1.6;
+    padding: 1rem;
+    border-radius: 8px;
+}
+
+#devisConfirmModal .notes-techniques::placeholder {
+    opacity: 0.7;
+    font-style: italic;
+}
+
+/* Styles spécifiques pour le modal SMS */
+#smsModal .modal-content {
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+    border: none;
+}
+
+#smsModal .modal-header {
+    background: linear-gradient(135deg, #4361ee, #3a86ff);
+    padding: 1.5rem;
+    border-bottom: none;
+}
+
+#smsModal .modal-title {
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    font-size: 1.3rem;
+    color: white;
+}
+
+#smsModal .modal-body {
+    padding: 2rem;
+}
+
+#smsModal .form-label {
+    margin-bottom: 0.7rem;
+    color: #4b5563;
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+#smsModal .form-control, 
+#smsModal .form-select {
+    border-radius: 12px;
+    padding: 0.8rem 1.2rem;
+    border-color: #e5e7eb;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    font-size: 1.05rem;
+}
+
+#smsModal textarea {
+    resize: vertical;
+    min-height: 180px;
+    font-size: 1.05rem;
+    line-height: 1.6;
+    border-radius: 12px;
+}
+
+#smsModal .input-group-text {
+    border-top-left-radius: 12px;
+    border-bottom-left-radius: 12px;
+    padding: 0 1rem;
+    background-color: #f9fafb;
+    border-right: none;
+}
+
+#smsModal .input-group {
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    border-radius: 12px;
+}
+
+#smsModal .input-group-lg input {
+    font-size: 1.05rem;
+}
+
+#smsModal .btn-lg {
+    padding: 0.8rem 2rem;
+    border-radius: 12px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    font-size: 1.05rem;
+    transition: all 0.3s ease;
+}
+
+#smsModal .btn-outline-secondary {
+    border-color: #d1d5db;
+    color: #4b5563;
+    background-color: #fff;
+}
+
+#smsModal .btn-outline-secondary:hover {
+    background-color: #f3f4f6;
+    color: #111827;
+    border-color: #9ca3af;
+    transform: translateY(-2px);
+}
+
+#smsModal .btn-primary {
+    background: linear-gradient(135deg, #4361ee, #3a86ff);
+    border: none;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+#smsModal .btn-primary:hover {
+    background: linear-gradient(135deg, #3a56e4, #2979ff);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 15px rgba(59, 130, 246, 0.4);
+}
+
+#smsModal .modal-footer {
+    padding: 1.5rem 2rem;
+    border-top: 1px solid #f0f2f5;
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+#smsModal .badge {
+    font-size: 0.9rem;
+    font-weight: 500;
+    padding: 0.4rem 0.8rem;
+    border-radius: 8px;
+}
+
+#smsModal #charCount {
+    background-color: #f9fafb;
+    color: #4b5563;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+
+#smsModal #smsCount {
+    background-color: #dbeafe;
+    color: #1e40af;
+    font-weight: 600;
+}
+
+#smsModal .pointer-events-none {
+    pointer-events: none;
+}
+
+/* Styles pour le mode nuit du modal SMS */
+@media (prefers-color-scheme: dark) {
+    #smsModal .modal-content {
+        background-color: #111827;
+        border: none;
+        box-shadow: 0 25px 50px rgba(0,0,0,0.25);
+    }
+    
+    #smsModal .modal-header {
+        background: linear-gradient(135deg, #3730a3, #1d4ed8);
+        border-bottom-color: #1f2937;
+    }
+    
+    #smsModal .modal-footer {
+        border-top-color: #1f2937;
+        background-color: #151e2d;
+    }
+    
+    #smsModal .form-label {
+        color: #e2e8f0;
+    }
+    
+    #smsModal .form-control, 
+    #smsModal .form-select {
+        background-color: #1f2937;
+        border-color: #374151;
+        color: #f9fafb;
+    }
+    
+    #smsModal .input-group-text {
+        background-color: #374151;
+        border-color: #4b5563;
+        color: #f9fafb;
+    }
+    
+    #smsModal .form-control:focus, 
+    #smsModal .form-select:focus {
+        border-color: #4361ee;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+    }
+    
+    #smsModal #charCount {
+        background-color: #1f2937;
+        color: #d1d5db;
+    }
+    
+    #smsModal #smsCount {
+        background-color: #1e3a8a;
+        color: #93c5fd;
+    }
+    
+    #smsModal .btn-outline-secondary {
+        color: #e2e8f0;
+        border-color: #4b5563;
+        background-color: #1f2937;
+    }
+    
+    #smsModal .btn-outline-secondary:hover {
+        background-color: #374151;
+        color: #f9fafb;
+        border-color: #6b7280;
+    }
+    
+    #smsModal .btn-primary {
+        background: linear-gradient(135deg, #3730a3, #1d4ed8);
+        box-shadow: 0 4px 12px rgba(29, 78, 216, 0.3);
+    }
+    
+    #smsModal .btn-primary:hover {
+        background: linear-gradient(135deg, #312e81, #1e40af);
+        box-shadow: 0 8px 15px rgba(29, 78, 216, 0.4);
+    }
+}
+
+/* Styles spécifiques pour les modals en mode nuit */
+@media (prefers-color-scheme: dark) {
+    .modal-content {
+        background-color: #1e2430;
+        color: #e9ecef;
+    }
+    
+    .modal-header {
+        border-bottom-color: #2d3748;
+    }
+    
+    .modal-footer {
+        border-top-color: #2d3748;
+    }
+    
+    .modal .form-control, 
+    .modal .form-select,
+    .modal textarea {
+        background-color: #2c3e50;
+        border-color: #4b5563;
+        color: white;
+    }
+    
+    .modal .form-control::placeholder, 
+    .modal textarea::placeholder {
+        color: #adb5bd;
+    }
+    
+    .modal .text-muted {
+        color: #ced4da !important;
+    }
+    
+    .modal .form-check-label {
+        color: #e9ecef;
+    }
+    
+    .modal .input-group-text {
+        background-color: #3a4b5c;
+        color: white;
+        border-color: #4b5563;
+    }
+    
+    .modal .btn-outline-light {
+        color: #f8f9fa;
+        border-color: #6c757d;
+    }
+    
+    .modal .btn-outline-light:hover {
+        background-color: #6c757d;
+        color: white;
+    }
+} 

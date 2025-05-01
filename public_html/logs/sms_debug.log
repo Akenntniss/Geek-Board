@@ -1,0 +1,81 @@
+[2025-04-18 00:36:47] Appel à send_sms() - Destinataire: 33782962906
+[2025-04-18 00:36:47] Message: saber, votre as est prêt ! Il vous attend pour retrouver une vie normale. 🥳
+🧾 Suivi : http://Mdgeek.top/suivi.php?id=614
+Maison du Geek – 08 95 79 59 33
+[2025-04-18 00:36:47] === ENVOI SMS DÉMARRÉ ===
+[2025-04-18 00:36:47] Destinataire: 33782962906
+[2025-04-18 00:36:47] Message: saber, votre as est prêt ! Il...
+[2025-04-18 00:36:47] URL API: https://api.sms-gate.app/3rdparty/v1/message
+[2025-04-18 00:36:47] Utilisateur: -GCB75
+[2025-04-18 00:36:47] Numéro formaté: +33782962906
+[2025-04-18 00:36:47] Données JSON: {"message":"saber, votre as est pr\u00eat ! Il vous attend pour retrouver une vie normale. \ud83e\udd73\r\n\ud83e\uddfe Suivi : http:\/\/Mdgeek.top\/suivi.php?id=614\r\nMaison du Geek \u2013 08 95 79 59 33","phoneNumbers":["+33782962906"]}
+[2025-04-18 00:36:47] Exécution de la requête cURL...
+[2025-04-18 00:36:47] Code HTTP: 202
+[2025-04-18 00:36:47] Temps: 225 ms
+[2025-04-18 00:36:47] Réponse: {"id":"7ZpfEWdfGAlLbJRkLoiEZ","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33782962906","state":"Pending"}],"states":null}
+[2025-04-18 00:36:47] SMS enregistré dans la base de données, ID: 211
+[2025-04-18 00:36:47] === ENVOI SMS RÉUSSI ===
+TEST_MODAL - Session initialisée - user_id: 1, user_name: Utilisateur Test
+GET_TACHE_DETAILS - Vérification session - session_id: 6fgsamvjb1bvlet08ku2qb37h9, user_id présent: OUI (1)
+TEST_MODAL - Session initialisée - user_id: 1, user_name: Utilisateur Test
+GET_TACHE_DETAILS - Vérification session - session_id: 6fgsamvjb1bvlet08ku2qb37h9, user_id présent: OUI (1)
+GET_TACHE_DETAILS - Vérification session - session_id: 6fgsamvjb1bvlet08ku2qb37h9, user_id présent: OUI (1)
+GET_TACHE_DETAILS - Vérification session - session_id: 6fgsamvjb1bvlet08ku2qb37h9, user_id présent: OUI (1)
+GET_TACHE_DETAILS - Vérification session - session_id: 6fgsamvjb1bvlet08ku2qb37h9, user_id présent: OUI (1)
+GET_TACHE_DETAILS - Vérification session - session_id: 6fgsamvjb1bvlet08ku2qb37h9, user_id présent: OUI (1)
+GET_TACHE_DETAILS - Vérification session - session_id: 6fgsamvjb1bvlet08ku2qb37h9, user_id présent: OUI (1)
+GET_TACHE_DETAILS - Vérification session - session_id: 6fgsamvjb1bvlet08ku2qb37h9, user_id présent: OUI (1)
+GET_TACHE_DETAILS - Vérification session - session_id: cqsn5urune87v9irfr85h365e6, user_id présent: NON
+GET_TACHE_DETAILS - Vérification session - session_id: evpvnfhunqceordp228j27a64r, user_id présent: OUI (2)
+GET_TACHE_DETAILS - Vérification session - session_id: va94oc64sp9dtp5s1e3nq61ua2, user_id présent: NON
+GET_TACHE_DETAILS - Vérification session - session_id: va94oc64sp9dtp5s1e3nq61ua2, user_id présent: NON
+GET_TACHE_DETAILS - Vérification session - session_id: evpvnfhunqceordp228j27a64r, user_id présent: OUI (2)
+GET_TACHE_DETAILS - Vérification session - session_id: 0l3kmbqshc182vt0mmeb6r53c1, user_id présent: NON
+GET_TACHE_DETAILS - Vérification session - session_id: evpvnfhunqceordp228j27a64r, user_id présent: OUI (2)
+GET_TACHE_DETAILS - Vérification session - session_id: evpvnfhunqceordp228j27a64r, user_id présent: OUI (2)
+GET_TACHE_DETAILS - Vérification session - session_id: cqsn5urune87v9irfr85h365e6, user_id présent: NON
+GET_TACHE_DETAILS - Vérification session - session_id: ujochs8r2p3jvln0mm48kv64jv, user_id présent: OUI (1)
+GET_TACHE_DETAILS - Vérification session - session_id: ujochs8r2p3jvln0mm48kv64jv, user_id présent: OUI (1)
+GET_TACHE_DETAILS - Vérification session - session_id: ujochs8r2p3jvln0mm48kv64jv, user_id présent: OUI (1)
+GET_TACHE_DETAILS - Vérification session - session_id: ujochs8r2p3jvln0mm48kv64jv, user_id présent: OUI (1)
+GET_TACHE_DETAILS - Vérification session - session_id: ujochs8r2p3jvln0mm48kv64jv, user_id présent: OUI (1)
+GET_TACHE_DETAILS - Vérification session - session_id: ujochs8r2p3jvln0mm48kv64jv, user_id présent: OUI (1)
+GET_TACHE_DETAILS - Vérification session - session_id: ujochs8r2p3jvln0mm48kv64jv, user_id présent: OUI (1)
+GET_TACHE_DETAILS - Vérification session - session_id: ujochs8r2p3jvln0mm48kv64jv, user_id présent: OUI (1)
+GET_TACHE_DETAILS - Vérification session - session_id: ujochs8r2p3jvln0mm48kv64jv, user_id présent: OUI (1)
+GET_TACHE_DETAILS - Vérification session - session_id: ujochs8r2p3jvln0mm48kv64jv, user_id présent: OUI (1)
+GET_TACHE_DETAILS - Vérification session - session_id: ujochs8r2p3jvln0mm48kv64jv, user_id présent: OUI (1)
+GET_TACHE_DETAILS - Vérification session - session_id: ujochs8r2p3jvln0mm48kv64jv, user_id présent: OUI (1)
+GET_TACHE_DETAILS - Vérification session - session_id: ujochs8r2p3jvln0mm48kv64jv, user_id présent: OUI (1)
+GET_TACHE_DETAILS - Vérification session - session_id: ujochs8r2p3jvln0mm48kv64jv, user_id présent: OUI (1)
+GET_TACHE_DETAILS - Vérification session - session_id: ujochs8r2p3jvln0mm48kv64jv, user_id présent: OUI (1)
+GET_TACHE_DETAILS - Vérification session - session_id: ujochs8r2p3jvln0mm48kv64jv, user_id présent: OUI (1)
+GET_TACHE_DETAILS - Vérification session - session_id: ujochs8r2p3jvln0mm48kv64jv, user_id présent: OUI (1)
+GET_TACHE_DETAILS - Vérification session - session_id: ujochs8r2p3jvln0mm48kv64jv, user_id présent: OUI (1)
+GET_TACHE_DETAILS - Vérification session - session_id: 0ahgm57ekdu7jfgai3o296jgi3, user_id présent: NON
+GET_TACHE_DETAILS - Vérification session - session_id: 0ahgm57ekdu7jfgai3o296jgi3, user_id présent: NON
+GET_TACHE_DETAILS - Vérification session - session_id: c83cc6a73mn4i2atedjcanuc5m, user_id présent: NON
+GET_TACHE_DETAILS - Vérification session - session_id: c83cc6a73mn4i2atedjcanuc5m, user_id présent: NON
+GET_TACHE_DETAILS - Vérification session - session_id: c83cc6a73mn4i2atedjcanuc5m, user_id présent: NON
+GET_TACHE_DETAILS - Vérification session - session_id: c83cc6a73mn4i2atedjcanuc5m, user_id présent: NON
+GET_TACHE_DETAILS - Vérification session - session_id: 7gm82tvvned6v4fa0qq9bthish, user_id présent: NON
+GET_TACHE_DETAILS - Vérification session - session_id: 7gm82tvvned6v4fa0qq9bthish, user_id présent: NON
+GET_TACHE_DETAILS - Vérification session - session_id: 7gm82tvvned6v4fa0qq9bthish, user_id présent: NON
+GET_TACHE_DETAILS - Vérification session - session_id: 7gm82tvvned6v4fa0qq9bthish, user_id présent: NON
+GET_TACHE_DETAILS - Vérification session - session_id: c83cc6a73mn4i2atedjcanuc5m, user_id présent: NON
+GET_TACHE_DETAILS - Vérification session - session_id: fs5h74qrqvufcd1mlosacie3m0, user_id présent: NON
+GET_TACHE_DETAILS - Vérification session - session_id: fs5h74qrqvufcd1mlosacie3m0, user_id présent: NON
+GET_TACHE_DETAILS - Vérification session - session_id: fs5h74qrqvufcd1mlosacie3m0, user_id présent: NON
+GET_TACHE_DETAILS - Vérification session - session_id: fs5h74qrqvufcd1mlosacie3m0, user_id présent: NON
+GET_TACHE_DETAILS - Vérification session - session_id: fs5h74qrqvufcd1mlosacie3m0, user_id présent: NON
+GET_TACHE_DETAILS - Vérification session - session_id: fs5h74qrqvufcd1mlosacie3m0, user_id présent: NON
+GET_TACHE_DETAILS - Vérification session - session_id: fs5h74qrqvufcd1mlosacie3m0, user_id présent: NON
+GET_TACHE_DETAILS - Vérification session - session_id: 5f49eupfh5khu872e7pibbb965, user_id présent: NON
+GET_TACHE_DETAILS - Vérification session - session_id: 5f49eupfh5khu872e7pibbb965, user_id présent: NON
+GET_TACHE_DETAILS - Vérification session - session_id: 5f49eupfh5khu872e7pibbb965, user_id présent: NON
+GET_TACHE_DETAILS - Vérification session - session_id: 5f49eupfh5khu872e7pibbb965, user_id présent: NON
+GET_TACHE_DETAILS - Vérification session - session_id: 5f49eupfh5khu872e7pibbb965, user_id présent: NON
+GET_TACHE_DETAILS - Vérification session - session_id: 5f49eupfh5khu872e7pibbb965, user_id présent: NON
+GET_TACHE_DETAILS - Vérification session - session_id: 6dcp8b53r4aj37jca9u3ipcjh2, user_id présent: NON
+GET_TACHE_DETAILS - Vérification session - session_id: 5f49eupfh5khu872e7pibbb965, user_id présent: NON
+GET_TACHE_DETAILS - Vérification session - session_id: u38q1lk7474m12ifjejfsfr0b1, user_id présent: NON

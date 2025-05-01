@@ -1,0 +1,7 @@
+<br />
+<b>Warning</b>:  Undefined variable $pdo in <b>/home/u139954273/domains/mdgeek.top/public_html/pages/reparations.php</b> on line <b>12</b><br />
+<br />
+<b>Fatal error</b>:  Uncaught Error: Call to a member function query() on null in /home/u139954273/domains/mdgeek.top/public_html/pages/reparations.php:12
+Stack trace:
+#0 {main}
+  thrown in <b>/home/u139954273/domains/mdgeek.top/public_html/pages/reparations.php</b> on line <b>12</b><br />

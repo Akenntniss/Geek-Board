@@ -1,0 +1,2 @@
+<link rel="stylesheet" href="assets/css/modal-fix.css"><?php // Styles spécifiques pour corriger l'affichage des modals ?>
+<script src="assets/js/modal-tab-fix.js" defer></script><?php // Script de correction des onglets du modal ?> 

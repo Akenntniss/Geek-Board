@@ -1,0 +1,384 @@
+/* Thème sombre - Mode nuit pour MD Geek */
+
+/* Variables de couleurs pour le thème sombre */
+:root {
+    --dark-bg-primary: #121212;
+    --dark-bg-secondary: #1e1e1e;
+    --dark-bg-tertiary: #252525;
+    --dark-text-primary: #e0e0e0;
+    --dark-text-secondary: #a0a0a0;
+    --dark-border-color: #333333;
+    --dark-card-bg: #1e1e1e;
+    --dark-input-bg: #2c2c2c;
+    --dark-hover-bg: rgba(255, 255, 255, 0.05);
+    --dark-active-bg: rgba(255, 255, 255, 0.1);
+    --dark-shadow: rgba(0, 0, 0, 0.5);
+    --dark-header-bg: rgba(18, 18, 18, 0.95);
+    --dark-header-border: #333333;
+    --dark-accent-color: #0078e8;
+    --dark-accent-hover: #0064c3;
+    --dark-danger: #e53935;
+    --dark-success: #43a047;
+    --dark-warning: #ffb300;
+    --dark-info: #039be5;
+    --dark-modal-bg: #1e1e1e;
+}
+
+/* Classe activée pour le mode sombre */
+body.dark-mode {
+    background-color: var(--dark-bg-primary);
+    color: var(--dark-text-primary);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Navigation supérieure en mode sombre */
+body.dark-mode .top-nav {
+    background: var(--dark-header-bg);
+    border-bottom: 1px solid var(--dark-border-color);
+    box-shadow: 0 4px 20px var(--dark-shadow);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+body.dark-mode .top-nav.scrolled {
+    background: var(--dark-header-bg);
+}
+
+/* Style du logo en mode sombre */
+body.dark-mode .brand-name {
+    background: linear-gradient(135deg, #3a9fff, #64b5ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Liens de navigation en mode sombre */
+body.dark-mode .nav-link {
+    color: var(--dark-text-primary);
+}
+
+body.dark-mode .nav-link:hover, 
+body.dark-mode .nav-link.active {
+    background: var(--dark-hover-bg);
+    color: var(--dark-accent-color);
+}
+
+/* Boutons d'icônes en mode sombre */
+body.dark-mode .nav-icon-btn {
+    color: var(--dark-text-primary);
+}
+
+body.dark-mode .nav-icon-btn:hover {
+    color: var(--dark-accent-color);
+}
+
+body.dark-mode .nav-icon-btn::before {
+    background: var(--dark-hover-bg);
+}
+
+/* Toggle menu en mode sombre */
+body.dark-mode .mobile-menu-toggle span {
+    background: var(--dark-text-primary);
+}
+
+body.dark-mode .mobile-menu-toggle.active span {
+    background: var(--dark-text-primary);
+}
+
+/* Dock mobile en mode sombre */
+body.dark-mode .mobile-dock {
+    background: var(--dark-header-bg);
+    box-shadow: 0 -2px 10px var(--dark-shadow);
+    border-top: 1px solid var(--dark-border-color);
+}
+
+body.dark-mode .dock-item {
+    color: var(--dark-text-secondary);
+}
+
+body.dark-mode .dock-item.active,
+body.dark-mode .dock-item:hover {
+    color: var(--dark-accent-color);
+}
+
+/* Cartes en mode sombre */
+body.dark-mode .card {
+    background-color: var(--dark-card-bg);
+    border-color: var(--dark-border-color);
+    box-shadow: 0 2px 8px var(--dark-shadow);
+}
+
+body.dark-mode .card-header {
+    background-color: var(--dark-bg-tertiary);
+    border-bottom-color: var(--dark-border-color);
+}
+
+body.dark-mode .card-footer {
+    background-color: var(--dark-bg-tertiary);
+    border-top-color: var(--dark-border-color);
+}
+
+/* Modals en mode sombre */
+body.dark-mode .modal-content {
+    background-color: var(--dark-modal-bg);
+    border-color: var(--dark-border-color);
+}
+
+body.dark-mode .modal-header {
+    background-color: var(--dark-bg-tertiary);
+    border-bottom-color: var(--dark-border-color);
+}
+
+body.dark-mode .modal-footer {
+    background-color: var(--dark-bg-tertiary);
+    border-top-color: var(--dark-border-color);
+}
+
+/* Menus dropdown en mode sombre */
+body.dark-mode .dropdown-menu {
+    background-color: var(--dark-card-bg);
+    border-color: var(--dark-border-color);
+    box-shadow: 0 2px 10px var(--dark-shadow);
+}
+
+body.dark-mode .dropdown-item {
+    color: var(--dark-text-primary);
+}
+
+body.dark-mode .dropdown-item:hover {
+    background-color: var(--dark-hover-bg);
+    color: var(--dark-text-primary);
+}
+
+body.dark-mode .dropdown-divider {
+    border-top-color: var(--dark-border-color);
+}
+
+/* List group en mode sombre */
+body.dark-mode .list-group-item {
+    background-color: var(--dark-card-bg);
+    border-color: var(--dark-border-color);
+    color: var(--dark-text-primary);
+}
+
+body.dark-mode .list-group-item-action:hover {
+    background-color: var(--dark-hover-bg);
+}
+
+/* Tableaux en mode sombre */
+body.dark-mode .table {
+    color: var(--dark-text-primary);
+    border-color: var(--dark-border-color);
+}
+
+body.dark-mode .table thead th {
+    background-color: var(--dark-bg-tertiary);
+    border-bottom-color: var(--dark-border-color);
+}
+
+body.dark-mode .table-striped tbody tr:nth-of-type(odd) {
+    background-color: var(--dark-hover-bg);
+}
+
+body.dark-mode .table-hover tbody tr:hover {
+    background-color: var(--dark-active-bg);
+}
+
+body.dark-mode .table td, 
+body.dark-mode .table th {
+    border-top-color: var(--dark-border-color);
+}
+
+/* Formulaires en mode sombre */
+body.dark-mode .form-control {
+    background-color: var(--dark-input-bg);
+    border-color: var(--dark-border-color);
+    color: var(--dark-text-primary);
+}
+
+body.dark-mode .form-control:focus {
+    background-color: var(--dark-input-bg);
+    border-color: var(--dark-accent-color);
+    color: var(--dark-text-primary);
+    box-shadow: 0 0 0 0.2rem rgba(0, 120, 232, 0.25);
+}
+
+body.dark-mode .form-control::placeholder {
+    color: var(--dark-text-secondary);
+}
+
+body.dark-mode .form-select {
+    background-color: var(--dark-input-bg);
+    border-color: var(--dark-border-color);
+    color: var(--dark-text-primary);
+}
+
+body.dark-mode .form-label {
+    color: var(--dark-text-primary);
+}
+
+/* Boutons en mode sombre */
+body.dark-mode .btn-light {
+    background-color: var(--dark-bg-tertiary);
+    border-color: var(--dark-border-color);
+    color: var(--dark-text-primary);
+}
+
+body.dark-mode .btn-light:hover {
+    background-color: var(--dark-hover-bg);
+    border-color: var(--dark-border-color);
+    color: var(--dark-text-primary);
+}
+
+body.dark-mode .btn-outline-secondary {
+    color: var(--dark-text-secondary);
+    border-color: var(--dark-border-color);
+}
+
+body.dark-mode .btn-outline-secondary:hover {
+    background-color: var(--dark-hover-bg);
+    color: var(--dark-text-primary);
+}
+
+/* Launchpad menu en mode sombre */
+body.dark-mode .launchpad-menu {
+    background: linear-gradient(135deg, #1e3c5a, #1e2a3a);
+}
+
+body.dark-mode .launchpad-item {
+    background-color: rgba(30, 30, 30, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    color: var(--dark-text-primary);
+}
+
+body.dark-mode .launchpad-item:hover {
+    background-color: rgba(40, 40, 40, 0.8);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode .launchpad-icon {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+body.dark-mode .launchpad-title,
+body.dark-mode .launchpad-subtitle {
+    color: var(--dark-text-primary);
+}
+
+/* Badges en mode sombre */
+body.dark-mode .badge.bg-light {
+    background-color: var(--dark-bg-tertiary) !important;
+    color: var(--dark-text-primary) !important;
+}
+
+body.dark-mode .badge.bg-secondary {
+    background-color: #454545 !important;
+}
+
+/* Paginations en mode sombre */
+body.dark-mode .page-link {
+    background-color: var(--dark-card-bg);
+    border-color: var(--dark-border-color);
+    color: var(--dark-text-primary);
+}
+
+body.dark-mode .page-link:hover {
+    background-color: var(--dark-hover-bg);
+    border-color: var(--dark-border-color);
+    color: var(--dark-text-primary);
+}
+
+body.dark-mode .page-item.active .page-link {
+    background-color: var(--dark-accent-color);
+    border-color: var(--dark-accent-color);
+}
+
+body.dark-mode .page-item.disabled .page-link {
+    background-color: var(--dark-card-bg);
+    border-color: var(--dark-border-color);
+    color: var(--dark-text-secondary);
+}
+
+/* Alertes en mode sombre */
+body.dark-mode .alert-secondary {
+    background-color: var(--dark-bg-tertiary);
+    border-color: var(--dark-border-color);
+    color: var(--dark-text-primary);
+}
+
+body.dark-mode .alert-info {
+    background-color: rgba(3, 155, 229, 0.15);
+    border-color: rgba(3, 155, 229, 0.3);
+    color: #8ed7ff;
+}
+
+body.dark-mode .alert-success {
+    background-color: rgba(67, 160, 71, 0.15);
+    border-color: rgba(67, 160, 71, 0.3);
+    color: #81c784;
+}
+
+body.dark-mode .alert-warning {
+    background-color: rgba(255, 179, 0, 0.15);
+    border-color: rgba(255, 179, 0, 0.3);
+    color: #ffcc80;
+}
+
+body.dark-mode .alert-danger {
+    background-color: rgba(229, 57, 53, 0.15);
+    border-color: rgba(229, 57, 53, 0.3);
+    color: #e57373;
+}
+
+/* Textes colorés en mode sombre */
+body.dark-mode .text-muted {
+    color: var(--dark-text-secondary) !important;
+}
+
+body.dark-mode .text-dark {
+    color: var(--dark-text-primary) !important;
+}
+
+/* Séparateurs horizontaux */
+body.dark-mode hr {
+    border-top-color: var(--dark-border-color);
+}
+
+/* Bouton de basculement de thème */
+#themeToggleButton {
+    transition: all 0.3s ease;
+}
+
+/* Animation de transition pour les changements de thème */
+body,
+body.dark-mode,
+.card,
+.modal-content,
+.form-control,
+.list-group-item,
+.table,
+.nav-icon-btn {
+    transition: background-color 0.3s ease, 
+                color 0.3s ease, 
+                border-color 0.3s ease,
+                box-shadow 0.3s ease;
+}
+
+/* Icône de la lune (mode sombre) */
+#darkModeIcon {
+    color: #6c757d;
+}
+
+/* Icône du soleil (mode clair) */
+#lightModeIcon {
+    color: #ffb400;
+}
+
+/* Animation pour les icônes du bouton de basculement de thème */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.theme-icon-active {
+    animation: spin 0.5s ease-in-out;
+} 

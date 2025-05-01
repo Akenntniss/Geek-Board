@@ -1,0 +1,3113 @@
+ --- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 62, ID statut: 3
+Nouveau statut: ID=3, Code=nouvelle_commande, Nom=Nouvelle Commande (Catégorie ID: 1, Nom: Nouvelle)
+Exception: Erreur dans update_repair_specific_status.php: Aucune réparation mise à jour
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 63, ID statut: 3
+Nouveau statut: ID=3, Code=nouvelle_commande, Nom=Nouvelle Commande (Catégorie ID: 1, Nom: Nouvelle)
+Réponse: Succès - Cas spécial: Non
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 58, ID statut: 3
+Nouveau statut: ID=3, Code=nouvelle_commande, Nom=Nouvelle Commande (Catégorie ID: 1, Nom: Nouvelle)
+Réponse: Succès - Cas spécial: Non
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 57, ID statut: 3
+Nouveau statut: ID=3, Code=nouvelle_commande, Nom=Nouvelle Commande (Catégorie ID: 1, Nom: Nouvelle)
+Réponse: Succès - Cas spécial: Non
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 59, ID statut: 3
+Nouveau statut: ID=3, Code=nouvelle_commande, Nom=Nouvelle Commande (Catégorie ID: 1, Nom: Nouvelle)
+Réponse: Succès - Cas spécial: Non
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 63, ID statut: 1
+Nouveau statut: ID=1, Code=nouveau_diagnostique, Nom=Nouveau Diagnostique (Catégorie ID: 1, Nom: Nouvelle)
+Réponse: Succès - Cas spécial: Non
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 63, ID statut: 3
+Nouveau statut: ID=3, Code=nouvelle_commande, Nom=Nouvelle Commande (Catégorie ID: 1, Nom: Nouvelle)
+Réponse: Succès - Cas spécial: Non
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 63, ID statut: 4
+Nouveau statut: ID=4, Code=en_cours_diagnostique, Nom=En cours de diagnostique (Catégorie ID: 2, Nom: En cours)
+Réponse: Succès - Cas spécial: Oui (ID 4)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 62, ID statut: 1
+Nouveau statut: ID=1, Code=nouveau_diagnostique, Nom=Nouveau Diagnostique (Catégorie ID: 1, Nom: Nouvelle)
+Réponse: Succès - Cas spécial: Non
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 62, ID statut: 3
+Nouveau statut: ID=3, Code=nouvelle_commande, Nom=Nouvelle Commande (Catégorie ID: 1, Nom: Nouvelle)
+Réponse: Succès - Cas spécial: Non
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 62, ID statut: 2
+Nouveau statut: ID=2, Code=nouvelle_intervention, Nom=Nouvelle Intervention (Catégorie ID: 1, Nom: Nouvelle)
+Réponse: Succès - Cas spécial: Oui (ID 2)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 62, ID statut: 3
+Nouveau statut: ID=3, Code=nouvelle_commande, Nom=Nouvelle Commande (Catégorie ID: 1, Nom: Nouvelle)
+Réponse: Succès - Cas spécial: Non
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 62, ID statut: 2
+Nouveau statut: ID=2, Code=nouvelle_intervention, Nom=Nouvelle Intervention (Catégorie ID: 1, Nom: Nouvelle)
+Réponse: Succès - Cas spécial: Oui (ID 2)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 62, ID statut: 3
+Nouveau statut: ID=3, Code=nouvelle_commande, Nom=Nouvelle Commande (Catégorie ID: 1, Nom: Nouvelle)
+Réponse: Succès - Cas spécial: Non
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 62, ID statut: 1
+Nouveau statut: ID=1, Code=nouveau_diagnostique, Nom=Nouveau Diagnostique (Catégorie ID: 1, Nom: Nouvelle)
+Réponse: Succès - Cas spécial: Non
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 64, ID statut: 1
+Nouveau statut: ID=1, Code=nouveau_diagnostique, Nom=Nouveau Diagnostique (Catégorie ID: 1, Nom: Nouvelle)
+Réponse: Succès - Cas spécial: Non
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 61, ID statut: 1
+Nouveau statut: ID=1, Code=nouveau_diagnostique, Nom=Nouveau Diagnostique (Catégorie ID: 1, Nom: Nouvelle)
+Réponse: Succès - Cas spécial: Non
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 62, ID statut: 3
+Nouveau statut: ID=3, Code=nouvelle_commande, Nom=Nouvelle Commande (Catégorie ID: 1, Nom: Nouvelle)
+Réponse: Succès - Cas spécial: Non
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 62, ID statut: 3
+Nouveau statut: ID=3, Code=nouvelle_commande, Nom=Nouvelle Commande (Catégorie ID: 1, Nom: Nouvelle)
+Exception: Erreur dans update_repair_specific_status.php: Aucune réparation mise à jour
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 62, ID statut: 3
+Nouveau statut: ID=3, Code=nouvelle_commande, Nom=Nouvelle Commande (Catégorie ID: 1, Nom: Nouvelle)
+Exception: Erreur dans update_repair_specific_status.php: Aucune réparation mise à jour
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 62, ID statut: 3
+Nouveau statut: ID=3, Code=nouvelle_commande, Nom=Nouvelle Commande (Catégorie ID: 1, Nom: Nouvelle)
+Exception: Erreur dans update_repair_specific_status.php: Aucune réparation mise à jour
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 62, ID statut: 3
+Nouveau statut: ID=3, Code=nouvelle_commande, Nom=Nouvelle Commande (Catégorie ID: 1, Nom: Nouvelle)
+Exception: Erreur dans update_repair_specific_status.php: Aucune réparation mise à jour
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 63, ID statut: 3
+Nouveau statut: ID=3, Code=nouvelle_commande, Nom=Nouvelle Commande (Catégorie ID: 1, Nom: Nouvelle)
+Réponse: Succès - Cas spécial: Non
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 63, ID statut: 3
+Nouveau statut: ID=3, Code=nouvelle_commande, Nom=Nouvelle Commande (Catégorie ID: 1, Nom: Nouvelle)
+Exception: Erreur dans update_repair_specific_status.php: Aucune réparation mise à jour
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 63, ID statut: 3
+Nouveau statut: ID=3, Code=nouvelle_commande, Nom=Nouvelle Commande (Catégorie ID: 1, Nom: Nouvelle)
+Exception: Erreur dans update_repair_specific_status.php: Aucune réparation mise à jour
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 64, ID statut: 3
+Nouveau statut: ID=3, Code=nouvelle_commande, Nom=Nouvelle Commande (Catégorie ID: 1, Nom: Nouvelle)
+Réponse: Succès - Cas spécial: Non
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 61, ID statut: 3
+Nouveau statut: ID=3, Code=nouvelle_commande, Nom=Nouvelle Commande (Catégorie ID: 1, Nom: Nouvelle)
+Réponse: Succès - Cas spécial: Non
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 63, ID statut: 1
+Nouveau statut: ID=1, Code=nouveau_diagnostique, Nom=Nouveau Diagnostique (Catégorie ID: 1, Nom: Nouvelle)
+Réponse: Succès - Cas spécial: Non
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 62, ID statut: 3
+Nouveau statut: ID=3, Code=nouvelle_commande, Nom=Nouvelle Commande (Catégorie ID: 1, Nom: Nouvelle)
+Exception: Erreur dans update_repair_specific_status.php: Aucune réparation mise à jour
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 63, ID statut: 3
+Nouveau statut: ID=3, Code=nouvelle_commande, Nom=Nouvelle Commande (Catégorie ID: 1, Nom: Nouvelle)
+Réponse: Succès - Cas spécial: Non
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 63, ID statut: 3
+Nouveau statut: ID=3, Code=nouvelle_commande, Nom=Nouvelle Commande (Catégorie ID: 1, Nom: Nouvelle)
+Exception: Erreur dans update_repair_specific_status.php: Aucune réparation mise à jour
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 62, ID statut: 3
+Nouveau statut: ID=3, Code=nouvelle_commande, Nom=Nouvelle Commande (Catégorie ID: 1, Nom: Nouvelle)
+Exception: Erreur dans update_repair_specific_status.php: Aucune réparation mise à jour
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 63, ID statut: 2
+Nouveau statut: ID=2, Code=nouvelle_intervention, Nom=Nouvelle Intervention (Catégorie ID: 1, Nom: Nouvelle)
+Réponse: Succès - Cas spécial: Oui (ID 2)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 63, ID statut: 3
+Nouveau statut: ID=3, Code=nouvelle_commande, Nom=Nouvelle Commande (Catégorie ID: 1, Nom: Nouvelle)
+Réponse: Succès - Cas spécial: Non
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 64, ID statut: 3
+Nouveau statut: ID=3, Code=nouvelle_commande, Nom=Nouvelle Commande (Catégorie ID: 1, Nom: Nouvelle)
+Exception: Erreur dans update_repair_specific_status.php: Aucune réparation mise à jour
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 63, ID statut: 8
+Nouveau statut: ID=8, Code=en_attente_responsable, Nom=En attente d'un responsable (Catégorie ID: 3, Nom: En attente)
+Réponse: Succès - Cas spécial: Oui (ID 8)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 63, ID statut: 11
+Nouveau statut: ID=11, Code=restitue, Nom=Restitué (Catégorie ID: 5, Nom: Annulé)
+Réponse: Succès - Cas spécial: Oui (ID 11)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 62, ID statut: 11
+Nouveau statut: ID=11, Code=restitue, Nom=Restitué (Catégorie ID: 5, Nom: Annulé)
+Réponse: Succès - Cas spécial: Oui (ID 11)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 61, ID statut: 4
+Nouveau statut: ID=4, Code=en_cours_diagnostique, Nom=En cours de diagnostique (Catégorie ID: 2, Nom: En cours)
+Réponse: Succès - Cas spécial: Oui (ID 4)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 59, ID statut: 13
+Nouveau statut: ID=13, Code=annule, Nom=Annulé (Catégorie ID: 5, Nom: Annulé)
+Réponse: Succès - Cas spécial: Oui (ID 13)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 58, ID statut: 13
+Nouveau statut: ID=13, Code=annule, Nom=Annulé (Catégorie ID: 5, Nom: Annulé)
+Réponse: Succès - Cas spécial: Oui (ID 13)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 60, ID statut: 13
+Nouveau statut: ID=13, Code=annule, Nom=Annulé (Catégorie ID: 5, Nom: Annulé)
+Réponse: Succès - Cas spécial: Oui (ID 13)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 64, ID statut: 13
+Nouveau statut: ID=13, Code=annule, Nom=Annulé (Catégorie ID: 5, Nom: Annulé)
+Réponse: Succès - Cas spécial: Oui (ID 13)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 57, ID statut: 13
+Nouveau statut: ID=13, Code=annule, Nom=Annulé (Catégorie ID: 5, Nom: Annulé)
+Réponse: Succès - Cas spécial: Oui (ID 13)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 61, ID statut: 1
+Nouveau statut: ID=1, Code=nouveau_diagnostique, Nom=Nouveau Diagnostique (Catégorie ID: 1, Nom: Nouvelle)
+Réponse: Succès - Cas spécial: Non
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 61, ID statut: 4
+Nouveau statut: ID=4, Code=en_cours_diagnostique, Nom=En cours de diagnostique (Catégorie ID: 2, Nom: En cours)
+Réponse: Succès - Cas spécial: Oui (ID 4)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 61, ID statut: 1
+Nouveau statut: ID=1, Code=nouveau_diagnostique, Nom=Nouveau Diagnostique (Catégorie ID: 1, Nom: Nouvelle)
+Réponse: Succès - Cas spécial: Non
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 61, ID statut: 4
+Nouveau statut: ID=4, Code=en_cours_diagnostique, Nom=En cours de diagnostique (Catégorie ID: 2, Nom: En cours)
+Réponse: Succès - Cas spécial: Oui (ID 4)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 63, ID statut: 4
+Nouveau statut: ID=4, Code=en_cours_diagnostique, Nom=En cours de diagnostique (Catégorie ID: 2, Nom: En cours)
+Réponse: Succès - Cas spécial: Oui (ID 4)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 61, ID statut: 6
+Nouveau statut: ID=6, Code=en_attente_accord_client, Nom=En attente de l'accord client (Catégorie ID: 3, Nom: En attente)
+Réponse: Succès - Cas spécial: Oui (ID 6)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 61, ID statut: 5
+Nouveau statut: ID=5, Code=en_cours_intervention, Nom=En cours d'intervention (Catégorie ID: 2, Nom: En cours)
+Réponse: Succès - Cas spécial: Oui (ID 5)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 63, ID statut: 6
+Nouveau statut: ID=6, Code=en_attente_accord_client, Nom=En attente de l'accord client (Catégorie ID: 3, Nom: En attente)
+Réponse: Succès - Cas spécial: Oui (ID 6)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 61, ID statut: 8
+Nouveau statut: ID=8, Code=en_attente_responsable, Nom=En attente d'un responsable (Catégorie ID: 3, Nom: En attente)
+Réponse: Succès - Cas spécial: Oui (ID 8)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 63, ID statut: 4
+Nouveau statut: ID=4, Code=en_cours_diagnostique, Nom=En cours de diagnostique (Catégorie ID: 2, Nom: En cours)
+Réponse: Succès - Cas spécial: Oui (ID 4)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 63, ID statut: 6
+Nouveau statut: ID=6, Code=en_attente_accord_client, Nom=En attente de l'accord client (Catégorie ID: 3, Nom: En attente)
+Réponse: Succès - Cas spécial: Oui (ID 6)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 63, ID statut: 4
+Nouveau statut: ID=4, Code=en_cours_diagnostique, Nom=En cours de diagnostique (Catégorie ID: 2, Nom: En cours)
+Réponse: Succès - Cas spécial: Oui (ID 4)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 61, ID statut: 4
+Nouveau statut: ID=4, Code=en_cours_diagnostique, Nom=En cours de diagnostique (Catégorie ID: 2, Nom: En cours)
+Réponse: Succès - Cas spécial: Oui (ID 4)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 63, ID statut: 6
+Nouveau statut: ID=6, Code=en_attente_accord_client, Nom=En attente de l'accord client (Catégorie ID: 3, Nom: En attente)
+Réponse: Succès - Cas spécial: Oui (ID 6)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 61, ID statut: 1
+Nouveau statut: ID=1, Code=nouveau_diagnostique, Nom=Nouveau Diagnostique (Catégorie ID: 1, Nom: Nouvelle)
+Réponse: Succès - Cas spécial: Non
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 61, ID statut: 2
+Nouveau statut: ID=2, Code=nouvelle_intervention, Nom=Nouvelle Intervention (Catégorie ID: 1, Nom: Nouvelle)
+Réponse: Succès - Cas spécial: Oui (ID 2)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 63, ID statut: 4
+Nouveau statut: ID=4, Code=en_cours_diagnostique, Nom=En cours de diagnostique (Catégorie ID: 2, Nom: En cours)
+Réponse: Succès - Cas spécial: Oui (ID 4)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 63, ID statut: 4
+Nouveau statut: ID=4, Code=en_cours_diagnostique, Nom=En cours de diagnostique (Catégorie ID: 2, Nom: En cours)
+Exception: Erreur dans update_repair_specific_status.php: Aucune réparation mise à jour
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 63, ID statut: 7
+Nouveau statut: ID=7, Code=en_attente_livraison, Nom=En attente de livraison (Catégorie ID: 3, Nom: En attente)
+Réponse: Succès - Cas spécial: Oui (ID 7)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 63, ID statut: 4
+Nouveau statut: ID=4, Code=en_cours_diagnostique, Nom=En cours de diagnostique (Catégorie ID: 2, Nom: En cours)
+Réponse: Succès - Cas spécial: Oui (ID 4)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 63, ID statut: 5
+Nouveau statut: ID=5, Code=en_cours_intervention, Nom=En cours d'intervention (Catégorie ID: 2, Nom: En cours)
+Réponse: Succès - Cas spécial: Oui (ID 5)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 63, ID statut: 7
+Nouveau statut: ID=7, Code=en_attente_livraison, Nom=En attente de livraison (Catégorie ID: 3, Nom: En attente)
+Réponse: Succès - Cas spécial: Oui (ID 7)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 63, ID statut: 4
+Nouveau statut: ID=4, Code=en_cours_diagnostique, Nom=En cours de diagnostique (Catégorie ID: 2, Nom: En cours)
+Réponse: Succès - Cas spécial: Oui (ID 4)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 61, ID statut: 6
+Nouveau statut: ID=6, Code=en_attente_accord_client, Nom=En attente de l'accord client (Catégorie ID: 3, Nom: En attente)
+Réponse: Succès - Cas spécial: Oui (ID 6)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 63, ID statut: 11
+Nouveau statut: ID=11, Code=restitue, Nom=Restitué (Catégorie ID: 5, Nom: Annulé)
+Réponse: Succès - Cas spécial: Oui (ID 11)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 64, ID statut: 1
+Nouveau statut: ID=1, Code=nouveau_diagnostique, Nom=Nouveau Diagnostique (Catégorie ID: 1, Nom: Nouvelle)
+Réponse: Succès - Cas spécial: Non
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 61, ID statut: 4
+Nouveau statut: ID=4, Code=en_cours_diagnostique, Nom=En cours de diagnostique (Catégorie ID: 2, Nom: En cours)
+Réponse: Succès - Cas spécial: Oui (ID 4)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 64, ID statut: 4
+Nouveau statut: ID=4, Code=en_cours_diagnostique, Nom=En cours de diagnostique (Catégorie ID: 2, Nom: En cours)
+Réponse: Succès - Cas spécial: Oui (ID 4)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 64, ID statut: 3
+Nouveau statut: ID=3, Code=nouvelle_commande, Nom=Nouvelle Commande (Catégorie ID: 1, Nom: Nouvelle)
+Réponse: Succès - Cas spécial: Non
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 66, ID statut: 8
+Nouveau statut: ID=8, Code=en_attente_responsable, Nom=En attente d'un responsable (Catégorie ID: 3, Nom: En attente)
+Réponse: Succès - Cas spécial: Oui (ID 8)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 61, ID statut: 3
+Nouveau statut: ID=3, Code=nouvelle_commande, Nom=Nouvelle Commande (Catégorie ID: 1, Nom: Nouvelle)
+Réponse: Succès - Cas spécial: Non
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 67, ID statut: 1
+Nouveau statut: ID=1, Code=nouveau_diagnostique, Nom=Nouveau Diagnostique (Catégorie ID: 1, Nom: Nouvelle)
+Réponse: Succès - Cas spécial: Non
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 66, ID statut: 4
+Nouveau statut: ID=4, Code=en_cours_diagnostique, Nom=En cours de diagnostique (Catégorie ID: 2, Nom: En cours)
+Réponse: Succès - Cas spécial: Oui (ID 4)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 66, ID statut: 6
+Nouveau statut: ID=6, Code=en_attente_accord_client, Nom=En attente de l'accord client (Catégorie ID: 3, Nom: En attente)
+Réponse: Succès - Cas spécial: Oui (ID 6)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 66, ID statut: 8
+Nouveau statut: ID=8, Code=en_attente_responsable, Nom=En attente d'un responsable (Catégorie ID: 3, Nom: En attente)
+Réponse: Succès - Cas spécial: Oui (ID 8)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 70, ID statut: 3
+Nouveau statut: ID=3, Code=nouvelle_commande, Nom=Nouvelle Commande (Catégorie ID: 1, Nom: Nouvelle)
+Réponse: Succès - Cas spécial: Non
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 69, ID statut: 1
+Nouveau statut: ID=1, Code=nouveau_diagnostique, Nom=Nouveau Diagnostique (Catégorie ID: 1, Nom: Nouvelle)
+Réponse: Succès - Cas spécial: Non
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 71, ID statut: 11
+Nouveau statut: ID=11, Code=restitue, Nom=Restitué (Catégorie ID: 5, Nom: Annulé)
+Réponse: Succès - Cas spécial: Oui (ID 11)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 70, ID statut: 11
+Nouveau statut: ID=11, Code=restitue, Nom=Restitué (Catégorie ID: 5, Nom: Annulé)
+Réponse: Succès - Cas spécial: Oui (ID 11)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 69, ID statut: 11
+Nouveau statut: ID=11, Code=restitue, Nom=Restitué (Catégorie ID: 5, Nom: Annulé)
+Réponse: Succès - Cas spécial: Oui (ID 11)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 68, ID statut: 11
+Nouveau statut: ID=11, Code=restitue, Nom=Restitué (Catégorie ID: 5, Nom: Annulé)
+Réponse: Succès - Cas spécial: Oui (ID 11)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 67, ID statut: 11
+Nouveau statut: ID=11, Code=restitue, Nom=Restitué (Catégorie ID: 5, Nom: Annulé)
+Réponse: Succès - Cas spécial: Oui (ID 11)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 65, ID statut: 11
+Nouveau statut: ID=11, Code=restitue, Nom=Restitué (Catégorie ID: 5, Nom: Annulé)
+Réponse: Succès - Cas spécial: Oui (ID 11)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 64, ID statut: 12
+Nouveau statut: ID=12, Code=gardiennage, Nom=Gardiennage (Catégorie ID: 5, Nom: Annulé)
+Réponse: Succès - Cas spécial: Oui (ID 12)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 61, ID statut: 12
+Nouveau statut: ID=12, Code=gardiennage, Nom=Gardiennage (Catégorie ID: 5, Nom: Annulé)
+Réponse: Succès - Cas spécial: Oui (ID 12)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 72, ID statut: 9
+Nouveau statut: ID=9, Code=reparation_effectue, Nom=Réparation Effectuée (Catégorie ID: 4, Nom: Terminé)
+Réponse: Succès - Cas spécial: Oui (ID 9)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 87, ID statut: 4
+Nouveau statut: ID=4, Code=en_cours_diagnostique, Nom=En cours de diagnostique (Catégorie ID: 2, Nom: En cours)
+Réponse: Succès - Cas spécial: Oui (ID 4)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 100, ID statut: 1
+Nouveau statut: ID=1, Code=nouveau_diagnostique, Nom=Nouveau Diagnostique (Catégorie ID: 1, Nom: Nouvelle)
+Réponse: Succès - Cas spécial: Non
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 100, ID statut: 1
+Nouveau statut: ID=1, Code=nouveau_diagnostique, Nom=Nouveau Diagnostique (Catégorie ID: 1, Nom: Nouvelle)
+Réponse: Succès - Cas spécial: Non
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 72, ID statut: 1
+Nouveau statut: ID=1, Code=nouveau_diagnostique, Nom=Nouveau Diagnostique (Catégorie ID: 1, Nom: Nouvelle)
+Réponse: Succès - Cas spécial: Non
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 100, ID statut: 1
+Nouveau statut: ID=1, Code=nouveau_diagnostique, Nom=Nouveau Diagnostique (Catégorie ID: 1, Nom: Nouvelle)
+Réponse: Succès - Cas spécial: Non
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 100, ID statut: 1
+Nouveau statut: ID=1, Code=nouveau_diagnostique, Nom=Nouveau Diagnostique (Catégorie ID: 1, Nom: Nouvelle)
+Exception: Erreur dans update_repair_specific_status.php: Aucune réparation mise à jour
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 100, ID statut: 1
+Nouveau statut: ID=1, Code=nouveau_diagnostique, Nom=Nouveau Diagnostique (Catégorie ID: 1, Nom: Nouvelle)
+Réponse: Succès - Cas spécial: Non
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 66, ID statut: 1
+Nouveau statut: ID=1, Code=nouveau_diagnostique, Nom=Nouveau Diagnostique (Catégorie ID: 1, Nom: Nouvelle)
+Réponse: Succès - Cas spécial: Non
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 100, ID statut: 6
+Nouveau statut: ID=6, Code=en_attente_accord_client, Nom=En attente de l'accord client (Catégorie ID: 3, Nom: En attente)
+Réponse: Succès - Cas spécial: Oui (ID 6)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 100, ID statut: 5
+Nouveau statut: ID=5, Code=en_cours_intervention, Nom=En cours d'intervention (Catégorie ID: 2, Nom: En cours)
+Log enregistré: Réparation #100 - Statut modifié de en_cours_intervention à en_cours_intervention
+Réponse: Succès - Cas spécial: Oui (ID 5)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 100, ID statut: 10
+Nouveau statut: ID=10, Code=reparation_annule, Nom=Réparation Annulée (Catégorie ID: 4, Nom: Terminé)
+Log enregistré: Réparation #100 - Statut modifié de reparation_annule à reparation_annule
+Réponse: Succès - Cas spécial: Oui (ID 10)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 72, ID statut: 1
+Nouveau statut: ID=1, Code=nouveau_diagnostique, Nom=Nouveau Diagnostique (Catégorie ID: 1, Nom: Nouvelle)
+Log enregistré: Réparation #72 - Statut modifié de nouveau_diagnostique à nouveau_diagnostique
+Réponse: Succès - Cas spécial: Non
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 100, ID statut: 1
+Nouveau statut: ID=1, Code=nouveau_diagnostique, Nom=Nouveau Diagnostique (Catégorie ID: 1, Nom: Nouvelle)
+Log enregistré: Réparation #100 - Statut modifié de nouveau_diagnostique à nouveau_diagnostique
+Réponse: Succès - Cas spécial: Non
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 100, ID statut: 1
+Nouveau statut: ID=1, Code=nouveau_diagnostique, Nom=Nouveau Diagnostique (Catégorie ID: 1, Nom: Nouvelle)
+Log enregistré: Réparation #100 - Statut modifié de nouveau_diagnostique à nouveau_diagnostique
+Réponse: Succès - Cas spécial: Non
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 491, ID statut: 10
+Nouveau statut: ID=10, Code=reparation_annule, Nom=Réparation Annulée (Catégorie ID: 4, Nom: Terminé)
+Log enregistré: Réparation #491 - Statut modifié de reparation_annule à reparation_annule
+Réponse: Succès - Cas spécial: Oui (ID 10)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 492, ID statut: 6
+Nouveau statut: ID=6, Code=en_attente_accord_client, Nom=En attente de l'accord client (Catégorie ID: 3, Nom: En attente)
+Log enregistré: Réparation #492 - Statut modifié de en_attente_accord_client à en_attente_accord_client
+Réponse: Succès - Cas spécial: Oui (ID 6)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 495, ID statut: 8
+Nouveau statut: ID=8, Code=en_attente_responsable, Nom=En attente d'un responsable (Catégorie ID: 3, Nom: En attente)
+Log enregistré: Réparation #495 - Statut modifié de en_attente_responsable à en_attente_responsable
+Réponse: Succès - Cas spécial: Oui (ID 8)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 496, ID statut: 12
+Nouveau statut: ID=12, Code=gardiennage, Nom=Gardiennage (Catégorie ID: 5, Nom: Annulé)
+Log enregistré: Réparation #496 - Statut modifié de gardiennage à gardiennage
+Réponse: Succès - Cas spécial: Oui (ID 12)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 499, ID statut: 8
+Nouveau statut: ID=8, Code=en_attente_responsable, Nom=En attente d'un responsable (Catégorie ID: 3, Nom: En attente)
+Log enregistré: Réparation #499 - Statut modifié de en_attente_responsable à en_attente_responsable
+Réponse: Succès - Cas spécial: Oui (ID 8)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 497, ID statut: 12
+Nouveau statut: ID=12, Code=gardiennage, Nom=Gardiennage (Catégorie ID: 5, Nom: Annulé)
+Log enregistré: Réparation #497 - Statut modifié de gardiennage à gardiennage
+Réponse: Succès - Cas spécial: Oui (ID 12)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 498, ID statut: 3
+Nouveau statut: ID=3, Code=nouvelle_commande, Nom=Nouvelle Commande (Catégorie ID: 1, Nom: Nouvelle)
+Log enregistré: Réparation #498 - Statut modifié de nouvelle_commande à nouvelle_commande
+Réponse: Succès - Cas spécial: Non
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 493, ID statut: 6
+Nouveau statut: ID=6, Code=en_attente_accord_client, Nom=En attente de l'accord client (Catégorie ID: 3, Nom: En attente)
+Log enregistré: Réparation #493 - Statut modifié de en_attente_accord_client à en_attente_accord_client
+Réponse: Succès - Cas spécial: Oui (ID 6)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 493, ID statut: 8
+Nouveau statut: ID=8, Code=en_attente_responsable, Nom=En attente d'un responsable (Catégorie ID: 3, Nom: En attente)
+Log enregistré: Réparation #493 - Statut modifié de en_attente_responsable à en_attente_responsable
+Réponse: Succès - Cas spécial: Oui (ID 8)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 501, ID statut: 12
+Nouveau statut: ID=12, Code=gardiennage, Nom=Gardiennage (Catégorie ID: 5, Nom: Annulé)
+Log enregistré: Réparation #501 - Statut modifié de gardiennage à gardiennage
+Réponse: Succès - Cas spécial: Oui (ID 12)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 508, ID statut: 8
+Nouveau statut: ID=8, Code=en_attente_responsable, Nom=En attente d'un responsable (Catégorie ID: 3, Nom: En attente)
+Log enregistré: Réparation #508 - Statut modifié de en_attente_responsable à en_attente_responsable
+Réponse: Succès - Cas spécial: Oui (ID 8)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 505, ID statut: 12
+Nouveau statut: ID=12, Code=gardiennage, Nom=Gardiennage (Catégorie ID: 5, Nom: Annulé)
+Log enregistré: Réparation #505 - Statut modifié de gardiennage à gardiennage
+Réponse: Succès - Cas spécial: Oui (ID 12)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 503, ID statut: 12
+Nouveau statut: ID=12, Code=gardiennage, Nom=Gardiennage (Catégorie ID: 5, Nom: Annulé)
+Log enregistré: Réparation #503 - Statut modifié de gardiennage à gardiennage
+Réponse: Succès - Cas spécial: Oui (ID 12)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 512, ID statut: 2
+Nouveau statut: ID=2, Code=nouvelle_intervention, Nom=Nouvelle Intervention (Catégorie ID: 1, Nom: Nouvelle)
+Log enregistré: Réparation #512 - Statut modifié de nouvelle_intervention à nouvelle_intervention
+Réponse: Succès - Cas spécial: Oui (ID 2)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 492, ID statut: 4
+Nouveau statut: ID=4, Code=en_cours_diagnostique, Nom=En cours de diagnostique (Catégorie ID: 2, Nom: En cours)
+Log enregistré: Réparation #492 - Statut modifié de en_cours_diagnostique à en_cours_diagnostique
+Réponse: Succès - Cas spécial: Oui (ID 4)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 492, ID statut: 1
+Nouveau statut: ID=1, Code=nouveau_diagnostique, Nom=Nouveau Diagnostique (Catégorie ID: 1, Nom: Nouvelle)
+Log enregistré: Réparation #492 - Statut modifié de nouveau_diagnostique à nouveau_diagnostique
+Réponse: Succès - Cas spécial: Non
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 510, ID statut: 4
+Nouveau statut: ID=4, Code=en_cours_diagnostique, Nom=En cours de diagnostique (Catégorie ID: 2, Nom: En cours)
+Log enregistré: Réparation #510 - Statut modifié de en_cours_diagnostique à en_cours_diagnostique
+Réponse: Succès - Cas spécial: Oui (ID 4)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 510, ID statut: 1
+Nouveau statut: ID=1, Code=nouveau_diagnostique, Nom=Nouveau Diagnostique (Catégorie ID: 1, Nom: Nouvelle)
+Log enregistré: Réparation #510 - Statut modifié de nouveau_diagnostique à nouveau_diagnostique
+Réponse: Succès - Cas spécial: Non
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 509, ID statut: 4
+Nouveau statut: ID=4, Code=en_cours_diagnostique, Nom=En cours de diagnostique (Catégorie ID: 2, Nom: En cours)
+Log enregistré: Réparation #509 - Statut modifié de en_cours_diagnostique à en_cours_diagnostique
+Réponse: Succès - Cas spécial: Oui (ID 4)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 510, ID statut: 3
+Nouveau statut: ID=3, Code=nouvelle_commande, Nom=Nouvelle Commande (Catégorie ID: 1, Nom: Nouvelle)
+Log enregistré: Réparation #510 - Statut modifié de nouvelle_commande à nouvelle_commande
+Réponse: Succès - Cas spécial: Non
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 509, ID statut: 1
+Nouveau statut: ID=1, Code=nouveau_diagnostique, Nom=Nouveau Diagnostique (Catégorie ID: 1, Nom: Nouvelle)
+Log enregistré: Réparation #509 - Statut modifié de nouveau_diagnostique à nouveau_diagnostique
+Réponse: Succès - Cas spécial: Non
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 510, ID statut: 1
+Nouveau statut: ID=1, Code=nouveau_diagnostique, Nom=Nouveau Diagnostique (Catégorie ID: 1, Nom: Nouvelle)
+Log enregistré: Réparation #510 - Statut modifié de nouveau_diagnostique à nouveau_diagnostique
+Réponse: Succès - Cas spécial: Non
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 509, ID statut: 3
+Nouveau statut: ID=3, Code=nouvelle_commande, Nom=Nouvelle Commande (Catégorie ID: 1, Nom: Nouvelle)
+Log enregistré: Réparation #509 - Statut modifié de nouvelle_commande à nouvelle_commande
+Réponse: Succès - Cas spécial: Non
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 492, ID statut: 3
+Nouveau statut: ID=3, Code=nouvelle_commande, Nom=Nouvelle Commande (Catégorie ID: 1, Nom: Nouvelle)
+Log enregistré: Réparation #492 - Statut modifié de nouvelle_commande à nouvelle_commande
+Réponse: Succès - Cas spécial: Non
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 509, ID statut: 1
+Nouveau statut: ID=1, Code=nouveau_diagnostique, Nom=Nouveau Diagnostique (Catégorie ID: 1, Nom: Nouvelle)
+Log enregistré: Réparation #509 - Statut modifié de nouveau_diagnostique à nouveau_diagnostique
+Réponse: Succès - Cas spécial: Non
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 514, ID statut: 2
+Nouveau statut: ID=2, Code=nouvelle_intervention, Nom=Nouvelle Intervention (Catégorie ID: 1, Nom: Nouvelle)
+Log enregistré: Réparation #514 - Statut modifié de nouvelle_intervention à nouvelle_intervention
+Réponse: Succès - Cas spécial: Oui (ID 2)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 514, ID statut: 1
+Nouveau statut: ID=1, Code=nouveau_diagnostique, Nom=Nouveau Diagnostique (Catégorie ID: 1, Nom: Nouvelle)
+Log enregistré: Réparation #514 - Statut modifié de nouveau_diagnostique à nouveau_diagnostique
+Réponse: Succès - Cas spécial: Non
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 517, ID statut: 1
+Nouveau statut: ID=1, Code=nouveau_diagnostique, Nom=Nouveau Diagnostique (Catégorie ID: 1, Nom: Nouvelle)
+Log enregistré: Réparation #517 - Statut modifié de nouveau_diagnostique à nouveau_diagnostique
+Réponse: Succès - Cas spécial: Non
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 517, ID statut: 1
+Nouveau statut: ID=1, Code=nouveau_diagnostique, Nom=Nouveau Diagnostique (Catégorie ID: 1, Nom: Nouvelle)
+Log enregistré: Réparation #517 - Statut modifié de nouveau_diagnostique à nouveau_diagnostique
+Réponse: Succès - Cas spécial: Non
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 517, ID statut: 3
+Nouveau statut: ID=3, Code=nouvelle_commande, Nom=Nouvelle Commande (Catégorie ID: 1, Nom: Nouvelle)
+Log enregistré: Réparation #517 - Statut modifié de nouvelle_commande à nouvelle_commande
+Réponse: Succès - Cas spécial: Non
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 517, ID statut: 2
+Nouveau statut: ID=2, Code=nouvelle_intervention, Nom=Nouvelle Intervention (Catégorie ID: 1, Nom: Nouvelle)
+Log enregistré: Réparation #517 - Statut modifié de nouvelle_intervention à nouvelle_intervention
+Réponse: Succès - Cas spécial: Oui (ID 2)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 517, ID statut: 1
+Nouveau statut: ID=1, Code=nouveau_diagnostique, Nom=Nouveau Diagnostique (Catégorie ID: 1, Nom: Nouvelle)
+Log enregistré: Réparation #517 - Statut modifié de nouveau_diagnostique à nouveau_diagnostique
+Réponse: Succès - Cas spécial: Non
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 517, ID statut: 1
+Nouveau statut: ID=1, Code=nouveau_diagnostique, Nom=Nouveau Diagnostique (Catégorie ID: 1, Nom: Nouvelle)
+Exception: Erreur dans update_repair_specific_status.php: Aucune réparation mise à jour
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 517, ID statut: 4
+Nouveau statut: ID=4, Code=en_cours_diagnostique, Nom=En cours de diagnostique (Catégorie ID: 2, Nom: En cours)
+Log enregistré: Réparation #517 - Statut modifié de en_cours_diagnostique à en_cours_diagnostique
+Réponse: Succès - Cas spécial: Oui (ID 4)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 517, ID statut: 1
+Nouveau statut: ID=1, Code=nouveau_diagnostique, Nom=Nouveau Diagnostique (Catégorie ID: 1, Nom: Nouvelle)
+Log enregistré: Réparation #517 - Statut modifié de nouveau_diagnostique à nouveau_diagnostique
+Réponse: Succès - Cas spécial: Non
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 517, ID statut: 5
+Nouveau statut: ID=5, Code=en_cours_intervention, Nom=En cours d'intervention (Catégorie ID: 2, Nom: En cours)
+Log enregistré: Réparation #517 - Statut modifié de en_cours_intervention à en_cours_intervention
+Réponse: Succès - Cas spécial: Oui (ID 5)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 518, ID statut: 1
+Nouveau statut: ID=1, Code=nouveau_diagnostique, Nom=Nouveau Diagnostique (Catégorie ID: 1, Nom: Nouvelle)
+Ancien statut: en_cours_diagnostique
+Log enregistré: Réparation #518 - Statut modifié de nouveau_diagnostique à nouveau_diagnostique
+Modèle de SMS trouvé: ID=5, Nom=Nouvelle reparation
+Message préparé: Bonjours ...
+Tentative d'envoi de SMS à 33782962906
+SMS envoyé avec succès!
+Réponse: {"success":true,"message":"Statut mis \u00e0 jour avec succ\u00e8s","data":{"badge":"<span class=\"status-badge badge bg-primary\" draggable=\"true\" data-repair-id=\"518\" data-status-code=\"nouveau_diagnostique\">Nouveau Diagnostique<\/span>","status_name":"Nouveau Diagnostique","new_status":"nouveau_diagnostique","new_status_id":1,"old_status":"nouveau_diagnostique","sms_sent":true,"sms_message":"SMS envoy\u00e9 au client avec succ\u00e8s"}}
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 517, ID statut: 1
+Nouveau statut: ID=1, Code=nouveau_diagnostique, Nom=Nouveau Diagnostique (Catégorie ID: 1, Nom: Nouvelle)
+Ancien statut: nouveau_diagnostique
+Log enregistré: Réparation #517 - Statut modifié de nouveau_diagnostique à nouveau_diagnostique
+Modèle de SMS trouvé: ID=5, Nom=Nouvelle reparation
+Message préparé: Bonjours ...
+Tentative d'envoi de SMS à 1234567890
+Échec de l'envoi SMS: Erreur lors de l'envoi du SMS - Code HTTP: 400
+Réponse: {"success":true,"message":"Statut mis \u00e0 jour avec succ\u00e8s","data":{"badge":"<span class=\"status-badge badge bg-primary\" draggable=\"true\" data-repair-id=\"517\" data-status-code=\"nouveau_diagnostique\">Nouveau Diagnostique<\/span>","status_name":"Nouveau Diagnostique","new_status":"nouveau_diagnostique","new_status_id":1,"old_status":"nouveau_diagnostique","sms_sent":false,"sms_message":"Erreur lors de l'envoi du SMS: Erreur lors de l'envoi du SMS - Code HTTP: 400"}}
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 517, ID statut: 9
+Nouveau statut: ID=9, Code=reparation_effectue, Nom=Réparation Effectuée (Catégorie ID: 4, Nom: Terminé)
+Ancien statut: nouveau_diagnostique
+Log enregistré: Réparation #517 - Statut modifié de reparation_effectue à reparation_effectue
+Modèle de SMS trouvé: ID=2, Nom=Réparation terminée
+Message préparé: Bonjour sab, bonne nouvelle! Votre Informatique  e...
+Tentative d'envoi de SMS à 1234567890
+Échec de l'envoi SMS: Erreur lors de l'envoi du SMS - Code HTTP: 400
+Réponse: {"success":true,"message":"Statut mis \u00e0 jour avec succ\u00e8s","data":{"badge":"<span class=\"status-badge badge bg-success\" draggable=\"true\" data-repair-id=\"517\" data-status-code=\"reparation_effectue\">R\u00e9paration Effectu\u00e9e<\/span>","status_name":"R\u00e9paration Effectu\u00e9e","new_status":"reparation_effectue","new_status_id":9,"old_status":"reparation_effectue","sms_sent":false,"sms_message":"Erreur lors de l'envoi du SMS: Erreur lors de l'envoi du SMS - Code HTTP: 400"}}
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 517, ID statut: 1
+Nouveau statut: ID=1, Code=nouveau_diagnostique, Nom=Nouveau Diagnostique (Catégorie ID: 1, Nom: Nouvelle)
+Ancien statut: reparation_effectue
+Log enregistré: Réparation #517 - Statut modifié de nouveau_diagnostique à nouveau_diagnostique
+Modèle de SMS trouvé: ID=5, Nom=Nouvelle reparation
+Message préparé: Bonjours ...
+Tentative d'envoi de SMS à 1234567890
+Échec de l'envoi SMS: Erreur lors de l'envoi du SMS - Code HTTP: 400
+Réponse: {"success":true,"message":"Statut mis \u00e0 jour avec succ\u00e8s","data":{"badge":"<span class=\"status-badge badge bg-primary\" draggable=\"true\" data-repair-id=\"517\" data-status-code=\"nouveau_diagnostique\">Nouveau Diagnostique<\/span>","status_name":"Nouveau Diagnostique","new_status":"nouveau_diagnostique","new_status_id":1,"old_status":"nouveau_diagnostique","sms_sent":false,"sms_message":"Erreur lors de l'envoi du SMS: Erreur lors de l'envoi du SMS - Code HTTP: 400"}}
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 518, ID statut: 9
+Nouveau statut: ID=9, Code=reparation_effectue, Nom=Réparation Effectuée (Catégorie ID: 4, Nom: Terminé)
+Ancien statut: nouveau_diagnostique
+Log enregistré: Réparation #518 - Statut modifié de reparation_effectue à reparation_effectue
+Modèle de SMS trouvé: ID=2, Nom=Réparation terminée
+Message préparé: Bonjour saber, bonne nouvelle! Votre Informatique ...
+Tentative d'envoi de SMS à 33782962906
+SMS envoyé avec succès!
+Réponse: {"success":true,"message":"Statut mis \u00e0 jour avec succ\u00e8s","data":{"badge":"<span class=\"status-badge badge bg-success\" draggable=\"true\" data-repair-id=\"518\" data-status-code=\"reparation_effectue\">R\u00e9paration Effectu\u00e9e<\/span>","status_name":"R\u00e9paration Effectu\u00e9e","new_status":"reparation_effectue","new_status_id":9,"old_status":"reparation_effectue","sms_sent":true,"sms_message":"SMS envoy\u00e9 au client avec succ\u00e8s"}}
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 518, ID statut: 1
+Nouveau statut: ID=1, Code=nouveau_diagnostique, Nom=Nouveau Diagnostique (Catégorie ID: 1, Nom: Nouvelle)
+Ancien statut: reparation_effectue
+Log enregistré: Réparation #518 - Statut modifié de nouveau_diagnostique à nouveau_diagnostique
+Modèle de SMS trouvé: ID=5, Nom=Nouvelle reparation
+Message préparé: Bonjours ...
+Tentative d'envoi de SMS à 33782962906
+SMS envoyé avec succès!
+Réponse: {"success":true,"message":"Statut mis \u00e0 jour avec succ\u00e8s","data":{"badge":"<span class=\"status-badge badge bg-primary\" draggable=\"true\" data-repair-id=\"518\" data-status-code=\"nouveau_diagnostique\">Nouveau Diagnostique<\/span>","status_name":"Nouveau Diagnostique","new_status":"nouveau_diagnostique","new_status_id":1,"old_status":"nouveau_diagnostique","sms_sent":true,"sms_message":"SMS envoy\u00e9 au client avec succ\u00e8s"}}
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 518, ID statut: 9
+Nouveau statut: ID=9, Code=reparation_effectue, Nom=Réparation Effectuée (Catégorie ID: 4, Nom: Terminé)
+Ancien statut: nouveau_diagnostique
+Log enregistré: Réparation #518 - Statut modifié de reparation_effectue à reparation_effectue
+Modèle de SMS trouvé: ID=2, Nom=Réparation terminée
+Message préparé: Bonjour saber, bonne nouvelle! Votre Informatique ...
+Tentative d'envoi de SMS à 33782962906
+SMS envoyé avec succès!
+Réponse: {"success":true,"message":"Statut mis \u00e0 jour avec succ\u00e8s","data":{"badge":"<span class=\"status-badge badge bg-success\" draggable=\"true\" data-repair-id=\"518\" data-status-code=\"reparation_effectue\">R\u00e9paration Effectu\u00e9e<\/span>","status_name":"R\u00e9paration Effectu\u00e9e","new_status":"reparation_effectue","new_status_id":9,"old_status":"reparation_effectue","sms_sent":true,"sms_message":"SMS envoy\u00e9 au client avec succ\u00e8s"}}
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 518, ID statut: 1
+Nouveau statut: ID=1, Code=nouveau_diagnostique, Nom=Nouveau Diagnostique (Catégorie ID: 1, Nom: Nouvelle)
+Ancien statut: reparation_effectue
+Log enregistré: Réparation #518 - Statut modifié de nouveau_diagnostique à nouveau_diagnostique
+Modèle de SMS trouvé: ID=5, Nom=Nouvelle reparation
+Message préparé: Bonjours 
+...
+Tentative d'envoi de SMS à 33782962906
+SMS envoyé avec succès!
+Réponse: {"success":true,"message":"Statut mis \u00e0 jour avec succ\u00e8s","data":{"badge":"<span class=\"status-badge badge bg-primary\" draggable=\"true\" data-repair-id=\"518\" data-status-code=\"nouveau_diagnostique\">Nouveau Diagnostique<\/span>","status_name":"Nouveau Diagnostique","new_status":"nouveau_diagnostique","new_status_id":1,"old_status":"nouveau_diagnostique","sms_sent":true,"sms_message":"SMS envoy\u00e9 au client avec succ\u00e8s"}}
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 518, ID statut: 9
+Nouveau statut: ID=9, Code=reparation_effectue, Nom=Réparation Effectuée (Catégorie ID: 4, Nom: Terminé)
+Ancien statut: nouveau_diagnostique
+Log enregistré: Réparation #518 - Statut modifié de reparation_effectue à reparation_effectue
+Modèle de SMS trouvé: ID=2, Nom=Réparation terminée
+Message préparé: Bonjour saber, bonne nouvelle! Votre Informatique ...
+Tentative d'envoi de SMS à 33782962906
+SMS envoyé avec succès!
+Réponse: {"success":true,"message":"Statut mis \u00e0 jour avec succ\u00e8s","data":{"badge":"<span class=\"status-badge badge bg-success\" draggable=\"true\" data-repair-id=\"518\" data-status-code=\"reparation_effectue\">R\u00e9paration Effectu\u00e9e<\/span>","status_name":"R\u00e9paration Effectu\u00e9e","new_status":"reparation_effectue","new_status_id":9,"old_status":"reparation_effectue","sms_sent":true,"sms_message":"SMS envoy\u00e9 au client avec succ\u00e8s"}}
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 518, ID statut: 1
+Nouveau statut: ID=1, Code=nouveau_diagnostique, Nom=Nouveau Diagnostique (Catégorie ID: 1, Nom: Nouvelle)
+Ancien statut: reparation_effectue
+Log enregistré: Réparation #518 - Statut modifié de nouveau_diagnostique à nouveau_diagnostique
+Modèle de SMS trouvé: ID=5, Nom=Nouvelle reparation
+Message préparé: Bonjours 
+jespere que cava
+...
+Tentative d'envoi de SMS à 33782962906
+SMS envoyé avec succès!
+Réponse: {"success":true,"message":"Statut mis \u00e0 jour avec succ\u00e8s","data":{"badge":"<span class=\"status-badge badge bg-primary\" draggable=\"true\" data-repair-id=\"518\" data-status-code=\"nouveau_diagnostique\">Nouveau Diagnostique<\/span>","status_name":"Nouveau Diagnostique","new_status":"nouveau_diagnostique","new_status_id":1,"old_status":"nouveau_diagnostique","sms_sent":true,"sms_message":"SMS envoy\u00e9 au client avec succ\u00e8s"}}
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 518, ID statut: 4
+Nouveau statut: ID=4, Code=en_cours_diagnostique, Nom=En cours de diagnostique (Catégorie ID: 2, Nom: En cours)
+Ancien statut: restitue
+Log enregistré: Réparation #518 - Statut modifié de en_cours_diagnostique à en_cours_diagnostique
+Aucun modèle de SMS trouvé pour le statut ID: 4
+Réponse: {"success":true,"message":"Statut mis \u00e0 jour avec succ\u00e8s","data":{"badge":"<span class=\"status-badge badge bg-primary\" draggable=\"true\" data-repair-id=\"518\" data-status-code=\"en_cours_diagnostique\">En cours de diagnostique<\/span>","status_name":"En cours de diagnostique","new_status":"en_cours_diagnostique","new_status_id":4,"old_status":"en_cours_diagnostique","sms_sent":false,"sms_message":""}}
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 518, ID statut: 1
+Nouveau statut: ID=1, Code=nouveau_diagnostique, Nom=Nouveau Diagnostique (Catégorie ID: 1, Nom: Nouvelle)
+Ancien statut: en_cours_diagnostique
+Log enregistré: Réparation #518 - Statut modifié de nouveau_diagnostique à nouveau_diagnostique
+Modèle de SMS trouvé: ID=5, Nom=Nouvelle reparation
+Message préparé: Bonjours 
+jespere que cava
+...
+Tentative d'envoi de SMS à 33782962906
+SMS envoyé avec succès!
+Réponse: {"success":true,"message":"Statut mis \u00e0 jour avec succ\u00e8s","data":{"badge":"<span class=\"status-badge badge bg-primary\" draggable=\"true\" data-repair-id=\"518\" data-status-code=\"nouveau_diagnostique\">Nouveau Diagnostique<\/span>","status_name":"Nouveau Diagnostique","new_status":"nouveau_diagnostique","new_status_id":1,"old_status":"nouveau_diagnostique","sms_sent":true,"sms_message":"SMS envoy\u00e9 au client avec succ\u00e8s"}}
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 518, ID statut: 4
+Nouveau statut: ID=4, Code=en_cours_diagnostique, Nom=En cours de diagnostique (Catégorie ID: 2, Nom: En cours)
+Ancien statut: reparation_effectue
+Log enregistré: Réparation #518 - Statut modifié de en_cours_diagnostique à en_cours_diagnostique
+Aucun modèle de SMS trouvé pour le statut ID: 4
+Réponse: {"success":true,"message":"Statut mis \u00e0 jour avec succ\u00e8s","data":{"badge":"<span class=\"status-badge badge bg-primary\" draggable=\"true\" data-repair-id=\"518\" data-status-code=\"en_cours_diagnostique\">En cours de diagnostique<\/span>","status_name":"En cours de diagnostique","new_status":"en_cours_diagnostique","new_status_id":4,"old_status":"en_cours_diagnostique","sms_sent":false,"sms_message":""}}
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 519, ID statut: 12
+Nouveau statut: ID=12, Code=gardiennage, Nom=Gardiennage (Catégorie ID: 5, Nom: Annulé)
+Ancien statut: nouvelle_intervention
+Démarrage du gardiennage pour la réparation #519
+Gardiennage démarré avec succès, ID: 1
+Log enregistré: Réparation #519 - Statut modifié de gardiennage à gardiennage
+Modèle de SMS trouvé: ID=12, Nom=Gardiennage
+Message préparé: Cher(e) saber, votre Informatique  est en gardienn...
+Tentative d'envoi de SMS à 33782962906
+SMS envoyé avec succès!
+Réponse: {"success":true,"message":"Statut mis \u00e0 jour avec succ\u00e8s","data":{"badge":"<span class=\"status-badge badge bg-danger\" draggable=\"true\" data-repair-id=\"519\" data-status-code=\"gardiennage\">Gardiennage<\/span>","status_name":"Gardiennage","new_status":"gardiennage","new_status_id":12,"old_status":"gardiennage","sms_sent":true,"sms_message":"SMS envoy\u00e9 au client avec succ\u00e8s"}}
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 520, ID statut: 4
+Nouveau statut: ID=4, Code=en_cours_diagnostique, Nom=En cours de diagnostique (Catégorie ID: 2, Nom: En cours)
+Ancien statut: nouvelle_intervention
+Log enregistré: Réparation #520 - Statut modifié de en_cours_diagnostique à en_cours_diagnostique
+Modèle de SMS trouvé: ID=8, Nom=En cours de diagnostique
+Message préparé: Bonjour saber, le diagnostic de votre Informatique...
+Tentative d'envoi de SMS à 33782962906
+SMS envoyé avec succès!
+Réponse: {"success":true,"message":"Statut mis \u00e0 jour avec succ\u00e8s","data":{"badge":"<span class=\"status-badge badge bg-primary\" draggable=\"true\" data-repair-id=\"520\" data-status-code=\"en_cours_diagnostique\">En cours de diagnostique<\/span>","status_name":"En cours de diagnostique","new_status":"en_cours_diagnostique","new_status_id":4,"old_status":"en_cours_diagnostique","sms_sent":true,"sms_message":"SMS envoy\u00e9 au client avec succ\u00e8s"}}
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 520, ID statut: 1
+Nouveau statut: ID=1, Code=nouveau_diagnostique, Nom=Nouveau Diagnostique (Catégorie ID: 1, Nom: Nouvelle)
+Ancien statut: reparation_effectue
+Log enregistré: Réparation #520 - Statut modifié de nouveau_diagnostique à nouveau_diagnostique
+Modèle de SMS trouvé: ID=5, Nom=Nouvelle reparation
+Message préparé: Rassurez-vous, nos Geeks prennent soin de votre In...
+Tentative d'envoi de SMS à 33782962906
+SMS envoyé avec succès!
+Réponse: {"success":true,"message":"Statut mis \u00e0 jour avec succ\u00e8s","data":{"badge":"<span class=\"status-badge badge bg-primary\" draggable=\"true\" data-repair-id=\"520\" data-status-code=\"nouveau_diagnostique\">Nouveau Diagnostique<\/span>","status_name":"Nouveau Diagnostique","new_status":"nouveau_diagnostique","new_status_id":1,"old_status":"nouveau_diagnostique","sms_sent":true,"sms_message":"SMS envoy\u00e9 au client avec succ\u00e8s"}}
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 522, ID statut: 1
+Nouveau statut: ID=1, Code=nouveau_diagnostique, Nom=Nouveau Diagnostique (Catégorie ID: 1, Nom: Nouvelle)
+Ancien statut: en_cours_diagnostique
+Log enregistré: Réparation #522 - Statut modifié de nouveau_diagnostique à nouveau_diagnostique
+Modèle de SMS trouvé: ID=5, Nom=Nouvelle reparation
+Message préparé: Rassurez-vous, nos Geeks prennent soin de votre Or...
+Tentative d'envoi de SMS à 3360577563
+Échec de l'envoi SMS: Erreur lors de l'envoi du SMS - Code HTTP: 400
+Réponse: {"success":true,"message":"Statut mis \u00e0 jour avec succ\u00e8s","data":{"badge":"<span class=\"status-badge badge bg-primary\" draggable=\"true\" data-repair-id=\"522\" data-status-code=\"nouveau_diagnostique\">Nouveau Diagnostique<\/span>","status_name":"Nouveau Diagnostique","new_status":"nouveau_diagnostique","new_status_id":1,"old_status":"nouveau_diagnostique","sms_sent":false,"sms_message":"Erreur lors de l'envoi du SMS: Erreur lors de l'envoi du SMS - Code HTTP: 400"}}
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 518, ID statut: 1
+Nouveau statut: ID=1, Code=nouveau_diagnostique, Nom=Nouveau Diagnostique (Catégorie ID: 1, Nom: Nouvelle)
+Ancien statut: en_cours_intervention
+Log enregistré: Réparation #518 - Statut modifié de nouveau_diagnostique à nouveau_diagnostique
+Modèle de SMS trouvé: ID=5, Nom=Nouvelle reparation
+Message préparé: Rassurez-vous, nos Geeks prennent soin de votre In...
+Tentative d'envoi de SMS à 33782962906
+SMS envoyé avec succès!
+Réponse: {"success":true,"message":"Statut mis \u00e0 jour avec succ\u00e8s","data":{"badge":"<span class=\"status-badge badge bg-primary\" draggable=\"true\" data-repair-id=\"518\" data-status-code=\"nouveau_diagnostique\">Nouveau Diagnostique<\/span>","status_name":"Nouveau Diagnostique","new_status":"nouveau_diagnostique","new_status_id":1,"old_status":"nouveau_diagnostique","sms_sent":true,"sms_message":"SMS envoy\u00e9 au client avec succ\u00e8s"}}
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 556, ID statut: 13
+Nouveau statut: ID=13, Code=annule, Nom=Annulé (Catégorie ID: 5, Nom: Annulé)
+Ancien statut: nouvelle_intervention
+Exception: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`u139954273_Vscodetest`.`reparation_logs`, CONSTRAINT `fk_log_user` FOREIGN KEY (`employe_id`) REFERENCES `users` (`id`) ON DELETE CASCADE)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 560, ID statut: 1
+Nouveau statut: ID=1, Code=nouveau_diagnostique, Nom=Nouveau Diagnostique (Catégorie ID: 1, Nom: Nouvelle)
+Ancien statut: nouvelle_intervention
+Exception: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`u139954273_Vscodetest`.`reparation_logs`, CONSTRAINT `fk_log_user` FOREIGN KEY (`employe_id`) REFERENCES `users` (`id`) ON DELETE CASCADE)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 560, ID statut: 9
+Nouveau statut: ID=9, Code=reparation_effectue, Nom=Réparation Effectuée (Catégorie ID: 4, Nom: Terminé)
+Ancien statut: nouvelle_intervention
+Exception: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`u139954273_Vscodetest`.`reparation_logs`, CONSTRAINT `fk_log_user` FOREIGN KEY (`employe_id`) REFERENCES `users` (`id`) ON DELETE CASCADE)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 559, ID statut: 9
+Nouveau statut: ID=9, Code=reparation_effectue, Nom=Réparation Effectuée (Catégorie ID: 4, Nom: Terminé)
+Ancien statut: nouvelle_intervention
+Exception: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`u139954273_Vscodetest`.`reparation_logs`, CONSTRAINT `fk_log_user` FOREIGN KEY (`employe_id`) REFERENCES `users` (`id`) ON DELETE CASCADE)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 558, ID statut: 9
+Nouveau statut: ID=9, Code=reparation_effectue, Nom=Réparation Effectuée (Catégorie ID: 4, Nom: Terminé)
+Ancien statut: nouvelle_intervention
+Exception: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`u139954273_Vscodetest`.`reparation_logs`, CONSTRAINT `fk_log_user` FOREIGN KEY (`employe_id`) REFERENCES `users` (`id`) ON DELETE CASCADE)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 586, ID statut: 7
+Nouveau statut: ID=7, Code=en_attente_livraison, Nom=En attente de livraison (Catégorie ID: 3, Nom: En attente)
+Ancien statut: nouvelle_commande
+Exception: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`u139954273_Vscodetest`.`reparation_logs`, CONSTRAINT `fk_log_user` FOREIGN KEY (`employe_id`) REFERENCES `users` (`id`) ON DELETE CASCADE)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 587, ID statut: 7
+Nouveau statut: ID=7, Code=en_attente_livraison, Nom=En attente de livraison (Catégorie ID: 3, Nom: En attente)
+Ancien statut: nouvelle_intervention
+Log enregistré: Réparation #587 - Statut modifié de en_attente_livraison à en_attente_livraison
+Modèle de SMS trouvé: ID=3, Nom=En attente de pièces
+Message préparé: Bonjour ..., nous sommes en attente de pièces pou...
+Tentative d'envoi de SMS à 33745187098
+SMS envoyé avec succès!
+Réponse: {"success":true,"message":"Statut mis \u00e0 jour avec succ\u00e8s","data":{"badge":"<span class=\"status-badge badge bg-warning\" draggable=\"true\" data-repair-id=\"587\" data-status-code=\"en_attente_livraison\">En attente de livraison<\/span>","status_name":"En attente de livraison","new_status":"en_attente_livraison","new_status_id":7,"old_status":"en_attente_livraison","sms_sent":true,"sms_message":"SMS envoy\u00e9 au client avec succ\u00e8s"}}
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 588, ID statut: 8
+Nouveau statut: ID=8, Code=en_attente_responsable, Nom=En attente d'un responsable (Catégorie ID: 3, Nom: En attente)
+Ancien statut: nouvelle_intervention
+Log enregistré: Réparation #588 - Statut modifié de en_attente_responsable à en_attente_responsable
+Modèle de SMS trouvé: ID=9, Nom=En attente d'un responsable
+Message préparé: Bonjour Franck, votre dossier concernant votre Tro...
+Tentative d'envoi de SMS à 33664995745
+SMS envoyé avec succès!
+Réponse: {"success":true,"message":"Statut mis \u00e0 jour avec succ\u00e8s","data":{"badge":"<span class=\"status-badge badge bg-warning\" draggable=\"true\" data-repair-id=\"588\" data-status-code=\"en_attente_responsable\">En attente d&#039;un responsable<\/span>","status_name":"En attente d'un responsable","new_status":"en_attente_responsable","new_status_id":8,"old_status":"en_attente_responsable","sms_sent":true,"sms_message":"SMS envoy\u00e9 au client avec succ\u00e8s"}}
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 589, ID statut: 7
+Nouveau statut: ID=7, Code=en_attente_livraison, Nom=En attente de livraison (Catégorie ID: 3, Nom: En attente)
+Ancien statut: nouvelle_intervention
+Log enregistré: Réparation #589 - Statut modifié de en_attente_livraison à en_attente_livraison
+Modèle de SMS trouvé: ID=3, Nom=En attente de pièces
+Message préparé: Bonjour Franck, nous sommes en attente de pièces ...
+Tentative d'envoi de SMS à 33664995745
+SMS envoyé avec succès!
+Réponse: {"success":true,"message":"Statut mis \u00e0 jour avec succ\u00e8s","data":{"badge":"<span class=\"status-badge badge bg-warning\" draggable=\"true\" data-repair-id=\"589\" data-status-code=\"en_attente_livraison\">En attente de livraison<\/span>","status_name":"En attente de livraison","new_status":"en_attente_livraison","new_status_id":7,"old_status":"en_attente_livraison","sms_sent":true,"sms_message":"SMS envoy\u00e9 au client avec succ\u00e8s"}}
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 590, ID statut: 7
+Nouveau statut: ID=7, Code=en_attente_livraison, Nom=En attente de livraison (Catégorie ID: 3, Nom: En attente)
+Ancien statut: nouvelle_intervention
+Log enregistré: Réparation #590 - Statut modifié de en_attente_livraison à en_attente_livraison
+Modèle de SMS trouvé: ID=3, Nom=En attente de pièces
+Message préparé: Bonjour ..., nous sommes en attente de pièces pou...
+Tentative d'envoi de SMS à 33753607252
+SMS envoyé avec succès!
+Réponse: {"success":true,"message":"Statut mis \u00e0 jour avec succ\u00e8s","data":{"badge":"<span class=\"status-badge badge bg-warning\" draggable=\"true\" data-repair-id=\"590\" data-status-code=\"en_attente_livraison\">En attente de livraison<\/span>","status_name":"En attente de livraison","new_status":"en_attente_livraison","new_status_id":7,"old_status":"en_attente_livraison","sms_sent":true,"sms_message":"SMS envoy\u00e9 au client avec succ\u00e8s"}}
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 591, ID statut: 7
+Nouveau statut: ID=7, Code=en_attente_livraison, Nom=En attente de livraison (Catégorie ID: 3, Nom: En attente)
+Ancien statut: nouvelle_intervention
+Log enregistré: Réparation #591 - Statut modifié de en_attente_livraison à en_attente_livraison
+Modèle de SMS trouvé: ID=3, Nom=En attente de pièces
+Message préparé: Bonjour ., nous sommes en attente de pièces pour ...
+Tentative d'envoi de SMS à 33628926041
+SMS envoyé avec succès!
+Réponse: {"success":true,"message":"Statut mis \u00e0 jour avec succ\u00e8s","data":{"badge":"<span class=\"status-badge badge bg-warning\" draggable=\"true\" data-repair-id=\"591\" data-status-code=\"en_attente_livraison\">En attente de livraison<\/span>","status_name":"En attente de livraison","new_status":"en_attente_livraison","new_status_id":7,"old_status":"en_attente_livraison","sms_sent":true,"sms_message":"SMS envoy\u00e9 au client avec succ\u00e8s"}}
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 594, ID statut: 9
+Nouveau statut: ID=9, Code=reparation_effectue, Nom=Réparation Effectuée (Catégorie ID: 4, Nom: Terminé)
+Ancien statut: nouvelle_intervention
+Exception: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`u139954273_Vscodetest`.`reparation_logs`, CONSTRAINT `fk_log_user` FOREIGN KEY (`employe_id`) REFERENCES `users` (`id`) ON DELETE CASCADE)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 596, ID statut: 4
+Nouveau statut: ID=4, Code=en_cours_diagnostique, Nom=En cours de diagnostique (Catégorie ID: 2, Nom: En cours)
+Ancien statut: nouvelle_intervention
+Exception: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`u139954273_Vscodetest`.`reparation_logs`, CONSTRAINT `fk_log_user` FOREIGN KEY (`employe_id`) REFERENCES `users` (`id`) ON DELETE CASCADE)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 596, ID statut: 5
+Nouveau statut: ID=5, Code=en_cours_intervention, Nom=En cours d'intervention (Catégorie ID: 2, Nom: En cours)
+Ancien statut: en_attente_responsable
+Exception: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`u139954273_Vscodetest`.`reparation_logs`, CONSTRAINT `fk_log_user` FOREIGN KEY (`employe_id`) REFERENCES `users` (`id`) ON DELETE CASCADE)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 597, ID statut: 7
+Nouveau statut: ID=7, Code=en_attente_livraison, Nom=En attente de livraison (Catégorie ID: 3, Nom: En attente)
+Ancien statut: nouvelle_intervention
+Exception: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`u139954273_Vscodetest`.`reparation_logs`, CONSTRAINT `fk_log_user` FOREIGN KEY (`employe_id`) REFERENCES `users` (`id`) ON DELETE CASCADE)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 604, ID statut: 4
+Nouveau statut: ID=4, Code=en_cours_diagnostique, Nom=En cours de diagnostique (Catégorie ID: 2, Nom: En cours)
+Ancien statut: nouveau_diagnostique
+Exception: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`u139954273_Vscodetest`.`reparation_logs`, CONSTRAINT `fk_log_user` FOREIGN KEY (`employe_id`) REFERENCES `users` (`id`) ON DELETE CASCADE)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 605, ID statut: 3
+Nouveau statut: ID=3, Code=nouvelle_commande, Nom=Nouvelle Commande (Catégorie ID: 1, Nom: Nouvelle)
+Ancien statut: nouvelle_intervention
+Exception: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`u139954273_Vscodetest`.`reparation_logs`, CONSTRAINT `fk_log_user` FOREIGN KEY (`employe_id`) REFERENCES `users` (`id`) ON DELETE CASCADE)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 602, ID statut: 13
+Nouveau statut: ID=13, Code=annule, Nom=Annulé (Catégorie ID: 5, Nom: Annulé)
+Ancien statut: en_attente_responsable
+Exception: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`u139954273_Vscodetest`.`reparation_logs`, CONSTRAINT `fk_log_user` FOREIGN KEY (`employe_id`) REFERENCES `users` (`id`) ON DELETE CASCADE)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 611, ID statut: 2
+Nouveau statut: ID=2, Code=nouvelle_intervention, Nom=Nouvelle Intervention (Catégorie ID: 1, Nom: Nouvelle)
+Ancien statut: nouvelle_intervention
+Aucune mise à jour effectuée
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 611, ID statut: 6
+Nouveau statut: ID=6, Code=en_attente_accord_client, Nom=En attente de l'accord client (Catégorie ID: 3, Nom: En attente)
+Ancien statut: nouvelle_intervention
+Exception: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`u139954273_Vscodetest`.`reparation_logs`, CONSTRAINT `fk_log_user` FOREIGN KEY (`employe_id`) REFERENCES `users` (`id`) ON DELETE CASCADE)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 611, ID statut: 1
+Nouveau statut: ID=1, Code=nouveau_diagnostique, Nom=Nouveau Diagnostique (Catégorie ID: 1, Nom: Nouvelle)
+Ancien statut: en_attente_accord_client
+Exception: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`u139954273_Vscodetest`.`reparation_logs`, CONSTRAINT `fk_log_user` FOREIGN KEY (`employe_id`) REFERENCES `users` (`id`) ON DELETE CASCADE)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 611, ID statut: 9
+Nouveau statut: ID=9, Code=reparation_effectue, Nom=Réparation Effectuée (Catégorie ID: 4, Nom: Terminé)
+Ancien statut: reparation_annule
+Exception: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`u139954273_Vscodetest`.`reparation_logs`, CONSTRAINT `fk_log_user` FOREIGN KEY (`employe_id`) REFERENCES `users` (`id`) ON DELETE CASCADE)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 611, ID statut: 1
+Nouveau statut: ID=1, Code=nouveau_diagnostique, Nom=Nouveau Diagnostique (Catégorie ID: 1, Nom: Nouvelle)
+Ancien statut: en_cours_intervention
+Exception: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`u139954273_Vscodetest`.`reparation_logs`, CONSTRAINT `fk_log_user` FOREIGN KEY (`employe_id`) REFERENCES `users` (`id`) ON DELETE CASCADE)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 614, ID statut: 11
+Nouveau statut: ID=11, Code=restitue, Nom=Restitué (Catégorie ID: 5, Nom: Annulé)
+Ancien statut: en_attente_responsable
+Exception: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`u139954273_Vscodetest`.`reparation_logs`, CONSTRAINT `fk_log_user` FOREIGN KEY (`employe_id`) REFERENCES `users` (`id`) ON DELETE CASCADE)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+Nouveau statut: ID=12, Code=gardiennage, Nom=Gardiennage (Catégorie ID: 5, Nom: Annulé)
+Ancien statut: restitue
+Démarrage du gardiennage pour la réparation #614
+Erreur lors du démarrage du gardiennage: Erreur lors du démarrage du gardiennage : SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`u139954273_Vscodetest`.`reparation_logs`, CONSTRAINT `fk_log_user` FOREIGN KEY (`employe_id`) REFERENCES `users` (`id`) ON DELETE CASCADE)
+Exception: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`u139954273_Vscodetest`.`reparation_logs`, CONSTRAINT `fk_log_user` FOREIGN KEY (`employe_id`) REFERENCES `users` (`id`) ON DELETE CASCADE)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+Nouveau statut: ID=11, Code=restitue, Nom=Restitué (Catégorie ID: 5, Nom: Annulé)
+Ancien statut: gardiennage
+Exception: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`u139954273_Vscodetest`.`reparation_logs`, CONSTRAINT `fk_log_user` FOREIGN KEY (`employe_id`) REFERENCES `users` (`id`) ON DELETE CASCADE)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+Données reçues: Array
+(
+    [repair_id] => 614
+    [status_id] => 11
+    [force_send_sms] => 1
+)
+
+force_send_sms: true
+Nouveau statut: ID=11, Code=restitue, Nom=Restitué (Catégorie ID: 5, Nom: Annulé)
+Ancien statut: restitue
+Aucune mise à jour effectuée
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+Données reçues: Array
+(
+    [repair_id] => 614
+    [status_id] => 12
+    [force_send_sms] => 1
+)
+
+force_send_sms: true
+Nouveau statut: ID=12, Code=gardiennage, Nom=Gardiennage (Catégorie ID: 5, Nom: Annulé)
+Ancien statut: restitue
+Démarrage du gardiennage pour la réparation #614
+Erreur lors du démarrage du gardiennage: Cette réparation est déjà en gardiennage
+Exception: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`u139954273_Vscodetest`.`reparation_logs`, CONSTRAINT `fk_log_user` FOREIGN KEY (`employe_id`) REFERENCES `users` (`id`) ON DELETE CASCADE)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+Données reçues: Array
+(
+    [repair_id] => 614
+    [status_id] => 11
+    [force_send_sms] => 1
+)
+
+force_send_sms: true
+Nouveau statut: ID=11, Code=restitue, Nom=Restitué (Catégorie ID: 5, Nom: Annulé)
+Ancien statut: gardiennage
+Exception: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`u139954273_Vscodetest`.`reparation_logs`, CONSTRAINT `fk_log_user` FOREIGN KEY (`employe_id`) REFERENCES `users` (`id`) ON DELETE CASCADE)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+Données reçues: Array
+(
+    [repair_id] => 614
+    [status_id] => 13
+    [force_send_sms] => 1
+)
+
+force_send_sms: true
+Nouveau statut: ID=13, Code=annule, Nom=Annulé (Catégorie ID: 5, Nom: Annulé)
+Ancien statut: restitue
+Exception: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`u139954273_Vscodetest`.`reparation_logs`, CONSTRAINT `fk_log_user` FOREIGN KEY (`employe_id`) REFERENCES `users` (`id`) ON DELETE CASCADE)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+Données reçues: Array
+(
+    [repair_id] => 614
+    [status_id] => 12
+    [force_send_sms] => 1
+)
+
+force_send_sms: true
+Nouveau statut: ID=12, Code=gardiennage, Nom=Gardiennage (Catégorie ID: 5, Nom: Annulé)
+Ancien statut: annule
+Démarrage du gardiennage pour la réparation #614
+Erreur lors du démarrage du gardiennage: Cette réparation est déjà en gardiennage
+Exception: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`u139954273_Vscodetest`.`reparation_logs`, CONSTRAINT `fk_log_user` FOREIGN KEY (`employe_id`) REFERENCES `users` (`id`) ON DELETE CASCADE)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+Données reçues: Array
+(
+    [repair_id] => 614
+    [status_id] => 13
+    [force_send_sms] => 1
+)
+
+force_send_sms: true
+Nouveau statut: ID=13, Code=annule, Nom=Annulé (Catégorie ID: 5, Nom: Annulé)
+Ancien statut: gardiennage
+Exception: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`u139954273_Vscodetest`.`reparation_logs`, CONSTRAINT `fk_log_user` FOREIGN KEY (`employe_id`) REFERENCES `users` (`id`) ON DELETE CASCADE)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+Données reçues: Array
+(
+    [repair_id] => 614
+    [status_id] => 11
+    [force_send_sms] => 1
+)
+
+force_send_sms: true
+Nouveau statut: ID=11, Code=restitue, Nom=Restitué (Catégorie ID: 5, Nom: Annulé)
+Ancien statut: annule
+Exception: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`u139954273_Vscodetest`.`reparation_logs`, CONSTRAINT `fk_log_user` FOREIGN KEY (`employe_id`) REFERENCES `users` (`id`) ON DELETE CASCADE)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+Données reçues: Array
+(
+    [repair_id] => 614
+    [status_id] => 13
+    [force_send_sms] => 1
+)
+
+force_send_sms: true
+Nouveau statut: ID=13, Code=annule, Nom=Annulé (Catégorie ID: 5, Nom: Annulé)
+Ancien statut: restitue
+Exception: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`u139954273_Vscodetest`.`reparation_logs`, CONSTRAINT `fk_log_user` FOREIGN KEY (`employe_id`) REFERENCES `users` (`id`) ON DELETE CASCADE)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+Données reçues: Array
+(
+    [repair_id] => 614
+    [status_id] => 11
+    [force_send_sms] => 1
+)
+
+force_send_sms: true
+Nouveau statut: ID=11, Code=restitue, Nom=Restitué (Catégorie ID: 5, Nom: Annulé)
+Ancien statut: annule
+Exception: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`u139954273_Vscodetest`.`reparation_logs`, CONSTRAINT `fk_log_user` FOREIGN KEY (`employe_id`) REFERENCES `users` (`id`) ON DELETE CASCADE)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+Données reçues: Array
+(
+    [repair_id] => 614
+    [status_id] => 13
+    [force_send_sms] => 1
+)
+
+force_send_sms: true
+Nouveau statut: ID=13, Code=annule, Nom=Annulé (Catégorie ID: 5, Nom: Annulé)
+Ancien statut: restitue
+Exception: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`u139954273_Vscodetest`.`reparation_logs`, CONSTRAINT `fk_log_user` FOREIGN KEY (`employe_id`) REFERENCES `users` (`id`) ON DELETE CASCADE)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+Données reçues: Array
+(
+    [repair_id] => 614
+    [status_id] => 13
+    [force_send_sms] => 1
+)
+
+force_send_sms: true
+Nouveau statut: ID=13, Code=annule, Nom=Annulé (Catégorie ID: 5, Nom: Annulé)
+Ancien statut: annule
+Aucune mise à jour effectuée
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+Données reçues: Array
+(
+    [repair_id] => 614
+    [status_id] => 13
+    [force_send_sms] => 1
+)
+
+force_send_sms: true
+Nouveau statut: ID=13, Code=annule, Nom=Annulé (Catégorie ID: 5, Nom: Annulé)
+Ancien statut: annule
+Aucune mise à jour effectuée
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+Données reçues: Array
+(
+    [repair_id] => 614
+    [status_id] => 13
+    [force_send_sms] => 1
+)
+
+force_send_sms: true
+Nouveau statut: ID=13, Code=annule, Nom=Annulé (Catégorie ID: 5, Nom: Annulé)
+Ancien statut: annule
+Aucune mise à jour effectuée
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+Données reçues: Array
+(
+    [repair_id] => 614
+    [status_id] => 13
+    [force_send_sms] => 1
+)
+
+force_send_sms: true
+Nouveau statut: ID=13, Code=annule, Nom=Annulé (Catégorie ID: 5, Nom: Annulé)
+Ancien statut: annule
+Aucune mise à jour effectuée
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+Données reçues: Array
+(
+    [repair_id] => 614
+    [status_id] => 11
+    [force_send_sms] => 1
+)
+
+force_send_sms: true
+Nouveau statut: ID=11, Code=restitue, Nom=Restitué (Catégorie ID: 5, Nom: Annulé)
+Ancien statut: annule
+Exception: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`u139954273_Vscodetest`.`reparation_logs`, CONSTRAINT `fk_log_user` FOREIGN KEY (`employe_id`) REFERENCES `users` (`id`) ON DELETE CASCADE)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+Données reçues: Array
+(
+    [repair_id] => 614
+    [status_id] => 13
+    [force_send_sms] => 1
+)
+
+force_send_sms: true
+Nouveau statut: ID=13, Code=annule, Nom=Annulé (Catégorie ID: 5, Nom: Annulé)
+Ancien statut: restitue
+Exception: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`u139954273_Vscodetest`.`reparation_logs`, CONSTRAINT `fk_log_user` FOREIGN KEY (`employe_id`) REFERENCES `users` (`id`) ON DELETE CASCADE)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+Données reçues: Array
+(
+    [repair_id] => 614
+    [status_id] => 12
+    [force_send_sms] => 1
+)
+
+force_send_sms: true
+Nouveau statut: ID=12, Code=gardiennage, Nom=Gardiennage (Catégorie ID: 5, Nom: Annulé)
+Ancien statut: annule
+Démarrage du gardiennage pour la réparation #614
+Erreur lors du démarrage du gardiennage: Cette réparation est déjà en gardiennage
+Exception: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`u139954273_Vscodetest`.`reparation_logs`, CONSTRAINT `fk_log_user` FOREIGN KEY (`employe_id`) REFERENCES `users` (`id`) ON DELETE CASCADE)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+Données reçues: Array
+(
+    [repair_id] => 614
+    [status_id] => 13
+    [force_send_sms] => 1
+)
+
+force_send_sms: true
+Nouveau statut: ID=13, Code=annule, Nom=Annulé (Catégorie ID: 5, Nom: Annulé)
+Ancien statut: gardiennage
+Exception: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`u139954273_Vscodetest`.`reparation_logs`, CONSTRAINT `fk_log_user` FOREIGN KEY (`employe_id`) REFERENCES `users` (`id`) ON DELETE CASCADE)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+Données reçues: Array
+(
+    [repair_id] => 614
+    [status_id] => 12
+    [force_send_sms] => 1
+)
+
+force_send_sms: true
+Nouveau statut: ID=12, Code=gardiennage, Nom=Gardiennage (Catégorie ID: 5, Nom: Annulé)
+Ancien statut: annule
+Démarrage du gardiennage pour la réparation #614
+Erreur lors du démarrage du gardiennage: Cette réparation est déjà en gardiennage
+Exception: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`u139954273_Vscodetest`.`reparation_logs`, CONSTRAINT `fk_log_user` FOREIGN KEY (`employe_id`) REFERENCES `users` (`id`) ON DELETE CASCADE)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+Données reçues: Array
+(
+    [repair_id] => 614
+    [status_id] => 11
+    [force_send_sms] => 1
+)
+
+force_send_sms: true
+Nouveau statut: ID=11, Code=restitue, Nom=Restitué (Catégorie ID: 5, Nom: Annulé)
+Ancien statut: gardiennage
+Exception: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`u139954273_Vscodetest`.`reparation_logs`, CONSTRAINT `fk_log_user` FOREIGN KEY (`employe_id`) REFERENCES `users` (`id`) ON DELETE CASCADE)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+Données reçues: Array
+(
+    [repair_id] => 614
+    [status_id] => 11
+    [force_send_sms] => 1
+)
+
+force_send_sms: true
+Nouveau statut: ID=11, Code=restitue, Nom=Restitué (Catégorie ID: 5, Nom: Annulé)
+Ancien statut: restitue
+Aucune mise à jour effectuée
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 616, ID statut: 13
+Nouveau statut: ID=13, Code=annule, Nom=Annulé (Catégorie ID: 5, Nom: Annulé)
+Ancien statut: reparation_effectue
+Log enregistré: Réparation #616 - Statut modifié de annule à annule
+Modèle de SMS trouvé: ID=13, Nom=Annulé
+Message préparé: 😔 saber,
+On a tout tenté pour réparer ton DS...
+Tentative d'envoi de SMS à 33782962906
+SMS envoyé avec succès!
+Réponse: {"success":true,"message":"Statut mis \u00e0 jour avec succ\u00e8s","data":{"badge":"<span class=\"status-badge badge bg-danger\" draggable=\"true\" data-repair-id=\"616\" data-status-code=\"annule\">Annul\u00e9<\/span>","status_name":"Annul\u00e9","new_status":"annule","new_status_id":13,"old_status":"annule","sms_sent":true,"sms_message":"SMS envoy\u00e9 au client avec succ\u00e8s"}}
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 615, ID statut: 12
+Nouveau statut: ID=12, Code=gardiennage, Nom=Gardiennage (Catégorie ID: 5, Nom: Annulé)
+Ancien statut: reparation_annule
+Démarrage du gardiennage pour la réparation #615
+Gardiennage démarré avec succès, ID: 5
+Log enregistré: Réparation #615 - Statut modifié de gardiennage à gardiennage
+Modèle de SMS trouvé: ID=12, Nom=Gardiennage
+Message préparé: 📣 saber,
+Ton iphone 8 est prêt mais t’atten...
+Tentative d'envoi de SMS à 33782962906
+SMS envoyé avec succès!
+Réponse: {"success":true,"message":"Statut mis \u00e0 jour avec succ\u00e8s","data":{"badge":"<span class=\"status-badge badge bg-danger\" draggable=\"true\" data-repair-id=\"615\" data-status-code=\"gardiennage\">Gardiennage<\/span>","status_name":"Gardiennage","new_status":"gardiennage","new_status_id":12,"old_status":"gardiennage","sms_sent":true,"sms_message":"SMS envoy\u00e9 au client avec succ\u00e8s"}}
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 616, ID statut: 11
+Nouveau statut: ID=11, Code=restitue, Nom=Restitué (Catégorie ID: 5, Nom: Annulé)
+Ancien statut: annule
+Log enregistré: Réparation #616 - Statut modifié de restitue à restitue
+Modèle de SMS trouvé: ID=11, Nom=Restitué
+Message préparé: 🎉 saber,
+Ton DSF est de retour à la maison ! ...
+Tentative d'envoi de SMS à 33782962906
+SMS envoyé avec succès!
+Réponse: {"success":true,"message":"Statut mis \u00e0 jour avec succ\u00e8s","data":{"badge":"<span class=\"status-badge badge bg-danger\" draggable=\"true\" data-repair-id=\"616\" data-status-code=\"restitue\">Restitu\u00e9<\/span>","status_name":"Restitu\u00e9","new_status":"restitue","new_status_id":11,"old_status":"restitue","sms_sent":true,"sms_message":"SMS envoy\u00e9 au client avec succ\u00e8s"}}
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 599, ID statut: 9
+Nouveau statut: ID=9, Code=reparation_effectue, Nom=Réparation Effectuée (Catégorie ID: 4, Nom: Terminé)
+Ancien statut: en_cours_intervention
+Exception: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`u139954273_Vscodetest`.`reparation_logs`, CONSTRAINT `fk_log_user` FOREIGN KEY (`employe_id`) REFERENCES `users` (`id`) ON DELETE CASCADE)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 595, ID statut: 11
+Nouveau statut: ID=11, Code=restitue, Nom=Restitué (Catégorie ID: 5, Nom: Annulé)
+Ancien statut: nouvelle_intervention
+Exception: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`u139954273_Vscodetest`.`reparation_logs`, CONSTRAINT `fk_log_user` FOREIGN KEY (`employe_id`) REFERENCES `users` (`id`) ON DELETE CASCADE)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 593, ID statut: 1
+Nouveau statut: ID=1, Code=nouveau_diagnostique, Nom=Nouveau Diagnostique (Catégorie ID: 1, Nom: Nouvelle)
+Ancien statut: nouvelle_intervention
+Exception: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`u139954273_Vscodetest`.`reparation_logs`, CONSTRAINT `fk_log_user` FOREIGN KEY (`employe_id`) REFERENCES `users` (`id`) ON DELETE CASCADE)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 599, ID statut: 11
+Nouveau statut: ID=11, Code=restitue, Nom=Restitué (Catégorie ID: 5, Nom: Annulé)
+Ancien statut: reparation_effectue
+Exception: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`u139954273_Vscodetest`.`reparation_logs`, CONSTRAINT `fk_log_user` FOREIGN KEY (`employe_id`) REFERENCES `users` (`id`) ON DELETE CASCADE)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 622, ID statut: 3
+Nouveau statut: ID=3, Code=nouvelle_commande, Nom=Nouvelle Commande (Catégorie ID: 1, Nom: Nouvelle)
+Ancien statut: en_cours_intervention
+Exception: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`u139954273_Vscodetest`.`reparation_logs`, CONSTRAINT `fk_log_user` FOREIGN KEY (`employe_id`) REFERENCES `users` (`id`) ON DELETE CASCADE)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 619, ID statut: 7
+Nouveau statut: ID=7, Code=en_attente_livraison, Nom=En attente de livraison (Catégorie ID: 3, Nom: En attente)
+Ancien statut: nouveau_diagnostique
+Exception: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`u139954273_Vscodetest`.`reparation_logs`, CONSTRAINT `fk_log_user` FOREIGN KEY (`employe_id`) REFERENCES `users` (`id`) ON DELETE CASCADE)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 623, ID statut: 11
+Nouveau statut: ID=11, Code=restitue, Nom=Restitué (Catégorie ID: 5, Nom: Annulé)
+Ancien statut: en_attente_responsable
+Exception: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`u139954273_Vscodetest`.`reparation_logs`, CONSTRAINT `fk_log_user` FOREIGN KEY (`employe_id`) REFERENCES `users` (`id`) ON DELETE CASCADE)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 619, ID statut: 9
+Nouveau statut: ID=9, Code=reparation_effectue, Nom=Réparation Effectuée (Catégorie ID: 4, Nom: Terminé)
+Ancien statut: en_attente_livraison
+Exception: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`u139954273_Vscodetest`.`reparation_logs`, CONSTRAINT `fk_log_user` FOREIGN KEY (`employe_id`) REFERENCES `users` (`id`) ON DELETE CASCADE)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 618, ID statut: 7
+Nouveau statut: ID=7, Code=en_attente_livraison, Nom=En attente de livraison (Catégorie ID: 3, Nom: En attente)
+Ancien statut: en_attente_responsable
+Exception: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`u139954273_Vscodetest`.`reparation_logs`, CONSTRAINT `fk_log_user` FOREIGN KEY (`employe_id`) REFERENCES `users` (`id`) ON DELETE CASCADE)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 588, ID statut: 7
+Nouveau statut: ID=7, Code=en_attente_livraison, Nom=En attente de livraison (Catégorie ID: 3, Nom: En attente)
+Ancien statut: en_attente_responsable
+Exception: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`u139954273_Vscodetest`.`reparation_logs`, CONSTRAINT `fk_log_user` FOREIGN KEY (`employe_id`) REFERENCES `users` (`id`) ON DELETE CASCADE)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 626, ID statut: 12
+Nouveau statut: ID=12, Code=gardiennage, Nom=Gardiennage (Catégorie ID: 5, Nom: Annulé)
+Ancien statut: nouvelle_commande
+Démarrage du gardiennage pour la réparation #626
+Erreur lors du démarrage du gardiennage: Erreur lors du démarrage du gardiennage : SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`u139954273_Vscodetest`.`reparation_logs`, CONSTRAINT `fk_log_user` FOREIGN KEY (`employe_id`) REFERENCES `users` (`id`) ON DELETE CASCADE)
+Exception: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`u139954273_Vscodetest`.`reparation_logs`, CONSTRAINT `fk_log_user` FOREIGN KEY (`employe_id`) REFERENCES `users` (`id`) ON DELETE CASCADE)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 627, ID statut: 11
+Nouveau statut: ID=11, Code=restitue, Nom=Restitué (Catégorie ID: 5, Nom: Annulé)
+Ancien statut: reparation_effectue
+Log enregistré: Réparation #627 - Statut modifié de restitue à restitue
+Modèle de SMS trouvé: ID=11, Nom=Restitué
+Message préparé: 🎉 sebastien,
+Ton wispeed t855 est de retour à...
+Tentative d'envoi de SMS à +33614064572
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 624, ID statut: 11
+Nouveau statut: ID=11, Code=restitue, Nom=Restitué (Catégorie ID: 5, Nom: Annulé)
+Ancien statut: reparation_effectue
+Log enregistré: Réparation #624 - Statut modifié de restitue à restitue
+Modèle de SMS trouvé: ID=11, Nom=Restitué
+Message préparé: 🎉 .....,
+Ton xiaomi m365 est de retour à la m...
+Tentative d'envoi de SMS à 33641991850
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 628, ID statut: 11
+Nouveau statut: ID=11, Code=restitue, Nom=Restitué (Catégorie ID: 5, Nom: Annulé)
+Ancien statut: reparation_effectue
+Log enregistré: Réparation #628 - Statut modifié de restitue à restitue
+Modèle de SMS trouvé: ID=11, Nom=Restitué
+Message préparé: 🎉 Jean robert,
+Ton iPhone XR est de retour à ...
+Tentative d'envoi de SMS à +33689685139
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 605, ID statut: 11
+Nouveau statut: ID=11, Code=restitue, Nom=Restitué (Catégorie ID: 5, Nom: Annulé)
+Ancien statut: reparation_effectue
+Log enregistré: Réparation #605 - Statut modifié de restitue à restitue
+Modèle de SMS trouvé: ID=11, Nom=Restitué
+Message préparé: 🎉 gaoo,
+Ton galaxy a12 est de retour à la mai...
+Tentative d'envoi de SMS à +33755152290
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 603, ID statut: 11
+Nouveau statut: ID=11, Code=restitue, Nom=Restitué (Catégorie ID: 5, Nom: Annulé)
+Ancien statut: reparation_effectue
+Log enregistré: Réparation #603 - Statut modifié de restitue à restitue
+Modèle de SMS trouvé: ID=11, Nom=Restitué
+Message préparé: 🎉 ruben,
+Ton wayscral est de retour à la mais...
+Tentative d'envoi de SMS à +33765811362
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 601, ID statut: 11
+Nouveau statut: ID=11, Code=restitue, Nom=Restitué (Catégorie ID: 5, Nom: Annulé)
+Ancien statut: reparation_effectue
+Log enregistré: Réparation #601 - Statut modifié de restitue à restitue
+Modèle de SMS trouvé: ID=11, Nom=Restitué
+Message préparé: 🎉 Salim,
+Ton iPhone 8 est de retour à la mais...
+Tentative d'envoi de SMS à 33788083299
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 596, ID statut: 11
+Nouveau statut: ID=11, Code=restitue, Nom=Restitué (Catégorie ID: 5, Nom: Annulé)
+Ancien statut: reparation_effectue
+Log enregistré: Réparation #596 - Statut modifié de restitue à restitue
+Modèle de SMS trouvé: ID=11, Nom=Restitué
+Message préparé: 🎉 .,
+Ton Acer est de retour à la maison ! On ...
+Tentative d'envoi de SMS à 33492180861
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 606, ID statut: 11
+Nouveau statut: ID=11, Code=restitue, Nom=Restitué (Catégorie ID: 5, Nom: Annulé)
+Ancien statut: reparation_effectue
+Log enregistré: Réparation #606 - Statut modifié de restitue à restitue
+Modèle de SMS trouvé: ID=11, Nom=Restitué
+Message préparé: 🎉 Luis,
+Ton iPhone 11 est de retour à la mais...
+Tentative d'envoi de SMS à +33751116090
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 594, ID statut: 11
+Nouveau statut: ID=11, Code=restitue, Nom=Restitué (Catégorie ID: 5, Nom: Annulé)
+Ancien statut: reparation_effectue
+Log enregistré: Réparation #594 - Statut modifié de restitue à restitue
+Modèle de SMS trouvé: ID=11, Nom=Restitué
+Message préparé: 🎉 Lyes,
+Ton MoovWay BM10 est de retour à la m...
+Tentative d'envoi de SMS à 33667710336
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 635, ID statut: 11
+Nouveau statut: ID=11, Code=restitue, Nom=Restitué (Catégorie ID: 5, Nom: Annulé)
+Ancien statut: nouvelle_intervention
+Log enregistré: Réparation #635 - Statut modifié de restitue à restitue
+Modèle de SMS trouvé: ID=11, Nom=Restitué
+Message préparé: 🎉 saber,
+Ton Test est de retour à la maison !...
+Tentative d'envoi de SMS à 33782962906
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 636, ID statut: 1
+Nouveau statut: ID=1, Code=nouveau_diagnostique, Nom=Nouveau Diagnostique (Catégorie ID: 1, Nom: Nouvelle)
+Ancien statut: en_attente_accord_client
+Log enregistré: Réparation #636 - Statut modifié de nouveau_diagnostique à nouveau_diagnostique
+Modèle de SMS trouvé: ID=5, Nom=Nouvelle reparation
+Message préparé: 👋 Bonjour saber,
+🛠️ Nous avons bien reçu...
+Tentative d'envoi de SMS à 33782962906
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 636, ID statut: 2
+Nouveau statut: ID=2, Code=nouvelle_intervention, Nom=Nouvelle Intervention (Catégorie ID: 1, Nom: Nouvelle)
+Ancien statut: en_attente_responsable
+Log enregistré: Réparation #636 - Statut modifié de nouvelle_intervention à nouvelle_intervention
+Modèle de SMS trouvé: ID=6, Nom=Nouvelle Intervention
+Message préparé: 👋 Bonjour saber,
+🛠️ Nous avons bien reçu...
+Tentative d'envoi de SMS à 33782962906
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 638, ID statut: 1
+Nouveau statut: ID=1, Code=nouveau_diagnostique, Nom=Nouveau Diagnostique (Catégorie ID: 1, Nom: Nouvelle)
+Ancien statut: restitue
+Log enregistré: Réparation #638 - Statut modifié de nouveau_diagnostique à nouveau_diagnostique
+Modèle de SMS trouvé: ID=5, Nom=Nouvelle reparation
+Message préparé: 👋 Bonjour saber,
+🛠️ Nous avons bien reçu...
+Tentative d'envoi de SMS à 33782962906
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 643, ID statut: 7
+Nouveau statut: ID=7, Code=en_attente_livraison, Nom=En attente de livraison (Catégorie ID: 3, Nom: En attente)
+Ancien statut: nouvelle_intervention
+Log enregistré: Réparation #643 - Statut modifié de en_attente_livraison à en_attente_livraison
+Modèle de SMS trouvé: ID=3, Nom=En attente de pièces
+Message préparé: 📦 En attente de pièces
+Votre macbook pro atte...
+Tentative d'envoi de SMS à +33760106281
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 643, ID statut: 1
+Nouveau statut: ID=1, Code=nouveau_diagnostique, Nom=Nouveau Diagnostique (Catégorie ID: 1, Nom: Nouvelle)
+Ancien statut: en_attente_livraison
+Log enregistré: Réparation #643 - Statut modifié de nouveau_diagnostique à nouveau_diagnostique
+Modèle de SMS trouvé: ID=5, Nom=Nouvelle reparation
+Message préparé: 👋 Bonjour junior,
+🛠️ Nous avons bien reç...
+Tentative d'envoi de SMS à +33760106281
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 625, ID statut: 7
+Nouveau statut: ID=7, Code=en_attente_livraison, Nom=En attente de livraison (Catégorie ID: 3, Nom: En attente)
+Ancien statut: nouveau_diagnostique
+Log enregistré: Réparation #625 - Statut modifié de en_attente_livraison à en_attente_livraison
+Modèle de SMS trouvé: ID=3, Nom=En attente de pièces
+Message préparé: 📦 En attente de pièces
+Votre Togo plus attend...
+Tentative d'envoi de SMS à +33771300956
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 641, ID statut: 7
+Nouveau statut: ID=7, Code=en_attente_livraison, Nom=En attente de livraison (Catégorie ID: 3, Nom: En attente)
+Ancien statut: nouvelle_commande
+Log enregistré: Réparation #641 - Statut modifié de en_attente_livraison à en_attente_livraison
+Modèle de SMS trouvé: ID=3, Nom=En attente de pièces
+Message préparé: 📦 En attente de pièces
+Votre iPhone 12 mini a...
+Tentative d'envoi de SMS à +33745583304
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 644, ID statut: 11
+Nouveau statut: ID=11, Code=restitue, Nom=Restitué (Catégorie ID: 5, Nom: Annulé)
+Ancien statut: reparation_effectue
+Exception: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`u139954273_Vscodetest`.`reparation_logs`, CONSTRAINT `fk_log_user` FOREIGN KEY (`employe_id`) REFERENCES `users` (`id`) ON DELETE CASCADE)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 637, ID statut: 11
+Nouveau statut: ID=11, Code=restitue, Nom=Restitué (Catégorie ID: 5, Nom: Annulé)
+Ancien statut: reparation_effectue
+Exception: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`u139954273_Vscodetest`.`reparation_logs`, CONSTRAINT `fk_log_user` FOREIGN KEY (`employe_id`) REFERENCES `users` (`id`) ON DELETE CASCADE)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 595, ID statut: 11
+Nouveau statut: ID=11, Code=restitue, Nom=Restitué (Catégorie ID: 5, Nom: Annulé)
+Ancien statut: reparation_annule
+Exception: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`u139954273_Vscodetest`.`reparation_logs`, CONSTRAINT `fk_log_user` FOREIGN KEY (`employe_id`) REFERENCES `users` (`id`) ON DELETE CASCADE)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 604, ID statut: 11
+Nouveau statut: ID=11, Code=restitue, Nom=Restitué (Catégorie ID: 5, Nom: Annulé)
+Ancien statut: reparation_effectue
+Exception: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`u139954273_Vscodetest`.`reparation_logs`, CONSTRAINT `fk_log_user` FOREIGN KEY (`employe_id`) REFERENCES `users` (`id`) ON DELETE CASCADE)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 650, ID statut: 9
+Nouveau statut: ID=9, Code=reparation_effectue, Nom=Réparation Effectuée (Catégorie ID: 4, Nom: Terminé)
+Ancien statut: nouveau_diagnostique
+Exception: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`u139954273_Vscodetest`.`reparation_logs`, CONSTRAINT `fk_log_user` FOREIGN KEY (`employe_id`) REFERENCES `users` (`id`) ON DELETE CASCADE)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 649, ID statut: 9
+Nouveau statut: ID=9, Code=reparation_effectue, Nom=Réparation Effectuée (Catégorie ID: 4, Nom: Terminé)
+Ancien statut: nouvelle_intervention
+Exception: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`u139954273_Vscodetest`.`reparation_logs`, CONSTRAINT `fk_log_user` FOREIGN KEY (`employe_id`) REFERENCES `users` (`id`) ON DELETE CASCADE)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 651, ID statut: 9
+Nouveau statut: ID=9, Code=reparation_effectue, Nom=Réparation Effectuée (Catégorie ID: 4, Nom: Terminé)
+Ancien statut: nouvelle_intervention
+Exception: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`u139954273_Vscodetest`.`reparation_logs`, CONSTRAINT `fk_log_user` FOREIGN KEY (`employe_id`) REFERENCES `users` (`id`) ON DELETE CASCADE)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 648, ID statut: 10
+Nouveau statut: ID=10, Code=reparation_annule, Nom=Réparation Annulée (Catégorie ID: 4, Nom: Terminé)
+Ancien statut: nouvelle_intervention
+Exception: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`u139954273_Vscodetest`.`reparation_logs`, CONSTRAINT `fk_log_user` FOREIGN KEY (`employe_id`) REFERENCES `users` (`id`) ON DELETE CASCADE)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 639, ID statut: 9
+Nouveau statut: ID=9, Code=reparation_effectue, Nom=Réparation Effectuée (Catégorie ID: 4, Nom: Terminé)
+Ancien statut: nouvelle_intervention
+Log enregistré: Réparation #639 - Statut modifié de reparation_effectue à reparation_effectue
+Modèle de SMS trouvé: ID=2, Nom=Réparation terminée
+Message préparé: karl, votre urban glider 2x2 est prêt ! Il vous a...
+Tentative d'envoi de SMS à +33673973704
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 646, ID statut: 1
+Nouveau statut: ID=1, Code=nouveau_diagnostique, Nom=Nouveau Diagnostique (Catégorie ID: 1, Nom: Nouvelle)
+Ancien statut: en_attente_responsable
+Exception: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`u139954273_Vscodetest`.`reparation_logs`, CONSTRAINT `fk_log_user` FOREIGN KEY (`employe_id`) REFERENCES `users` (`id`) ON DELETE CASCADE)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 630, ID statut: 3
+Nouveau statut: ID=3, Code=nouvelle_commande, Nom=Nouvelle Commande (Catégorie ID: 1, Nom: Nouvelle)
+Ancien statut: en_attente_livraison
+Exception: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`u139954273_Vscodetest`.`reparation_logs`, CONSTRAINT `fk_log_user` FOREIGN KEY (`employe_id`) REFERENCES `users` (`id`) ON DELETE CASCADE)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 592, ID statut: 1
+Nouveau statut: ID=1, Code=nouveau_diagnostique, Nom=Nouveau Diagnostique (Catégorie ID: 1, Nom: Nouvelle)
+Ancien statut: restitue
+Exception: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`u139954273_Vscodetest`.`reparation_logs`, CONSTRAINT `fk_log_user` FOREIGN KEY (`employe_id`) REFERENCES `users` (`id`) ON DELETE CASCADE)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 658, ID statut: 8
+Nouveau statut: ID=8, Code=en_attente_responsable, Nom=En attente d'un responsable (Catégorie ID: 3, Nom: En attente)
+Ancien statut: nouvelle_intervention
+Exception: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`u139954273_Vscodetest`.`reparation_logs`, CONSTRAINT `fk_log_user` FOREIGN KEY (`employe_id`) REFERENCES `users` (`id`) ON DELETE CASCADE)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 662, ID statut: 9
+Nouveau statut: ID=9, Code=reparation_effectue, Nom=Réparation Effectuée (Catégorie ID: 4, Nom: Terminé)
+Ancien statut: en_attente_accord_client
+Exception: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`u139954273_Vscodetest`.`reparation_logs`, CONSTRAINT `fk_log_user` FOREIGN KEY (`employe_id`) REFERENCES `users` (`id`) ON DELETE CASCADE)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 642, ID statut: 11
+Nouveau statut: ID=11, Code=restitue, Nom=Restitué (Catégorie ID: 5, Nom: Annulé)
+Ancien statut: en_attente_responsable
+Exception: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`u139954273_Vscodetest`.`reparation_logs`, CONSTRAINT `fk_log_user` FOREIGN KEY (`employe_id`) REFERENCES `users` (`id`) ON DELETE CASCADE)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 665, ID statut: 3
+Nouveau statut: ID=3, Code=nouvelle_commande, Nom=Nouvelle Commande (Catégorie ID: 1, Nom: Nouvelle)
+Ancien statut: nouvelle_intervention
+Exception: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`u139954273_Vscodetest`.`reparation_logs`, CONSTRAINT `fk_log_user` FOREIGN KEY (`employe_id`) REFERENCES `users` (`id`) ON DELETE CASCADE)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 661, ID statut: 11
+Nouveau statut: ID=11, Code=restitue, Nom=Restitué (Catégorie ID: 5, Nom: Annulé)
+Ancien statut: nouvelle_intervention
+Exception: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`u139954273_Vscodetest`.`reparation_logs`, CONSTRAINT `fk_log_user` FOREIGN KEY (`employe_id`) REFERENCES `users` (`id`) ON DELETE CASCADE)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 654, ID statut: 11
+Nouveau statut: ID=11, Code=restitue, Nom=Restitué (Catégorie ID: 5, Nom: Annulé)
+Ancien statut: nouvelle_intervention
+Exception: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`u139954273_Vscodetest`.`reparation_logs`, CONSTRAINT `fk_log_user` FOREIGN KEY (`employe_id`) REFERENCES `users` (`id`) ON DELETE CASCADE)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 630, ID statut: 11
+Nouveau statut: ID=11, Code=restitue, Nom=Restitué (Catégorie ID: 5, Nom: Annulé)
+Ancien statut: nouvelle_commande
+Exception: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`u139954273_Vscodetest`.`reparation_logs`, CONSTRAINT `fk_log_user` FOREIGN KEY (`employe_id`) REFERENCES `users` (`id`) ON DELETE CASCADE)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 659, ID statut: 9
+Nouveau statut: ID=9, Code=reparation_effectue, Nom=Réparation Effectuée (Catégorie ID: 4, Nom: Terminé)
+Ancien statut: nouvelle_intervention
+Exception: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`u139954273_Vscodetest`.`reparation_logs`, CONSTRAINT `fk_log_user` FOREIGN KEY (`employe_id`) REFERENCES `users` (`id`) ON DELETE CASCADE)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 665, ID statut: 7
+Nouveau statut: ID=7, Code=en_attente_livraison, Nom=En attente de livraison (Catégorie ID: 3, Nom: En attente)
+Ancien statut: nouvelle_commande
+Exception: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`u139954273_Vscodetest`.`reparation_logs`, CONSTRAINT `fk_log_user` FOREIGN KEY (`employe_id`) REFERENCES `users` (`id`) ON DELETE CASCADE)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 592, ID statut: 7
+Nouveau statut: ID=7, Code=en_attente_livraison, Nom=En attente de livraison (Catégorie ID: 3, Nom: En attente)
+Ancien statut: nouveau_diagnostique
+Exception: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`u139954273_Vscodetest`.`reparation_logs`, CONSTRAINT `fk_log_user` FOREIGN KEY (`employe_id`) REFERENCES `users` (`id`) ON DELETE CASCADE)
+--- Nouvelle requête de mise à jour du statut spécifique ---
+POST data: Array
+(
+)
+
+Config path: /home/u139954273/domains/mdgeek.top/public_html/config/database.php
+Functions path: /home/u139954273/domains/mdgeek.top/public_html/includes/functions.php
+ID réparation: 666, ID statut: 13
+Nouveau statut: ID=13, Code=annule, Nom=Annulé (Catégorie ID: 5, Nom: Annulé)
+Ancien statut: nouvelle_intervention
+Exception: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`u139954273_Vscodetest`.`reparation_logs`, CONSTRAINT `fk_log_user` FOREIGN KEY (`employe_id`) REFERENCES `users` (`id`) ON DELETE CASCADE)

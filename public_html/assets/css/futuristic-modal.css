@@ -1,0 +1,347 @@
+/* Futuristic Modal Styles - Styles pour le modal futuriste */
+
+/* Apparence générale */
+.futuristic-modal .modal-content {
+    background-color: var(--modal-bg, rgba(13, 17, 28, 0.9));
+    border-radius: 16px;
+    border: none;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    box-shadow: 0 8px 32px rgba(30, 144, 255, 0.3);
+    animation: modal-entry 0.4s ease-out;
+}
+
+.light-mode .futuristic-modal .modal-content {
+    background-color: rgba(255, 255, 255, 0.95);
+}
+
+@keyframes modal-entry {
+    from {
+        opacity: 0;
+        transform: scale(0.9) translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* En-tête */
+.futuristic-modal .modal-header {
+    background: linear-gradient(90deg, rgba(30, 144, 255, 0.3) 0%, rgba(0, 77, 155, 0.3) 100%);
+    border-bottom: none;
+    padding: 1.5rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.light-mode .futuristic-modal .modal-header {
+    background: linear-gradient(90deg, rgba(30, 144, 255, 0.15) 0%, rgba(0, 77, 155, 0.15) 100%);
+}
+
+.futuristic-modal .modal-header::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, #1e90ff, #004d9b, #1e90ff);
+    background-size: 200% 100%;
+    animation: border-slide 3s linear infinite;
+}
+
+@keyframes border-slide {
+    0% { background-position: 0% 0; }
+    100% { background-position: 200% 0; }
+}
+
+.futuristic-modal .modal-title {
+    color: #fff;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-shadow: 0 0 10px rgba(30, 144, 255, 0.7);
+}
+
+.light-mode .futuristic-modal .modal-title {
+    color: #0a1629;
+    text-shadow: 0 0 8px rgba(30, 144, 255, 0.4);
+}
+
+/* Corps */
+.futuristic-modal .modal-body {
+    position: relative;
+    padding: 1.5rem;
+    overflow: hidden;
+}
+
+/* Styles des champs de formulaire */
+.futuristic-modal .form-control, 
+.futuristic-modal .task-detail-container {
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(30, 144, 255, 0.2);
+    border-radius: 8px;
+    color: var(--text-color, #fff);
+    transition: all 0.3s ease;
+}
+
+.light-mode .futuristic-modal .form-control,
+.light-mode .futuristic-modal .task-detail-container {
+    background-color: rgba(30, 144, 255, 0.05);
+    border: 1px solid rgba(30, 144, 255, 0.2);
+    color: #0a1629;
+}
+
+.futuristic-modal .form-control:focus,
+.futuristic-modal .form-control:hover {
+    border-color: rgba(30, 144, 255, 0.6);
+    box-shadow: 0 0 12px rgba(30, 144, 255, 0.3);
+}
+
+.futuristic-modal .form-control:focus {
+    position: relative;
+}
+
+.futuristic-modal .form-control:focus::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #1e90ff, #0066cc);
+    animation: progress-bar 2s forwards ease-out;
+}
+
+@keyframes progress-bar {
+    to { width: 100%; }
+}
+
+/* Boutons */
+.futuristic-modal .btn-primary {
+    background: linear-gradient(135deg, #1e90ff, #0066cc);
+    border: none;
+    border-radius: 8px;
+    padding: 0.6rem 1.5rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(30, 144, 255, 0.3);
+}
+
+.futuristic-modal .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(30, 144, 255, 0.4);
+}
+
+.futuristic-modal .btn-success {
+    background: linear-gradient(135deg, #20c997, #0ca678);
+    border: none;
+    box-shadow: 0 4px 10px rgba(32, 201, 151, 0.3);
+}
+
+.futuristic-modal .btn-success:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(32, 201, 151, 0.4);
+}
+
+.futuristic-modal .btn-close {
+    color: #fff;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+    opacity: 0.7;
+    transition: all 0.3s ease;
+}
+
+.futuristic-modal .btn-close:hover {
+    opacity: 1;
+    transform: rotate(90deg);
+}
+
+.light-mode .futuristic-modal .btn-close {
+    color: #0a1629;
+    text-shadow: none;
+}
+
+/* Particules flottantes */
+.futuristic-modal .particle {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background-color: rgba(30, 144, 255, 0.4);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Effet de pulsation */
+.futuristic-modal .pulse-effect {
+    position: relative;
+}
+
+.futuristic-modal .pulse-effect::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: rgba(30, 144, 255, 0.4);
+    border-radius: inherit;
+    z-index: -1;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        opacity: 0.5;
+    }
+    50% {
+        transform: scale(1.1);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 0;
+    }
+}
+
+/* Effet holographique */
+.futuristic-modal .holographic {
+    position: relative;
+    overflow: hidden;
+}
+
+.futuristic-modal .holographic::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        45deg,
+        transparent 0%,
+        rgba(30, 144, 255, 0.1) 30%,
+        rgba(30, 144, 255, 0.2) 40%,
+        transparent 50%,
+        transparent 100%
+    );
+    transform: rotate(30deg);
+    animation: hologram 3s linear infinite;
+}
+
+@keyframes hologram {
+    0% { transform: rotate(30deg) translateX(-100%); }
+    100% { transform: rotate(30deg) translateX(100%); }
+}
+
+/* Spécifications pour la tâche */
+.futuristic-modal .task-detail-container {
+    padding: 1.5rem;
+    background-color: rgba(30, 144, 255, 0.05);
+    border-radius: 12px;
+    position: relative;
+    overflow: hidden;
+}
+
+.light-mode .futuristic-modal .task-detail-container {
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+.futuristic-modal #task-title {
+    color: var(--title-color, #fff);
+    font-size: 1.25rem;
+    border-bottom: 2px solid rgba(30, 144, 255, 0.3);
+    padding-bottom: 0.75rem;
+    position: relative;
+}
+
+.light-mode .futuristic-modal #task-title {
+    color: #0a1629;
+}
+
+.futuristic-modal #task-priority {
+    background-color: rgba(30, 144, 255, 0.2);
+    color: var(--text-color, #fff);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    display: inline-block;
+    border: 1px solid rgba(30, 144, 255, 0.3);
+}
+
+.light-mode .futuristic-modal #task-priority {
+    color: #0a1629;
+}
+
+.futuristic-modal #task-description {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: var(--text-color, rgba(255, 255, 255, 0.9));
+    min-height: 60px;
+    background-color: rgba(255, 255, 255, 0.05);
+    padding: 1rem;
+    border-radius: 8px;
+    border: 1px solid rgba(30, 144, 255, 0.2);
+}
+
+.light-mode .futuristic-modal #task-description {
+    color: #0a1629;
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+/* Animation d'apparition séquentielle */
+.futuristic-modal .fade-in-sequence > * {
+    opacity: 0;
+    transform: translateY(10px);
+    animation: fade-in 0.5s forwards ease-out;
+}
+
+.futuristic-modal .fade-in-sequence > *:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.futuristic-modal .fade-in-sequence > *:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.futuristic-modal .fade-in-sequence > *:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+.futuristic-modal .fade-in-sequence > *:nth-child(4) {
+    animation-delay: 0.4s;
+}
+
+@keyframes fade-in {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Effets pour animations d'erreurs */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-5px); }
+    40%, 80% { transform: translateX(5px); }
+}
+
+.futuristic-modal .shake {
+    animation: shake 0.5s ease-in-out;
+}
+
+/* Classe pour ajouter/supprimer mode clair dynamiquement */
+.futuristic-modal {
+    --modal-bg: rgba(13, 17, 28, 0.9);
+    --text-color: #fff;
+    --title-color: #fff;
+}
+
+.light-mode .futuristic-modal {
+    --modal-bg: rgba(255, 255, 255, 0.95);
+    --text-color: #0a1629;
+    --title-color: #0a1629;
+} 

@@ -1,0 +1,564 @@
+/* 
+ * GeekBoard Navigation Styles
+ * Includes both desktop and mobile/PWA navigation styles
+ * Version améliorée avec effets visuels modernes
+ */
+
+/* Variables globales */
+:root {
+    --primary: #0078e8;
+    --primary-light: #e7f3ff;
+    --primary-dark: #0056b3;
+    --secondary: #6c757d;
+    --success: #28a745;
+    --danger: #dc3545;
+    --warning: #ffc107;
+    --info: #17a2b8;
+    --light: #f8f9fa;
+    --dark: #343a40;
+    --white: #ffffff;
+    --black: #000000;
+    --gray-100: #f8f9fa;
+    --gray-200: #e9ecef;
+    --gray-300: #dee2e6;
+    --gray-400: #ced4da;
+    --gray-500: #adb5bd;
+    --gray-600: #6c757d;
+    --gray-700: #495057;
+    --gray-800: #343a40;
+    --gray-900: #212529;
+    
+    --navbar-height: 60px;
+    --mobile-navbar-height: 70px;
+    --navbar-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    --navbar-shadow-hover: 0 4px 15px rgba(0,0,0,0.15);
+    --card-radius: 12px;
+    --btn-radius: 8px;
+    --transition-fast: 0.2s ease;
+    --transition-standard: 0.3s ease;
+    --transition-slow: 0.5s ease;
+}
+
+/* Desktop Navbar - Amélioré */
+#desktop-navbar {
+    height: var(--navbar-height);
+    background-color: var(--white);
+    box-shadow: var(--navbar-shadow);
+    border-bottom: 1px solid rgba(0,0,0,.05);
+    z-index: 1030;
+    transition: all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+#desktop-navbar.scrolled {
+    background-color: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    height: 50px;
+}
+
+.navbar-brand {
+    font-weight: 600;
+    color: var(--gray-800);
+    transition: transform var(--transition-standard);
+    display: flex;
+    align-items: center;
+}
+
+.navbar-brand:hover {
+    transform: translateY(-1px);
+}
+
+.navbar-brand img {
+    transition: transform var(--transition-standard);
+    filter: drop-shadow(0 1px 2px rgba(0,0,0,0.1));
+}
+
+.navbar-brand:hover img {
+    transform: scale(1.05);
+}
+
+/* Effet pour le bouton "Nouvelle" */
+.btn-primary {
+    background-color: var(--primary);
+    border-color: var(--primary);
+    box-shadow: 0 2px 4px rgba(0, 120, 232, 0.2);
+    transition: all var(--transition-standard);
+    border-radius: var(--btn-radius);
+    font-weight: 600;
+    letter-spacing: 0.2px;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-dark);
+    border-color: var(--primary-dark);
+    box-shadow: 0 4px 8px rgba(0, 120, 232, 0.3);
+    transform: translateY(-1px);
+}
+
+/* Design des liens de navigation */
+.nav-link {
+    color: var(--gray-700);
+    font-weight: 500;
+    padding: 0.75rem 1rem !important;
+    border-radius: var(--btn-radius);
+    margin: 0 0.15rem;
+    transition: all var(--transition-standard);
+    position: relative;
+}
+
+.nav-link:hover {
+    color: var(--primary);
+    background-color: var(--primary-light);
+    transform: translateY(-1px);
+}
+
+.nav-link.active {
+    color: var(--primary);
+    font-weight: 600;
+    background-color: var(--primary-light);
+}
+
+.nav-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 20px;
+    height: 3px;
+    background-color: var(--primary);
+    border-radius: 10px;
+}
+
+.nav-link i {
+    transition: transform var(--transition-standard);
+}
+
+.nav-link:hover i {
+    transform: translateY(-2px);
+}
+
+/* Mobile Bottom Navbar - Amélioré */
+#mobile-navbar {
+    height: 65px;
+    z-index: 1030;
+    background-color: white;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+    overflow: visible;
+}
+
+#mobile-navbar .row {
+    width: 100%;
+    margin: 0;
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+#mobile-navbar .col {
+    flex: 1 1 0;
+    min-width: 0;
+    padding: 0;
+    position: relative;
+}
+
+#mobile-navbar .nav-link {
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding: 8px 4px;
+    color: #6c757d;
+}
+
+#mobile-navbar .nav-link.active {
+    color: var(--primary);
+}
+
+#mobile-navbar .nav-link i {
+    font-size: 1.2rem;
+    margin-bottom: 4px;
+    display: block;
+}
+
+#mobile-navbar .nav-link span {
+    font-size: 0.7rem;
+    display: block;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 100%;
+    text-align: center;
+}
+
+/* Classes utilitaires */
+.shadow-top {
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Ajustements pour les petits écrans */
+@media (max-width: 320px) {
+    #mobile-navbar .nav-link span {
+        font-size: 0.6rem;
+    }
+}
+
+/* Ajustements pour l'espacement dans le mode PWA sur iOS */
+/* Note: Pour les URLs de test, utiliser seulement un '?' pour le premier paramètre et '&' pour les suivants
+   Exemple correct: ?page=reparations&test_pwa=true&device=ios&dynamic_island=true */
+.ios-pwa #mobile-navbar {
+    padding-bottom: env(safe-area-inset-bottom, 0);
+    height: calc(65px + env(safe-area-inset-bottom, 0));
+}
+
+/* Style pour le menu modal mobile */
+.menu-icon-circle {
+    width: 40px;
+    height: 40px;
+    background-color: var(--primary-light);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary);
+}
+
+/* Offcanvas Menu - Amélioré */
+.offcanvas {
+    border-left: 1px solid rgba(0,0,0,.05);
+    box-shadow: -5px 0 25px rgba(0,0,0,0.1);
+    transition: transform 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+.offcanvas-header {
+    background-color: var(--primary-light);
+    border-bottom: 1px solid rgba(0,0,0,.05);
+    padding: 1rem 1.5rem;
+}
+
+.offcanvas-title {
+    font-weight: 600;
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+}
+
+.offcanvas-title::before {
+    content: '';
+    display: inline-block;
+    width: 4px;
+    height: 20px;
+    background-color: var(--primary);
+    margin-right: 10px;
+    border-radius: 2px;
+}
+
+.offcanvas-body {
+    padding: 1rem;
+}
+
+.list-group-item-action {
+    color: var(--gray-700);
+    transition: all var(--transition-standard);
+    border-radius: var(--btn-radius);
+    margin-bottom: 3px;
+    padding: 0.75rem 1rem;
+    border: none;
+}
+
+.list-group-item-action:hover {
+    background-color: var(--primary-light);
+    color: var(--primary);
+    transform: translateX(3px);
+}
+
+.list-group-item-action.active {
+    background-color: var(--primary-light);
+    color: var(--primary);
+    font-weight: 500;
+    border-color: transparent;
+}
+
+.list-group-item-action i {
+    transition: transform var(--transition-standard);
+}
+
+.list-group-item-action:hover i {
+    transform: translateX(2px);
+}
+
+.sidebar-heading {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    color: var(--gray-500);
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+/* Modal Styles for Action Buttons - Amélioré */
+#newItemModal .modal-content {
+    border: none;
+    border-radius: var(--card-radius);
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+
+#newItemModal .modal-header {
+    background-color: var(--primary-light);
+    border-bottom: 1px solid rgba(0,0,0,.05);
+    padding: 1.25rem 1.5rem;
+}
+
+#newItemModal .modal-title {
+    color: var(--primary);
+    font-weight: 600;
+}
+
+#newItemModal .modal-body {
+    padding: 1.5rem;
+}
+
+#newItemModal .btn-outline-primary {
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border-radius: var(--card-radius);
+    border: 1px solid rgba(0, 120, 232, 0.2);
+    background-color: var(--white);
+}
+
+#newItemModal .btn-outline-primary:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+    border-color: var(--primary);
+    background-color: var(--white);
+    color: var(--primary);
+}
+
+#newItemModal .btn-outline-primary i {
+    transition: all var(--transition-standard);
+}
+
+#newItemModal .btn-outline-primary:hover i {
+    transform: translateY(-3px);
+    color: var(--primary);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 991.98px) {
+    body {
+        padding-bottom: calc(var(--mobile-navbar-height) + env(safe-area-inset-bottom, 0));
+    }
+    
+    body.ios-pwa {
+        padding-bottom: calc(var(--mobile-navbar-height) + env(safe-area-inset-bottom, 20px));
+    }
+    
+    body.ios-dynamic-island {
+        padding-bottom: calc(var(--mobile-navbar-height) + env(safe-area-inset-bottom, 35px));
+    }
+    
+    main {
+        padding-bottom: 1rem;
+    }
+}
+
+@media (min-width: 992px) {
+    body {
+        padding-bottom: var(--mobile-navbar-height);
+    }
+    
+    body.ios-pwa {
+        padding-bottom: calc(var(--mobile-navbar-height) + env(safe-area-inset-bottom, 20px));
+    }
+    
+    body.ios-dynamic-island {
+        padding-bottom: calc(var(--mobile-navbar-height) + env(safe-area-inset-bottom, 35px));
+    }
+}
+
+/* Nouvelle navigation mobile globale - Styles unifiés */
+#new-mobile-navbar {
+    height: var(--mobile-navbar-height);
+    z-index: 9999;
+    box-shadow: 0 -2px 5px rgba(0,0,0,0.05);
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    display: flex !important;
+    background-color: white !important;
+    border-top: 1px solid rgba(0,0,0,0.1);
+}
+
+/* Règles spécifiques pour le mode PWA */
+body.pwa-mode #new-mobile-navbar {
+    height: calc(var(--mobile-navbar-height) + env(safe-area-inset-bottom, 0)) !important;
+    padding-bottom: env(safe-area-inset-bottom, 0) !important;
+}
+
+/* Ajustements iOS pour le mode PWA */
+body.ios-pwa #new-mobile-navbar {
+    height: calc(var(--mobile-navbar-height) + env(safe-area-inset-bottom, 20px)) !important;
+    padding-bottom: env(safe-area-inset-bottom, 20px) !important;
+}
+
+body.ios-dynamic-island #new-mobile-navbar {
+    height: calc(var(--mobile-navbar-height) + env(safe-area-inset-bottom, 35px)) !important;
+    padding-bottom: env(safe-area-inset-bottom, 35px) !important;
+}
+
+/* Assurer la visibilité de la barre de navigation mobile sur toutes les pages */
+body[data-page="reparations"] #new-mobile-navbar,
+.page-reparations #new-mobile-navbar {
+    display: flex !important;
+    z-index: 9999 !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+/* Style unifié pour les éléments de navigation */
+.mobile-nav-item {
+    flex: 1;
+    color: #6c757d;
+    text-decoration: none;
+    position: relative;
+    padding: 0.75rem 0.5rem;
+}
+
+.mobile-nav-item i {
+    font-size: 1.25rem;
+    display: block !important;
+    margin-bottom: 4px !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+.mobile-nav-item.active {
+    color: #0078e8;
+    font-weight: 500;
+}
+
+.mobile-nav-text {
+    font-size: 0.7rem;
+    display: block !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Animation du menu lors du scroll */
+#desktop-navbar.scrolled {
+    height: 50px;
+}
+
+#desktop-navbar.scrolled .navbar-brand {
+    transform: scale(0.9);
+}
+
+#desktop-navbar.scrolled .nav-link {
+    padding-top: 0.5rem !important;
+    padding-bottom: 0.5rem !important;
+}
+
+/* Animations pour le menu mobile */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translate3d(0, 30px, 0);
+    }
+    to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+/* Dark Mode Support - Amélioré */
+@media (prefers-color-scheme: dark) {
+    body.supports-dark-mode {
+        --navbar-bg: #1a1a1a;
+        --navbar-border: #333;
+        --navbar-text: #e0e0e0;
+        --navbar-active: #3a8dff;
+        --navbar-active-bg: rgba(58, 141, 255, 0.15);
+        --navbar-hover-bg: rgba(58, 141, 255, 0.1);
+    }
+    
+    body.supports-dark-mode #desktop-navbar,
+    body.supports-dark-mode #mobile-navbar {
+        background-color: var(--navbar-bg);
+        border-color: var(--navbar-border);
+        box-shadow: 0 2px 15px rgba(0,0,0,0.25);
+    }
+    
+    body.supports-dark-mode .navbar-brand,
+    body.supports-dark-mode .nav-link {
+        color: var(--navbar-text);
+    }
+    
+    body.supports-dark-mode .nav-link.active {
+        color: var(--navbar-active);
+        background-color: var(--navbar-active-bg);
+    }
+    
+    body.supports-dark-mode .nav-link:hover {
+        background-color: var(--navbar-hover-bg);
+    }
+    
+    body.supports-dark-mode .list-group-item-action {
+        background-color: var(--navbar-bg);
+        color: var(--navbar-text);
+    }
+    
+    body.supports-dark-mode .list-group-item-action:hover {
+        background-color: var(--navbar-hover-bg);
+    }
+    
+    body.supports-dark-mode .list-group-item-action.active {
+        background-color: var(--navbar-active-bg);
+        color: var(--navbar-active);
+    }
+    
+    body.supports-dark-mode .offcanvas {
+        background-color: var(--navbar-bg);
+        box-shadow: -5px 0 25px rgba(0,0,0,0.3);
+    }
+    
+    body.supports-dark-mode .offcanvas-header {
+        background-color: rgba(58, 141, 255, 0.1);
+        border-color: var(--navbar-border);
+    }
+    
+    body.supports-dark-mode .offcanvas-title {
+        color: var(--navbar-active);
+    }
+    
+    body.supports-dark-mode #desktop-navbar.scrolled {
+        background-color: rgba(26, 26, 26, 0.9);
+    }
+    
+    body.supports-dark-mode #newItemModal .modal-content {
+        background-color: var(--navbar-bg);
+        color: var(--navbar-text);
+    }
+    
+    body.supports-dark-mode #newItemModal .btn-outline-primary {
+        border-color: rgba(58, 141, 255, 0.3);
+        color: var(--navbar-text);
+        background-color: rgba(26, 26, 26, 0.3);
+    }
+    
+    body.supports-dark-mode #newItemModal .btn-outline-primary:hover {
+        background-color: var(--navbar-hover-bg);
+        border-color: var(--navbar-active);
+        color: var(--navbar-active);
+    }
+} 

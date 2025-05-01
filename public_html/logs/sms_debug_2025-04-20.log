@@ -1,0 +1,37 @@
+[2025-04-20 16:34:32] ====== DÉBUT DEBUG SMS ======
+[2025-04-20 16:34:32] Template ID: 2
+[2025-04-20 16:34:32] Template nom: Réparation terminée
+[2025-04-20 16:34:32] Template contenu brut: [CLIENT_PRENOM], votre [APPAREIL_MODELE] est prêt ! Il vous attend pour retrouver une vie normale. 🥳
+🧾 Suivi : http://Mdgeek.top/suivi.php?id=[REPARATION_ID]
+Maison du Geek – 08 95 79 59 33
+[2025-04-20 16:34:32] Réparation ID: 589
+[2025-04-20 16:34:32] Variables à remplacer:
+[2025-04-20 16:34:32]   [CLIENT_NOM] => 'blanchard'
+[2025-04-20 16:34:32]   [CLIENT_PRENOM] => 'Franck'
+[2025-04-20 16:34:32]   [CLIENT_TELEPHONE] => '33664995745'
+[2025-04-20 16:34:32]   [REPARATION_ID] => '589'
+[2025-04-20 16:34:32]   [APPAREIL_TYPE] => 'Informatique'
+[2025-04-20 16:34:32]   [APPAREIL_MARQUE] => ''
+[2025-04-20 16:34:32]   [APPAREIL_MODELE] => 'iPad A2297'
+[2025-04-20 16:34:32]   [DATE_RECEPTION] => '16/04/2025'
+[2025-04-20 16:34:32]   [DATE_FIN_PREVUE] => 'Non définie'
+[2025-04-20 16:34:32]   [PRIX] => '0,00'
+[2025-04-20 16:34:32] Message avant remplacement: [CLIENT_PRENOM], votre [APPAREIL_MODELE] est prêt ! Il vous attend pour retrouver une vie normale. 🥳
+🧾 Suivi : http://Mdgeek.top/suivi.php?id=[REPARATION_ID]
+Maison du Geek – 08 95 79 59 33
+[2025-04-20 16:34:32] Remplacement de '[CLIENT_NOM]' par 'blanchard': AUCUN CHANGEMENT
+[2025-04-20 16:34:32] Remplacement de '[CLIENT_PRENOM]' par 'Franck': OK
+[2025-04-20 16:34:32] Remplacement de '[CLIENT_TELEPHONE]' par '33664995745': AUCUN CHANGEMENT
+[2025-04-20 16:34:32] Remplacement de '[REPARATION_ID]' par '589': OK
+[2025-04-20 16:34:32] Remplacement de '[APPAREIL_TYPE]' par 'Informatique': AUCUN CHANGEMENT
+[2025-04-20 16:34:32] Remplacement de '[APPAREIL_MARQUE]' par '': AUCUN CHANGEMENT
+[2025-04-20 16:34:32] Remplacement de '[APPAREIL_MODELE]' par 'iPad A2297': OK
+[2025-04-20 16:34:32] Remplacement de '[DATE_RECEPTION]' par '16/04/2025': AUCUN CHANGEMENT
+[2025-04-20 16:34:32] Remplacement de '[DATE_FIN_PREVUE]' par 'Non définie': AUCUN CHANGEMENT
+[2025-04-20 16:34:32] Remplacement de '[PRIX]' par '0,00': AUCUN CHANGEMENT
+[2025-04-20 16:34:32] Message final après remplacement: Franck, votre iPad A2297 est prêt ! Il vous attend pour retrouver une vie normale. 🥳
+🧾 Suivi : http://Mdgeek.top/suivi.php?id=589
+Maison du Geek – 08 95 79 59 33
+[2025-04-20 16:34:32] Tentative d'envoi SMS à 33664995745
+[2025-04-20 16:34:33] Résultat de l'envoi: SUCCÈS
+[2025-04-20 16:34:33] ====== FIN DEBUG SMS ======

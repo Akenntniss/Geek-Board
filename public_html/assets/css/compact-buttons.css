@@ -1,0 +1,52 @@
+/* CSS pour réduire la taille des boutons d'action */
+#repairDetailsModal .action-btn,
+#repairDetailsModal .client-action-btn {
+    height: 85px !important;
+    padding: 10px 5px !important;
+    margin-bottom: 8px !important;
+    border-width: 1.5px !important;
+}
+
+#repairDetailsModal .action-btn i,
+#repairDetailsModal .client-action-btn i {
+    font-size: 1.75rem !important;
+    margin-bottom: 8px !important;
+}
+
+#repairDetailsModal .action-btn span,
+#repairDetailsModal .client-action-btn span {
+    font-size: 0.7rem !important;
+}
+
+@media (max-width: 768px) {
+    #repairDetailsModal .action-btn,
+    #repairDetailsModal .client-action-btn {
+        height: 75px !important;
+        padding: 8px 5px !important;
+    }
+    
+    #repairDetailsModal .action-btn i,
+    #repairDetailsModal .client-action-btn i {
+        font-size: 1.5rem !important;
+        margin-bottom: 6px !important;
+    }
+}
+
+@media (max-width: 576px) {
+    #repairDetailsModal .action-btn,
+    #repairDetailsModal .client-action-btn {
+        height: 70px !important;
+        padding: 6px 4px !important;
+    }
+    
+    #repairDetailsModal .action-btn i,
+    #repairDetailsModal .client-action-btn i {
+        font-size: 1.4rem !important;
+        margin-bottom: 5px !important;
+    }
+    
+    #repairDetailsModal .action-btn span,
+    #repairDetailsModal .client-action-btn span {
+        font-size: 0.6rem !important;
+    }
+} 

@@ -1,0 +1,128 @@
+/* 
+ * Styles spécifiques pour la page ajouter_reparation.php sur mobile
+ * Ce fichier corrige les problèmes d'affichage sur les appareils mobiles
+ */
+
+/* Styles généraux pour mobile */
+@media (max-width: 767.98px) {
+    /* Ajustements pour le conteneur principal */
+    .container-fluid {
+        padding: 0 !important;
+        overflow-x: hidden !important;
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+    
+    /* Ajustements pour la carte principale */
+    .card {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+        border-radius: 10px !important;
+    }
+    
+    /* Ajustements pour le corps de la carte */
+    .card-body {
+        padding: 1rem !important;
+    }
+    
+    /* Ajustements pour le formulaire */
+    #rep_reparationForm {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+    
+    /* Ajustements pour les étapes du formulaire */
+    .form-step {
+        width: 100% !important;
+        padding: 0 !important;
+    }
+    
+    /* Ajustements pour les cartes de sélection */
+    .type-appareil-card, .mot-de-passe-card {
+        margin-bottom: 0.75rem !important;
+    }
+    
+    /* Ajustements pour les boutons */
+    .btn-group, .mobile-btn-group {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+    
+    .btn-group .btn, .mobile-btn-group .btn {
+        margin-bottom: 0.5rem;
+        border-radius: 0.375rem !important;
+        width: 100%;
+    }
+    
+    .mobile-buttons-container {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+    
+    .mobile-buttons-container .btn {
+        width: 100%;
+    }
+    
+    /* Ajustements pour la modal */
+    .modal-dialog {
+        margin: 0.5rem;
+    }
+    
+    /* Ajustements pour la caméra */
+    .camera-container {
+        width: 100% !important;
+    }
+    
+    #rep_camera, #rep_photo_preview {
+        max-height: 200px !important;
+    }
+    
+    /* Ajustements pour les champs de formulaire */
+    .form-control, .form-select {
+        font-size: 16px !important; /* Évite le zoom automatique sur iOS */
+    }
+    
+    /* Ajustements pour les groupes de boutons à l'étape 4 */
+    .d-flex.justify-content-between {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .d-flex.justify-content-between .btn-group {
+        width: 100%;
+    }
+    
+    /* Correction pour les colonnes */
+    .col-md-6 {
+        padding: 0 0.5rem !important;
+    }
+    
+    /* Ajustements pour les tableaux */
+    .table-responsive {
+        border: none !important;
+    }
+    
+    /* Ajustements pour les résultats de recherche */
+    #rep_resultats_clients {
+        max-height: 300px;
+        overflow-y: auto;
+    }
+}
+
+/* Styles spécifiques pour les très petits écrans */
+@media (max-width: 375px) {
+    .card-body {
+        padding: 0.75rem !important;
+    }
+    
+    h4.page-title {
+        font-size: 1.25rem !important;
+    }
+    
+    h5 {
+        font-size: 1.1rem !important;
+    }
+}

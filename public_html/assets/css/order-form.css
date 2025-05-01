@@ -1,0 +1,520 @@
+/**
+ * Styles spécifiques pour le formulaire de commande de pièces
+ * Design moderne avec support des modes jour/nuit
+ */
+
+/* Conteneur principal du formulaire */
+.order-container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 1.5rem;
+  background-color: var(--bg-card) !important;
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Forcer les couleurs de fond pour les différents modes */
+body:not(.dark-mode) .order-container {
+  background-color: #ffffff !important;
+}
+
+body.dark-mode .order-container {
+  background-color: #1f2937 !important;
+}
+
+/* En-tête du formulaire */
+.order-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.25rem 1.5rem;
+  background-color: var(--primary);
+  color: white;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  margin: -1.5rem -1.5rem 1.5rem;
+}
+
+.order-header h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.order-header h2 i {
+  font-size: 1.25rem;
+}
+
+.order-header .btn-close {
+  margin-left: auto;
+  width: 2rem;
+  height: 2rem;
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s;
+}
+
+.order-header .btn-close:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Sections du formulaire */
+.order-section {
+  margin-bottom: 2rem;
+}
+
+.order-section-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.order-section-title i {
+  color: var(--primary);
+}
+
+/* Grille pour la disposition */
+.order-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .order-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Champs de formulaire améliorés */
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-floating {
+  position: relative;
+}
+
+.form-floating > .form-control {
+  height: 3.5rem;
+  padding: 1.25rem 0.875rem 0.5rem;
+}
+
+.form-floating > label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  padding: 1rem 0.875rem;
+  pointer-events: none;
+  border: 1px solid transparent;
+  transform-origin: 0 0;
+  transition: opacity 0.15s ease-in-out, transform 0.15s ease-in-out;
+  color: var(--text-light);
+}
+
+.form-floating > .form-control:focus ~ label,
+.form-floating > .form-control:not(:placeholder-shown) ~ label {
+  transform: scale(0.85) translateY(-0.5rem);
+  color: var(--primary);
+}
+
+/* Champ client */
+.client-field {
+  position: relative;
+}
+
+.client-field .form-control {
+  padding-left: 2.75rem;
+}
+
+.client-field i {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  pointer-events: none;
+}
+
+.client-field:focus-within i {
+  color: var(--primary);
+}
+
+/* Champ de sélection du fournisseur */
+.supplier-select {
+  position: relative;
+}
+
+.supplier-select .form-select {
+  appearance: none;
+  padding-right: 2.5rem;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.supplier-select::after {
+  content: '\f107';
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  pointer-events: none;
+  transition: transform 0.2s;
+}
+
+.supplier-select:focus-within::after {
+  transform: translateY(-50%) rotate(180deg);
+  color: var(--primary);
+}
+
+/* Champ code barre avec icône */
+.barcode-field {
+  position: relative;
+}
+
+.barcode-field .form-control {
+  padding-right: 3.5rem;
+}
+
+.barcode-field .barcode-scan-btn {
+  position: absolute;
+  right: 0.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: var(--bg-hover);
+  border: none;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: var(--radius);
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.barcode-field .barcode-scan-btn:hover {
+  background-color: var(--bg-active);
+  color: var(--primary);
+}
+
+/* Sélecteur de quantité */
+.quantity-selector {
+  display: flex;
+  align-items: center;
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--border-input);
+  background-color: var(--bg-input);
+}
+
+.quantity-selector button {
+  width: 3rem;
+  height: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--bg-hover);
+  border: none;
+  color: var(--text-primary);
+  font-size: 1.25rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color var(--transition-fast);
+}
+
+.quantity-selector button:hover {
+  background-color: var(--bg-active);
+  color: var(--primary);
+}
+
+.quantity-selector input {
+  width: 5rem;
+  text-align: center;
+  border: none;
+  background-color: var(--bg-input);
+  color: var(--text-primary);
+  font-weight: 600;
+  font-size: 1.25rem;
+  padding: 0.5rem;
+}
+
+.quantity-selector button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Champ de prix */
+.price-field {
+  position: relative;
+}
+
+.price-field .form-control {
+  padding-right: 2.5rem;
+  font-weight: 500;
+  text-align: right;
+}
+
+.price-field::after {
+  content: '€';
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  pointer-events: none;
+}
+
+.price-field:focus-within::after {
+  color: var(--primary);
+}
+
+/* Options de statut */
+.status-options {
+  display: flex;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+.status-option {
+  flex: 1;
+  position: relative;
+}
+
+.status-option input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+}
+
+.status-option label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 0.5rem;
+  padding: 0.75rem 0.5rem;
+  background-color: var(--bg-hover);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: all var(--transition);
+  border: 2px solid transparent;
+  width: 100%;
+  min-height: 5rem;
+}
+
+.status-option label i {
+  font-size: 1.5rem;
+  transition: transform var(--transition);
+}
+
+.status-option label span {
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.status-option-pending label i {
+  color: var(--warning);
+}
+
+.status-option-pending input:checked + label {
+  background-color: rgba(245, 158, 11, 0.1);
+  border-color: var(--warning);
+  color: var(--warning);
+}
+
+.status-option-ordered label i {
+  color: var(--info);
+}
+
+.status-option-ordered input:checked + label {
+  background-color: rgba(59, 130, 246, 0.1);
+  border-color: var(--info);
+  color: var(--info);
+}
+
+.status-option-received label i {
+  color: var(--success);
+}
+
+.status-option-received input:checked + label {
+  background-color: rgba(16, 185, 129, 0.1);
+  border-color: var(--success);
+  color: var(--success);
+}
+
+.status-option label:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.status-option label:active {
+  transform: translateY(0);
+}
+
+/* Pied de page et actions */
+.order-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.order-footer .btn:not(:last-child) {
+  margin-right: 0.75rem;
+}
+
+/* Bouton Ajouter une autre pièce */
+.add-item-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: transparent;
+  border: 1px dashed var(--border-input);
+  color: var(--primary);
+  padding: 1rem;
+  border-radius: var(--radius);
+  width: 100%;
+  justify-content: center;
+  margin-top: 1.5rem;
+  transition: all 0.2s;
+}
+
+.add-item-btn:hover {
+  background-color: var(--bg-hover);
+  border-color: var(--primary);
+}
+
+.add-item-btn i {
+  font-size: 1rem;
+}
+
+/* Mode sombre - Ajustements spécifiques */
+.dark-mode .order-header,
+[data-theme="dark"] .order-header {
+  background-color: var(--primary-dark);
+}
+
+.dark-mode .barcode-scan-btn:hover,
+[data-theme="dark"] .barcode-scan-btn:hover {
+  background-color: rgba(99, 102, 241, 0.2);
+}
+
+.dark-mode .add-item-btn,
+[data-theme="dark"] .add-item-btn {
+  border-color: var(--border-color);
+}
+
+.dark-mode .add-item-btn:hover,
+[data-theme="dark"] .add-item-btn:hover {
+  background-color: rgba(99, 102, 241, 0.1);
+}
+
+/* Effets visuels subtils */
+.order-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 8px;
+  background: linear-gradient(to right, var(--primary), var(--secondary));
+  opacity: 0.8;
+}
+
+.dark-mode .order-container::before,
+[data-theme="dark"] .order-container::before {
+  opacity: 0.6;
+}
+
+/* Styles supplémentaires pour s'assurer de la compatibilité */
+.status-option input:checked + label {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.status-option.active label {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.dark-mode .status-option-pending label {
+  background-color: rgba(245, 158, 11, 0.1);
+}
+
+.dark-mode .status-option-ordered label {
+  background-color: rgba(59, 130, 246, 0.1);
+}
+
+.dark-mode .status-option-received label {
+  background-color: rgba(16, 185, 129, 0.1);
+}
+
+/* Corrections pour iOS et mobile */
+@media (max-width: 768px) {
+  .status-options {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+    justify-content: space-between;
+  }
+  
+  .status-option {
+    flex: 1 0 auto;
+    min-width: 80px;
+    max-width: 120px;
+  }
+  
+  .status-option label {
+    min-height: 80px;
+    padding: 0.5rem;
+  }
+  
+  .quantity-selector {
+    max-width: 100%;
+  }
+  
+  .quantity-selector button {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+}
+
+.selected-item-info {
+  padding: 0.75rem;
+  background-color: var(--bg-hover);
+  border-radius: var(--radius);
+  border-left: 3px solid var(--primary);
+}
+
+.avatar-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  background-color: var(--primary-light);
+  color: var(--primary);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+} 

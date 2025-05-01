@@ -1,0 +1,294 @@
+[2025-04-23 02:36:38] === ENVOI SMS DÉMARRÉ ===
+[2025-04-23 02:36:38] Destinataire: 33782962906
+[2025-04-23 02:36:38] Message: 🎉 saber,
+Ton sad est de re...
+[2025-04-23 02:36:38] URL API: https://api.sms-gate.app/3rdparty/v1/message
+[2025-04-23 02:36:38] Utilisateur: -GCB75
+[2025-04-23 02:36:38] Numéro formaté: +33782962906
+[2025-04-23 02:36:38] Données JSON: {"message":"\ud83c\udf89 saber,\r\nTon sad est de retour \u00e0 la maison ! On esp\u00e8re qu\u2019il est content \ud83e\udd13\r\n\ud83d\udcac Laisse-nous un petit avis !\r\n\u2b50 https:\/\/g.page\/r\/Ce-HHwKZjezIEB0\/review\r\n\ud83c\udfe0 Maison du Geek\r\n\ud83d\udcde 08 95 79 59 33\r\n","phoneNumbers":["+33782962906"]}
+[2025-04-23 02:36:38] Exécution de la requête cURL...
+[2025-04-23 02:36:38] Code HTTP: 202
+[2025-04-23 02:36:38] Temps: 415 ms
+[2025-04-23 02:36:38] Réponse: {"id":"UTdFMqxNfilhcCwD9xgqu","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33782962906","state":"Pending"}],"states":null}
+[2025-04-23 02:36:38] Destinataire: +33782962906, Message: 🎉 saber,
+Ton sad est de re..., Statut: 202, Réponse: {"id":"UTdFMqxNfilhcCwD9xgqu","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33782962906","state":"Pending"}],"states":null}
+[2025-04-23 02:36:38] SMS enregistré dans la base de données, ID: 342
+[2025-04-23 02:36:38] === ENVOI SMS RÉUSSI ===
+[2025-04-23 08:24:21] === ENVOI SMS DÉMARRÉ ===
+[2025-04-23 08:24:21] Destinataire: 33626861669
+[2025-04-23 08:24:21] Message: 👋 Bonjour Adam,
+🛠️ No...
+[2025-04-23 08:24:21] URL API: https://api.sms-gate.app/3rdparty/v1/message
+[2025-04-23 08:24:21] Utilisateur: -GCB75
+[2025-04-23 08:24:21] Numéro formaté: +33626861669
+[2025-04-23 08:24:21] Données JSON: {"message":"\ud83d\udc4b Bonjour Adam,\r\n\ud83d\udee0\ufe0f Nous avons bien re\u00e7u votre iPhone 13 Pro et nos experts geeks sont d\u00e9j\u00e0 \u00e0 l'\u0153uvre pour le remettre en \u00e9tat.\r\n\ud83d\udd0e Suivez l'avancement de la r\u00e9paration ici :\r\n\ud83d\udc49 http:\/\/Mdgeek.top\/suivi.php?id=652\r\n\ud83d\udcde Une question ? Contactez nous au 08 95 79 59 33\r\n\ud83c\udfe0 Maison du GEEK \ud83d\udee0\ufe0f","phoneNumbers":["+33626861669"]}
+[2025-04-23 08:24:21] Exécution de la requête cURL...
+[2025-04-23 08:24:21] Code HTTP: 202
+[2025-04-23 08:24:21] Temps: 319 ms
+[2025-04-23 08:24:21] Réponse: {"id":"c4rAv81iQ1SZzSel1iDsi","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33626861669","state":"Pending"}],"states":null}
+[2025-04-23 08:24:21] Destinataire: +33626861669, Message: 👋 Bonjour Adam,
+🛠️ No..., Statut: 202, Réponse: {"id":"c4rAv81iQ1SZzSel1iDsi","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33626861669","state":"Pending"}],"states":null}
+[2025-04-23 08:24:21] SMS enregistré dans la base de données, ID: 343
+[2025-04-23 08:24:21] === ENVOI SMS RÉUSSI ===
+[2025-04-23 08:52:05] === ENVOI SMS DÉMARRÉ ===
+[2025-04-23 08:52:05] Destinataire: 33782962906
+[2025-04-23 08:52:05] Message: saber, votre sad est prêt ! I...
+[2025-04-23 08:52:05] URL API: https://api.sms-gate.app/3rdparty/v1/message
+[2025-04-23 08:52:05] Utilisateur: -GCB75
+[2025-04-23 08:52:05] Numéro formaté: +33782962906
+[2025-04-23 08:52:05] Données JSON: {"message":"saber, votre sad est pr\u00eat ! Il vous attend pour retrouver une vie normale. \ud83e\udd73\r\n\ud83e\uddfe Suivi : http:\/\/Mdgeek.top\/suivi.php?id=651\r\nMaison du Geek \u2013 08 95 79 59 33","phoneNumbers":["+33782962906"]}
+[2025-04-23 08:52:05] Exécution de la requête cURL...
+[2025-04-23 08:52:05] Code HTTP: 202
+[2025-04-23 08:52:05] Temps: 311 ms
+[2025-04-23 08:52:05] Réponse: {"id":"9bSavpOz7RBTDCjcd8ALc","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33782962906","state":"Pending"}],"states":null}
+[2025-04-23 08:52:05] Destinataire: +33782962906, Message: saber, votre sad est prêt ! I..., Statut: 202, Réponse: {"id":"9bSavpOz7RBTDCjcd8ALc","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33782962906","state":"Pending"}],"states":null}
+[2025-04-23 08:52:05] SMS enregistré dans la base de données, ID: 344
+[2025-04-23 08:52:05] === ENVOI SMS RÉUSSI ===
+[2025-04-23 08:52:46] === ENVOI SMS DÉMARRÉ ===
+[2025-04-23 08:52:46] Destinataire: 33626861669
+[2025-04-23 08:52:46] Message: Adam, votre iPhone 13 Pro est ...
+[2025-04-23 08:52:46] URL API: https://api.sms-gate.app/3rdparty/v1/message
+[2025-04-23 08:52:46] Utilisateur: -GCB75
+[2025-04-23 08:52:46] Numéro formaté: +33626861669
+[2025-04-23 08:52:46] Données JSON: {"message":"Adam, votre iPhone 13 Pro est pr\u00eat ! Il vous attend pour retrouver une vie normale. \ud83e\udd73\r\n\ud83e\uddfe Suivi : http:\/\/Mdgeek.top\/suivi.php?id=652\r\nMaison du Geek \u2013 08 95 79 59 33","phoneNumbers":["+33626861669"]}
+[2025-04-23 08:52:46] Exécution de la requête cURL...
+[2025-04-23 08:52:46] Code HTTP: 202
+[2025-04-23 08:52:46] Temps: 313 ms
+[2025-04-23 08:52:46] Réponse: {"id":"yzgUmC_XPl3U5wt120Ly9","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33626861669","state":"Pending"}],"states":null}
+[2025-04-23 08:52:46] Destinataire: +33626861669, Message: Adam, votre iPhone 13 Pro est ..., Statut: 202, Réponse: {"id":"yzgUmC_XPl3U5wt120Ly9","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33626861669","state":"Pending"}],"states":null}
+[2025-04-23 08:52:46] SMS enregistré dans la base de données, ID: 345
+[2025-04-23 08:52:46] === ENVOI SMS RÉUSSI ===
+[2025-04-23 08:54:13] === ENVOI SMS DÉMARRÉ ===
+[2025-04-23 08:54:13] Destinataire: 33613795938
+[2025-04-23 08:54:13] Message: 👋 Bonjour Bruno,
+🛠️ N...
+[2025-04-23 08:54:13] URL API: https://api.sms-gate.app/3rdparty/v1/message
+[2025-04-23 08:54:13] Utilisateur: -GCB75
+[2025-04-23 08:54:13] Numéro formaté: +33613795938
+[2025-04-23 08:54:13] Données JSON: {"message":"\ud83d\udc4b Bonjour Bruno,\r\n\ud83d\udee0\ufe0f Nous avons bien re\u00e7u votre UrbanGlide Draisienne et nos experts geeks sont d\u00e9j\u00e0 \u00e0 l'\u0153uvre pour le remettre en \u00e9tat.\r\n\ud83d\udd0e Suivez l'avancement de la r\u00e9paration ici :\r\n\ud83d\udc49 http:\/\/Mdgeek.top\/suivi.php?id=653\r\n\ud83d\udcde Une question ? Contactez nous au 08 95 79 59 33\r\n\ud83c\udfe0 Maison du GEEK \ud83d\udee0\ufe0f","phoneNumbers":["+33613795938"]}
+[2025-04-23 08:54:13] Exécution de la requête cURL...
+[2025-04-23 08:54:13] Code HTTP: 202
+[2025-04-23 08:54:13] Temps: 335 ms
+[2025-04-23 08:54:13] Réponse: {"id":"LHbFPG5PSSNomrYaV5uzh","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33613795938","state":"Pending"}],"states":null}
+[2025-04-23 08:54:13] Destinataire: +33613795938, Message: 👋 Bonjour Bruno,
+🛠️ N..., Statut: 202, Réponse: {"id":"LHbFPG5PSSNomrYaV5uzh","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33613795938","state":"Pending"}],"states":null}
+[2025-04-23 08:54:13] SMS enregistré dans la base de données, ID: 346
+[2025-04-23 08:54:13] === ENVOI SMS RÉUSSI ===
+[2025-04-23 09:30:57] === ENVOI SMS DÉMARRÉ ===
+[2025-04-23 09:30:57] Destinataire: 33613795938
+[2025-04-23 09:30:57] Message: Bruno, votre UrbanGlide Draisi...
+[2025-04-23 09:30:57] URL API: https://api.sms-gate.app/3rdparty/v1/message
+[2025-04-23 09:30:57] Utilisateur: -GCB75
+[2025-04-23 09:30:57] Numéro formaté: +33613795938
+[2025-04-23 09:30:57] Données JSON: {"message":"Bruno, votre UrbanGlide Draisienne est pr\u00eat ! Il vous attend pour retrouver une vie normale. \ud83e\udd73\r\n\ud83e\uddfe Suivi : http:\/\/Mdgeek.top\/suivi.php?id=653\r\nMaison du Geek \u2013 08 95 79 59 33","phoneNumbers":["+33613795938"]}
+[2025-04-23 09:30:57] Exécution de la requête cURL...
+[2025-04-23 09:30:57] Code HTTP: 202
+[2025-04-23 09:30:57] Temps: 414 ms
+[2025-04-23 09:30:57] Réponse: {"id":"QFlBeTvBqMX9Y65RDbp_r","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33613795938","state":"Pending"}],"states":null}
+[2025-04-23 09:30:57] Destinataire: +33613795938, Message: Bruno, votre UrbanGlide Draisi..., Statut: 202, Réponse: {"id":"QFlBeTvBqMX9Y65RDbp_r","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33613795938","state":"Pending"}],"states":null}
+[2025-04-23 09:30:57] SMS enregistré dans la base de données, ID: 347
+[2025-04-23 09:30:57] === ENVOI SMS RÉUSSI ===
+[2025-04-23 09:49:50] === ENVOI SMS DÉMARRÉ ===
+[2025-04-23 09:49:50] Destinataire: +33771300956
+[2025-04-23 09:49:50] Message: saif, votre Togo plus est prê...
+[2025-04-23 09:49:50] URL API: https://api.sms-gate.app/3rdparty/v1/message
+[2025-04-23 09:49:50] Utilisateur: -GCB75
+[2025-04-23 09:49:50] Numéro formaté: +33771300956
+[2025-04-23 09:49:50] Données JSON: {"message":"saif, votre Togo plus est pr\u00eat ! Il vous attend pour retrouver une vie normale. \ud83e\udd73\r\n\ud83e\uddfe Suivi : http:\/\/Mdgeek.top\/suivi.php?id=625\r\nMaison du Geek \u2013 08 95 79 59 33","phoneNumbers":["+33771300956"]}
+[2025-04-23 09:49:50] Exécution de la requête cURL...
+[2025-04-23 09:49:50] Code HTTP: 202
+[2025-04-23 09:49:50] Temps: 333 ms
+[2025-04-23 09:49:50] Réponse: {"id":"UFovkylUvLtyn0iJEJwJc","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33771300956","state":"Pending"}],"states":null}
+[2025-04-23 09:49:50] Destinataire: +33771300956, Message: saif, votre Togo plus est prê..., Statut: 202, Réponse: {"id":"UFovkylUvLtyn0iJEJwJc","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33771300956","state":"Pending"}],"states":null}
+[2025-04-23 09:49:50] SMS enregistré dans la base de données, ID: 348
+[2025-04-23 09:49:50] === ENVOI SMS RÉUSSI ===
+[2025-04-23 11:53:05] === ENVOI SMS DÉMARRÉ ===
+[2025-04-23 11:53:05] Destinataire: +33749057297
+[2025-04-23 11:53:05] Message: 🎉 ronaldo,
+Ton iPhone 13 p...
+[2025-04-23 11:53:05] URL API: https://api.sms-gate.app/3rdparty/v1/message
+[2025-04-23 11:53:05] Utilisateur: -GCB75
+[2025-04-23 11:53:05] Numéro formaté: +33749057297
+[2025-04-23 11:53:05] Données JSON: {"message":"\ud83c\udf89 ronaldo,\r\nTon iPhone 13 pro max est de retour \u00e0 la maison ! On esp\u00e8re qu\u2019il est content \ud83e\udd13\r\n\ud83d\udcac Laisse-nous un petit avis !\r\n\u2b50 https:\/\/g.page\/r\/Ce-HHwKZjezIEB0\/review\r\n\ud83c\udfe0 Maison du Geek\r\n\ud83d\udcde 08 95 79 59 33\r\n","phoneNumbers":["+33749057297"]}
+[2025-04-23 11:53:05] Exécution de la requête cURL...
+[2025-04-23 11:53:05] Code HTTP: 202
+[2025-04-23 11:53:05] Temps: 228 ms
+[2025-04-23 11:53:05] Réponse: {"id":"oprxRt8kyWQG4yLElP3iX","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33749057297","state":"Pending"}],"states":null}
+[2025-04-23 11:53:05] Destinataire: +33749057297, Message: 🎉 ronaldo,
+Ton iPhone 13 p..., Statut: 202, Réponse: {"id":"oprxRt8kyWQG4yLElP3iX","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33749057297","state":"Pending"}],"states":null}
+[2025-04-23 11:53:05] SMS enregistré dans la base de données, ID: 349
+[2025-04-23 11:53:05] === ENVOI SMS RÉUSSI ===
+[2025-04-23 12:04:37] === ENVOI SMS DÉMARRÉ ===
+[2025-04-23 12:04:37] Destinataire: 33667034099
+[2025-04-23 12:04:37] Message: 👋 Bonjour Noaj,
+🛠️ No...
+[2025-04-23 12:04:37] URL API: https://api.sms-gate.app/3rdparty/v1/message
+[2025-04-23 12:04:37] Utilisateur: -GCB75
+[2025-04-23 12:04:37] Numéro formaté: +33667034099
+[2025-04-23 12:04:37] Données JSON: {"message":"\ud83d\udc4b Bonjour Noaj,\r\n\ud83d\udee0\ufe0f Nous avons bien re\u00e7u votre Mobygym et nos experts geeks sont d\u00e9j\u00e0 \u00e0 l'\u0153uvre pour le remettre en \u00e9tat.\r\n\ud83d\udd0e Suivez l'avancement de la r\u00e9paration ici :\r\n\ud83d\udc49 http:\/\/Mdgeek.top\/suivi.php?id=654\r\n\ud83d\udcde Une question ? Contactez nous au 08 95 79 59 33\r\n\ud83c\udfe0 Maison du GEEK \ud83d\udee0\ufe0f","phoneNumbers":["+33667034099"]}
+[2025-04-23 12:04:37] Exécution de la requête cURL...
+[2025-04-23 12:04:37] Code HTTP: 202
+[2025-04-23 12:04:37] Temps: 240 ms
+[2025-04-23 12:04:37] Réponse: {"id":"LZLqpoKrRxv22j-V2Vrhw","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33667034099","state":"Pending"}],"states":null}
+[2025-04-23 12:04:37] Destinataire: +33667034099, Message: 👋 Bonjour Noaj,
+🛠️ No..., Statut: 202, Réponse: {"id":"LZLqpoKrRxv22j-V2Vrhw","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33667034099","state":"Pending"}],"states":null}
+[2025-04-23 12:04:37] SMS enregistré dans la base de données, ID: 350
+[2025-04-23 12:04:37] === ENVOI SMS RÉUSSI ===
+[2025-04-23 12:08:47] === ENVOI SMS DÉMARRÉ ===
+[2025-04-23 12:08:47] Destinataire: 33613917144
+[2025-04-23 12:08:47] Message: 👋 Bonjour Adrien,
+🛠️ ...
+[2025-04-23 12:08:47] URL API: https://api.sms-gate.app/3rdparty/v1/message
+[2025-04-23 12:08:47] Utilisateur: -GCB75
+[2025-04-23 12:08:47] Numéro formaté: +33613917144
+[2025-04-23 12:08:47] Données JSON: {"message":"\ud83d\udc4b Bonjour Adrien,\r\n\ud83d\udee0\ufe0f Nous avons bien re\u00e7u votre Urban glide 2x2 et nos experts geeks sont d\u00e9j\u00e0 \u00e0 l'\u0153uvre pour le remettre en \u00e9tat.\r\n\ud83d\udd0e Suivez l'avancement de la r\u00e9paration ici :\r\n\ud83d\udc49 http:\/\/Mdgeek.top\/suivi.php?id=655\r\n\ud83d\udcde Une question ? Contactez nous au 08 95 79 59 33\r\n\ud83c\udfe0 Maison du GEEK \ud83d\udee0\ufe0f","phoneNumbers":["+33613917144"]}
+[2025-04-23 12:08:47] Exécution de la requête cURL...
+[2025-04-23 12:08:47] Code HTTP: 202
+[2025-04-23 12:08:47] Temps: 312 ms
+[2025-04-23 12:08:47] Réponse: {"id":"c5xQIt3I2kPfLgUf_gI_E","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33613917144","state":"Pending"}],"states":null}
+[2025-04-23 12:08:47] Destinataire: +33613917144, Message: 👋 Bonjour Adrien,
+🛠️ ..., Statut: 202, Réponse: {"id":"c5xQIt3I2kPfLgUf_gI_E","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33613917144","state":"Pending"}],"states":null}
+[2025-04-23 12:08:47] SMS enregistré dans la base de données, ID: 351
+[2025-04-23 12:08:47] === ENVOI SMS RÉUSSI ===
+[2025-04-23 12:33:46] === ENVOI SMS DÉMARRÉ ===
+[2025-04-23 12:33:46] Destinataire: 33616371516
+[2025-04-23 12:33:46] Message: 📣 Sebastien,
+Ton Dualtron ...
+[2025-04-23 12:33:46] URL API: https://api.sms-gate.app/3rdparty/v1/message
+[2025-04-23 12:33:46] Utilisateur: -GCB75
+[2025-04-23 12:33:46] Numéro formaté: +33616371516
+[2025-04-23 12:33:46] Données JSON: {"message":"\ud83d\udce3 Sebastien,\r\nTon Dualtron Mini Special est pr\u00eat mais t\u2019attend toujours ! Des frais de gardiennage s\u2019appliquent \ud83e\ude99 et apr\u00e8s 90j il sera recycl\u00e9 gratuitement \u267b\ufe0f\r\n\ud83d\udccd Suivi : http:\/\/Mdgeek.top\/suivi.php?id=593\r\n\ud83d\udcde 08 95 79 59 33\r\n\ud83c\udfe0 Maison du Geek","phoneNumbers":["+33616371516"]}
+[2025-04-23 12:33:46] Exécution de la requête cURL...
+[2025-04-23 12:33:46] Code HTTP: 202
+[2025-04-23 12:33:46] Temps: 419 ms
+[2025-04-23 12:33:46] Réponse: {"id":"chesTvhxDuia5HBmH0P3r","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33616371516","state":"Pending"}],"states":null}
+[2025-04-23 12:33:46] Destinataire: +33616371516, Message: 📣 Sebastien,
+Ton Dualtron ..., Statut: 202, Réponse: {"id":"chesTvhxDuia5HBmH0P3r","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33616371516","state":"Pending"}],"states":null}
+[2025-04-23 12:33:46] SMS enregistré dans la base de données, ID: 352
+[2025-04-23 12:33:46] === ENVOI SMS RÉUSSI ===
+[2025-04-23 12:33:46] === ENVOI SMS DÉMARRÉ ===
+[2025-04-23 12:33:46] Destinataire: 33616371516
+[2025-04-23 12:33:46] Message: 📣 Sebastien,
+Ton Dualtron ...
+[2025-04-23 12:33:46] URL API: https://api.sms-gate.app/3rdparty/v1/message
+[2025-04-23 12:33:46] Utilisateur: -GCB75
+[2025-04-23 12:33:46] Numéro formaté: +33616371516
+[2025-04-23 12:33:46] Données JSON: {"message":"\ud83d\udce3 Sebastien,\r\nTon Dualtron Mini Special est pr\u00eat mais t\u2019attend toujours ! Des frais de gardiennage s\u2019appliquent \ud83e\ude99 et apr\u00e8s 90j il sera recycl\u00e9 gratuitement \u267b\ufe0f\r\n\ud83d\udccd Suivi : http:\/\/Mdgeek.top\/suivi.php?id=593\r\n\ud83d\udcde 08 95 79 59 33\r\n\ud83c\udfe0 Maison du Geek","phoneNumbers":["+33616371516"]}
+[2025-04-23 12:33:46] Exécution de la requête cURL...
+[2025-04-23 12:33:47] Code HTTP: 202
+[2025-04-23 12:33:47] Temps: 310 ms
+[2025-04-23 12:33:47] Réponse: {"id":"Cb7OlwZWKIFEXWyIqQNxd","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33616371516","state":"Pending"}],"states":null}
+[2025-04-23 12:33:47] Destinataire: +33616371516, Message: 📣 Sebastien,
+Ton Dualtron ..., Statut: 202, Réponse: {"id":"Cb7OlwZWKIFEXWyIqQNxd","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33616371516","state":"Pending"}],"states":null}
+[2025-04-23 12:33:47] SMS enregistré dans la base de données, ID: 353
+[2025-04-23 12:33:47] === ENVOI SMS RÉUSSI ===
+[2025-04-23 12:35:27] === ENVOI SMS DÉMARRÉ ===
+[2025-04-23 12:35:27] Destinataire: +39 340 076 0220
+[2025-04-23 12:35:27] Message: 📣 Ludovic,
+Ton Ninebot est...
+[2025-04-23 12:35:27] URL API: https://api.sms-gate.app/3rdparty/v1/message
+[2025-04-23 12:35:27] Utilisateur: -GCB75
+[2025-04-23 12:35:27] Numéro formaté: +393400760220
+[2025-04-23 12:35:27] Données JSON: {"message":"\ud83d\udce3 Ludovic,\r\nTon Ninebot est pr\u00eat mais t\u2019attend toujours ! Des frais de gardiennage s\u2019appliquent \ud83e\ude99 et apr\u00e8s 90j il sera recycl\u00e9 gratuitement \u267b\ufe0f\r\n\ud83d\udccd Suivi : http:\/\/Mdgeek.top\/suivi.php?id=618\r\n\ud83d\udcde 08 95 79 59 33\r\n\ud83c\udfe0 Maison du Geek","phoneNumbers":["+393400760220"]}
+[2025-04-23 12:35:27] Exécution de la requête cURL...
+[2025-04-23 12:35:27] Code HTTP: 202
+[2025-04-23 12:35:27] Temps: 309 ms
+[2025-04-23 12:35:27] Réponse: {"id":"ci2k2BNKHCMxQPdayB2ok","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+393400760220","state":"Pending"}],"states":null}
+[2025-04-23 12:35:27] Destinataire: +393400760220, Message: 📣 Ludovic,
+Ton Ninebot est..., Statut: 202, Réponse: {"id":"ci2k2BNKHCMxQPdayB2ok","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+393400760220","state":"Pending"}],"states":null}
+[2025-04-23 12:35:27] SMS enregistré dans la base de données, ID: 354
+[2025-04-23 12:35:27] === ENVOI SMS RÉUSSI ===
+[2025-04-23 14:03:17] === ENVOI SMS DÉMARRÉ ===
+[2025-04-23 14:03:17] Destinataire: 33659145811
+[2025-04-23 14:03:17] Message: 👋 Bonjour rayan,
+🛠️ N...
+[2025-04-23 14:03:17] URL API: https://api.sms-gate.app/3rdparty/v1/message
+[2025-04-23 14:03:17] Utilisateur: -GCB75
+[2025-04-23 14:03:17] Numéro formaté: +33659145811
+[2025-04-23 14:03:17] Données JSON: {"message":"\ud83d\udc4b Bonjour rayan,\r\n\ud83d\udee0\ufe0f Nous avons bien re\u00e7u votre Ninebot F2 et nos experts geeks sont d\u00e9j\u00e0 \u00e0 l'\u0153uvre pour le remettre en \u00e9tat.\r\n\ud83d\udd0e Suivez l'avancement de la r\u00e9paration ici :\r\n\ud83d\udc49 http:\/\/Mdgeek.top\/suivi.php?id=656\r\n\ud83d\udcde Une question ? Contactez nous au 08 95 79 59 33\r\n\ud83c\udfe0 Maison du GEEK \ud83d\udee0\ufe0f","phoneNumbers":["+33659145811"]}
+[2025-04-23 14:03:17] Exécution de la requête cURL...
+[2025-04-23 14:03:18] Code HTTP: 202
+[2025-04-23 14:03:18] Temps: 314 ms
+[2025-04-23 14:03:18] Réponse: {"id":"zoz5HrLnWJOCTzzT0pMnO","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33659145811","state":"Pending"}],"states":null}
+[2025-04-23 14:03:18] Destinataire: +33659145811, Message: 👋 Bonjour rayan,
+🛠️ N..., Statut: 202, Réponse: {"id":"zoz5HrLnWJOCTzzT0pMnO","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33659145811","state":"Pending"}],"states":null}
+[2025-04-23 14:03:18] SMS enregistré dans la base de données, ID: 355
+[2025-04-23 14:03:18] === ENVOI SMS RÉUSSI ===
+[2025-04-23 14:56:57] === ENVOI SMS DÉMARRÉ ===
+[2025-04-23 14:56:57] Destinataire: +33627532376
+[2025-04-23 14:56:57] Message: 👋 Bonjour thierry,
+🛠️...
+[2025-04-23 14:56:57] URL API: https://api.sms-gate.app/3rdparty/v1/message
+[2025-04-23 14:56:57] Utilisateur: -GCB75
+[2025-04-23 14:56:57] Numéro formaté: +33627532376
+[2025-04-23 14:56:57] Données JSON: {"message":"\ud83d\udc4b Bonjour thierry,\r\n\ud83d\udee0\ufe0f Nous avons bien re\u00e7u votre Redmi 2201116tg et nos experts geeks sont d\u00e9j\u00e0 \u00e0 l'\u0153uvre pour le remettre en \u00e9tat.\r\n\ud83d\udd0e Suivez l'avancement de la r\u00e9paration ici :\r\n\ud83d\udc49 http:\/\/Mdgeek.top\/suivi.php?id=657\r\n\ud83d\udcde Une question ? Contactez nous au 08 95 79 59 33\r\n\ud83c\udfe0 Maison du GEEK \ud83d\udee0\ufe0f","phoneNumbers":["+33627532376"]}
+[2025-04-23 14:56:57] Exécution de la requête cURL...
+[2025-04-23 14:56:57] Code HTTP: 202
+[2025-04-23 14:56:57] Temps: 323 ms
+[2025-04-23 14:56:57] Réponse: {"id":"KzokELZcs7A9_gPIOTNjg","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33627532376","state":"Pending"}],"states":null}
+[2025-04-23 14:56:57] Destinataire: +33627532376, Message: 👋 Bonjour thierry,
+🛠️..., Statut: 202, Réponse: {"id":"KzokELZcs7A9_gPIOTNjg","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33627532376","state":"Pending"}],"states":null}
+[2025-04-23 14:56:57] SMS enregistré dans la base de données, ID: 356
+[2025-04-23 14:56:57] === ENVOI SMS RÉUSSI ===
+[2025-04-23 15:23:46] === ENVOI SMS DÉMARRÉ ===
+[2025-04-23 15:23:46] Destinataire: +33673973704
+[2025-04-23 15:23:46] Message: 🎉 karl,
+Ton urban glider 2...
+[2025-04-23 15:23:46] URL API: https://api.sms-gate.app/3rdparty/v1/message
+[2025-04-23 15:23:46] Utilisateur: -GCB75
+[2025-04-23 15:23:46] Numéro formaté: +33673973704
+[2025-04-23 15:23:46] Données JSON: {"message":"\ud83c\udf89 karl,\r\nTon urban glider 2x2 est de retour \u00e0 la maison ! On esp\u00e8re qu\u2019il est content \ud83e\udd13\r\n\ud83d\udcac Laisse-nous un petit avis !\r\n\u2b50 https:\/\/g.page\/r\/Ce-HHwKZjezIEB0\/review\r\n\ud83c\udfe0 Maison du Geek\r\n\ud83d\udcde 08 95 79 59 33\r\n","phoneNumbers":["+33673973704"]}
+[2025-04-23 15:23:46] Exécution de la requête cURL...
+[2025-04-23 15:23:47] Code HTTP: 202
+[2025-04-23 15:23:47] Temps: 417 ms
+[2025-04-23 15:23:47] Réponse: {"id":"eUOFCKZCNndVQaLrNzTO2","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33673973704","state":"Pending"}],"states":null}
+[2025-04-23 15:23:47] Destinataire: +33673973704, Message: 🎉 karl,
+Ton urban glider 2..., Statut: 202, Réponse: {"id":"eUOFCKZCNndVQaLrNzTO2","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33673973704","state":"Pending"}],"states":null}
+[2025-04-23 15:23:47] SMS enregistré dans la base de données, ID: 357
+[2025-04-23 15:23:47] === ENVOI SMS RÉUSSI ===
+[2025-04-23 15:34:57] === ENVOI SMS DÉMARRÉ ===
+[2025-04-23 15:34:57] Destinataire: 33613917144
+[2025-04-23 15:34:57] Message: Adrien, votre Urban glide 2x2 ...
+[2025-04-23 15:34:57] URL API: https://api.sms-gate.app/3rdparty/v1/message
+[2025-04-23 15:34:57] Utilisateur: -GCB75
+[2025-04-23 15:34:57] Numéro formaté: +33613917144
+[2025-04-23 15:34:57] Données JSON: {"message":"Adrien, votre Urban glide 2x2 est pr\u00eat ! Il vous attend pour retrouver une vie normale. \ud83e\udd73\r\n\ud83e\uddfe Suivi : http:\/\/Mdgeek.top\/suivi.php?id=655\r\nMaison du Geek \u2013 08 95 79 59 33","phoneNumbers":["+33613917144"]}
+[2025-04-23 15:34:57] Exécution de la requête cURL...
+[2025-04-23 15:34:57] Code HTTP: 202
+[2025-04-23 15:34:57] Temps: 326 ms
+[2025-04-23 15:34:57] Réponse: {"id":"l98DCFM8pAHA-ZyJa7WWa","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33613917144","state":"Pending"}],"states":null}
+[2025-04-23 15:34:57] Destinataire: +33613917144, Message: Adrien, votre Urban glide 2x2 ..., Statut: 202, Réponse: {"id":"l98DCFM8pAHA-ZyJa7WWa","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33613917144","state":"Pending"}],"states":null}
+[2025-04-23 15:34:57] SMS enregistré dans la base de données, ID: 358
+[2025-04-23 15:34:57] === ENVOI SMS RÉUSSI ===
+[2025-04-23 15:52:55] === ENVOI SMS DÉMARRÉ ===
+[2025-04-23 15:52:55] Destinataire: 33619425652
+[2025-04-23 15:52:55] Message: 👋 Bonjour Ben klil,
+🛠�...
+[2025-04-23 15:52:55] URL API: https://api.sms-gate.app/3rdparty/v1/message
+[2025-04-23 15:52:55] Utilisateur: -GCB75
+[2025-04-23 15:52:55] Numéro formaté: +33619425652
+[2025-04-23 15:52:55] Données JSON: {"message":"\ud83d\udc4b Bonjour Ben klil,\r\n\ud83d\udee0\ufe0f Nous avons bien re\u00e7u votre Controlleur Forever et nos experts geeks sont d\u00e9j\u00e0 \u00e0 l'\u0153uvre pour le remettre en \u00e9tat.\r\n\ud83d\udd0e Suivez l'avancement de la r\u00e9paration ici :\r\n\ud83d\udc49 http:\/\/Mdgeek.top\/suivi.php?id=658\r\n\ud83d\udcde Une question ? Contactez nous au 08 95 79 59 33\r\n\ud83c\udfe0 Maison du GEEK \ud83d\udee0\ufe0f","phoneNumbers":["+33619425652"]}
+[2025-04-23 15:52:55] Exécution de la requête cURL...
+[2025-04-23 15:52:55] Code HTTP: 202
+[2025-04-23 15:52:55] Temps: 222 ms
+[2025-04-23 15:52:55] Réponse: {"id":"Ssg36um4AS5Xvt4VpeClG","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33619425652","state":"Pending"}],"states":null}
+[2025-04-23 15:52:55] Destinataire: +33619425652, Message: 👋 Bonjour Ben klil,
+🛠�..., Statut: 202, Réponse: {"id":"Ssg36um4AS5Xvt4VpeClG","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33619425652","state":"Pending"}],"states":null}
+[2025-04-23 15:52:55] SMS enregistré dans la base de données, ID: 359
+[2025-04-23 15:52:55] === ENVOI SMS RÉUSSI ===
+[2025-04-23 15:53:55] === ENVOI SMS DÉMARRÉ ===
+[2025-04-23 15:53:55] Destinataire: 33745934270
+[2025-04-23 15:53:55] Message: 👋 Bonjour lamine,
+🛠️ ...
+[2025-04-23 15:53:55] URL API: https://api.sms-gate.app/3rdparty/v1/message
+[2025-04-23 15:53:55] Utilisateur: -GCB75
+[2025-04-23 15:53:55] Numéro formaté: +33745934270
+[2025-04-23 15:53:55] Données JSON: {"message":"\ud83d\udc4b Bonjour lamine,\r\n\ud83d\udee0\ufe0f Nous avons bien re\u00e7u votre Hitway et nos experts geeks sont d\u00e9j\u00e0 \u00e0 l'\u0153uvre pour le remettre en \u00e9tat.\r\n\ud83d\udd0e Suivez l'avancement de la r\u00e9paration ici :\r\n\ud83d\udc49 http:\/\/Mdgeek.top\/suivi.php?id=659\r\n\ud83d\udcde Une question ? Contactez nous au 08 95 79 59 33\r\n\ud83c\udfe0 Maison du GEEK \ud83d\udee0\ufe0f","phoneNumbers":["+33745934270"]}
+[2025-04-23 15:53:55] Exécution de la requête cURL...
+[2025-04-23 15:53:55] Code HTTP: 202
+[2025-04-23 15:53:55] Temps: 335 ms
+[2025-04-23 15:53:55] Réponse: {"id":"g55CHqNZ0aUb2jFA5V3pF","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33745934270","state":"Pending"}],"states":null}
+[2025-04-23 15:53:55] Destinataire: +33745934270, Message: 👋 Bonjour lamine,
+🛠️ ..., Statut: 202, Réponse: {"id":"g55CHqNZ0aUb2jFA5V3pF","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33745934270","state":"Pending"}],"states":null}
+[2025-04-23 15:53:55] SMS enregistré dans la base de données, ID: 360
+[2025-04-23 15:53:55] === ENVOI SMS RÉUSSI ===

@@ -1,0 +1,228 @@
+/* Corrections pour le modal de recherche avancée */
+
+/* Styles pour les conteneurs de tableaux */
+.table-responsive {
+    max-height: 350px;
+    overflow-y: auto;
+    border-radius: 0.5rem;
+}
+
+/* Ligne de résultat de recherche */
+.search-result-row {
+    transition: all 0.2s ease-in-out;
+}
+
+.search-result-row:hover {
+    background-color: rgba(13, 110, 253, 0.05);
+    transform: translateY(-1px);
+}
+
+/* Amélioration des badges */
+.badge.rounded-pill {
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Style pour les onglets */
+.nav-pills .nav-link {
+    font-weight: 500;
+    transition: all 0.2s ease;
+    padding: 0.6rem 1.5rem;
+}
+
+.nav-pills .nav-link.active {
+    box-shadow: 0 4px 10px rgba(13, 110, 253, 0.2);
+    transform: translateY(-1px);
+}
+
+/* Animation pour le panneau de résultats */
+.tab-pane {
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Correction pour la visibilité des onglets */
+#rechercheTabContent {
+    position: relative;
+    min-height: 200px;
+}
+
+.tab-pane.show.active {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+/* Style pour les boutons */
+.btn-primary.rounded-pill {
+    transition: all 0.2s ease;
+}
+
+.btn-primary.rounded-pill:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(13, 110, 253, 0.25);
+}
+
+/* Styles spécifiques pour l'affichage mobile */
+@media (max-width: 768px) {
+    .modal-dialog {
+        margin: 0.5rem;
+    }
+    
+    .table-responsive {
+        max-height: 300px;
+    }
+    
+    .btn-sm {
+        padding: 0.25rem 0.5rem;
+    }
+}
+
+/* Fixes pour les problèmes d'affichage */
+.recherche-resultats:not(.d-none) {
+    display: block !important;
+}
+
+#rechercheTabContent .table {
+    width: 100% !important;
+    margin-bottom: 0;
+}
+
+/* Styliser les en-têtes de tableaux */
+.table thead th {
+    font-weight: 600;
+    color: #495057;
+    border-top: none;
+    background-color: #f8f9fa;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+/* Style pour les cellules */
+.table td, .table th {
+    padding: 0.85rem 0.75rem;
+    vertical-align: middle;
+}
+
+.fw-medium {
+    font-weight: 500;
+}
+
+/* Assurer que le modal est au-dessus des autres éléments */
+#rechercheAvanceeModal {
+    z-index: 1051;
+}
+
+/* Correctifs radicaux pour forcer l'affichage des tableaux */
+/* Ces styles forcent l'affichage des tableaux dans toutes les situations */
+
+/* Forcer la visibilité de tous les conteneurs importants */
+#resultats_recherche,
+#rechercheTabContent,
+.tab-pane,
+.table-responsive,
+.table {
+    visibility: visible !important;
+    opacity: 1 !important;
+    display: block !important;
+    height: auto !important;
+    overflow: visible !important;
+}
+
+/* Assurer que les tableaux sont correctement dimensionnés */
+.table {
+    width: 100% !important;
+    table-layout: fixed !important;
+    border-collapse: separate !important;
+    border-spacing: 0 !important;
+}
+
+/* Forcer la hauteur minimale du conteneur de résultats */
+#rechercheTabContent {
+    min-height: 300px !important;
+}
+
+/* S'assurer que le tableau s'affiche même si le panneau n'est pas actif */
+.tab-pane {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    z-index: 1 !important;
+}
+
+/* Afficher uniquement le panneau actif */
+.tab-pane.active {
+    z-index: 2 !important;
+}
+
+/* Correction spécifique pour le problème d'onglets */
+#reparationsTab.active,
+#clients.active,
+#commandesTab.active {
+    display: block !important; 
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+/* Assurer que les onglets fonctionnent correctement */
+.nav-pills .nav-link {
+    cursor: pointer !important;
+    user-select: none !important;
+}
+
+/* Styles pour le bouton de correction d'urgence */
+#emergency-fix-btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    z-index: 9999;
+    font-size: 12px;
+    padding: 3px 8px;
+    border-radius: 4px;
+    background-color: #ffc107;
+    color: #212529;
+    border: none;
+    cursor: pointer;
+    opacity: 0.8;
+    transition: all 0.2s ease;
+}
+
+#emergency-fix-btn:hover {
+    opacity: 1;
+    transform: scale(1.05);
+}
+
+/* Styles additionnels pour le bon fonctionnement des tableaux */
+.tab-pane.active .table-responsive {
+    min-height: 200px !important;
+}
+
+/* Assurer que le contenu est visible même si Bootstrap le masque */
+.show {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+/* Solution extrême: rendre tous les panneaux visibles et utiliser z-index */
+.tab-pane {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    z-index: 1;
+}
+
+.tab-pane.active {
+    z-index: 2;
+} 

@@ -1,0 +1,223 @@
+[2025-04-07 19:34:14] Erreur lors de la récupération des conversations: SQLSTATE[HY093]: Invalid parameter number
+[2025-04-07 19:40:17] Erreur lors de la récupération des conversations: SQLSTATE[HY093]: Invalid parameter number
+[2025-04-07 19:40:21] Erreur lors de la récupération des conversations: SQLSTATE[HY093]: Invalid parameter number
+[2025-04-07 20:38:45] Erreur lors de la récupération des conversations: SQLSTATE[HY093]: Invalid parameter number
+[2025-04-07 20:40:12] Erreur lors de la récupération des conversations: SQLSTATE[HY093]: Invalid parameter number
+[2025-04-07 20:40:13] Erreur lors de la récupération des conversations: SQLSTATE[HY093]: Invalid parameter number
+[2025-04-07 20:41:51] Erreur lors de la récupération des conversations: SQLSTATE[HY093]: Invalid parameter number
+[2025-04-07 20:43:31] Erreur lors de la récupération des conversations: SQLSTATE[HY093]: Invalid parameter number
+[2025-04-07 20:43:42] Erreur lors de la récupération des conversations: SQLSTATE[HY093]: Invalid parameter number
+[2025-04-07 20:43:44] Erreur lors de la récupération des conversations: SQLSTATE[HY093]: Invalid parameter number
+[2025-04-07 20:44:55] Erreur lors de la récupération des conversations: SQLSTATE[HY093]: Invalid parameter number
+[2025-04-07 20:49:08] Erreur lors de la récupération des conversations: SQLSTATE[HY093]: Invalid parameter number
+[2025-04-07 20:49:54] Erreur lors de la récupération des conversations: SQLSTATE[HY093]: Invalid parameter number
+[2025-04-07 20:51:08] Erreur lors de la récupération des conversations: SQLSTATE[HY093]: Invalid parameter number
+[2025-04-07 20:51:24] Erreur lors de la récupération des conversations: SQLSTATE[HY093]: Invalid parameter number
+[2025-04-07 20:51:25] Erreur lors de la récupération des utilisateurs: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'email' in 'SELECT'
+[2025-04-07 20:51:39] Erreur lors de la récupération des conversations: SQLSTATE[HY093]: Invalid parameter number
+[2025-04-07 20:51:40] Erreur lors de la récupération des utilisateurs: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'email' in 'SELECT'
+[2025-04-07 20:51:54] Erreur lors de la récupération des conversations: SQLSTATE[HY093]: Invalid parameter number
+[2025-04-07 20:52:09] Erreur lors de la récupération des conversations: SQLSTATE[HY093]: Invalid parameter number
+[2025-04-07 20:52:11] Erreur lors de la récupération des conversations: SQLSTATE[HY093]: Invalid parameter number
+[2025-04-07 20:52:26] Erreur lors de la récupération des conversations: SQLSTATE[HY093]: Invalid parameter number
+[2025-04-07 20:52:42] Erreur lors de la récupération des conversations: SQLSTATE[HY093]: Invalid parameter number
+[2025-04-07 20:52:59] Erreur lors de la récupération des conversations: SQLSTATE[HY093]: Invalid parameter number
+[2025-04-07 20:53:11] Erreur lors de la récupération des conversations: SQLSTATE[HY093]: Invalid parameter number
+[2025-04-07 20:53:26] Erreur lors de la récupération des conversations: SQLSTATE[HY093]: Invalid parameter number
+[2025-04-07 20:54:34] Erreur lors de la récupération des conversations: SQLSTATE[HY093]: Invalid parameter number
+[2025-04-07 20:54:42] Erreur lors de la récupération des conversations: SQLSTATE[HY093]: Invalid parameter number
+[2025-04-07 20:54:43] Erreur lors de la récupération des conversations: SQLSTATE[HY093]: Invalid parameter number
+[2025-04-07 20:54:58] Erreur lors de la récupération des conversations: SQLSTATE[HY093]: Invalid parameter number
+[2025-04-07 20:55:05] Erreur lors de la récupération des messages: SQLSTATE[HY000]: General error: 1111 Invalid use of group function
+[2025-04-07 20:55:05] Erreur lors de la récupération des conversations: SQLSTATE[HY093]: Invalid parameter number
+[2025-04-07 20:55:06] Erreur lors de la récupération des messages: SQLSTATE[HY000]: General error: 1111 Invalid use of group function
+[2025-04-07 20:55:13] Erreur lors de la récupération des conversations: SQLSTATE[HY093]: Invalid parameter number
+[2025-04-07 20:55:17] Erreur lors de la récupération des messages: SQLSTATE[HY000]: General error: 1111 Invalid use of group function
+[2025-04-07 20:55:17] Erreur lors de la récupération des conversations: SQLSTATE[HY093]: Invalid parameter number
+[2025-04-07 20:55:17] Erreur lors de la récupération des messages: SQLSTATE[HY000]: General error: 1111 Invalid use of group function
+[2025-04-07 20:55:23] Erreur lors de la récupération des conversations: SQLSTATE[HY093]: Invalid parameter number
+[2025-04-07 20:55:38] Erreur lors de la récupération des conversations: SQLSTATE[HY093]: Invalid parameter number
+[2025-04-07 20:55:44] Erreur lors de la récupération des messages: SQLSTATE[HY000]: General error: 1111 Invalid use of group function
+[2025-04-07 20:55:44] Erreur lors de la récupération des conversations: SQLSTATE[HY093]: Invalid parameter number
+[2025-04-07 20:55:45] Erreur lors de la récupération des messages: SQLSTATE[HY000]: General error: 1111 Invalid use of group function
+[2025-04-07 20:55:54] Erreur lors de la récupération des conversations: SQLSTATE[HY093]: Invalid parameter number
+[2025-04-07 20:56:13] Erreur lors de la récupération des conversations: SQLSTATE[HY093]: Invalid parameter number
+[2025-04-07 20:56:24] Erreur lors de la récupération des conversations: SQLSTATE[HY093]: Invalid parameter number
+[2025-04-07 20:56:42] Erreur lors de la récupération des conversations: SQLSTATE[HY093]: Invalid parameter number
+[2025-04-07 20:56:57] Erreur lors de la récupération des conversations: SQLSTATE[HY093]: Invalid parameter number
+[2025-04-07 20:57:35] Erreur lors de la récupération des conversations: SQLSTATE[HY093]: Invalid parameter number
+[2025-04-07 20:58:26] Erreur lors de la récupération des conversations: SQLSTATE[HY093]: Invalid parameter number
+[2025-04-07 20:59:35] Erreur lors de la récupération des conversations: SQLSTATE[HY093]: Invalid parameter number
+[2025-04-07 21:00:34] Erreur lors de la récupération des conversations: SQLSTATE[HY093]: Invalid parameter number
+[2025-04-07 21:01:08] Erreur lors de la récupération des conversations: SQLSTATE[HY093]: Invalid parameter number
+[2025-04-07 21:01:23] Erreur lors de la récupération des conversations: SQLSTATE[HY093]: Invalid parameter number
+[2025-04-07 21:01:38] Erreur lors de la récupération des conversations: SQLSTATE[HY093]: Invalid parameter number
+[2025-04-07 21:01:53] Erreur lors de la récupération des conversations: SQLSTATE[HY093]: Invalid parameter number
+[2025-04-07 21:02:08] Erreur lors de la récupération des conversations: SQLSTATE[HY093]: Invalid parameter number
+[2025-04-07 21:02:25] Erreur lors de la récupération des conversations: SQLSTATE[HY093]: Invalid parameter number
+[2025-04-07 21:03:25] Erreur lors de la récupération des conversations: SQLSTATE[HY093]: Invalid parameter number
+[2025-04-07 21:04:25] Erreur lors de la récupération des conversations: SQLSTATE[HY093]: Invalid parameter number
+[2025-04-07 21:05:25] Erreur lors de la récupération des conversations: SQLSTATE[HY093]: Invalid parameter number
+[2025-04-07 21:06:25] Erreur lors de la récupération des conversations: SQLSTATE[HY093]: Invalid parameter number
+[2025-04-07 21:06:32] Erreur lors de la récupération des conversations: SQLSTATE[HY093]: Invalid parameter number
+[2025-04-07 21:06:38] Erreur lors de la récupération des messages: SQLSTATE[HY000]: General error: 1111 Invalid use of group function
+[2025-04-07 21:06:38] Erreur lors de la récupération des conversations: SQLSTATE[HY093]: Invalid parameter number
+[2025-04-07 21:06:42] Erreur lors de la récupération des conversations: SQLSTATE[HY093]: Invalid parameter number
+[2025-04-07 21:06:43] Erreur lors de la récupération des conversations: SQLSTATE[HY093]: Invalid parameter number
+[2025-04-07 21:06:44] Erreur lors de la récupération des conversations: SQLSTATE[HY093]: Invalid parameter number
+[2025-04-07 21:07:06] Erreur lors de la récupération des conversations: SQLSTATE[HY093]: Invalid parameter number
+[2025-04-07 21:07:12] Erreur lors de la récupération des conversations: SQLSTATE[HY093]: Invalid parameter number
+[2025-04-07 21:07:15] Erreur lors de la récupération des messages: SQLSTATE[HY000]: General error: 1111 Invalid use of group function
+[2025-04-07 21:07:15] Erreur lors de la récupération des conversations: SQLSTATE[HY093]: Invalid parameter number
+[2025-04-07 21:07:27] Erreur lors de la récupération des conversations: SQLSTATE[HY093]: Invalid parameter number
+[2025-04-07 21:07:43] Erreur lors de la récupération des conversations: SQLSTATE[HY093]: Invalid parameter number
+[2025-04-07 21:07:57] Erreur lors de la récupération des conversations: SQLSTATE[HY093]: Invalid parameter number
+[2025-04-07 21:08:05] Erreur lors de la récupération des conversations: SQLSTATE[HY093]: Invalid parameter number
+[2025-04-07 21:10:53] Erreur lors de la récupération des conversations: SQLSTATE[HY093]: Invalid parameter number - #0 /home/u139954273/domains/mdgeek.top/public_html/messagerie/includes/functions.php(103): PDOStatement->execute()
+#1 /home/u139954273/domains/mdgeek.top/public_html/messagerie/api/get_conversations.php(49): get_user_conversations()
+#2 {main}
+[2025-04-07 21:10:54] Erreur lors de la récupération des conversations: SQLSTATE[HY093]: Invalid parameter number - #0 /home/u139954273/domains/mdgeek.top/public_html/messagerie/includes/functions.php(103): PDOStatement->execute()
+#1 /home/u139954273/domains/mdgeek.top/public_html/messagerie/api/get_conversations.php(49): get_user_conversations()
+#2 {main}
+[2025-04-07 21:10:55] Erreur lors de la récupération des conversations: SQLSTATE[HY093]: Invalid parameter number - #0 /home/u139954273/domains/mdgeek.top/public_html/messagerie/includes/functions.php(103): PDOStatement->execute()
+#1 /home/u139954273/domains/mdgeek.top/public_html/messagerie/api/get_conversations.php(49): get_user_conversations()
+#2 {main}
+[2025-04-07 21:11:16] Erreur lors de la récupération des conversations: SQLSTATE[HY093]: Invalid parameter number - #0 /home/u139954273/domains/mdgeek.top/public_html/messagerie/includes/functions.php(103): PDOStatement->execute()
+#1 /home/u139954273/domains/mdgeek.top/public_html/messagerie/api/get_conversations.php(49): get_user_conversations()
+#2 {main}
+[2025-04-07 21:11:29] Erreur lors de la récupération des conversations: SQLSTATE[HY093]: Invalid parameter number - #0 /home/u139954273/domains/mdgeek.top/public_html/messagerie/includes/functions.php(103): PDOStatement->execute()
+#1 /home/u139954273/domains/mdgeek.top/public_html/messagerie/api/get_conversations.php(49): get_user_conversations()
+#2 {main}
+[2025-04-07 21:11:41] Erreur lors de la récupération des conversations: SQLSTATE[HY093]: Invalid parameter number - #0 /home/u139954273/domains/mdgeek.top/public_html/messagerie/includes/functions.php(103): PDOStatement->execute()
+#1 /home/u139954273/domains/mdgeek.top/public_html/messagerie/api/get_conversations.php(49): get_user_conversations()
+#2 {main}
+[2025-04-07 21:11:54] Erreur lors de la récupération des conversations: SQLSTATE[HY093]: Invalid parameter number - #0 /home/u139954273/domains/mdgeek.top/public_html/messagerie/includes/functions.php(103): PDOStatement->execute()
+#1 /home/u139954273/domains/mdgeek.top/public_html/messagerie/api/get_conversations.php(49): get_user_conversations()
+#2 {main}
+[2025-04-07 21:12:12] Erreur lors de la récupération des conversations: SQLSTATE[HY093]: Invalid parameter number - #0 /home/u139954273/domains/mdgeek.top/public_html/messagerie/includes/functions.php(103): PDOStatement->execute()
+#1 /home/u139954273/domains/mdgeek.top/public_html/messagerie/api/get_conversations.php(49): get_user_conversations()
+#2 {main}
+[2025-04-07 21:12:25] Erreur lors de la récupération des conversations: SQLSTATE[HY093]: Invalid parameter number - #0 /home/u139954273/domains/mdgeek.top/public_html/messagerie/includes/functions.php(103): PDOStatement->execute()
+#1 /home/u139954273/domains/mdgeek.top/public_html/messagerie/api/get_conversations.php(49): get_user_conversations()
+#2 {main}
+[2025-04-07 21:12:38] Erreur lors de la récupération des conversations: SQLSTATE[HY093]: Invalid parameter number - #0 /home/u139954273/domains/mdgeek.top/public_html/messagerie/includes/functions.php(103): PDOStatement->execute()
+#1 /home/u139954273/domains/mdgeek.top/public_html/messagerie/api/get_conversations.php(49): get_user_conversations()
+#2 {main}
+[2025-04-07 21:12:53] Erreur lors de la récupération des conversations: SQLSTATE[HY093]: Invalid parameter number - #0 /home/u139954273/domains/mdgeek.top/public_html/messagerie/includes/functions.php(103): PDOStatement->execute()
+#1 /home/u139954273/domains/mdgeek.top/public_html/messagerie/api/get_conversations.php(49): get_user_conversations()
+#2 {main}
+[2025-04-07 21:13:08] Erreur lors de la récupération des conversations: SQLSTATE[HY093]: Invalid parameter number - #0 /home/u139954273/domains/mdgeek.top/public_html/messagerie/includes/functions.php(103): PDOStatement->execute()
+#1 /home/u139954273/domains/mdgeek.top/public_html/messagerie/api/get_conversations.php(49): get_user_conversations()
+#2 {main}
+[2025-04-07 21:13:23] Erreur lors de la récupération des conversations: SQLSTATE[HY093]: Invalid parameter number - #0 /home/u139954273/domains/mdgeek.top/public_html/messagerie/includes/functions.php(103): PDOStatement->execute()
+#1 /home/u139954273/domains/mdgeek.top/public_html/messagerie/api/get_conversations.php(49): get_user_conversations()
+#2 {main}
+[2025-04-07 21:13:32] Erreur lors de la récupération des conversations: SQLSTATE[HY093]: Invalid parameter number - #0 /home/u139954273/domains/mdgeek.top/public_html/messagerie/includes/functions.php(103): PDOStatement->execute()
+#1 /home/u139954273/domains/mdgeek.top/public_html/messagerie/api/get_conversations.php(49): get_user_conversations()
+#2 {main}
+[2025-04-07 21:13:33] Erreur lors de la récupération des conversations: SQLSTATE[HY093]: Invalid parameter number - #0 /home/u139954273/domains/mdgeek.top/public_html/messagerie/includes/functions.php(103): PDOStatement->execute()
+#1 /home/u139954273/domains/mdgeek.top/public_html/messagerie/api/get_conversations.php(49): get_user_conversations()
+#2 {main}
+[2025-04-07 21:13:33] Erreur lors de la récupération des conversations: SQLSTATE[HY093]: Invalid parameter number - #0 /home/u139954273/domains/mdgeek.top/public_html/messagerie/includes/functions.php(103): PDOStatement->execute()
+#1 /home/u139954273/domains/mdgeek.top/public_html/messagerie/api/get_conversations.php(49): get_user_conversations()
+#2 {main}
+[2025-04-07 21:13:33] Erreur lors de la récupération des conversations: SQLSTATE[HY093]: Invalid parameter number - #0 /home/u139954273/domains/mdgeek.top/public_html/messagerie/includes/functions.php(103): PDOStatement->execute()
+#1 /home/u139954273/domains/mdgeek.top/public_html/messagerie/api/get_conversations.php(49): get_user_conversations()
+#2 {main}
+[2025-04-07 21:13:34] Erreur lors de la récupération des conversations: SQLSTATE[HY093]: Invalid parameter number - #0 /home/u139954273/domains/mdgeek.top/public_html/messagerie/includes/functions.php(103): PDOStatement->execute()
+#1 /home/u139954273/domains/mdgeek.top/public_html/messagerie/api/get_conversations.php(49): get_user_conversations()
+#2 {main}
+[2025-04-07 21:13:49] Erreur lors de la récupération des conversations: SQLSTATE[HY093]: Invalid parameter number - #0 /home/u139954273/domains/mdgeek.top/public_html/messagerie/includes/functions.php(103): PDOStatement->execute()
+#1 /home/u139954273/domains/mdgeek.top/public_html/messagerie/api/get_conversations.php(49): get_user_conversations()
+#2 {main}
+[2025-04-07 21:14:08] Erreur lors de la récupération des conversations: SQLSTATE[HY093]: Invalid parameter number - #0 /home/u139954273/domains/mdgeek.top/public_html/messagerie/includes/functions.php(103): PDOStatement->execute()
+#1 /home/u139954273/domains/mdgeek.top/public_html/messagerie/api/get_conversations.php(49): get_user_conversations()
+#2 {main}
+[2025-04-07 21:14:19] Erreur lors de la récupération des conversations: SQLSTATE[HY093]: Invalid parameter number - #0 /home/u139954273/domains/mdgeek.top/public_html/messagerie/includes/functions.php(103): PDOStatement->execute()
+#1 /home/u139954273/domains/mdgeek.top/public_html/messagerie/api/get_conversations.php(49): get_user_conversations()
+#2 {main}
+[2025-04-07 21:22:30] Erreur lors de la récupération des conversations: SQLSTATE[HY093]: Invalid parameter number - #0 /home/u139954273/domains/mdgeek.top/public_html/messagerie/includes/functions.php(102): PDOStatement->execute()
+#1 /home/u139954273/domains/mdgeek.top/public_html/messagerie/api/get_conversations.php(49): get_user_conversations()
+#2 {main}
+[2025-04-07 21:29:56] Erreur lors de la récupération des conversations: SQLSTATE[HY093]: Invalid parameter number - #0 /home/u139954273/domains/mdgeek.top/public_html/messagerie/includes/functions.php(102): PDOStatement->execute()
+#1 /home/u139954273/domains/mdgeek.top/public_html/messagerie/test.php(42): get_user_conversations()
+#2 {main}
+[2025-04-07 21:30:25] Erreur lors de la récupération des conversations: SQLSTATE[HY093]: Invalid parameter number - #0 /home/u139954273/domains/mdgeek.top/public_html/messagerie/includes/functions.php(102): PDOStatement->execute()
+#1 /home/u139954273/domains/mdgeek.top/public_html/messagerie/test.php(42): get_user_conversations()
+#2 {main}
+[2025-04-07 21:35:04] Erreur lors de la récupération des participants: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'u.email' in 'SELECT'
+Requête: conversation_id = 3
+[2025-04-07 21:35:04] Erreur lors de la récupération des participants: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'u.email' in 'SELECT'
+Requête: conversation_id = 2
+[2025-04-07 21:35:04] Erreur lors de la récupération des participants: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'u.email' in 'SELECT'
+Requête: conversation_id = 1
+[2025-04-07 21:35:21] Erreur lors de la récupération des participants: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'u.email' in 'SELECT'
+Requête: conversation_id = 2
+[2025-04-07 21:35:21] Erreur lors de la récupération des participants: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'u.email' in 'SELECT'
+Requête: conversation_id = 1
+[2025-04-07 21:35:25] Erreur lors de la récupération des participants: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'u.email' in 'SELECT'
+Requête: conversation_id = 2
+[2025-04-07 21:35:25] Erreur lors de la récupération des participants: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'u.email' in 'SELECT'
+Requête: conversation_id = 1
+[2025-04-07 21:36:00] Erreur lors de la récupération des participants: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'u.email' in 'SELECT'
+Requête: conversation_id = 3
+[2025-04-07 21:36:00] Erreur lors de la récupération des participants: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'u.email' in 'SELECT'
+Requête: conversation_id = 2
+[2025-04-07 21:36:00] Erreur lors de la récupération des participants: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'u.email' in 'SELECT'
+Requête: conversation_id = 1
+[2025-04-07 21:45:37] Erreur lors de la récupération des participants: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'u.email' in 'SELECT'
+Requête: conversation_id = 3
+[2025-04-07 21:45:37] Erreur lors de la récupération des participants: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'u.email' in 'SELECT'
+Requête: conversation_id = 2
+[2025-04-07 21:45:37] Erreur lors de la récupération des participants: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'u.email' in 'SELECT'
+Requête: conversation_id = 1
+[2025-04-07 22:48:17] Erreur lors de la récupération des participants: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'u.email' in 'SELECT'
+Requête: conversation_id = 3
+[2025-04-07 22:48:17] Erreur lors de la récupération des participants: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'u.email' in 'SELECT'
+Requête: conversation_id = 2
+[2025-04-07 22:48:17] Erreur lors de la récupération des participants: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'u.email' in 'SELECT'
+Requête: conversation_id = 1
+[2025-04-07 22:58:12] Erreur lors de la récupération des participants: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'u.email' in 'SELECT'
+Requête: conversation_id = 3
+[2025-04-07 22:58:12] Erreur lors de la récupération des participants: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'u.email' in 'SELECT'
+Requête: conversation_id = 2
+[2025-04-07 22:58:12] Erreur lors de la récupération des participants: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'u.email' in 'SELECT'
+Requête: conversation_id = 1
+[2025-04-07 23:17:30] Erreur lors de la récupération des participants: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'u.email' in 'SELECT'
+Requête: conversation_id = 3
+[2025-04-07 23:17:30] Erreur lors de la récupération des participants: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'u.email' in 'SELECT'
+Requête: conversation_id = 2
+[2025-04-07 23:17:30] Erreur lors de la récupération des participants: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'u.email' in 'SELECT'
+Requête: conversation_id = 1
+[2025-04-07 23:17:34] Erreur lors de la récupération des participants: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'u.email' in 'SELECT'
+Requête: conversation_id = 3
+[2025-04-07 23:17:34] Erreur lors de la récupération des participants: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'u.email' in 'SELECT'
+Requête: conversation_id = 2
+[2025-04-07 23:17:34] Erreur lors de la récupération des participants: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'u.email' in 'SELECT'
+Requête: conversation_id = 1
+[2025-04-07 23:39:28] Erreur lors de la récupération des participants: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'u.email' in 'SELECT'
+Requête: conversation_id = 3
+[2025-04-07 23:39:28] Erreur lors de la récupération des participants: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'u.email' in 'SELECT'
+Requête: conversation_id = 2
+[2025-04-07 23:39:28] Erreur lors de la récupération des participants: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'u.email' in 'SELECT'
+Requête: conversation_id = 1
+[2025-04-08 00:40:54] Erreur lors de la récupération des participants: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'u.email' in 'SELECT'
+Requête: conversation_id = 2
+[2025-04-08 00:40:54] Erreur lors de la récupération des participants: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'u.email' in 'SELECT'
+Requête: conversation_id = 1
+[2025-04-08 00:40:57] Erreur lors de la récupération des participants: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'u.email' in 'SELECT'
+Requête: conversation_id = 2
+[2025-04-08 00:40:57] Erreur lors de la récupération des participants: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'u.email' in 'SELECT'
+Requête: conversation_id = 1
+[2025-04-13 22:06:18] Erreur lors de la récupération des participants: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'u.email' in 'SELECT'
+Requête: conversation_id = 3
+[2025-04-13 22:06:18] Erreur lors de la récupération des participants: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'u.email' in 'SELECT'
+Requête: conversation_id = 2
+[2025-04-13 22:06:18] Erreur lors de la récupération des participants: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'u.email' in 'SELECT'
+Requête: conversation_id = 1
+[2025-04-13 22:10:30] Erreur lors de la récupération des participants: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'u.email' in 'SELECT'
+Requête: conversation_id = 3
+[2025-04-13 22:10:30] Erreur lors de la récupération des participants: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'u.email' in 'SELECT'
+Requête: conversation_id = 2
+[2025-04-13 22:10:30] Erreur lors de la récupération des participants: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'u.email' in 'SELECT'
+Requête: conversation_id = 1

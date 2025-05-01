@@ -1,0 +1,227 @@
+/**
+ * Intégration des nouveaux styles de thème
+ * Ce fichier permet d'intégrer les nouveaux styles sans perturber l'existant
+ */
+
+/* Importation des fichiers CSS du nouveau thème */
+@import url('modern-theme.css');
+@import url('order-form.css');
+
+/* Ajustements pour éviter les conflits avec les styles existants */
+#ajouterCommandeModal .modal-content {
+    border: none !important;
+    border-radius: 8px !important;
+    background-color: var(--bg-card) !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1) !important;
+    position: relative !important;
+    z-index: 1055 !important;
+}
+
+#ajouterCommandeModal .modal-body {
+    padding: 0 !important;
+}
+
+#ajouterCommandeModal .modal-header,
+#ajouterCommandeModal .modal-footer {
+    display: none !important;
+}
+
+/* Style plus moderne pour la fenêtre modale avec effet glassmorphism */
+.modal-dialog {
+    margin-top: 2rem;
+    position: relative !important;
+    z-index: 1055 !important;
+}
+
+.modal-backdrop.show {
+    opacity: 0.5;
+    z-index: 1040 !important;
+}
+
+/* S'assurer que la modal est au premier plan */
+.modal {
+    z-index: 1050 !important;
+    pointer-events: none;
+}
+
+.modal.show {
+    pointer-events: auto;
+}
+
+.modal-dialog {
+    z-index: 1051 !important;
+    pointer-events: auto;
+}
+
+/* Empêcher le modal-backdrop de bloquer les clics */
+.modal-backdrop {
+    pointer-events: auto;
+}
+
+#ajouterCommandeModal ~ .modal-backdrop {
+    pointer-events: none;
+}
+
+/* Assurer que les variables CSS sont disponibles globalement */
+:root {
+    /* Palette de couleurs - Mode jour */
+    --primary: #4361ee;
+    --primary-dark: #3a56d4;
+    --primary-light: #6282ff;
+    --secondary: #4cc9f0;
+    --accent: #f72585;
+  
+    /* Couleurs sémantiques */
+    --success: #10b981;
+    --warning: #f59e0b;
+    --danger: #ef4444;
+    --info: #3b82f6;
+  
+    /* Couleurs neutres - Mode jour */
+    --bg-main: #f9fafb;
+    --bg-card: #ffffff;
+    --bg-input: #ffffff;
+    --bg-hover: #f3f4f6;
+    --bg-active: #e5e7eb;
+    --bg-header: #ffffff;
+    --bg-footer: #f3f4f6;
+  
+    --text-primary: #111827;
+    --text-secondary: #4b5563;
+    --text-muted: #6b7280;
+    --text-light: #9ca3af;
+    --border-color: #e5e7eb;
+    --border-input: #d1d5db;
+  
+    /* Effets et animations */
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.03);
+    --shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.06), 0 2px 4px -1px rgba(0, 0, 0, 0.04);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.06), 0 4px 6px -2px rgba(0, 0, 0, 0.04);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.06), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  
+    --radius-sm: 0.25rem;
+    --radius: 0.375rem;
+    --radius-md: 0.5rem;
+    --radius-lg: 0.75rem;
+    --radius-xl: 1rem;
+    --radius-full: 9999px;
+  
+    --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-slow: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  
+    /* Layout */
+    --header-height: 4rem;
+    --sidebar-width: 260px;
+    --dock-height: 4.5rem;
+    --dock-height-pwa: 5.5rem;
+}
+
+/* Corrections pour le problème de z-index avec Bootstrap */
+.fade.show {
+    z-index: auto !important;
+}
+
+/* Support du mode sombre */
+.dark-mode, 
+body.dark-mode, 
+html[data-theme="dark"] {
+    --primary: #6282ff;
+    --primary-dark: #4361ee;
+    --primary-light: #93acff;
+  
+    /* Couleurs sémantiques - légèrement plus claires en mode sombre */
+    --success: #34d399;
+    --warning: #fbbf24;
+    --danger: #f87171;
+    --info: #60a5fa;
+  
+    /* Couleurs neutres - Mode nuit */
+    --bg-main: #111827;
+    --bg-card: #1f2937;
+    --bg-input: #1f2937;
+    --bg-hover: #2d3748;
+    --bg-active: #374151;
+    --bg-header: #1a1e2c;
+    --bg-footer: #1a1e2c;
+  
+    --text-primary: #f9fafb;
+    --text-secondary: #e5e7eb;
+    --text-muted: #9ca3af;
+    --text-light: #6b7280;
+    --border-color: #374151;
+    --border-input: #4b5563;
+  
+    /* Ombres renforcées pour le mode sombre */
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.1);
+    --shadow: 0 1px 3px rgba(0, 0, 0, 0.2), 0 1px 2px rgba(0, 0, 0, 0.2);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.2), 0 2px 4px -1px rgba(0, 0, 0, 0.15);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.15);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.15);
+}
+
+/* Empêcher les styles des boutons Bootstrap d'interférer avec les nouveaux styles */
+.order-container .btn-outline-primary {
+    border-color: var(--primary) !important;
+    color: var(--primary) !important;
+    background-color: transparent !important;
+}
+
+.order-container .btn-outline-primary:hover {
+    background-color: var(--primary) !important;
+    color: white !important;
+}
+
+.order-container .btn-primary {
+    background-color: var(--primary) !important;
+    border-color: var(--primary) !important;
+    color: white !important;
+}
+
+.order-container .btn-primary:hover {
+    background-color: var(--primary-dark) !important;
+    border-color: var(--primary-dark) !important;
+}
+
+/* Adaptation de la taille de la fenêtre modale */
+@media (min-width: 992px) {
+    #ajouterCommandeModal .modal-lg {
+        max-width: 960px;
+    }
+}
+
+/* Correction pour les boutons radio de statut */
+.status-option input[type="radio"]:checked + label {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+/* Corrections pour les navigateurs mobiles */
+@media (max-width: 768px) {
+    .order-container {
+        max-width: 100%;
+        margin: 0;
+        border-radius: var(--radius-lg);
+    }
+    
+    .order-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .order-footer {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .order-footer > div {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+}
+
+/* Correction pour assurer que le background du modal est visible en mode clair et foncé */
+.modal-content.order-container {
+    background-color: var(--bg-card) !important;
+} 

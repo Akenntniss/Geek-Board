@@ -1,0 +1,244 @@
+=== REQUÊTE DEVIS 2025-04-19 16:59:01 ===
+Type de requête: POST
+Données POST: Array
+(
+    [action] => envoyer_devis
+    [reparation_id] => 631
+    [montant] => 20
+    [update_prix] => 1
+    [user_id] => 1
+)
+
+=== REQUÊTE DEVIS 2025-04-19 16:59:18 ===
+Type de requête: JSON
+Données JSON: Array
+(
+    [reparation_id] => 629
+    [template_id] => 4
+    [update_statut] => 1
+)
+
+Template ID spécifié: 4
+=== REQUÊTE DEVIS 2025-04-19 16:59:29 ===
+Type de requête: JSON
+Données JSON: Array
+(
+    [reparation_id] => 593
+    [template_id] => 4
+    [update_statut] => 1
+)
+
+Montant récupéré depuis la base de données: 120.00
+Template ID spécifié: 4
+=== REQUÊTE DEVIS 2025-04-19 16:59:57 ===
+Type de requête: JSON
+Données JSON: Array
+(
+    [reparation_id] => 629
+    [template_id] => 4
+    [update_statut] => 1
+)
+
+Template ID spécifié: 4
+=== REQUÊTE DEVIS 2025-04-19 17:00:06 ===
+Type de requête: JSON
+Données JSON: Array
+(
+    [reparation_id] => 593
+    [template_id] => 4
+    [update_statut] => 1
+)
+
+Montant récupéré depuis la base de données: 120.00
+Template ID spécifié: 4
+=== REQUÊTE DEVIS 2025-04-19 17:01:02 ===
+Type de requête: POST
+Données POST: Array
+(
+    [action] => envoyer_devis
+    [reparation_id] => 630
+    [montant] => 150.00
+    [update_prix] => 1
+    [user_id] => 1
+)
+
+=== REQUÊTE DEVIS 2025-04-19 17:02:26 ===
+Type de requête: JSON
+Données JSON: Array
+(
+    [reparation_id] => 631
+    [montant] => 20
+    [update_prix] => 1
+    [user_id] => 1
+)
+
+=== REQUÊTE DEVIS 2025-04-19 17:02:50 ===
+Type de requête: JSON
+Données JSON: Array
+(
+    [reparation_id] => 593
+    [template_id] => 4
+    [update_statut] => 1
+)
+
+Montant récupéré depuis la base de données: 120.00
+Template ID spécifié: 4
+=== REQUÊTE DEVIS 2025-04-19 17:03:33 ===
+Type de requête: JSON
+Données JSON: Array
+(
+    [reparation_id] => 625
+    [template_id] => 4
+    [update_statut] => 1
+)
+
+Template ID spécifié: 4
+=== REQUÊTE DEVIS 2025-04-19 17:03:52 ===
+Type de requête: JSON
+Données JSON: Array
+(
+    [reparation_id] => 631
+    [template_id] => 4
+    [update_statut] => 1
+)
+
+Montant récupéré depuis la base de données: 20.00
+Template ID spécifié: 4
+=== REQUÊTE DEVIS 2025-04-19 17:03:59 ===
+Type de requête: JSON
+Données JSON: Array
+(
+    [reparation_id] => 631
+    [template_id] => 4
+    [update_statut] => 1
+)
+
+Montant récupéré depuis la base de données: 20.00
+Template ID spécifié: 4
+=== REQUÊTE DEVIS 2025-04-19 17:06:22 ===
+[2025-04-19 17:06:22] Type de requête: JSON
+[2025-04-19 17:06:22] Données JSON: Array
+(
+    [reparation_id] => 631
+    [template_id] => 4
+    [update_statut] => 1
+)
+
+[2025-04-19 17:06:22] Montant récupéré depuis la base de données: 20.00
+[2025-04-19 17:06:22] Template ID spécifié: 4
+=== REQUÊTE DEVIS 2025-04-19 17:06:38 ===
+[2025-04-19 17:06:38] Type de requête: JSON
+[2025-04-19 17:06:38] Données JSON: Array
+(
+    [reparation_id] => 631
+    [montant] => 20
+    [update_prix] => 1
+    [user_id] => 1
+)
+
+ID utilisateur défini à partir des données: 1
+[2025-04-19 17:06:38] Utilisation du template ID: 4
+[2025-04-19 17:06:39] Déclenchement du SMS terminé avec statut: Envoyé
+=== REQUÊTE DEVIS 2025-04-19 17:07:42 ===
+[2025-04-19 17:07:42] Type de requête: JSON
+[2025-04-19 17:07:42] Données JSON: Array
+(
+    [reparation_id] => 631
+    [template_id] => 4
+    [update_statut] => 1
+)
+
+[2025-04-19 17:07:42] Montant récupéré depuis la base de données: 20.00
+[2025-04-19 17:07:42] Template ID spécifié: 4
+[2025-04-19 17:07:42] Utilisation du template ID: 4
+[2025-04-19 17:07:42] Déclenchement du SMS terminé avec statut: Envoyé
+=== REQUÊTE DEVIS 2025-04-19 17:08:32 ===
+[2025-04-19 17:08:32] Type de requête: JSON
+[2025-04-19 17:08:32] Données JSON: Array
+(
+    [reparation_id] => 631
+    [template_id] => 4
+    [update_statut] => 1
+)
+
+[2025-04-19 17:08:32] Montant récupéré depuis la base de données: 20.00
+[2025-04-19 17:08:32] Template ID spécifié: 4
+[2025-04-19 17:08:32] Utilisation du template ID: 4
+[2025-04-19 17:08:32] Déclenchement du SMS terminé avec statut: Envoyé
+=== REQUÊTE DEVIS 2025-04-19 17:11:44 ===
+[2025-04-19 17:11:44] Type de requête: JSON
+[2025-04-19 17:11:44] Données JSON: Array
+(
+    [reparation_id] => 626
+    [template_id] => 4
+    [update_statut] => 1
+)
+
+[2025-04-19 17:11:44] Montant récupéré depuis la base de données: 20.00
+[2025-04-19 17:11:44] Template ID spécifié: 4
+=== REQUÊTE DEVIS 2025-04-19 17:12:05 ===
+[2025-04-19 17:12:05] Type de requête: JSON
+[2025-04-19 17:12:05] Données JSON: Array
+(
+    [reparation_id] => 631
+    [montant] => 20
+    [update_prix] => 1
+    [user_id] => 1
+)
+
+ID utilisateur défini à partir des données: 1
+[2025-04-19 17:12:05] Utilisation du template ID: 4
+[2025-04-19 17:12:06] Déclenchement du SMS terminé avec statut: Envoyé
+=== REQUÊTE DEVIS 2025-04-19 17:12:06 ===
+[2025-04-19 17:12:06] Type de requête: JSON
+[2025-04-19 17:12:06] Données JSON: Array
+(
+    [reparation_id] => 631
+    [montant] => 20
+    [update_prix] => 1
+    [user_id] => 1
+)
+
+[2025-04-19 17:12:06] Utilisation du template ID: 4
+[2025-04-19 17:12:06] Déclenchement du SMS terminé avec statut: Envoyé
+=== REQUÊTE DEVIS 2025-04-19 17:13:14 ===
+[2025-04-19 17:13:14] Vérification de la table sms_logs effectuée
+[2025-04-19 17:13:14] Type de requête: JSON
+[2025-04-19 17:13:14] Données JSON: Array
+(
+    [reparation_id] => 631
+    [montant] => 20
+    [update_prix] => 1
+    [user_id] => 1
+)
+
+ID utilisateur défini à partir des données: 1
+[2025-04-19 17:13:14] Utilisation du template ID: 4
+[2025-04-19 17:13:14] Déclenchement du SMS terminé avec statut: Envoyé
+=== REQUÊTE DEVIS 2025-04-19 17:13:14 ===
+[2025-04-19 17:13:14] Vérification de la table sms_logs effectuée
+[2025-04-19 17:13:14] Type de requête: JSON
+[2025-04-19 17:13:14] Données JSON: Array
+(
+    [reparation_id] => 631
+    [montant] => 20
+    [update_prix] => 1
+    [user_id] => 1
+)
+
+[2025-04-19 17:13:14] Utilisation du template ID: 4
+[2025-04-19 17:13:15] Déclenchement du SMS terminé avec statut: Envoyé
+=== REQUÊTE DEVIS 2025-04-19 17:14:19 ===
+[2025-04-19 17:14:19] Vérification de la table sms_logs effectuée
+[2025-04-19 17:14:19] Type de requête: JSON
+[2025-04-19 17:14:19] Données JSON: Array
+(
+    [reparation_id] => 626
+    [template_id] => 4
+    [update_statut] => 1
+)
+
+[2025-04-19 17:14:19] Montant récupéré depuis la base de données: 20.00
+[2025-04-19 17:14:19] Template ID spécifié: 4
+[2025-04-19 17:14:19] Utilisation du template ID: 4
+[2025-04-19 17:14:19] Déclenchement du SMS terminé avec statut: Envoyé

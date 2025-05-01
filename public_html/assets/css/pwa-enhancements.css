@@ -1,0 +1,418 @@
+/* 
+ * PWA Enhancements CSS
+ * Styles spécifiques pour améliorer l'expérience PWA GeekBoard
+ */
+
+/* Styles globaux pour le mode PWA */
+body.pwa-mode {
+    /* Empêcher le comportement de rebond sur iOS */
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-y: none;
+    
+    /* Empêcher la sélection du texte */
+    -webkit-user-select: none;
+    user-select: none;
+    
+    /* Supprimer le flash bleu au toucher sur mobile */
+    -webkit-tap-highlight-color: transparent;
+    
+    /* Meilleure gestion du padding pour les barres système */
+    padding-top: env(safe-area-inset-top, 0);
+    padding-bottom: env(safe-area-inset-bottom, 0);
+    padding-left: env(safe-area-inset-left, 0);
+    padding-right: env(safe-area-inset-right, 0);
+}
+
+/* Ajustements spécifiques pour iOS avec Dynamic Island */
+body.pwa-mode.ios-dynamic-island {
+    padding-top: env(safe-area-inset-top, 54px);
+}
+
+/* Navigation du bas pour PWA */
+body.pwa-mode .bottom-nav-container {
+    padding-bottom: env(safe-area-inset-bottom, 0);
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+/* Style amélioré pour les boutons dans le mode PWA */
+body.pwa-mode .btn {
+    min-height: 44px; /* Taille minimale recommandée pour les cibles tactiles */
+}
+
+/* Augmenter la taille des icônes pour une meilleure accessibilité */
+body.pwa-mode .nav-icon,
+body.pwa-mode .bottom-nav-item-icon {
+    font-size: 1.5rem;
+    margin-bottom: 4px;
+}
+
+/* Pull-to-refresh pour PWA */
+#pull-refresh-indicator {
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    letter-spacing: 0.5px;
+}
+
+#pull-refresh-indicator::before {
+    content: "";
+    width: 16px;
+    height: 16px;
+    margin-right: 8px;
+    border: 2px solid #4361ee;
+    border-top-color: transparent;
+    border-radius: 50%;
+    display: inline-block;
+    animation: refreshRotation 1s linear infinite;
+}
+
+@keyframes refreshRotation {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Amélioration des formulaires en mode PWA */
+body.pwa-mode input[type="text"],
+body.pwa-mode input[type="password"],
+body.pwa-mode input[type="email"],
+body.pwa-mode input[type="tel"],
+body.pwa-mode select,
+body.pwa-mode textarea {
+    font-size: 16px; /* Empêche le zoom sur iOS */
+    padding: 12px;
+    border-radius: 10px;
+}
+
+/* Améliorer l'expérience utilisateur des boutons PWA */
+body.pwa-mode .btn,
+body.pwa-mode button,
+body.pwa-mode .nav-link {
+    transition: transform 0.15s ease;
+}
+
+body.pwa-mode .btn:active,
+body.pwa-mode button:active,
+body.pwa-mode .nav-link:active {
+    transform: scale(0.97);
+}
+
+/* Animations plus fluides */
+body.pwa-mode .card,
+body.pwa-mode .modal,
+body.pwa-mode .alert {
+    will-change: transform, opacity;
+}
+
+/* Animation pour les modales */
+body.pwa-mode .modal.fade .modal-dialog {
+    transform: translateY(20px);
+    transition: transform 0.3s ease-out;
+}
+
+body.pwa-mode .modal.show .modal-dialog {
+    transform: translateY(0);
+}
+
+/* Styles de la grille pour PWA */
+@media (max-width: 767px) {
+    body.pwa-mode .container {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+    
+    body.pwa-mode .row {
+        margin-left: -8px;
+        margin-right: -8px;
+    }
+    
+    body.pwa-mode [class*="col-"] {
+        padding-left: 8px;
+        padding-right: 8px;
+    }
+}
+
+/* Cartes adaptées au mode PWA */
+body.pwa-mode .card {
+    border-radius: 16px;
+    overflow: hidden;
+    border: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    margin-bottom: 16px;
+}
+
+body.pwa-mode .card-header {
+    background-color: transparent;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    padding: 16px;
+}
+
+body.pwa-mode .card-body {
+    padding: 16px;
+}
+
+/* Améliorer les listes en mode PWA */
+body.pwa-mode .list-group-item {
+    padding: 14px 16px;
+    border: none;
+    position: relative;
+}
+
+body.pwa-mode .list-group-item:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    left: 16px;
+    right: 16px;
+    bottom: 0;
+    height: 1px;
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+/* Mode sombre pour PWA */
+@media (prefers-color-scheme: dark) {
+    body.pwa-mode {
+        background-color: #121212;
+        color: #e4e4e4;
+    }
+    
+    body.pwa-mode .card,
+    body.pwa-mode .bottom-nav-container,
+    body.pwa-mode .modal-content {
+        background-color: #1e1e1e;
+    }
+    
+    body.pwa-mode .card-header,
+    body.pwa-mode .modal-header,
+    body.pwa-mode .modal-footer {
+        border-color: rgba(255, 255, 255, 0.05);
+    }
+    
+    body.pwa-mode .text-dark {
+        color: #e4e4e4 !important;
+    }
+    
+    body.pwa-mode .list-group-item {
+        background-color: #1e1e1e;
+        color: #e4e4e4;
+    }
+    
+    body.pwa-mode .list-group-item:not(:last-child)::after {
+        background-color: rgba(255, 255, 255, 0.05);
+    }
+    
+    body.pwa-mode .bottom-nav-container {
+        background: rgba(30, 30, 30, 0.95);
+    }
+    
+    body.pwa-mode hr {
+        border-color: rgba(255, 255, 255, 0.05);
+    }
+}
+
+/* Animations de transition entre les pages */
+body.pwa-mode .page-transition-wrapper {
+    animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Optimisation pour le mode paysage */
+@media (orientation: landscape) and (max-width: 991px) {
+    body.pwa-mode .bottom-nav-container {
+        padding-bottom: 0;
+    }
+    
+    body.pwa-mode {
+        padding-bottom: 0 !important;
+    }
+}
+
+/* Icônes pour signaler les actions disponibles */
+body.pwa-mode .pwa-action-indicator {
+    position: relative;
+}
+
+body.pwa-mode .pwa-action-indicator::after {
+    content: '';
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background-color: #4361ee;
+    border-radius: 50%;
+    top: 2px;
+    right: 2px;
+}
+
+/* Améliorations pour le menu modal en mode PWA */
+body.pwa-mode .menu-modal {
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+}
+
+body.pwa-mode .menu-modal-content {
+    border-radius: 20px 20px 0 0;
+    box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.2);
+    max-width: 100%;
+    margin: 0;
+    height: 90vh;
+    overflow-y: auto;
+}
+
+body.pwa-mode .menu-modal-header {
+    padding: 20px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+body.pwa-mode .menu-modal-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #4361ee;
+}
+
+body.pwa-mode .menu-item {
+    border-radius: 12px;
+    margin-bottom: 8px;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+body.pwa-mode .menu-item:active {
+    transform: scale(0.98);
+    background-color: rgba(67, 97, 238, 0.1);
+}
+
+/* Amélioration de la barre de navigation inférieure */
+body.pwa-mode .modern-bottom-nav {
+    display: flex !important;
+}
+
+body.pwa-mode .modern-nav-action-inner {
+    background: linear-gradient(135deg, #4361ee, #3a0ca3);
+}
+
+body.pwa-mode .modern-nav-item.active {
+    color: #4361ee;
+}
+
+body.pwa-mode .modern-nav-item::after {
+    background: #4361ee;
+}
+
+@media (prefers-color-scheme: dark) {
+    body.pwa-mode .menu-modal-content {
+        background-color: #1e1e1e;
+    }
+    
+    body.pwa-mode .menu-modal-header {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    
+    body.pwa-mode .menu-item {
+        background-color: #2a2a2a;
+        color: #e4e4e4;
+    }
+    
+    body.pwa-mode .menu-item:active {
+        background-color: rgba(67, 97, 238, 0.2);
+    }
+    
+    body.pwa-mode .menu-modal-section-title {
+        color: #a0a0a0;
+    }
+    
+    body.pwa-mode .modern-bottom-nav {
+        background: rgba(30, 30, 30, 0.95);
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    
+    body.pwa-mode .modern-nav-item {
+        color: #a0a0a0;
+    }
+    
+    body.pwa-mode .modern-nav-item.active {
+        color: #60a5fa;
+    }
+    
+    body.pwa-mode .modern-nav-item::after {
+        background: #60a5fa;
+    }
+}
+
+/* Styles pour les liens du Launchpad modal */
+body.pwa-mode .launchpad-pc-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 10px;
+}
+
+body.pwa-mode .launchpad-pc-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 15px 10px;
+    border-radius: 12px;
+    background-color: #f8f9fa;
+    color: #333;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+body.pwa-mode .launchpad-pc-item:active {
+    transform: scale(0.95);
+    background-color: #eef2ff;
+}
+
+body.pwa-mode .launchpad-pc-item i {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #4361ee;
+}
+
+body.pwa-mode .launchpad-pc-item span {
+    font-size: 12px;
+    font-weight: 500;
+}
+
+@media (prefers-color-scheme: dark) {
+    body.pwa-mode .launchpad-pc-item {
+        background-color: #2a2a2a;
+        color: #e4e4e4;
+    }
+    
+    body.pwa-mode .launchpad-pc-item:active {
+        background-color: #3a3a3a;
+    }
+    
+    body.pwa-mode .launchpad-pc-item i {
+        color: #60a5fa;
+    }
+}
+
+/* Assurer une bonne distance entre le contenu et la barre de navigation */
+body.pwa-mode main,
+body.pwa-mode .page-container,
+body.pwa-mode .main-container {
+    padding-bottom: calc(64px + env(safe-area-inset-bottom, 0px) + 16px) !important;
+}
+
+/* Adapter les boutons pour qu'ils soient plus faciles à toucher */
+body.pwa-mode .btn,
+body.pwa-mode a.btn,
+body.pwa-mode button.btn {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    font-weight: 500;
+} 

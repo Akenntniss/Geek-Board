@@ -1,0 +1,63 @@
+[2025-04-19 17:13:22] === DÉBUT TRAITEMENT GARDIENNAGE ===
+[2025-04-19 17:13:22] Session ID: k1cojt79uo0719utcdhlkuhb5k
+[2025-04-19 17:13:22] Session name: PHPSESSID
+[2025-04-19 17:13:22] User ID in session: 1
+[2025-04-19 17:13:22] Remember token cookie: Absent
+[2025-04-19 17:13:22] MDGEEK_SESSION cookie: Présent
+[2025-04-19 17:13:22] --- COOKIES ---
+[2025-04-19 17:13:22] Cookie pwa_mode: true
+[2025-04-19 17:13:22] Cookie PHPSESSID: k1cojt79uo0719utcdhlkuhb5k
+[2025-04-19 17:13:22] Cookie mdgeek_remember: 6b340923ddcdeaa4cd20a63541380fb8e24252a9c1fca3e8ff76cdfbcb7e412a
+[2025-04-19 17:13:22] Cookie MDGEEK_SESSION: i28jhjk9ojurkvtit047678j8c
+[2025-04-19 17:13:22] --- HEADERS ---
+[2025-04-19 17:13:22] Header Host: mdgeek.top
+[2025-04-19 17:13:22] Header Content-Type: multipart/form-data; boundary=----WebKitFormBoundaryUPvGDpoRdv3vsiif
+[2025-04-19 17:13:22] Header origin: https://mdgeek.top
+[2025-04-19 17:13:22] Header Referer: https://mdgeek.top/index.php?page=statut_rapide&id=631
+[2025-04-19 17:13:22] Header Content-Length: 343
+[2025-04-19 17:13:22] Header Cookie: pwa_mode=true; PHPSESSID=k1cojt79uo0719utcdhlkuhb5k; mdgeek_remember=6b340923ddcdeaa4cd20a63541380fb8e24252a9c1fca3e8ff76cdfbcb7e412a; MDGEEK_SESSION=i28jhjk9ojurkvtit047678j8c
+[2025-04-19 17:13:22] Paramètres reçus:
+[2025-04-19 17:13:22] - reparation_id: 631
+[2025-04-19 17:13:22] - notes: Absent
+[2025-04-19 17:13:40] === DÉBUT TRAITEMENT GARDIENNAGE ===
+[2025-04-19 17:13:40] Session ID: k1cojt79uo0719utcdhlkuhb5k
+[2025-04-19 17:13:40] Session name: PHPSESSID
+[2025-04-19 17:13:40] User ID in session: 1
+[2025-04-19 17:13:40] Remember token cookie: Absent
+[2025-04-19 17:13:40] MDGEEK_SESSION cookie: Présent
+[2025-04-19 17:13:40] --- COOKIES ---
+[2025-04-19 17:13:40] Cookie pwa_mode: true
+[2025-04-19 17:13:40] Cookie PHPSESSID: k1cojt79uo0719utcdhlkuhb5k
+[2025-04-19 17:13:40] Cookie mdgeek_remember: 6b340923ddcdeaa4cd20a63541380fb8e24252a9c1fca3e8ff76cdfbcb7e412a
+[2025-04-19 17:13:40] Cookie MDGEEK_SESSION: i28jhjk9ojurkvtit047678j8c
+[2025-04-19 17:13:40] --- HEADERS ---
+[2025-04-19 17:13:40] Header Host: mdgeek.top
+[2025-04-19 17:13:40] Header Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7cCmtqavAlmQ50aF
+[2025-04-19 17:13:40] Header origin: https://mdgeek.top
+[2025-04-19 17:13:40] Header Referer: https://mdgeek.top/index.php?page=statut_rapide&id=631
+[2025-04-19 17:13:40] Header Content-Length: 343
+[2025-04-19 17:13:40] Header Cookie: pwa_mode=true; PHPSESSID=k1cojt79uo0719utcdhlkuhb5k; mdgeek_remember=6b340923ddcdeaa4cd20a63541380fb8e24252a9c1fca3e8ff76cdfbcb7e412a; MDGEEK_SESSION=i28jhjk9ojurkvtit047678j8c
+[2025-04-19 17:13:40] Paramètres reçus:
+[2025-04-19 17:13:40] - reparation_id: 631
+[2025-04-19 17:13:40] - notes: Absent
+[2025-04-19 21:33:50] === DÉBUT TRAITEMENT GARDIENNAGE ===
+[2025-04-19 21:33:50] Session ID: ov3in2itrrao4v7l3nl3drsq9i
+[2025-04-19 21:33:50] Session name: PHPSESSID
+[2025-04-19 21:33:50] User ID in session: 1
+[2025-04-19 21:33:50] Remember token cookie: Absent
+[2025-04-19 21:33:50] MDGEEK_SESSION cookie: Présent
+[2025-04-19 21:33:50] --- COOKIES ---
+[2025-04-19 21:33:50] Cookie pwa_mode: true
+[2025-04-19 21:33:50] Cookie MDGEEK_SESSION: 5124l3ffud13bf4e2aseg7d4q5
+[2025-04-19 21:33:50] Cookie PHPSESSID: ov3in2itrrao4v7l3nl3drsq9i
+[2025-04-19 21:33:50] Cookie mdgeek_remember: 59e3ad0b0ee1035eba3c171d1334fd8feff7ff6dd7e4f4254d91bcce4bae9a97
+[2025-04-19 21:33:50] --- HEADERS ---
+[2025-04-19 21:33:50] Header Host: mdgeek.top
+[2025-04-19 21:33:50] Header Content-Length: 343
+[2025-04-19 21:33:50] Header Content-Type: multipart/form-data; boundary=----WebKitFormBoundaryTvydVbQlYHZQ7VAG
+[2025-04-19 21:33:50] Header origin: https://mdgeek.top
+[2025-04-19 21:33:50] Header Referer: https://mdgeek.top/index.php?page=statut_rapide&id=631
+[2025-04-19 21:33:50] Header Cookie: pwa_mode=true; MDGEEK_SESSION=5124l3ffud13bf4e2aseg7d4q5; PHPSESSID=ov3in2itrrao4v7l3nl3drsq9i; mdgeek_remember=59e3ad0b0ee1035eba3c171d1334fd8feff7ff6dd7e4f4254d91bcce4bae9a97
+[2025-04-19 21:33:50] Paramètres reçus:
+[2025-04-19 21:33:50] - reparation_id: 631
+[2025-04-19 21:33:50] - notes: Absent

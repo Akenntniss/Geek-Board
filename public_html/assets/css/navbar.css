@@ -1,0 +1,1009 @@
+/**
+ * Styles pour la nouvelle barre de navigation
+ * Trois formats: PC, mobile et PWA
+ */
+
+:root {
+    --primary-color: #0078e8;
+    --primary-light: rgba(0, 120, 232, 0.1);
+    --dark-color: #343a40;
+    --success-color: #28a745;
+    --success-light: rgba(40, 167, 69, 0.1);
+    --warning-color: #ffc107;
+    --warning-light: rgba(255, 193, 7, 0.1);
+    --danger-color: #dc3545;
+    --danger-light: rgba(220, 53, 69, 0.1);
+    --navbar-height: 55px;
+    --dock-height: 55px;
+    --dock-height-pwa: calc(var(--dock-height) + env(safe-area-inset-bottom, 0px));
+}
+
+/* ========== DESKTOP NAVBAR (PC) ========== */
+#desktop-navbar {
+    height: var(--navbar-height);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1030;
+    transition: all 0.3s ease;
+    display: none; /* Caché par défaut */
+}
+
+/* Afficher la navbar uniquement sur PC - SAUF en mode PWA */
+@media (min-width: 992px) {
+    body:not(.ipad-device):not(.pwa-mode):not([class*="tablet"]):not([class*="ipad"]) #desktop-navbar {
+        display: block !important; /* Afficher seulement sur desktop réel, pas sur tablettes */
+    }
+    
+    /* Cacher le dock mobile sur vrais grands écrans */
+    body:not(.ipad-device):not(.pwa-mode):not([class*="tablet"]):not([class*="ipad"]) #mobile-dock {
+        display: none !important;
+    }
+}
+
+/* Correction spécifique pour Safari sur desktop */
+@media not all and (min-resolution:.001dpcm) { 
+    @media (min-width: 992px) {
+        @supports (-webkit-appearance:none) {
+            body:not(.ipad-device):not(.pwa-mode):not([class*="tablet"]):not([class*="ipad"]) #desktop-navbar {
+                display: block !important;
+                visibility: visible !important;
+                opacity: 1 !important;
+                height: var(--navbar-height) !important;
+                transform: none !important;
+            }
+            
+            body:not(.ipad-device):not(.pwa-mode):not([class*="tablet"]):not([class*="ipad"]) #mobile-dock {
+                display: none !important;
+                visibility: hidden !important;
+                opacity: 0 !important;
+            }
+            
+            /* Override pour forcer l'affichage */
+            @media screen and (min-width: 1367px) {
+                body:not(.ipad-device):not(.pwa-mode):not([class*="tablet"]):not([class*="ipad"]) #desktop-navbar {
+                    display: block !important;
+                }
+            }
+        }
+    }
+}
+
+/* Style pour les iPad et tablettes, quelle que soit leur résolution */
+body.ipad-device #desktop-navbar,
+body.pwa-mode #desktop-navbar,
+body[class*="tablet"] #desktop-navbar,
+body[class*="ipad"] #desktop-navbar {
+    display: none !important;
+}
+
+body.ipad-device #mobile-dock,
+body.pwa-mode #mobile-dock,
+body[class*="tablet"] #mobile-dock,
+body[class*="ipad"] #mobile-dock {
+    display: block !important;
+}
+
+#desktop-navbar .navbar-brand img {
+    transition: all 0.3s ease;
+}
+
+#desktop-navbar .btn {
+    border-radius: 6px;
+    transition: all 0.2s ease;
+}
+
+#desktop-navbar .btn-outline-secondary {
+    font-weight: 500;
+    color: var(--dark-color);
+    border-color: #dee2e6;
+}
+
+#desktop-navbar .btn-outline-secondary:hover {
+    background-color: var(--primary-light);
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+#desktop-navbar .btn-outline-secondary.active {
+    background-color: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+/* Bouton Nouvelle avec dropdown */
+#desktop-navbar .btn-primary {
+    background: linear-gradient(135deg, var(--primary-color), #0066cc);
+    border: none;
+    color: white;
+    box-shadow: 0 2px 8px rgba(0, 120, 232, 0.25);
+    transition: all 0.3s ease;
+}
+
+#desktop-navbar .btn-primary:hover {
+    background: linear-gradient(135deg, #0066cc, var(--primary-color));
+    box-shadow: 0 4px 12px rgba(0, 120, 232, 0.4);
+    transform: translateY(-2px);
+}
+
+#desktop-navbar .btn-primary:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 6px rgba(0, 120, 232, 0.2);
+}
+
+/* Dropdowns */
+#desktop-navbar .dropdown-menu {
+    border-radius: 8px;
+    overflow: hidden;
+    margin-top: 10px;
+}
+
+#desktop-navbar .dropdown-item {
+    padding: 8px 16px;
+    transition: all 0.2s ease;
+}
+
+#desktop-navbar .dropdown-item:hover {
+    background-color: var(--primary-light);
+}
+
+/* Effet de scroll */
+#desktop-navbar.scrolled {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    height: 45px;
+}
+
+#desktop-navbar.scrolled .navbar-brand img {
+    height: 30px;
+}
+
+/* Bouton du menu hamburger amélioré */
+.main-menu-btn {
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+}
+
+.main-menu-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: var(--primary-light);
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+/* ========== MOBILE DOCK (Mobile & PWA) ========== */
+#mobile-dock {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1030;
+    background-color: white;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    display: block; /* Toujours visible sur mobile */
+    transition: transform 0.3s ease-in-out; /* Transition fluide pour l'animation */
+}
+
+/* Classe pour cacher le dock lors du défilement vers le bas */
+#mobile-dock.hidden {
+    transform: translateY(100%);
+}
+
+/* Cacher le dock sur desktop - SAUF en mode PWA ou iPad */
+@media (min-width: 992px) {
+    #mobile-dock {
+        display: none; /* Cacher sur desktop */
+    }
+    
+    /* Force l'affichage du dock en mode PWA, même sur desktop */
+    body.pwa-mode #mobile-dock {
+        display: block !important;
+        width: 100%;
+    }
+    
+    /* Force l'affichage du dock sur iPad, quelle que soit l'orientation */
+    body.ipad-device #mobile-dock {
+        display: block !important;
+        width: 80%;
+        margin: 0 auto;
+        border-radius: 16px 16px 0 0;
+    }
+}
+
+/* Assurer que le dock est visible sur les grands iPad */
+@media only screen and (min-width: 1000px) and (max-width: 1366px) {
+    body.ipad-device #mobile-dock {
+        display: block !important;
+    }
+    
+    body.ipad-device #desktop-navbar {
+        display: none !important;
+    }
+}
+
+/* Garantir l'affichage de la barre de navigation sur les grands écrans non-tablettes */
+@media (min-width: 1367px) {
+    body:not(.ipad-device):not(.pwa-mode):not([class*="tablet"]):not([class*="ipad"]) #desktop-navbar {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+    
+    body:not(.ipad-device):not(.pwa-mode):not([class*="tablet"]):not([class*="ipad"]) #mobile-dock {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+    }
+}
+
+.mobile-dock-container {
+    height: var(--dock-height);
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+/* Style pour tablettes - dock centré et réduit */
+@media (min-width: 768px) and (max-width: 991.98px) {
+    .mobile-dock-container {
+        width: 80%;
+        margin: 0 auto;
+        border-radius: 12px 12px 0 0;
+        overflow: hidden;
+    }
+}
+
+/* Style pour iPad - dock encore plus centré */
+@media (min-width: 992px) and (max-width: 1199.98px) {
+    .mobile-dock-container {
+        width: 60%;
+        margin: 0 auto;
+        border-radius: 16px 16px 0 0;
+        overflow: hidden;
+    }
+}
+
+/* Pour les appareils iPad, rendre la transition plus rapide */
+@media (min-width: 768px) {
+    #mobile-dock {
+        transition: transform 0.25s ease-out;
+    }
+}
+
+.dock-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: #6c757d;
+    transition: all 0.2s ease;
+    padding: 4px 0;
+    position: relative;
+}
+
+.dock-item i {
+    font-size: 17px;
+    margin-bottom: 2px;
+}
+
+.dock-item span {
+    font-size: 9px;
+    text-align: center;
+}
+
+.dock-item.active {
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+.dock-item-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+}
+
+.btn-nouvelle-action {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary-color), #0066cc);
+    color: white;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0, 120, 232, 0.5);
+    transition: all 0.2s ease;
+    transform: translateY(-7px);
+}
+
+.btn-nouvelle-action i {
+    font-size: 17px;
+}
+
+.btn-nouvelle-action:hover, 
+.btn-nouvelle-action:focus {
+    background: linear-gradient(135deg, #0066cc, var(--primary-color));
+    transform: translateY(-10px);
+    box-shadow: 0 4px 12px rgba(0, 120, 232, 0.6);
+}
+
+.btn-nouvelle-action:active {
+    transform: translateY(-5px);
+    box-shadow: 0 2px 6px rgba(0, 120, 232, 0.4);
+}
+
+.badge-count {
+    position: absolute;
+    top: 0;
+    right: calc(50% - 14px);
+    background-color: var(--primary-color);
+    color: white;
+    border-radius: 50%;
+    width: 14px;
+    height: 14px;
+    font-size: 9px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 4px rgba(0, 120, 232, 0.3);
+}
+
+/* ========== MODALS & OFFCANVAS ========== */
+.action-icon {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.menu-icon {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+}
+
+.menu-section-header {
+    background-color: #f8f9fa;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    padding: 0.75rem 1rem;
+    letter-spacing: 0.05rem;
+    color: #6c757d;
+}
+
+.sidebar-heading {
+    background-color: #f8f9fa;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    padding: 0.75rem 1rem;
+    letter-spacing: 0.05rem;
+    color: #6c757d;
+    margin-top: 1rem;
+}
+
+.nested-item {
+    padding-left: 2.5rem !important;
+}
+
+.nested-item::before {
+    content: "";
+    position: absolute;
+    left: 1.5rem;
+    top: 1.5rem;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: #dee2e6;
+}
+
+.list-group-item.active {
+    background-color: #f1f5ff;
+    color: var(--primary-color);
+    border-color: #dee2e6;
+}
+
+.list-group-item:hover:not(.active) {
+    background-color: #f8f9fa;
+    color: var(--dark-color);
+}
+
+/* ========== STYLES UTILITAIRES ========== */
+body.pwa-mode {
+    padding-top: 0;
+    padding-bottom: var(--dock-height-pwa);
+    touch-action: manipulation;
+}
+
+body.ios-pwa {
+    padding-bottom: calc(var(--dock-height) + env(safe-area-inset-bottom, 20px));
+    touch-action: manipulation;
+}
+
+@media (max-width: 991.98px) {
+    body.pwa-mode {
+        padding-bottom: var(--dock-height-pwa);
+    }
+}
+
+@media (min-width: 992px) {
+    body:not(.pwa-mode):not(.mobile-device) {
+        padding-top: var(--navbar-height);
+        padding-bottom: 0;
+    }
+}
+
+body.mobile-device:not(.pwa-mode) {
+    padding-bottom: var(--dock-height);
+    padding-top: 0;
+}
+
+.bg-primary-light {
+    background-color: var(--primary-light);
+}
+
+.bg-success-light {
+    background-color: var(--success-light);
+}
+
+.bg-warning-light {
+    background-color: var(--warning-light);
+}
+
+.bg-danger-light {
+    background-color: var(--danger-light);
+}
+
+/* ========== DARK MODE ========== */
+body.dark-mode #desktop-navbar {
+    background-color: #1e1e1e;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    border-color: #2d2d2d;
+}
+
+body.dark-mode #desktop-navbar .btn-outline-secondary {
+    color: #e0e0e0;
+    border-color: #2d2d2d;
+}
+
+body.dark-mode #desktop-navbar .btn-outline-secondary:hover {
+    background-color: rgba(0, 120, 232, 0.2);
+    color: #3a8dff;
+    border-color: #3a8dff;
+}
+
+body.dark-mode #desktop-navbar .btn-outline-secondary.active {
+    background-color: #3a8dff;
+    color: #fff;
+    border-color: #3a8dff;
+}
+
+body.dark-mode #mobile-dock {
+    background-color: #1e1e1e;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.25);
+    border-top: 1px solid #2d2d2d;
+}
+
+body.dark-mode .dock-item {
+    color: #a0a0a0;
+}
+
+body.dark-mode .dock-item.active {
+    color: #3a8dff;
+}
+
+body.dark-mode .menu-section-header,
+body.dark-mode .sidebar-heading {
+    background-color: #2c2c2c;
+    color: #a0a0a0;
+    border-color: #2d2d2d;
+}
+
+body.dark-mode .menu-icon {
+    color: #a0a0a0;
+}
+
+body.dark-mode .offcanvas,
+body.dark-mode .modal-content {
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+    border-color: #2d2d2d;
+}
+
+body.dark-mode .list-group-item {
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+    border-color: #2d2d2d;
+}
+
+body.dark-mode .list-group-item:hover {
+    background-color: #2c2c2c;
+}
+
+body.dark-mode .list-group-item.active {
+    background-color: rgba(58, 141, 255, 0.15);
+    color: #3a8dff;
+    border-color: #2d2d2d;
+}
+
+/* ========== RESPONSIVE ADJUSTMENTS ========== */
+.dock-item:active {
+    transform: scale(0.9);
+    transition: transform 0.1s ease;
+}
+
+/* Media query pour iPad en mode portrait */
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: portrait) {
+    /* Cacher la navbar desktop sur iPad en portrait */
+    #desktop-navbar {
+        display: none !important;
+    }
+    
+    /* Afficher la navbar mobile sur iPad en portrait */
+    #mobile-dock {
+        display: block !important;
+    }
+    
+    /* Styles pour adapter le layout en conséquence */
+    body {
+        padding-bottom: var(--mobile-navbar-height) !important;
+    }
+    
+    /* Ajuster pour les appareils iOS PWA */
+    body.ios-pwa {
+        padding-bottom: calc(var(--mobile-navbar-height) + env(safe-area-inset-bottom, 20px)) !important;
+    }
+    
+    /* Ajuster pour les appareils avec Dynamic Island */
+    body.ios-dynamic-island {
+        padding-bottom: calc(var(--mobile-navbar-height) + env(safe-area-inset-bottom, 35px)) !important;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .list-group-item {
+        padding: 0.75rem 1rem;
+    }
+    
+    .btn-nouvelle-action {
+        width: 36px;
+        height: 36px;
+        transform: translateY(-5px);
+    }
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.btn-nouvelle-action {
+    animation: pulse 2s infinite;
+}
+
+/* ========== STYLES POUR LAUNCHPAD ========== */
+/* Styles pour le Launchpad du menu principal */
+.launchpad-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 2rem;
+    animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scaleIn {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.launchpad-section {
+    margin-bottom: 1.5rem;
+}
+
+.launchpad-section-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #6c757d;
+    margin-bottom: 0.75rem;
+    padding-left: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05rem;
+}
+
+.launchpad-section-content {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+@media (min-width: 576px) {
+    .launchpad-section-content {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (min-width: 768px) {
+    .launchpad-section-content {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+.launchpad-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: #333;
+    padding: 1rem;
+    border-radius: 12px;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    position: relative;
+    text-align: center;
+    animation: scaleIn 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+    animation-fill-mode: both;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+}
+
+.dark-mode .launchpad-item {
+    color: #eee;
+}
+
+.launchpad-item:hover {
+    transform: translateY(-5px) scale(1.05);
+    background-color: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+}
+
+.launchpad-item:active {
+    transform: translateY(0) scale(0.95);
+    transition: all 0.1s ease;
+}
+
+.dark-mode .launchpad-item:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+.launchpad-item.active {
+    color: var(--primary-color);
+}
+
+.launchpad-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 15px;
+    background-color: var(--primary-light);
+    color: var(--primary-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.75rem;
+    font-size: 1.5rem;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.launchpad-icon::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 50%, rgba(0,0,0,0.1) 100%);
+    border-radius: 15px;
+}
+
+.launchpad-item:hover .launchpad-icon {
+    transform: scale(1.1);
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.15);
+}
+
+.launchpad-item span {
+    font-weight: 500;
+    margin-top: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.launchpad-item:hover span {
+    transform: scale(1.05);
+}
+
+.launchpad-icon-danger {
+    background-color: var(--danger-light);
+    color: var(--danger-color);
+}
+
+/* Spécifique au menu offcanvas */
+.offcanvas-launchpad {
+    padding: 1rem;
+}
+
+.offcanvas-launchpad .launchpad-section {
+    margin-bottom: 1.5rem;
+}
+
+.offcanvas-launchpad .launchpad-section-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #6c757d;
+    margin-bottom: 0.75rem;
+    padding-left: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05rem;
+}
+
+.offcanvas-launchpad .launchpad-section-content {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+}
+
+@media (min-width: 400px) {
+    .offcanvas-launchpad .launchpad-section-content {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.offcanvas-launchpad .launchpad-item {
+    animation-delay: 0.05s;
+}
+
+#mainMenuOffcanvas {
+    max-width: 420px;
+}
+
+#mainMenuOffcanvas .launchpad-icon {
+    width: 50px;
+    height: 50px;
+    font-size: 1.2rem;
+}
+
+#mainMenuOffcanvas .launchpad-item span {
+    font-size: 0.8rem;
+}
+
+/* Animation delay for each item */
+.launchpad-item:nth-child(1) { animation-delay: 0.05s; }
+.launchpad-item:nth-child(2) { animation-delay: 0.1s; }
+.launchpad-item:nth-child(3) { animation-delay: 0.15s; }
+.launchpad-item:nth-child(4) { animation-delay: 0.2s; }
+.launchpad-item:nth-child(5) { animation-delay: 0.25s; }
+.launchpad-item:nth-child(6) { animation-delay: 0.3s; }
+.launchpad-item:nth-child(7) { animation-delay: 0.35s; }
+.launchpad-item:nth-child(8) { animation-delay: 0.4s; }
+
+/* Icon specific colors */
+.launchpad-icon-home {
+    background-color: rgba(52, 152, 219, 0.15);
+    color: #3498db; /* Blue */
+}
+
+.launchpad-icon-repair {
+    background-color: rgba(231, 76, 60, 0.15);
+    color: #e74c3c; /* Red */
+}
+
+.launchpad-icon-order {
+    background-color: rgba(241, 196, 15, 0.15);
+    color: #f1c40f; /* Yellow */
+}
+
+.launchpad-icon-task {
+    background-color: rgba(46, 204, 113, 0.15);
+    color: #2ecc71; /* Green */
+}
+
+.launchpad-icon-inventory {
+    background-color: rgba(155, 89, 182, 0.15);
+    color: #9b59b6; /* Purple */
+}
+
+.launchpad-icon-vacation {
+    background-color: rgba(230, 126, 34, 0.15);
+    color: #e67e22; /* Orange */
+}
+
+.launchpad-icon-client {
+    background-color: rgba(41, 128, 185, 0.15); 
+    color: #2980b9; /* Dark Blue */
+}
+
+.launchpad-icon-settings {
+    background-color: rgba(52, 73, 94, 0.15);
+    color: #34495e; /* Dark Gray/Blue */
+}
+
+.launchpad-icon-partner {
+    background-color: rgba(22, 160, 133, 0.15);
+    color: #16a085; /* Teal */
+}
+
+.launchpad-icon-sms {
+    background-color: rgba(192, 57, 43, 0.15);
+    color: #c0392b; /* Dark Red */
+}
+
+.launchpad-icon-message {
+    background-color: rgba(41, 128, 185, 0.15);
+    color: #2980b9; /* Dark Blue */
+}
+
+.launchpad-icon-add {
+    background-color: rgba(76, 175, 80, 0.15);
+    color: #4CAF50; /* Green */
+}
+
+.launchpad-icon-scanner {
+    background-color: rgba(0, 150, 136, 0.15);
+    color: #009688; /* Teal */
+}
+
+.launchpad-icon-bug {
+    background-color: rgba(244, 67, 54, 0.15);
+    color: #F44336; /* Red */
+}
+
+/* Mode nuit pour le launchpad */
+.dark-mode .launchpad-icon {
+    background-color: rgba(58, 141, 255, 0.2);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.dark-mode .launchpad-section-title {
+    color: #adb5bd;
+}
+
+.dark-mode .launchpad-icon-home,
+.dark-mode .launchpad-icon-repair,
+.dark-mode .launchpad-icon-order,
+.dark-mode .launchpad-icon-task,
+.dark-mode .launchpad-icon-inventory,
+.dark-mode .launchpad-icon-vacation,
+.dark-mode .launchpad-icon-client,
+.dark-mode .launchpad-icon-settings,
+.dark-mode .launchpad-icon-partner,
+.dark-mode .launchpad-icon-sms,
+.dark-mode .launchpad-icon-message,
+.dark-mode .launchpad-icon-add,
+.dark-mode .launchpad-icon-scanner,
+.dark-mode .launchpad-icon-bug {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Cacher la navbar desktop sur tablettes et mobiles */
+@media (max-width: 991px), (max-device-width: 1366px) and (-webkit-min-device-pixel-ratio: 2) {
+    #desktop-navbar {
+        display: none !important;
+    }
+    
+    /* Forcer l'affichage du dock sur tablettes et mobiles */
+    #mobile-dock {
+        display: block !important;
+    }
+}
+
+/* Styles pour iPad en mode PWA (portrait et paysage) */
+@media only screen and (min-device-width: 768px) and (max-device-width: 1366px) and (-webkit-min-device-pixel-ratio: 2) {
+    /* Cacher la barre de navigation desktop sur iPad */
+    #desktop-navbar {
+        display: none !important;
+    }
+    
+    /* Afficher le dock mobile sur iPad */
+    #mobile-dock {
+        display: block !important;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 1030;
+        background-color: white;
+        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+        padding-bottom: env(safe-area-inset-bottom, 0px);
+    }
+    
+    /* Style pour le dock sur tablettes */
+    .mobile-dock-container {
+        width: 85%;
+        margin: 0 auto;
+        border-radius: 16px 16px 0 0;
+        overflow: hidden;
+    }
+}
+
+/* Styles spécifiques pour assurer que les règles sont appliquées */
+body.ipad-device #desktop-navbar,
+body.pwa-mode #desktop-navbar {
+    display: none !important;
+}
+
+body.ipad-device #mobile-dock,
+body.pwa-mode #mobile-dock {
+    display: block !important;
+}
+
+/* Spécifique pour iPad Pro et tablettes larges */
+@media (min-width: 900px) and (max-width: 1366px) {
+    body.ipad-device #desktop-navbar {
+        display: none !important;
+    }
+    
+    body.ipad-device #mobile-dock {
+        display: block !important;
+    }
+}
+
+/* Sélecteurs spécifiques pour Safari desktop */
+@media not all and (min-resolution:.001dpcm) { 
+    @supports (-webkit-appearance:none) and (display:flow-root) {
+        body.safari-desktop #desktop-navbar {
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            right: 0 !important;
+            z-index: 1030 !important;
+            height: var(--navbar-height) !important;
+        }
+        
+        body.safari-desktop #mobile-dock {
+            display: none !important;
+            visibility: hidden !important;
+            opacity: 0 !important;
+        }
+        
+        /* Garantir le padding correct pour le body */
+        body.safari-desktop {
+            padding-top: var(--navbar-height) !important;
+            padding-bottom: 0 !important;
+        }
+    }
+}
+
+/* Règle spécifique pour les grandes résolutions sur Safari */
+@media screen and (min-width: 1366px) {
+    body.safari-browser:not(.ipad-device):not(.pwa-mode) #desktop-navbar {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+    
+    body.safari-browser:not(.ipad-device):not(.pwa-mode) #mobile-dock {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+    }
+}

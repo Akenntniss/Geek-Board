@@ -1,0 +1,283 @@
+/**
+ * Corrections et optimisations spécifiques pour iPad
+ * Ce fichier est chargé en dernier pour surcharger les autres styles
+ */
+
+/* RÈGLES PRIORITAIRES POUR SAFARI */
+/* Desktop uniquement */
+@media screen and (min-width: 992px) {
+    body.safari-browser:not(.ipad-device):not(.pwa-mode):not(.mobile-device) #desktop-navbar {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        height: var(--navbar-height) !important;
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        z-index: 1030 !important;
+    }
+    
+    body.safari-browser:not(.ipad-device):not(.pwa-mode):not(.mobile-device) #mobile-dock {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+    }
+}
+
+/* Garantir que le dock mobile s'affiche sur mobile et iPad */
+@media screen and (max-width: 991px) {
+    #mobile-dock {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        position: fixed !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        z-index: 1030 !important;
+    }
+    
+    #desktop-navbar {
+        display: none !important;
+    }
+}
+
+/* Spécifique pour iPad - forcer l'affichage du dock */
+body.ipad-device #mobile-dock,
+body.mobile-device #mobile-dock,
+body.tablet-device #mobile-dock,
+body[class*="ipad"] #mobile-dock,
+body[class*="tablet"] #mobile-dock {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    z-index: 1030 !important;
+}
+
+body.ipad-device #desktop-navbar,
+body.mobile-device #desktop-navbar,
+body.tablet-device #desktop-navbar,
+body[class*="ipad"] #desktop-navbar,
+body[class*="tablet"] #desktop-navbar {
+    display: none !important;
+}
+
+/* Garantir le bon padding pour le body */
+body.safari-browser:not(.ipad-device):not(.pwa-mode):not(.mobile-device):not(.tablet-device),
+body.safari-desktop:not(.ipad-device):not(.pwa-mode):not(.mobile-device):not(.tablet-device) {
+    padding-top: var(--navbar-height) !important;
+    padding-bottom: 0 !important;
+}
+
+/* ===== SPÉCIFIQUE POUR SAFARI SUR DESKTOP ===== */
+@media screen and (min-width: 992px) {
+    /* Sélecteur Safari spécifique avec supports */
+    @supports (-webkit-appearance:none) {
+        body.safari-browser:not(.ipad-device):not(.pwa-mode):not([class*="tablet"]) #desktop-navbar {
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            height: var(--navbar-height) !important;
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            right: 0 !important;
+            z-index: 1030 !important;
+        }
+
+        body.safari-browser:not(.ipad-device):not(.pwa-mode):not([class*="tablet"]) #mobile-dock {
+            display: none !important;
+            visibility: hidden !important;
+            opacity: 0 !important;
+        }
+    }
+}
+
+/* Safari desktop à toutes les résolutions */
+body.safari-desktop:not(.ipad-device):not(.pwa-mode):not(.tablet-device) #desktop-navbar {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+body.safari-desktop:not(.ipad-device):not(.pwa-mode):not(.tablet-device) #mobile-dock {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+}
+
+/* Général */
+.ipad-device {
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+}
+
+/* Media query pour les résolutions d'iPad et tablettes */
+@media screen and (max-width: 1366px) {
+    /* Garantir que la navigation desktop est masquée pour tous les appareils */
+    #desktop-navbar,
+    .top-nav {
+        display: none !important;
+    }
+
+    /* Garantir que le dock mobile est affiché */
+    #mobile-dock {
+        display: block !important;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 1030;
+        background-color: white;
+        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+        padding-bottom: env(safe-area-inset-bottom, 0px);
+    }
+    
+    /* Ajuster le style du conteneur du dock mobile */
+    .mobile-dock-container {
+        width: 100%;
+        max-width: 768px;
+        margin: 0 auto;
+        border-radius: 16px 16px 0 0;
+        overflow: hidden;
+    }
+    
+    /* Ajustements pour les appareils iOS */
+    body.ios-pwa {
+        padding-top: 0 !important;
+        padding-bottom: calc(var(--dock-height) + env(safe-area-inset-bottom, 20px)) !important;
+    }
+    
+    /* Pour iOS avec Dynamic Island */
+    body.ios-dynamic-island {
+        padding-top: 0 !important;
+        padding-bottom: calc(var(--dock-height) + env(safe-area-inset-bottom, 35px)) !important;
+    }
+    
+    /* Style des apps mobile et PWA */
+    body,
+    body.pwa-mode,
+    body.ios-pwa,
+    body.ipad-device,
+    body.tablet-device,
+    body[class*="tablet"],
+    body[class*="ipad"] {
+        padding-top: 0 !important;
+        padding-bottom: var(--dock-height, 55px) !important;
+    }
+}
+
+/* Exception pour Safari sur desktop */
+@media screen and (min-width: 1367px) {
+    body.safari-browser:not(.ipad-device):not(.pwa-mode):not([class*="tablet"]):not([class*="ipad"]) #desktop-navbar {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+    
+    body.safari-browser:not(.ipad-device):not(.pwa-mode):not([class*="tablet"]):not([class*="ipad"]) #mobile-dock {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+    }
+}
+
+/* Règle générale pour tous les grands écrans (y compris non-Safari) */
+@media screen and (min-width: 1367px) {
+    body:not(.ipad-device):not(.pwa-mode):not(.mobile-device):not([class*="tablet"]):not([class*="ipad"]) #desktop-navbar {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+    
+    body:not(.ipad-device):not(.pwa-mode):not(.mobile-device):not([class*="tablet"]):not([class*="ipad"]) #mobile-dock {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+    }
+}
+
+/* Exception spécifique pour toutes les résolutions Safari sur ordinateur */
+@media not all and (min-resolution:.001dpcm) {
+    @supports (-webkit-appearance:none) and (not (overflow:-webkit-marquee)) {
+        body:not(.ipad-device):not(.pwa-mode):not(.mobile-device):not([class*="tablet"]):not([class*="ipad"]) #desktop-navbar {
+            display: block !important;
+            visibility: visible !important;
+        }
+        
+        body:not(.ipad-device):not(.pwa-mode):not(.mobile-device):not([class*="tablet"]):not([class*="ipad"]) #mobile-dock {
+            display: none !important;
+            visibility: hidden !important;
+        }
+    }
+}
+
+/* Style avancé pour le dock mobile sur tablettes */
+@media screen and (min-width: 768px) and (max-width: 1366px) {
+    .mobile-dock-container {
+        width: 85%;
+        max-width: 640px;
+        border-radius: 20px 20px 0 0;
+    }
+}
+
+/* Améliorer l'interactivité tactile */
+.ipad-device button,
+.ipad-device .btn,
+.ipad-device a,
+.ipad-device .nav-link,
+.ipad-device .form-control,
+.ipad-device .form-select {
+    min-height: 44px;
+    min-width: 44px;
+    touch-action: manipulation;
+}
+
+/* Améliorations pour le mode sombre sur iPad */
+.ipad-device.dark-mode #mobile-dock {
+    background-color: #1a1a1a;
+    border-top-color: #333;
+}
+
+/* Optimisations de performance */
+.ipad-device {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Correctifs pour les cartes */
+@media screen and (max-width: 1024px) {
+    .ipad-device .card {
+        overflow: hidden;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+    }
+}
+
+/* Amélioration de la transition pour un rendu plus fluide */
+.ipad-device #mobile-dock .dock-item {
+    transition: transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.ipad-device #mobile-dock .dock-item:active {
+    transform: scale(0.92);
+}
+
+/* Ajustements responsifs supplémentaires */
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+    .ipad-device #mobile-dock .mobile-dock-container {
+        width: 80%;
+        max-width: 600px;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .ipad-device #mobile-dock .mobile-dock-container {
+        width: 100%;
+    }
+} 

@@ -1,0 +1,217 @@
+/**
+ * Styles pour les étiquettes de réparation
+ * Compatible avec l'impression et le design existant
+ */
+
+/* Conteneur principal des étiquettes */
+.etiquettes-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+/* Style de base pour une étiquette */
+.etiquette {
+    width: 300px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    break-inside: avoid;
+    page-break-inside: avoid;
+    margin-bottom: 15px;
+    border: 1px solid #e0e0e0;
+    position: relative;
+}
+
+/* En-tête de l'étiquette */
+.etiquette-header {
+    padding: 12px 15px;
+    border-bottom: 1px solid #e0e0e0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.etiquette-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.etiquette-logo i {
+    font-size: 1.5rem;
+    color: #4361ee;
+}
+
+.etiquette-logo-text {
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: #333;
+}
+
+.etiquette-id {
+    font-weight: 700;
+    color: #4361ee;
+    font-size: 1.1rem;
+}
+
+/* Corps de l'étiquette */
+.etiquette-body {
+    padding: 15px;
+}
+
+.etiquette-client {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.etiquette-client-icon {
+    width: 40px;
+    height: 40px;
+    background: #4361ee;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+.etiquette-client-info {
+    flex: 1;
+}
+
+.etiquette-client-name {
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: #333;
+    margin: 0;
+}
+
+.etiquette-client-contact {
+    font-size: 0.9rem;
+    color: #666;
+    margin: 0;
+}
+
+/* Informations de l'appareil */
+.etiquette-device {
+    margin-bottom: 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px dashed #e0e0e0;
+}
+
+.etiquette-label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #666;
+    text-transform: uppercase;
+    margin-bottom: 3px;
+}
+
+.etiquette-value {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 8px;
+}
+
+/* Problème et date */
+.etiquette-problem,
+.etiquette-dates {
+    margin-bottom: 12px;
+}
+
+/* Statut et prix */
+.etiquette-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px dashed #e0e0e0;
+}
+
+.etiquette-status {
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.etiquette-status.en-attente {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.etiquette-status.en-cours {
+    background-color: #cce5ff;
+    color: #004085;
+}
+
+.etiquette-status.terminee {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.etiquette-status.annulee {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.etiquette-price {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #333;
+}
+
+/* QR Code pour l'étiquette */
+.etiquette-qr {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 80px;
+    height: 80px;
+    background: white;
+    border-radius: 4px;
+    display: none; /* Caché par défaut, affiché en JS */
+}
+
+/* Mode d'impression */
+@media print {
+    .etiquette {
+        box-shadow: none;
+        border: 1px solid #ccc;
+        page-break-inside: avoid;
+        break-inside: avoid;
+        margin: 0;
+        width: 100%;
+    }
+    
+    .etiquettes-container {
+        display: block;
+    }
+    
+    body * {
+        visibility: hidden;
+    }
+    
+    .etiquettes-container, .etiquette, .etiquette * {
+        visibility: visible;
+    }
+    
+    .etiquettes-container {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+    }
+    
+    .no-print {
+        display: none !important;
+    }
+} 

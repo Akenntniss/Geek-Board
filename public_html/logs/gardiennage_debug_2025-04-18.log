@@ -1,0 +1,42 @@
+[2025-04-18 01:15:17] === DÉBUT TRAITEMENT GARDIENNAGE ===
+[2025-04-18 01:15:17] Session ID: brg5pnn8tthhu23vsfpitlamp4
+[2025-04-18 01:15:17] Session name: PHPSESSID
+[2025-04-18 01:15:17] User ID in session: 1
+[2025-04-18 01:15:17] Remember token cookie: Absent
+[2025-04-18 01:15:17] MDGEEK_SESSION cookie: Présent
+[2025-04-18 01:15:17] --- COOKIES ---
+[2025-04-18 01:15:17] Cookie pwa_mode: true
+[2025-04-18 01:15:17] Cookie MDGEEK_SESSION: 1r8l6hksnjql26gde64juvm4gn
+[2025-04-18 01:15:17] Cookie PHPSESSID: brg5pnn8tthhu23vsfpitlamp4
+[2025-04-18 01:15:17] Cookie mdgeek_remember: 978e2453aa1876985fb23b781dad9bd2b0aa529db44a81ea031e33ae5a802dcb
+[2025-04-18 01:15:17] --- HEADERS ---
+[2025-04-18 01:15:17] Header Host: mdgeek.top
+[2025-04-18 01:15:17] Header Content-Length: 343
+[2025-04-18 01:15:17] Header Content-Type: multipart/form-data; boundary=----WebKitFormBoundary1rQeLAGEBVgxgrlH
+[2025-04-18 01:15:17] Header origin: https://mdgeek.top
+[2025-04-18 01:15:17] Header Referer: https://mdgeek.top/index.php?page=statut_rapide&id=614
+[2025-04-18 01:15:17] Header Cookie: pwa_mode=true; MDGEEK_SESSION=1r8l6hksnjql26gde64juvm4gn; PHPSESSID=brg5pnn8tthhu23vsfpitlamp4; mdgeek_remember=978e2453aa1876985fb23b781dad9bd2b0aa529db44a81ea031e33ae5a802dcb
+[2025-04-18 01:15:17] Paramètres reçus:
+[2025-04-18 01:15:17] - reparation_id: 614
+[2025-04-18 01:15:17] - notes: Absent
+[2025-04-18 01:16:03] === DÉBUT TRAITEMENT GARDIENNAGE ===
+[2025-04-18 01:16:03] Session ID: brg5pnn8tthhu23vsfpitlamp4
+[2025-04-18 01:16:03] Session name: PHPSESSID
+[2025-04-18 01:16:03] User ID in session: 1
+[2025-04-18 01:16:03] Remember token cookie: Absent
+[2025-04-18 01:16:03] MDGEEK_SESSION cookie: Présent
+[2025-04-18 01:16:03] --- COOKIES ---
+[2025-04-18 01:16:03] Cookie pwa_mode: true
+[2025-04-18 01:16:03] Cookie MDGEEK_SESSION: 1r8l6hksnjql26gde64juvm4gn
+[2025-04-18 01:16:03] Cookie PHPSESSID: brg5pnn8tthhu23vsfpitlamp4
+[2025-04-18 01:16:03] Cookie mdgeek_remember: 978e2453aa1876985fb23b781dad9bd2b0aa529db44a81ea031e33ae5a802dcb
+[2025-04-18 01:16:03] --- HEADERS ---
+[2025-04-18 01:16:03] Header Host: mdgeek.top
+[2025-04-18 01:16:03] Header Content-Length: 343
+[2025-04-18 01:16:03] Header Content-Type: multipart/form-data; boundary=----WebKitFormBoundarylLtdOLS0wzjDmhhX
+[2025-04-18 01:16:03] Header origin: https://mdgeek.top
+[2025-04-18 01:16:03] Header Referer: https://mdgeek.top/index.php?page=statut_rapide&id=614
+[2025-04-18 01:16:03] Header Cookie: pwa_mode=true; MDGEEK_SESSION=1r8l6hksnjql26gde64juvm4gn; PHPSESSID=brg5pnn8tthhu23vsfpitlamp4; mdgeek_remember=978e2453aa1876985fb23b781dad9bd2b0aa529db44a81ea031e33ae5a802dcb
+[2025-04-18 01:16:03] Paramètres reçus:
+[2025-04-18 01:16:03] - reparation_id: 614
+[2025-04-18 01:16:03] - notes: Absent

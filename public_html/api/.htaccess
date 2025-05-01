@@ -1,0 +1,42 @@
+# Activer le moteur de réécriture
+RewriteEngine On
+
+# Définir le répertoire de base
+RewriteBase /
+
+# Rediriger vers HTTPS (décommentez si vous avez un certificat SSL)
+# RewriteCond %{HTTPS} off
+# RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Ne pas appliquer les règles aux fichiers et dossiers existants
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Rediriger /login vers la page de connexion
+RewriteRule ^login/?$ pages/login.php [L]
+
+# Gérer les erreurs 404
+ErrorDocument 404 /index.php?page=404
+
+# Définir le fuseau horaire par défaut
+php_value date.timezone "Europe/Paris"
+
+# Activer l'affichage des erreurs pendant le développement (à désactiver en production)
+php_flag display_errors on
+php_value error_reporting E_ALL
+
+# Augmenter la limite de mémoire si nécessaire
+php_value memory_limit 256M
+
+# Augmenter la taille maximale des fichiers téléchargés si nécessaire
+php_value upload_max_filesize 10M
+php_value post_max_size 10M
+
+# Sécurité : empêcher l'accès aux fichiers sensibles
+<FilesMatch "^\.htaccess|\.git|\.env|database\.sql$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Désactiver l'affichage du contenu des répertoires
+Options -Indexes

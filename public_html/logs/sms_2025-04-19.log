@@ -1,0 +1,564 @@
+[2025-04-19 08:24:04] === ENVOI SMS DÉMARRÉ ===
+[2025-04-19 08:24:04] Destinataire: +33614064572
+[2025-04-19 08:24:04] Message: 👋 Bonjour sebastien,
+🛠�...
+[2025-04-19 08:24:04] URL API: https://api.sms-gate.app/3rdparty/v1/message
+[2025-04-19 08:24:04] Utilisateur: -GCB75
+[2025-04-19 08:24:04] Numéro formaté: +33614064572
+[2025-04-19 08:24:04] Données JSON: {"message":"\ud83d\udc4b Bonjour sebastien,\r\n\ud83d\udee0\ufe0f Nous avons bien re\u00e7u votre wispeed t855 et nos experts geeks sont d\u00e9j\u00e0 \u00e0 l'\u0153uvre pour le remettre en \u00e9tat.\r\n\ud83d\udd0e Suivez l'avancement de la r\u00e9paration ici :\r\n\ud83d\udc49 http:\/\/Mdgeek.top\/suivi.php?id=627\r\n\ud83d\udcde Une question ? Contactez nous au 08 95 79 59 33\r\n\ud83c\udfe0 Maison du GEEK \ud83d\udee0\ufe0f","phoneNumbers":["+33614064572"]}
+[2025-04-19 08:24:04] Exécution de la requête cURL...
+[2025-04-19 08:24:05] Code HTTP: 202
+[2025-04-19 08:24:05] Temps: 459 ms
+[2025-04-19 08:24:05] Réponse: {"id":"fdYHIpsmixFhsnnDg1RvN","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33614064572","state":"Pending"}],"states":null}
+[2025-04-19 08:24:05] Destinataire: +33614064572, Message: 👋 Bonjour sebastien,
+🛠�..., Statut: 202, Réponse: {"id":"fdYHIpsmixFhsnnDg1RvN","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33614064572","state":"Pending"}],"states":null}
+[2025-04-19 08:24:05] SMS enregistré dans la base de données, ID: 244
+[2025-04-19 08:24:05] === ENVOI SMS RÉUSSI ===
+[2025-04-19 09:20:32] === ENVOI SMS DÉMARRÉ ===
+[2025-04-19 09:20:32] Destinataire: +33689685139
+[2025-04-19 09:20:32] Message: 👋 Bonjour Jean robert,
+�...
+[2025-04-19 09:20:32] URL API: https://api.sms-gate.app/3rdparty/v1/message
+[2025-04-19 09:20:32] Utilisateur: -GCB75
+[2025-04-19 09:20:32] Numéro formaté: +33689685139
+[2025-04-19 09:20:32] Données JSON: {"message":"\ud83d\udc4b Bonjour Jean robert,\r\n\ud83d\udee0\ufe0f Nous avons bien re\u00e7u votre iPhone XR et nos experts geeks sont d\u00e9j\u00e0 \u00e0 l'\u0153uvre pour le remettre en \u00e9tat.\r\n\ud83d\udd0e Suivez l'avancement de la r\u00e9paration ici :\r\n\ud83d\udc49 http:\/\/Mdgeek.top\/suivi.php?id=628\r\n\ud83d\udcde Une question ? Contactez nous au 08 95 79 59 33\r\n\ud83c\udfe0 Maison du GEEK \ud83d\udee0\ufe0f","phoneNumbers":["+33689685139"]}
+[2025-04-19 09:20:32] Exécution de la requête cURL...
+[2025-04-19 09:20:32] Code HTTP: 202
+[2025-04-19 09:20:32] Temps: 255 ms
+[2025-04-19 09:20:32] Réponse: {"id":"nMwJV8U9SYZ2SPhTdolAs","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33689685139","state":"Pending"}],"states":null}
+[2025-04-19 09:20:32] Destinataire: +33689685139, Message: 👋 Bonjour Jean robert,
+�..., Statut: 202, Réponse: {"id":"nMwJV8U9SYZ2SPhTdolAs","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33689685139","state":"Pending"}],"states":null}
+[2025-04-19 09:20:32] SMS enregistré dans la base de données, ID: 245
+[2025-04-19 09:20:32] === ENVOI SMS RÉUSSI ===
+[2025-04-19 09:58:13] === ENVOI SMS DÉMARRÉ ===
+[2025-04-19 09:58:13] Destinataire: +33689685139
+[2025-04-19 09:58:13] Message: Jean robert, votre iPhone XR e...
+[2025-04-19 09:58:13] URL API: https://api.sms-gate.app/3rdparty/v1/message
+[2025-04-19 09:58:13] Utilisateur: -GCB75
+[2025-04-19 09:58:13] Numéro formaté: +33689685139
+[2025-04-19 09:58:13] Données JSON: {"message":"Jean robert, votre iPhone XR est pr\u00eat ! Il vous attend pour retrouver une vie normale. \ud83e\udd73\r\n\ud83e\uddfe Suivi : http:\/\/Mdgeek.top\/suivi.php?id=628\r\nMaison du Geek \u2013 08 95 79 59 33","phoneNumbers":["+33689685139"]}
+[2025-04-19 09:58:13] Exécution de la requête cURL...
+[2025-04-19 09:58:13] Code HTTP: 202
+[2025-04-19 09:58:13] Temps: 457 ms
+[2025-04-19 09:58:13] Réponse: {"id":"PsGC8_lz1mquEmXxWfU6J","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33689685139","state":"Pending"}],"states":null}
+[2025-04-19 09:58:13] Destinataire: +33689685139, Message: Jean robert, votre iPhone XR e..., Statut: 202, Réponse: {"id":"PsGC8_lz1mquEmXxWfU6J","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33689685139","state":"Pending"}],"states":null}
+[2025-04-19 09:58:13] SMS enregistré dans la base de données, ID: 246
+[2025-04-19 09:58:13] === ENVOI SMS RÉUSSI ===
+[2025-04-19 09:59:25] === ENVOI SMS DÉMARRÉ ===
+[2025-04-19 09:59:25] Destinataire: +39 340 076 0220
+[2025-04-19 09:59:25] Message: Bonjour Ludovic, votre dossier...
+[2025-04-19 09:59:25] URL API: https://api.sms-gate.app/3rdparty/v1/message
+[2025-04-19 09:59:25] Utilisateur: -GCB75
+[2025-04-19 09:59:25] Numéro formaté: +393400760220
+[2025-04-19 09:59:25] Données JSON: {"message":"Bonjour Ludovic, votre dossier 618 au sujet de votre Ninebot est en attente de validation par un responsable technique. Nous vous tenons inform\u00e9 tr\u00e8s bient\u00f4t.\r\n\ud83d\udcf2 Suivi : http:\/\/Mdgeek.top\/suivi.php?id=618\r\nMaison du Geek \u2013 08 95 79 59 33","phoneNumbers":["+393400760220"]}
+[2025-04-19 09:59:25] Exécution de la requête cURL...
+[2025-04-19 09:59:26] Code HTTP: 202
+[2025-04-19 09:59:26] Temps: 311 ms
+[2025-04-19 09:59:26] Réponse: {"id":"HMiUJv7LDGujnDpc6Y-SW","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+393400760220","state":"Pending"}],"states":null}
+[2025-04-19 09:59:26] Destinataire: +393400760220, Message: Bonjour Ludovic, votre dossier..., Statut: 202, Réponse: {"id":"HMiUJv7LDGujnDpc6Y-SW","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+393400760220","state":"Pending"}],"states":null}
+[2025-04-19 09:59:26] SMS enregistré dans la base de données, ID: 247
+[2025-04-19 09:59:26] === ENVOI SMS RÉUSSI ===
+[2025-04-19 10:00:15] === ENVOI SMS DÉMARRÉ ===
+[2025-04-19 10:00:15] Destinataire: +33614064572
+[2025-04-19 10:00:15] Message: sebastien, votre wispeed t855 ...
+[2025-04-19 10:00:15] URL API: https://api.sms-gate.app/3rdparty/v1/message
+[2025-04-19 10:00:15] Utilisateur: -GCB75
+[2025-04-19 10:00:15] Numéro formaté: +33614064572
+[2025-04-19 10:00:15] Données JSON: {"message":"sebastien, votre wispeed t855 est pr\u00eat ! Il vous attend pour retrouver une vie normale. \ud83e\udd73\r\n\ud83e\uddfe Suivi : http:\/\/Mdgeek.top\/suivi.php?id=627\r\nMaison du Geek \u2013 08 95 79 59 33","phoneNumbers":["+33614064572"]}
+[2025-04-19 10:00:15] Exécution de la requête cURL...
+[2025-04-19 10:00:16] Code HTTP: 202
+[2025-04-19 10:00:16] Temps: 310 ms
+[2025-04-19 10:00:16] Réponse: {"id":"6FYFNSjVFPOTIhhwQmbV8","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33614064572","state":"Pending"}],"states":null}
+[2025-04-19 10:00:16] Destinataire: +33614064572, Message: sebastien, votre wispeed t855 ..., Statut: 202, Réponse: {"id":"6FYFNSjVFPOTIhhwQmbV8","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33614064572","state":"Pending"}],"states":null}
+[2025-04-19 10:00:16] SMS enregistré dans la base de données, ID: 248
+[2025-04-19 10:00:16] === ENVOI SMS RÉUSSI ===
+[2025-04-19 10:00:23] === ENVOI SMS DÉMARRÉ ===
+[2025-04-19 10:00:23] Destinataire: 33782962906
+[2025-04-19 10:00:23] Message: saber, votre iPhone 8 est prê...
+[2025-04-19 10:00:23] URL API: https://api.sms-gate.app/3rdparty/v1/message
+[2025-04-19 10:00:23] Utilisateur: -GCB75
+[2025-04-19 10:00:23] Numéro formaté: +33782962906
+[2025-04-19 10:00:23] Données JSON: {"message":"saber, votre iPhone 8 est pr\u00eat ! Il vous attend pour retrouver une vie normale. \ud83e\udd73\r\n\ud83e\uddfe Suivi : http:\/\/Mdgeek.top\/suivi.php?id=626\r\nMaison du Geek \u2013 08 95 79 59 33","phoneNumbers":["+33782962906"]}
+[2025-04-19 10:00:23] Exécution de la requête cURL...
+[2025-04-19 10:00:24] Code HTTP: 202
+[2025-04-19 10:00:24] Temps: 311 ms
+[2025-04-19 10:00:24] Réponse: {"id":"H_RakXLR48-d6N94AUl78","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33782962906","state":"Pending"}],"states":null}
+[2025-04-19 10:00:24] Destinataire: +33782962906, Message: saber, votre iPhone 8 est prê..., Statut: 202, Réponse: {"id":"H_RakXLR48-d6N94AUl78","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33782962906","state":"Pending"}],"states":null}
+[2025-04-19 10:00:24] SMS enregistré dans la base de données, ID: 249
+[2025-04-19 10:00:24] === ENVOI SMS RÉUSSI ===
+[2025-04-19 10:06:42] === ENVOI SMS DÉMARRÉ ===
+[2025-04-19 10:06:42] Destinataire: 33769471380
+[2025-04-19 10:06:42] Message: Nous avons tout essayé pour s...
+[2025-04-19 10:06:42] URL API: https://api.sms-gate.app/3rdparty/v1/message
+[2025-04-19 10:06:42] Utilisateur: -GCB75
+[2025-04-19 10:06:42] Numéro formaté: +33769471380
+[2025-04-19 10:06:42] Données JSON: {"message":"Nous avons tout essay\u00e9 pour sauver votre iPad Air A1474 (), mais pour des raisons techniques, nous avons d\u00fb annuler la r\u00e9paration.\r\n\ud83d\udcc4 D\u00e9tails : http:\/\/Mdgeek.top\/suivi.php?id=595\r\nMaison du Geek \u2013 08 95 79 59 33","phoneNumbers":["+33769471380"]}
+[2025-04-19 10:06:42] Exécution de la requête cURL...
+[2025-04-19 10:06:43] Code HTTP: 202
+[2025-04-19 10:06:43] Temps: 331 ms
+[2025-04-19 10:06:43] Réponse: {"id":"bhp7jYDPcOX19UeYHO_u6","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33769471380","state":"Pending"}],"states":null}
+[2025-04-19 10:06:43] Destinataire: +33769471380, Message: Nous avons tout essayé pour s..., Statut: 202, Réponse: {"id":"bhp7jYDPcOX19UeYHO_u6","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33769471380","state":"Pending"}],"states":null}
+[2025-04-19 10:06:43] SMS enregistré dans la base de données, ID: 250
+[2025-04-19 10:06:43] === ENVOI SMS RÉUSSI ===
+[2025-04-19 12:45:45] === ENVOI SMS DÉMARRÉ ===
+[2025-04-19 12:45:45] Destinataire: +33767980783
+[2025-04-19 12:45:45] Message: 👋 Bonjour Mohamed,
+🛠️...
+[2025-04-19 12:45:45] URL API: https://api.sms-gate.app/3rdparty/v1/message
+[2025-04-19 12:45:45] Utilisateur: -GCB75
+[2025-04-19 12:45:45] Numéro formaté: +33767980783
+[2025-04-19 12:45:45] Données JSON: {"message":"\ud83d\udc4b Bonjour Mohamed,\r\n\ud83d\udee0\ufe0f Nous avons bien re\u00e7u votre Mini et nos experts geeks sont d\u00e9j\u00e0 \u00e0 l'\u0153uvre pour le remettre en \u00e9tat.\r\n\ud83d\udd0e Suivez l'avancement de la r\u00e9paration ici :\r\n\ud83d\udc49 http:\/\/Mdgeek.top\/suivi.php?id=629\r\n\ud83d\udcde Une question ? Contactez nous au 08 95 79 59 33\r\n\ud83c\udfe0 Maison du GEEK \ud83d\udee0\ufe0f","phoneNumbers":["+33767980783"]}
+[2025-04-19 12:45:45] Exécution de la requête cURL...
+[2025-04-19 12:45:46] Code HTTP: 202
+[2025-04-19 12:45:46] Temps: 433 ms
+[2025-04-19 12:45:46] Réponse: {"id":"eGUqLlO0u2LHrIPgjd9eH","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33767980783","state":"Pending"}],"states":null}
+[2025-04-19 12:45:46] Destinataire: +33767980783, Message: 👋 Bonjour Mohamed,
+🛠️..., Statut: 202, Réponse: {"id":"eGUqLlO0u2LHrIPgjd9eH","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33767980783","state":"Pending"}],"states":null}
+[2025-04-19 12:45:46] SMS enregistré dans la base de données, ID: 251
+[2025-04-19 12:45:46] === ENVOI SMS RÉUSSI ===
+[2025-04-19 13:24:30] === ENVOI SMS DÉMARRÉ ===
+[2025-04-19 13:24:30] Destinataire: 33682366934
+[2025-04-19 13:24:30] Message: Bonjour ..., votre dossier 592...
+[2025-04-19 13:24:30] URL API: https://api.sms-gate.app/3rdparty/v1/message
+[2025-04-19 13:24:30] Utilisateur: -GCB75
+[2025-04-19 13:24:30] Numéro formaté: +33682366934
+[2025-04-19 13:24:30] Données JSON: {"message":"Bonjour ..., votre dossier 592 au sujet de votre TOUR PC est en attente de validation par un responsable technique. Nous vous tenons inform\u00e9 tr\u00e8s bient\u00f4t.\r\n\ud83d\udcf2 Suivi : http:\/\/Mdgeek.top\/suivi.php?id=592\r\nMaison du Geek \u2013 08 95 79 59 33","phoneNumbers":["+33682366934"]}
+[2025-04-19 13:24:30] Exécution de la requête cURL...
+[2025-04-19 13:24:30] Code HTTP: 202
+[2025-04-19 13:24:30] Temps: 216 ms
+[2025-04-19 13:24:30] Réponse: {"id":"2uCZ3MQLO2pRQ5Knqiyb5","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33682366934","state":"Pending"}],"states":null}
+[2025-04-19 13:24:30] Destinataire: +33682366934, Message: Bonjour ..., votre dossier 592..., Statut: 202, Réponse: {"id":"2uCZ3MQLO2pRQ5Knqiyb5","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33682366934","state":"Pending"}],"states":null}
+[2025-04-19 13:24:30] SMS enregistré dans la base de données, ID: 252
+[2025-04-19 13:24:30] === ENVOI SMS RÉUSSI ===
+[2025-04-19 13:43:47] === ENVOI SMS DÉMARRÉ ===
+[2025-04-19 13:43:47] Destinataire: 33614341278
+[2025-04-19 13:43:47] Message: Bonjour Sav, votre dossier 623...
+[2025-04-19 13:43:47] URL API: https://api.sms-gate.app/3rdparty/v1/message
+[2025-04-19 13:43:47] Utilisateur: -GCB75
+[2025-04-19 13:43:47] Numéro formaté: +33614341278
+[2025-04-19 13:43:47] Données JSON: {"message":"Bonjour Sav, votre dossier 623 au sujet de votre Saber est en attente de validation par un responsable technique. Nous vous tenons inform\u00e9 tr\u00e8s bient\u00f4t.\r\n\ud83d\udcf2 Suivi : http:\/\/Mdgeek.top\/suivi.php?id=623\r\nMaison du Geek \u2013 08 95 79 59 33","phoneNumbers":["+33614341278"]}
+[2025-04-19 13:43:47] Exécution de la requête cURL...
+[2025-04-19 13:43:47] Code HTTP: 202
+[2025-04-19 13:43:47] Temps: 338 ms
+[2025-04-19 13:43:47] Réponse: {"id":"z1xmvJ3rj5I32xaocIyrN","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33614341278","state":"Pending"}],"states":null}
+[2025-04-19 13:43:47] Destinataire: +33614341278, Message: Bonjour Sav, votre dossier 623..., Statut: 202, Réponse: {"id":"z1xmvJ3rj5I32xaocIyrN","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33614341278","state":"Pending"}],"states":null}
+[2025-04-19 13:43:47] SMS enregistré dans la base de données, ID: 253
+[2025-04-19 13:43:47] === ENVOI SMS RÉUSSI ===
+[2025-04-19 15:27:54] === ENVOI SMS DÉMARRÉ ===
+[2025-04-19 15:27:54] Destinataire: 33664995745
+[2025-04-19 15:27:54] Message: Franck, votre iPad A2297 est p...
+[2025-04-19 15:27:54] URL API: https://api.sms-gate.app/3rdparty/v1/message
+[2025-04-19 15:27:54] Utilisateur: -GCB75
+[2025-04-19 15:27:54] Numéro formaté: +33664995745
+[2025-04-19 15:27:54] Données JSON: {"message":"Franck, votre iPad A2297 est pr\u00eat ! Il vous attend pour retrouver une vie normale. \ud83e\udd73\r\n\ud83e\uddfe Suivi : http:\/\/Mdgeek.top\/suivi.php?id=589\r\nMaison du Geek \u2013 08 95 79 59 33","phoneNumbers":["+33664995745"]}
+[2025-04-19 15:27:54] Exécution de la requête cURL...
+[2025-04-19 15:27:54] Code HTTP: 202
+[2025-04-19 15:27:54] Temps: 303 ms
+[2025-04-19 15:27:54] Réponse: {"id":"MB-iFwl8HdD_8bZJQyZWy","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33664995745","state":"Pending"}],"states":null}
+[2025-04-19 15:27:54] Destinataire: +33664995745, Message: Franck, votre iPad A2297 est p..., Statut: 202, Réponse: {"id":"MB-iFwl8HdD_8bZJQyZWy","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33664995745","state":"Pending"}],"states":null}
+[2025-04-19 15:27:54] SMS enregistré dans la base de données, ID: 254
+[2025-04-19 15:27:54] === ENVOI SMS RÉUSSI ===
+[2025-04-19 15:30:13] === ENVOI SMS DÉMARRÉ ===
+[2025-04-19 15:30:13] Destinataire: 33664995745
+[2025-04-19 15:30:13] Message: Bonjour Franck, votre dossier ...
+[2025-04-19 15:30:13] URL API: https://api.sms-gate.app/3rdparty/v1/message
+[2025-04-19 15:30:13] Utilisateur: -GCB75
+[2025-04-19 15:30:13] Numéro formaté: +33664995745
+[2025-04-19 15:30:13] Données JSON: {"message":"Bonjour Franck, votre dossier 589 au sujet de votre iPad A2297 est en attente de validation par un responsable technique. Nous vous tenons inform\u00e9 tr\u00e8s bient\u00f4t.\r\n\ud83d\udcf2 Suivi : http:\/\/Mdgeek.top\/suivi.php?id=589\r\nMaison du Geek \u2013 08 95 79 59 33","phoneNumbers":["+33664995745"]}
+[2025-04-19 15:30:13] Exécution de la requête cURL...
+[2025-04-19 15:30:13] Code HTTP: 202
+[2025-04-19 15:30:13] Temps: 323 ms
+[2025-04-19 15:30:13] Réponse: {"id":"a4_dD57_BUInAFi-FvD1E","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33664995745","state":"Pending"}],"states":null}
+[2025-04-19 15:30:13] Destinataire: +33664995745, Message: Bonjour Franck, votre dossier ..., Statut: 202, Réponse: {"id":"a4_dD57_BUInAFi-FvD1E","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33664995745","state":"Pending"}],"states":null}
+[2025-04-19 15:30:13] SMS enregistré dans la base de données, ID: 255
+[2025-04-19 15:30:13] === ENVOI SMS RÉUSSI ===
+[2025-04-19 15:37:36] === ENVOI SMS DÉMARRÉ ===
+[2025-04-19 15:37:36] Destinataire: +33627532376
+[2025-04-19 15:37:36] Message: 👋 Bonjour thierry,
+🛠️...
+[2025-04-19 15:37:36] URL API: https://api.sms-gate.app/3rdparty/v1/message
+[2025-04-19 15:37:36] Utilisateur: -GCB75
+[2025-04-19 15:37:36] Numéro formaté: +33627532376
+[2025-04-19 15:37:36] Données JSON: {"message":"\ud83d\udc4b Bonjour thierry,\r\n\ud83d\udee0\ufe0f Nous avons bien re\u00e7u votre samsung a25 5g et nos experts geeks sont d\u00e9j\u00e0 \u00e0 l'\u0153uvre pour le remettre en \u00e9tat.\r\n\ud83d\udd0e Suivez l'avancement de la r\u00e9paration ici :\r\n\ud83d\udc49 http:\/\/Mdgeek.top\/suivi.php?id=630\r\n\ud83d\udcde Une question ? Contactez nous au 08 95 79 59 33\r\n\ud83c\udfe0 Maison du GEEK \ud83d\udee0\ufe0f","phoneNumbers":["+33627532376"]}
+[2025-04-19 15:37:36] Exécution de la requête cURL...
+[2025-04-19 15:37:37] Code HTTP: 202
+[2025-04-19 15:37:37] Temps: 326 ms
+[2025-04-19 15:37:37] Réponse: {"id":"s71LIPz2FtiT55mS8IdNG","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33627532376","state":"Pending"}],"states":null}
+[2025-04-19 15:37:37] Destinataire: +33627532376, Message: 👋 Bonjour thierry,
+🛠️..., Statut: 202, Réponse: {"id":"s71LIPz2FtiT55mS8IdNG","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33627532376","state":"Pending"}],"states":null}
+[2025-04-19 15:37:37] SMS enregistré dans la base de données, ID: 256
+[2025-04-19 15:37:37] === ENVOI SMS RÉUSSI ===
+[2025-04-19 15:40:47] === ENVOI SMS DÉMARRÉ ===
+[2025-04-19 15:40:47] Destinataire: 33782962906
+[2025-04-19 15:40:47] Message: 👋 Bonjour saber,
+🛠️ N...
+[2025-04-19 15:40:47] URL API: https://api.sms-gate.app/3rdparty/v1/message
+[2025-04-19 15:40:47] Utilisateur: -GCB75
+[2025-04-19 15:40:47] Numéro formaté: +33782962906
+[2025-04-19 15:40:47] Données JSON: {"message":"\ud83d\udc4b Bonjour saber,\r\n\ud83d\udee0\ufe0f Nous avons bien re\u00e7u votre Test et nos experts geeks sont d\u00e9j\u00e0 \u00e0 l'\u0153uvre pour le remettre en \u00e9tat.\r\n\ud83d\udd0e Suivez l'avancement de la r\u00e9paration ici :\r\n\ud83d\udc49 http:\/\/Mdgeek.top\/suivi.php?id=631\r\n\ud83d\udcde Une question ? Contactez nous au 08 95 79 59 33\r\n\ud83c\udfe0 Maison du GEEK \ud83d\udee0\ufe0f","phoneNumbers":["+33782962906"]}
+[2025-04-19 15:40:47] Exécution de la requête cURL...
+[2025-04-19 15:40:47] Code HTTP: 202
+[2025-04-19 15:40:47] Temps: 314 ms
+[2025-04-19 15:40:47] Réponse: {"id":"19u0EPyBxuXzvlDBwk-Ak","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33782962906","state":"Pending"}],"states":null}
+[2025-04-19 15:40:47] Destinataire: +33782962906, Message: 👋 Bonjour saber,
+🛠️ N..., Statut: 202, Réponse: {"id":"19u0EPyBxuXzvlDBwk-Ak","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33782962906","state":"Pending"}],"states":null}
+[2025-04-19 15:40:47] SMS enregistré dans la base de données, ID: 257
+[2025-04-19 15:40:47] === ENVOI SMS RÉUSSI ===
+[2025-04-19 21:23:47] === TRAITEMENT REQUÊTE SMS ===
+[2025-04-19 21:23:47] Données reçues: {"client_id":"414","telephone":"33782962906","template":"4","message":"Bonjour, [CLIENT_PRENOM], votre devis pour le [APPAREIL_MODELE] est disponible. \r\nConsultez-le ici :\r\n\ud83d\udcc4 http:\/\/Mdgeek.top\/suivi.php?id=[REPARATION_ID]\r\nUne question ? Appelez-nous au 04 93 46 71 63\r\nMAISON DU GEEK"}
+[2025-04-19 21:23:47] Variables à remplacer trouvées: [CLIENT_PRENOM], [REPARATION_ID], [APPAREIL_MODELE]
+[2025-04-19 21:23:47] Données récupérées - Client: Oui, Réparation: Oui
+[2025-04-19 21:23:47] Message après remplacement des variables: Bonjour, saber, votre devis pour le Test est disponible. 
+Consultez-le ici :
+📄 http://Mdgeek.top/suivi.php?id=631
+Une question ? Appelez-nous au 04 93 46 71 63
+MAISON DU GEEK
+[2025-04-19 21:23:47] Envoi du SMS au numéro: 33782962906
+[2025-04-19 21:43:09] === TRAITEMENT REQUÊTE SMS ===
+[2025-04-19 21:43:09] Données reçues: {"client_id":"414","telephone":"33782962906","template":"13","message":"\ud83d\ude14 [CLIENT_PRENOM],\r\nOn a tout tent\u00e9 pour r\u00e9parer ton [APPAREIL_MODELE], mais pour raisons techniques, on a d\u00fb annuler la r\u00e9paration.\r\n\ud83d\udd0d D\u00e9tails : http:\/\/Mdgeek.top\/suivi.php?id=[REPARATION_ID]\r\n\ud83d\udcde Une Question ?  08 95 79 59 33\r\n\ud83c\udfe0 Maison du Geek"}
+[2025-04-19 21:43:09] Variables à remplacer trouvées: [CLIENT_PRENOM], [REPARATION_ID], [APPAREIL_MODELE]
+[2025-04-19 21:43:09] Données récupérées - Client: Oui, Réparation: Oui
+[2025-04-19 21:43:09] Message après remplacement des variables: 😔 saber,
+On a tout tenté pour réparer ton Test, mais pour raisons techniques, on a dû annuler la réparation.
+🔍 Détails : http://Mdgeek.top/suivi.php?id=631
+📞 Une Question ?  08 95 79 59 33
+🏠 Maison du Geek
+[2025-04-19 21:43:09] Envoi du SMS au numéro: 33782962906
+[2025-04-19 21:47:13] === TRAITEMENT REQUÊTE SMS ===
+[2025-04-19 21:47:13] Données reçues: {"client_id":"414","telephone":"33782962906","template":"4","message":"Bonjour, [CLIENT_PRENOM], \r\nle devis de votre [APPAREIL_MODELE] est disponible. \r\nMontant : [PRIX]\r\nConsultez-le ici :\r\n\ud83d\udcc4 http:\/\/Mdgeek.top\/suivi.php?id=[REPARATION_ID]\r\nUne question ? Appelez-nous au 04 93 46 71 63\r\nMAISON DU GEEK"}
+[2025-04-19 21:47:13] Variables à remplacer trouvées: [CLIENT_PRENOM], [REPARATION_ID], [APPAREIL_MODELE], [PRIX]
+[2025-04-19 21:47:13] Données récupérées - Client: Oui, Réparation: Oui
+[2025-04-19 21:47:13] Message après remplacement des variables: Bonjour, saber, 
+le devis de votre Test est disponible. 
+Montant : 20,00 €
+Consultez-le ici :
+📄 http://Mdgeek.top/suivi.php?id=631
+Une question ? Appelez-nous au 04 93 46 71 63
+MAISON DU GEEK
+[2025-04-19 21:47:13] Envoi du SMS au numéro: 33782962906
+[2025-04-19 21:47:59] === TRAITEMENT REQUÊTE SMS ===
+[2025-04-19 21:47:59] Données reçues: {"client_id":"414","telephone":"33782962906","template":"8","message":"\ud83d\udc4b Hello [CLIENT_PRENOM],\r\nVotre devis pour le \ud83d\udcf1 [APPAREIL_MODELE] est pr\u00eat !\r\n\ud83e\uddd0 Consultez-le ici :\r\n\ud83d\udd17 http:\/\/Mdgeek.top\/suivi.php?id=[REPARATION_ID]\r\n\ud83d\udcde Une question ? Appelez-nous au \u260e\ufe0f 04 93 46 71 63\r\n\ud83c\udfe0 Maison du Geek \u2013 \ud83d\udcf1 08 95 79 59 33"}
+[2025-04-19 21:47:59] Variables à remplacer trouvées: [CLIENT_PRENOM], [REPARATION_ID], [APPAREIL_MODELE]
+[2025-04-19 21:47:59] Données récupérées - Client: Oui, Réparation: Oui
+[2025-04-19 21:47:59] Message après remplacement des variables: 👋 Hello saber,
+Votre devis pour le 📱 Test est prêt !
+🧐 Consultez-le ici :
+🔗 http://Mdgeek.top/suivi.php?id=631
+📞 Une question ? Appelez-nous au ☎️ 04 93 46 71 63
+🏠 Maison du Geek – 📱 08 95 79 59 33
+[2025-04-19 21:47:59] Envoi du SMS au numéro: 33782962906
+[2025-04-19 21:48:32] === TRAITEMENT REQUÊTE SMS ===
+[2025-04-19 21:48:32] Données reçues: {"client_id":"414","telephone":"33782962906","template":"8","message":"\ud83d\udc4b Hello [CLIENT_PRENOM],\r\nVotre devis pour le \ud83d\udcf1 [APPAREIL_MODELE] est pr\u00eat !\r\n\ud83e\uddd0 Consultez-le ici :\r\n\ud83d\udd17 http:\/\/Mdgeek.top\/suivi.php?id=[REPARATION_ID]\r\n\ud83d\udcde Une question ? Appelez-nous au \u260e\ufe0f 04 93 46 71 63\r\n\ud83c\udfe0 Maison du Geek \u2013 \ud83d\udcf1 08 95 79 59 33"}
+[2025-04-19 21:48:32] Variables à remplacer trouvées: [CLIENT_PRENOM], [REPARATION_ID], [APPAREIL_MODELE]
+[2025-04-19 21:48:32] Données récupérées - Client: Oui, Réparation: Oui
+[2025-04-19 21:48:32] Message après remplacement des variables: 👋 Hello saber,
+Votre devis pour le 📱 Test est prêt !
+🧐 Consultez-le ici :
+🔗 http://Mdgeek.top/suivi.php?id=631
+📞 Une question ? Appelez-nous au ☎️ 04 93 46 71 63
+🏠 Maison du Geek – 📱 08 95 79 59 33
+[2025-04-19 21:48:32] Envoi du SMS au numéro: 33782962906
+[2025-04-19 21:48:41] === TRAITEMENT REQUÊTE SMS ===
+[2025-04-19 21:48:41] Données reçues: {"client_id":"414","telephone":"33782962906","template":"8","message":"\ud83d\udc4b Hello [CLIENT_PRENOM],\r\nVotre devis pour le \ud83d\udcf1 [APPAREIL_MODELE] est pr\u00eat !\r\n\ud83e\uddd0 Consultez-le ici :\r\n\ud83d\udd17 http:\/\/Mdgeek.top\/suivi.php?id=[REPARATION_ID]\r\n\ud83d\udcde Une question ? Appelez-nous au \u260e\ufe0f 04 93 46 71 63\r\n\ud83c\udfe0 Maison du Geek \u2013 \ud83d\udcf1 08 95 79 59 33"}
+[2025-04-19 21:48:41] Variables à remplacer trouvées: [CLIENT_PRENOM], [REPARATION_ID], [APPAREIL_MODELE]
+[2025-04-19 21:48:41] Données récupérées - Client: Oui, Réparation: Oui
+[2025-04-19 21:48:41] Message après remplacement des variables: 👋 Hello saber,
+Votre devis pour le 📱 Test est prêt !
+🧐 Consultez-le ici :
+🔗 http://Mdgeek.top/suivi.php?id=631
+📞 Une question ? Appelez-nous au ☎️ 04 93 46 71 63
+🏠 Maison du Geek – 📱 08 95 79 59 33
+[2025-04-19 21:48:41] Envoi du SMS au numéro: 33782962906
+[2025-04-19 21:50:38] === TRAITEMENT REQUÊTE SMS ===
+[2025-04-19 21:50:38] Données reçues: {"client_id":"414","telephone":"33782962906","template":"9","message":"Bonjour [CLIENT_PRENOM], votre dossier [REPARATION_ID] au sujet de votre [APPAREIL_MODELE] est en attente de validation par un responsable technique. Nous vous tenons inform\u00e9 tr\u00e8s bient\u00f4t.\r\n\ud83d\udcf2 Suivi : http:\/\/Mdgeek.top\/suivi.php?id=[REPARATION_ID]\r\nMaison du Geek \u2013 08 95 79 59 33"}
+[2025-04-19 21:50:38] Variables à remplacer trouvées: [CLIENT_PRENOM], [REPARATION_ID], [APPAREIL_MODELE]
+[2025-04-19 21:50:38] Données récupérées - Client: Oui, Réparation: Oui
+[2025-04-19 21:50:38] Message après remplacement des variables: Bonjour saber, votre dossier 631 au sujet de votre Test est en attente de validation par un responsable technique. Nous vous tenons informé très bientôt.
+📲 Suivi : http://Mdgeek.top/suivi.php?id=631
+Maison du Geek – 08 95 79 59 33
+[2025-04-19 21:50:38] Envoi du SMS au numéro: 33782962906
+[2025-04-19 21:50:38] Numéro formaté: +33782962906
+[2025-04-19 21:50:38] Données JSON: {"message":"Bonjour saber, votre dossier 631 au sujet de votre Test est en attente de validation par un responsable technique. Nous vous tenons inform\u00e9 tr\u00e8s bient\u00f4t.\r\n\ud83d\udcf2 Suivi : http:\/\/Mdgeek.top\/suivi.php?id=631\r\nMaison du Geek \u2013 08 95 79 59 33","phoneNumbers":["+33782962906"]}
+[2025-04-19 21:50:38] Exécution de la requête cURL...
+[2025-04-19 21:50:38] Code HTTP: 202
+[2025-04-19 21:50:38] Réponse: {"id":"Y9fZcZ8ZjaHMRgAJvhPWZ","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33782962906","state":"Pending"}],"states":null}
+[2025-04-19 21:50:38] Envoi SMS réussi
+[2025-04-19 21:50:38] Erreur lors de l'enregistrement du SMS: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'client_id' in 'INSERT INTO'
+[2025-04-19 21:50:38] Résultat final: {"success":true,"message":"SMS envoy\u00e9 avec succ\u00e8s","response":{"id":"Y9fZcZ8ZjaHMRgAJvhPWZ","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33782962906","state":"Pending"}],"states":null}}
+[2025-04-19 21:50:46] === TRAITEMENT REQUÊTE SMS ===
+[2025-04-19 21:50:46] Données reçues: {"client_id":"414","telephone":"33782962906","template":"6","message":"\ud83d\udc4b Bonjour [CLIENT_PRENOM],\r\n\ud83d\udee0\ufe0f Nous avons bien re\u00e7u votre [APPAREIL_MODELE] et nos experts geeks sont d\u00e9j\u00e0 \u00e0 l'\u0153uvre pour le remettre en \u00e9tat.\r\n\ud83d\udd0e Suivez l'avancement de la r\u00e9paration ici :\r\n\ud83d\udc49 http:\/\/Mdgeek.top\/suivi.php?id=[REPARATION_ID]\r\n\ud83d\udcde Une question ? Contactez nous au 08 95 79 59 33\r\n\ud83c\udfe0 Maison du GEEK \ud83d\udee0\ufe0f"}
+[2025-04-19 21:50:46] Variables à remplacer trouvées: [CLIENT_PRENOM], [REPARATION_ID], [APPAREIL_MODELE]
+[2025-04-19 21:50:46] Données récupérées - Client: Oui, Réparation: Oui
+[2025-04-19 21:50:46] Message après remplacement des variables: 👋 Bonjour saber,
+🛠️ Nous avons bien reçu votre Test et nos experts geeks sont déjà à l'œuvre pour le remettre en état.
+🔎 Suivez l'avancement de la réparation ici :
+👉 http://Mdgeek.top/suivi.php?id=631
+📞 Une question ? Contactez nous au 08 95 79 59 33
+🏠 Maison du GEEK 🛠️
+[2025-04-19 21:50:46] Envoi du SMS au numéro: 33782962906
+[2025-04-19 21:50:46] Numéro formaté: +33782962906
+[2025-04-19 21:50:46] Données JSON: {"message":"\ud83d\udc4b Bonjour saber,\r\n\ud83d\udee0\ufe0f Nous avons bien re\u00e7u votre Test et nos experts geeks sont d\u00e9j\u00e0 \u00e0 l'\u0153uvre pour le remettre en \u00e9tat.\r\n\ud83d\udd0e Suivez l'avancement de la r\u00e9paration ici :\r\n\ud83d\udc49 http:\/\/Mdgeek.top\/suivi.php?id=631\r\n\ud83d\udcde Une question ? Contactez nous au 08 95 79 59 33\r\n\ud83c\udfe0 Maison du GEEK \ud83d\udee0\ufe0f","phoneNumbers":["+33782962906"]}
+[2025-04-19 21:50:46] Exécution de la requête cURL...
+[2025-04-19 21:50:46] Code HTTP: 202
+[2025-04-19 21:50:46] Réponse: {"id":"1juRP0shUcjPICoUd9sG6","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33782962906","state":"Pending"}],"states":null}
+[2025-04-19 21:50:46] Envoi SMS réussi
+[2025-04-19 21:50:46] Erreur lors de l'enregistrement du SMS: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'client_id' in 'INSERT INTO'
+[2025-04-19 21:50:46] Résultat final: {"success":true,"message":"SMS envoy\u00e9 avec succ\u00e8s","response":{"id":"1juRP0shUcjPICoUd9sG6","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33782962906","state":"Pending"}],"states":null}}
+[2025-04-19 23:47:34] === TRAITEMENT REQUÊTE SMS ===
+[2025-04-19 23:47:34] Données reçues: {"client_id":"414","telephone":"33782962906","template":"13","message":"\ud83d\ude14 [CLIENT_PRENOM],\r\nOn a tout tent\u00e9 pour r\u00e9parer ton [APPAREIL_MODELE], mais pour raisons techniques, on a d\u00fb annuler la r\u00e9paration.\r\n\ud83d\udd0d D\u00e9tails : http:\/\/Mdgeek.top\/suivi.php?id=[REPARATION_ID]\r\n\ud83d\udcde Une Question ?  08 95 79 59 33\r\n\ud83c\udfe0 Maison du Geek\ud83d\ude14 [CLIENT_PRENOM],\r\nOn a tout tent\u00e9 pour r\u00e9parer ton [APPAREIL_MODELE], mais pour raisons techniques, on a d\u00fb annuler la r\u00e9paration.\r\n\ud83d\udd0d D\u00e9tails : http:\/\/Mdgeek.top\/suivi.php?id=[REPARATION_ID]\r\n\ud83d\udcde Une Question ?  08 95 79 59 33\r\n\ud83c\udfe0 Maison du Geek\ud83d\ude14 [CLIENT_PRENOM],\r\nOn a tout tent\u00e9 pour r\u00e9parer ton [APPAREIL_MODELE], mais pour raisons techniques, on a d\u00fb annuler la r\u00e9paration.\r\n\ud83d\udd0d D\u00e9tails : http:\/\/Mdgeek.top\/suivi.php?id=[REPARATION_ID]\r\n\ud83d\udcde Une Question ?  08 95 79 59 33\r\n\ud83c\udfe0 Maison du Geek\ud83d\ude14 [CLIENT_PRENOM],\r\nOn a tout tent\u00e9 pour r\u00e9parer ton [APPAREIL_MODELE], mais pour raisons techniques, on a d\u00fb annuler la r\u00e9paration.\r\n\ud83d\udd0d D\u00e9tails : http:\/\/Mdgeek.top\/suivi.php?id=[REPARATION_ID]\r\n\ud83d\udcde Une Question ?  08 95 79 59 33\r\n\ud83c\udfe0 Maison du Geek\ud83d\ude14 [CLIENT_PRENOM],\r\nOn a tout tent\u00e9 pour r\u00e9parer ton [APPAREIL_MODELE], mais pour raisons techniques, on a d\u00fb annuler la r\u00e9paration.\r\n\ud83d\udd0d D\u00e9tails : http:\/\/Mdgeek.top\/suivi.php?id=[REPARATION_ID]\r\n\ud83d\udcde Une Question ?  08 95 79 59 33\r\n\ud83c\udfe0 Maison du Geek"}
+[2025-04-19 23:47:34] Variables à remplacer trouvées: [CLIENT_PRENOM], [REPARATION_ID], [APPAREIL_MODELE]
+[2025-04-19 23:47:34] Données récupérées - Client: Oui, Réparation: Oui
+[2025-04-19 23:47:34] Message après remplacement des variables: 😔 saber,
+On a tout tenté pour réparer ton Test, mais pour raisons techniques, on a dû annuler la réparation.
+🔍 Détails : http://Mdgeek.top/suivi.php?id=631
+📞 Une Question ?  08 95 79 59 33
+🏠 Maison du Geek😔 saber,
+On a tout tenté pour réparer ton Test, mais pour raisons techniques, on a dû annuler la réparation.
+🔍 Détails : http://Mdgeek.top/suivi.php?id=631
+📞 Une Question ?  08 95 79 59 33
+🏠 Maison du Geek😔 saber,
+On a tout tenté pour réparer ton Test, mais pour raisons techniques, on a dû annuler la réparation.
+🔍 Détails : http://Mdgeek.top/suivi.php?id=631
+📞 Une Question ?  08 95 79 59 33
+🏠 Maison du Geek😔 saber,
+On a tout tenté pour réparer ton Test, mais pour raisons techniques, on a dû annuler la réparation.
+🔍 Détails : http://Mdgeek.top/suivi.php?id=631
+📞 Une Question ?  08 95 79 59 33
+🏠 Maison du Geek😔 saber,
+On a tout tenté pour réparer ton Test, mais pour raisons techniques, on a dû annuler la réparation.
+🔍 Détails : http://Mdgeek.top/suivi.php?id=631
+📞 Une Question ?  08 95 79 59 33
+🏠 Maison du Geek
+[2025-04-19 23:47:34] Envoi du SMS au numéro: 33782962906
+[2025-04-19 23:47:34] Numéro formaté: +33782962906
+[2025-04-19 23:47:34] Données JSON: {"message":"\ud83d\ude14 saber,\r\nOn a tout tent\u00e9 pour r\u00e9parer ton Test, mais pour raisons techniques, on a d\u00fb annuler la r\u00e9paration.\r\n\ud83d\udd0d D\u00e9tails : http:\/\/Mdgeek.top\/suivi.php?id=631\r\n\ud83d\udcde Une Question ?  08 95 79 59 33\r\n\ud83c\udfe0 Maison du Geek\ud83d\ude14 saber,\r\nOn a tout tent\u00e9 pour r\u00e9parer ton Test, mais pour raisons techniques, on a d\u00fb annuler la r\u00e9paration.\r\n\ud83d\udd0d D\u00e9tails : http:\/\/Mdgeek.top\/suivi.php?id=631\r\n\ud83d\udcde Une Question ?  08 95 79 59 33\r\n\ud83c\udfe0 Maison du Geek\ud83d\ude14 saber,\r\nOn a tout tent\u00e9 pour r\u00e9parer ton Test, mais pour raisons techniques, on a d\u00fb annuler la r\u00e9paration.\r\n\ud83d\udd0d D\u00e9tails : http:\/\/Mdgeek.top\/suivi.php?id=631\r\n\ud83d\udcde Une Question ?  08 95 79 59 33\r\n\ud83c\udfe0 Maison du Geek\ud83d\ude14 saber,\r\nOn a tout tent\u00e9 pour r\u00e9parer ton Test, mais pour raisons techniques, on a d\u00fb annuler la r\u00e9paration.\r\n\ud83d\udd0d D\u00e9tails : http:\/\/Mdgeek.top\/suivi.php?id=631\r\n\ud83d\udcde Une Question ?  08 95 79 59 33\r\n\ud83c\udfe0 Maison du Geek\ud83d\ude14 saber,\r\nOn a tout tent\u00e9 pour r\u00e9parer ton Test, mais pour raisons techniques, on a d\u00fb annuler la r\u00e9paration.\r\n\ud83d\udd0d D\u00e9tails : http:\/\/Mdgeek.top\/suivi.php?id=631\r\n\ud83d\udcde Une Question ?  08 95 79 59 33\r\n\ud83c\udfe0 Maison du Geek","phoneNumbers":["+33782962906"]}
+[2025-04-19 23:47:34] Exécution de la requête cURL...
+[2025-04-19 23:47:34] Code HTTP: 202
+[2025-04-19 23:47:34] Réponse: {"id":"emNVQEVb7VSBhT-R5hmqp","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33782962906","state":"Pending"}],"states":null}
+[2025-04-19 23:47:34] Envoi SMS réussi
+[2025-04-19 23:47:34] Erreur lors de l'enregistrement du SMS: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'client_id' in 'INSERT INTO'
+[2025-04-19 23:47:34] Résultat final: {"success":true,"message":"SMS envoy\u00e9 avec succ\u00e8s","response":{"id":"emNVQEVb7VSBhT-R5hmqp","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33782962906","state":"Pending"}],"states":null}}
+[2025-04-19 23:48:01] === TRAITEMENT REQUÊTE SMS ===
+[2025-04-19 23:48:01] Données reçues: {"client_id":"414","telephone":"33782962906","template":"","message":"\ud83d\ude14 [CLIENT_PRENOM],\r\nOn a tout tent\u00e9 pour r\u00e9parer ton [APPAREIL_MODELE], mais pour raisons techniques, on a d\u00fb annuler la r\u00e9paration.\r\n\ud83d\udd0d D\u00e9tails : http:\/\/Mdgeek.top\/suivi.php?id=[REPARATION_ID]\r\n\ud83d\udcde Une Question ?  08 95 79 59 33\r\n\ud83c\udfe0 Maison du Geek\ud83d\ude14 [CLIENT_PRENOM],\r\nOn a tout tent\u00e9 pour r\u00e9parer ton [APPAREIL_MODELE], mais pour raisons techniques, on a d\u00fb annuler la r\u00e9paration.\r\n\ud83d\udd0d D\u00e9tails : http:\/\/Mdgeek.top\/suivi.php?id=[REPARATION_ID]\r\n\ud83d\udcde Une Question ?  08 95 79 59 33\r\n\ud83c\udfe0 Maison du Geek"}
+[2025-04-19 23:48:01] Variables à remplacer trouvées: [CLIENT_PRENOM], [REPARATION_ID], [APPAREIL_MODELE]
+[2025-04-19 23:48:01] Données récupérées - Client: Oui, Réparation: Oui
+[2025-04-19 23:48:01] Message après remplacement des variables: 😔 saber,
+On a tout tenté pour réparer ton Test, mais pour raisons techniques, on a dû annuler la réparation.
+🔍 Détails : http://Mdgeek.top/suivi.php?id=631
+📞 Une Question ?  08 95 79 59 33
+🏠 Maison du Geek😔 saber,
+On a tout tenté pour réparer ton Test, mais pour raisons techniques, on a dû annuler la réparation.
+🔍 Détails : http://Mdgeek.top/suivi.php?id=631
+📞 Une Question ?  08 95 79 59 33
+🏠 Maison du Geek
+[2025-04-19 23:48:01] Envoi du SMS au numéro: 33782962906
+[2025-04-19 23:48:01] Numéro formaté: +33782962906
+[2025-04-19 23:48:01] Données JSON: {"message":"\ud83d\ude14 saber,\r\nOn a tout tent\u00e9 pour r\u00e9parer ton Test, mais pour raisons techniques, on a d\u00fb annuler la r\u00e9paration.\r\n\ud83d\udd0d D\u00e9tails : http:\/\/Mdgeek.top\/suivi.php?id=631\r\n\ud83d\udcde Une Question ?  08 95 79 59 33\r\n\ud83c\udfe0 Maison du Geek\ud83d\ude14 saber,\r\nOn a tout tent\u00e9 pour r\u00e9parer ton Test, mais pour raisons techniques, on a d\u00fb annuler la r\u00e9paration.\r\n\ud83d\udd0d D\u00e9tails : http:\/\/Mdgeek.top\/suivi.php?id=631\r\n\ud83d\udcde Une Question ?  08 95 79 59 33\r\n\ud83c\udfe0 Maison du Geek","phoneNumbers":["+33782962906"]}
+[2025-04-19 23:48:01] Exécution de la requête cURL...
+[2025-04-19 23:48:01] Code HTTP: 202
+[2025-04-19 23:48:01] Réponse: {"id":"QYnRR_TzgzSyUGYZHrd6G","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33782962906","state":"Pending"}],"states":null}
+[2025-04-19 23:48:01] Envoi SMS réussi
+[2025-04-19 23:48:01] Erreur lors de l'enregistrement du SMS: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'client_id' in 'INSERT INTO'
+[2025-04-19 23:48:01] Résultat final: {"success":true,"message":"SMS envoy\u00e9 avec succ\u00e8s","response":{"id":"QYnRR_TzgzSyUGYZHrd6G","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33782962906","state":"Pending"}],"states":null}}
+[2025-04-19 23:48:07] === TRAITEMENT REQUÊTE SMS ===
+[2025-04-19 23:48:07] Données reçues: {"client_id":"414","telephone":"33782962906","template":"","message":"\ud83d\ude14 [CLIENT_PRENOM],\r\nOn a tout tent\u00e9 pour r\u00e9parer ton [APPAREIL_MODELE], mais pour raisons techniques, on a d\u00fb annuler la r\u00e9paration.\r\n\ud83d\udd0d D\u00e9tails : http:\/\/Mdgeek.top\/suivi.php?id=[REPARATION_ID]\r\n\ud83d\udcde Une Question ?  08 95 79 59 33\r\n\ud83c\udfe0 Maison du Geek"}
+[2025-04-19 23:48:07] Variables à remplacer trouvées: [CLIENT_PRENOM], [REPARATION_ID], [APPAREIL_MODELE]
+[2025-04-19 23:48:07] Données récupérées - Client: Oui, Réparation: Oui
+[2025-04-19 23:48:07] Message après remplacement des variables: 😔 saber,
+On a tout tenté pour réparer ton Test, mais pour raisons techniques, on a dû annuler la réparation.
+🔍 Détails : http://Mdgeek.top/suivi.php?id=631
+📞 Une Question ?  08 95 79 59 33
+🏠 Maison du Geek
+[2025-04-19 23:48:07] Envoi du SMS au numéro: 33782962906
+[2025-04-19 23:48:07] Numéro formaté: +33782962906
+[2025-04-19 23:48:07] Données JSON: {"message":"\ud83d\ude14 saber,\r\nOn a tout tent\u00e9 pour r\u00e9parer ton Test, mais pour raisons techniques, on a d\u00fb annuler la r\u00e9paration.\r\n\ud83d\udd0d D\u00e9tails : http:\/\/Mdgeek.top\/suivi.php?id=631\r\n\ud83d\udcde Une Question ?  08 95 79 59 33\r\n\ud83c\udfe0 Maison du Geek","phoneNumbers":["+33782962906"]}
+[2025-04-19 23:48:07] Exécution de la requête cURL...
+[2025-04-19 23:48:07] Code HTTP: 202
+[2025-04-19 23:48:07] Réponse: {"id":"vIaLDkpiltgJL7X5V9SgL","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33782962906","state":"Pending"}],"states":null}
+[2025-04-19 23:48:07] Envoi SMS réussi
+[2025-04-19 23:48:07] Erreur lors de l'enregistrement du SMS: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'client_id' in 'INSERT INTO'
+[2025-04-19 23:48:07] Résultat final: {"success":true,"message":"SMS envoy\u00e9 avec succ\u00e8s","response":{"id":"vIaLDkpiltgJL7X5V9SgL","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33782962906","state":"Pending"}],"states":null}}
+[2025-04-19 23:48:38] === TRAITEMENT REQUÊTE SMS ===
+[2025-04-19 23:48:38] Données reçues: {"client_id":"414","telephone":"33782962906","template":"","message":"\ud83d\ude14 [CLIENT_PRENOM],\r\nOn a tout tent\u00e9 pour r\u00e9parer ton [APPAREIL_MODELE], mais pour raisons techniques, on a d\u00fb annuler la r\u00e9paration.\r\n\ud83d\udd0d D\u00e9tails : http:\/\/Mdgeek.top\/suivi.php?id=[REPARATION_ID]\r\n\ud83d\udcde Une Question ?  08 95 79 59 33\r\n\ud83c\udfe0 Maison du Geek\ud83d\ude14 [CLIENT_PRENOM],\r\nOn a tout tent\u00e9 pour r\u00e9parer ton [APPAREIL_MODELE], mais pour raisons techniques, on a d\u00fb annuler la r\u00e9paration.\r\n\ud83d\udd0d D\u00e9tails : http:\/\/Mdgeek.top\/suivi.php?id=[REPARATION_ID]\r\n\ud83d\udcde Une Question ?  08 95 79 59 33\r\n\ud83c\udfe0 Maison du Geek\ud83d\ude14 [CLIENT_PRENOM],\r\nOn a tout tent\u00e9 pour r\u00e9parer ton [APPAREIL_MODELE], mais pour raisons techniques, on a d\u00fb annuler la r\u00e9paration.\r\n\ud83d\udd0d D\u00e9tails : http:\/\/Mdgeek.top\/suivi.php?id=[REPARATION_ID]\r\n\ud83d\udcde Une Question ?  08 95 79 59 33\r\n\ud83c\udfe0 Maison du Geek"}
+[2025-04-19 23:48:38] Variables à remplacer trouvées: [CLIENT_PRENOM], [REPARATION_ID], [APPAREIL_MODELE]
+[2025-04-19 23:48:38] Données récupérées - Client: Oui, Réparation: Oui
+[2025-04-19 23:48:38] Message après remplacement des variables: 😔 saber,
+On a tout tenté pour réparer ton Test, mais pour raisons techniques, on a dû annuler la réparation.
+🔍 Détails : http://Mdgeek.top/suivi.php?id=631
+📞 Une Question ?  08 95 79 59 33
+🏠 Maison du Geek😔 saber,
+On a tout tenté pour réparer ton Test, mais pour raisons techniques, on a dû annuler la réparation.
+🔍 Détails : http://Mdgeek.top/suivi.php?id=631
+📞 Une Question ?  08 95 79 59 33
+🏠 Maison du Geek😔 saber,
+On a tout tenté pour réparer ton Test, mais pour raisons techniques, on a dû annuler la réparation.
+🔍 Détails : http://Mdgeek.top/suivi.php?id=631
+📞 Une Question ?  08 95 79 59 33
+🏠 Maison du Geek
+[2025-04-19 23:48:38] Envoi du SMS au numéro: 33782962906
+[2025-04-19 23:48:38] Numéro formaté: +33782962906
+[2025-04-19 23:48:38] Données JSON: {"message":"\ud83d\ude14 saber,\r\nOn a tout tent\u00e9 pour r\u00e9parer ton Test, mais pour raisons techniques, on a d\u00fb annuler la r\u00e9paration.\r\n\ud83d\udd0d D\u00e9tails : http:\/\/Mdgeek.top\/suivi.php?id=631\r\n\ud83d\udcde Une Question ?  08 95 79 59 33\r\n\ud83c\udfe0 Maison du Geek\ud83d\ude14 saber,\r\nOn a tout tent\u00e9 pour r\u00e9parer ton Test, mais pour raisons techniques, on a d\u00fb annuler la r\u00e9paration.\r\n\ud83d\udd0d D\u00e9tails : http:\/\/Mdgeek.top\/suivi.php?id=631\r\n\ud83d\udcde Une Question ?  08 95 79 59 33\r\n\ud83c\udfe0 Maison du Geek\ud83d\ude14 saber,\r\nOn a tout tent\u00e9 pour r\u00e9parer ton Test, mais pour raisons techniques, on a d\u00fb annuler la r\u00e9paration.\r\n\ud83d\udd0d D\u00e9tails : http:\/\/Mdgeek.top\/suivi.php?id=631\r\n\ud83d\udcde Une Question ?  08 95 79 59 33\r\n\ud83c\udfe0 Maison du Geek","phoneNumbers":["+33782962906"]}
+[2025-04-19 23:48:38] Exécution de la requête cURL...
+[2025-04-19 23:48:39] Code HTTP: 202
+[2025-04-19 23:48:39] Réponse: {"id":"SkwiOHajBe8sNURpkKgSW","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33782962906","state":"Pending"}],"states":null}
+[2025-04-19 23:48:39] Envoi SMS réussi
+[2025-04-19 23:48:39] Erreur lors de l'enregistrement du SMS: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'client_id' in 'INSERT INTO'
+[2025-04-19 23:48:39] Résultat final: {"success":true,"message":"SMS envoy\u00e9 avec succ\u00e8s","response":{"id":"SkwiOHajBe8sNURpkKgSW","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33782962906","state":"Pending"}],"states":null}}
+[2025-04-19 23:49:26] === TRAITEMENT REQUÊTE SMS ===
+[2025-04-19 23:49:26] Données reçues: {"client_id":"414","telephone":"33782962906","template":"","message":"\ud83d\ude14 [CLIENT_PRENOM],\r\nOn a tout tent\u00e9 pour r\u00e9parer ton [APPAREIL_MODELE], mais pour raisons techniques, on a d\u00fb annuler la r\u00e9paration.\r\n\ud83d\udd0d D\u00e9tails : http:\/\/Mdgeek.top\/suivi.php?id=[REPARATION_ID]\r\n\ud83d\udcde Une Question ?  08 95 79 59 33\r\n\ud83c\udfe0 Maison du Geek\ud83d\ude14 [CLIENT_PRENOM],\r\nOn a tout tent\u00e9 pour r\u00e9parer ton [APPAREIL_MODELE], mais pour raisons techniques, on a d\u00fb annuler la r\u00e9paration.\r\n\ud83d\udd0d D\u00e9tails : http:\/\/Mdgeek.top\/suivi.php?id=[REPARATION_ID]\r\n\ud83d\udcde Une Question ?  08 95 79 59 33\r\n\ud83c\udfe0 Maison du Geek\ud83d\ude14 [CLIENT_PRENOM],\r\nOn a tout tent\u00e9 pour r\u00e9parer ton [APPAREIL_MODELE], mais pour raisons techniques, on a d\u00fb annuler la r\u00e9paration.\r\n\ud83d\udd0d D\u00e9tails : http:\/\/Mdgeek.top\/suivi.php?id=[REPARATION_ID]\r\n\ud83d\udcde Une Question ?  08 95 79 59 33\r\n\ud83c\udfe0 Maison du Geek\ud83d\ude14 [CLIENT_PRENOM],\r\nOn a tout tent\u00e9 pour r\u00e9parer ton [APPAREIL_MODELE], mais pour raisons techniques, on a d\u00fb annuler la r\u00e9paration.\r\n\ud83d\udd0d D\u00e9tails : http:\/\/Mdgeek.top\/suivi.php?id=[REPARATION_ID]\r\n\ud83d\udcde Une Question ?  08 95 79 59 33\r\n\ud83c\udfe0 Maison du Geek"}
+[2025-04-19 23:49:26] Variables à remplacer trouvées: [CLIENT_PRENOM], [REPARATION_ID], [APPAREIL_MODELE]
+[2025-04-19 23:49:26] Données récupérées - Client: Oui, Réparation: Oui
+[2025-04-19 23:49:26] Message après remplacement des variables: 😔 saber,
+On a tout tenté pour réparer ton Test, mais pour raisons techniques, on a dû annuler la réparation.
+🔍 Détails : http://Mdgeek.top/suivi.php?id=631
+📞 Une Question ?  08 95 79 59 33
+🏠 Maison du Geek😔 saber,
+On a tout tenté pour réparer ton Test, mais pour raisons techniques, on a dû annuler la réparation.
+🔍 Détails : http://Mdgeek.top/suivi.php?id=631
+📞 Une Question ?  08 95 79 59 33
+🏠 Maison du Geek😔 saber,
+On a tout tenté pour réparer ton Test, mais pour raisons techniques, on a dû annuler la réparation.
+🔍 Détails : http://Mdgeek.top/suivi.php?id=631
+📞 Une Question ?  08 95 79 59 33
+🏠 Maison du Geek😔 saber,
+On a tout tenté pour réparer ton Test, mais pour raisons techniques, on a dû annuler la réparation.
+🔍 Détails : http://Mdgeek.top/suivi.php?id=631
+📞 Une Question ?  08 95 79 59 33
+🏠 Maison du Geek
+[2025-04-19 23:49:26] Envoi du SMS au numéro: 33782962906
+[2025-04-19 23:49:26] Numéro formaté: +33782962906
+[2025-04-19 23:49:26] Données JSON: {"message":"\ud83d\ude14 saber,\r\nOn a tout tent\u00e9 pour r\u00e9parer ton Test, mais pour raisons techniques, on a d\u00fb annuler la r\u00e9paration.\r\n\ud83d\udd0d D\u00e9tails : http:\/\/Mdgeek.top\/suivi.php?id=631\r\n\ud83d\udcde Une Question ?  08 95 79 59 33\r\n\ud83c\udfe0 Maison du Geek\ud83d\ude14 saber,\r\nOn a tout tent\u00e9 pour r\u00e9parer ton Test, mais pour raisons techniques, on a d\u00fb annuler la r\u00e9paration.\r\n\ud83d\udd0d D\u00e9tails : http:\/\/Mdgeek.top\/suivi.php?id=631\r\n\ud83d\udcde Une Question ?  08 95 79 59 33\r\n\ud83c\udfe0 Maison du Geek\ud83d\ude14 saber,\r\nOn a tout tent\u00e9 pour r\u00e9parer ton Test, mais pour raisons techniques, on a d\u00fb annuler la r\u00e9paration.\r\n\ud83d\udd0d D\u00e9tails : http:\/\/Mdgeek.top\/suivi.php?id=631\r\n\ud83d\udcde Une Question ?  08 95 79 59 33\r\n\ud83c\udfe0 Maison du Geek\ud83d\ude14 saber,\r\nOn a tout tent\u00e9 pour r\u00e9parer ton Test, mais pour raisons techniques, on a d\u00fb annuler la r\u00e9paration.\r\n\ud83d\udd0d D\u00e9tails : http:\/\/Mdgeek.top\/suivi.php?id=631\r\n\ud83d\udcde Une Question ?  08 95 79 59 33\r\n\ud83c\udfe0 Maison du Geek","phoneNumbers":["+33782962906"]}
+[2025-04-19 23:49:26] Exécution de la requête cURL...
+[2025-04-19 23:49:26] Code HTTP: 202
+[2025-04-19 23:49:26] Réponse: {"id":"AmdAuIBuomN_RtdKdl1k1","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33782962906","state":"Pending"}],"states":null}
+[2025-04-19 23:49:26] Envoi SMS réussi
+[2025-04-19 23:49:26] Erreur lors de l'enregistrement du SMS: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'client_id' in 'INSERT INTO'
+[2025-04-19 23:49:26] Résultat final: {"success":true,"message":"SMS envoy\u00e9 avec succ\u00e8s","response":{"id":"AmdAuIBuomN_RtdKdl1k1","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33782962906","state":"Pending"}],"states":null}}
+[2025-04-19 23:49:47] === TRAITEMENT REQUÊTE SMS ===
+[2025-04-19 23:49:47] Données reçues: {"client_id":"414","telephone":"33782962906","template":"","message":"\ud83d\ude14 [CLIENT_PRENOM],\r\nOn a tout tent\u00e9 pour r\u00e9parer ton [APPAREIL_MODELE], mais pour raisons techniques, on a d\u00fb annuler la r\u00e9paration.\r\n\ud83d\udd0d D\u00e9tails : http:\/\/Mdgeek.top\/suivi.php?id=[REPARATION_ID]\r\n\ud83d\udcde Une Question ?  08 95 79 59 33\r\n\ud83c\udfe0 Maison du Geek\ud83d\ude14 [CLIENT_PRENOM],\r\nOn a tout tent\u00e9 pour r\u00e9parer ton [APPAREIL_MODELE], mais pour raisons techniques, on a d\u00fb annuler la r\u00e9paration.\r\n\ud83d\udd0d D\u00e9tails : http:\/\/Mdgeek.top\/suivi.php?id=[REPARATION_ID]\r\n\ud83d\udcde Une Question ?  08 95 79 59 33\r\n\ud83c\udfe0 Maison du Geek\ud83d\ude14 [CLIENT_PRENOM],\r\nOn a tout tent\u00e9 pour r\u00e9parer ton [APPAREIL_MODELE], mais pour raisons techniques, on a d\u00fb annuler la r\u00e9paration.\r\n\ud83d\udd0d D\u00e9tails : http:\/\/Mdgeek.top\/suivi.php?id=[REPARATION_ID]\r\n\ud83d\udcde Une Question ?  08 95 79 59 33\r\n\ud83c\udfe0 Maison du Geek\ud83d\ude14 [CLIENT_PRENOM],\r\nOn a tout tent\u00e9 pour r\u00e9parer ton [APPAREIL_MODELE], mais pour raisons techniques, on a d\u00fb annuler la r\u00e9paration.\r\n\ud83d\udd0d D\u00e9tails : http:\/\/Mdgeek.top\/suivi.php?id=[REPARATION_ID]\r\n\ud83d\udcde Une Question ?  08 95 79 59 33\r\n\ud83c\udfe0 Maison du Geek\ud83d\ude14 [CLIENT_PRENOM],\r\nOn a tout tent\u00e9 pour r\u00e9parer ton [APPAREIL_MODELE], mais pour raisons techniques, on a d\u00fb annuler la r\u00e9paration.\r\n\ud83d\udd0d D\u00e9tails : http:\/\/Mdgeek.top\/suivi.php?id=[REPARATION_ID]\r\n\ud83d\udcde Une Question ?  08 95 79 59 33\r\n\ud83c\udfe0 Maison du Geek"}
+[2025-04-19 23:49:47] Variables à remplacer trouvées: [CLIENT_PRENOM], [REPARATION_ID], [APPAREIL_MODELE]
+[2025-04-19 23:49:47] Données récupérées - Client: Oui, Réparation: Oui
+[2025-04-19 23:49:47] Message après remplacement des variables: 😔 saber,
+On a tout tenté pour réparer ton Test, mais pour raisons techniques, on a dû annuler la réparation.
+🔍 Détails : http://Mdgeek.top/suivi.php?id=631
+📞 Une Question ?  08 95 79 59 33
+🏠 Maison du Geek😔 saber,
+On a tout tenté pour réparer ton Test, mais pour raisons techniques, on a dû annuler la réparation.
+🔍 Détails : http://Mdgeek.top/suivi.php?id=631
+📞 Une Question ?  08 95 79 59 33
+🏠 Maison du Geek😔 saber,
+On a tout tenté pour réparer ton Test, mais pour raisons techniques, on a dû annuler la réparation.
+🔍 Détails : http://Mdgeek.top/suivi.php?id=631
+📞 Une Question ?  08 95 79 59 33
+🏠 Maison du Geek😔 saber,
+On a tout tenté pour réparer ton Test, mais pour raisons techniques, on a dû annuler la réparation.
+🔍 Détails : http://Mdgeek.top/suivi.php?id=631
+📞 Une Question ?  08 95 79 59 33
+🏠 Maison du Geek😔 saber,
+On a tout tenté pour réparer ton Test, mais pour raisons techniques, on a dû annuler la réparation.
+🔍 Détails : http://Mdgeek.top/suivi.php?id=631
+📞 Une Question ?  08 95 79 59 33
+🏠 Maison du Geek
+[2025-04-19 23:49:47] Envoi du SMS au numéro: 33782962906
+[2025-04-19 23:49:47] Numéro formaté: +33782962906
+[2025-04-19 23:49:47] Données JSON: {"message":"\ud83d\ude14 saber,\r\nOn a tout tent\u00e9 pour r\u00e9parer ton Test, mais pour raisons techniques, on a d\u00fb annuler la r\u00e9paration.\r\n\ud83d\udd0d D\u00e9tails : http:\/\/Mdgeek.top\/suivi.php?id=631\r\n\ud83d\udcde Une Question ?  08 95 79 59 33\r\n\ud83c\udfe0 Maison du Geek\ud83d\ude14 saber,\r\nOn a tout tent\u00e9 pour r\u00e9parer ton Test, mais pour raisons techniques, on a d\u00fb annuler la r\u00e9paration.\r\n\ud83d\udd0d D\u00e9tails : http:\/\/Mdgeek.top\/suivi.php?id=631\r\n\ud83d\udcde Une Question ?  08 95 79 59 33\r\n\ud83c\udfe0 Maison du Geek\ud83d\ude14 saber,\r\nOn a tout tent\u00e9 pour r\u00e9parer ton Test, mais pour raisons techniques, on a d\u00fb annuler la r\u00e9paration.\r\n\ud83d\udd0d D\u00e9tails : http:\/\/Mdgeek.top\/suivi.php?id=631\r\n\ud83d\udcde Une Question ?  08 95 79 59 33\r\n\ud83c\udfe0 Maison du Geek\ud83d\ude14 saber,\r\nOn a tout tent\u00e9 pour r\u00e9parer ton Test, mais pour raisons techniques, on a d\u00fb annuler la r\u00e9paration.\r\n\ud83d\udd0d D\u00e9tails : http:\/\/Mdgeek.top\/suivi.php?id=631\r\n\ud83d\udcde Une Question ?  08 95 79 59 33\r\n\ud83c\udfe0 Maison du Geek\ud83d\ude14 saber,\r\nOn a tout tent\u00e9 pour r\u00e9parer ton Test, mais pour raisons techniques, on a d\u00fb annuler la r\u00e9paration.\r\n\ud83d\udd0d D\u00e9tails : http:\/\/Mdgeek.top\/suivi.php?id=631\r\n\ud83d\udcde Une Question ?  08 95 79 59 33\r\n\ud83c\udfe0 Maison du Geek","phoneNumbers":["+33782962906"]}
+[2025-04-19 23:49:47] Exécution de la requête cURL...
+[2025-04-19 23:49:47] Code HTTP: 202
+[2025-04-19 23:49:47] Réponse: {"id":"y9KlkbOzOJVbzGtyNf9uv","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33782962906","state":"Pending"}],"states":null}
+[2025-04-19 23:49:47] Envoi SMS réussi
+[2025-04-19 23:49:47] Erreur lors de l'enregistrement du SMS: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'client_id' in 'INSERT INTO'
+[2025-04-19 23:49:47] Résultat final: {"success":true,"message":"SMS envoy\u00e9 avec succ\u00e8s","response":{"id":"y9KlkbOzOJVbzGtyNf9uv","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33782962906","state":"Pending"}],"states":null}}
+[2025-04-19 23:49:56] === TRAITEMENT REQUÊTE SMS ===
+[2025-04-19 23:49:56] Données reçues: {"client_id":"414","telephone":"33782962906","template":"","message":"\ud83d\ude14 [CLIENT_PRENOM],\r\nOn a tout tent\u00e9 pour r\u00e9parer ton [APPAREIL_MODELE], mais pour raisons techniques, on a d\u00fb annuler la r\u00e9paration.\r\n\ud83d\udd0d D\u00e9tails : http:\/\/Mdgeek.top\/suivi.php?id=[REPARATION_ID]\r\n\ud83d\udcde Une Question ?  08 95 79 59 33\r\n\ud83c\udfe0 Maison du Geek\ud83d\ude14 [CLIENT_PRENOM],\r\nOn a tout tent\u00e9 pour r\u00e9parer ton [APPAREIL_MODELE], mais pour raisons techniques, on a d\u00fb annuler la r\u00e9paration.\r\n\ud83d\udd0d D\u00e9tails : http:\/\/Mdgeek.top\/suivi.php?id=[REPARATION_ID]\r\n\ud83d\udcde Une Question ?  08 95 79 59 33\r\n\ud83c\udfe0 Maison du Geek\ud83d\ude14 [CLIENT_PRENOM],\r\nOn a tout tent\u00e9 pour r\u00e9parer ton [APPAREIL_MODELE], mais pour raisons techniques, on a d\u00fb annuler la r\u00e9paration.\r\n\ud83d\udd0d D\u00e9tails : http:\/\/Mdgeek.top\/suivi.php?id=[REPARATION_ID]\r\n\ud83d\udcde Une Question ?  08 95 79 59 33\r\n\ud83c\udfe0 Maison du Geek\ud83d\ude14 [CLIENT_PRENOM],\r\nOn a tout tent\u00e9 pour r\u00e9parer ton [APPAREIL_MODELE], mais pour raisons techniques, on a d\u00fb annuler la r\u00e9paration.\r\n\ud83d\udd0d D\u00e9tails : http:\/\/Mdgeek.top\/suivi.php?id=[REPARATION_ID]\r\n\ud83d\udcde Une Question ?  08 95 79 59 33\r\n\ud83c\udfe0 Maison du Geek\ud83d\ude14 [CLIENT_PRENOM],\r\nOn a tout tent\u00e9 pour r\u00e9parer ton [APPAREIL_MODELE], mais pour raisons techniques, on a d\u00fb annuler la r\u00e9paration.\r\n\ud83d\udd0d D\u00e9tails : http:\/\/Mdgeek.top\/suivi.php?id=[REPARATION_ID]\r\n\ud83d\udcde Une Question ?  08 95 79 59 33\r\n\ud83c\udfe0 Maison du Geek\ud83d\ude14 [CLIENT_PRENOM],\r\nOn a tout tent\u00e9 pour r\u00e9parer ton [APPAREIL_MODELE], mais pour raisons techniques, on a d\u00fb annuler la r\u00e9paration.\r\n\ud83d\udd0d D\u00e9tails : http:\/\/Mdgeek.top\/suivi.php?id=[REPARATION_ID]\r\n\ud83d\udcde Une Question ?  08 95 79 59 33\r\n\ud83c\udfe0 Maison du Geek\ud83d\ude14 [CLIENT_PRENOM],\r\nOn a tout tent\u00e9 pour r\u00e9parer ton [APPAREIL_MODELE], mais pour raisons techniques, on a d\u00fb annuler la r\u00e9paration.\r\n\ud83d\udd0d D\u00e9tails : http:\/\/Mdgeek.top\/suivi.php?id=[REPARATION_ID]\r\n\ud83d\udcde Une Question ?  08 95 79 59 33\r\n\ud83c\udfe0 Maison du Geek\ud83d\ude14 [CLIENT_PRENOM],\r\nOn a tout tent\u00e9 pour r\u00e9parer ton [APPAREIL_MODELE], mais pour raisons techniques, on a d\u00fb annuler la r\u00e9paration.\r\n\ud83d\udd0d D\u00e9tails : http:\/\/Mdgeek.top\/suivi.php?id=[REPARATION_ID]\r\n\ud83d\udcde Une Question ?  08 95 79 59 33\r\n\ud83c\udfe0 Maison du Geek\ud83d\ude14 [CLIENT_PRENOM],\r\nOn a tout tent\u00e9 pour r\u00e9parer ton [APPAREIL_MODELE], mais pour raisons techniques, on a d\u00fb annuler la r\u00e9paration.\r\n\ud83d\udd0d D\u00e9tails : http:\/\/Mdgeek.top\/suivi.php?id=[REPARATION_ID]\r\n\ud83d\udcde Une Question ?  08 95 79 59 33\r\n\ud83c\udfe0 Maison du Geek\ud83d\ude14 [CLIENT_PRENOM],\r\nOn a tout tent\u00e9 pour r\u00e9parer ton [APPAREIL_MODELE], mais pour raisons techniques, on a d\u00fb annuler la r\u00e9paration.\r\n\ud83d\udd0d D\u00e9tails : http:\/\/Mdgeek.top\/suivi.php?id=[REPARATION_ID]\r\n\ud83d\udcde Une Question ?  08 95 79 59 33\r\n\ud83c\udfe0 Maison du Geek\ud83d\ude14 [CLIENT_PRENOM],\r\nOn a tout tent\u00e9 pour r\u00e9parer ton [APPAREIL_MODELE], mais pour raisons techniques, on a d\u00fb annuler la r\u00e9paration.\r\n\ud83d\udd0d D\u00e9tails : http:\/\/Mdgeek.top\/suivi.php?id=[REPARATION_ID]\r\n\ud83d\udcde Une Question ?  08 95 79 59 33\r\n\ud83c\udfe0 Maison du Geek\ud83d\ude14 [CLIENT_PRENOM],\r\nOn a tout tent\u00e9 pour r\u00e9parer ton [APPAREIL_MODELE], mais pour raisons techniques, on a d\u00fb annuler la r\u00e9paration.\r\n\ud83d\udd0d D\u00e9tails : http:\/\/Mdgeek.top\/suivi.php?id=[REPARATION_ID]\r\n\ud83d\udcde Une Question ?  08 95 79 59 33\r\n\ud83c\udfe0 Maison du Geek\ud83d\ude14 [CLIENT_PRENOM],\r\nOn a tout tent\u00e9 pour r\u00e9parer ton [APPAREIL_MODELE], mais pour raisons techniques, on a d\u00fb annuler la r\u00e9paration.\r\n\ud83d\udd0d D\u00e9tails : http:\/\/Mdgeek.top\/suivi.php?id=[REPARATION_ID]\r\n\ud83d\udcde Une Question ?  08 95 79 59 33\r\n\ud83c\udfe0 Maison du Geek\ud83d\ude14 [CLIENT_PRENOM],\r\nOn a tout tent\u00e9 pour r\u00e9parer ton [APPAREIL_MODELE], mais pour raisons techniques, on a d\u00fb annuler la r\u00e9paration.\r\n\ud83d\udd0d D\u00e9tails : http:\/\/Mdgeek.top\/suivi.php?id=[REPARATION_ID]\r\n\ud83d\udcde Une Question ?  08 95 79 59 33\r\n\ud83c\udfe0 Maison du Geek\ud83d\ude14 [CLIENT_PRENOM],\r\nOn a tout tent\u00e9 pour r\u00e9parer ton [APPAREIL_MODELE], mais pour raisons techniques, on a d\u00fb annuler la r\u00e9paration.\r\n\ud83d\udd0d D\u00e9tails : http:\/\/Mdgeek.top\/suivi.php?id=[REPARATION_ID]\r\n\ud83d\udcde Une Question ?  08 95 79 59 33\r\n\ud83c\udfe0 Maison du Geek\ud83d\ude14 [CLIENT_PRENOM],\r\nOn a tout tent\u00e9 pour r\u00e9parer ton [APPAREIL_MODELE], mais pour raisons techniques, on a d\u00fb annuler la r\u00e9paration.\r\n\ud83d\udd0d D\u00e9tails : http:\/\/Mdgeek.top\/suivi.php?id=[REPARATION_ID]\r\n\ud83d\udcde Une Question ?  08 95 79 59 33\r\n\ud83c\udfe0 Maison du Geek\ud83d\ude14 [CLIENT_PRENOM],\r\nOn a tout tent\u00e9 pour r\u00e9parer ton [APPAREIL_MODELE], mais pour raisons techniques, on a d\u00fb annuler la r\u00e9paration.\r\n\ud83d\udd0d D\u00e9tails : http:\/\/Mdgeek.top\/suivi.php?id=[REPARATION_ID]\r\n\ud83d\udcde Une Question ?  08 95 79 59 33\r\n\ud83c\udfe0 Maison du Geek\ud83d\ude14 [CLIENT_PRENOM],\r\nOn a tout tent\u00e9 pour r\u00e9parer ton [APPAREIL_MODELE], mais pour raisons techniques, on a d\u00fb annuler la r\u00e9paration.\r\n\ud83d\udd0d D\u00e9tails : http:\/\/Mdgeek.top\/suivi.php?id=[REPARATION_ID]\r\n\ud83d\udcde Une Question ?  08 95 79 59 33\r\n\ud83c\udfe0 Maison du Geek\ud83d\ude14 [CLIENT_PRENOM],\r\nOn a tout tent\u00e9 pour r\u00e9parer ton [APPAREIL_MODELE], mais pour raisons techniques, on a d\u00fb annuler la r\u00e9paration.\r\n\ud83d\udd0d D\u00e9tails : http:\/\/Mdgeek.top\/suivi.php?id=[REPARATION_ID]\r\n\ud83d\udcde Une Question ?  08 95 79 59 33\r\n\ud83c\udfe0 Maison du Geek\ud83d\ude14 [CLIENT_PRENOM],\r\nOn a tout tent\u00e9 pour r\u00e9parer ton [APPAREIL_MODELE], mais pour raisons techniques, on a d\u00fb annuler la r\u00e9paration.\r\n\ud83d\udd0d D\u00e9tails : http:\/\/Mdgeek.top\/suivi.php?id=[REPARATION_ID]\r\n\ud83d\udcde Une Question ?  08 95 79 59 33\r\n\ud83c\udfe0 Maison du Geek"}
+[2025-04-19 23:49:56] Variables à remplacer trouvées: [CLIENT_PRENOM], [REPARATION_ID], [APPAREIL_MODELE]
+[2025-04-19 23:49:56] Données récupérées - Client: Oui, Réparation: Oui
+[2025-04-19 23:49:56] Message après remplacement des variables: 😔 saber,
+On a tout tenté pour réparer ton Test, mais pour raisons techniques, on a dû annuler la réparation.
+🔍 Détails : http://Mdgeek.top/suivi.php?id=631
+📞 Une Question ?  08 95 79 59 33
+🏠 Maison du Geek😔 saber,
+On a tout tenté pour réparer ton Test, mais pour raisons techniques, on a dû annuler la réparation.
+🔍 Détails : http://Mdgeek.top/suivi.php?id=631
+📞 Une Question ?  08 95 79 59 33
+🏠 Maison du Geek😔 saber,
+On a tout tenté pour réparer ton Test, mais pour raisons techniques, on a dû annuler la réparation.
+🔍 Détails : http://Mdgeek.top/suivi.php?id=631
+📞 Une Question ?  08 95 79 59 33
+🏠 Maison du Geek😔 saber,
+On a tout tenté pour réparer ton Test, mais pour raisons techniques, on a dû annuler la réparation.
+🔍 Détails : http://Mdgeek.top/suivi.php?id=631
+📞 Une Question ?  08 95 79 59 33
+🏠 Maison du Geek😔 saber,
+On a tout tenté pour réparer ton Test, mais pour raisons techniques, on a dû annuler la réparation.
+🔍 Détails : http://Mdgeek.top/suivi.php?id=631
+📞 Une Question ?  08 95 79 59 33
+🏠 Maison du Geek😔 saber,
+On a tout tenté pour réparer ton Test, mais pour raisons techniques, on a dû annuler la réparation.
+🔍 Détails : http://Mdgeek.top/suivi.php?id=631
+📞 Une Question ?  08 95 79 59 33
+🏠 Maison du Geek😔 saber,
+On a tout tenté pour réparer ton Test, mais pour raisons techniques, on a dû annuler la réparation.
+🔍 Détails : http://Mdgeek.top/suivi.php?id=631
+📞 Une Question ?  08 95 79 59 33
+🏠 Maison du Geek😔 saber,
+On a tout tenté pour réparer ton Test, mais pour raisons techniques, on a dû annuler la réparation.
+🔍 Détails : http://Mdgeek.top/suivi.php?id=631
+📞 Une Question ?  08 95 79 59 33
+🏠 Maison du Geek😔 saber,
+On a tout tenté pour réparer ton Test, mais pour raisons techniques, on a dû annuler la réparation.
+🔍 Détails : http://Mdgeek.top/suivi.php?id=631
+📞 Une Question ?  08 95 79 59 33
+🏠 Maison du Geek😔 saber,
+On a tout tenté pour réparer ton Test, mais pour raisons techniques, on a dû annuler la réparation.
+🔍 Détails : http://Mdgeek.top/suivi.php?id=631
+📞 Une Question ?  08 95 79 59 33
+🏠 Maison du Geek😔 saber,
+On a tout tenté pour réparer ton Test, mais pour raisons techniques, on a dû annuler la réparation.
+🔍 Détails : http://Mdgeek.top/suivi.php?id=631
+📞 Une Question ?  08 95 79 59 33
+🏠 Maison du Geek😔 saber,
+On a tout tenté pour réparer ton Test, mais pour raisons techniques, on a dû annuler la réparation.
+🔍 Détails : http://Mdgeek.top/suivi.php?id=631
+📞 Une Question ?  08 95 79 59 33
+🏠 Maison du Geek😔 saber,
+On a tout tenté pour réparer ton Test, mais pour raisons techniques, on a dû annuler la réparation.
+🔍 Détails : http://Mdgeek.top/suivi.php?id=631
+📞 Une Question ?  08 95 79 59 33
+🏠 Maison du Geek😔 saber,
+On a tout tenté pour réparer ton Test, mais pour raisons techniques, on a dû annuler la réparation.
+🔍 Détails : http://Mdgeek.top/suivi.php?id=631
+📞 Une Question ?  08 95 79 59 33
+🏠 Maison du Geek😔 saber,
+On a tout tenté pour réparer ton Test, mais pour raisons techniques, on a dû annuler la réparation.
+🔍 Détails : http://Mdgeek.top/suivi.php?id=631
+📞 Une Question ?  08 95 79 59 33
+🏠 Maison du Geek😔 saber,
+On a tout tenté pour réparer ton Test, mais pour raisons techniques, on a dû annuler la réparation.
+🔍 Détails : http://Mdgeek.top/suivi.php?id=631
+📞 Une Question ?  08 95 79 59 33
+🏠 Maison du Geek😔 saber,
+On a tout tenté pour réparer ton Test, mais pour raisons techniques, on a dû annuler la réparation.
+🔍 Détails : http://Mdgeek.top/suivi.php?id=631
+📞 Une Question ?  08 95 79 59 33
+🏠 Maison du Geek😔 saber,
+On a tout tenté pour réparer ton Test, mais pour raisons techniques, on a dû annuler la réparation.
+🔍 Détails : http://Mdgeek.top/suivi.php?id=631
+📞 Une Question ?  08 95 79 59 33
+🏠 Maison du Geek😔 saber,
+On a tout tenté pour réparer ton Test, mais pour raisons techniques, on a dû annuler la réparation.
+🔍 Détails : http://Mdgeek.top/suivi.php?id=631
+📞 Une Question ?  08 95 79 59 33
+🏠 Maison du Geek😔 saber,
+On a tout tenté pour réparer ton Test, mais pour raisons techniques, on a dû annuler la réparation.
+🔍 Détails : http://Mdgeek.top/suivi.php?id=631
+📞 Une Question ?  08 95 79 59 33
+🏠 Maison du Geek
+[2025-04-19 23:49:56] Envoi du SMS au numéro: 33782962906
+[2025-04-19 23:49:56] Numéro formaté: +33782962906
+[2025-04-19 23:49:56] Données JSON: {"message":"\ud83d\ude14 saber,\r\nOn a tout tent\u00e9 pour r\u00e9parer ton Test, mais pour raisons techniques, on a d\u00fb annuler la r\u00e9paration.\r\n\ud83d\udd0d D\u00e9tails : http:\/\/Mdgeek.top\/suivi.php?id=631\r\n\ud83d\udcde Une Question ?  08 95 79 59 33\r\n\ud83c\udfe0 Maison du Geek\ud83d\ude14 saber,\r\nOn a tout tent\u00e9 pour r\u00e9parer ton Test, mais pour raisons techniques, on a d\u00fb annuler la r\u00e9paration.\r\n\ud83d\udd0d D\u00e9tails : http:\/\/Mdgeek.top\/suivi.php?id=631\r\n\ud83d\udcde Une Question ?  08 95 79 59 33\r\n\ud83c\udfe0 Maison du Geek\ud83d\ude14 saber,\r\nOn a tout tent\u00e9 pour r\u00e9parer ton Test, mais pour raisons techniques, on a d\u00fb annuler la r\u00e9paration.\r\n\ud83d\udd0d D\u00e9tails : http:\/\/Mdgeek.top\/suivi.php?id=631\r\n\ud83d\udcde Une Question ?  08 95 79 59 33\r\n\ud83c\udfe0 Maison du Geek\ud83d\ude14 saber,\r\nOn a tout tent\u00e9 pour r\u00e9parer ton Test, mais pour raisons techniques, on a d\u00fb annuler la r\u00e9paration.\r\n\ud83d\udd0d D\u00e9tails : http:\/\/Mdgeek.top\/suivi.php?id=631\r\n\ud83d\udcde Une Question ?  08 95 79 59 33\r\n\ud83c\udfe0 Maison du Geek\ud83d\ude14 saber,\r\nOn a tout tent\u00e9 pour r\u00e9parer ton Test, mais pour raisons techniques, on a d\u00fb annuler la r\u00e9paration.\r\n\ud83d\udd0d D\u00e9tails : http:\/\/Mdgeek.top\/suivi.php?id=631\r\n\ud83d\udcde Une Question ?  08 95 79 59 33\r\n\ud83c\udfe0 Maison du Geek\ud83d\ude14 saber,\r\nOn a tout tent\u00e9 pour r\u00e9parer ton Test, mais pour raisons techniques, on a d\u00fb annuler la r\u00e9paration.\r\n\ud83d\udd0d D\u00e9tails : http:\/\/Mdgeek.top\/suivi.php?id=631\r\n\ud83d\udcde Une Question ?  08 95 79 59 33\r\n\ud83c\udfe0 Maison du Geek\ud83d\ude14 saber,\r\nOn a tout tent\u00e9 pour r\u00e9parer ton Test, mais pour raisons techniques, on a d\u00fb annuler la r\u00e9paration.\r\n\ud83d\udd0d D\u00e9tails : http:\/\/Mdgeek.top\/suivi.php?id=631\r\n\ud83d\udcde Une Question ?  08 95 79 59 33\r\n\ud83c\udfe0 Maison du Geek\ud83d\ude14 saber,\r\nOn a tout tent\u00e9 pour r\u00e9parer ton Test, mais pour raisons techniques, on a d\u00fb annuler la r\u00e9paration.\r\n\ud83d\udd0d D\u00e9tails : http:\/\/Mdgeek.top\/suivi.php?id=631\r\n\ud83d\udcde Une Question ?  08 95 79 59 33\r\n\ud83c\udfe0 Maison du Geek\ud83d\ude14 saber,\r\nOn a tout tent\u00e9 pour r\u00e9parer ton Test, mais pour raisons techniques, on a d\u00fb annuler la r\u00e9paration.\r\n\ud83d\udd0d D\u00e9tails : http:\/\/Mdgeek.top\/suivi.php?id=631\r\n\ud83d\udcde Une Question ?  08 95 79 59 33\r\n\ud83c\udfe0 Maison du Geek\ud83d\ude14 saber,\r\nOn a tout tent\u00e9 pour r\u00e9parer ton Test, mais pour raisons techniques, on a d\u00fb annuler la r\u00e9paration.\r\n\ud83d\udd0d D\u00e9tails : http:\/\/Mdgeek.top\/suivi.php?id=631\r\n\ud83d\udcde Une Question ?  08 95 79 59 33\r\n\ud83c\udfe0 Maison du Geek\ud83d\ude14 saber,\r\nOn a tout tent\u00e9 pour r\u00e9parer ton Test, mais pour raisons techniques, on a d\u00fb annuler la r\u00e9paration.\r\n\ud83d\udd0d D\u00e9tails : http:\/\/Mdgeek.top\/suivi.php?id=631\r\n\ud83d\udcde Une Question ?  08 95 79 59 33\r\n\ud83c\udfe0 Maison du Geek\ud83d\ude14 saber,\r\nOn a tout tent\u00e9 pour r\u00e9parer ton Test, mais pour raisons techniques, on a d\u00fb annuler la r\u00e9paration.\r\n\ud83d\udd0d D\u00e9tails : http:\/\/Mdgeek.top\/suivi.php?id=631\r\n\ud83d\udcde Une Question ?  08 95 79 59 33\r\n\ud83c\udfe0 Maison du Geek\ud83d\ude14 saber,\r\nOn a tout tent\u00e9 pour r\u00e9parer ton Test, mais pour raisons techniques, on a d\u00fb annuler la r\u00e9paration.\r\n\ud83d\udd0d D\u00e9tails : http:\/\/Mdgeek.top\/suivi.php?id=631\r\n\ud83d\udcde Une Question ?  08 95 79 59 33\r\n\ud83c\udfe0 Maison du Geek\ud83d\ude14 saber,\r\nOn a tout tent\u00e9 pour r\u00e9parer ton Test, mais pour raisons techniques, on a d\u00fb annuler la r\u00e9paration.\r\n\ud83d\udd0d D\u00e9tails : http:\/\/Mdgeek.top\/suivi.php?id=631\r\n\ud83d\udcde Une Question ?  08 95 79 59 33\r\n\ud83c\udfe0 Maison du Geek\ud83d\ude14 saber,\r\nOn a tout tent\u00e9 pour r\u00e9parer ton Test, mais pour raisons techniques, on a d\u00fb annuler la r\u00e9paration.\r\n\ud83d\udd0d D\u00e9tails : http:\/\/Mdgeek.top\/suivi.php?id=631\r\n\ud83d\udcde Une Question ?  08 95 79 59 33\r\n\ud83c\udfe0 Maison du Geek\ud83d\ude14 saber,\r\nOn a tout tent\u00e9 pour r\u00e9parer ton Test, mais pour raisons techniques, on a d\u00fb annuler la r\u00e9paration.\r\n\ud83d\udd0d D\u00e9tails : http:\/\/Mdgeek.top\/suivi.php?id=631\r\n\ud83d\udcde Une Question ?  08 95 79 59 33\r\n\ud83c\udfe0 Maison du Geek\ud83d\ude14 saber,\r\nOn a tout tent\u00e9 pour r\u00e9parer ton Test, mais pour raisons techniques, on a d\u00fb annuler la r\u00e9paration.\r\n\ud83d\udd0d D\u00e9tails : http:\/\/Mdgeek.top\/suivi.php?id=631\r\n\ud83d\udcde Une Question ?  08 95 79 59 33\r\n\ud83c\udfe0 Maison du Geek\ud83d\ude14 saber,\r\nOn a tout tent\u00e9 pour r\u00e9parer ton Test, mais pour raisons techniques, on a d\u00fb annuler la r\u00e9paration.\r\n\ud83d\udd0d D\u00e9tails : http:\/\/Mdgeek.top\/suivi.php?id=631\r\n\ud83d\udcde Une Question ?  08 95 79 59 33\r\n\ud83c\udfe0 Maison du Geek\ud83d\ude14 saber,\r\nOn a tout tent\u00e9 pour r\u00e9parer ton Test, mais pour raisons techniques, on a d\u00fb annuler la r\u00e9paration.\r\n\ud83d\udd0d D\u00e9tails : http:\/\/Mdgeek.top\/suivi.php?id=631\r\n\ud83d\udcde Une Question ?  08 95 79 59 33\r\n\ud83c\udfe0 Maison du Geek\ud83d\ude14 saber,\r\nOn a tout tent\u00e9 pour r\u00e9parer ton Test, mais pour raisons techniques, on a d\u00fb annuler la r\u00e9paration.\r\n\ud83d\udd0d D\u00e9tails : http:\/\/Mdgeek.top\/suivi.php?id=631\r\n\ud83d\udcde Une Question ?  08 95 79 59 33\r\n\ud83c\udfe0 Maison du Geek","phoneNumbers":["+33782962906"]}
+[2025-04-19 23:49:56] Exécution de la requête cURL...
+[2025-04-19 23:49:56] Code HTTP: 202
+[2025-04-19 23:49:56] Réponse: {"id":"j6YUyetmYfcv5xKGcm0P5","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33782962906","state":"Pending"}],"states":null}
+[2025-04-19 23:49:56] Envoi SMS réussi
+[2025-04-19 23:49:56] Erreur lors de l'enregistrement du SMS: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'client_id' in 'INSERT INTO'
+[2025-04-19 23:49:56] Résultat final: {"success":true,"message":"SMS envoy\u00e9 avec succ\u00e8s","response":{"id":"j6YUyetmYfcv5xKGcm0P5","state":"Pending","isHashed":false,"isEncrypted":false,"recipients":[{"phoneNumber":"+33782962906","state":"Pending"}],"states":null}}

@@ -1,0 +1,124 @@
+.top-nav {
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    padding: 0.5rem 0;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #333;
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.logo i {
+    font-size: 1.5rem;
+    margin-right: 0.5rem;
+    color: #007bff;
+}
+
+.nav-links {
+    display: flex;
+    gap: 1rem;
+}
+
+.nav-links a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #666;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    transition: all 0.2s ease;
+}
+
+.nav-links a:hover {
+    color: #007bff;
+    background-color: #f8f9fa;
+}
+
+.nav-links a.active {
+    color: #007bff;
+    background-color: #e7f1ff;
+}
+
+.nav-links a i {
+    margin-right: 0.5rem;
+}
+
+.bottom-nav {
+    background-color: #fff;
+    box-shadow: 0 -2px 4px rgba(0,0,0,0.1);
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    padding: 0.5rem 0;
+}
+
+.bottom-nav a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: #666;
+    font-size: 0.875rem;
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+    transition: all 0.2s ease;
+}
+
+.bottom-nav a:hover {
+    color: #007bff;
+    background-color: #f8f9fa;
+}
+
+.bottom-nav a.active {
+    color: #007bff;
+    background-color: #e7f1ff;
+}
+
+.bottom-nav a i {
+    font-size: 1.25rem;
+    margin-bottom: 0.25rem;
+}
+
+.bottom-nav a span {
+    font-size: 0.75rem;
+}
+
+@media (max-width: 768px) {
+    .top-nav .nav-links {
+        display: none;
+    }
+    
+    .top-nav {
+        padding: 0.5rem 1rem;
+    }
+    
+    .bottom-nav {
+        display: block;
+    }
+    
+    main {
+        padding-bottom: 4rem;
+    }
+}
+
+@media (min-width: 769px) {
+    .bottom-nav {
+        display: none;
+    }
+    
+    main {
+        padding-top: 4rem;
+    }
+} 

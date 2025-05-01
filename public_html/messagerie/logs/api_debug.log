@@ -1,0 +1,98 @@
+[2025-04-07 21:35:04] GET /api/get_conversations.php - Début de la requête
+[2025-04-07 21:35:04] Session ID: 1iv0cetgbcmq3b14285bslihtr, User ID: 1
+[2025-04-07 21:35:04] Filtres: []
+[2025-04-07 21:35:04] Appel à get_user_conversations avec user_id=1
+[2025-04-07 21:35:04] Nombre de conversations récupérées: 3
+[2025-04-07 21:35:04] Réponse: 3 conversations formatées
+[2025-04-07 21:35:04] Fin de la requête
+[2025-04-07 21:35:21] GET /api/get_conversations.php - Début de la requête
+[2025-04-07 21:35:21] Session ID: 3hjh87k4tfat22tp798hvf7la2, User ID: 2
+[2025-04-07 21:35:21] Filtres: []
+[2025-04-07 21:35:21] Appel à get_user_conversations avec user_id=2
+[2025-04-07 21:35:21] Nombre de conversations récupérées: 2
+[2025-04-07 21:35:21] Réponse: 2 conversations formatées
+[2025-04-07 21:35:21] Fin de la requête
+[2025-04-07 21:35:25] GET /api/get_conversations.php - Début de la requête
+[2025-04-07 21:35:25] Session ID: 3hjh87k4tfat22tp798hvf7la2, User ID: 2
+[2025-04-07 21:35:25] Filtres: []
+[2025-04-07 21:35:25] Appel à get_user_conversations avec user_id=2
+[2025-04-07 21:35:25] Nombre de conversations récupérées: 2
+[2025-04-07 21:35:25] Réponse: 2 conversations formatées
+[2025-04-07 21:35:25] Fin de la requête
+[2025-04-07 21:36:00] GET /api/get_conversations.php - Début de la requête
+[2025-04-07 21:36:00] Session ID: 1iv0cetgbcmq3b14285bslihtr, User ID: 1
+[2025-04-07 21:36:00] Filtres: []
+[2025-04-07 21:36:00] Appel à get_user_conversations avec user_id=1
+[2025-04-07 21:36:00] Nombre de conversations récupérées: 3
+[2025-04-07 21:36:00] Réponse: 3 conversations formatées
+[2025-04-07 21:36:00] Fin de la requête
+[2025-04-07 21:45:37] GET /api/get_conversations.php - Début de la requête
+[2025-04-07 21:45:37] Session ID: 1iv0cetgbcmq3b14285bslihtr, User ID: 1
+[2025-04-07 21:45:37] Filtres: []
+[2025-04-07 21:45:37] Appel à get_user_conversations avec user_id=1
+[2025-04-07 21:45:37] Nombre de conversations récupérées: 3
+[2025-04-07 21:45:37] Réponse: 3 conversations formatées
+[2025-04-07 21:45:37] Fin de la requête
+[2025-04-07 22:48:17] GET /api/get_conversations.php - Début de la requête
+[2025-04-07 22:48:17] Session ID: 1iv0cetgbcmq3b14285bslihtr, User ID: 1
+[2025-04-07 22:48:17] Filtres: []
+[2025-04-07 22:48:17] Appel à get_user_conversations avec user_id=1
+[2025-04-07 22:48:17] Nombre de conversations récupérées: 3
+[2025-04-07 22:48:17] Réponse: 3 conversations formatées
+[2025-04-07 22:48:17] Fin de la requête
+[2025-04-07 22:58:12] GET /api/get_conversations.php - Début de la requête
+[2025-04-07 22:58:12] Session ID: 1iv0cetgbcmq3b14285bslihtr, User ID: 1
+[2025-04-07 22:58:12] Filtres: []
+[2025-04-07 22:58:12] Appel à get_user_conversations avec user_id=1
+[2025-04-07 22:58:12] Nombre de conversations récupérées: 3
+[2025-04-07 22:58:12] Réponse: 3 conversations formatées
+[2025-04-07 22:58:12] Fin de la requête
+[2025-04-07 23:17:30] GET /api/get_conversations.php - Début de la requête
+[2025-04-07 23:17:30] Session ID: 1iv0cetgbcmq3b14285bslihtr, User ID: 1
+[2025-04-07 23:17:30] Filtres: []
+[2025-04-07 23:17:30] Appel à get_user_conversations avec user_id=1
+[2025-04-07 23:17:30] Nombre de conversations récupérées: 3
+[2025-04-07 23:17:30] Réponse: 3 conversations formatées
+[2025-04-07 23:17:30] Fin de la requête
+[2025-04-07 23:17:34] GET /api/get_conversations.php - Début de la requête
+[2025-04-07 23:17:34] Session ID: 1iv0cetgbcmq3b14285bslihtr, User ID: 1
+[2025-04-07 23:17:34] Filtres: []
+[2025-04-07 23:17:34] Appel à get_user_conversations avec user_id=1
+[2025-04-07 23:17:34] Nombre de conversations récupérées: 3
+[2025-04-07 23:17:34] Réponse: 3 conversations formatées
+[2025-04-07 23:17:34] Fin de la requête
+[2025-04-07 23:39:28] GET /api/get_conversations.php - Début de la requête
+[2025-04-07 23:39:28] Session ID: 1iv0cetgbcmq3b14285bslihtr, User ID: 1
+[2025-04-07 23:39:28] Filtres: []
+[2025-04-07 23:39:28] Appel à get_user_conversations avec user_id=1
+[2025-04-07 23:39:28] Nombre de conversations récupérées: 3
+[2025-04-07 23:39:28] Réponse: 3 conversations formatées
+[2025-04-07 23:39:28] Fin de la requête
+[2025-04-08 00:40:54] GET /api/get_conversations.php - Début de la requête
+[2025-04-08 00:40:54] Session ID: 3hjh87k4tfat22tp798hvf7la2, User ID: 2
+[2025-04-08 00:40:54] Filtres: []
+[2025-04-08 00:40:54] Appel à get_user_conversations avec user_id=2
+[2025-04-08 00:40:54] Nombre de conversations récupérées: 2
+[2025-04-08 00:40:54] Réponse: 2 conversations formatées
+[2025-04-08 00:40:54] Fin de la requête
+[2025-04-08 00:40:57] GET /api/get_conversations.php - Début de la requête
+[2025-04-08 00:40:57] Session ID: 3hjh87k4tfat22tp798hvf7la2, User ID: 2
+[2025-04-08 00:40:57] Filtres: []
+[2025-04-08 00:40:57] Appel à get_user_conversations avec user_id=2
+[2025-04-08 00:40:57] Nombre de conversations récupérées: 2
+[2025-04-08 00:40:57] Réponse: 2 conversations formatées
+[2025-04-08 00:40:57] Fin de la requête
+[2025-04-13 22:06:18] GET /api/get_conversations.php - Début de la requête
+[2025-04-13 22:06:18] Session ID: vfgi4ss8mumkvsigktqs6gc5mh, User ID: 1
+[2025-04-13 22:06:18] Filtres: []
+[2025-04-13 22:06:18] Appel à get_user_conversations avec user_id=1
+[2025-04-13 22:06:18] Nombre de conversations récupérées: 3
+[2025-04-13 22:06:18] Réponse: 3 conversations formatées
+[2025-04-13 22:06:18] Fin de la requête
+[2025-04-13 22:10:30] GET /api/get_conversations.php - Début de la requête
+[2025-04-13 22:10:30] Session ID: vfgi4ss8mumkvsigktqs6gc5mh, User ID: 1
+[2025-04-13 22:10:30] Filtres: []
+[2025-04-13 22:10:30] Appel à get_user_conversations avec user_id=1
+[2025-04-13 22:10:30] Nombre de conversations récupérées: 3
+[2025-04-13 22:10:30] Réponse: 3 conversations formatées
+[2025-04-13 22:10:30] Fin de la requête

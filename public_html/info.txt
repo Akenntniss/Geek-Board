@@ -1,0 +1,19 @@
+Il est important de comprendre que, pour des raisons de sécurité, les navigateurs web (comme Chrome, Firefox, Safari) ne permettent pas à un site web d'accéder directement à tous les documents de votre ordinateur.  C'est une protection essentielle pour vos données personnelles.
+
+**Ce que je peux faire :**
+
+Je peux accéder et visualiser les fichiers et dossiers **qui se trouvent dans le répertoire de ce projet web spécifique.**  C'est l'endroit où nous travaillons actuellement.  Vous pouvez créer des fichiers ici, les modifier, les organiser dans des dossiers, et je peux interagir avec eux.
+
+**Ce que je ne peux pas faire (pour des raisons de sécurité) :**
+
+* **Visualiser *tous* les documents de votre ordinateur :**  Je ne peux pas parcourir l'ensemble de votre disque dur et afficher tous vos fichiers personnels (documents, images, etc.).
+* **Accéder à des dossiers en dehors de ce projet web :** Je suis limité au répertoire du projet actuel.
+
+**Pour visualiser les fichiers du projet actuel :**
+
+Vous pouvez utiliser la commande `ls` dans le shell pour lister les fichiers et dossiers.  Par exemple :
+
+* `ls`  (pour lister le contenu du répertoire courant)
+* `ls mon-dossier` (pour lister le contenu du dossier "mon-dossier")
+
+Si vous avez des actions spécifiques que vous souhaitez réaliser avec les fichiers **de ce projet**, dites-le moi !  Je peux vous aider à créer, modifier, afficher, ou organiser ces fichiers.

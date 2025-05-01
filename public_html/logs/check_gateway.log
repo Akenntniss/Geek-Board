@@ -1,0 +1,44 @@
+[2025-04-19 21:31:42] Vérification de l'état de SMS Gateway
+[2025-04-19 21:31:42] Vérification de l'URL: https://api.sms-gate.app/3rdparty/v1/status
+[2025-04-19 21:31:42] Exécution de la requête cURL...
+[2025-04-19 21:31:43] Code HTTP: 404
+[2025-04-19 21:31:43] Réponse: {"message":"Not Found"}
+[2025-04-19 21:31:43] Échec de la vérification
+[2025-04-19 21:31:43] Vérification de l'URL: https://api.sms-gate.app/3rdparty/v1/message
+[2025-04-19 21:31:43] Exécution de la requête cURL...
+[2025-04-19 21:31:43] Code HTTP: 404
+[2025-04-19 21:31:43] Réponse: {"message":"Not Found"}
+[2025-04-19 21:31:43] Échec de la vérification
+[2025-04-19 21:31:58] Vérification de l'état de SMS Gateway
+[2025-04-19 21:31:58] Vérification de l'URL: https://api.sms-gate.app/3rdparty/v1/status
+[2025-04-19 21:31:58] Exécution de la requête cURL...
+[2025-04-19 21:31:59] Code HTTP: 404
+[2025-04-19 21:31:59] Réponse: {"message":"Not Found"}
+[2025-04-19 21:31:59] Échec de la vérification
+[2025-04-19 21:31:59] Vérification de l'URL: https://api.sms-gate.app/3rdparty/v1/message
+[2025-04-19 21:31:59] Exécution de la requête cURL...
+[2025-04-19 21:31:59] Code HTTP: 404
+[2025-04-19 21:31:59] Réponse: {"message":"Not Found"}
+[2025-04-19 21:31:59] Échec de la vérification
+[2025-04-19 21:32:31] Vérification de l'état de SMS Gateway
+[2025-04-19 21:32:31] Vérification de l'URL: https://api.sms-gate.app/3rdparty/v1/status
+[2025-04-19 21:32:31] Exécution de la requête cURL...
+[2025-04-19 21:32:31] Code HTTP: 404
+[2025-04-19 21:32:31] Réponse: {"message":"Not Found"}
+[2025-04-19 21:32:31] Échec de la vérification
+[2025-04-19 21:32:31] Vérification de l'URL: https://api.sms-gate.app/3rdparty/v1/message
+[2025-04-19 21:32:31] Exécution de la requête cURL...
+[2025-04-19 21:32:31] Code HTTP: 404
+[2025-04-19 21:32:31] Réponse: {"message":"Not Found"}
+[2025-04-19 21:32:31] Échec de la vérification
+[2025-04-19 21:42:38] Vérification de l'état de SMS Gateway
+[2025-04-19 21:42:38] Vérification de l'URL: https://api.sms-gate.app/3rdparty/v1/status
+[2025-04-19 21:42:38] Exécution de la requête cURL...
+[2025-04-19 21:42:38] Code HTTP: 404
+[2025-04-19 21:42:38] Réponse: {"message":"Not Found"}
+[2025-04-19 21:42:38] Échec de la vérification
+[2025-04-19 21:42:38] Vérification de l'URL: https://api.sms-gate.app/3rdparty/v1/message
+[2025-04-19 21:42:38] Exécution de la requête cURL...
+[2025-04-19 21:42:38] Code HTTP: 404
+[2025-04-19 21:42:38] Réponse: {"message":"Not Found"}
+[2025-04-19 21:42:38] Échec de la vérification

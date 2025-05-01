@@ -1,0 +1,174 @@
+/* 
+ * Modern Navigation Styles - Barre de menu améliorée
+ * Version plus discrète et moderne pour l'application GeekBoard
+ */
+
+/* Variables pour la barre de navigation moderne */
+:root {
+    --nav-bg: rgba(255, 255, 255, 0.85);
+    --nav-bg-dark: rgba(33, 37, 41, 0.85);
+    --nav-shadow: 0 -1px 10px rgba(0, 0, 0, 0.08);
+    --nav-border: 1px solid rgba(0, 0, 0, 0.03);
+    --nav-height: 60px;
+    --nav-icon-size: 1.1rem;
+    --nav-text-size: 0.7rem;
+    --nav-radius: 16px;
+    --nav-transition: all 0.25s cubic-bezier(0.25, 0.1, 0.25, 1);
+    --nav-active-color: #0078e8;
+    --nav-inactive-color: #6c757d;
+    --nav-hover-bg: rgba(0, 120, 232, 0.08);
+    --nav-active-indicator: 3px solid var(--nav-active-color);
+    --nav-badge-bg: #dc3545;
+    --nav-badge-color: white;
+}
+
+/* Style moderne pour la barre de navigation mobile */
+#mobile-navbar {
+    height: var(--nav-height);
+    background-color: var(--nav-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: var(--nav-shadow);
+    border-top: var(--nav-border);
+    z-index: 1030;
+    transition: var(--nav-transition);
+    padding: 0;
+    margin: 0;
+    overflow: visible;
+}
+
+/* Conteneur de la barre de navigation */
+#mobile-navbar .row {
+    width: 100%;
+    margin: 0;
+    display: flex;
+    flex-wrap: nowrap;
+    height: 100%;
+}
+
+#mobile-navbar .col {
+    flex: 1 1 0;
+    min-width: 0;
+    padding: 0;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Style des liens de navigation */
+#mobile-navbar .nav-link {
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    padding: 8px 4px;
+    color: var(--nav-inactive-color);
+    transition: var(--nav-transition);
+    position: relative;
+    border-radius: 0;
+    margin: 0;
+    background: transparent;
+}
+
+/* Icônes dans la barre de navigation */
+#mobile-navbar .nav-link i {
+    font-size: var(--nav-icon-size);
+    margin-bottom: 4px;
+    transition: var(--nav-transition);
+}
+
+/* Texte dans la barre de navigation */
+#mobile-navbar .nav-link span {
+    font-size: var(--nav-text-size);
+    font-weight: 500;
+    display: block;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 100%;
+    text-align: center;
+    transition: var(--nav-transition);
+    opacity: 0.9;
+}
+
+/* Style au survol */
+#mobile-navbar .nav-link:hover {
+    color: var(--nav-active-color);
+    background-color: transparent;
+    transform: none;
+}
+
+#mobile-navbar .nav-link:hover i {
+    transform: translateY(-2px);
+}
+
+/* Style pour l'élément actif */
+#mobile-navbar .nav-link.active {
+    color: var(--nav-active-color);
+    background-color: transparent;
+    font-weight: 600;
+}
+
+#mobile-navbar .nav-link.active::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 25px;
+    height: 3px;
+    background-color: var(--nav-active-color);
+    border-radius: 0 0 3px 3px;
+}
+
+/* Style des badges */
+#mobile-navbar .badge {
+    position: absolute;
+    top: 6px;
+    right: 50%;
+    transform: translateX(8px);
+    font-size: 0.6rem;
+    padding: 0.25em 0.4em;
+    min-width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9px;
+    background-color: var(--nav-badge-bg);
+    color: var(--nav-badge-color);
+    border: 1px solid white;
+}
+
+/* Ajustements pour les appareils iOS */
+body.pwa-mode #mobile-navbar {
+    padding-bottom: env(safe-area-inset-bottom, 0);
+    height: calc(var(--nav-height) + env(safe-area-inset-bottom, 0));
+}
+
+/* Support du mode sombre */
+@media (prefers-color-scheme: dark) {
+    body.supports-dark-mode #mobile-navbar {
+        background-color: var(--nav-bg-dark);
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    
+    body.supports-dark-mode #mobile-navbar .nav-link {
+        color: rgba(255, 255, 255, 0.7);
+    }
+    
+    body.supports-dark-mode #mobile-navbar .nav-link.active {
+        color: #3a8dff;
+    }
+    
+    body.supports-dark-mode #mobile-navbar .nav-link.active::after {
+        background-color: #3a8dff;
+    }
+    
+    body.supports-dark-mode #mobile-navbar .badge {
+        border-color: var(--nav-bg-dark);
+    }
+}

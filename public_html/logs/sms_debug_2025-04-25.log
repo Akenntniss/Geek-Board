@@ -1,0 +1,221 @@
+[2025-04-25 08:09:23] ====== DÉBUT DEBUG SMS ======
+[2025-04-25 08:09:23] Template ID: 11
+[2025-04-25 08:09:23] Template nom: Restitué
+[2025-04-25 08:09:23] Template contenu brut: 🎉 [CLIENT_PRENOM],
+Ton [APPAREIL_MODELE] est de retour à la maison ! On espère qu’il est content 🤓
+💬 Laisse-nous un petit avis !
+⭐ https://g.page/r/Ce-HHwKZjezIEB0/review
+🏠 Maison du Geek
+📞 08 95 79 59 33
+
+[2025-04-25 08:09:23] Réparation ID: 653
+[2025-04-25 08:09:23] Variables à remplacer:
+[2025-04-25 08:09:23]   [CLIENT_NOM] => 'Laskar'
+[2025-04-25 08:09:23]   [CLIENT_PRENOM] => 'Bruno'
+[2025-04-25 08:09:23]   [CLIENT_TELEPHONE] => '33613795938'
+[2025-04-25 08:09:23]   [REPARATION_ID] => '653'
+[2025-04-25 08:09:23]   [APPAREIL_TYPE] => 'Trottinette'
+[2025-04-25 08:09:23]   [APPAREIL_MARQUE] => ''
+[2025-04-25 08:09:23]   [APPAREIL_MODELE] => 'UrbanGlide Draisienne'
+[2025-04-25 08:09:23]   [DATE_RECEPTION] => '23/04/2025'
+[2025-04-25 08:09:23]   [DATE_FIN_PREVUE] => 'Non définie'
+[2025-04-25 08:09:23]   [PRIX] => '50,00'
+[2025-04-25 08:09:23] Message avant remplacement: 🎉 [CLIENT_PRENOM],
+Ton [APPAREIL_MODELE] est de retour à la maison ! On espère qu’il est content 🤓
+💬 Laisse-nous un petit avis !
+⭐ https://g.page/r/Ce-HHwKZjezIEB0/review
+🏠 Maison du Geek
+📞 08 95 79 59 33
+
+[2025-04-25 08:09:23] Remplacement de '[CLIENT_NOM]' par 'Laskar': AUCUN CHANGEMENT
+[2025-04-25 08:09:23] Remplacement de '[CLIENT_PRENOM]' par 'Bruno': OK
+[2025-04-25 08:09:23] Remplacement de '[CLIENT_TELEPHONE]' par '33613795938': AUCUN CHANGEMENT
+[2025-04-25 08:09:23] Remplacement de '[REPARATION_ID]' par '653': AUCUN CHANGEMENT
+[2025-04-25 08:09:23] Remplacement de '[APPAREIL_TYPE]' par 'Trottinette': AUCUN CHANGEMENT
+[2025-04-25 08:09:23] Remplacement de '[APPAREIL_MARQUE]' par '': AUCUN CHANGEMENT
+[2025-04-25 08:09:23] Remplacement de '[APPAREIL_MODELE]' par 'UrbanGlide Draisienne': OK
+[2025-04-25 08:09:23] Remplacement de '[DATE_RECEPTION]' par '23/04/2025': AUCUN CHANGEMENT
+[2025-04-25 08:09:23] Remplacement de '[DATE_FIN_PREVUE]' par 'Non définie': AUCUN CHANGEMENT
+[2025-04-25 08:09:23] Remplacement de '[PRIX]' par '50,00': AUCUN CHANGEMENT
+[2025-04-25 08:09:23] Message final après remplacement: 🎉 Bruno,
+Ton UrbanGlide Draisienne est de retour à la maison ! On espère qu’il est content 🤓
+💬 Laisse-nous un petit avis !
+⭐ https://g.page/r/Ce-HHwKZjezIEB0/review
+🏠 Maison du Geek
+📞 08 95 79 59 33
+
+[2025-04-25 08:09:23] Tentative d'envoi SMS à 33613795938
+[2025-04-25 08:09:23] Résultat de l'envoi: SUCCÈS
+[2025-04-25 08:09:23] ====== FIN DEBUG SMS ======
+[2025-04-25 08:23:38] ====== DÉBUT DEBUG SMS ======
+[2025-04-25 08:23:38] Template ID: 2
+[2025-04-25 08:23:38] Template nom: Réparation terminée
+[2025-04-25 08:23:38] Template contenu brut: [CLIENT_PRENOM], votre [APPAREIL_MODELE] est prêt ! Il vous attend pour retrouver une vie normale. 🥳
+🧾 Suivi : http://Mdgeek.top/suivi.php?id=[REPARATION_ID]
+Maison du Geek – 08 95 79 59 33
+[2025-04-25 08:23:38] Réparation ID: 646
+[2025-04-25 08:23:38] Variables à remplacer:
+[2025-04-25 08:23:38]   [CLIENT_NOM] => 'boh'
+[2025-04-25 08:23:38]   [CLIENT_PRENOM] => 'leny'
+[2025-04-25 08:23:38]   [CLIENT_TELEPHONE] => '+33767233917'
+[2025-04-25 08:23:38]   [REPARATION_ID] => '646'
+[2025-04-25 08:23:38]   [APPAREIL_TYPE] => 'Informatique'
+[2025-04-25 08:23:38]   [APPAREIL_MARQUE] => ''
+[2025-04-25 08:23:38]   [APPAREIL_MODELE] => 'pc gamer tour'
+[2025-04-25 08:23:38]   [DATE_RECEPTION] => '22/04/2025'
+[2025-04-25 08:23:38]   [DATE_FIN_PREVUE] => 'Non définie'
+[2025-04-25 08:23:38]   [PRIX] => '50,00'
+[2025-04-25 08:23:38] Message avant remplacement: [CLIENT_PRENOM], votre [APPAREIL_MODELE] est prêt ! Il vous attend pour retrouver une vie normale. 🥳
+🧾 Suivi : http://Mdgeek.top/suivi.php?id=[REPARATION_ID]
+Maison du Geek – 08 95 79 59 33
+[2025-04-25 08:23:38] Remplacement de '[CLIENT_NOM]' par 'boh': AUCUN CHANGEMENT
+[2025-04-25 08:23:38] Remplacement de '[CLIENT_PRENOM]' par 'leny': OK
+[2025-04-25 08:23:38] Remplacement de '[CLIENT_TELEPHONE]' par '+33767233917': AUCUN CHANGEMENT
+[2025-04-25 08:23:38] Remplacement de '[REPARATION_ID]' par '646': OK
+[2025-04-25 08:23:38] Remplacement de '[APPAREIL_TYPE]' par 'Informatique': AUCUN CHANGEMENT
+[2025-04-25 08:23:38] Remplacement de '[APPAREIL_MARQUE]' par '': AUCUN CHANGEMENT
+[2025-04-25 08:23:38] Remplacement de '[APPAREIL_MODELE]' par 'pc gamer tour': OK
+[2025-04-25 08:23:38] Remplacement de '[DATE_RECEPTION]' par '22/04/2025': AUCUN CHANGEMENT
+[2025-04-25 08:23:38] Remplacement de '[DATE_FIN_PREVUE]' par 'Non définie': AUCUN CHANGEMENT
+[2025-04-25 08:23:38] Remplacement de '[PRIX]' par '50,00': AUCUN CHANGEMENT
+[2025-04-25 08:23:38] Message final après remplacement: leny, votre pc gamer tour est prêt ! Il vous attend pour retrouver une vie normale. 🥳
+🧾 Suivi : http://Mdgeek.top/suivi.php?id=646
+Maison du Geek – 08 95 79 59 33
+[2025-04-25 08:23:38] Tentative d'envoi SMS à +33767233917
+[2025-04-25 08:23:38] Résultat de l'envoi: SUCCÈS
+[2025-04-25 08:23:38] ====== FIN DEBUG SMS ======
+[2025-04-25 09:26:43] ====== DÉBUT DEBUG SMS ======
+[2025-04-25 09:26:43] Template ID: 11
+[2025-04-25 09:26:43] Template nom: Restitué
+[2025-04-25 09:26:43] Template contenu brut: 🎉 [CLIENT_PRENOM],
+Ton [APPAREIL_MODELE] est de retour à la maison ! On espère qu’il est content 🤓
+💬 Laisse-nous un petit avis !
+⭐ https://g.page/r/Ce-HHwKZjezIEB0/review
+🏠 Maison du Geek
+📞 08 95 79 59 33
+
+[2025-04-25 09:26:43] Réparation ID: 646
+[2025-04-25 09:26:43] Variables à remplacer:
+[2025-04-25 09:26:43]   [CLIENT_NOM] => 'boh'
+[2025-04-25 09:26:43]   [CLIENT_PRENOM] => 'leny'
+[2025-04-25 09:26:43]   [CLIENT_TELEPHONE] => '+33767233917'
+[2025-04-25 09:26:43]   [REPARATION_ID] => '646'
+[2025-04-25 09:26:43]   [APPAREIL_TYPE] => 'Informatique'
+[2025-04-25 09:26:43]   [APPAREIL_MARQUE] => ''
+[2025-04-25 09:26:43]   [APPAREIL_MODELE] => 'pc gamer tour'
+[2025-04-25 09:26:43]   [DATE_RECEPTION] => '22/04/2025'
+[2025-04-25 09:26:43]   [DATE_FIN_PREVUE] => 'Non définie'
+[2025-04-25 09:26:43]   [PRIX] => '50,00'
+[2025-04-25 09:26:43] Message avant remplacement: 🎉 [CLIENT_PRENOM],
+Ton [APPAREIL_MODELE] est de retour à la maison ! On espère qu’il est content 🤓
+💬 Laisse-nous un petit avis !
+⭐ https://g.page/r/Ce-HHwKZjezIEB0/review
+🏠 Maison du Geek
+📞 08 95 79 59 33
+
+[2025-04-25 09:26:43] Remplacement de '[CLIENT_NOM]' par 'boh': AUCUN CHANGEMENT
+[2025-04-25 09:26:43] Remplacement de '[CLIENT_PRENOM]' par 'leny': OK
+[2025-04-25 09:26:43] Remplacement de '[CLIENT_TELEPHONE]' par '+33767233917': AUCUN CHANGEMENT
+[2025-04-25 09:26:43] Remplacement de '[REPARATION_ID]' par '646': AUCUN CHANGEMENT
+[2025-04-25 09:26:43] Remplacement de '[APPAREIL_TYPE]' par 'Informatique': AUCUN CHANGEMENT
+[2025-04-25 09:26:43] Remplacement de '[APPAREIL_MARQUE]' par '': AUCUN CHANGEMENT
+[2025-04-25 09:26:43] Remplacement de '[APPAREIL_MODELE]' par 'pc gamer tour': OK
+[2025-04-25 09:26:43] Remplacement de '[DATE_RECEPTION]' par '22/04/2025': AUCUN CHANGEMENT
+[2025-04-25 09:26:43] Remplacement de '[DATE_FIN_PREVUE]' par 'Non définie': AUCUN CHANGEMENT
+[2025-04-25 09:26:43] Remplacement de '[PRIX]' par '50,00': AUCUN CHANGEMENT
+[2025-04-25 09:26:43] Message final après remplacement: 🎉 leny,
+Ton pc gamer tour est de retour à la maison ! On espère qu’il est content 🤓
+💬 Laisse-nous un petit avis !
+⭐ https://g.page/r/Ce-HHwKZjezIEB0/review
+🏠 Maison du Geek
+📞 08 95 79 59 33
+
+[2025-04-25 09:26:43] Tentative d'envoi SMS à +33767233917
+[2025-04-25 09:26:43] Résultat de l'envoi: SUCCÈS
+[2025-04-25 09:26:43] ====== FIN DEBUG SMS ======
+[2025-04-25 12:19:07] ====== DÉBUT DEBUG SMS ======
+[2025-04-25 12:19:07] Template ID: 11
+[2025-04-25 12:19:07] Template nom: Restitué
+[2025-04-25 12:19:07] Template contenu brut: 🎉 [CLIENT_PRENOM],
+Ton [APPAREIL_MODELE] est de retour à la maison ! On espère qu’il est content 🤓
+💬 Laisse-nous un petit avis !
+⭐ https://g.page/r/Ce-HHwKZjezIEB0/review
+🏠 Maison du Geek
+📞 08 95 79 59 33
+
+[2025-04-25 12:19:07] Réparation ID: 664
+[2025-04-25 12:19:07] Variables à remplacer:
+[2025-04-25 12:19:07]   [CLIENT_NOM] => 'Pienkowski'
+[2025-04-25 12:19:07]   [CLIENT_PRENOM] => 'Julie'
+[2025-04-25 12:19:07]   [CLIENT_TELEPHONE] => '33659406676'
+[2025-04-25 12:19:07]   [REPARATION_ID] => '664'
+[2025-04-25 12:19:07]   [APPAREIL_TYPE] => 'Informatique'
+[2025-04-25 12:19:07]   [APPAREIL_MARQUE] => ''
+[2025-04-25 12:19:07]   [APPAREIL_MODELE] => 'HP'
+[2025-04-25 12:19:07]   [DATE_RECEPTION] => '25/04/2025'
+[2025-04-25 12:19:07]   [DATE_FIN_PREVUE] => 'Non définie'
+[2025-04-25 12:19:07]   [PRIX] => '29,99'
+[2025-04-25 12:19:07] Message avant remplacement: 🎉 [CLIENT_PRENOM],
+Ton [APPAREIL_MODELE] est de retour à la maison ! On espère qu’il est content 🤓
+💬 Laisse-nous un petit avis !
+⭐ https://g.page/r/Ce-HHwKZjezIEB0/review
+🏠 Maison du Geek
+📞 08 95 79 59 33
+
+[2025-04-25 12:19:07] Remplacement de '[CLIENT_NOM]' par 'Pienkowski': AUCUN CHANGEMENT
+[2025-04-25 12:19:07] Remplacement de '[CLIENT_PRENOM]' par 'Julie': OK
+[2025-04-25 12:19:07] Remplacement de '[CLIENT_TELEPHONE]' par '33659406676': AUCUN CHANGEMENT
+[2025-04-25 12:19:07] Remplacement de '[REPARATION_ID]' par '664': AUCUN CHANGEMENT
+[2025-04-25 12:19:07] Remplacement de '[APPAREIL_TYPE]' par 'Informatique': AUCUN CHANGEMENT
+[2025-04-25 12:19:07] Remplacement de '[APPAREIL_MARQUE]' par '': AUCUN CHANGEMENT
+[2025-04-25 12:19:07] Remplacement de '[APPAREIL_MODELE]' par 'HP': OK
+[2025-04-25 12:19:07] Remplacement de '[DATE_RECEPTION]' par '25/04/2025': AUCUN CHANGEMENT
+[2025-04-25 12:19:07] Remplacement de '[DATE_FIN_PREVUE]' par 'Non définie': AUCUN CHANGEMENT
+[2025-04-25 12:19:07] Remplacement de '[PRIX]' par '29,99': AUCUN CHANGEMENT
+[2025-04-25 12:19:07] Message final après remplacement: 🎉 Julie,
+Ton HP est de retour à la maison ! On espère qu’il est content 🤓
+💬 Laisse-nous un petit avis !
+⭐ https://g.page/r/Ce-HHwKZjezIEB0/review
+🏠 Maison du Geek
+📞 08 95 79 59 33
+
+[2025-04-25 12:19:07] Tentative d'envoi SMS à 33659406676
+[2025-04-25 12:19:07] Résultat de l'envoi: SUCCÈS
+[2025-04-25 12:19:07] ====== FIN DEBUG SMS ======
+[2025-04-25 13:04:45] ====== DÉBUT DEBUG SMS ======
+[2025-04-25 13:04:45] Template ID: 2
+[2025-04-25 13:04:45] Template nom: Réparation terminée
+[2025-04-25 13:04:45] Template contenu brut: [CLIENT_PRENOM], votre [APPAREIL_MODELE] est prêt ! Il vous attend pour retrouver une vie normale. 🥳
+🧾 Suivi : http://Mdgeek.top/suivi.php?id=[REPARATION_ID]
+Maison du Geek – 08 95 79 59 33
+[2025-04-25 13:04:45] Réparation ID: 657
+[2025-04-25 13:04:45] Variables à remplacer:
+[2025-04-25 13:04:45]   [CLIENT_NOM] => 'le jeune'
+[2025-04-25 13:04:45]   [CLIENT_PRENOM] => 'thierry'
+[2025-04-25 13:04:45]   [CLIENT_TELEPHONE] => '+33627532376'
+[2025-04-25 13:04:45]   [REPARATION_ID] => '657'
+[2025-04-25 13:04:45]   [APPAREIL_TYPE] => 'Informatique'
+[2025-04-25 13:04:45]   [APPAREIL_MARQUE] => ''
+[2025-04-25 13:04:45]   [APPAREIL_MODELE] => 'Redmi 2201116tg'
+[2025-04-25 13:04:45]   [DATE_RECEPTION] => '23/04/2025'
+[2025-04-25 13:04:45]   [DATE_FIN_PREVUE] => 'Non définie'
+[2025-04-25 13:04:45]   [PRIX] => '80,00'
+[2025-04-25 13:04:45] Message avant remplacement: [CLIENT_PRENOM], votre [APPAREIL_MODELE] est prêt ! Il vous attend pour retrouver une vie normale. 🥳
+🧾 Suivi : http://Mdgeek.top/suivi.php?id=[REPARATION_ID]
+Maison du Geek – 08 95 79 59 33
+[2025-04-25 13:04:45] Remplacement de '[CLIENT_NOM]' par 'le jeune': AUCUN CHANGEMENT
+[2025-04-25 13:04:45] Remplacement de '[CLIENT_PRENOM]' par 'thierry': OK
+[2025-04-25 13:04:45] Remplacement de '[CLIENT_TELEPHONE]' par '+33627532376': AUCUN CHANGEMENT
+[2025-04-25 13:04:45] Remplacement de '[REPARATION_ID]' par '657': OK
+[2025-04-25 13:04:45] Remplacement de '[APPAREIL_TYPE]' par 'Informatique': AUCUN CHANGEMENT
+[2025-04-25 13:04:45] Remplacement de '[APPAREIL_MARQUE]' par '': AUCUN CHANGEMENT
+[2025-04-25 13:04:45] Remplacement de '[APPAREIL_MODELE]' par 'Redmi 2201116tg': OK
+[2025-04-25 13:04:45] Remplacement de '[DATE_RECEPTION]' par '23/04/2025': AUCUN CHANGEMENT
+[2025-04-25 13:04:45] Remplacement de '[DATE_FIN_PREVUE]' par 'Non définie': AUCUN CHANGEMENT
+[2025-04-25 13:04:45] Remplacement de '[PRIX]' par '80,00': AUCUN CHANGEMENT
+[2025-04-25 13:04:45] Message final après remplacement: thierry, votre Redmi 2201116tg est prêt ! Il vous attend pour retrouver une vie normale. 🥳
+🧾 Suivi : http://Mdgeek.top/suivi.php?id=657
+Maison du Geek – 08 95 79 59 33
+[2025-04-25 13:04:45] Tentative d'envoi SMS à +33627532376
+[2025-04-25 13:04:46] Résultat de l'envoi: SUCCÈS
+[2025-04-25 13:04:46] ====== FIN DEBUG SMS ======

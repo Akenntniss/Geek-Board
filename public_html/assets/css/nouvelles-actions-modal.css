@@ -1,0 +1,231 @@
+/* Styles spécifiques pour le modal Nouvelles Actions */
+
+/* Animation d'entrée avec zoom */
+#nouvelles_actions_modal .modal-content {
+    animation: modal-zoom-in 0.4s ease-out forwards;
+}
+
+@keyframes modal-zoom-in {
+    from {
+        opacity: 0;
+        transform: scale(0.95) translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* Effet de particules flottantes */
+#nouvelles_actions_modal .modal-body {
+    position: relative;
+    overflow: hidden;
+}
+
+#nouvelles_actions_modal .particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background-color: rgba(30, 144, 255, 0.4);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+    animation: float-particle 8s infinite ease-in-out;
+}
+
+@keyframes float-particle {
+    0% {
+        transform: translateY(0) translateX(0);
+        opacity: 0;
+    }
+    25% {
+        opacity: 0.8;
+    }
+    50% {
+        transform: translateY(-20px) translateX(10px);
+        opacity: 0.4;
+    }
+    75% {
+        opacity: 0.8;
+    }
+    100% {
+        transform: translateY(-40px) translateX(0);
+        opacity: 0;
+    }
+}
+
+/* Effet de lueur au survol */
+#nouvelles_actions_modal .list-group-item {
+    position: relative;
+    transition: all 0.3s ease;
+    overflow: hidden;
+    z-index: 1;
+    border-left: 3px solid transparent;
+}
+
+#nouvelles_actions_modal .list-group-item:hover {
+    transform: translateX(5px);
+    background-color: rgba(30, 144, 255, 0.05);
+    border-left-color: #1e90ff;
+}
+
+/* Adaptation pour le mode jour */
+.light-mode #nouvelles_actions_modal .list-group-item:hover {
+    background-color: rgba(30, 144, 255, 0.08);
+}
+
+/* Animation d'apparition séquentielle */
+#nouvelles_actions_modal .fade-in-sequence > .list-group > .list-group-item {
+    opacity: 0;
+    transform: translateY(10px);
+    animation: fade-in-item 0.5s forwards ease-out;
+}
+
+#nouvelles_actions_modal .fade-in-sequence > .list-group > .list-group-item:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+#nouvelles_actions_modal .fade-in-sequence > .list-group > .list-group-item:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+#nouvelles_actions_modal .fade-in-sequence > .list-group > .list-group-item:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+#nouvelles_actions_modal .fade-in-sequence > .list-group > .list-group-item:nth-child(4) {
+    animation-delay: 0.4s;
+}
+
+#nouvelles_actions_modal .fade-in-sequence > .list-group > .list-group-item:nth-child(5) {
+    animation-delay: 0.5s;
+}
+
+@keyframes fade-in-item {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Effet de pulsation pour les icônes */
+#nouvelles_actions_modal .pulse-effect {
+    position: relative;
+}
+
+#nouvelles_actions_modal .pulse-effect::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: rgba(30, 144, 255, 0.4);
+    border-radius: 50%;
+    z-index: -1;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        opacity: 0.5;
+    }
+    50% {
+        transform: scale(1.2);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 0;
+    }
+}
+
+/* Effet holographique */
+#nouvelles_actions_modal .holographic {
+    position: relative;
+    overflow: hidden;
+}
+
+#nouvelles_actions_modal .holographic::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        45deg,
+        transparent 0%,
+        rgba(30, 144, 255, 0.05) 30%,
+        rgba(30, 144, 255, 0.1) 40%,
+        transparent 50%,
+        transparent 100%
+    );
+    transform: rotate(30deg);
+    z-index: 0;
+    animation: hologram 3s linear infinite;
+}
+
+@keyframes hologram {
+    0% { transform: rotate(30deg) translateX(-100%); }
+    100% { transform: rotate(30deg) translateX(100%); }
+}
+
+/* Effet "scanner" animé */
+#nouvelles_actions_modal .modal-body::after {
+    content: '';
+    position: absolute;
+    height: 2px;
+    width: 100%;
+    background: linear-gradient(90deg, transparent, rgba(30, 144, 255, 0.8), transparent);
+    top: 0;
+    left: 0;
+    z-index: 2;
+    animation: scanner 3s linear infinite;
+}
+
+@keyframes scanner {
+    0% {
+        top: 0%;
+        opacity: 0.1;
+    }
+    50% {
+        top: 100%;
+        opacity: 0.8;
+    }
+    100% {
+        top: 0%;
+        opacity: 0.1;
+    }
+}
+
+/* Style des icônes */
+#nouvelles_actions_modal .action-icon {
+    width: 50px;
+    height: 50px;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 15px rgba(30, 144, 255, 0.3);
+}
+
+#nouvelles_actions_modal .list-group-item:hover .action-icon {
+    transform: scale(1.1);
+    box-shadow: 0 0 20px rgba(30, 144, 255, 0.5);
+}
+
+/* Adaptation pour les écrans mobiles */
+@media (max-width: 576px) {
+    #nouvelles_actions_modal .action-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 0.9rem;
+    }
+    
+    #nouvelles_actions_modal h6 {
+        font-size: 0.95rem;
+    }
+    
+    #nouvelles_actions_modal p {
+        font-size: 0.8rem;
+    }
+} 

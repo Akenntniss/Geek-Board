@@ -1,0 +1,388 @@
+/* Styles futuristes pour le modal Menu Principal */
+
+/* Apparence générale */
+#menu_navigation_modal .modal-content {
+    background-color: var(--modal-bg, rgba(13, 17, 28, 0.9));
+    border-radius: 16px;
+    border: none;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    box-shadow: 0 8px 32px rgba(30, 144, 255, 0.3);
+    animation: modal-entry 0.4s ease-out;
+    overflow: hidden;
+}
+
+.light-mode #menu_navigation_modal .modal-content {
+    background-color: rgba(255, 255, 255, 0.95);
+}
+
+@keyframes modal-entry {
+    from {
+        opacity: 0;
+        transform: scale(0.95) translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* En-tête */
+#menu_navigation_modal .modal-header {
+    background: linear-gradient(90deg, rgba(30, 144, 255, 0.3) 0%, rgba(0, 77, 155, 0.3) 100%);
+    border-bottom: none;
+    padding: 1.5rem;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Style pour le bouton de fermeture (X) du modal menu principal */
+#menu_navigation_modal .modal-header .btn-close {
+    padding: 0.5rem;
+    margin: 0;
+    position: absolute;
+    right: 1.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.light-mode #menu_navigation_modal .modal-header {
+    background: linear-gradient(90deg, rgba(30, 144, 255, 0.15) 0%, rgba(0, 77, 155, 0.15) 100%);
+}
+
+/* Style pour décaler le modal menu principal vers le bas en format mobile */
+@media (max-width: 991px) {
+    #menu_navigation_modal .modal-dialog {
+        margin-top: 60px;
+    }
+}
+
+#menu_navigation_modal .modal-header::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, #1e90ff, #004d9b, #1e90ff);
+    background-size: 200% 100%;
+    animation: border-slide 3s linear infinite;
+}
+
+@keyframes border-slide {
+    0% { background-position: 0% 0; }
+    100% { background-position: 200% 0; }
+}
+
+#menu_navigation_modal .modal-title {
+    color: #fff;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-shadow: 0 0 10px rgba(30, 144, 255, 0.7);
+}
+
+.light-mode #menu_navigation_modal .modal-title {
+    color: #0a1629;
+    text-shadow: 0 0 8px rgba(30, 144, 255, 0.4);
+}
+
+/* Corps du modal */
+#menu_navigation_modal .modal-body {
+    position: relative;
+    overflow-x: hidden;
+    overflow-y: auto;
+    max-height: 85vh;
+}
+
+/* Particules flottantes */
+#menu_navigation_modal .particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background-color: rgba(30, 144, 255, 0.4);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+    animation: float-particle 8s infinite ease-in-out;
+}
+
+@keyframes float-particle {
+    0% {
+        transform: translateY(0) translateX(0);
+        opacity: 0;
+    }
+    25% {
+        opacity: 0.8;
+    }
+    50% {
+        transform: translateY(-30px) translateX(15px);
+        opacity: 0.4;
+    }
+    75% {
+        opacity: 0.8;
+    }
+    100% {
+        transform: translateY(-60px) translateX(0);
+        opacity: 0;
+    }
+}
+
+/* Section de lancement */
+.launchpad-section {
+    margin-bottom: 2rem;
+    padding: 0 1rem;
+    animation: fade-in 0.5s ease-out forwards;
+    opacity: 0;
+}
+
+.launchpad-section:nth-child(1) { animation-delay: 0.1s; }
+.launchpad-section:nth-child(2) { animation-delay: 0.2s; }
+.launchpad-section:nth-child(3) { animation-delay: 0.3s; }
+.launchpad-section:nth-child(4) { animation-delay: 0.4s; }
+.launchpad-section:nth-child(5) { animation-delay: 0.5s; }
+
+@keyframes fade-in {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Titre de section */
+.launchpad-section-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #1e90ff;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(30, 144, 255, 0.3);
+    letter-spacing: 0.5px;
+    position: relative;
+}
+
+.light-mode .launchpad-section-title {
+    color: #0066cc;
+}
+
+.launchpad-section-title::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -1px;
+    width: 50px;
+    height: 2px;
+    background: linear-gradient(90deg, #1e90ff, rgba(30, 144, 255, 0.2));
+}
+
+/* Contenu de la section */
+.launchpad-section-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 1rem;
+}
+
+/* Items de lancement */
+.launchpad-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: #fff;
+    padding: 1rem 0.5rem;
+    border-radius: 12px;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.light-mode .launchpad-item {
+    color: #0a1629;
+}
+
+.launchpad-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(30, 144, 255, 0.05);
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    border-radius: 12px;
+}
+
+.launchpad-item:hover::before {
+    opacity: 1;
+}
+
+.launchpad-item:hover {
+    transform: translateY(-5px);
+}
+
+/* Animation holographique pour items */
+.launchpad-item::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        45deg,
+        transparent 0%,
+        rgba(30, 144, 255, 0.05) 30%,
+        rgba(30, 144, 255, 0.1) 40%,
+        transparent 50%,
+        transparent 100%
+    );
+    transform: rotate(30deg);
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.launchpad-item:hover::after {
+    opacity: 1;
+    animation: hologram 3s linear infinite;
+}
+
+@keyframes hologram {
+    0% { transform: rotate(30deg) translateX(-100%); }
+    100% { transform: rotate(30deg) translateX(100%); }
+}
+
+/* Icônes de lancement */
+.launchpad-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.75rem;
+    position: relative;
+    overflow: hidden;
+    background: rgba(30, 144, 255, 0.1);
+    color: #1e90ff;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.light-mode .launchpad-icon {
+    background: rgba(30, 144, 255, 0.08);
+    box-shadow: 0 5px 15px rgba(30, 144, 255, 0.1);
+}
+
+.launchpad-item:hover .launchpad-icon {
+    transform: scale(1.1);
+    box-shadow: 0 0 20px rgba(30, 144, 255, 0.4);
+}
+
+.launchpad-icon i {
+    font-size: 1.5rem;
+    position: relative;
+    z-index: 1;
+}
+
+/* Effet de pulsation pour les icônes */
+.launchpad-icon.pulse-effect {
+    position: relative;
+}
+
+.launchpad-icon.pulse-effect::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: rgba(30, 144, 255, 0.4);
+    border-radius: 16px;
+    z-index: 0;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        opacity: 0.5;
+    }
+    50% {
+        transform: scale(1.2);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 0;
+    }
+}
+
+/* Effet de scanner pour le corps du modal */
+#menu_navigation_modal .modal-body::after {
+    content: '';
+    position: absolute;
+    height: 2px;
+    width: 100%;
+    background: linear-gradient(90deg, transparent, rgba(30, 144, 255, 0.8), transparent);
+    top: 0;
+    left: 0;
+    z-index: 2;
+    animation: scanner 6s linear infinite;
+}
+
+@keyframes scanner {
+    0% {
+        top: 0%;
+        opacity: 0.1;
+    }
+    50% {
+        top: 100%;
+        opacity: 0.8;
+    }
+    100% {
+        top: 0%;
+        opacity: 0.1;
+    }
+}
+
+/* Adaptation pour petits écrans */
+@media (max-width: 576px) {
+    .launchpad-section-content {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .launchpad-icon {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .launchpad-icon i {
+        font-size: 1.25rem;
+    }
+    
+    .launchpad-item span {
+        font-size: 0.85rem;
+    }
+}
+
+/* Badge pour les notifications */
+.launchpad-item .badge {
+    position: absolute;
+    top: 0;
+    right: 20%;
+    background: linear-gradient(135deg, #ff6b6b 0%, #ff8e8e 100%);
+    color: white;
+    font-size: 0.7rem;
+    border-radius: 50%;
+    width: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 5px rgba(255, 107, 107, 0.3);
+    animation: pulse 2s infinite;
+    z-index: 2;
+} 
