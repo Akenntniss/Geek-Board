@@ -77,6 +77,12 @@ try {
             JOIN clients c ON cp.client_id = c.id
             LEFT JOIN fournisseurs f ON cp.fournisseur_id = f.id
             WHERE cp.statut = 'recue'
+            AND cp.id NOT IN (
+                SELECT SUBSTRING(reparation_id, 5) 
+                FROM sms_logs 
+                WHERE reparation_id LIKE 'CMD-%' 
+                AND date_envoi > DATE_SUB(NOW(), INTERVAL 7 DAY)
+            )
         ";
     } else {
         // Pour les réparations, utiliser la requête d'origine
@@ -246,14 +252,22 @@ foreach ($clients as $client) {
         } else {
             // Enregistrer le SMS dans les logs
             try {
+                // Pour les commandes, utiliser un préfixe différent pour distinguer dans les logs
+                $entity_id = $client['id'];
+                $entity_type = ($filterType === 'commande') ? 'CMD-' . $entity_id : $entity_id;
+                
                 $log_stmt = $pdo->prepare("
                     INSERT INTO sms_logs (recipient, message, status, response, reparation_id, date_envoi) 
                     VALUES (?, ?, ?, ?, ?, NOW())
                 ");
-                $log_stmt->execute([$telephone, $message, ($http_code == 200 ? 1 : 0), $response, $client['id']]);
+                $log_stmt->execute([$telephone, $message, ($http_code == 200 ? 1 : 0), $response, $entity_type]);
                 
                 // Incrémenter le compteur de SMS envoyés
                 $sms_sent++;
+                
+                // Log supplémentaire pour le suivi
+                error_log("SMS envoyé avec succès à {$client['client_nom']} {$client['client_prenom']} pour " . 
+                    ($filterType === 'commande' ? "la commande" : "la réparation") . " #{$client['id']}");
             } catch (PDOException $e) {
                 error_log("Erreur lors de l'enregistrement du SMS dans les logs: " . $e->getMessage());
                 // Continuer malgré l'erreur

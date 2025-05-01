@@ -773,13 +773,15 @@ function get_base_url() {
 }
 
 /**
- * Fonction pour envoyer un SMS
- * @param string $recipient Numéro de téléphone du destinataire (format international)
- * @param string $message Contenu du message
- * @param string $gateway_url URL de la passerelle SMS (optionnel)
+ * Envoie un SMS à un destinataire via la passerelle SMS configurée.
+ * @param string $recipient Le numéro de téléphone du destinataire
+ * @param string $message Le contenu du message à envoyer
+ * @param string|null $gateway_url URL de la passerelle SMS (facultatif si utilisation de la passerelle par défaut)
+ * @param string|null $entity_id ID de l'entité associée (réparation, commande, etc.)
+ * @param string $entity_type Type d'entité ('reparation', 'commande', etc.)
  * @return array Résultat de l'opération
  */
-function send_sms($recipient, $message, $gateway_url = null) {
+function send_sms($recipient, $message, $gateway_url = null, $entity_id = null, $entity_type = 'reparation') {
     global $pdo; // S'assurer que la variable $pdo est accessible
 
     // Créer un fichier de log dans un dossier accessible
@@ -798,6 +800,10 @@ function send_sms($recipient, $message, $gateway_url = null) {
         $log("=== ENVOI SMS DÉMARRÉ ===");
         $log("Destinataire: $recipient");
         $log("Message: " . substr($message, 0, 30) . "...");
+        
+        if ($entity_id) {
+            $log("Entité: $entity_type #$entity_id");
+        }
         
         // Vérification des paramètres
         if (empty($recipient) || empty($message)) {
@@ -911,8 +917,9 @@ function send_sms($recipient, $message, $gateway_url = null) {
                     check_sms_logs_table();
                 }
                 
-                $stmt = $pdo->prepare("INSERT INTO sms_logs (recipient, message, status, response) VALUES (?, ?, ?, ?)");
-                $stmt->execute([$recipient, $message, $status, $response ?: $curl_error]);
+                // Enregistrer l'ID de l'entité tel quel, sans distinction entre réparation et commande
+                $stmt = $pdo->prepare("INSERT INTO sms_logs (recipient, message, status, response, reparation_id) VALUES (?, ?, ?, ?, ?)");
+                $stmt->execute([$recipient, $message, $status, $response ?: $curl_error, $entity_id]);
                 $log_id = $pdo->lastInsertId();
                 $log("SMS enregistré dans la base de données, ID: $log_id");
             } catch (PDOException $e) {

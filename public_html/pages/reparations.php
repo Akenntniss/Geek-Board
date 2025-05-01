@@ -1734,6 +1734,12 @@ document.addEventListener('DOMContentLoaded', function() {
                         <i class="fas fa-info-circle me-1"></i>
                         Un SMS sera envoyé au client pour l'informer du changement de statut de sa réparation
                     </p>
+                    
+                    <!-- Ajout du grand bouton d'envoi de SMS -->
+                    <button type="button" id="bigSendSmsBtn" class="btn btn-primary btn-lg w-100 mt-3 mb-2">
+                        <i class="fas fa-sms me-2 fa-lg"></i>
+                        Envoyer un SMS maintenant
+                    </button>
                 </div>
             </div>
             <div class="modal-footer">
@@ -4846,6 +4852,51 @@ document.addEventListener('DOMContentLoaded', function() {
         smsLabel.addEventListener('click', function() {
             smsEnabled = !smsEnabled;
             updateSmsIndicator();
+        });
+    }
+});
+</script>
+
+<!-- Ajouter un gestionnaire d'événements pour le bouton d'envoi de SMS -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const bigSendSmsBtn = document.getElementById('bigSendSmsBtn');
+    if (bigSendSmsBtn) {
+        bigSendSmsBtn.addEventListener('click', function() {
+            // Récupérer l'ID de la réparation en cours
+            const repairId = document.getElementById('chooseStatusRepairId').value;
+            
+            // Vérifier que l'ID est valide
+            if (!repairId) {
+                console.error('ID de réparation non trouvé');
+                alert('Impossible de trouver les informations de réparation');
+                return;
+            }
+            
+            // Fermer le modal de choix de statut
+            const statusModal = bootstrap.Modal.getInstance(document.getElementById('chooseStatusModal'));
+            if (statusModal) statusModal.hide();
+            
+            // Récupérer les informations du client pour cette réparation
+            fetch(`../ajax/get_client_info.php?repair_id=${repairId}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Ouvrir le modal d'envoi de SMS avec les informations du client
+                        openSmsModal(
+                            data.client_id,
+                            data.client_nom,
+                            data.client_prenom,
+                            data.client_telephone
+                        );
+                    } else {
+                        alert('Erreur : ' + (data.message || 'Impossible de récupérer les informations du client'));
+                    }
+                })
+                .catch(error => {
+                    console.error('Erreur lors de la récupération des informations du client :', error);
+                    alert('Erreur de communication avec le serveur');
+                });
         });
     }
 });

@@ -71,7 +71,7 @@ try {
         file_put_contents($logFile, "Mise à jour réussie: " . $stmt->rowCount() . " ligne(s) affectée(s)\n", FILE_APPEND);
         
         // Récupérer le statut précédent pour le journal
-        $stmt_prev = $pdo->prepare("SELECT statut FROM reparation_logs WHERE reparation_id = ? AND action_type = 'statut' ORDER BY date_creation DESC LIMIT 1");
+        $stmt_prev = $pdo->prepare("SELECT statut_apres FROM reparation_logs WHERE reparation_id = ? AND action_type = 'changement_statut' ORDER BY date_action DESC LIMIT 1");
         $stmt_prev->execute([$repair_id]);
         $previous_status = $stmt_prev->fetchColumn();
         
@@ -88,7 +88,7 @@ try {
             $stmt_log = $pdo->prepare("
                 INSERT INTO reparation_logs (
                     reparation_id, employe_id, action_type, statut_avant, statut_apres, details
-                ) VALUES (?, ?, 'statut', ?, ?, ?)
+                ) VALUES (?, ?, 'changement_statut', ?, ?, ?)
             ");
             
             $details = "Mise à jour simplifiée du statut";
@@ -131,34 +131,92 @@ try {
         try {
             file_put_contents($logFile, "Tentative d'envoi de SMS\n", FILE_APPEND);
             
-            // Récupérer les informations du client avec PDO
+            // Récupérer les informations du client et de la réparation
             $stmt = $pdo->prepare("
-                SELECT c.telephone, c.nom, c.prenom
+                SELECT r.*, c.telephone, c.nom as client_nom, c.prenom as client_prenom
                 FROM reparations r
                 JOIN clients c ON r.client_id = c.id
                 WHERE r.id = ?
             ");
             $stmt->execute([$repair_id]);
-            $client = $stmt->fetch();
+            $repair_data = $stmt->fetch();
             
-            if ($client && !empty($client['telephone'])) {
-                $telephone = $client['telephone'];
-                $client_nom = $client['nom'] . ' ' . $client['prenom'];
-                $status_name = $status['nom'] ?? 'statut inconnu';
+            if ($repair_data && !empty($repair_data['telephone'])) {
+                $telephone = $repair_data['telephone'];
+                $client_nom = $repair_data['client_nom'];
+                $client_prenom = $repair_data['client_prenom'];
                 
-                // Message simplifié
-                $message = "GeekBoard: Votre réparation est maintenant en statut \"$status_name\". Pour plus d'informations, connectez-vous à votre espace client.";
+                // Récupérer le template correspondant au statut_id
+                $stmt = $pdo->prepare("
+                    SELECT id, contenu 
+                    FROM sms_templates 
+                    WHERE statut_id = ? AND est_actif = 1
+                    LIMIT 1
+                ");
+                $stmt->execute([$status_id]);
+                $template = $stmt->fetch(PDO::FETCH_ASSOC);
+                
+                if ($template && !empty($template['contenu'])) {
+                    // Créer le message à partir du template et des informations de la réparation
+                    $message = $template['contenu'];
+                    
+                    // Remplacer les variables dans le template
+                    $replacements = [
+                        '[CLIENT_NOM]' => $client_nom,
+                        '[CLIENT_PRENOM]' => $client_prenom,
+                        '[CLIENT_TELEPHONE]' => $telephone,
+                        '[REPARATION_ID]' => $repair_id,
+                        '[APPAREIL_TYPE]' => $repair_data['type_appareil'] ?? '',
+                        '[APPAREIL_MARQUE]' => $repair_data['marque'] ?? '',
+                        '[APPAREIL_MODELE]' => $repair_data['modele'] ?? '',
+                        '[DATE_RECEPTION]' => !empty($repair_data['date_reception']) ? date('d/m/Y', strtotime($repair_data['date_reception'])) : '',
+                        '[DATE_FIN_PREVUE]' => !empty($repair_data['date_fin_prevue']) ? date('d/m/Y', strtotime($repair_data['date_fin_prevue'])) : '',
+                        '[PRIX]' => !empty($repair_data['prix_reparation']) ? number_format($repair_data['prix_reparation'], 2, ',', ' ') . ' €' : ''
+                    ];
+                    
+                    foreach ($replacements as $placeholder => $value) {
+                        $message = str_replace($placeholder, $value, $message);
+                    }
+                    
+                    file_put_contents($logFile, "Template de SMS trouvé pour le statut_id $status_id\n", FILE_APPEND);
+                    file_put_contents($logFile, "Message après remplacement des variables : " . substr($message, 0, 100) . "...\n", FILE_APPEND);
+                } else {
+                    // Fallback si aucun template trouvé pour ce statut
+                    file_put_contents($logFile, "Aucun template trouvé pour le statut_id $status_id, utilisation du message par défaut\n", FILE_APPEND);
+                    $status_name = $status['nom'] ?? 'statut inconnu';
+                    $message = "GeekBoard: Votre réparation est maintenant en statut \"$status_name\". Pour plus d'informations, connectez-vous à votre espace client.";
+                }
                 
                 // Envoi du SMS
                 file_put_contents($logFile, "Tentative d'envoi de SMS à $telephone\n", FILE_APPEND);
-                $sms_sent = send_sms($telephone, $message);
+                $sms_result = send_sms($telephone, $message);
                 
-                file_put_contents($logFile, "Résultat de l'envoi SMS: " . ($sms_sent ? 'OK' : 'ÉCHEC') . "\n", FILE_APPEND);
+                file_put_contents($logFile, "Résultat de l'envoi SMS: " . print_r($sms_result, true) . "\n", FILE_APPEND);
+                
+                // Déterminer si l'envoi a réussi
+                $sms_sent = isset($sms_result['success']) && $sms_result['success'] === true;
+                
+                // Enregistrer dans la table reparation_sms
+                try {
+                    $stmt = $pdo->prepare("
+                        INSERT INTO reparation_sms (
+                            reparation_id, template_id, statut_id, telephone, message
+                        ) VALUES (?, ?, ?, ?, ?)
+                    ");
+                    
+                    $template_id = isset($template['id']) ? $template['id'] : 0;
+                    
+                    $stmt->execute([$repair_id, $template_id, $status_id, $telephone, $message]);
+                    
+                    file_put_contents($logFile, "SMS enregistré dans reparation_sms: ID=" . $pdo->lastInsertId() . "\n", FILE_APPEND);
+                } catch (Exception $e) {
+                    file_put_contents($logFile, "Erreur lors de l'enregistrement dans reparation_sms: " . $e->getMessage() . "\n", FILE_APPEND);
+                }
                 
                 $response['data']['sms_sent'] = $sms_sent;
                 $response['data']['sms_message'] = $sms_sent 
                     ? "SMS envoyé à $client_nom ($telephone) [mode simplifié]"
-                    : "Échec de l'envoi du SMS à $client_nom ($telephone) [mode simplifié]";
+                    : "Échec de l'envoi du SMS à $client_nom ($telephone): " . ($sms_result['message'] ?? 'Erreur inconnue');
             } else {
                 file_put_contents($logFile, "Client non trouvé ou sans téléphone\n", FILE_APPEND);
                 $response['data']['sms_message'] = "SMS non envoyé: client non trouvé ou sans téléphone";
