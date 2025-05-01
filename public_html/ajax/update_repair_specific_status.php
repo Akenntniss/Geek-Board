@@ -128,7 +128,7 @@ try {
         file_put_contents($logFile, "Mise à jour réussie: " . $stmt->rowCount() . " ligne(s) affectée(s)\n", FILE_APPEND);
         
         // Récupérer le statut précédent pour le journal
-        $stmt_prev = $pdo->prepare("SELECT statut FROM reparation_logs WHERE reparation_id = ? AND action_type = 'statut' ORDER BY date_creation DESC LIMIT 1");
+        $stmt_prev = $pdo->prepare("SELECT statut_apres FROM reparation_logs WHERE reparation_id = ? AND action_type = 'changement_statut' ORDER BY date_action DESC LIMIT 1");
         $stmt_prev->execute([$repair_id]);
         $previous_status = $stmt_prev->fetchColumn();
         
@@ -142,10 +142,10 @@ try {
             $stmt_log = $pdo->prepare("
                 INSERT INTO reparation_logs (
                     reparation_id, employe_id, action_type, statut_avant, statut_apres, details
-                ) VALUES (?, ?, 'statut', ?, ?, ?)
+                ) VALUES (?, ?, 'changement_statut', ?, ?, ?)
             ");
             
-            $details = "Mise à jour du statut via l'interface";
+            $details = "Mise à jour du statut avec SMS " . ($send_sms ? "activé" : "désactivé");
             $stmt_log->execute([
                 $repair_id, 
                 $user_id, 
@@ -202,7 +202,7 @@ try {
                 
                 // Récupérer le template correspondant au statut_id
                 $stmt = $pdo->prepare("
-                    SELECT contenu 
+                    SELECT id, contenu 
                     FROM sms_templates 
                     WHERE statut_id = ? AND est_actif = 1
                     LIMIT 1
@@ -215,7 +215,7 @@ try {
                     $message = $template['contenu'];
                     
                     // Remplacer les variables dans le template
-                    $replacements = [
+                $replacements = [
                         '[CLIENT_NOM]' => $client_nom,
                         '[CLIENT_PRENOM]' => $client_prenom,
                         '[CLIENT_TELEPHONE]' => $telephone,
@@ -263,7 +263,7 @@ try {
                         
                         // Enregistrer dans la table reparation_sms
                         try {
-                            $stmt = $pdo->prepare("
+                        $stmt = $pdo->prepare("
                                 INSERT INTO reparation_sms (
                                     reparation_id, template_id, statut_id, telephone, message
                                 ) VALUES (?, ?, ?, ?, ?)
