@@ -1,0 +1,440 @@
+/**
+ * Neo Dock - Barre de navigation futuriste pour GeekBoard
+ * Design ultra-moderne avec effets visuels avancés
+ * v2.0
+ */
+
+:root {
+  /* Couleurs principales */
+  --neo-dock-primary: #4361ee;
+  --neo-dock-secondary: #6178f1;
+  --neo-dock-success: #2dd4bf;
+  --neo-dock-danger: #f43f5e;
+  --neo-dock-warning: #fbbf24;
+  
+  /* Couleurs de fond */
+  --neo-dock-bg-light: rgba(255, 255, 255, 0.7);
+  --neo-dock-bg-dark: rgba(22, 24, 32, 0.9);
+  
+  /* Couleurs de texte */
+  --neo-dock-text: #64748b;
+  --neo-dock-text-active: #4361ee;
+  --neo-dock-text-dark: rgba(235, 240, 255, 0.85);
+  --neo-dock-text-dark-active: #7d9bff;
+  
+  /* Dimensions */
+  --neo-dock-height: 70px;
+  --neo-dock-icon-size: 22px;
+  --neo-dock-text-size: 11px;
+  --neo-dock-radius: 24px;
+  --neo-dock-action-btn-size: 60px;
+  
+  /* Effets */
+  --neo-dock-blur: 20px;
+  --neo-dock-shadow: 0 -10px 30px rgba(0, 0, 0, 0.08);
+  --neo-dock-shadow-dark: 0 -10px 30px rgba(0, 0, 0, 0.3);
+  --neo-dock-border-light: 1px solid rgba(255, 255, 255, 0.1);
+  --neo-dock-border-dark: 1px solid rgba(255, 255, 255, 0.05);
+  --neo-dock-transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Force d'affichage - Override tous les autres styles */
+#mobile-dock {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  z-index: 9999 !important;
+  transition: transform 0.4s ease, opacity 0.3s ease !important;
+}
+
+@media (max-width: 992px) {
+  body {
+    padding-bottom: calc(var(--neo-dock-height) + env(safe-area-inset-bottom, 0px)) !important;
+  }
+}
+
+/* Container principal du dock */
+#mobile-dock {
+  position: fixed !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  height: var(--neo-dock-height) !important;
+  background: var(--neo-dock-bg-light) !important;
+  backdrop-filter: blur(var(--neo-dock-blur)) !important;
+  -webkit-backdrop-filter: blur(var(--neo-dock-blur)) !important;
+  box-shadow: var(--neo-dock-shadow) !important;
+  border-top: var(--neo-dock-border-light) !important;
+  padding-bottom: env(safe-area-inset-bottom, 0) !important;
+  overflow: visible !important;
+}
+
+/* Animation d'apparition */
+@keyframes dock-slide-in {
+  from { 
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to { 
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+#mobile-dock {
+  animation: dock-slide-in 0.5s ease-out forwards;
+}
+
+/* Container des éléments du dock */
+.mobile-dock-container {
+  display: flex !important;
+  justify-content: space-around !important;
+  align-items: center !important;
+  height: 100% !important;
+  max-width: 600px !important;
+  margin: 0 auto !important;
+  padding: 10px 16px !important;
+  overflow: visible !important;
+}
+
+/* Éléments individuels du dock */
+.dock-item {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  position: relative !important;
+  flex: 1 !important;
+  text-decoration: none !important;
+  color: var(--neo-dock-text) !important;
+  transition: var(--neo-dock-transition) !important;
+  z-index: 1 !important;
+}
+
+/* Conteneur d'icône avec effet de glassmorphism */
+.dock-icon-wrapper {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 46px !important;
+  height: 46px !important;
+  border-radius: 16px !important;
+  margin-bottom: 6px !important;
+  background: rgba(255, 255, 255, 0.8) !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03) !important;
+  transition: var(--neo-dock-transition) !important;
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+/* Effet de brillance sur les icônes */
+.dock-icon-wrapper::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.1) 45%,
+    rgba(255, 255, 255, 0.4) 50%,
+    rgba(255, 255, 255, 0.1) 55%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: rotate(45deg) translateY(-100%);
+  opacity: 0;
+  transition: opacity 0.6s, transform 0.6s;
+}
+
+/* Styles des icônes */
+.dock-item i {
+  font-size: var(--neo-dock-icon-size) !important;
+  color: inherit !important;
+  transition: var(--neo-dock-transition) !important;
+  z-index: 1 !important;
+  transform: translateY(1px) !important;
+}
+
+/* Étiquettes de texte */
+.dock-item span {
+  font-size: var(--neo-dock-text-size) !important;
+  font-weight: 500 !important;
+  transition: var(--neo-dock-transition) !important;
+  white-space: nowrap !important;
+  opacity: 0.8 !important;
+}
+
+/* Élément actif */
+.dock-item.active {
+  color: var(--neo-dock-text-active) !important;
+}
+
+.dock-item.active .dock-icon-wrapper {
+  transform: translateY(-14px) scale(1.1) !important;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.7)) !important;
+  box-shadow: 0 8px 20px rgba(67, 97, 238, 0.15) !important;
+}
+
+.dock-item.active i {
+  transform: scale(1.1) !important;
+}
+
+.dock-item.active span {
+  font-weight: 600 !important;
+  opacity: 1 !important;
+}
+
+/* Indicateur d'élément actif */
+.dock-item.active::after {
+  content: '';
+  position: absolute;
+  bottom: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--neo-dock-text-active);
+  box-shadow: 0 0 10px var(--neo-dock-text-active);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: translateX(-50%) scale(0.8); opacity: 0.6; }
+  50% { transform: translateX(-50%) scale(1.2); opacity: 1; }
+  100% { transform: translateX(-50%) scale(0.8); opacity: 0.6; }
+}
+
+/* Effets au survol */
+.dock-item:hover .dock-icon-wrapper {
+  transform: translateY(-8px);
+  box-shadow: 0 6px 15px rgba(67, 97, 238, 0.1);
+}
+
+.dock-item:hover .dock-icon-wrapper::before {
+  opacity: 1;
+  transform: rotate(45deg) translateY(100%);
+}
+
+.dock-item:hover span {
+  opacity: 1;
+}
+
+/* Effet au toucher actif */
+.dock-item:active .dock-icon-wrapper {
+  transform: scale(0.92);
+  background-color: rgba(67, 97, 238, 0.1);
+}
+
+/* Bouton d'action central */
+.dock-item-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+  position: relative !important;
+  overflow: visible !important;
+}
+
+.btn-nouvelle-action {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--neo-dock-action-btn-size);
+  height: var(--neo-dock-action-btn-size);
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--neo-dock-primary), var(--neo-dock-secondary));
+  border: none;
+  color: white;
+  font-size: 24px;
+  box-shadow: 0 6px 20px rgba(67, 97, 238, 0.4);
+  transition: var(--neo-dock-transition);
+  position: relative;
+  overflow: hidden;
+  transform: translateY(0) !important;
+  z-index: 10;
+}
+
+/* Effet de brillance pour le bouton d'action */
+.btn-nouvelle-action::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.1) 45%,
+    rgba(255, 255, 255, 0.4) 50%,
+    rgba(255, 255, 255, 0.1) 55%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: rotate(45deg);
+  animation: btn-shine 3s infinite;
+}
+
+@keyframes btn-shine {
+  0% { transform: rotate(45deg) translateX(-100%); }
+  100% { transform: rotate(45deg) translateX(100%); }
+}
+
+/* Animation sur le bouton central */
+@keyframes pulse-ring {
+  0% { box-shadow: 0 0 0 0 rgba(67, 97, 238, 0.4); }
+  70% { box-shadow: 0 0 0 15px rgba(67, 97, 238, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(67, 97, 238, 0); }
+}
+
+.btn-nouvelle-action {
+  animation: pulse-ring 2s infinite;
+}
+
+.btn-nouvelle-action:hover {
+  transform: translateY(0) scale(1.05);
+  box-shadow: 0 10px 25px rgba(67, 97, 238, 0.5);
+}
+
+.btn-nouvelle-action:active {
+  transform: translateY(0) scale(0.95);
+}
+
+/* Style des badges */
+.dock-icon-wrapper .badge {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 9px;
+  background-color: var(--neo-dock-danger);
+  color: white;
+  font-size: 10px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  box-shadow: 0 2px 5px rgba(244, 63, 94, 0.3);
+  border: 2px solid white;
+  animation: badge-pulse 2s infinite;
+}
+
+@keyframes badge-pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+/* Animation d'apparition des éléments du dock */
+@keyframes dock-item-appear {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.dock-item:nth-child(1) { animation: dock-item-appear 0.4s 0.1s ease-out forwards; }
+.dock-item:nth-child(2) { animation: dock-item-appear 0.4s 0.2s ease-out forwards; }
+.dock-item-center { animation: dock-item-appear 0.4s 0.3s ease-out forwards; }
+.dock-item:nth-child(4) { animation: dock-item-appear 0.4s 0.4s ease-out forwards; }
+.dock-item:nth-child(5) { animation: dock-item-appear 0.4s 0.5s ease-out forwards; }
+
+/* Mode sombre */
+body.dark-mode #mobile-dock {
+  background: var(--neo-dock-bg-dark) !important;
+  box-shadow: var(--neo-dock-shadow-dark) !important;
+  border-top: var(--neo-dock-border-dark) !important;
+}
+
+body.dark-mode .dock-item {
+  color: var(--neo-dock-text-dark) !important;
+}
+
+body.dark-mode .dock-item.active {
+  color: var(--neo-dock-text-dark-active) !important;
+}
+
+body.dark-mode .dock-icon-wrapper {
+  background: rgba(45, 47, 60, 0.8) !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15) !important;
+}
+
+body.dark-mode .dock-item.active .dock-icon-wrapper {
+  background: linear-gradient(145deg, rgba(55, 58, 75, 0.9), rgba(45, 47, 60, 0.7)) !important;
+  box-shadow: 0 8px 20px rgba(109, 135, 255, 0.2) !important;
+}
+
+body.dark-mode .dock-item:hover .dock-icon-wrapper {
+  background: rgba(55, 58, 75, 0.95) !important;
+  box-shadow: 0 6px 15px rgba(109, 135, 255, 0.15) !important;
+}
+
+body.dark-mode .dock-item:active .dock-icon-wrapper {
+  background-color: rgba(109, 135, 255, 0.2) !important;
+}
+
+body.dark-mode .dock-item.active::after {
+  background-color: var(--neo-dock-text-dark-active) !important;
+  box-shadow: 0 0 10px var(--neo-dock-text-dark-active) !important;
+}
+
+body.dark-mode .btn-nouvelle-action {
+  background: linear-gradient(135deg, #3754d8, #5a68e2) !important;
+  box-shadow: 0 6px 20px rgba(55, 84, 216, 0.4) !important;
+}
+
+body.dark-mode .btn-nouvelle-action:hover {
+  box-shadow: 0 10px 25px rgba(55, 84, 216, 0.5) !important;
+}
+
+body.dark-mode .dock-icon-wrapper .badge {
+  border-color: var(--neo-dock-bg-dark) !important;
+}
+
+/* Optimisations mobiles */
+@media (max-width: 380px) {
+  .dock-icon-wrapper {
+    width: 42px;
+    height: 42px;
+  }
+  
+  .dock-item i {
+    font-size: calc(var(--neo-dock-icon-size) - 2px);
+  }
+  
+  .dock-item span {
+    font-size: calc(var(--neo-dock-text-size) - 1px);
+  }
+  
+  .btn-nouvelle-action {
+    width: calc(var(--neo-dock-action-btn-size) - 5px);
+    height: calc(var(--neo-dock-action-btn-size) - 5px);
+  }
+}
+
+/* Support iPad et iPhone avec notch */
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+  #mobile-dock {
+    height: calc(var(--neo-dock-height) + env(safe-area-inset-bottom, 0px));
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  
+  .mobile-dock-container {
+    padding-bottom: 0;
+  }
+}
+
+/* Transitions pour l'affichage/masquage de la barre */
+#mobile-dock.hidden, #mobile-dock.dock-hidden {
+  transform: translateY(100%) !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+#mobile-dock.show, #mobile-dock.dock-visible {
+  transform: translateY(0) !important;
+  opacity: 1 !important;
+  pointer-events: auto !important;
+} 

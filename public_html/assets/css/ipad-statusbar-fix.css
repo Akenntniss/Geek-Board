@@ -1,0 +1,102 @@
+/**
+ * Correctif spécifique pour la barre de statut iPad en mode PWA
+ * Ce fichier vise à corriger les problèmes liés à la barre de statut sur iPad
+ */
+
+/* Règles spécifiques pour iPad en mode PWA */
+@supports (-webkit-touch-callout: none) {
+    /* Ciblage de l'iPad */
+    @media only screen and (min-device-width: 768px) and (max-device-width: 1366px) and (-webkit-min-device-pixel-ratio: 2) {
+        /* Styles généraux pour le corps de la page */
+        body.pwa-mode {
+            /* Application du padding pour la zone de la barre de statut */
+            padding-top: env(safe-area-inset-top, 20px) !important;
+            background-color: #f8f9fa; /* Fond légèrement gris clair pour s'adapter à celui de l'application */
+        }
+        
+        /* Style pour la barre de statut elle-même */
+        body.pwa-mode::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: env(safe-area-inset-top, 20px);
+            background-color: #f8f9fa; /* Couleur adaptée au thème clair de l'application */
+            z-index: 1100; /* Z-index élevé pour rester au dessus */
+        }
+        
+        /* Ajustement des conteneurs principaux */
+        body.pwa-mode main,
+        body.pwa-mode .page-container,
+        body.pwa-mode .mobile-container {
+            margin-top: env(safe-area-inset-top, 20px);
+        }
+        
+        /* Ajustement des éléments de navigation fixés */
+        body.pwa-mode .navbar,
+        body.pwa-mode #desktop-navbar,
+        body.pwa-mode .fixed-top,
+        body.pwa-mode .header-container {
+            top: env(safe-area-inset-top, 20px) !important;
+            height: calc(60px + env(safe-area-inset-top, 0px)) !important;
+            padding-top: env(safe-area-inset-top, 0px);
+        }
+        
+        /* Assurer que le contenu principal ne soit pas caché */
+        body.pwa-mode .content-wrapper {
+            padding-top: calc(60px + env(safe-area-inset-top, 20px)) !important;
+        }
+        
+        /* S'assurer que les pages de réparations et tâches s'affichent correctement */
+        body.pwa-mode.page-reparations,
+        body.pwa-mode.page-taches,
+        body.pwa-mode[data-page="reparations"],
+        body.pwa-mode[data-page="taches"] {
+            background-color: #f8f9fa;
+        }
+        
+        body.pwa-mode.page-reparations::before,
+        body.pwa-mode.page-taches::before,
+        body.pwa-mode[data-page="reparations"]::before,
+        body.pwa-mode[data-page="taches"]::before {
+            background-color: #f8f9fa;
+        }
+        
+        /* Mode sombre - détection via la classe sur le body ou via prefers-color-scheme */
+        body.pwa-mode.dark-mode,
+        body.pwa-mode.darkmode {
+            background-color: #121212;
+        }
+        
+        body.pwa-mode.dark-mode::before,
+        body.pwa-mode.darkmode::before {
+            background-color: #121212;
+        }
+    }
+    
+    /* Détection du mode sombre via prefers-color-scheme */
+    @media (prefers-color-scheme: dark) {
+        body.pwa-mode {
+            background-color: #121212 !important;
+        }
+        
+        body.pwa-mode::before {
+            background-color: #121212 !important;
+        }
+    }
+    
+    /* Styles spécifiques pour le mode portrait */
+    @media only screen and (min-device-width: 768px) and (max-device-width: 1366px) and (orientation: portrait) and (-webkit-min-device-pixel-ratio: 2) {
+        body.pwa-mode {
+            padding-top: env(safe-area-inset-top, 24px) !important;
+        }
+    }
+    
+    /* Styles spécifiques pour le mode paysage */
+    @media only screen and (min-device-width: 768px) and (max-device-width: 1366px) and (orientation: landscape) and (-webkit-min-device-pixel-ratio: 2) {
+        body.pwa-mode {
+            padding-top: env(safe-area-inset-top, 18px) !important;
+        }
+    }
+} 

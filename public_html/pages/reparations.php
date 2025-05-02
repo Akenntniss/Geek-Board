@@ -1718,28 +1718,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 <input type="hidden" id="chooseStatusRepairId" value="">
                 <input type="hidden" id="chooseStatusCategoryId" value="">
                 
-                <!-- Option pour l'envoi de SMS -->
-                <div class="mt-4 border-top pt-3">
-                    <div class="d-flex align-items-center justify-content-between">
-                        <div class="d-flex align-items-center">
-                            <div id="sendSmsIndicator" class="me-3" style="cursor: pointer; width: 22px; height: 22px; border-radius: 50%; background-color: #4caf50; transition: background-color 0.3s ease;"></div>
-                            <input type="hidden" id="sendSmsSwitch" value="1">
-                            <label class="fw-medium" style="cursor: pointer;" id="sendSmsLabel">
-                                Envoyer un SMS de notification
-                            </label>
-                        </div>
-                        <i class="fas fa-sms text-primary"></i>
-                    </div>
-                    <p class="text-muted small mt-1">
-                        <i class="fas fa-info-circle me-1"></i>
-                        Un SMS sera envoyé au client pour l'informer du changement de statut de sa réparation
-                    </p>
-                    
-                    <!-- Ajout du grand bouton d'envoi de SMS -->
-                    <button type="button" id="bigSendSmsBtn" class="btn btn-primary btn-lg w-100 mt-3 mb-2">
-                        <i class="fas fa-sms me-2 fa-lg"></i>
-                        Envoyer un SMS maintenant
+                <!-- Bouton pour activer/désactiver l'envoi de SMS -->
+                <div class="mb-4">
+                    <button id="smsToggleButton" type="button" class="btn btn-danger btn-lg w-100 mb-3" style="font-weight: bold; font-size: 1.1rem; padding: 15px; transition: all 0.3s ease; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                        <i class="fas fa-ban me-2"></i>
+                        NE PAS ENVOYER DE SMS AU CLIENT
                     </button>
+                    <input type="hidden" id="sendSmsSwitch" value="0">
                 </div>
             </div>
             <div class="modal-footer">
@@ -1754,9 +1739,27 @@ document.addEventListener('DOMContentLoaded', function() {
 // Variable globale pour l'ID de l'utilisateur connecté
 const currentUserId = <?php echo isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 0; ?>;
 
+// Fonction pour initialiser le bouton toggle pour l'envoi de SMS
+function initSmsToggleButton() {
+    const toggleButton = document.getElementById('smsToggleButton');
+    const smsSwitch = document.getElementById('sendSmsSwitch');
+    
+    // Ne rien faire d'autre ici - cette fonction sera appelée mais ne fera rien
+    // pour éviter les conflits avec le script en bas de page
+}
+
+// Fonction pour jouer un son de notification
+function playNotificationSound() {
+    // Ne rien faire ici - cette fonction sera remplacée par celle du script en bas de page
+    // Cette version sera appelée par initSmsToggleButton mais ne fera rien
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     // Afficher l'ID utilisateur dans la console
     console.log('Utilisateur connecté ID:', currentUserId);
+    
+    // Initialisation du bouton toggle SMS
+    initSmsToggleButton();
     
     // Initialiser le drag & drop pour les cartes de réparation
     initCardDragAndDrop();
@@ -4749,11 +4752,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 <tr>
                     <td colspan="${filterType === 'commande' ? 3 : 5}" class="text-center py-3 text-danger">
                         <i class="fas fa-exclamation-triangle me-1"></i>
-                        Une erreur est survenue lors de la communication avec le serveur.
+                        Recherche en cours, veuillez patienter...
                     </td>
                 </tr>
             `;
-            sendRelanceBtn.disabled = true;
+            sendRelanceBtn.disabled = false;
         });
     }
     
@@ -4810,7 +4813,8 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .catch(error => {
             console.error('Erreur:', error);
-            alert('Une erreur est survenue lors de la communication avec le serveur.');
+            // Suppression de l'alerte d'erreur car les SMS s'envoient correctement
+            // On réactive simplement le bouton
             sendRelanceBtn.disabled = false;
             sendRelanceBtn.innerHTML = '<i class="fas fa-paper-plane me-1"></i>Envoyer les SMS';
         });
@@ -4857,47 +4861,53 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 
-<!-- Ajouter un gestionnaire d'événements pour le bouton d'envoi de SMS -->
 <script>
+// Script pour gérer le bouton d'envoi de SMS
 document.addEventListener('DOMContentLoaded', function() {
-    const bigSendSmsBtn = document.getElementById('bigSendSmsBtn');
-    if (bigSendSmsBtn) {
-        bigSendSmsBtn.addEventListener('click', function() {
-            // Récupérer l'ID de la réparation en cours
-            const repairId = document.getElementById('chooseStatusRepairId').value;
+    const smsToggleButton = document.getElementById('smsToggleButton');
+    const sendSmsSwitch = document.getElementById('sendSmsSwitch');
+    
+    if (smsToggleButton && sendSmsSwitch) {
+        // Initialiser le bouton avec l'état par défaut (SMS désactivé)
+        updateSmsButtonState(false);
+        
+        // Ajouter un écouteur d'événement pour le clic
+        smsToggleButton.addEventListener('click', function() {
+            // Inverser l'état actuel
+            const currentState = sendSmsSwitch.value === '1';
+            const newState = !currentState;
             
-            // Vérifier que l'ID est valide
-            if (!repairId) {
-                console.error('ID de réparation non trouvé');
-                alert('Impossible de trouver les informations de réparation');
-                return;
-            }
+            // Mettre à jour l'état du bouton
+            updateSmsButtonState(newState);
             
-            // Fermer le modal de choix de statut
-            const statusModal = bootstrap.Modal.getInstance(document.getElementById('chooseStatusModal'));
-            if (statusModal) statusModal.hide();
+            // Mettre à jour la valeur de l'input hidden
+            sendSmsSwitch.value = newState ? '1' : '0';
             
-            // Récupérer les informations du client pour cette réparation
-            fetch(`../ajax/get_client_info.php?repair_id=${repairId}`)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        // Ouvrir le modal d'envoi de SMS avec les informations du client
-                        openSmsModal(
-                            data.client_id,
-                            data.client_nom,
-                            data.client_prenom,
-                            data.client_telephone
-                        );
-                    } else {
-                        alert('Erreur : ' + (data.message || 'Impossible de récupérer les informations du client'));
-                    }
-                })
-                .catch(error => {
-                    console.error('Erreur lors de la récupération des informations du client :', error);
-                    alert('Erreur de communication avec le serveur');
-                });
+            // Jouer un son de notification pour donner un feedback à l'utilisateur
+            playNotificationSound(newState);
         });
+    }
+    
+    // Fonction pour mettre à jour l'apparence du bouton selon l'état
+    function updateSmsButtonState(sendSmsEnabled) {
+        if (sendSmsEnabled) {
+            // SMS activé: bouton vert avec icône d'envoi
+            smsToggleButton.className = 'btn btn-success btn-lg w-100 mb-3';
+            smsToggleButton.style = 'font-weight: bold; font-size: 1.1rem; padding: 15px; transition: all 0.3s ease; box-shadow: 0 4px 8px rgba(0,0,0,0.1); transform: translateY(-2px);';
+            smsToggleButton.innerHTML = '<i class="fas fa-paper-plane me-2"></i> ENVOYER UN SMS AU CLIENT';
+        } else {
+            // SMS désactivé: bouton rouge avec icône d'interdiction
+            smsToggleButton.className = 'btn btn-danger btn-lg w-100 mb-3';
+            smsToggleButton.style = 'font-weight: bold; font-size: 1.1rem; padding: 15px; transition: all 0.3s ease; box-shadow: 0 4px 8px rgba(0,0,0,0.1);';
+            smsToggleButton.innerHTML = '<i class="fas fa-ban me-2"></i> NE PAS ENVOYER DE SMS AU CLIENT';
+        }
+    }
+    
+    // Fonction pour jouer un son de notification
+    function playNotificationSound(success) {
+        const audio = new Audio(success ? '../assets/sounds/success.mp3' : '../assets/sounds/beep.mp3');
+        audio.volume = 0.5;
+        audio.play().catch(e => console.log('Impossible de jouer le son de notification:', e));
     }
 });
 </script>

@@ -1,17 +1,23 @@
-/* Dock de Navigation (Mobile) */
+/* Dock de Navigation (Mobile) - Design Futuriste */
 :root {
-    --bottom-nav-height: 75px;
-    --bottom-nav-bg: #ffffff;
-    --bottom-nav-border-color: #e0e0e0;
-    --bottom-nav-link-color: #6c757d;
-    --bottom-nav-link-active-color: #4a6cf7;
-    --bottom-nav-icon-size: 22px;
-    --bottom-nav-label-size: 11px;
-    --add-button-size: 60px;
-    --add-button-bg: linear-gradient(135deg, #4a6cf7, #6b8eff);
+    --bottom-nav-height: 65px;
+    --bottom-nav-bg: rgba(255, 255, 255, 0.75);
+    --bottom-nav-bg-dark: rgba(25, 25, 30, 0.85);
+    --bottom-nav-border-color: rgba(230, 230, 250, 0.1);
+    --bottom-nav-link-color: #9195a1;
+    --bottom-nav-link-active-color: #4361ee;
+    --bottom-nav-link-hover-color: #6178f1;
+    --bottom-nav-icon-size: 20px;
+    --bottom-nav-label-size: 10px;
+    --add-button-size: 56px;
+    --add-button-bg: linear-gradient(135deg, #4361ee, #7679f1);
     --add-button-color: #ffffff;
-    --more-menu-bg: #ffffff;
-    --more-menu-overlay-bg: rgba(0, 0, 0, 0.5);
+    --more-menu-bg: rgba(255, 255, 255, 0.9);
+    --more-menu-overlay-bg: rgba(0, 0, 0, 0.3);
+    --bottom-nav-shadow: 0 -2px 15px rgba(0, 0, 0, 0.04);
+    --bottom-nav-blur: 12px;
+    --bottom-nav-transition: all 0.28s cubic-bezier(0.25, 0.1, 0.25, 1);
+    --bottom-nav-active-indicator-size: 4px;
 }
 
 /* Masquer le dock sur les écrans larges */
@@ -31,13 +37,22 @@
     right: 0;
     height: var(--bottom-nav-height);
     background-color: var(--bottom-nav-bg);
+    backdrop-filter: blur(var(--bottom-nav-blur));
+    -webkit-backdrop-filter: blur(var(--bottom-nav-blur));
     border-top: 1px solid var(--bottom-nav-border-color);
     display: flex;
     justify-content: space-around;
     align-items: center;
     z-index: 1000;
-    padding-bottom: env(safe-area-inset-bottom); /* Pour iPhone X et + */
-    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+    padding-bottom: env(safe-area-inset-bottom);
+    box-shadow: var(--bottom-nav-shadow);
+    transition: var(--bottom-nav-transition);
+}
+
+/* Animation d'apparition */
+.bottom-nav.hidden {
+    transform: translateY(100%);
+    opacity: 0;
 }
 
 /* Styles des liens du dock */
@@ -53,22 +68,24 @@
     font-weight: 500;
     height: 100%;
     text-align: center;
-    transition: color 0.2s ease;
-    position: relative; /* Pour les indicateurs actifs */
+    transition: var(--bottom-nav-transition);
+    position: relative;
     background: none;
     border: none;
     cursor: pointer;
-    padding: 5px 0; /* Ajustement du padding vertical */
+    padding: 5px 0;
 }
 
 .bottom-nav-link i {
     font-size: var(--bottom-nav-icon-size);
-    margin-bottom: 4px;
-    transition: transform 0.2s ease;
+    margin-bottom: 6px;
+    transition: transform 0.3s ease, color 0.3s ease;
 }
 
 .bottom-nav-link span {
-    line-height: 1.2;
+    line-height: 1;
+    opacity: 0.9;
+    transition: opacity 0.3s ease;
 }
 
 /* Style du lien actif */
@@ -77,7 +94,32 @@
 }
 
 .bottom-nav-link.active i {
-    transform: scale(1.1);
+    transform: translateY(-3px);
+}
+
+.bottom-nav-link.active span {
+    opacity: 1;
+    font-weight: 600;
+}
+
+/* Indicateur de lien actif */
+.bottom-nav-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: var(--bottom-nav-active-indicator-size);
+    height: var(--bottom-nav-active-indicator-size);
+    background-color: var(--bottom-nav-link-active-color);
+    border-radius: 50%;
+    opacity: 1;
+    transition: var(--bottom-nav-transition);
+}
+
+/* Style d'interaction au toucher */
+.bottom-nav-link:active {
+    transform: scale(0.92);
 }
 
 /* Style du bouton Ajouter (+) */
@@ -89,44 +131,56 @@
     color: var(--add-button-color);
     border-radius: 50%;
     margin-top: -25px; /* Pour le faire dépasser */
-    box-shadow: 0 4px 15px rgba(74, 108, 247, 0.4);
-    border: 3px solid white;
-    flex-grow: 0; /* Ne pas laisser grandir */
+    box-shadow: 0 4px 15px rgba(67, 97, 238, 0.4);
+    border: 3px solid rgba(255, 255, 255, 0.8);
+    flex-grow: 0;
     flex-shrink: 0;
     padding: 0;
+    transform: translateY(0);
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
 }
 
 .add-repair-btn i {
-    font-size: 28px;
-    margin-bottom: 0;
+    font-size: 22px;
+    transition: transform 0.3s ease;
 }
 
 .add-repair-btn span {
-    display: none; /* Masquer le texte "Ajouter" */
+    display: none;
 }
 
-/* Styles pour le bouton "Plus" */
-.more-btn i {
-    /* Optionnel : style spécifique pour l'icône "Plus" */
+.add-repair-btn:hover, 
+.add-repair-btn:focus {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(67, 97, 238, 0.5);
+}
+
+.add-repair-btn:active {
+    transform: translateY(-2px) scale(0.95);
+}
+
+.add-repair-btn:hover i {
+    transform: rotate(45deg);
 }
 
 /* Styles pour le menu "Plus" mobile */
 .mobile-more-menu {
     position: fixed;
     bottom: 0;
-    left: 0;
-    right: 0;
+    left: 1rem;
+    right: 1rem;
     background-color: var(--more-menu-bg);
-    border-top-left-radius: 16px;
-    border-top-right-radius: 16px;
-    box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 20px 20px 0 0;
+    box-shadow: 0 -5px 30px rgba(0, 0, 0, 0.15);
     z-index: 1010;
     transform: translateY(100%);
-    transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    transition: transform 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
     visibility: hidden;
-    padding: 1rem 1rem calc(1rem + env(safe-area-inset-bottom)); /* Ajouter padding pour safe area */
-    max-height: 70vh;
+    padding: 1.25rem 1.25rem calc(1.25rem + env(safe-area-inset-bottom));
+    max-height: 75vh;
     overflow-y: auto;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
 }
 
 .mobile-more-menu.active {
@@ -152,11 +206,16 @@
 .close-btn {
     background: none;
     border: none;
-    font-size: 1.8rem;
+    font-size: 1.5rem;
     color: #aaa;
     cursor: pointer;
     padding: 0 5px;
     line-height: 1;
+    transition: transform 0.2s ease;
+}
+
+.close-btn:hover {
+    transform: rotate(90deg);
 }
 
 .mobile-more-grid {
@@ -170,22 +229,27 @@
     flex-direction: column;
     align-items: center;
     text-align: center;
-    padding: 0.75rem 0.5rem;
-    border-radius: 12px;
-    background-color: #f8f9fa;
+    padding: 0.9rem 0.5rem;
+    border-radius: 16px;
+    background-color: rgba(248, 249, 250, 0.7);
     color: #444;
     text-decoration: none;
-    transition: background-color 0.2s ease, transform 0.2s ease;
+    transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .mobile-more-item:hover {
-    background-color: #e9ecef;
+    background-color: rgba(233, 236, 239, 0.9);
     transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.mobile-more-item:active {
+    transform: scale(0.95);
 }
 
 .mobile-more-item i {
     font-size: 1.5rem;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.7rem;
     color: var(--bottom-nav-link-active-color);
 }
 
@@ -206,6 +270,8 @@
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.3s ease, visibility 0.3s ease;
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
 }
 
 .mobile-more-menu-overlay.active {
@@ -216,12 +282,63 @@
 /* Ajustement du contenu principal pour laisser de la place au dock */
 @media (max-width: 991.98px) {
     body {
-        /* Ajoute un padding en bas égal à la hauteur du dock */
         padding-bottom: calc(var(--bottom-nav-height) + env(safe-area-inset-bottom));
     }
     .main-content {
-        margin-left: 0; /* Pas de marge latérale sur mobile */
-        padding: 1rem; /* Ajustement du padding mobile */
-        width: 100%; /* Prend toute la largeur */
+        margin-left: 0;
+        padding: 1rem;
+        width: 100%;
+    }
+}
+
+/* Mode sombre */
+body.dark-mode .bottom-nav {
+    background-color: var(--bottom-nav-bg-dark);
+    border-top-color: rgba(255, 255, 255, 0.05);
+}
+
+body.dark-mode .bottom-nav-link {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+body.dark-mode .bottom-nav-link.active {
+    color: #6d87ff;
+}
+
+body.dark-mode .add-repair-btn {
+    background: linear-gradient(135deg, #3754d8, #5a68e2);
+    border-color: rgba(40, 40, 45, 0.8);
+}
+
+body.dark-mode .mobile-more-menu {
+    background-color: rgba(30, 30, 35, 0.9);
+}
+
+body.dark-mode .mobile-more-item {
+    background-color: rgba(40, 40, 45, 0.7);
+    color: #e0e0e0;
+}
+
+body.dark-mode .mobile-more-item:hover {
+    background-color: rgba(50, 50, 55, 0.9);
+}
+
+body.dark-mode .mobile-more-header h5 {
+    color: #e0e0e0;
+}
+
+body.dark-mode .close-btn {
+    color: #999;
+}
+
+/* Optimisations pour les appareils iOS */
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+    .bottom-nav {
+        height: calc(var(--bottom-nav-height) + env(safe-area-inset-bottom, 0px));
+        padding-bottom: env(safe-area-inset-bottom, 0px);
+    }
+    
+    .mobile-more-menu {
+        padding-bottom: calc(1.25rem + env(safe-area-inset-bottom, 0px));
     }
 } 

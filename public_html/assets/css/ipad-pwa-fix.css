@@ -1,0 +1,53 @@
+/**
+ * Ajustements spécifiques pour iPad en mode PWA
+ * Décale le contenu de la page d'accueil de 20px vers le bas et gère la barre de statut
+ */
+
+/* Ciblage spécifique pour iPad en mode PWA */
+@media only screen and (min-device-width: 768px) and (max-device-width: 1366px) and (-webkit-min-device-pixel-ratio: 2) {
+    body.pwa-mode .mobile-container,
+    body.pwa-mode .page-transition {
+        padding-top: 20px !important; /* Utilisation de !important pour s'assurer que la règle est prioritaire */
+    }
+    
+    /* Ajustements additionnels pour garantir l'espacement */
+    body.pwa-mode .search-bar {
+        margin-top: 20px;
+    }
+    
+    /* Correction pour la barre de statut iPad - qui apparaît en haut de l'écran */
+    body.pwa-mode {
+        padding-top: env(safe-area-inset-top, 20px) !important;
+    }
+
+    /* Ajustement des éléments fixes en haut de la page */
+    body.pwa-mode #desktop-navbar,
+    body.pwa-mode .navbar-fixed-top,
+    body.pwa-mode .header-container {
+        top: env(safe-area-inset-top, 20px) !important;
+    }
+}
+
+/* En mode portrait */
+@media only screen and (min-device-width: 768px) and (max-device-width: 1366px) and (orientation: portrait) and (-webkit-min-device-pixel-ratio: 2) {
+    body.pwa-mode .mobile-container {
+        padding-top: 20px !important;
+    }
+    
+    /* Ajustement spécifique pour le mode portrait */
+    body.pwa-mode {
+        padding-top: env(safe-area-inset-top, 24px) !important;
+    }
+}
+
+/* En mode paysage */
+@media only screen and (min-device-width: 768px) and (max-device-width: 1366px) and (orientation: landscape) and (-webkit-min-device-pixel-ratio: 2) {
+    body.pwa-mode .mobile-container {
+        padding-top: 20px !important;
+    }
+    
+    /* Ajustement spécifique pour le mode paysage */
+    body.pwa-mode {
+        padding-top: env(safe-area-inset-top, 20px) !important;
+    }
+} 

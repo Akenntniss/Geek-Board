@@ -2,10 +2,10 @@
 // Définir le type de contenu comme JSON
 header('Content-Type: application/json');
 
-// Activer l'affichage des erreurs pour faciliter le débogage
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+// Désactiver l'affichage des erreurs pour la production
+ini_set('display_errors', 0);
+ini_set('display_startup_errors', 0);
+error_reporting(0);
 
 // Inclure la configuration de la base de données et les fonctions
 require_once('../config/database.php');

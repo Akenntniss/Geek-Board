@@ -16,7 +16,7 @@ require_once __DIR__ . '/../config/database.php';
     
     <!-- iOS PWA Meta Tags -->
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="GeekBoard">
     <link rel="apple-touch-icon" href="assets/images/pwa-icons/icon-192x192.png">
     <link rel="apple-touch-icon" sizes="152x152" href="assets/images/pwa-icons/icon-152x152.png">
@@ -88,6 +88,8 @@ require_once __DIR__ . '/../config/database.php';
     <link href="assets/css/status-colors.css" rel="stylesheet">
     <link href="assets/css/bug-reporter.css" rel="stylesheet">
     <link href="assets/css/rachat-styles.css" rel="stylesheet">
+    <!-- Styles PWA -->
+    <link href="assets/css/pwa-enhancements.css" rel="stylesheet">
     <!-- Modal Futuriste -->
     <link href="assets/css/futuristic-modal.css" rel="stylesheet">
     <link href="assets/css/futuristic-search-modal.css" rel="stylesheet">
@@ -98,11 +100,43 @@ require_once __DIR__ . '/../config/database.php';
     <script src="assets/js/menu-principal-futuriste.js" defer></script>
     <!-- Correctif pour iPad - chargé à la fin pour remplacer les autres styles -->
     <link href="assets/css/ipad-header-fix.css" rel="stylesheet">
+    <!-- Ajustement du contenu pour iPad PWA -->
+    <link href="assets/css/ipad-pwa-fix.css" rel="stylesheet">
+    <!-- Correctif spécifique pour la barre de statut sur iPad -->
+    <link href="assets/css/ipad-statusbar-fix.css" rel="stylesheet">
+    <!-- Nouvelle barre de navigation futuriste -->
+    <link href="assets/css/neo-dock.css" rel="stylesheet">
+    
+    <!-- Correctif pour le bouton d'action -->
+    <style>
+        /* Garantir que le bouton + dépasse de la barre de navigation */
+        #mobile-dock {
+            overflow: visible !important;
+        }
+        .mobile-dock-container {
+            overflow: visible !important;
+        }
+        .dock-item-center {
+            overflow: visible !important;
+            position: relative !important;
+        }
+        .btn-nouvelle-action {
+            transform: translateY(-25px) !important;
+            z-index: 1050 !important;
+        }
+        
+        /* Descendre les icônes de 1px */
+        .dock-item i, .dock-icon-wrapper i {
+            transform: translateY(1px) !important;
+        }
+    </style>
+    
     <script src="assets/js/app.js" defer></script>
     <script src="assets/js/modern-interactions.js" defer></script>
     <script src="assets/js/bug-reporter.js" defer></script>
     <script src="assets/js/offline-sync.js" defer></script>
     <script src="assets/js/pull-to-refresh.js" defer></script>
+    <script src="assets/js/statusbar-theme.js" defer></script>
     <script src="components/js/navbar.js" defer></script>
     <script src="components/js/tablet-detect.js" defer></script>
     <script src="assets/js/pwa-notifications.js" defer></script>

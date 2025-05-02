@@ -14,7 +14,7 @@
     --danger-color: #dc3545;
     --danger-light: rgba(220, 53, 69, 0.1);
     --navbar-height: 55px;
-    --dock-height: 55px;
+    --dock-height: 85px;
     --dock-height-pwa: calc(var(--dock-height) + env(safe-area-inset-bottom, 0px));
 }
 

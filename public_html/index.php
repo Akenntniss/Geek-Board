@@ -3,6 +3,20 @@
 require_once __DIR__ . '/config/session_config.php';
 // La session est déjà démarrée dans session_config.php, pas besoin de session_start() ici
 
+// Vérifier si on est dans le contexte d'un magasin spécifique
+if (isset($_SESSION['shop_id'])) {
+    // Nous sommes dans un magasin spécifique, noter cela pour l'interface
+    $current_shop_id = $_SESSION['shop_id'];
+    $current_shop_name = $_SESSION['shop_name'] ?? 'Magasin';
+} else {
+    // Pas de magasin sélectionné, vérifier si c'est un super administrateur
+    if (isset($_SESSION['superadmin_id'])) {
+        // Rediriger vers le tableau de bord des magasins
+        header('Location: superadmin/index.php');
+        exit;
+    }
+}
+
 // Vérifier les paramètres de test PWA dans l'URL et les stocker dans la session
 if (isset($_GET['test_pwa']) && $_GET['test_pwa'] === 'true') {
     $_SESSION['test_pwa'] = true;
@@ -32,6 +46,11 @@ if (!isset($_SESSION['user_id'])) {
     
     if (isset($_SESSION['test_dynamic_island']) && $_SESSION['test_dynamic_island'] === true) {
         $pwa_params[] = 'test_dynamic_island=true';
+    }
+    
+    // Ajouter le paramètre shop_id si présent
+    if (isset($_SESSION['shop_id'])) {
+        $pwa_params[] = 'shop_id=' . $_SESSION['shop_id'];
     }
     
     // Ajouter les paramètres à l'URL de redirection
@@ -145,11 +164,38 @@ require_once BASE_PATH . '/actions/inventaire_actions.php';
 $page = isset($_GET['page']) ? cleanInput($_GET['page']) : 'accueil';
 
 // Liste des pages autorisées
-$allowed_pages = ['accueil', 'clients', 'ajouter_client', 'modifier_client', 'reparations', 'ajouter_reparation', 'modifier_reparation', 'taches', 'ajouter_tache', 'modifier_tache', 'supprimer_tache', 'commentaires_tache', 'employes', 'ajouter_employe', 'modifier_employe', 'conges', 'conges_employe', 'conges_calendrier', 'conges_imposer', 'conges_disponibles', 'inventaire', 'categories', 'fournisseurs', 'commandes', 'commandes_pieces', 'nouvelle_commande', 'ajax/recherche_clients', 'ajax/ajouter_client', 'inventaire_actions', 'historique_client', 'deconnexion', 'rachat_appareils', 'parametre', 'scanner', 'ajouter_scan', 'nouveau_rachat', 'imprimer_etiquette', 'details_reparation', 'statut_rapide', 'comptes_partenaires', 'reparation_logs', 'reparation_log', 'messagerie', 'base_connaissances', 'article_kb', 'ajouter_article_kb', 'modifier_article_kb', 'gestion_kb', 'sms_templates', 'sms_historique', 'gardiennage', 'campagne_sms', 'campagne_details', 'bug-reports', 'suivi_reparation', 'admin_notifications', 'retours', 'retours_actions'];
+$allowed_pages = ['accueil', 'clients', 'ajouter_client', 'modifier_client', 'reparations', 'ajouter_reparation', 'modifier_reparation', 'taches', 'ajouter_tache', 'modifier_tache', 'supprimer_tache', 'commentaires_tache', 'employes', 'ajouter_employe', 'modifier_employe', 'conges', 'conges_employe', 'conges_calendrier', 'conges_imposer', 'conges_disponibles', 'inventaire', 'categories', 'fournisseurs', 'commandes', 'commandes_pieces', 'nouvelle_commande', 'ajax/recherche_clients', 'ajax/ajouter_client', 'inventaire_actions', 'historique_client', 'deconnexion', 'rachat_appareils', 'parametre', 'scanner', 'ajouter_scan', 'nouveau_rachat', 'imprimer_etiquette', 'details_reparation', 'statut_rapide', 'comptes_partenaires', 'reparation_logs', 'reparation_log', 'messagerie', 'base_connaissances', 'article_kb', 'ajouter_article_kb', 'modifier_article_kb', 'gestion_kb', 'sms_templates', 'sms_historique', 'gardiennage', 'campagne_sms', 'campagne_details', 'bug-reports', 'suivi_reparation', 'admin_notifications', 'retours', 'retours_actions', 'switch_shop'];
 
 // Vérifier si la page demandée est autorisée
 if (!in_array($page, $allowed_pages)) {
     $page = '404';
+}
+
+// Gérer le changement de magasin si demandé
+if ($page === 'switch_shop') {
+    // Vérifie si l'utilisateur est un super administrateur
+    if (isset($_SESSION['superadmin_id'])) {
+        $shop_id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+        
+        if ($shop_id > 0) {
+            // Stocker l'ID du magasin en session
+            $_SESSION['shop_id'] = $shop_id;
+            
+            // Récupérer le nom du magasin
+            $pdo = getMainDBConnection();
+            $stmt = $pdo->prepare("SELECT name FROM shops WHERE id = ?");
+            $stmt->execute([$shop_id]);
+            $shop = $stmt->fetch();
+            
+            if ($shop) {
+                $_SESSION['shop_name'] = $shop['name'];
+            }
+        }
+    }
+    
+    // Rediriger vers la page d'accueil
+    header('Location: index.php');
+    exit;
 }
 
 // Contenu principal

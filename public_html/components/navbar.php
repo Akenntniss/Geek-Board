@@ -126,6 +126,18 @@ if (strpos($_SERVER['HTTP_USER_AGENT'], 'Safari') !== false &&
             </div>
         </a>
         
+        <!-- Message de bienvenue avec le nom de l'utilisateur -->
+        <?php if (isset($_SESSION['full_name'])): ?>
+        <div class="d-none d-md-flex align-items-center ms-3 me-2" style="transform: translateY(-5px);">
+            <span class="fw-medium text-primary">
+                Bonjour, <?php echo htmlspecialchars($_SESSION['full_name']); ?> 
+                <?php if (isset($_SESSION['shop_name'])): ?>
+                <span class="badge bg-info ms-1"><?php echo htmlspecialchars($_SESSION['shop_name']); ?></span>
+                <?php endif; ?>
+            </span>
+        </div>
+        <?php endif; ?>
+        
         <!-- Bouton Nouvelle avec dropdown -->
         <div class="dropdown d-none d-lg-block me-auto" style="transform: translateY(-5px);">
             <button class="btn btn-primary" type="button" id="btnNouvelle" data-bs-toggle="modal" data-bs-target="#nouvelles_actions_modal">
@@ -150,39 +162,238 @@ if (strpos($_SERVER['HTTP_USER_AGENT'], 'Safari') !== false &&
 
 <!-- NAVBAR MOBILE ET PWA (Dock en bas) -->
 <div id="mobile-dock" class="<?php echo ($isMobile || $isIPad) ? 'd-block' : 'd-lg-none'; ?>" <?php if (strpos($_SERVER['HTTP_USER_AGENT'], 'Safari') !== false && !strpos($_SERVER['HTTP_USER_AGENT'], 'Chrome') !== false && !$isIPad && !$isMobile): ?>style="display: none !important; visibility: hidden !important;"<?php endif; ?>>
+    <!-- Message de bienvenue pour mobile en haut du dock -->
+    <?php if (isset($_SESSION['full_name'])): ?>
+    <div class="mobile-welcome-banner">
+        <div class="container-fluid py-1 text-center">
+            <span class="fw-medium">
+                Bonjour, <?php echo htmlspecialchars($_SESSION['full_name']); ?>
+                <?php if (isset($_SESSION['shop_name'])): ?>
+                <span class="badge bg-info ms-1"><?php echo htmlspecialchars($_SESSION['shop_name']); ?></span>
+                <?php endif; ?>
+            </span>
+        </div>
+    </div>
+    <?php endif; ?>
+    
     <div class="mobile-dock-container">
         <a href="index.php" class="dock-item <?php echo $currentPage == 'accueil' ? 'active' : ''; ?>">
-            <img src="assets/images/logo/AppIcons_lightMode/appstore.png" alt="GeekBoard" height="24" class="light-mode-logo">
-            <img src="assets/images/logo/AppIcons-darkmode/playstore.png" alt="GeekBoard" height="24" class="dark-mode-logo" style="display: none;">
+            <div class="dock-icon-wrapper">
+                <i class="fas fa-home"></i>
+            </div>
             <span>Accueil</span>
         </a>
+        
         <a href="index.php?page=reparations" class="dock-item <?php echo $currentPage == 'reparations' ? 'active' : ''; ?>">
-            <i class="fas fa-tools"></i>
+            <div class="dock-icon-wrapper">
+                <i class="fas fa-tools"></i>
+            </div>
             <span>Réparations</span>
         </a>
         
         <!-- Bouton Nouvelle au centre (stylisé différemment) -->
-        <div class="dock-item-center">
-            <button class="btn-nouvelle-action" type="button" data-bs-toggle="modal" data-bs-target="#nouvelles_actions_modal">
+        <div class="dock-item-center" style="overflow: visible !important; position: relative !important;">
+            <button class="btn-nouvelle-action" type="button" data-bs-toggle="modal" data-bs-target="#nouvelles_actions_modal" style="transform: translateY(0) !important;">
                 <i class="fas fa-plus"></i>
             </button>
         </div>
         
         <a href="index.php?page=taches" class="dock-item <?php echo $currentPage == 'taches' ? 'active' : ''; ?>">
-            <i class="fas fa-tasks"></i>
+            <div class="dock-icon-wrapper">
+                <i class="fas fa-tasks"></i>
+                <?php if ($tasks_count > 0): ?>
+                <span class="badge"><?php echo $tasks_count; ?></span>
+                <?php endif; ?>
+            </div>
             <span>Tâches</span>
-            <?php if ($tasks_count > 0): ?>
-                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                    <?php echo $tasks_count; ?>
-                </span>
-            <?php endif; ?>
         </a>
+        
         <a href="#" class="dock-item" data-bs-toggle="modal" data-bs-target="#menu_navigation_modal">
-            <i class="fas fa-bars"></i>
+            <div class="dock-icon-wrapper">
+                <i class="fas fa-ellipsis-h"></i>
+            </div>
             <span>Menu</span>
         </a>
     </div>
 </div>
+
+<style>
+/* Style pour gérer l'affichage des logos en fonction du mode */
+body:not(.dark-mode) .dark-mode-logo {
+    display: none !important;
+}
+
+body:not(.dark-mode) .light-mode-logo {
+    display: inline-block !important;
+}
+
+body.dark-mode .dark-mode-logo {
+    display: inline-block !important;
+}
+
+body.dark-mode .light-mode-logo {
+    display: none !important;
+}
+
+/* Styles pour le texte de la marque */
+.brand-text-primary {
+    color: var(--primary) !important;
+}
+
+.brand-text-secondary {
+    color: var(--info) !important;
+}
+
+body:not(.dark-mode) .brand-text-primary {
+    color: #2563eb !important;
+}
+
+body:not(.dark-mode) .brand-text-secondary {
+    color: #3b82f6 !important;
+}
+
+body.dark-mode .brand-text-primary {
+    color: #60a5fa !important;
+}
+
+body.dark-mode .brand-text-secondary {
+    color: #93c5fd !important;
+}
+
+/* Style pour la bannière de bienvenue mobile */
+.mobile-welcome-banner {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    z-index: 1020;
+    padding: 8px 0;
+    font-size: 0.9rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.dark-mode .mobile-welcome-banner {
+    background-color: rgba(25, 25, 25, 0.95);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Ajustement du contenu principal pour éviter qu'il soit caché par la bannière */
+body:has(.mobile-welcome-banner) #main-content {
+    padding-top: 60px !important;
+}
+
+/* Styles pour le nouveau menu Offcanvas */
+.offcanvas-launchpad {
+    padding: 1rem;
+}
+
+.offcanvas-launchpad .launchpad-section {
+    margin-bottom: 1.5rem;
+}
+
+.offcanvas-launchpad .launchpad-section-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #6c757d;
+    margin-bottom: 0.75rem;
+    padding-left: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05rem;
+}
+
+.offcanvas-launchpad .launchpad-section-content {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+}
+
+@media (min-width: 400px) {
+    .offcanvas-launchpad .launchpad-section-content {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.offcanvas-launchpad .launchpad-item {
+    animation-delay: 0.05s;
+}
+
+#mainMenuOffcanvas {
+    max-width: 420px;
+}
+
+#mainMenuOffcanvas .launchpad-icon {
+    width: 50px;
+    height: 50px;
+    font-size: 1.2rem;
+}
+
+#mainMenuOffcanvas .launchpad-item span {
+    font-size: 0.8rem;
+}
+
+/* Bouton du menu hamburger amélioré */
+.main-menu-btn {
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+}
+
+.main-menu-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Styles pour l'icône scanner */
+.launchpad-icon-scanner {
+    background-color: rgba(0, 150, 136, 0.15);
+    color: #009688;
+}
+
+/* Styles pour l'icône ajouter */
+.launchpad-icon-add {
+    background-color: rgba(76, 175, 80, 0.15);
+    color: #4CAF50;
+}
+
+/* Styles pour l'icône partenaires */
+.launchpad-icon-partner {
+    background-color: rgba(33, 150, 243, 0.15);
+    color: #2196F3;
+}
+
+/* Styles pour l'icône bug */
+.launchpad-icon-bug {
+    background-color: rgba(244, 67, 54, 0.15);
+    color: #F44336;
+}
+
+/* Styles pour l'icône de rachat */
+.launchpad-icon-trade {
+    background-color: rgba(76, 175, 80, 0.15);
+    color: #4CAF50;
+}
+
+/* Styles pour l'icône retours */
+.launchpad-icon-return {
+    background-color: rgba(33, 150, 243, 0.15);
+    color: #2196F3;
+}
+
+/* Styles pour l'icône logs */
+.launchpad-icon-logs {
+    background-color: rgba(33, 150, 243, 0.15);
+    color: #2196F3;
+}
+</style>
 
 <!-- OFFCANVAS MENU PRINCIPAL (pour desktop) -->
 <div class="offcanvas offcanvas-end" tabindex="-1" id="mainMenuOffcanvas" aria-labelledby="mainMenuOffcanvasLabel">
@@ -331,158 +542,6 @@ if (strpos($_SERVER['HTTP_USER_AGENT'], 'Safari') !== false &&
         </div>
     </div>
 </div>
-
-<style>
-/* Style pour gérer l'affichage des logos en fonction du mode */
-body:not(.dark-mode) .dark-mode-logo {
-    display: none !important;
-}
-
-body:not(.dark-mode) .light-mode-logo {
-    display: inline-block !important;
-}
-
-body.dark-mode .dark-mode-logo {
-    display: inline-block !important;
-}
-
-body.dark-mode .light-mode-logo {
-    display: none !important;
-}
-
-/* Styles pour le texte de la marque */
-.brand-text-primary {
-    color: var(--primary) !important;
-}
-
-.brand-text-secondary {
-    color: var(--info) !important;
-}
-
-body:not(.dark-mode) .brand-text-primary {
-    color: #2563eb !important;
-}
-
-body:not(.dark-mode) .brand-text-secondary {
-    color: #3b82f6 !important;
-}
-
-body.dark-mode .brand-text-primary {
-    color: #60a5fa !important;
-}
-
-body.dark-mode .brand-text-secondary {
-    color: #93c5fd !important;
-}
-
-/* Styles pour le nouveau menu Offcanvas */
-.offcanvas-launchpad {
-    padding: 1rem;
-}
-
-.offcanvas-launchpad .launchpad-section {
-    margin-bottom: 1.5rem;
-}
-
-.offcanvas-launchpad .launchpad-section-title {
-    font-size: 1rem;
-    font-weight: 600;
-    color: #6c757d;
-    margin-bottom: 0.75rem;
-    padding-left: 0.5rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05rem;
-}
-
-.offcanvas-launchpad .launchpad-section-content {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 0.75rem;
-}
-
-@media (min-width: 400px) {
-    .offcanvas-launchpad .launchpad-section-content {
-        grid-template-columns: repeat(3, 1fr);
-    }
-}
-
-.offcanvas-launchpad .launchpad-item {
-    animation-delay: 0.05s;
-}
-
-#mainMenuOffcanvas {
-    max-width: 420px;
-}
-
-#mainMenuOffcanvas .launchpad-icon {
-    width: 50px;
-    height: 50px;
-    font-size: 1.2rem;
-}
-
-#mainMenuOffcanvas .launchpad-item span {
-    font-size: 0.8rem;
-}
-
-/* Bouton du menu hamburger amélioré */
-.main-menu-btn {
-    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0;
-}
-
-.main-menu-btn:hover {
-    transform: scale(1.1);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-/* Styles pour l'icône scanner */
-.launchpad-icon-scanner {
-    background-color: rgba(0, 150, 136, 0.15);
-    color: #009688;
-}
-
-/* Styles pour l'icône ajouter */
-.launchpad-icon-add {
-    background-color: rgba(76, 175, 80, 0.15);
-    color: #4CAF50;
-}
-
-/* Styles pour l'icône partenaires */
-.launchpad-icon-partner {
-    background-color: rgba(33, 150, 243, 0.15);
-    color: #2196F3;
-}
-
-/* Styles pour l'icône bug */
-.launchpad-icon-bug {
-    background-color: rgba(244, 67, 54, 0.15);
-    color: #F44336;
-}
-
-/* Styles pour l'icône de rachat */
-.launchpad-icon-trade {
-    background-color: rgba(76, 175, 80, 0.15);
-    color: #4CAF50;
-}
-
-/* Styles pour l'icône retours */
-.launchpad-icon-return {
-    background-color: rgba(33, 150, 243, 0.15);
-    color: #2196F3;
-}
-
-/* Styles pour l'icône logs */
-.launchpad-icon-logs {
-    background-color: rgba(33, 150, 243, 0.15);
-    color: #2196F3;
-}
-</style>
 
 <!-- Modal pour déclarer un bug -->
 <div class="modal fade" id="ajouterBugModal" tabindex="-1" aria-labelledby="ajouterBugModalLabel" aria-hidden="true">

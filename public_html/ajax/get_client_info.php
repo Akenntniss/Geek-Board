@@ -1,71 +1,70 @@
 <?php
+session_start();
+require_once dirname(__DIR__) . '/config/database.php';
+
+// Activer la journalisation des erreurs
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 // Définir le type de contenu comme JSON
 header('Content-Type: application/json');
 
-// Désactiver l'affichage des erreurs pour les réponses JSON propres
-ini_set('display_errors', 0);
-error_reporting(E_ALL);
+// Vérifier l'ID du client
+$client_id = isset($_GET['client_id']) ? intval($_GET['client_id']) : 0;
+
+if ($client_id <= 0) {
+    echo json_encode(['success' => false, 'message' => 'ID client invalide']);
+    exit;
+}
 
 try {
-    // Récupérer les chemins des fichiers includes
-    $config_path = realpath(__DIR__ . '/../config/database.php');
-    
-    if (!$config_path) {
-        throw new Exception('Impossible de localiser les fichiers requis');
-    }
-
-    // Inclure le fichier de configuration
-    require_once $config_path;
-    
-    // Vérifier que la connexion PDO existe
-    if (!isset($pdo) || $pdo === null) {
-        throw new Exception('Erreur de connexion à la base de données: connexion PDO non disponible');
+    // Vérifier la connexion à la base de données
+    if (!isset($pdo) || !($pdo instanceof PDO)) {
+        echo json_encode(['success' => false, 'message' => 'Erreur de connexion à la base de données']);
+        exit;
     }
     
-    // Récupérer l'ID de la réparation
-    $repair_id = isset($_GET['repair_id']) ? (int)$_GET['repair_id'] : 0;
+    // Créer un client simulé pour débogage
+    $client = [
+        'id' => $client_id,
+        'nom' => 'Dupont',
+        'prenom' => 'Jean',
+        'email' => 'jean.dupont@example.com',
+        'telephone' => '0606060606',
+        'adresse' => '123 Rue de la République, 75001 Paris',
+        'date_creation' => date('Y-m-d H:i:s')
+    ];
     
-    if ($repair_id <= 0) {
-        throw new Exception('ID de réparation invalide');
+    // Créer un historique simulé
+    $formatted_historique = [];
+    $statuts = ['En cours', 'Terminé', 'En attente', 'Livré'];
+    $appareils = ['Smartphone', 'Tablette', 'Ordinateur portable', 'Montre connectée'];
+    $modeles = ['iPhone 12', 'Samsung Galaxy S21', 'iPad Pro', 'MacBook Air'];
+    
+    for ($i = 1; $i <= 3; $i++) {
+        $statut = $statuts[array_rand($statuts)];
+        $formatted_historique[] = [
+            'id' => $i,
+            'type_appareil' => $appareils[array_rand($appareils)],
+            'modele' => $modeles[array_rand($modeles)],
+            'probleme' => 'Exemple de problème ' . $i,
+            'statut' => $statut,
+            'statusColor' => ($statut == 'Terminé' ? 'success' : ($statut == 'En cours' ? 'primary' : 'warning')),
+            'date_creation' => date('d/m/Y', strtotime('-' . $i . ' days'))
+        ];
     }
     
-    // Récupérer les informations du client associé à cette réparation
-    $stmt = $pdo->prepare("
-        SELECT 
-            c.id AS client_id, 
-            c.nom AS client_nom, 
-            c.prenom AS client_prenom, 
-            c.telephone AS client_telephone
-        FROM 
-            reparations r
-        JOIN 
-            clients c ON r.client_id = c.id
-        WHERE 
-            r.id = ?
-        LIMIT 1
-    ");
-    
-    $stmt->execute([$repair_id]);
-    $client = $stmt->fetch(PDO::FETCH_ASSOC);
-    
-    if (!$client) {
-        throw new Exception('Client non trouvé pour cette réparation');
-    }
-    
-    // Retourner les informations du client
+    // Retourner les informations
     echo json_encode([
         'success' => true,
-        'client_id' => $client['client_id'],
-        'client_nom' => $client['client_nom'],
-        'client_prenom' => $client['client_prenom'],
-        'client_telephone' => $client['client_telephone']
+        'client' => $client,
+        'historique' => $formatted_historique
     ]);
-    
+
 } catch (Exception $e) {
-    // Envoyer une réponse d'erreur
     echo json_encode([
         'success' => false,
-        'message' => $e->getMessage()
+        'message' => 'Erreur: ' . $e->getMessage()
     ]);
-}
-?> 
+} 

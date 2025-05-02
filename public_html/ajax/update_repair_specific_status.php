@@ -41,7 +41,7 @@ try {
         file_put_contents($logFile, "ERREUR: Connexion PDO non disponible après inclusion de database.php\n", FILE_APPEND);
         throw new Exception('Erreur de connexion à la base de données: connexion PDO non disponible');
     }
-    
+
     file_put_contents($logFile, "Connexion PDO établie avec succès\n", FILE_APPEND);
     
     // Déterminer comment les données sont envoyées
@@ -71,7 +71,7 @@ try {
         file_put_contents($logFile, "ERREUR: Aucune donnée n'a été reçue\n", FILE_APPEND);
         throw new Exception('Aucune donnée reçue');
     }
-    
+
     // Vérifier si nous avons des données valides
     if (!isset($data) || !is_array($data)) {
         file_put_contents($logFile, "ERREUR: Données reçues invalides\n", FILE_APPEND);
@@ -79,7 +79,7 @@ try {
     }
     
     file_put_contents($logFile, "Données décodées: " . print_r($data, true) . "\n", FILE_APPEND);
-    
+
     // Valider les données requises
     if (!isset($data['repair_id']) || !isset($data['status_id'])) {
         file_put_contents($logFile, "ERREUR: Données requises manquantes\n", FILE_APPEND);
@@ -118,13 +118,13 @@ try {
     if (!$result) {
         file_put_contents($logFile, "ERREUR lors de la mise à jour: " . implode(", ", $stmt->errorInfo()) . "\n", FILE_APPEND);
         throw new Exception('Erreur lors de la mise à jour du statut: ' . implode(", ", $stmt->errorInfo()));
-    }
+        }
     
     // Vérifier si des lignes ont été affectées
     if ($stmt->rowCount() === 0) {
         file_put_contents($logFile, "AVERTISSEMENT: Aucune ligne affectée - la réparation n'existe peut-être pas ou le statut est inchangé\n", FILE_APPEND);
         // Ne pas lancer d'exception, juste un avertissement dans le log
-    } else {
+            } else {
         file_put_contents($logFile, "Mise à jour réussie: " . $stmt->rowCount() . " ligne(s) affectée(s)\n", FILE_APPEND);
         
         // Récupérer le statut précédent pour le journal
@@ -212,8 +212,8 @@ try {
                 
                 if ($template && !empty($template['contenu'])) {
                     // Créer le message à partir du template et des informations de la réparation
-                    $message = $template['contenu'];
-                    
+                $message = $template['contenu'];
+                
                     // Remplacer les variables dans le template
                 $replacements = [
                         '[CLIENT_NOM]' => $client_nom,
@@ -226,12 +226,12 @@ try {
                         '[DATE_RECEPTION]' => !empty($repair_data['date_reception']) ? date('d/m/Y', strtotime($repair_data['date_reception'])) : '',
                         '[DATE_FIN_PREVUE]' => !empty($repair_data['date_fin_prevue']) ? date('d/m/Y', strtotime($repair_data['date_fin_prevue'])) : '',
                         '[PRIX]' => !empty($repair_data['prix_reparation']) ? number_format($repair_data['prix_reparation'], 2, ',', ' ') . ' €' : ''
-                    ];
-                    
+                ];
+                
                     foreach ($replacements as $placeholder => $value) {
                         $message = str_replace($placeholder, $value, $message);
-                    }
-                    
+                }
+                
                     file_put_contents($logFile, "Template de SMS trouvé pour le statut_id $status_id\n", FILE_APPEND);
                     file_put_contents($logFile, "Message après remplacement des variables : " . substr($message, 0, 100) . "...\n", FILE_APPEND);
                 } else {
@@ -254,7 +254,7 @@ try {
                         
                         // Appeler la fonction send_sms et récupérer le résultat complet
                         $sms_result = send_sms($telephone, $message);
-                        
+                    
                         // Journaliser le résultat complet
                         file_put_contents($logFile, "Résultat de l'envoi du SMS: " . print_r($sms_result, true) . "\n", FILE_APPEND);
                         
@@ -277,7 +277,7 @@ try {
                                 // Si on n'a pas l'ID du template, essayer de le récupérer
                                 $stmt_template = $pdo->prepare("
                                     SELECT id FROM sms_templates WHERE statut_id = ? AND est_actif = 1 LIMIT 1
-                                ");
+                        ");
                                 $stmt_template->execute([$status_id]);
                                 $template_id_result = $stmt_template->fetch(PDO::FETCH_COLUMN);
                                 if ($template_id_result) {
