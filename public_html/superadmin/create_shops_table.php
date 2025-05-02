@@ -22,6 +22,7 @@ try {
             phone VARCHAR(20),
             email VARCHAR(100),
             website VARCHAR(200),
+            subdomain VARCHAR(50) UNIQUE,
             logo VARCHAR(255),
             active TINYINT(1) DEFAULT 1,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

@@ -23,6 +23,7 @@ $country = 'France';
 $phone = '';
 $email = '';
 $website = '';
+$subdomain = '';
 $db_host = 'localhost';
 $db_port = '3306';
 $db_name = '';
@@ -42,6 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $phone = trim($_POST['phone'] ?? '');
     $email = trim($_POST['email'] ?? '');
     $website = trim($_POST['website'] ?? '');
+    $subdomain = trim($_POST['subdomain'] ?? '');
     $db_host = trim($_POST['db_host'] ?? 'localhost');
     $db_port = trim($_POST['db_port'] ?? '3306');
     $db_name = trim($_POST['db_name'] ?? '');
@@ -72,6 +74,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $errors[] = 'Un magasin avec ce nom existe déjà.';
     }
     
+    // Valider le format du sous-domaine s'il est fourni
+    if (!empty($subdomain)) {
+        // Vérification que le sous-domaine contient uniquement des caractères alphanumériques et des tirets
+        if (!preg_match('/^[a-z0-9-]+$/', $subdomain)) {
+            $errors[] = 'Le sous-domaine ne peut contenir que des lettres minuscules, des chiffres et des tirets.';
+        }
+        
+        // Vérifier que le sous-domaine est unique
+        $stmt = $pdo->prepare("SELECT COUNT(*) FROM shops WHERE subdomain = ?");
+        $stmt->execute([$subdomain]);
+        if ($stmt->fetchColumn() > 0) {
+            $errors[] = 'Ce sous-domaine est déjà utilisé par un autre magasin.';
+        }
+    }
+    
     // Si pas d'erreurs, on tente de créer le magasin
     if (empty($errors)) {
         try {
@@ -93,16 +110,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $stmt = $pdo->prepare("
                     INSERT INTO shops (
                         name, description, address, city, postal_code, country, 
-                        phone, email, website, active, 
+                        phone, email, website, subdomain, active, 
                         db_host, db_port, db_name, db_user, db_pass
                     ) VALUES (
-                        ?, ?, ?, ?, ?, ?, ?, ?, ?, 1, ?, ?, ?, ?, ?
+                        ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1, ?, ?, ?, ?, ?
                     )
                 ");
                 
                 $stmt->execute([
                     $name, $description, $address, $city, $postal_code, $country,
-                    $phone, $email, $website,
+                    $phone, $email, $website, $subdomain,
                     $db_host, $db_port, $db_name, $db_user, $db_pass
                 ]);
                 
@@ -266,6 +283,18 @@ $superadmin = $stmt->fetch();
                         <div class="col-md-4 mb-3">
                             <label for="website" class="form-label">Site web</label>
                             <input type="url" class="form-control" id="website" name="website" value="<?php echo htmlspecialchars($website); ?>">
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="subdomain" class="form-label">Sous-domaine</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="subdomain" name="subdomain" value="<?php echo htmlspecialchars($subdomain); ?>" 
+                                   placeholder="magasin1" pattern="[a-z0-9-]+" title="Lettres minuscules, chiffres et tirets uniquement">
+                            <span class="input-group-text">.votredomaine.fr</span>
+                        </div>
+                        <div class="form-text">
+                            <i class="fas fa-info-circle me-1"></i> Le sous-domaine sera utilisé pour accéder à ce magasin (exemple: magasin1.votredomaine.fr)
                         </div>
                     </div>
                 </div>

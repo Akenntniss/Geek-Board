@@ -21,6 +21,7 @@ debugLog("Début du processus de connexion");
 require_once '../config/session_config.php';
 // La session est déjà démarrée dans session_config.php
 require_once '../config/database.php';
+require_once '../config/domain_config.php';
 
 // Vérifier si mode superadmin est demandé et l'enregistrer en session
 $superadmin_mode = isset($_GET['superadmin']) && $_GET['superadmin'] == '1';
@@ -447,6 +448,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <div class="alert alert-info">
                         <i class="fas fa-store me-2"></i>
                         Connexion au magasin: <strong><?php echo htmlspecialchars($_SESSION['shop_name']); ?></strong>
+                        <?php
+                        // Vérifier si on est sur un sous-domaine
+                        $subdomain = getCurrentSubdomain();
+                        if ($subdomain && !isSystemSubdomain($subdomain)):
+                        ?>
+                        <br><small>(Détecté par votre sous-domaine: <?php echo htmlspecialchars($subdomain); ?>.<?php echo MAIN_DOMAIN; ?>)</small>
+                        <?php endif; ?>
                     </div>
                     <input type="hidden" name="shop_id" value="<?php echo $_SESSION['shop_id']; ?>">
                 </div>

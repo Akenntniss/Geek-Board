@@ -1,0 +1,17 @@
+RewriteEngine On
+
+# Rediriger www vers non-www
+RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
+RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
+
+# Gestion des sous-domaines
+RewriteCond %{HTTP_HOST} !^(www\.|)mdgeek\.top$ [NC]
+RewriteCond %{HTTP_HOST} ^([^.]+)\.mdgeek\.top$ [NC]
+RewriteRule ^(.*)$ $1 [L]
+
+# Protection du répertoire
+Options -Indexes
+
+# Forcer HTTPS
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301] 
