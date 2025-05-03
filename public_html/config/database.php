@@ -162,27 +162,28 @@ function getShopDBConnection() {
     // Si mode superadmin est actif, retourner toujours la connexion principale
     if (isset($_SESSION['superadmin_mode']) && $_SESSION['superadmin_mode'] === true) {
         dbDebugLog("Mode superadmin actif: utilisation forcée de la base principale");
+        error_log("SHOP CONNECTION: Mode superadmin actif, utilisation base principale");
         return getMainDBConnection();
     }
     
-    // Cache la connexion pour éviter de se reconnecter à chaque appel
-    if ($shop_pdo !== null) {
-        dbDebugLog("Utilisation de la connexion magasin déjà établie");
-        return $shop_pdo;
-    }
+    // Force la création d'une nouvelle connexion à chaque appel pour résoudre le problème 
+    // de persistance de la connexion à la base principale
+    $shop_pdo = null;
     
-    dbDebugLog("Initialisation nouvelle connexion magasin");
+    dbDebugLog("Initialisation nouvelle connexion magasin (forcée)");
+    error_log("SHOP CONNECTION: Initialisation nouvelle connexion magasin (forcée)");
     
     // Si aucun magasin n'est sélectionné, on utilise la base principale
     if (!isset($_SESSION['shop_id'])) {
         dbDebugLog("Aucun magasin en session, utilisation de la base principale");
-        $shop_pdo = getMainDBConnection(); // Stocker dans shop_pdo pour la mise en cache
-        return $shop_pdo;
+        error_log("SHOP CONNECTION: Aucun magasin en session, utilisation base principale");
+        return getMainDBConnection();
     }
     
     // Récupérer les informations de connexion pour ce magasin depuis la base principale
     $shop_id = $_SESSION['shop_id'];
     dbDebugLog("Magasin en session trouvé: ID=" . $shop_id);
+    error_log("SHOP CONNECTION: Magasin en session trouvé: ID=" . $shop_id);
     $main_pdo = getMainDBConnection();
     
     try {
@@ -192,6 +193,14 @@ function getShopDBConnection() {
         
         if ($shop) {
             dbDebugLog("Informations du magasin " . $shop['name'] . " récupérées");
+            error_log("SHOP CONNECTION: Informations du magasin " . $shop['name'] . " récupérées");
+            
+            // Vérifier que les informations de connexion sont complètes
+            if (empty($shop['db_host']) || empty($shop['db_user']) || empty($shop['db_name'])) {
+                error_log("SHOP CONNECTION: Informations de connexion incomplètes pour le magasin " . $shop['name']);
+                throw new Exception("Configuration de base de données incomplète pour le magasin");
+            }
+            
             $shop_config = [
                 'host' => $shop['db_host'],
                 'port' => $shop['db_port'],
@@ -201,32 +210,62 @@ function getShopDBConnection() {
             ];
             
             dbDebugLog("Tentative de connexion à la DB du magasin: " . $shop_config['dbname']);
-            $shop_pdo = connectToShopDB($shop_config);
+            error_log("SHOP CONNECTION: Tentative de connexion à " . $shop_config['dbname'] . " sur " . $shop_config['host']);
             
-            // La fonction connectToShopDB retourne maintenant toujours une connexion valide
-            // (soit celle du magasin, soit celle principale)
-            dbDebugLog("Connexion établie (magasin ou principale)");
+            // Création directe de la connexion PDO sans passer par connectToShopDB
+            try {
+                $dsn = "mysql:host=" . $shop_config['host'] . ";port=" . 
+                       ($shop_config['port'] ?? '3306') . ";dbname=" . 
+                       $shop_config['dbname'] . ";charset=utf8mb4";
+                
+                $shop_pdo = new PDO(
+                    $dsn,
+                    $shop_config['user'],
+                    $shop_config['pass'],
+                    [
+                        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+                        PDO::ATTR_EMULATE_PREPARES => false,
+                        PDO::ATTR_PERSISTENT => false
+                    ]
+                );
+                
+                // Vérifier que la connexion utilise bien la bonne base de données
+                $stmt = $shop_pdo->query("SELECT DATABASE() as current_db");
+                $result = $stmt->fetch(PDO::FETCH_ASSOC);
+                $current_db = $result['current_db'];
+                
+                if ($current_db !== $shop_config['dbname']) {
+                    error_log("SHOP CONNECTION: ERREUR - Base incorrecte utilisée. Attendue: " . $shop_config['dbname'] . ", Utilisée: " . $current_db);
+                    throw new Exception("Erreur de connexion à la base du magasin");
+                }
+                
+                error_log("SHOP CONNECTION: Connexion réussie à " . $shop_config['dbname']);
+                dbDebugLog("Connexion réussie à " . $shop_config['dbname']);
+                
+                return $shop_pdo;
+                
+            } catch (PDOException $e) {
+                error_log("SHOP CONNECTION: Échec connexion directe à " . $shop_config['dbname'] . ": " . $e->getMessage());
+                // En cas d'erreur, on passera à l'utilisation de la base principale
+                throw $e;
+            }
         } else {
             // Si le magasin n'existe pas, on utilise la base principale
             dbDebugLog("Magasin " . $shop_id . " non trouvé, utilisation de la base principale");
-            error_log("Magasin {$shop_id} non trouvé, utilisation de la base principale");
-            $shop_pdo = $main_pdo;
+            error_log("SHOP CONNECTION: Magasin " . $shop_id . " non trouvé, utilisation base principale");
         }
     } catch (Exception $e) {
         // En cas d'erreur lors de la récupération des infos du magasin,
         // utiliser la connexion principale
         dbDebugLog("Exception lors de la récupération des infos magasin: " . $e->getMessage());
-        error_log("Exception lors de la récupération des infos magasin: " . $e->getMessage());
-        $shop_pdo = $main_pdo;
+        error_log("SHOP CONNECTION: Exception lors de la récupération/connexion: " . $e->getMessage());
     }
     
-    // Si malgré tout shop_pdo est null, utiliser la connexion principale
-    if ($shop_pdo === null) {
-        dbDebugLog("Connexion shop_pdo toujours null, utilisation forcée de la base principale");
-        $shop_pdo = $main_pdo;
-    }
-    
-    return $shop_pdo;
+    // Si on arrive ici, c'est qu'il y a eu un problème
+    // On utilise la connexion principale comme fallback
+    error_log("SHOP CONNECTION: Utilisation de la base principale comme fallback");
+    return getMainDBConnection();
 }
 
 // Pour la compatibilité avec le code existant

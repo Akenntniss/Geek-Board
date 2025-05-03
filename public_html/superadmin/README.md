@@ -77,4 +77,53 @@ Pour assurer la sécurité:
 
 ## Support technique
 
-En cas de problème, contactez l'équipe de support technique de GeekBoard. 
+En cas de problème, contactez l'équipe de support technique de GeekBoard.
+
+# Système d'initialisation de base de données pour les magasins
+
+Ce dossier contient les outils nécessaires pour initialiser la base de données d'un nouveau magasin dans le système GeekBoard multi-magasins.
+
+## Fichiers principaux
+
+1. **initialize_shop_db_form.php** - Interface utilisateur pour sélectionner un magasin et initialiser sa base de données.
+2. **initialize_shop_db.php** - Script principal qui crée toutes les tables nécessaires dans la base de données d'un magasin.
+3. **create_shops_table.php** - Script pour créer les tables de gestion des magasins dans la base de données principale.
+
+## Fonctionnalités
+
+- Création automatique de toutes les tables nécessaires selon la structure standard
+- Vérification d'existence des tables pour éviter les doublons
+- Création des utilisateurs par défaut et des données initiales
+- Respect des relations entre les tables (clés étrangères)
+
+## Comment utiliser
+
+1. Assurez-vous d'abord d'avoir créé un nouveau magasin via l'interface d'administration
+2. Accédez à `initialize_shop_db_form.php` pour voir la liste des magasins disponibles
+3. Cliquez sur "Initialiser la base de données" pour le magasin concerné
+4. Le système créera automatiquement toutes les tables nécessaires
+
+## Structure des tables
+
+Le script crée les catégories de tables suivantes:
+
+- Tables utilisateurs et système (users, employes, etc.)
+- Tables clients et réparations (clients, reparations, etc.)
+- Tables stock et fournisseurs (produits, stock, commandes, etc.)
+- Système SMS (templates, logs, etc.)
+- Système de gardiennage (gardiennage, notifications, etc.)
+- Système de parrainage (config, relations, etc.)
+- Système de partenariat (partenaires, transactions, etc.)
+- Système de messagerie (conversations, messages, etc.)
+- Base de connaissances (articles, catégories, etc.)
+- Et plus encore...
+
+En tout, plus de 60 tables sont créées pour chaque magasin, formant un système de gestion complet pour les boutiques de réparation.
+
+## Notes importantes
+
+- Le mot de passe utilisateur par défaut est "Admin123!" - assurez-vous de le changer immédiatement.
+- Certaines tables ont des valeurs par défaut pour faciliter la prise en main (comme les catégories de statut).
+- Ce script respecte toutes les contraintes et relations de clés étrangères pour maintenir l'intégrité des données.
+
+N'hésitez pas à contacter le développeur pour toute question ou problème concernant ce système. 

@@ -212,9 +212,12 @@ if ($db_initialized) {
                 <?php if (!empty($missing_tables)): ?>
                     <div class="mt-2">Tables manquantes: <?php echo implode(', ', $missing_tables); ?></div>
                 <?php endif; ?>
-                <a href="initialize_shop_db.php?id=<?php echo $shop_id; ?>" class="btn btn-primary mt-2">
-                    <i class="fas fa-cogs me-2"></i>Initialiser la base de données
-                </a>
+                <form action="initialize_shop_db.php" method="post" class="mt-2">
+                    <input type="hidden" name="shop_id" value="<?php echo $shop_id; ?>">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-cogs me-2"></i>Initialiser la base de données
+                    </button>
+                </form>
             </div>
         <?php else: ?>
             <div class="row mb-4">
@@ -387,9 +390,12 @@ if ($db_initialized) {
             </a>
             
             <?php if (!$db_initialized): ?>
-                <a href="initialize_shop_db.php?id=<?php echo $shop_id; ?>" class="btn btn-warning">
-                    <i class="fas fa-database me-2"></i>Initialiser la base de données
-                </a>
+                <form action="initialize_shop_db.php" method="post">
+                    <input type="hidden" name="shop_id" value="<?php echo $shop_id; ?>">
+                    <button type="submit" class="btn btn-warning">
+                        <i class="fas fa-database me-2"></i>Initialiser la base de données
+                    </button>
+                </form>
             <?php endif; ?>
         </div>
     </div>

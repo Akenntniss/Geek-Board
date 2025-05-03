@@ -1,0 +1,2 @@
+Table	Create Table
+journal_actions	CREATE TABLE `journal_actions` (\n  `id` int(11) NOT NULL AUTO_INCREMENT,\n  `user_id` int(11) NOT NULL,\n  `action_type` varchar(50) NOT NULL,\n  `target_id` int(11) NOT NULL,\n  `details` text DEFAULT NULL,\n  `date_action` datetime NOT NULL,\n  PRIMARY KEY (`id`),\n  KEY `user_id` (`user_id`),\n  KEY `action_type` (`action_type`),\n  KEY `target_id` (`target_id`)\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
