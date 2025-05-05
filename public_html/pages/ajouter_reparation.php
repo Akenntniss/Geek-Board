@@ -26,6 +26,12 @@ function verifierEtForcerBonneBD() {
             // Récupérer la connexion principale
             $main_pdo = getMainDBConnection();
             
+            // Vérifier que $main_pdo n'est pas null avant de l'utiliser
+            if ($main_pdo === null) {
+                error_log("ERREUR CRITIQUE: $main_pdo est null lors de la récupération des infos du magasin");
+                return false; // Sortir de la fonction sans essayer d'utiliser $main_pdo
+            }
+            
             // Récupérer les infos du magasin
             $stmt = $main_pdo->prepare("SELECT * FROM shops WHERE id = ?");
             $stmt->execute([$_SESSION['shop_id']]);
@@ -55,6 +61,31 @@ function verifierEtForcerBonneBD() {
 
 // Initialiser la connexion à la base de données du magasin
 $shop_pdo = getShopDBConnection();
+
+// Vérifier si la connexion a été établie correctement
+if ($shop_pdo === null) {
+    error_log("ERREUR CRITIQUE: Impossible d'établir une connexion initiale à la base de données du magasin");
+    // Si nous sommes dans une requête AJAX, renvoyer une erreur JSON
+    if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
+        header('Content-Type: application/json');
+        echo json_encode(['success' => false, 'message' => 'Erreur de connexion à la base de données']);
+        exit;
+    } else {
+        // Sinon, définir un message d'erreur et rediriger
+        if (function_exists('set_message')) {
+            set_message("Erreur de connexion à la base de données. Veuillez contacter l'administrateur.", "danger");
+        }
+        if (function_exists('redirect')) {
+            redirect('accueil');
+            exit;
+        } else {
+            // Fallback si redirect n'est pas disponible
+            echo '<div class="alert alert-danger">Erreur de connexion à la base de données. Veuillez réessayer ou contacter l\'administrateur.</div>';
+            exit;
+        }
+    }
+}
+
 verifierEtForcerBonneBD();
 
 // Vérifier si la fonction getShopDBConnection est disponible
@@ -124,6 +155,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $main_pdo = getMainDBConnection();
             error_log("Connexion principale (main_pdo) obtenue avec succès");
             
+            // Vérifier que $main_pdo n'est pas null avant de l'utiliser
+            if ($main_pdo === null) {
+                error_log("ERREUR CRITIQUE: $main_pdo est null lors de la récupération des infos du magasin");
+                // Nous ne sommes pas dans une boucle, donc ne pas utiliser break
+                set_message("Erreur de connexion à la base de données principale. Veuillez contacter l'administrateur.", "danger");
+                return; // Sortir du bloc de code courant
+            }
+            
             // Récupérer les infos du magasin
             if (isset($_SESSION['shop_id'])) {
                 $stmt = $main_pdo->prepare("SELECT * FROM shops WHERE id = ?");
@@ -192,7 +231,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $statut = cleanInput($_POST['statut']);
         error_log("Statut récupéré de POST: " . $statut);
         
-        $shop_pdo = getShopDBConnection();
+        // Vérifier que $shop_pdo n'est pas null avant de l'utiliser
+        if ($shop_pdo === null) {
+            error_log("ALERTE: $shop_pdo est null avant la requête de catégorie. Tentative de reconnexion.");
+            $shop_pdo = getShopDBConnection();
+            
+            // Vérifier à nouveau après la tentative de reconnexion
+            if ($shop_pdo === null) {
+                error_log("ERREUR CRITIQUE: Impossible de rétablir la connexion à la base de données du magasin.");
+                set_message("Erreur de connexion à la base de données. Veuillez contacter l'administrateur ou réessayer.", "danger");
+                // Rediriger pour éviter l'erreur
+                redirect('reparations');
+                exit;
+            }
+        }
+        
         // Récupérer la catégorie_id correspondante au statut
         $stmt_categorie = $shop_pdo->prepare("SELECT categorie_id FROM statuts WHERE nom = ?");
         $stmt_categorie->execute([$statut]);
@@ -341,8 +394,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 error_log("Aucune photo fournie dans le formulaire");
             }
 
-            $shop_pdo = getShopDBConnection();
-            verifierEtForcerBonneBD();
+            // Vérifier que $shop_pdo n'est pas null avant de l'utiliser pour l'insertion
+            if ($shop_pdo === null) {
+                error_log("ALERTE: $shop_pdo est null avant l'insertion de la réparation. Tentative de reconnexion.");
+                $shop_pdo = getShopDBConnection();
+                verifierEtForcerBonneBD();
+                
+                // Vérifier à nouveau après la tentative de reconnexion
+                if ($shop_pdo === null) {
+                    error_log("ERREUR CRITIQUE: Impossible de rétablir la connexion à la base de données du magasin pour l'insertion.");
+                    set_message("Erreur de connexion à la base de données. Veuillez contacter l'administrateur ou réessayer.", "danger");
+                    // Rediriger pour éviter l'erreur
+                    redirect('reparations');
+                    exit;
+                }
+            } else {
+                verifierEtForcerBonneBD();
+            }
 
             $stmt = $shop_pdo->prepare("
                 INSERT INTO reparations (client_id, type_appareil, modele, description_probleme, 
@@ -401,22 +469,36 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             // Enregistrement du log de création de la réparation
             try {
-                $shop_pdo = getShopDBConnection();
-                $log_stmt = $shop_pdo->prepare("
-                    INSERT INTO reparation_logs 
-                    (reparation_id, employe_id, action_type, statut_avant, statut_apres, details) 
-                    VALUES (?, ?, ?, NULL, ?, ?)
-                ");
+                // Vérifier que $shop_pdo n'est pas null avant d'insérer le log
+                if ($shop_pdo === null) {
+                    error_log("ALERTE: $shop_pdo est null avant l'insertion du log. Tentative de reconnexion.");
+                    $shop_pdo = getShopDBConnection();
+                    
+                    // Vérifier à nouveau après la tentative de reconnexion
+                    if ($shop_pdo === null) {
+                        error_log("ERREUR: Impossible de rétablir la connexion pour l'insertion du log.");
+                        // Continuer malgré l'erreur (le log n'est pas critique)
+                    }
+                }
                 
-                $log_stmt->execute([
-                    $reparation_id,
-                    $_SESSION['user_id'],
-                    'demarrage', // Type d'action pour une création
-                    $statutForDB, // Statut après (statut initial)
-                    'Création d\'une nouvelle réparation' . ($a_note_interne === 'oui' ? ' avec note interne' : '')
-                ]);
-                
-                error_log("Log de création de réparation ajouté avec succès");
+                // Procéder seulement si la connexion est valide
+                if ($shop_pdo !== null) {
+                    $log_stmt = $shop_pdo->prepare("
+                        INSERT INTO reparation_logs 
+                        (reparation_id, employe_id, action_type, statut_avant, statut_apres, details) 
+                        VALUES (?, ?, ?, NULL, ?, ?)
+                    ");
+                    
+                    $log_stmt->execute([
+                        $reparation_id,
+                        $_SESSION['user_id'],
+                        'demarrage', // Type d'action pour une création
+                        $statutForDB, // Statut après (statut initial)
+                        'Création d\'une nouvelle réparation' . ($a_note_interne === 'oui' ? ' avec note interne' : '')
+                    ]);
+                    
+                    error_log("Log de création de réparation ajouté avec succès");
+                }
             } catch (PDOException $e) {
                 error_log("Erreur lors de l'ajout du log de création: " . $e->getMessage());
             }
@@ -424,23 +506,38 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Si une note interne a été ajoutée, enregistrer un log spécifique
             if ($a_note_interne === 'oui' && !empty($notes_techniques)) {
                 try {
-                    $shop_pdo = getShopDBConnection();
-                    $log_note_stmt = $shop_pdo->prepare("
-                        INSERT INTO reparation_logs 
-                        (reparation_id, employe_id, action_type, statut_avant, statut_apres, details) 
-                        VALUES (?, ?, ?, ?, ?, ?)
-                    ");
+                    // Vérifier que $shop_pdo n'est pas null avant d'insérer la note
+                    if ($shop_pdo === null) {
+                        error_log("ALERTE: $shop_pdo est null avant l'insertion de la note. Tentative de reconnexion.");
+                        $shop_pdo = getShopDBConnection();
+                        
+                        // Vérifier à nouveau après la tentative de reconnexion
+                        if ($shop_pdo === null) {
+                            error_log("ERREUR: Impossible de rétablir la connexion pour l'insertion de la note.");
+                            // Continuer malgré l'erreur (la note n'est pas critique)
+                            return; // Utiliser return au lieu de continue
+                        }
+                    }
                     
-                    $log_note_stmt->execute([
-                        $reparation_id,
-                        $_SESSION['user_id'],
-                        'ajout_note', // Type d'action pour une note
-                        $statutForDB,
-                        $statutForDB, // Le statut ne change pas
-                        'Note interne ajoutée: ' . substr($notes_techniques, 0, 100) . (strlen($notes_techniques) > 100 ? '...' : '')
-                    ]);
-                    
-                    error_log("Log d'ajout de note interne créé avec succès");
+                    // Procéder seulement si la connexion est valide
+                    if ($shop_pdo !== null) {
+                        $log_note_stmt = $shop_pdo->prepare("
+                            INSERT INTO reparation_logs 
+                            (reparation_id, employe_id, action_type, statut_avant, statut_apres, details) 
+                            VALUES (?, ?, ?, ?, ?, ?)
+                        ");
+                        
+                        $log_note_stmt->execute([
+                            $reparation_id,
+                            $_SESSION['user_id'],
+                            'ajout_note', // Type d'action pour une note
+                            $statutForDB,
+                            $statutForDB, // Le statut ne change pas
+                            'Note interne ajoutée: ' . substr($notes_techniques, 0, 100) . (strlen($notes_techniques) > 100 ? '...' : '')
+                        ]);
+                        
+                        error_log("Log d'ajout de note interne créé avec succès");
+                    }
                 } catch (PDOException $e) {
                     error_log("Erreur lors de l'ajout du log de note interne: " . $e->getMessage());
                 }
@@ -448,59 +545,79 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             // Si une commande est requise, créer la commande de pièces
             if (isset($_POST['commande_requise'])) {
-                // Générer une référence unique
-                $reference = 'CMD-' . date('Ymd') . '-' . uniqid();
-                
-                $shop_pdo = getShopDBConnection();
-                $stmt = $shop_pdo->prepare("
-                    INSERT INTO commandes_pieces (
-                        reference,
-                        client_id,
-                        reparation_id,
-                        fournisseur_id,
-                        nom_piece,
-                        description,
-                        quantite,
-                        prix_estime,
-                        statut,
-                        date_creation
-                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'en_attente', NOW())
-                ");
-                
-                $stmt->execute([
-                    $reference,
-                    $client_id,
-                    $reparation_id,
-                    $_POST['fournisseur_id'],
-                    $_POST['nom_piece'],
-                    $_POST['reference_piece'],
-                    $_POST['quantite'],
-                    $_POST['prix_piece']
-                ]);
-                
-                $commande_id = $shop_pdo->lastInsertId();
-                
-                // Ajouter un log pour la création de commande
                 try {
-                    $shop_pdo = getShopDBConnection();
-                    $log_commande_stmt = $shop_pdo->prepare("
-                        INSERT INTO reparation_logs 
-                        (reparation_id, employe_id, action_type, statut_avant, statut_apres, details) 
-                        VALUES (?, ?, ?, ?, ?, ?)
+                    // Vérifier que $shop_pdo n'est pas null avant d'insérer la commande
+                    if ($shop_pdo === null) {
+                        error_log("ALERTE: $shop_pdo est null avant l'insertion de la commande. Tentative de reconnexion.");
+                        $shop_pdo = getShopDBConnection();
+                        
+                        // Vérifier à nouveau après la tentative de reconnexion
+                        if ($shop_pdo === null) {
+                            error_log("ERREUR: Impossible de rétablir la connexion pour l'insertion de la commande.");
+                            // Ne pas continuer si la connexion n'est pas disponible
+                            set_message("La réparation a été créée mais la commande de pièces n'a pas pu être enregistrée. Veuillez la créer manuellement.", "warning");
+                            redirect('reparations');
+                            exit;
+                        }
+                    }
+
+                    // Générer une référence unique
+                    $reference = 'CMD-' . date('Ymd') . '-' . uniqid();
+                    
+                    $stmt = $shop_pdo->prepare("
+                        INSERT INTO commandes_pieces (
+                            reference,
+                            client_id,
+                            reparation_id,
+                            fournisseur_id,
+                            nom_piece,
+                            description,
+                            quantite,
+                            prix_estime,
+                            statut,
+                            date_creation
+                        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'en_attente', NOW())
                     ");
                     
-                    $log_commande_stmt->execute([
+                    $stmt->execute([
+                        $reference,
+                        $client_id,
                         $reparation_id,
-                        $_SESSION['user_id'],
-                        'autre', // Type d'action pour une commande
-                        $statutForDB,
-                        $statutForDB, // Le statut ne change pas
-                        'Commande de pièces créée: ' . $_POST['nom_piece'] . ' (Réf: ' . $reference . ')'
+                        $_POST['fournisseur_id'],
+                        $_POST['nom_piece'],
+                        $_POST['reference_piece'],
+                        $_POST['quantite'],
+                        $_POST['prix_piece']
                     ]);
                     
-                    error_log("Log de création de commande ajouté avec succès");
+                    $commande_id = $shop_pdo->lastInsertId();
+                    
+                    // Ajouter un log pour la création de commande si la connexion est valide
+                    if ($shop_pdo !== null) {
+                        try {
+                            $log_commande_stmt = $shop_pdo->prepare("
+                                INSERT INTO reparation_logs 
+                                (reparation_id, employe_id, action_type, statut_avant, statut_apres, details) 
+                                VALUES (?, ?, ?, ?, ?, ?)
+                            ");
+                            
+                            $log_commande_stmt->execute([
+                                $reparation_id,
+                                $_SESSION['user_id'],
+                                'autre', // Type d'action pour une commande
+                                $statutForDB,
+                                $statutForDB, // Le statut ne change pas
+                                'Commande de pièces créée: ' . $_POST['nom_piece'] . ' (Réf: ' . $reference . ')'
+                            ]);
+                            
+                            error_log("Log de création de commande ajouté avec succès");
+                        } catch (PDOException $e) {
+                            error_log("Erreur lors de l'ajout du log de commande: " . $e->getMessage());
+                        }
+                    }
                 } catch (PDOException $e) {
-                    error_log("Erreur lors de l'ajout du log de commande: " . $e->getMessage());
+                    error_log("Erreur lors de la création de la commande de pièces: " . $e->getMessage());
+                    set_message("La réparation a été créée mais une erreur est survenue lors de la création de la commande de pièces.", "warning");
                 }
             }
             
@@ -509,7 +626,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Ajouter l'envoi de SMS automatique avec modèle "Nouvelle reparation"
             if (isset($reparation_id) && is_numeric($reparation_id) && $reparation_id > 0) {
                 try {
-                    $shop_pdo = getShopDBConnection();
+                    // Vérifier que $shop_pdo n'est pas null avant d'accéder aux templates SMS
+                    if ($shop_pdo === null) {
+                        error_log("ALERTE: $shop_pdo est null avant l'envoi du SMS. Tentative de reconnexion.");
+                        $shop_pdo = getShopDBConnection();
+                        
+                        // Vérifier à nouveau après la tentative de reconnexion
+                        if ($shop_pdo === null) {
+                            error_log("ERREUR: Impossible de rétablir la connexion pour l'envoi du SMS.");
+                            // Ne pas continuer si la connexion n'est pas disponible - SMS non critique
+                            set_message("La réparation a été créée mais le SMS de confirmation n'a pas pu être envoyé.", "warning");
+                            redirect('reparations');
+                            exit;
+                        }
+                    }
+                    
                     // Récupérer le modèle SMS "Nouvelle reparation"
                     $stmt_template = $shop_pdo->prepare("
                         SELECT id, nom, contenu 

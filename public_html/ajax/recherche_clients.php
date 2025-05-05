@@ -29,14 +29,20 @@ error_log("Recherche de clients avec le terme: " . $terme);
 try {
     // Vérifier qu'un magasin est sélectionné
     if (!isset($_SESSION['shop_id'])) {
-        error_log("ATTENTION: Aucun magasin sélectionné en session");
-        echo json_encode(['success' => false, 'message' => 'Aucun magasin sélectionné']);
-        exit;
+        error_log("ATTENTION: Aucun magasin sélectionné en session, utilisation de la connexion principale");
+        // Au lieu de renvoyer une erreur, utiliser la connexion principale
+        $shop_pdo = getMainDBConnection();
+        
+        if ($shop_pdo === null) {
+            error_log("ERREUR: Impossible d'obtenir une connexion à la base de données principale");
+            echo json_encode(['success' => false, 'message' => 'Erreur de connexion à la base de données']);
+            exit;
+        }
+    } else {
+        // Utiliser getShopDBConnection() pour obtenir la connexion à la base du magasin
+        $shop_pdo = getShopDBConnection();
     }
     
-    // Utiliser getShopDBConnection() pour obtenir la connexion à la base du magasin
-    $shop_pdo = getShopDBConnection();
-        
     // Vérifier la connexion
         $check_stmt = $shop_pdo->query("SELECT DATABASE() as current_db");
         $check_result = $check_stmt->fetch(PDO::FETCH_ASSOC);

@@ -101,11 +101,56 @@ if ($main_pdo === null) {
 
 /**
  * Fonction pour obtenir une connexion à la base de données principale
- * @return PDO Instance de connexion PDO à la base principale
+ * @return PDO|null Instance de connexion PDO à la base principale ou null en cas d'échec
  */
 function getMainDBConnection() {
     global $main_pdo;
     dbDebugLog("Demande de connexion à la base principale");
+    
+    // Vérifier si la connexion est établie
+    if ($main_pdo === null) {
+        dbDebugLog("ALERTE: Connexion à la base principale inexistante ou perdue - tentative de reconnexion");
+        error_log("ALERTE: Connexion à la base principale inexistante ou perdue - tentative de reconnexion");
+        
+        try {
+            // Tentative de reconnexion
+            $dsn = "mysql:host=" . MAIN_DB_HOST . ";port=" . MAIN_DB_PORT . ";dbname=" . MAIN_DB_NAME . ";charset=utf8mb4";
+            
+            $main_pdo = new PDO(
+                $dsn,
+                MAIN_DB_USER,
+                MAIN_DB_PASS,
+                [
+                    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+                    PDO::ATTR_EMULATE_PREPARES => false,
+                    PDO::ATTR_PERSISTENT => false
+                ]
+            );
+            
+            dbDebugLog("Reconnexion à la base principale réussie");
+            error_log("Reconnexion à la base principale réussie");
+        } catch (PDOException $e) {
+            dbDebugLog("ÉCHEC de reconnexion à la base principale: " . $e->getMessage());
+            error_log("ÉCHEC de reconnexion à la base principale: " . $e->getMessage());
+            // La connexion reste null
+        }
+    } else {
+        // Test de la connexion existante
+        try {
+            $stmt = $main_pdo->query("SELECT 1");
+            $stmt->fetch();
+            dbDebugLog("Connexion à la base principale active et fonctionnelle");
+        } catch (PDOException $e) {
+            dbDebugLog("La connexion à la base principale existe mais semble invalide: " . $e->getMessage());
+            error_log("La connexion à la base principale existe mais semble invalide: " . $e->getMessage());
+            
+            // Réinitialiser et tenter une reconnexion
+            $main_pdo = null;
+            return getMainDBConnection(); // Appel récursif une seule fois
+        }
+    }
+    
     return $main_pdo;
 }
 
@@ -185,7 +230,7 @@ function connectToShopDB($shop_config) {
 
 /**
  * Fonction pour obtenir la connexion à la base de données du magasin actuel
- * @return PDO Instance de connexion PDO au magasin actuel ou à la base principale
+ * @return PDO|null Instance de connexion PDO au magasin actuel ou à la base principale, ou null en cas d'échec total
  */
 function getShopDBConnection() {
     global $shop_pdo, $main_pdo;
@@ -199,8 +244,19 @@ function getShopDBConnection() {
     
     // Cache la connexion pour éviter de se reconnecter à chaque appel
     if ($shop_pdo !== null) {
-        dbDebugLog("Utilisation de la connexion magasin déjà établie");
-        return $shop_pdo;
+        // Tester si la connexion est encore valide
+        try {
+            $test_stmt = $shop_pdo->query("SELECT 1");
+            $test_stmt->fetch();
+            dbDebugLog("Connexion magasin existante validée");
+            return $shop_pdo;
+        } catch (PDOException $e) {
+            // La connexion n'est plus valide
+            dbDebugLog("Connexion magasin existante non valide: " . $e->getMessage());
+            error_log("Connexion magasin existante non valide: " . $e->getMessage());
+            // On va réinitialiser la connexion et continuer
+            $shop_pdo = null;
+        }
     }
     
     dbDebugLog("Initialisation nouvelle connexion magasin");
@@ -216,6 +272,13 @@ function getShopDBConnection() {
     $shop_id = $_SESSION['shop_id'];
     dbDebugLog("Magasin en session trouvé: ID=" . $shop_id);
     $main_pdo = getMainDBConnection();
+    
+    // Vérifier que la connexion principale a bien été établie
+    if ($main_pdo === null) {
+        dbDebugLog("ERREUR CRITIQUE: Impossible d'obtenir la connexion principale pour récupérer les infos du magasin");
+        error_log("ERREUR CRITIQUE: Impossible d'obtenir la connexion principale pour récupérer les infos du magasin");
+        return null; // On ne peut pas continuer sans connexion principale
+    }
     
     try {
         $stmt = $main_pdo->prepare("SELECT * FROM shops WHERE id = ?");
