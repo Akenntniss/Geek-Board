@@ -4,10 +4,13 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-// Vérifier que $pdo est accessible et initialisé
-if (!isset($pdo) || $pdo === null) {
-    echo "<div class='alert alert-danger'>Erreur de connexion à la base de données. La variable \$pdo n'est pas disponible. Veuillez contacter l'administrateur.</div>";
-    error_log("ERREUR CRITIQUE dans reparations.php: La variable \$pdo n'est pas disponible");
+// Obtenir la connexion à la base de données du magasin de l'utilisateur
+$shop_pdo = getShopDBConnection();
+
+// Vérifier que $shop_pdo est accessible et initialisé
+if (!isset($shop_pdo) || $shop_pdo === null) {
+    echo "<div class='alert alert-danger'>Erreur de connexion à la base de données. La variable \$shop_pdo n'est pas disponible. Veuillez contacter l'administrateur.</div>";
+    error_log("ERREUR CRITIQUE dans reparations.php: La variable \$shop_pdo n'est pas disponible");
     // Initialiser les variables pour éviter les erreurs
     $total_reparations = 0;
     $total_nouvelles = 0;
@@ -27,7 +30,7 @@ if (!isset($pdo) || $pdo === null) {
     // Compter les réparations par catégorie de statut
     try {
         // Total des réparations pour le bouton "Récentes" (statuts 1 à 5)
-        $stmt = $pdo->query("
+        $stmt = $shop_pdo->query("
             SELECT COUNT(*) as total 
             FROM reparations r 
             WHERE r.statut IN (SELECT code FROM statuts WHERE id BETWEEN 1 AND 5)
@@ -35,7 +38,7 @@ if (!isset($pdo) || $pdo === null) {
         $total_reparations = $stmt->fetch()['total'];
 
         // Réparations nouvelles (statuts 1,2,3)
-        $stmt = $pdo->query("
+        $stmt = $shop_pdo->query("
             SELECT COUNT(*) as total 
             FROM reparations r 
             WHERE r.statut IN (SELECT code FROM statuts WHERE id IN (1,2,3))
@@ -43,7 +46,7 @@ if (!isset($pdo) || $pdo === null) {
         $total_nouvelles = $stmt->fetch()['total'];
 
         // Réparations en cours (statuts 4,5)
-        $stmt = $pdo->query("
+        $stmt = $shop_pdo->query("
             SELECT COUNT(*) as total 
             FROM reparations r 
             WHERE r.statut IN (SELECT code FROM statuts WHERE id IN (4,5))
@@ -51,7 +54,7 @@ if (!isset($pdo) || $pdo === null) {
         $total_en_cours = $stmt->fetch()['total'];
 
         // Réparations en attente (statuts 6,7,8)
-        $stmt = $pdo->query("
+        $stmt = $shop_pdo->query("
             SELECT COUNT(*) as total 
             FROM reparations r 
             WHERE r.statut IN (SELECT code FROM statuts WHERE id IN (6,7,8))
@@ -59,7 +62,7 @@ if (!isset($pdo) || $pdo === null) {
         $total_en_attente = $stmt->fetch()['total'];
 
         // Réparations terminées (statuts 9,10)
-        $stmt = $pdo->query("
+        $stmt = $shop_pdo->query("
             SELECT COUNT(*) as total 
             FROM reparations r 
             WHERE r.statut IN (SELECT code FROM statuts WHERE id IN (9,10))
@@ -67,7 +70,7 @@ if (!isset($pdo) || $pdo === null) {
         $total_termines = $stmt->fetch()['total'];
 
         // Réparations archivées (statuts 11,12,13)
-        $stmt = $pdo->query("
+        $stmt = $shop_pdo->query("
             SELECT COUNT(*) as total 
             FROM reparations r 
             WHERE r.statut IN (SELECT code FROM statuts WHERE id IN (11,12,13))
@@ -164,7 +167,7 @@ $sql .= " ORDER BY r.date_reception DESC";
 
 // Récupérer les réparations
 try {
-    $stmt = $pdo->prepare($sql);
+    $stmt = $shop_pdo->prepare($sql);
     $stmt->execute($params);
     $reparations = $stmt->fetchAll();
 } catch (PDOException $e) {
@@ -184,7 +187,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'delete' && isset($_GET['id'])
 
     $id = (int)$_GET['id'];
     try {
-        $stmt = $pdo->prepare("DELETE FROM reparations WHERE id = ?");
+        $stmt = $shop_pdo->prepare("DELETE FROM reparations WHERE id = ?");
         $stmt->execute([$id]);
         
         set_message("Réparation supprimée avec succès.", "success");
@@ -4101,7 +4104,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                 <?php
                                 // Récupérer les réparations terminées (statuts 9 et 10)
                                 try {
-                                    $stmt = $pdo->prepare("
+                                    $stmt = $shop_pdo->prepare("
                                         SELECT r.*, c.nom as client_nom, c.prenom as client_prenom, s.nom as statut_nom
                                         FROM reparations r
                                         LEFT JOIN clients c ON r.client_id = c.id
