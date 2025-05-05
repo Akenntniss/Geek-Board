@@ -1,0 +1,30 @@
+J'ai une application GeekBoard multi-magasins où chaque magasin possède sa propre base de données. Le système comprend:
+Une base de données principale (u139954273_Vscodetest)
+Des bases de données spécifiques pour chaque magasin
+Un système de connexion qui sélectionne la base de données appropriée via getShopDBConnection()
+Description du problème
+Certaines pages/fonctionnalités utilisent directement la variable $pdo (qui pointe vers la base de données principale) au lieu d'utiliser getShopDBConnection(), ce qui fait que les données sont enregistrées dans la base principale et non dans celle du magasin de l'utilisateur.
+
+
+Exemple de fichier corrigé
+// Ancien code (problématique)
+$stmt = $pdo->prepare("INSERT INTO taches (titre, description) VALUES (?, ?)");
+
+// Nouveau code (corrigé)
+$shop_pdo = getShopDBConnection();
+$stmt = $shop_pdo->prepare("INSERT INTO taches (titre, description) VALUES (?, ?)");
+
+Ce que je souhaite
+Une méthode pour identifier rapidement les fichiers susceptibles d'avoir ce problème
+Un guide étape par étape pour convertir l'utilisation de $pdo en getShopDBConnection()
+Des conseils pour tester si les corrections fonctionnent correctement
+Comment éviter ce problème à l'avenir dans les nouvelles fonctionnalités
+
+
+Fichiers déjà corrigés
+/pages/ajouter_tache.php
+/pages/taches.php
+/pages/modifier_tache.php
+/pages/commentaires_tache.php
+/pages/supprimer_tache.php
+Merci d'expliquer les instructions de manière simple et systématique.

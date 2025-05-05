@@ -14,10 +14,19 @@ ini_set('session.cookie_lifetime', $session_lifetime);
 // Configurer le cookie pour qu'il soit accessible sur tous les sous-domaines
 ini_set('session.cookie_domain', '');
 
-// Pour permettre le fonctionnement sur mdgeek.top
+// Pour permettre le fonctionnement sur les domaines reconnus
 $host = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : '';
-if (strpos($host, 'mdgeek.top') !== false) {
-    ini_set('session.cookie_domain', '.mdgeek.top');
+
+// Liste des domaines connus
+$known_domains = ['mdgeek.top'];
+
+// Recherche du domaine principal dans l'hôte
+foreach ($known_domains as $domain) {
+    if (strpos($host, $domain) !== false) {
+        // Configurer le cookie pour ce domaine et ses sous-domaines
+        ini_set('session.cookie_domain', '.' . $domain);
+        break;
+    }
 }
 
 // Configurer le cookie pour qu'il soit accessible uniquement via HTTP

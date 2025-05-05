@@ -29,7 +29,8 @@ $taches = get_taches_en_cours(5);
 // Récupérer les commandes récentes
 $commandes_recentes = [];
 try {
-    $stmt = $pdo->query("
+    $shop_pdo = getShopDBConnection();
+    $stmt = $shop_pdo->query("
         SELECT c.*, cl.nom as client_nom, cl.prenom as client_prenom, f.nom as fournisseur_nom 
         FROM commandes_pieces c 
         LEFT JOIN clients cl ON c.client_id = cl.id 

@@ -105,9 +105,14 @@ if (isset($_SESSION['message'])) {
 
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h1>Gestion des magasins</h1>
-            <a href="create_shop.php" class="btn btn-success">
-                <i class="fas fa-plus-circle me-1"></i> Nouveau magasin
-            </a>
+            <div>
+                <a href="configure_domains.php" class="btn btn-primary me-2">
+                    <i class="fas fa-globe me-1"></i> Configurer les sous-domaines
+                </a>
+                <a href="create_shop.php" class="btn btn-success">
+                    <i class="fas fa-plus-circle me-1"></i> Nouveau magasin
+                </a>
+            </div>
         </div>
 
         <div class="row">

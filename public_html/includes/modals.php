@@ -976,8 +976,13 @@ document.addEventListener('DOMContentLoaded', function() {
             formData.append('email', email);
             formData.append('adresse', adresse);
             
-            // Enregistrement AJAX
-            fetch('ajax/ajouter_client.php', {
+            // Récupérer le shop_id depuis PHP pour l'envoyer explicitement
+            <?php if (isset($_SESSION['shop_id'])): ?>
+            formData.append('shop_id', '<?php echo $_SESSION['shop_id']; ?>');
+            <?php endif; ?>
+            
+            // Enregistrement AJAX avec connexion directe à la base du magasin
+            fetch('ajax/direct_add_client_rapide.php', {
                 method: 'POST',
                 body: formData,
                 credentials: 'include'

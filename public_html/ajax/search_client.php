@@ -20,6 +20,24 @@ if (empty($query)) {
 }
 
 try {
+    // Utiliser la connexion à la base de données du magasin actuel
+    $shop_pdo = getShopDBConnection();
+    
+    // Vérifier la connexion à la base de données
+    if (!isset($shop_pdo) || !($shop_pdo instanceof PDO)) {
+        error_log("Connexion à la base de données du magasin non disponible");
+        throw new Exception('Connexion à la base de données du magasin non disponible');
+    }
+    
+    // Journaliser l'information sur la base de données utilisée
+    try {
+        $stmt_db = $shop_pdo->query("SELECT DATABASE() as db_name");
+        $db_info = $stmt_db->fetch(PDO::FETCH_ASSOC);
+        error_log("Recherche clients - BASE DE DONNÉES UTILISÉE: " . ($db_info['db_name'] ?? 'Inconnue'));
+    } catch (Exception $e) {
+        error_log("Erreur lors de la vérification de la base de données: " . $e->getMessage());
+    }
+    
     // Préparer la requête SQL
     $sql = "SELECT id, nom, prenom, telephone, email 
             FROM clients 
@@ -31,7 +49,7 @@ try {
             ORDER BY nom, prenom 
             LIMIT 10";
     
-    $stmt = $pdo->prepare($sql);
+    $stmt = $shop_pdo->prepare($sql);
     $stmt->execute(['query' => "%$query%"]);
     
     $clients = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -45,5 +63,11 @@ try {
     echo json_encode([
         'success' => false,
         'message' => 'Erreur lors de la recherche des clients'
+    ]);
+} catch (Exception $e) {
+    error_log("Exception lors de la recherche des clients: " . $e->getMessage());
+    echo json_encode([
+        'success' => false,
+        'message' => 'Erreur: ' . $e->getMessage()
     ]);
 } 

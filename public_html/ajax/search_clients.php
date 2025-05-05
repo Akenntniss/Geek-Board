@@ -47,10 +47,22 @@ if (empty($terme)) {
 }
 
 try {
+    // Utiliser la connexion à la base de données du magasin actuel
+    $shop_pdo = getShopDBConnection();
+    
     // Vérifier la connexion à la base de données
-    if (!isset($pdo) || !($pdo instanceof PDO)) {
-        error_log("Connexion à la base de données non disponible");
-        throw new Exception('Connexion à la base de données non disponible');
+    if (!isset($shop_pdo) || !($shop_pdo instanceof PDO)) {
+        error_log("Connexion à la base de données du magasin non disponible");
+        throw new Exception('Connexion à la base de données du magasin non disponible');
+    }
+    
+    // Journaliser l'information sur la base de données utilisée
+    try {
+        $stmt_db = $shop_pdo->query("SELECT DATABASE() as db_name");
+        $db_info = $stmt_db->fetch(PDO::FETCH_ASSOC);
+        error_log("Search clients - BASE DE DONNÉES UTILISÉE: " . ($db_info['db_name'] ?? 'Inconnue'));
+    } catch (Exception $e) {
+        error_log("Erreur lors de la vérification de la base de données: " . $e->getMessage());
     }
     
     // Préparer la requête SQL avec des paramètres distincts
@@ -65,11 +77,11 @@ try {
     ";
     error_log("Requête SQL: " . $sql);
     
-    $stmt = $pdo->prepare($sql);
+    $stmt = $shop_pdo->prepare($sql);
     
     if (!$stmt) {
-        error_log("Erreur de préparation de la requête: " . implode(' ', $pdo->errorInfo()));
-        throw new Exception('Erreur de préparation de la requête: ' . implode(' ', $pdo->errorInfo()));
+        error_log("Erreur de préparation de la requête: " . implode(' ', $shop_pdo->errorInfo()));
+        throw new Exception('Erreur de préparation de la requête: ' . implode(' ', $shop_pdo->errorInfo()));
     }
     
     // Exécuter la requête avec les paramètres

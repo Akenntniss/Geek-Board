@@ -1,53 +1,11 @@
 <?php
-// Inclure la configuration de domaine
-require_once __DIR__ . '/config/domain_config.php';
-
-// Code de détection de sous-domaine pour le routage vers le bon magasin
-function detectSubdomain() {
-    // Vérifier si la détection est activée
-    if (!ENABLE_SUBDOMAIN_DETECTION) {
-        return false;
-    }
-    
-    // Récupérer le sous-domaine actuel
-    $subdomain = getCurrentSubdomain();
-    
-    // Si pas de sous-domaine ou sous-domaine système, ne rien faire
-    if (!$subdomain || isSystemSubdomain($subdomain)) {
-        return false;
-    }
-    
-    // Faire une recherche du magasin correspondant au sous-domaine
-    require_once __DIR__ . '/config/database.php';
-    $pdo = getMainDBConnection();
-    $stmt = $pdo->prepare("SELECT id, name FROM shops WHERE subdomain = ? AND active = 1");
-    $stmt->execute([$subdomain]);
-    $shop = $stmt->fetch();
-    
-    // Si un magasin est trouvé, définir la session
-    if ($shop) {
-        if (session_status() === PHP_SESSION_NONE) {
-            // Inclure la configuration de session avant de démarrer la session
-            require_once __DIR__ . '/config/session_config.php';
-        }
-        
-        // Définir le magasin en session
-        $_SESSION['shop_id'] = $shop['id'];
-        $_SESSION['shop_name'] = $shop['name'];
-        error_log("Magasin détecté par sous-domaine: ID=" . $shop['id'] . ", Nom=" . $shop['name']);
-        
-        return true;
-    }
-    
-    return false;
-}
-
-// Exécuter la détection de sous-domaine
-detectSubdomain();
-
 // Inclure la configuration de session avant de démarrer la session
 require_once __DIR__ . '/config/session_config.php';
 // La session est déjà démarrée dans session_config.php, pas besoin de session_start() ici
+
+// Inclure la configuration pour la gestion des sous-domaines
+require_once __DIR__ . '/config/subdomain_config.php';
+// Le sous-domaine est détecté et la session est configurée avec le magasin correspondant
 
 // Vérifier si on est dans le contexte d'un magasin spécifique
 if (isset($_SESSION['shop_id'])) {

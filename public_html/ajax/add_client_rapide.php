@@ -13,6 +13,11 @@ header('Content-Type: application/json');
 // Démarrer la session
 session_start();
 
+// Log de débogage
+error_log("=== DÉBUT ADD_CLIENT_RAPIDE.PHP ===");
+error_log("POST: " . print_r($_POST, true));
+error_log("SESSION: " . print_r($_SESSION, true));
+
 // Vérifier si l'utilisateur est connecté
 if (!isset($_SESSION['user_id'])) {
     echo json_encode([
@@ -41,6 +46,14 @@ $telephone = isset($_POST['telephone']) ? trim($_POST['telephone']) : '';
 $email = isset($_POST['email']) ? trim($_POST['email']) : '';
 
 try {
+    // Utiliser getShopDBConnection() pour s'assurer d'utiliser la base du magasin
+    $shop_pdo = getShopDBConnection();
+    
+    // Vérifier la connexion à la base de données du magasin
+    $db_stmt = $shop_pdo->query("SELECT DATABASE() as db_name");
+    $db_info = $db_stmt->fetch(PDO::FETCH_ASSOC);
+    error_log("BASE UTILISÉE POUR L'AJOUT RAPIDE DU CLIENT: " . ($db_info['db_name'] ?? 'Inconnue'));
+
     // Vérifier si un client avec le même nom, prénom et téléphone existe déjà
     $check_sql = "SELECT id FROM clients WHERE nom = :nom AND prenom = :prenom";
     
@@ -49,7 +62,7 @@ try {
         $check_sql .= " AND telephone = :telephone";
     }
     
-    $check_stmt = $pdo->prepare($check_sql);
+    $check_stmt = $shop_pdo->prepare($check_sql);
     $check_stmt->bindParam(':nom', $nom);
     $check_stmt->bindParam(':prenom', $prenom);
     
@@ -62,6 +75,7 @@ try {
     if ($check_stmt->rowCount() > 0) {
         // Client existe déjà, renvoyer son ID
         $client = $check_stmt->fetch(PDO::FETCH_ASSOC);
+        error_log("CLIENT EXISTANT TROUVÉ: " . $client['id']);
         
         echo json_encode([
             'success' => true,
@@ -69,14 +83,15 @@ try {
             'nom' => $nom,
             'prenom' => $prenom,
             'telephone' => $telephone,
-            'message' => 'Client existant sélectionné'
+            'message' => 'Client existant sélectionné',
+            'database' => $db_info['db_name']
         ]);
         exit;
     }
     
     // Insérer le nouveau client
     $insert_sql = "INSERT INTO clients (nom, prenom, telephone, email, date_creation) VALUES (:nom, :prenom, :telephone, :email, NOW())";
-    $insert_stmt = $pdo->prepare($insert_sql);
+    $insert_stmt = $shop_pdo->prepare($insert_sql);
     
     $insert_stmt->bindParam(':nom', $nom);
     $insert_stmt->bindParam(':prenom', $prenom);
@@ -86,13 +101,14 @@ try {
     $insert_stmt->execute();
     
     // Récupérer l'ID du client nouvellement créé
-    $client_id = $pdo->lastInsertId();
+    $client_id = $shop_pdo->lastInsertId();
+    error_log("NOUVEAU CLIENT CRÉÉ: " . $client_id);
     
     // Log de l'action
     $user_id = $_SESSION['user_id'];
     $log_sql = "INSERT INTO logs (user_id, action, target_type, target_id, details, date_creation) 
                 VALUES (:user_id, 'create', 'client', :client_id, :details, NOW())";
-    $log_stmt = $pdo->prepare($log_sql);
+    $log_stmt = $shop_pdo->prepare($log_sql);
     
     $details = json_encode([
         'nom' => $nom,
@@ -114,7 +130,8 @@ try {
         'nom' => $nom,
         'prenom' => $prenom,
         'telephone' => $telephone,
-        'message' => 'Client créé avec succès'
+        'message' => 'Client créé avec succès',
+        'database' => $db_info['db_name']
     ]);
     
 } catch (PDOException $e) {
@@ -127,4 +144,6 @@ try {
         'message' => 'Erreur lors de la création du client: ' . $e->getMessage()
     ]);
 }
+
+error_log("=== FIN ADD_CLIENT_RAPIDE.PHP ===");
 ?> 

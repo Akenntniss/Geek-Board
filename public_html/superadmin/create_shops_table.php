@@ -22,7 +22,6 @@ try {
             phone VARCHAR(20),
             email VARCHAR(100),
             website VARCHAR(200),
-            subdomain VARCHAR(50) UNIQUE,
             logo VARCHAR(255),
             active TINYINT(1) DEFAULT 1,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -33,7 +32,8 @@ try {
             db_port VARCHAR(10) DEFAULT '3306',
             db_name VARCHAR(100) NOT NULL,
             db_user VARCHAR(100) NOT NULL,
-            db_pass VARCHAR(255) NOT NULL
+            db_pass VARCHAR(255) NOT NULL,
+            subdomain VARCHAR(50) UNIQUE
         )";
         
         $pdo->exec($sql);

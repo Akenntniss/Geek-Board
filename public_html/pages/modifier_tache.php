@@ -7,9 +7,12 @@ if (!isset($_GET['id'])) {
 
 $tache_id = (int)$_GET['id'];
 
+// Obtenir la connexion à la base de données du magasin
+$shop_pdo = getShopDBConnection();
+
 // Récupération des employés actifs
 try {
-    $stmt = $pdo->query("SELECT id, full_name as nom, username as prenom FROM users WHERE role = 'technicien' ORDER BY full_name ASC");
+    $stmt = $shop_pdo->query("SELECT id, full_name as nom, username as prenom FROM users WHERE role = 'technicien' ORDER BY full_name ASC");
     $employes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
     set_message("Erreur lors de la récupération des employés: " . $e->getMessage(), "error");
@@ -18,7 +21,7 @@ try {
 
 // Récupération des données de la tâche
 try {
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         SELECT t.*, e.nom as employe_nom, e.prenom as employe_prenom 
         FROM taches t 
         LEFT JOIN employes e ON t.employe_id = e.id 
@@ -68,7 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Si pas d'erreurs, mise à jour de la tâche
     if (empty($errors)) {
         try {
-            $stmt = $pdo->prepare("
+            $stmt = $shop_pdo->prepare("
                 UPDATE taches 
                 SET titre = ?, description = ?, priorite = ?, statut = ?, 
                     date_limite = ?, employe_id = ?

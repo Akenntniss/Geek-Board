@@ -76,7 +76,7 @@ if (!empty($errors)) {
 // Si pas d'erreurs, insertion de la tâche
 try {
     // Vérification de l'ID du magasin en session
-    if (!isset($_SESSION['shop_id'])) {
+    if (!isset($_SESSION['shop_id']) || empty($_SESSION['shop_id'])) {
         // Journaliser l'erreur
         error_log("Erreur: Aucun magasin associé à l'utilisateur " . $_SESSION['user_id']);
         throw new Exception("Aucun magasin associé à votre compte. Veuillez contacter l'administrateur.");
@@ -86,30 +86,52 @@ try {
     $shop_id = $_SESSION['shop_id'];
     error_log("Utilisateur ID: " . $_SESSION['user_id'] . ", Magasin ID: " . $shop_id);
     
-    // Obtenir la connexion à la base de données du magasin de l'utilisateur connecté
-    $shop_pdo = getShopDBConnection();
+    // Obtenir les informations du magasin depuis la base principale
+    $main_pdo = getMainDBConnection();
+    $stmt = $main_pdo->prepare("SELECT * FROM shops WHERE id = ?");
+    $stmt->execute([$shop_id]);
+    $shop = $stmt->fetch();
     
-    // Vérifier quelle base de données est utilisée
+    if (!$shop) {
+        error_log("ERREUR: Impossible de trouver les informations du magasin ID: " . $shop_id);
+        throw new Exception("Impossible de trouver les informations du magasin. Veuillez contacter l'administrateur.");
+    }
+    
+    // Vérifier que les informations de connexion sont complètes
+    if (empty($shop['db_host']) || empty($shop['db_name']) || empty($shop['db_user'])) {
+        error_log("ERREUR: Configuration de base de données incomplète pour le magasin: " . $shop['name']);
+        throw new Exception("Configuration de base de données incomplète pour le magasin. Veuillez contacter l'administrateur.");
+    }
+    
+    error_log("Connexion directe à la base: " . $shop['db_name'] . " sur " . $shop['db_host']);
+    
+    // Créer directement une nouvelle connexion à la base de données du magasin
+    $dsn = "mysql:host=" . $shop['db_host'] . ";port=" . 
+           ($shop['db_port'] ?? '3306') . ";dbname=" . 
+           $shop['db_name'] . ";charset=utf8mb4";
+    
+    $shop_pdo = new PDO(
+        $dsn,
+        $shop['db_user'],
+        $shop['db_pass'],
+        [
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+            PDO::ATTR_EMULATE_PREPARES => false,
+            PDO::ATTR_PERSISTENT => false
+        ]
+    );
+    
+    // Vérifier que la connexion utilise bien la bonne base de données
     $stmt = $shop_pdo->query("SELECT DATABASE() as current_db");
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     $current_db = $result['current_db'];
+    
     error_log("Base de données utilisée pour l'insertion de la tâche: " . $current_db);
     
-    // Récupérer les informations du magasin depuis la base principale
-    $main_pdo = getMainDBConnection();
-    $stmt = $main_pdo->prepare("SELECT name, db_name FROM shops WHERE id = ?");
-    $stmt->execute([$shop_id]);
-    $shop_info = $stmt->fetch(PDO::FETCH_ASSOC);
-    
-    if ($shop_info) {
-        error_log("Magasin: " . $shop_info['name'] . ", Base attendue: " . $shop_info['db_name']);
-        
-        // Vérifier si la bonne base de données est utilisée
-        if ($current_db !== $shop_info['db_name']) {
-            error_log("ERREUR: Mauvaise base de données utilisée. Attendue: " . $shop_info['db_name'] . ", Utilisée: " . $current_db);
-        }
-    } else {
-        error_log("ERREUR: Impossible de trouver les informations du magasin ID: " . $shop_id);
+    if ($current_db !== $shop['db_name']) {
+        error_log("ERREUR: Mauvaise base de données utilisée. Attendue: " . $shop['db_name'] . ", Utilisée: " . $current_db);
+        throw new Exception("Erreur lors de la connexion à la base de données du magasin. Veuillez contacter l'administrateur.");
     }
     
     // Préparation des paramètres pour la requête
@@ -122,6 +144,33 @@ try {
         $employe_id, 
         $_SESSION['user_id']
     ];
+    
+    // Vérifier si la table taches existe dans la base de données du magasin
+    $tableExists = false;
+    $stmt = $shop_pdo->query("SHOW TABLES LIKE 'taches'");
+    $tableExists = $stmt->rowCount() > 0;
+    
+    if (!$tableExists) {
+        error_log("ERREUR: La table 'taches' n'existe pas dans la base de données du magasin: " . $shop['db_name']);
+        
+        // Tenter de créer la table si elle n'existe pas
+        $shop_pdo->exec("
+            CREATE TABLE IF NOT EXISTS `taches` (
+              `id` int(11) NOT NULL AUTO_INCREMENT,
+              `titre` varchar(255) NOT NULL,
+              `description` text NOT NULL,
+              `priorite` varchar(50) NOT NULL,
+              `statut` varchar(50) NOT NULL,
+              `date_limite` date DEFAULT NULL,
+              `employe_id` int(11) DEFAULT NULL,
+              `created_by` int(11) NOT NULL,
+              `date_creation` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+              PRIMARY KEY (`id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+        ");
+        
+        error_log("Table 'taches' créée dans la base de données du magasin");
+    }
     
     $stmt = $shop_pdo->prepare("
         INSERT INTO taches (titre, description, priorite, statut, date_limite, employe_id, created_by) 
@@ -140,7 +189,7 @@ try {
     header('Content-Type: application/json');
     echo json_encode([
         'success' => true,
-        'message' => 'Tâche ajoutée avec succès!',
+        'message' => 'Tâche ajoutée avec succès dans la base de données ' . $shop['db_name'] . '!',
         'task_id' => $task_id,
         'debug_info' => [
             'user_id' => $_SESSION['user_id'],

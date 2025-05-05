@@ -1,7 +1,8 @@
 <?php
 // Récupération des utilisateurs
 try {
-    $stmt = $pdo->query("SELECT id, full_name, role FROM users ORDER BY role DESC, full_name ASC");
+    $shop_pdo = getShopDBConnection();
+    $stmt = $shop_pdo->query("SELECT id, full_name, role FROM users ORDER BY role DESC, full_name ASC");
     $utilisateurs = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
     set_message("Erreur lors de la récupération des utilisateurs: " . $e->getMessage(), "error");
@@ -40,7 +41,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Si pas d'erreurs, insertion de la tâche
     if (empty($errors)) {
         try {
-            $stmt = $pdo->prepare("
+            $shop_pdo = getShopDBConnection();
+            $stmt = $shop_pdo->prepare("
                 INSERT INTO taches (titre, description, priorite, statut, date_limite, employe_id, created_by) 
                 VALUES (?, ?, ?, ?, ?, ?, ?)
             ");

@@ -26,6 +26,23 @@ if (isset($_SERVER['HTTP_USER_AGENT'])) {
                strpos($_SERVER['HTTP_USER_AGENT'], 'Chrome') === false);
 }
 
+// Obtenir le nom de la base de données actuelle
+$db_name = '';
+$shop_pdo = null;
+
+try {
+    if (isset($_SESSION['shop_id'])) {
+        $shop_pdo = getShopDBConnection();
+        $query = $shop_pdo->query("SELECT DATABASE() as db_name");
+        $result = $query->fetch(PDO::FETCH_ASSOC);
+        if ($result && isset($result['db_name'])) {
+            $db_name = $result['db_name'];
+        }
+    }
+} catch (Exception $e) {
+    error_log("Erreur lors de la récupération du nom de la base de données: " . $e->getMessage());
+}
+
 // Ajouter une classe CSS au body pour les iPad
 if ($isIPad) {
     echo '<script>document.body.classList.add("ipad-device");</script>';
@@ -132,7 +149,11 @@ if (strpos($_SERVER['HTTP_USER_AGENT'], 'Safari') !== false &&
             <span class="fw-medium text-primary">
                 Bonjour, <?php echo htmlspecialchars($_SESSION['full_name']); ?> 
                 <?php if (isset($_SESSION['shop_name'])): ?>
-                <span class="badge bg-info ms-1"><?php echo htmlspecialchars($_SESSION['shop_name']); ?></span>
+                <span class="badge bg-info ms-1"><?php echo htmlspecialchars($_SESSION['shop_name']); ?> 
+                    <?php if (!empty($db_name)): ?>
+                    <small class="ms-1">(DB: <?php echo htmlspecialchars($db_name); ?>)</small>
+                    <?php endif; ?>
+                </span>
                 <?php endif; ?>
             </span>
         </div>
@@ -169,7 +190,12 @@ if (strpos($_SERVER['HTTP_USER_AGENT'], 'Safari') !== false &&
             <span class="fw-medium">
                 Bonjour, <?php echo htmlspecialchars($_SESSION['full_name']); ?>
                 <?php if (isset($_SESSION['shop_name'])): ?>
-                <span class="badge bg-info ms-1"><?php echo htmlspecialchars($_SESSION['shop_name']); ?></span>
+                <span class="badge bg-info ms-1">
+                    <?php echo htmlspecialchars($_SESSION['shop_name']); ?>
+                    <?php if (!empty($db_name)): ?>
+                    <small class="ms-1">(DB: <?php echo htmlspecialchars($db_name); ?>)</small>
+                    <?php endif; ?>
+                </span>
                 <?php endif; ?>
             </span>
         </div>
@@ -530,6 +556,15 @@ body:has(.mobile-welcome-banner) #main-content {
                         </div>
                         <span>Parametre</span>
                     </a>
+                    
+                    <?php if (isset($_SESSION['shop_id'])): ?>
+                    <a href="/pages/change_shop.php" class="launchpad-item">
+                        <div class="launchpad-icon" style="background-color: rgba(0, 120, 232, 0.15); color: #0078E8;">
+                            <i class="fas fa-store"></i>
+                        </div>
+                        <span>Changer de magasin</span>
+                    </a>
+                    <?php endif; ?>
                     
                     <a href="index.php?action=logout" class="launchpad-item">
                         <div class="launchpad-icon launchpad-icon-danger">

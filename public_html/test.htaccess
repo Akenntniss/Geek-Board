@@ -1,0 +1,46 @@
+# Activation du module de réécriture
+RewriteEngine On
+
+# Définir la base du répertoire pour les règles de réécriture
+RewriteBase /
+
+# Version simplifiée pour la détection des sous-domaines
+# Capturer le sous-domaine dans une variable SUBDOMAIN
+RewriteCond %{HTTP_HOST} ^([^.]+)\.mdgeek\.top$ [NC]
+RewriteRule ^ - [E=SUBDOMAIN:%1]
+
+# Débogage - Écrire la variable d'environnement dans un en-tête HTTP
+RewriteCond %{ENV:SUBDOMAIN} !^$
+RewriteRule ^ - [E=HTTP_X_SUBDOMAIN:%{ENV:SUBDOMAIN}]
+
+# Autoriser l'accès direct au script de test
+RewriteRule ^subdomain_test\.php$ - [L]
+
+# Rediriger toutes les requêtes de sous-domaine vers le gestionnaire
+RewriteCond %{ENV:SUBDOMAIN} !^$
+RewriteCond %{REQUEST_URI} !^/subdomain_handler\.php
+RewriteRule ^(.*)$ /subdomain_handler.php?subdomain=%{ENV:SUBDOMAIN}&path=$1 [QSA,L]
+
+# Autoriser l'accès aux fichiers et répertoires existants
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# Règles PHP pour améliorer la sécurité
+<IfModule mod_php7.c>
+    php_flag display_errors Off
+    php_flag log_errors On
+    php_value error_reporting E_ALL
+</IfModule>
+
+# Activer CORS pour les requêtes sous-domaines
+<IfModule mod_headers.c>
+    Header set Access-Control-Allow-Origin "*"
+    Header set Access-Control-Allow-Methods "GET, POST, OPTIONS"
+    Header set Access-Control-Allow-Headers "Origin, Content-Type, Accept"
+</IfModule>
+
+# Compression Gzip
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/css application/javascript
+</IfModule> 

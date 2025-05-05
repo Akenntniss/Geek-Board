@@ -7,9 +7,12 @@ if (!isset($_GET['id'])) {
 
 $tache_id = (int)$_GET['id'];
 
+// Obtenir la connexion à la base de données du magasin
+$shop_pdo = getShopDBConnection();
+
 // Récupération des informations de la tâche
 try {
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         SELECT t.*, 
                u.full_name as employe_nom,
                c.full_name as createur_nom
@@ -40,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     
     if (empty($errors)) {
         try {
-            $stmt = $pdo->prepare("
+            $stmt = $shop_pdo->prepare("
                 INSERT INTO commentaires_tache (tache_id, user_id, commentaire) 
                 VALUES (?, ?, ?)
             ");
@@ -56,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 // Récupération des commentaires
 try {
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         SELECT c.*, u.full_name as user_nom
         FROM commentaires_tache c
         JOIN users u ON c.user_id = u.id

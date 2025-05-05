@@ -3,6 +3,9 @@
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
+// Démarrer la session
+session_start();
+
 // Définir le type de contenu comme JSON
 header('Content-Type: application/json');
 
@@ -10,7 +13,8 @@ header('Content-Type: application/json');
 require_once '../config/database.php';
 
 // Log des données POST reçues
-error_log("POST reçu: " . print_r($_POST, true));
+error_log("POST reçu dans recherche_clients.php: " . print_r($_POST, true));
+error_log("SESSION dans recherche_clients.php: " . print_r($_SESSION, true));
 
 // Vérifier que le terme de recherche est fourni
 if (!isset($_POST['terme']) || empty($_POST['terme'])) {
@@ -20,67 +24,47 @@ if (!isset($_POST['terme']) || empty($_POST['terme'])) {
 }
 
 $terme = trim($_POST['terme']);
-error_log("Terme de recherche: " . $terme);
+error_log("Recherche de clients avec le terme: " . $terme);
 
 try {
-    // Vérifier la connexion à la base de données
-    if (!isset($pdo) || !($pdo instanceof PDO)) {
-        error_log("Connexion à la base de données non disponible");
-        throw new Exception('Connexion à la base de données non disponible');
+    // Vérifier qu'un magasin est sélectionné
+    if (!isset($_SESSION['shop_id'])) {
+        error_log("ATTENTION: Aucun magasin sélectionné en session");
+        echo json_encode(['success' => false, 'message' => 'Aucun magasin sélectionné']);
+        exit;
     }
     
-    // Préparer la requête SQL avec trois paramètres distincts
-    $sql = "
-        SELECT id, nom, prenom, telephone 
-        FROM clients 
-        WHERE nom LIKE :terme_nom 
-        OR prenom LIKE :terme_prenom 
-        OR telephone LIKE :terme_tel 
-        ORDER BY nom, prenom 
-        LIMIT 10
-    ";
-    error_log("Requête SQL: " . $sql);
+    // Utiliser getShopDBConnection() pour obtenir la connexion à la base du magasin
+    $shop_pdo = getShopDBConnection();
+        
+    // Vérifier la connexion
+        $check_stmt = $shop_pdo->query("SELECT DATABASE() as current_db");
+        $check_result = $check_stmt->fetch(PDO::FETCH_ASSOC);
+        $current_db = $check_result['current_db'];
+        
+    error_log("Base de données actuellement utilisée pour la recherche de clients: " . $current_db);
     
-    $stmt = $pdo->prepare($sql);
+    // Préparer la requête
+    $query = "SELECT id, nom as lastname, prenom as firstname, email, telephone as phone FROM clients WHERE 
+              nom LIKE :terme OR prenom LIKE :terme OR email LIKE :terme OR telephone LIKE :terme
+              ORDER BY nom, prenom LIMIT 10";
     
-    if (!$stmt) {
-        error_log("Erreur de préparation de la requête: " . implode(' ', $pdo->errorInfo()));
-        throw new Exception('Erreur de préparation de la requête: ' . implode(' ', $pdo->errorInfo()));
-    }
-    
-    // Exécuter la requête avec les trois paramètres
-    $terme = "%$terme%";
-    error_log("Terme de recherche avec wildcards: " . $terme);
-    
-    $stmt->bindParam(':terme_nom', $terme);
-    $stmt->bindParam(':terme_prenom', $terme);
-    $stmt->bindParam(':terme_tel', $terme);
-    
-    error_log("Exécution de la requête...");
-    $stmt->execute();
-    error_log("Requête exécutée");
-    
-    // Récupérer les résultats
+    $stmt = $shop_pdo->prepare($query);
+    $stmt->execute(['terme' => "%$terme%"]);
     $clients = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    error_log("Résultats trouvés: " . count($clients));
-    error_log("Données des clients: " . print_r($clients, true));
     
+    error_log("Nombre de clients trouvés: " . count($clients));
+    
+    // Retourner les résultats en JSON
     echo json_encode([
         'success' => true,
-        'clients' => $clients
+        'clients' => $clients,
+        'database' => $current_db,
+        'count' => count($clients)
     ]);
     
 } catch (PDOException $e) {
-    error_log("Erreur PDO lors de la recherche des clients: " . $e->getMessage());
-    echo json_encode([
-        'success' => false,
-        'message' => 'Erreur lors de la recherche des clients: ' . $e->getMessage()
-    ]);
-} catch (Exception $e) {
-    error_log("Exception lors de la recherche des clients: " . $e->getMessage());
-    echo json_encode([
-        'success' => false,
-        'message' => 'Erreur: ' . $e->getMessage()
-    ]);
+    error_log("Erreur durant la recherche: " . $e->getMessage());
+    echo json_encode(['success' => false, 'message' => 'Erreur lors de la recherche: ' . $e->getMessage()]);
 }
 ?> 

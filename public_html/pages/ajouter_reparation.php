@@ -1,4 +1,79 @@
 <?php
+// Code de débogage - Journaliser les variables POST et SESSION
+error_log("============= DÉBUT AJOUTER_REPARATION =============");
+error_log("SESSION: " . print_r($_SESSION, true));
+error_log("POST: " . print_r($_POST, true));
+error_log("REQUEST_METHOD: " . $_SERVER['REQUEST_METHOD']);
+
+// Déboguer le shop_id en session
+if (isset($_SESSION['shop_id'])) {
+    error_log("MAGASIN SÉLECTIONNÉ (SESSION): " . $_SESSION['shop_id']);
+} else {
+    error_log("ALERTE: Aucun magasin sélectionné en session!");
+}
+
+// Fonction pour vérifier et forcer la connexion à la bonne BD
+function verifierEtForcerBonneBD() {
+    global $shop_pdo;
+    try {
+        // Vérifier la connexion actuelle
+        $db_name_stmt = $shop_pdo->query("SELECT DATABASE() as current_db");
+        $db_result = $db_name_stmt->fetch(PDO::FETCH_ASSOC);
+        error_log("VÉRIFICATION: Base actuellement utilisée = " . ($db_result['current_db'] ?? 'Inconnue'));
+        
+        // Si on a un shop_id en session, récupérer les infos du magasin
+        if (isset($_SESSION['shop_id'])) {
+            // Récupérer la connexion principale
+            $main_pdo = getMainDBConnection();
+            
+            // Récupérer les infos du magasin
+            $stmt = $main_pdo->prepare("SELECT * FROM shops WHERE id = ?");
+            $stmt->execute([$_SESSION['shop_id']]);
+            $shop_info = $stmt->fetch(PDO::FETCH_ASSOC);
+            
+            // Si on a trouvé le magasin et que la base utilisée n'est pas la bonne
+            if ($shop_info && isset($db_result['current_db']) && $shop_info['db_name'] != $db_result['current_db']) {
+                error_log("CORRECTION NÉCESSAIRE: BD attendue '" . $shop_info['db_name'] . "', actuellement sur '" . $db_result['current_db'] . "'");
+                // Forcer la connexion à la bonne base
+                $shop_pdo = null; // Réinitialiser la connexion
+                $shop_pdo = getShopDBConnection();
+                
+                // Vérifier que ça a fonctionné
+                $db_check = $shop_pdo->query("SELECT DATABASE() as current_db");
+                $db_after = $db_check->fetch(PDO::FETCH_ASSOC);
+                error_log("APRÈS CORRECTION: Base utilisée = " . ($db_after['current_db'] ?? 'Inconnue'));
+                
+                return true; // Correction effectuée
+            }
+        }
+    } catch (Exception $e) {
+        error_log("ERREUR lors de la vérification/correction de la BD: " . $e->getMessage());
+    }
+    
+    return false; // Aucune correction nécessaire
+}
+
+// Initialiser la connexion à la base de données du magasin
+$shop_pdo = getShopDBConnection();
+verifierEtForcerBonneBD();
+
+// Vérifier si la fonction getShopDBConnection est disponible
+if (!function_exists('getShopDBConnection')) {
+    error_log("ERREUR CRITIQUE: La fonction getShopDBConnection() n'est pas disponible");
+}
+if (!function_exists('cleanInput')) {
+    error_log("ERREUR CRITIQUE: La fonction cleanInput() n'est pas disponible");
+}
+if (!function_exists('set_message')) {
+    error_log("ERREUR CRITIQUE: La fonction set_message() n'est pas disponible");
+}
+if (!function_exists('redirect')) {
+    error_log("ERREUR CRITIQUE: La fonction redirect() n'est pas disponible");
+}
+if (!function_exists('send_sms')) {
+    error_log("AVERTISSEMENT: La fonction send_sms() n'est pas disponible - Les SMS ne seront pas envoyés");
+}
+
 // Vérifier si la page est déjà chargée (pour éviter les inclusions multiples)
 if (defined('PAGE_AJOUTER_REPARATION_LOADED')) {
     echo '<div class="alert alert-danger">Erreur: La page est déjà chargée une fois. Vérifiez votre système d\'inclusion.</div>';
@@ -7,13 +82,97 @@ if (defined('PAGE_AJOUTER_REPARATION_LOADED')) {
 define('PAGE_AJOUTER_REPARATION_LOADED', true);
 
 // Récupérer la liste des clients pour le formulaire
-$stmt = $pdo->query("SELECT id, nom, prenom, telephone FROM clients ORDER BY nom, prenom");
+$shop_pdo = getShopDBConnection();
+verifierEtForcerBonneBD();
+
+$stmt = $shop_pdo->query("SELECT id, nom, prenom, telephone FROM clients ORDER BY nom, prenom");
 $clients = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // Traitement du formulaire d'ajout de réparation
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Débogage - Afficher toutes les données POST
-    error_log("Données POST: " . print_r($_POST, true));
+    // Débogage - Afficher toutes les données POST et SESSION
+    error_log("========== TRAITEMENT FORMULAIRE POST ==========");
+    error_log("SESSION: " . print_r($_SESSION, true));
+    error_log("POST complet: " . print_r($_POST, true));
+    
+    // Vérifier les informations de la base de données du magasin
+    try {
+        $main_pdo = null;
+        // Vérification de la base de données actuellement utilisée
+        try {
+            $shop_pdo = getShopDBConnection();
+            $db_name_stmt = $shop_pdo->query("SELECT DATABASE() as current_db");
+            $db_result = $db_name_stmt->fetch(PDO::FETCH_ASSOC);
+            error_log("BD INITIALE dans ajouter_reparation: " . ($db_result['current_db'] ?? 'Inconnue'));
+            
+            // S'assurer que shop_pdo utilise bien la connexion au magasin
+            if (isset($_SESSION['shop_id'])) {
+                error_log("SESSION SHOP_ID: " . $_SESSION['shop_id']);
+                // On s'assure que shop_pdo est bien la connexion au magasin
+                $shop_pdo = getShopDBConnection();
+                
+                // Vérifier après récupération
+                $db_check = $shop_pdo->query("SELECT DATABASE() as current_db");
+                $db_info = $db_check->fetch(PDO::FETCH_ASSOC);
+                error_log("APRÈS RÉCUPÉRATION avec getShopDBConnection(): " . ($db_info['current_db'] ?? 'Inconnue'));
+            }
+        } catch (Exception $e) {
+            error_log("Erreur lors de la vérification de la base de données: " . $e->getMessage());
+        }
+        
+        if (function_exists('getMainDBConnection')) {
+            $main_pdo = getMainDBConnection();
+            error_log("Connexion principale (main_pdo) obtenue avec succès");
+            
+            // Récupérer les infos du magasin
+            if (isset($_SESSION['shop_id'])) {
+                $stmt = $main_pdo->prepare("SELECT * FROM shops WHERE id = ?");
+                $stmt->execute([$_SESSION['shop_id']]);
+                $shop_info = $stmt->fetch(PDO::FETCH_ASSOC);
+                
+                if ($shop_info) {
+                    error_log("INFO MAGASIN SÉLECTIONNÉ: " . json_encode($shop_info));
+                } else {
+                    error_log("ERREUR: Magasin avec ID=" . $_SESSION['shop_id'] . " non trouvé dans la base principale!");
+                }
+            }
+        } else {
+            error_log("ERREUR: Fonction getMainDBConnection() non disponible");
+        }
+    } catch (Exception $e) {
+        error_log("ERREUR lors du débogage des connexions: " . $e->getMessage());
+    }
+    
+    // Vérifier les champs clés
+    $champs_requis = ['client_id', 'type_appareil', 'modele', 'description_probleme', 'prix_reparation'];
+    $champs_manquants = [];
+    foreach ($champs_requis as $champ) {
+        if (!isset($_POST[$champ]) || empty($_POST[$champ])) {
+            $champs_manquants[] = $champ;
+        }
+    }
+    
+    if (!empty($champs_manquants)) {
+        error_log("ALERTE: Champs requis manquants: " . implode(', ', $champs_manquants));
+    } else {
+        error_log("Tous les champs requis sont présents");
+    }
+    
+    // Débogage - Vérifier la connexion à la base de données
+    $shop_pdo = getShopDBConnection();
+    if (!$shop_pdo) {
+        error_log("ERREUR CRITIQUE: \$shop_pdo n'est pas disponible dans ajouter_reparation.php");
+        set_message("Erreur de connexion à la base de données. Veuillez contacter l'administrateur.", "danger");
+        // Continuer pour voir les autres erreurs potentielles
+    } else {
+        error_log("Connexion \$shop_pdo disponible dans ajouter_reparation.php");
+        try {
+            $test_query = $shop_pdo->query("SELECT 1");
+            error_log("Test de requête avec \$shop_pdo réussi");
+        } catch (PDOException $e) {
+            error_log("Erreur lors du test de \$shop_pdo: " . $e->getMessage());
+        }
+    }
     
     // Récupérer et nettoyer les données du formulaire
     $client_id = (int)$_POST['client_id'];
@@ -33,8 +192,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $statut = cleanInput($_POST['statut']);
         error_log("Statut récupéré de POST: " . $statut);
         
+        $shop_pdo = getShopDBConnection();
         // Récupérer la catégorie_id correspondante au statut
-        $stmt_categorie = $pdo->prepare("SELECT categorie_id FROM statuts WHERE nom = ?");
+        $stmt_categorie = $shop_pdo->prepare("SELECT categorie_id FROM statuts WHERE nom = ?");
         $stmt_categorie->execute([$statut]);
         $categorie_id = $stmt_categorie->fetchColumn();
         
@@ -77,12 +237,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $errors[] = "Le mot de passe est obligatoire si l'appareil en possède un.";
     }
     
+    // Vérification de la photo - ne pas bloquer si pas de photo
+    if (isset($_POST['photo_appareil']) && !empty($_POST['photo_appareil'])) {
+        $photo_data = $_POST['photo_appareil'];
+        if (strpos($photo_data, ';') === false || strpos($photo_data, ',') === false) {
+            error_log("Photo fournie mais format incorrect - on continue sans photo");
+            // Ne pas ajouter d'erreur, simplement logger et continuer sans photo
+        }
+    }
+    
     // Si pas d'erreurs, insérer la réparation dans la base de données
     if (empty($errors)) {
         try {
             // Vérification de la structure de la table
             try {
-                $tableCheck = $pdo->query("DESCRIBE reparations");
+                $shop_pdo = getShopDBConnection();
+                $tableCheck = $shop_pdo->query("DESCRIBE reparations");
                 $columns = $tableCheck->fetchAll(PDO::FETCH_ASSOC);
                 $statutColumn = null;
                 
@@ -126,28 +296,55 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $photo_path = null;
             if (!empty($_POST['photo_appareil'])) {
                 $photo_data = $_POST['photo_appareil'];
-                // Extraire les données binaires de l'image
-                list($type, $photo_data) = explode(';', $photo_data);
-                list(, $photo_data) = explode(',', $photo_data);
-                $photo_data = base64_decode($photo_data);
                 
-                // Créer le dossier d'upload s'il n'existe pas
-                $upload_dir = 'assets/images/reparations/';
-                if (!file_exists($upload_dir)) {
-                    mkdir($upload_dir, 0777, true);
+                // Vérifier que la photo est correctement formatée (doit contenir un point-virgule pour le format base64)
+                if (strpos($photo_data, ';') !== false && strpos($photo_data, ',') !== false) {
+                    // Extraire les données binaires de l'image
+                    list($type, $data_part) = explode(';', $photo_data);
+                    
+                    if (!empty($data_part)) {
+                        list(, $base64_data) = explode(',', $data_part);
+                        
+                        if (!empty($base64_data)) {
+                            $decoded_data = base64_decode($base64_data);
+                            
+                            // Vérifier que le décodage a réussi
+                            if ($decoded_data !== false) {
+                                // Créer le dossier d'upload s'il n'existe pas
+                                $upload_dir = 'assets/images/reparations/';
+                                if (!file_exists($upload_dir)) {
+                                    mkdir($upload_dir, 0777, true);
+                                }
+                                
+                                // Générer un nom unique pour la photo
+                                $photo_name = uniqid('repair_') . '.jpg';
+                                $photo_path = $upload_dir . $photo_name;
+                                
+                                // Sauvegarder la photo
+                                if (file_put_contents($photo_path, $decoded_data) === false) {
+                                    error_log("Erreur lors de l'enregistrement de la photo");
+                                    $photo_path = null;
+                                }
+                            } else {
+                                error_log("Échec du décodage base64 de la photo");
+                            }
+                        } else {
+                            error_log("Données base64 vides après split sur ','");
+                        }
+                    } else {
+                        error_log("Partie de données vide après split sur ';'");
+                    }
+                } else {
+                    error_log("Format de données photo invalide, manque ';' ou ','");
                 }
-                
-                // Générer un nom unique pour la photo
-                $photo_name = uniqid('repair_') . '.jpg';
-                $photo_path = $upload_dir . $photo_name;
-                
-                // Sauvegarder la photo
-                if (file_put_contents($photo_path, $photo_data) === false) {
-                    throw new Exception("Erreur lors de l'enregistrement de la photo");
-                }
+            } else {
+                error_log("Aucune photo fournie dans le formulaire");
             }
 
-            $stmt = $pdo->prepare("
+            $shop_pdo = getShopDBConnection();
+            verifierEtForcerBonneBD();
+
+            $stmt = $shop_pdo->prepare("
                 INSERT INTO reparations (client_id, type_appareil, modele, description_probleme, 
                 mot_de_passe, prix_reparation, date_reception, statut, photo_appareil, commande_requise, statut_categorie, notes_techniques) 
                 VALUES (?, ?, ?, ?, ?, ?, NOW(), ?, ?, ?, ?, ?)
@@ -178,6 +375,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 ]);
                 
                 error_log("Insertion réussie dans la table reparations");
+                
+                // Vérifier la base de données après insertion
+                try {
+                    $db_name_after = $shop_pdo->query("SELECT DATABASE() as current_db");
+                    $db_after = $db_name_after->fetch(PDO::FETCH_ASSOC);
+                    error_log("APRÈS INSERTION: Base de données utilisée = " . ($db_after['current_db'] ?? 'Inconnue'));
+                } catch (Exception $e) {
+                    error_log("Erreur après insertion: " . $e->getMessage());
+                }
+                
+                $reparation_id = $shop_pdo->lastInsertId();
+                error_log("ID de la réparation insérée: " . $reparation_id);
+                
             } catch (PDOException $e) {
                 error_log("Erreur SQL lors de l'insertion: " . $e->getMessage());
                 error_log("Code d'erreur SQL: " . $e->getCode());
@@ -189,11 +399,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 throw $e;
             }
 
-            $reparation_id = $pdo->lastInsertId();
-
             // Enregistrement du log de création de la réparation
             try {
-                $log_stmt = $pdo->prepare("
+                $shop_pdo = getShopDBConnection();
+                $log_stmt = $shop_pdo->prepare("
                     INSERT INTO reparation_logs 
                     (reparation_id, employe_id, action_type, statut_avant, statut_apres, details) 
                     VALUES (?, ?, ?, NULL, ?, ?)
@@ -215,7 +424,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Si une note interne a été ajoutée, enregistrer un log spécifique
             if ($a_note_interne === 'oui' && !empty($notes_techniques)) {
                 try {
-                    $log_note_stmt = $pdo->prepare("
+                    $shop_pdo = getShopDBConnection();
+                    $log_note_stmt = $shop_pdo->prepare("
                         INSERT INTO reparation_logs 
                         (reparation_id, employe_id, action_type, statut_avant, statut_apres, details) 
                         VALUES (?, ?, ?, ?, ?, ?)
@@ -241,7 +451,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 // Générer une référence unique
                 $reference = 'CMD-' . date('Ymd') . '-' . uniqid();
                 
-                $stmt = $pdo->prepare("
+                $shop_pdo = getShopDBConnection();
+                $stmt = $shop_pdo->prepare("
                     INSERT INTO commandes_pieces (
                         reference,
                         client_id,
@@ -267,11 +478,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $_POST['prix_piece']
                 ]);
                 
-                $commande_id = $pdo->lastInsertId();
+                $commande_id = $shop_pdo->lastInsertId();
                 
                 // Ajouter un log pour la création de commande
                 try {
-                    $log_commande_stmt = $pdo->prepare("
+                    $shop_pdo = getShopDBConnection();
+                    $log_commande_stmt = $shop_pdo->prepare("
                         INSERT INTO reparation_logs 
                         (reparation_id, employe_id, action_type, statut_avant, statut_apres, details) 
                         VALUES (?, ?, ?, ?, ?, ?)
@@ -293,13 +505,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
             
             set_message("Réparation ajoutée avec succès!", "success");
-            // Corriger la redirection en utilisant un tableau de paramètres
             
             // Ajouter l'envoi de SMS automatique avec modèle "Nouvelle reparation"
             if (isset($reparation_id) && is_numeric($reparation_id) && $reparation_id > 0) {
                 try {
+                    $shop_pdo = getShopDBConnection();
                     // Récupérer le modèle SMS "Nouvelle reparation"
-                    $stmt_template = $pdo->prepare("
+                    $stmt_template = $shop_pdo->prepare("
                         SELECT id, nom, contenu 
                         FROM sms_templates 
                         WHERE nom = ? AND est_actif = 1
@@ -308,7 +520,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $template = $stmt_template->fetch(PDO::FETCH_ASSOC);
                     
                     // Récupérer les informations du client et de la réparation
-                    $stmt_client = $pdo->prepare("
+                    $stmt_client = $shop_pdo->prepare("
                         SELECT c.telephone, c.nom, c.prenom, r.type_appareil, r.modele, r.prix_reparation, r.date_reception
                         FROM clients c
                         JOIN reparations r ON r.client_id = c.id
@@ -345,13 +557,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             
                             if ($sms_result['success']) {
                                 // Enregistrer l'envoi du SMS dans la base de données
-                                $stmt_log = $pdo->prepare("
+                                $shop_pdo = getShopDBConnection();
+                                $stmt_log = $shop_pdo->prepare("
                                     INSERT INTO reparation_sms (reparation_id, template_id, telephone, message, date_envoi, statut_id)
                                     VALUES (?, ?, ?, ?, NOW(), ?)
                                 ");
                                 
                                 // Récupérer le statut_id (celui de la nouvelle réparation)
-                                $stmt_statut = $pdo->prepare("SELECT id FROM statuts WHERE code = ?");
+                                $stmt_statut = $shop_pdo->prepare("SELECT id FROM statuts WHERE code = ?");
                                 $stmt_statut->execute([$statutForDB]);
                                 $statut_id = $stmt_statut->fetchColumn() ?: null;
                                 
@@ -380,13 +593,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 }
             }
             
-            redirect("imprimer_etiquette", ['id' => $reparation_id]);
-
             // Si la réparation a été ajoutée avec succès et qu'il y a un ID de réparation
             if (isset($reparation_id) && is_numeric($reparation_id) && $reparation_id > 0) {
                 // Récupérer les informations du client pour envoyer le SMS
                 try {
-                    $stmt = $pdo->prepare("
+                    $shop_pdo = getShopDBConnection();
+                    $stmt = $shop_pdo->prepare("
                         SELECT c.telephone, c.nom, c.prenom, r.type_appareil, r.modele, r.statut
                         FROM clients c
                         JOIN reparations r ON r.client_id = c.id
@@ -440,8 +652,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 } catch (PDOException $e) {
                     error_log("Erreur lors de la récupération des informations client pour le SMS: " . $e->getMessage());
                 }
+                
+                // Rediriger vers la page d'impression d'étiquette avec l'ID de la réparation
+                error_log("Tentative de redirection directe vers imprimer_etiquette avec ID=" . $reparation_id);
+                $redirect_url = "index.php?page=imprimer_etiquette&id=" . $reparation_id;
+                error_log("URL de redirection: " . $redirect_url);
+                header("Location: " . $redirect_url);
+                exit; // Important pour arrêter l'exécution après la redirection
             }
         } catch (PDOException $e) {
+            error_log("ERREUR PDO PRINCIPALE: " . $e->getMessage());
             set_message("Erreur lors de l'ajout de la réparation: " . $e->getMessage(), "danger");
         }
     } else {
@@ -464,7 +684,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">Étape 1/4</div>
                     </div>
                     
-                    <form id="rep_reparationForm" action="index.php?page=ajouter_reparation" method="post">
+                    <form id="rep_reparationForm" action="/index.php?page=ajouter_reparation" method="post" enctype="multipart/form-data">
+                        <!-- Ajout d'un champ caché pour forcer un identifiant unique au formulaire -->
+                        <input type="hidden" name="form_submission_id" value="<?php echo uniqid('rep_'); ?>">
                         <!-- Étape 1: Type d'appareil -->
                         <div id="rep_etape1" class="form-step">
                             <h5 class="mb-3">Type d'appareil</h5>
@@ -741,7 +963,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                             <select class="form-select" id="rep_fournisseur" name="fournisseur_id">
                                                 <option value="">Sélectionner un fournisseur</option>
                                                 <?php
-                                                $stmt = $pdo->query("SELECT id, nom FROM fournisseurs ORDER BY nom");
+                                                $stmt = $shop_pdo->query("SELECT id, nom FROM fournisseurs ORDER BY nom");
                                                 while ($fournisseur = $stmt->fetch()) {
                                                     echo "<option value='{$fournisseur['id']}'>{$fournisseur['nom']}</option>";
                                                 }
@@ -785,10 +1007,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 
                                 <!-- Boutons de choix de statut -->
                                 <div class="btn-group btn-group-mobile d-flex flex-column d-md-inline-flex flex-md-row" role="group">
-                                    <button type="submit" name="statut" value="nouvelle_intervention" class="btn btn-primary mb-2 mb-md-0">
-                                        <i class="fas fa-save me-2"></i>Nouvelle Réparation
+                                    <button type="submit" name="statut" value="nouvelle_intervention" class="btn btn-primary mb-2 mb-md-0" id="btn_soumettre_reparation">
+                                        <i class="fas fa-save me-2"></i>Enregistrer la réparation
                                     </button>
                                 </div>
+                            </div>
+                            
+                            <!-- Message de confirmation caché -->
+                            <div class="alert alert-info mt-3 d-none" id="submitting_message">
+                                <i class="fas fa-spinner fa-spin me-2"></i>Traitement en cours...
                             </div>
                         </div>
                     </form>
@@ -808,6 +1035,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </div>
             <div class="modal-body">
                 <form id="formNouveauClient_reparation">
+                    <?php if (isset($_SESSION['shop_id'])): ?>
+                    <input type="hidden" id="nouveau_shop_id_reparation" name="shop_id" value="<?php echo $_SESSION['shop_id']; ?>">
+                    <?php endif; ?>
                     <div class="mb-3">
                         <label for="nouveau_nom_reparation" class="form-label">Nom *</label>
                         <input type="text" class="form-control form-control-lg" id="nouveau_nom_reparation" required>
@@ -820,14 +1050,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <label for="nouveau_telephone_reparation" class="form-label">Téléphone *</label>
                         <input type="tel" inputmode="tel" class="form-control form-control-lg" id="nouveau_telephone_reparation" required>
                     </div>
-                    <div class="mb-3">
-                        <label for="nouveau_email_reparation" class="form-label">Email</label>
-                        <input type="email" inputmode="email" class="form-control form-control-lg" id="nouveau_email_reparation">
-                    </div>
-                    <div class="mb-3">
-                        <label for="nouveau_adresse_reparation" class="form-label">Adresse</label>
-                        <textarea class="form-control form-control-lg" id="nouveau_adresse_reparation" rows="2"></textarea>
-                    </div>
+                    <!-- Suppression des champs email et adresse selon la demande -->
                 </form>
             </div>
             <div class="modal-footer">
@@ -2031,8 +2254,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const nom = document.getElementById('nouveau_nom_reparation').value.trim();
         const prenom = document.getElementById('nouveau_prenom_reparation').value.trim();
         const telephone = document.getElementById('nouveau_telephone_reparation').value.trim();
-        const email = document.getElementById('nouveau_email_reparation').value.trim();
-        const adresse = document.getElementById('nouveau_adresse_reparation').value.trim();
         
         // Validation des champs
         if (!nom || !prenom || !telephone) {
@@ -2058,11 +2279,19 @@ document.addEventListener('DOMContentLoaded', function() {
         formData.append('nom', nom);
         formData.append('prenom', prenom);
         formData.append('telephone', telephone);
-        formData.append('email', email);
-        formData.append('adresse', adresse);
         
-        // Enregistrement AJAX
-        fetch('/ajax/ajouter_client.php', {
+        // Récupérer le shop_id depuis PHP pour l'envoyer explicitement
+        <?php if (isset($_SESSION['shop_id'])): ?>
+        formData.append('shop_id', '<?php echo $_SESSION['shop_id']; ?>');
+        <?php else: ?>
+        console.error("ERREUR: Aucun shop_id défini en session!");
+        <?php endif; ?>
+        
+        // Ajouter un timestamp pour éviter les problèmes de cache
+        formData.append('_timestamp', Date.now());
+        
+        // Enregistrement AJAX avec le nouveau script qui effectue une connexion directe
+        fetch('/ajax/direct_add_client.php', {
             method: 'POST',
             body: formData,
             credentials: 'include'
@@ -2443,9 +2672,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Gestion de la soumission du formulaire
     reparationForm.addEventListener('submit', function(e) {
+        // Empêcher la soumission par défaut
         e.preventDefault();
-
+        
         // Si une commande est requise, vérifier que tous les champs obligatoires sont remplis
+        const commandeRequise = document.getElementById('rep_commande_requise');
         if (commandeRequise.checked) {
             const fournisseur = document.getElementById('rep_fournisseur').value;
             const nomPiece = document.getElementById('rep_nom_piece').value;
@@ -2457,9 +2688,53 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
         }
-
-        // Si tout est valide, soumettre le formulaire
-        this.submit();
+        
+        // Afficher un message pendant le traitement
+        document.getElementById('submitting_message').classList.remove('d-none');
+        document.getElementById('btn_soumettre_reparation').disabled = true;
+        document.getElementById('btn_soumettre_reparation').innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Traitement...';
+        
+        // Collecter les données du formulaire
+        const formData = new FormData(this);
+        
+        // Ajouter un timestamp pour éviter les problèmes de cache
+        formData.append('submission_time', Date.now());
+        
+        // Effectuer une requête AJAX pour soumettre le formulaire
+        fetch('/index.php?page=ajouter_reparation', {
+            method: 'POST',
+            body: formData,
+            credentials: 'same-origin'
+        })
+        .then(response => {
+            if (response.ok) {
+                // Redirection réussie (peut contenir une URL de redirection)
+                return response.text();
+            }
+            throw new Error('Erreur lors de la soumission');
+        })
+        .then(html => {
+            // Vérifier si l'HTML contient une URL de redirection
+            const redirectMatch = html.match(/<meta\s+http-equiv="refresh"\s+content="0;\s*url=([^"]+)"/i);
+            if (redirectMatch && redirectMatch[1]) {
+                // Rediriger vers l'URL spécifiée
+                window.location.href = redirectMatch[1];
+            } else if (html.includes('imprimer_etiquette')) {
+                // Si nous pouvons identifier que le HTML contient une référence à imprimer_etiquette
+                window.location.href = '/index.php?page=imprimer_etiquette&id=' + 
+                                      (html.match(/id=(\d+)/i) ? html.match(/id=(\d+)/i)[1] : '');
+            } else {
+                // Soumettre directement le formulaire de manière traditionnelle
+                document.getElementById('rep_reparationForm').removeEventListener('submit', this);
+                document.getElementById('rep_reparationForm').submit();
+            }
+        })
+        .catch(error => {
+            console.error('Erreur:', error);
+            // En cas d'erreur, soumettre le formulaire de manière traditionnelle
+            document.getElementById('rep_reparationForm').removeEventListener('submit', this);
+            document.getElementById('rep_reparationForm').submit();
+        });
     });
 
     // Validation des champs requis pour la confirmation sans mot de passe
@@ -2700,5 +2975,111 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('rep_notes_techniques').addEventListener('input', function(e) {
         this.value = this.value.replace(/[\r\n]+/g, ' ');
     });
+
+    function rechercheClient() {
+        // Récupérer le terme de recherche
+        const terme = document.getElementById('rep_recherche_client_reparation').value.trim();
+        
+        // Vérifier que le terme n'est pas vide
+        if (terme.length < 2) {
+            document.getElementById('rep_resultats_recherche_client').innerHTML = '<div class="alert alert-info">Entrez au moins 2 caractères</div>';
+            return;
+        }
+        
+        // Afficher un indicateur de chargement
+        document.getElementById('rep_resultats_recherche_client').innerHTML = '<div class="text-center"><div class="spinner-border text-primary" role="status"><span class="visually-hidden">Chargement...</span></div></div>';
+        
+        // Construire les données à envoyer au format FormData
+        const formData = new FormData();
+        formData.append('terme', terme);
+        
+        console.log('Recherche client avec le terme:', terme);
+        
+        // Construire l'URL complète avec le chemin absolu
+        const baseUrl = window.location.protocol + '//' + window.location.host;
+        const url = baseUrl + '/ajax/recherche_clients.php';
+        
+        console.log('Envoi requête à:', url);
+        
+        // Recherche AJAX
+        fetch(url, {
+            method: 'POST',
+            body: formData,
+            credentials: 'same-origin'
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Erreur réseau');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Réponse reçue:', data);
+            
+            // Si la recherche a réussi
+            if (data.success) {
+                // Log la base de données utilisée pour diagnostic
+                console.log('Base de données utilisée:', data.database);
+                console.log('Nombre de clients trouvés:', data.count);
+                
+                // Vérifier s'il y a des résultats
+                if (data.clients && data.clients.length > 0) {
+                    // Construire le tableau des résultats
+                    let html = `
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Nom</th>
+                                    <th>Prénom</th>
+                                    <th>Contact</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                    `;
+                    
+                    // Ajouter chaque client trouvé
+                    data.clients.forEach(client => {
+                        html += `
+                            <tr>
+                                <td>${client.lastname || ''}</td>
+                                <td>${client.firstname || ''}</td>
+                                <td>${client.phone || ''}<br>${client.email || ''}</td>
+                                <td>
+                                    <button type="button" class="btn btn-sm btn-primary" 
+                                        onclick="selectionnerClient(${client.id}, '${client.lastname || ''}', '${client.firstname || ''}')">
+                                        Sélectionner
+                                    </button>
+                                </td>
+                            </tr>
+                        `;
+                    });
+                    
+                    html += `
+                            </tbody>
+                        </table>
+                    </div>
+                    `;
+                    
+                    // Afficher les résultats
+                    document.getElementById('rep_resultats_recherche_client').innerHTML = html;
+                } else {
+                    // Aucun résultat trouvé
+                    document.getElementById('rep_resultats_recherche_client').innerHTML = 
+                        '<div class="alert alert-warning">Aucun client trouvé. <button type="button" class="btn btn-link p-0" onclick="afficherFormulaireAjoutClient()">Ajouter un nouveau client</button></div>';
+                }
+            } else {
+                // La recherche a échoué
+                document.getElementById('rep_resultats_recherche_client').innerHTML = 
+                    `<div class="alert alert-danger">Erreur: ${data.message || 'Une erreur est survenue'}</div>`;
+            }
+        })
+        .catch(error => {
+            console.error('Erreur:', error);
+            document.getElementById('rep_resultats_recherche_client').innerHTML = 
+                `<div class="alert alert-danger">Erreur: ${error.message}</div>`;
+        });
+    }
 });
 </script>

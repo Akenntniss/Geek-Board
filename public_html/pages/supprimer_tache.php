@@ -7,9 +7,12 @@ if (!isset($_GET['id'])) {
 
 $tache_id = (int)$_GET['id'];
 
+// Obtenir la connexion à la base de données du magasin
+$shop_pdo = getShopDBConnection();
+
 // Vérification de l'existence de la tâche
 try {
-    $stmt = $pdo->prepare("SELECT id FROM taches WHERE id = ?");
+    $stmt = $shop_pdo->prepare("SELECT id FROM taches WHERE id = ?");
     $stmt->execute([$tache_id]);
     if (!$stmt->fetch()) {
         set_message("Tâche non trouvée.", "error");
@@ -23,11 +26,11 @@ try {
 // Suppression de la tâche
 try {
     // Suppression des commentaires associés
-    $stmt = $pdo->prepare("DELETE FROM commentaires_tache WHERE tache_id = ?");
+    $stmt = $shop_pdo->prepare("DELETE FROM commentaires_tache WHERE tache_id = ?");
     $stmt->execute([$tache_id]);
     
     // Suppression de la tâche
-    $stmt = $pdo->prepare("DELETE FROM taches WHERE id = ?");
+    $stmt = $shop_pdo->prepare("DELETE FROM taches WHERE id = ?");
     $stmt->execute([$tache_id]);
     
     set_message("Tâche supprimée avec succès!", "success");

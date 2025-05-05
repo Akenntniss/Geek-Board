@@ -19,10 +19,22 @@ if ($client_id <= 0) {
 }
 
 try {
+    // Utiliser la connexion à la base de données du magasin actuel
+    $shop_pdo = getShopDBConnection();
+    
     // Vérifier la connexion à la base de données
-    if (!isset($pdo) || !($pdo instanceof PDO)) {
-        echo json_encode(['success' => false, 'message' => 'Erreur de connexion à la base de données']);
+    if (!isset($shop_pdo) || !($shop_pdo instanceof PDO)) {
+        echo json_encode(['success' => false, 'message' => 'Erreur de connexion à la base de données du magasin']);
         exit;
+    }
+    
+    // Journaliser l'information sur la base de données utilisée
+    try {
+        $stmt_db = $shop_pdo->query("SELECT DATABASE() as db_name");
+        $db_info = $stmt_db->fetch(PDO::FETCH_ASSOC);
+        error_log("Get client info - BASE DE DONNÉES UTILISÉE: " . ($db_info['db_name'] ?? 'Inconnue'));
+    } catch (Exception $e) {
+        error_log("Erreur lors de la vérification de la base de données: " . $e->getMessage());
     }
     
     // Créer un client simulé pour débogage

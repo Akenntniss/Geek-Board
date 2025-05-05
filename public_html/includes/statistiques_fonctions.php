@@ -2,6 +2,7 @@
 /**
  * Fichier de fonctions pour les statistiques
  * Crée le: 2025-04-08
+ * Mis à jour: Application du système multi-magasins
  */
 
 /**
@@ -9,15 +10,15 @@
  * @return array Tableau des statistiques globales
  */
 function get_statistiques_generales() {
-    global $pdo;
+    $shop_pdo = getShopDBConnection();
     
     try {
         // Nombre total de réparations
-        $stmt = $pdo->query("SELECT COUNT(*) as total FROM reparations");
+        $stmt = $shop_pdo->query("SELECT COUNT(*) as total FROM reparations");
         $total_reparations = $stmt->fetch()['total'];
         
         // Nombre de réparations actives
-        $stmt = $pdo->query("
+        $stmt = $shop_pdo->query("
             SELECT COUNT(*) as total 
             FROM reparations 
             WHERE archive = 'NON' 
@@ -26,15 +27,15 @@ function get_statistiques_generales() {
         $reparations_actives = $stmt->fetch()['total'];
         
         // Nombre total de clients
-        $stmt = $pdo->query("SELECT COUNT(*) as total FROM clients");
+        $stmt = $shop_pdo->query("SELECT COUNT(*) as total FROM clients");
         $total_clients = $stmt->fetch()['total'];
         
         // Nombre total d'employés
-        $stmt = $pdo->query("SELECT COUNT(*) as total FROM users");
+        $stmt = $shop_pdo->query("SELECT COUNT(*) as total FROM users");
         $total_employes = $stmt->fetch()['total'];
         
         // Nombre de commandes en cours
-        $stmt = $pdo->query("
+        $stmt = $shop_pdo->query("
             SELECT COUNT(*) as total 
             FROM commandes_pieces 
             WHERE statut NOT IN ('livré', 'annulé')
@@ -42,7 +43,7 @@ function get_statistiques_generales() {
         $commandes_en_cours = $stmt->fetch()['total'];
         
         // Réparations en gardiennage
-        $stmt = $pdo->query("
+        $stmt = $shop_pdo->query("
             SELECT COUNT(*) as total 
             FROM gardiennage 
             WHERE est_actif = TRUE
@@ -50,7 +51,7 @@ function get_statistiques_generales() {
         $gardiennage_actif = $stmt->fetch()['total'];
         
         // Chiffre d'affaires total des réparations
-        $stmt = $pdo->query("
+        $stmt = $shop_pdo->query("
             SELECT COALESCE(SUM(prix), 0) as ca_total 
             FROM reparations 
             WHERE statut IN (SELECT code FROM statuts WHERE categorie_id = 4)
@@ -80,7 +81,7 @@ function get_statistiques_generales() {
  * @return array Tableau des statistiques de réparation par statut
  */
 function get_reparations_par_statut() {
-    global $pdo;
+    $shop_pdo = getShopDBConnection();
     
     try {
         $query = "
@@ -94,7 +95,7 @@ function get_reparations_par_statut() {
             ORDER BY c.ordre, s.ordre
         ";
         
-        $stmt = $pdo->query($query);
+        $stmt = $shop_pdo->query($query);
         $resultats = $stmt->fetchAll(PDO::FETCH_ASSOC);
         
         // Organiser par catégorie
@@ -133,7 +134,7 @@ function get_reparations_par_statut() {
  * @return array Tableau des statistiques par type d'appareil
  */
 function get_reparations_par_type_appareil() {
-    global $pdo;
+    $shop_pdo = getShopDBConnection();
     
     try {
         $query = "
@@ -144,7 +145,7 @@ function get_reparations_par_type_appareil() {
             ORDER BY nombre DESC
         ";
         
-        $stmt = $pdo->query($query);
+        $stmt = $shop_pdo->query($query);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     } catch (PDOException $e) {
         error_log("Erreur lors de la récupération des statistiques par type d'appareil: " . $e->getMessage());
@@ -161,7 +162,7 @@ function get_reparations_par_type_appareil() {
  * @return array Tableau des statistiques par marque
  */
 function get_reparations_par_marque($type_appareil = null) {
-    global $pdo;
+    $shop_pdo = getShopDBConnection();
     
     try {
         $query = "
@@ -179,7 +180,7 @@ function get_reparations_par_marque($type_appareil = null) {
         
         $query .= " GROUP BY marque ORDER BY nombre DESC LIMIT 10";
         
-        $stmt = $pdo->prepare($query);
+        $stmt = $shop_pdo->prepare($query);
         $stmt->execute($params);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     } catch (PDOException $e) {
@@ -198,7 +199,7 @@ function get_reparations_par_marque($type_appareil = null) {
  * @return array Tableau des statistiques par période
  */
 function get_reparations_par_periode($periode = 'mois', $nombre_periodes = 12) {
-    global $pdo;
+    $shop_pdo = getShopDBConnection();
     
     try {
         switch ($periode) {
@@ -235,7 +236,7 @@ function get_reparations_par_periode($periode = 'mois', $nombre_periodes = 12) {
             ORDER BY periode
         ";
         
-        $stmt = $pdo->query($query);
+        $stmt = $shop_pdo->query($query);
         $resultats = $stmt->fetchAll(PDO::FETCH_ASSOC);
         
         return $resultats;
@@ -253,7 +254,7 @@ function get_reparations_par_periode($periode = 'mois', $nombre_periodes = 12) {
  * @return array Temps moyen de réparation par type d'appareil
  */
 function get_temps_moyen_reparation() {
-    global $pdo;
+    $shop_pdo = getShopDBConnection();
     
     try {
         $query = "
@@ -271,7 +272,7 @@ function get_temps_moyen_reparation() {
             ORDER BY temps_moyen_jours ASC
         ";
         
-        $stmt = $pdo->query($query);
+        $stmt = $shop_pdo->query($query);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     } catch (PDOException $e) {
         error_log("Erreur lors de la récupération du temps moyen de réparation: " . $e->getMessage());
@@ -289,7 +290,7 @@ function get_temps_moyen_reparation() {
  * @return array Chiffre d'affaires par période
  */
 function get_chiffre_affaires_par_periode($periode = 'mois', $nombre_periodes = 12) {
-    global $pdo;
+    $shop_pdo = getShopDBConnection();
     
     try {
         switch ($periode) {
@@ -329,7 +330,7 @@ function get_chiffre_affaires_par_periode($periode = 'mois', $nombre_periodes = 
             ORDER BY periode
         ";
         
-        $stmt = $pdo->query($query);
+        $stmt = $shop_pdo->query($query);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     } catch (PDOException $e) {
         error_log("Erreur lors de la récupération du chiffre d'affaires: " . $e->getMessage());
@@ -345,7 +346,7 @@ function get_chiffre_affaires_par_periode($periode = 'mois', $nombre_periodes = 
  * @return array Statistiques des employés
  */
 function get_statistiques_employes() {
-    global $pdo;
+    $shop_pdo = getShopDBConnection();
     
     try {
         $query = "
@@ -364,7 +365,7 @@ function get_statistiques_employes() {
             ORDER BY total_reparations DESC
         ";
         
-        $stmt = $pdo->query($query);
+        $stmt = $shop_pdo->query($query);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     } catch (PDOException $e) {
         error_log("Erreur lors de la récupération des statistiques employés: " . $e->getMessage());
@@ -380,27 +381,27 @@ function get_statistiques_employes() {
  * @return array Statistiques de stock
  */
 function get_statistiques_stock() {
-    global $pdo;
+    $shop_pdo = getShopDBConnection();
     
     try {
         // Total des produits
-        $stmt = $pdo->query("SELECT COUNT(*) as total FROM stock");
+        $stmt = $shop_pdo->query("SELECT COUNT(*) as total FROM stock");
         $total_produits = $stmt->fetch()['total'];
         
         // Produits en alerte (quantité faible)
-        $stmt = $pdo->query("SELECT COUNT(*) as total FROM stock WHERE quantity <= 5 AND quantity > 0");
+        $stmt = $shop_pdo->query("SELECT COUNT(*) as total FROM stock WHERE quantity <= 5 AND quantity > 0");
         $produits_en_alerte = $stmt->fetch()['total'];
         
         // Produits épuisés
-        $stmt = $pdo->query("SELECT COUNT(*) as total FROM stock WHERE quantity = 0");
+        $stmt = $shop_pdo->query("SELECT COUNT(*) as total FROM stock WHERE quantity = 0");
         $produits_epuises = $stmt->fetch()['total'];
         
         // Valeur totale du stock
-        $stmt = $pdo->query("SELECT COALESCE(SUM(quantity * price), 0) as valeur FROM stock");
+        $stmt = $shop_pdo->query("SELECT COALESCE(SUM(quantity * price), 0) as valeur FROM stock");
         $valeur_stock = $stmt->fetch()['valeur'];
         
         // Produits les plus utilisés
-        $stmt = $pdo->query("
+        $stmt = $shop_pdo->query("
             SELECT s.name, s.category, s.quantity, s.price, 
                 COUNT(m.id) as nombre_mouvements,
                 SUM(CASE WHEN m.type_mouvement = 'sortie' THEN m.quantite ELSE 0 END) as total_sorties
@@ -434,11 +435,11 @@ function get_statistiques_stock() {
  * @return array Statistiques clients
  */
 function get_statistiques_clients($nb_mois = 6) {
-    global $pdo;
+    $shop_pdo = getShopDBConnection();
     
     try {
         // Total des clients
-        $stmt = $pdo->query("SELECT COUNT(*) as total FROM clients");
+        $stmt = $shop_pdo->query("SELECT COUNT(*) as total FROM clients");
         $total_clients = $stmt->fetch()['total'];
         
         // Nouveaux clients par mois sur les derniers mois
@@ -451,7 +452,7 @@ function get_statistiques_clients($nb_mois = 6) {
             GROUP BY mois
             ORDER BY mois
         ";
-        $stmt = $pdo->query($query);
+        $stmt = $shop_pdo->query($query);
         $nouveaux_clients = $stmt->fetchAll(PDO::FETCH_ASSOC);
         
         // Clients avec plusieurs réparations (fidèles)
@@ -471,7 +472,7 @@ function get_statistiques_clients($nb_mois = 6) {
             ORDER BY nombre_reparations DESC
             LIMIT 10
         ";
-        $stmt = $pdo->query($query);
+        $stmt = $shop_pdo->query($query);
         $clients_fideles = $stmt->fetchAll(PDO::FETCH_ASSOC);
         
         // Valeur moyenne d'un client
@@ -488,7 +489,7 @@ function get_statistiques_clients($nb_mois = 6) {
                 GROUP BY c.id
             ) as client_values
         ";
-        $stmt = $pdo->query($query);
+        $stmt = $shop_pdo->query($query);
         $panier_moyen = $stmt->fetch()['panier_moyen'];
         
         return [
@@ -511,11 +512,11 @@ function get_statistiques_clients($nb_mois = 6) {
  * @return array Statistiques des tâches
  */
 function get_statistiques_taches() {
-    global $pdo;
+    $shop_pdo = getShopDBConnection();
     
     try {
         // Total des tâches
-        $stmt = $pdo->query("SELECT COUNT(*) as total FROM taches");
+        $stmt = $shop_pdo->query("SELECT COUNT(*) as total FROM taches");
         $total_taches = $stmt->fetch()['total'];
         
         // Tâches par statut
@@ -526,7 +527,7 @@ function get_statistiques_taches() {
             FROM taches
             GROUP BY statut
         ";
-        $stmt = $pdo->query($query);
+        $stmt = $shop_pdo->query($query);
         $taches_par_statut = $stmt->fetchAll(PDO::FETCH_ASSOC);
         
         // Tâches par priorité
@@ -537,7 +538,7 @@ function get_statistiques_taches() {
             FROM taches
             GROUP BY priorite
         ";
-        $stmt = $pdo->query($query);
+        $stmt = $shop_pdo->query($query);
         $taches_par_priorite = $stmt->fetchAll(PDO::FETCH_ASSOC);
         
         // Tâches par employé
@@ -552,7 +553,7 @@ function get_statistiques_taches() {
             GROUP BY u.id
             ORDER BY nombre_taches DESC
         ";
-        $stmt = $pdo->query($query);
+        $stmt = $shop_pdo->query($query);
         $taches_par_employe = $stmt->fetchAll(PDO::FETCH_ASSOC);
         
         return [
@@ -576,7 +577,7 @@ function get_statistiques_taches() {
  * @return array Historique des connexions
  */
 function get_historique_connexions($limit = 100) {
-    global $pdo;
+    $shop_pdo = getShopDBConnection();
     
     try {
         $query = "
@@ -593,7 +594,7 @@ function get_historique_connexions($limit = 100) {
             LIMIT ?
         ";
         
-        $stmt = $pdo->prepare($query);
+        $stmt = $shop_pdo->prepare($query);
         $stmt->execute([$limit]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     } catch (PDOException $e) {
@@ -611,11 +612,11 @@ function get_historique_connexions($limit = 100) {
  * @return array Statistiques des SMS
  */
 function get_statistiques_sms($nb_mois = 6) {
-    global $pdo;
+    $shop_pdo = getShopDBConnection();
     
     try {
         // Total des SMS envoyés
-        $stmt = $pdo->query("SELECT COUNT(*) as total FROM sms_logs");
+        $stmt = $shop_pdo->query("SELECT COUNT(*) as total FROM sms_logs");
         $total_sms = $stmt->fetch()['total'];
         
         // SMS par statut
@@ -626,7 +627,7 @@ function get_statistiques_sms($nb_mois = 6) {
             FROM sms_logs
             GROUP BY status
         ";
-        $stmt = $pdo->query($query);
+        $stmt = $shop_pdo->query($query);
         $sms_par_statut = $stmt->fetchAll(PDO::FETCH_ASSOC);
         
         // SMS par mois
@@ -639,7 +640,7 @@ function get_statistiques_sms($nb_mois = 6) {
             GROUP BY mois
             ORDER BY mois
         ";
-        $stmt = $pdo->query($query);
+        $stmt = $shop_pdo->query($query);
         $sms_par_mois = $stmt->fetchAll(PDO::FETCH_ASSOC);
         
         // Campagnes récentes
@@ -657,7 +658,7 @@ function get_statistiques_sms($nb_mois = 6) {
             ORDER BY c.date_creation DESC
             LIMIT 5
         ";
-        $stmt = $pdo->query($query);
+        $stmt = $shop_pdo->query($query);
         $campagnes_recentes = $stmt->fetchAll(PDO::FETCH_ASSOC);
         
         return [
@@ -681,11 +682,11 @@ function get_statistiques_sms($nb_mois = 6) {
  * @return array Statistiques du journal d'actions
  */
 function get_statistiques_journal($limit = 1000) {
-    global $pdo;
+    $shop_pdo = getShopDBConnection();
     
     try {
         // Total des actions
-        $stmt = $pdo->query("SELECT COUNT(*) as total FROM journal_actions");
+        $stmt = $shop_pdo->query("SELECT COUNT(*) as total FROM journal_actions");
         $total_actions = $stmt->fetch()['total'];
         
         // Actions par type
@@ -697,7 +698,7 @@ function get_statistiques_journal($limit = 1000) {
             GROUP BY action_type
             ORDER BY nombre DESC
         ";
-        $stmt = $pdo->query($query);
+        $stmt = $shop_pdo->query($query);
         $actions_par_type = $stmt->fetchAll(PDO::FETCH_ASSOC);
         
         // Actions par utilisateur
@@ -711,7 +712,7 @@ function get_statistiques_journal($limit = 1000) {
             GROUP BY u.id
             ORDER BY nombre_actions DESC
         ";
-        $stmt = $pdo->query($query);
+        $stmt = $shop_pdo->query($query);
         $actions_par_utilisateur = $stmt->fetchAll(PDO::FETCH_ASSOC);
         
         // Actions récentes
@@ -727,7 +728,7 @@ function get_statistiques_journal($limit = 1000) {
             ORDER BY j.date_action DESC
             LIMIT ?
         ";
-        $stmt = $pdo->prepare($query);
+        $stmt = $shop_pdo->prepare($query);
         $stmt->execute([$limit]);
         $actions_recentes = $stmt->fetchAll(PDO::FETCH_ASSOC);
         

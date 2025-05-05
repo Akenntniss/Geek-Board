@@ -7,6 +7,9 @@ $employe_id = isset($_GET['employe_id']) ? $_GET['employe_id'] : null;
 // Récupérer l'ID de l'utilisateur connecté
 $current_user_id = isset($_SESSION['user_id']) ? (int)$_SESSION['user_id'] : 0;
 
+// Obtenir la connexion à la base de données du magasin
+$shop_pdo = getShopDBConnection();
+
 // Construction de la requête SQL
 $sql = "SELECT t.*, 
         e.full_name as employe_nom,
@@ -34,7 +37,7 @@ $sql .= " AND (t.employe_id = ? OR t.employe_id IS NULL)";
 $sql .= " ORDER BY t.date_creation DESC";
 
 try {
-    $stmt = $pdo->prepare($sql);
+    $stmt = $shop_pdo->prepare($sql);
     $params = [];
     if ($status) {
         $params[] = $status;
@@ -56,7 +59,7 @@ try {
 
 // Récupération des utilisateurs pour le filtre
 try {
-    $stmt = $pdo->query("SELECT id, full_name FROM users ORDER BY full_name ASC");
+    $stmt = $shop_pdo->query("SELECT id, full_name FROM users ORDER BY full_name ASC");
     $utilisateurs = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
     set_message("Erreur lors de la récupération des utilisateurs: " . $e->getMessage(), "error");
@@ -65,22 +68,22 @@ try {
 
 // Comptage des tâches par statut
 try {
-    $stmt = $pdo->query("SELECT COUNT(*) as total FROM taches");
+    $stmt = $shop_pdo->query("SELECT COUNT(*) as total FROM taches");
     $total_taches = $stmt->fetch(PDO::FETCH_ASSOC)['total'];
 
-    $stmt = $pdo->prepare("SELECT COUNT(*) as total FROM taches WHERE statut = ?");
+    $stmt = $shop_pdo->prepare("SELECT COUNT(*) as total FROM taches WHERE statut = ?");
     $stmt->execute(['a_faire']);
     $total_a_faire = $stmt->fetch(PDO::FETCH_ASSOC)['total'];
 
-    $stmt = $pdo->prepare("SELECT COUNT(*) as total FROM taches WHERE statut = ?");
+    $stmt = $shop_pdo->prepare("SELECT COUNT(*) as total FROM taches WHERE statut = ?");
     $stmt->execute(['en_cours']);
     $total_en_cours = $stmt->fetch(PDO::FETCH_ASSOC)['total'];
 
-    $stmt = $pdo->prepare("SELECT COUNT(*) as total FROM taches WHERE statut = ?");
+    $stmt = $shop_pdo->prepare("SELECT COUNT(*) as total FROM taches WHERE statut = ?");
     $stmt->execute(['termine']);
     $total_terminees = $stmt->fetch(PDO::FETCH_ASSOC)['total'];
 
-    $stmt = $pdo->prepare("SELECT COUNT(*) as total FROM taches WHERE priorite = ?");
+    $stmt = $shop_pdo->prepare("SELECT COUNT(*) as total FROM taches WHERE priorite = ?");
     $stmt->execute(['haute']);
     $total_haute_priorite = $stmt->fetch(PDO::FETCH_ASSOC)['total'];
 } catch (PDOException $e) {
@@ -92,7 +95,7 @@ try {
 if (isset($_GET['action']) && $_GET['action'] == 'supprimer' && isset($_GET['id'])) {
     $id = (int)$_GET['id'];
     try {
-        $stmt = $pdo->prepare("DELETE FROM taches WHERE id = ?");
+        $stmt = $shop_pdo->prepare("DELETE FROM taches WHERE id = ?");
         $stmt->execute([$id]);
         set_message("Tâche supprimée avec succès!", "success");
         redirect("taches");

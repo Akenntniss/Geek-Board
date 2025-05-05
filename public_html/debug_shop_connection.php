@@ -4,6 +4,12 @@
  * Ce script teste la connexion à la base de données du magasin de l'utilisateur
  * et affiche des informations détaillées sur la configuration.
  */
+// Activer l'affichage des erreurs pour le débogage
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+// Démarrer la session
 session_start();
 
 // Mode débogage pour administrateurs (à supprimer en production)

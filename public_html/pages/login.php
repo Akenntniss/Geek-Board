@@ -21,7 +21,8 @@ debugLog("Début du processus de connexion");
 require_once '../config/session_config.php';
 // La session est déjà démarrée dans session_config.php
 require_once '../config/database.php';
-require_once '../config/domain_config.php';
+// Inclure la configuration pour la gestion des sous-domaines
+require_once '../config/subdomain_config.php';
 
 // Vérifier si mode superadmin est demandé et l'enregistrer en session
 $superadmin_mode = isset($_GET['superadmin']) && $_GET['superadmin'] == '1';
@@ -142,7 +143,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
                 
                 // Vérifier les identifiants super administrateur
-                $stmt = $pdo_main->prepare('SELECT * FROM superadmins WHERE username = ? AND active = 1');
+                // Vérifier si le username est un email
+                if (filter_var($username, FILTER_VALIDATE_EMAIL)) {
+                    debugLog("Tentative de connexion superadmin par email");
+                    $stmt = $pdo_main->prepare('SELECT * FROM superadmins WHERE email = ? AND active = 1');
+                } else {
+                    debugLog("Tentative de connexion superadmin par nom d'utilisateur");
+                    $stmt = $pdo_main->prepare('SELECT * FROM superadmins WHERE username = ? AND active = 1');
+                }
                 $stmt->execute([$username]);
                 $superadmin = $stmt->fetch();
                 
@@ -249,62 +257,69 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     }
                 }
                 
-                // Vérifier que la connexion à la base de données est disponible
-                if ($pdo === null) {
+            // Vérifier que la connexion à la base de données est disponible
+            if ($pdo === null) {
                     debugLog("Connexion à la base de données non disponible");
-                    throw new PDOException("La connexion à la base de données n'est pas disponible");
-                }
-                
+                throw new PDOException("La connexion à la base de données n'est pas disponible");
+            }
+            
                 // Vérifier les identifiants utilisateur normaux
                 debugLog("Recherche de l'utilisateur: " . $username);
-                $stmt = $pdo->prepare('SELECT * FROM users WHERE username = ?');
-                $stmt->execute([$username]);
-                $user = $stmt->fetch();
+                // Vérifier si le username est un email
+                if (filter_var($username, FILTER_VALIDATE_EMAIL)) {
+                    debugLog("Tentative de connexion par email");
+                    $stmt = $pdo->prepare('SELECT * FROM users WHERE email = ?');
+                } else {
+                    debugLog("Tentative de connexion par nom d'utilisateur");
+            $stmt = $pdo->prepare('SELECT * FROM users WHERE username = ?');
+                }
+            $stmt->execute([$username]);
+            $user = $stmt->fetch();
 
                 if ($user) {
                     debugLog("Utilisateur trouvé, ID: " . $user['id'] . ", vérification du mot de passe");
                     if (password_verify($password, $user['password'])) {
                         debugLog("Authentification utilisateur réussie");
-                        $_SESSION['user_id'] = $user['id'];
-                        $_SESSION['username'] = $user['username'];
-                        $_SESSION['role'] = $user['role'];
-                        $_SESSION['full_name'] = $user['full_name'];
-                        
-                        // Si option "Se souvenir de moi" est cochée ou si c'est un mode PWA
-                        if ($remember || is_pwa_mode() || isset($_COOKIE['pwa_mode'])) {
+                $_SESSION['user_id'] = $user['id'];
+                $_SESSION['username'] = $user['username'];
+                $_SESSION['role'] = $user['role'];
+                $_SESSION['full_name'] = $user['full_name'];
+                
+                // Si option "Se souvenir de moi" est cochée ou si c'est un mode PWA
+                if ($remember || is_pwa_mode() || isset($_COOKIE['pwa_mode'])) {
                             debugLog("Option 'Se souvenir de moi' active");
-                            // Définir un cookie pour indiquer que c'est une session PWA
-                            $session_lifetime = 259200; // 3 jours
-                            setcookie('pwa_mode', 'true', time() + $session_lifetime, '/', '', isset($_SERVER['HTTPS']), true);
-                            
-                            // Stocker le token de session dans un cookie pour une connexion persistante
-                            $token = bin2hex(random_bytes(32));
-                            $expiry = time() + $session_lifetime;
-                            
-                            // Stocker le token dans la base de données
-                            $stmt = $pdo->prepare('INSERT INTO user_sessions (user_id, token, expiry) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE token = ?, expiry = ?');
-                            $stmt->execute([$user['id'], $token, date('Y-m-d H:i:s', $expiry), $token, date('Y-m-d H:i:s', $expiry)]);
-                            
-                            // Définir le cookie de session persistante
-                            setcookie('mdgeek_remember', $token, $expiry, '/', '', isset($_SERVER['HTTPS']), true);
-                        }
-                        
-                        // Débogage
+                    // Définir un cookie pour indiquer que c'est une session PWA
+                    $session_lifetime = 259200; // 3 jours
+                    setcookie('pwa_mode', 'true', time() + $session_lifetime, '/', '', isset($_SERVER['HTTPS']), true);
+                    
+                    // Stocker le token de session dans un cookie pour une connexion persistante
+                    $token = bin2hex(random_bytes(32));
+                    $expiry = time() + $session_lifetime;
+                    
+                    // Stocker le token dans la base de données
+                    $stmt = $pdo->prepare('INSERT INTO user_sessions (user_id, token, expiry) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE token = ?, expiry = ?');
+                    $stmt->execute([$user['id'], $token, date('Y-m-d H:i:s', $expiry), $token, date('Y-m-d H:i:s', $expiry)]);
+                    
+                    // Définir le cookie de session persistante
+                    setcookie('mdgeek_remember', $token, $expiry, '/', '', isset($_SERVER['HTTPS']), true);
+                }
+                
+                // Débogage
                         debugLog("Connexion réussie, redirection vers l'accueil");
-                        error_log("Connexion réussie pour l'utilisateur : " . $username);
-                        
-                        // Redirection vers la page d'accueil
-                        header('Location: /index.php');
-                        exit();
-                    } else {
+                error_log("Connexion réussie pour l'utilisateur : " . $username);
+                
+                // Redirection vers la page d'accueil
+                header('Location: /index.php');
+                exit();
+            } else {
                         debugLog("Mot de passe incorrect pour: " . $username);
                         $error = 'Identifiants incorrects';
                         error_log("Tentative de connexion échouée pour l'utilisateur : " . $username);
                     }
                 } else {
                     debugLog("Utilisateur non trouvé: " . $username);
-                    $error = 'Identifiants incorrects';
-                    error_log("Tentative de connexion échouée pour l'utilisateur : " . $username);
+                $error = 'Identifiants incorrects';
+                error_log("Tentative de connexion échouée pour l'utilisateur : " . $username);
                 }
             }
         } catch (PDOException $e) {
@@ -448,13 +463,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <div class="alert alert-info">
                         <i class="fas fa-store me-2"></i>
                         Connexion au magasin: <strong><?php echo htmlspecialchars($_SESSION['shop_name']); ?></strong>
-                        <?php
-                        // Vérifier si on est sur un sous-domaine
-                        $subdomain = getCurrentSubdomain();
-                        if ($subdomain && !isSystemSubdomain($subdomain)):
-                        ?>
-                        <br><small>(Détecté par votre sous-domaine: <?php echo htmlspecialchars($subdomain); ?>.<?php echo MAIN_DOMAIN; ?>)</small>
-                        <?php endif; ?>
                     </div>
                     <input type="hidden" name="shop_id" value="<?php echo $_SESSION['shop_id']; ?>">
                 </div>
@@ -468,12 +476,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <?php endif; ?>
                 
                 <div class="mb-3">
-                    <label for="username" class="form-label">Nom d'utilisateur</label>
+                    <label for="username" class="form-label">Email ou nom d'utilisateur</label>
                     <div class="input-group">
                         <span class="input-group-text">
                             <i class="fas fa-user"></i>
                         </span>
-                        <input type="text" class="form-control" id="username" name="username" required>
+                        <input type="text" class="form-control" id="username" name="username" placeholder="email@exemple.com" required>
                     </div>
                 </div>
 
