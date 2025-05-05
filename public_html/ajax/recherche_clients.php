@@ -44,13 +44,14 @@ try {
         
     error_log("Base de données actuellement utilisée pour la recherche de clients: " . $current_db);
     
-    // Préparer la requête
-    $query = "SELECT id, nom as lastname, prenom as firstname, email, telephone as phone FROM clients WHERE 
-              nom LIKE :terme OR prenom LIKE :terme OR email LIKE :terme OR telephone LIKE :terme
+    // Préparer la requête avec des paramètres positionnels au lieu de paramètres nommés répétés
+    $query = "SELECT id, nom, prenom, email, telephone FROM clients WHERE 
+              nom LIKE ? OR prenom LIKE ? OR email LIKE ? OR telephone LIKE ?
               ORDER BY nom, prenom LIMIT 10";
     
     $stmt = $shop_pdo->prepare($query);
-    $stmt->execute(['terme' => "%$terme%"]);
+    $search_term = "%$terme%";
+    $stmt->execute([$search_term, $search_term, $search_term, $search_term]);
     $clients = $stmt->fetchAll(PDO::FETCH_ASSOC);
     
     error_log("Nombre de clients trouvés: " . count($clients));
