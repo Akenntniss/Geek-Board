@@ -4283,6 +4283,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const selectAllCheckbox = document.getElementById('selectAllRepairs');
     const repairCheckboxes = document.querySelectorAll('.repair-checkbox');
     const updateButton = document.getElementById('updateBatchStatus');
+    const sendSmsCheckbox = document.getElementById('sendSmsCheckbox');
     
     if (selectAllCheckbox) {
         selectAllCheckbox.addEventListener('change', function() {
@@ -4335,6 +4336,21 @@ document.addEventListener('DOMContentLoaded', function() {
             // Soumettre le formulaire via AJAX
             const formData = new FormData(form);
             
+            // Vérifier l'état de la case à cocher SMS
+            const smsIsChecked = sendSmsCheckbox.checked;
+            console.log("État de la case SMS:", smsIsChecked);
+            
+            // S'assurer que la valeur send_sms est correctement définie
+            if (smsIsChecked) {
+                formData.set('send_sms', "1");
+            }
+            
+            // Afficher les données du formulaire pour débogage
+            console.log("Données du formulaire:");
+            for (let [key, value] of formData.entries()) {
+                console.log(`${key}: ${value}`);
+            }
+            
             // Désactiver le bouton pendant la soumission
             updateButton.disabled = true;
             updateButton.innerHTML = '<i class="fas fa-spinner fa-spin me-1"></i>Traitement en cours...';
@@ -4343,15 +4359,19 @@ document.addEventListener('DOMContentLoaded', function() {
                 method: 'POST',
                 body: formData
             })
-            .then(response => response.json())
+            .then(response => {
+                console.log("Réponse brute:", response);
+                return response.json();
+            })
             .then(data => {
+                console.log("Données de réponse:", data);
                 if (data.success) {
                     // Fermer le modal
                     const modal = bootstrap.Modal.getInstance(document.getElementById('updateStatusModal'));
                     modal.hide();
                     
                     // Afficher un message de succès
-                    alert(`${data.count} réparation(s) mise(s) à jour avec succès.`);
+                    alert(`${data.count} réparation(s) mise(s) à jour avec succès.${data.sms_count ? ' ' + data.sms_count + ' SMS envoyé(s).' : ''}`);
                     
                     // Recharger la page pour afficher les changements
                     window.location.reload();
@@ -4811,8 +4831,21 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                // Fermer le modal
-                relanceModal.hide();
+                // S'assurer que le modal existe et est initialisé
+                const modalElement = document.getElementById('relanceClientModal');
+                let modalInstance = bootstrap.Modal.getInstance(modalElement);
+                
+                // Si l'instance n'existe pas, la créer
+                if (!modalInstance && modalElement) {
+                    modalInstance = new bootstrap.Modal(modalElement);
+                }
+                
+                // Fermer le modal s'il est disponible
+                if (modalInstance) {
+                    modalInstance.hide();
+                } else {
+                    console.warn('Modal non trouvé ou non initialisé, fermeture impossible');
+                }
                 
                 // Afficher un message de succès
                 alert(`${data.count} SMS de relance envoyés avec succès.`);
