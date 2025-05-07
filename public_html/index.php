@@ -36,6 +36,12 @@ if (isset($_GET['test_dynamic_island']) && $_GET['test_dynamic_island'] === 'tru
 
 // Vérifier si l'utilisateur est connecté
 if (!isset($_SESSION['user_id'])) {
+    // Cas spécial pour l'impression d'étiquette qui peut ne pas nécessiter d'authentification
+    // ou gérer l'authentification différemment
+    if (isset($_GET['page']) && $_GET['page'] == 'imprimer_etiquette' && isset($_GET['id'])) {
+        error_log("Accès à imprimer_etiquette avec id=" . $_GET['id'] . " sans session utilisateur active.");
+        // Continuer sans redirection, la page imprimer_etiquette gèrera l'authentification si nécessaire
+    } else {
     // Transmettre les paramètres de test s'ils existent
     $redirect_url = '/pages/login.php';
     $pwa_params = [];
@@ -56,6 +62,16 @@ if (!isset($_SESSION['user_id'])) {
     if (isset($_SESSION['shop_id'])) {
         $pwa_params[] = 'shop_id=' . $_SESSION['shop_id'];
     }
+        
+        // Mémoriser la page originale pour y revenir après connexion
+        if (isset($_GET['page'])) {
+            $pwa_params[] = 'redirect=' . urlencode($_GET['page']);
+            
+            // Ajouter l'ID si présent
+            if (isset($_GET['id'])) {
+                $pwa_params[] = 'id=' . $_GET['id'];
+            }
+        }
     
     // Ajouter les paramètres à l'URL de redirection
     if (!empty($pwa_params)) {
@@ -64,6 +80,7 @@ if (!isset($_SESSION['user_id'])) {
     
     header('Location: ' . $redirect_url);
     exit();
+    }
 }
 
 // Configuration de l'affichage des erreurs (à désactiver en production)
@@ -74,6 +91,22 @@ error_reporting(E_ALL);
 // Définir le chemin de base
 define('BASE_PATH', __DIR__);
 define('BASE_URL', '/');
+
+// Vérification et redirection de domaine
+$current_domain = $_SERVER['HTTP_HOST'];
+if (strpos($current_domain, 'mdgeek.fr') !== false) {
+    // Récupérer l'URL complète actuelle
+    $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https://' : 'http://';
+    $current_url = $protocol . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+    
+    // Remplacer mdgeek.fr par mdgeek.top
+    $new_url = str_replace('mdgeek.fr', 'mdgeek.top', $current_url);
+    
+    // Effectuer la redirection permanente
+    header("HTTP/1.1 301 Moved Permanently");
+    header("Location: " . $new_url);
+    exit;
+}
 
 // Script d'initialisation pour la barre de navigation sur Safari
 echo '<script>

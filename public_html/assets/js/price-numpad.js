@@ -248,13 +248,31 @@ window.PriceNumpad = window.PriceNumpad || {
         
         console.log('Enregistrement du prix', nouveauPrix, 'pour la réparation', repairId);
         
+        // Récupérer l'ID du magasin
+        let shopId = null;
+        if (typeof SessionHelper !== 'undefined' && SessionHelper.getShopId) {
+            shopId = SessionHelper.getShopId();
+        } else if (localStorage.getItem('shop_id')) {
+            shopId = localStorage.getItem('shop_id');
+        } else if (document.body.hasAttribute('data-shop-id')) {
+            shopId = document.body.getAttribute('data-shop-id');
+        }
+        
+        // Construire les données à envoyer
+        let requestBody = `repair_id=${repairId}&price=${nouveauPrix}`;
+        if (shopId) {
+            requestBody += `&shop_id=${shopId}`;
+        }
+        
+        console.log('Envoi de la requête avec les paramètres:', requestBody);
+        
         // Envoi de la requête AJAX
         fetch('ajax/update_repair_price.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
             },
-            body: `repair_id=${repairId}&price=${nouveauPrix}`
+            body: requestBody
         })
         .then(response => {
             // Vérifier si la réponse est de type JSON

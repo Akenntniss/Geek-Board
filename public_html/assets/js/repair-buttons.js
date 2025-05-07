@@ -154,7 +154,18 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(data => {
             if (data.success) {
                 // Afficher un message de succès
-                alert('Réparation terminée avec succès. Vous pouvez maintenant démarrer une nouvelle réparation.');
+                let successMessage = 'Réparation terminée avec succès. Vous pouvez maintenant démarrer une nouvelle réparation.';
+                
+                // Ajouter le statut d'envoi du SMS au message si disponible
+                if (data.hasOwnProperty('sms_sent')) {
+                    if (data.sms_sent) {
+                        successMessage += '\nSMS envoyé au client avec succès.';
+                    } else {
+                        successMessage += '\nAucun SMS envoyé. ' + (data.sms_message || '');
+                    }
+                }
+                
+                alert(successMessage);
                 
                 // Actions supplémentaires selon le statut
                 if (finalStatus === 'en_attente_accord_client') {

@@ -16,6 +16,7 @@ function send_json_response($success, $message, $data = []) {
 try {
     // Inclure les fichiers nécessaires
     require_once '../config/config.php';
+    require_once '../config/database.php';
     
     // Vérifier la méthode de requête
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -25,14 +26,41 @@ try {
     // Récupérer et valider les données
     $repair_id = isset($_POST['repair_id']) ? intval($_POST['repair_id']) : 0;
     $notes = isset($_POST['notes']) ? trim($_POST['notes']) : '';
+
+    // Récupérer l'ID du magasin, soit de POST, soit de GET
+    $shop_id = isset($_POST['shop_id']) ? intval($_POST['shop_id']) : null;
+    if ($shop_id === null) {
+        $shop_id = isset($_GET['shop_id']) ? intval($_GET['shop_id']) : null;
+    }
+
+    error_log("Update repair notes - POST data: " . print_r($_POST, true));
+    error_log("Update repair notes - GET data: " . print_r($_GET, true));
+    error_log("Update repair notes - shop_id: " . ($shop_id ?? 'null'));
     
     if ($repair_id <= 0) {
         send_json_response(false, 'ID de réparation invalide');
     }
     
-    // Connexion à la base de données
-    $db = new PDO('mysql:host='.DB_HOST.';dbname='.DB_NAME.';charset=utf8', DB_USER, DB_PASS);
-    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    // Démarrer la session si ce n'est pas déjà fait
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
+    
+    // Si shop_id n'est pas défini dans la requête, essayer de le récupérer de la session
+    if ($shop_id === null) {
+        $shop_id = isset($_SESSION['shop_id']) ? $_SESSION['shop_id'] : 1;
+    }
+    
+    // Journaliser les informations de débogage
+    error_log("Update repair notes: repair_id=$repair_id, shop_id=$shop_id");
+    
+    // Utiliser la connexion à la base de données du magasin
+    $db = getShopDBConnection();
+    
+    if (!$db) {
+        error_log("Impossible d'obtenir la connexion à la base de données du magasin dans update_repair_notes.php");
+        send_json_response(false, "Erreur de connexion à la base de données");
+    }
     
     // Mettre à jour les notes techniques
     $stmt = $db->prepare('UPDATE reparations SET notes_techniques = :notes, date_modification = NOW() WHERE id = :id');
@@ -40,12 +68,32 @@ try {
     $stmt->bindParam(':id', $repair_id, PDO::PARAM_INT);
     $success = $stmt->execute();
     
+    // Vérifier si la mise à jour a bien modifié une ligne
     if ($success) {
-        // Enregistrer l'action dans les logs s'il y a une session
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
+        $rowCount = $stmt->rowCount();
+        error_log("Mise à jour des notes techniques - Lignes affectées: $rowCount");
         
+        if ($rowCount === 0) {
+            // La requête s'est exécutée mais aucune ligne n'a été modifiée
+            // Vérifions si la réparation existe
+            $check_stmt = $db->prepare('SELECT id FROM reparations WHERE id = :id');
+            $check_stmt->bindParam(':id', $repair_id, PDO::PARAM_INT);
+            $check_stmt->execute();
+            
+            if ($check_stmt->fetch()) {
+                error_log("La réparation existe mais aucune ligne n'a été modifiée. Peut-être que les notes n'ont pas changé?");
+                // C'est normal si les notes n'ont pas changé, on considère que c'est un succès
+                $success = true;
+            } else {
+                error_log("La réparation avec ID $repair_id n'existe pas dans cette base de données");
+                send_json_response(false, "Réparation non trouvée");
+                exit;
+            }
+        }
+    }
+    
+    if ($success) {
+        // Enregistrer l'action dans les logs
         $employe_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 0;
         $log_message = "Notes techniques mises à jour";
         

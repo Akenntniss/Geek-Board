@@ -2,6 +2,18 @@
 // Définir le type de contenu comme JSON
 header('Content-Type: application/json');
 
+// Démarrer la session pour récupérer l'ID du magasin
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+// Récupérer l'ID du magasin depuis les paramètres GET
+$shop_id_from_request = $_GET['shop_id'] ?? null;
+if ($shop_id_from_request) {
+    $_SESSION['shop_id'] = $shop_id_from_request;
+    error_log("ID du magasin récupéré depuis la requête: $shop_id_from_request");
+}
+
 try {
     // Récupérer les chemins des fichiers includes
     $config_path = realpath(__DIR__ . '/../config/database.php');
@@ -12,6 +24,24 @@ try {
 
     // Inclure les fichiers nécessaires
     require_once $config_path;
+    
+    // Utiliser la connexion à la base de données du magasin
+    $shop_pdo = getShopDBConnection();
+    
+    // Vérifier que la connexion à la base de données est établie
+    if (!isset($shop_pdo) || $shop_pdo === null) {
+        error_log("Erreur: Connexion à la base de données non établie dans get_all_statuts.php");
+        throw new Exception('Erreur de connexion à la base de données');
+    }
+    
+    // Vérifier quelle base de données nous utilisons
+    try {
+        $db_stmt = $shop_pdo->query("SELECT DATABASE() as current_db");
+        $db_info = $db_stmt->fetch(PDO::FETCH_ASSOC);
+        error_log("Base de données connectée dans get_all_statuts.php: " . ($db_info['current_db'] ?? 'Inconnue'));
+    } catch (Exception $e) {
+        error_log("Erreur lors de la vérification de la base: " . $e->getMessage());
+    }
 
     // Requête pour récupérer tous les statuts avec leurs catégories
     $sql = "
@@ -24,7 +54,7 @@ try {
         ORDER BY c.ordre, s.ordre
     ";
     
-    $stmt = $pdo->query($sql);
+    $stmt = $shop_pdo->query($sql);
     $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
     
     // Organiser les statuts par catégorie
@@ -55,6 +85,7 @@ try {
     ]);
 
 } catch (Exception $e) {
+    error_log("Erreur dans get_all_statuts.php: " . $e->getMessage());
     echo json_encode([
         'success' => false,
         'error' => $e->getMessage()

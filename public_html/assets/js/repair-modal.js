@@ -112,8 +112,32 @@ window.RepairModal = window.RepairModal || {
         console.log('Chargement des détails pour la réparation ID:', repairId);
         console.log('URL de l\'API:', this.config.apiUrl);
         
+        // Récupérer l'ID du magasin depuis les données de session ou un attribut data
+        let shopId = null;
+        
+        // Tenter de récupérer l'ID du magasin depuis l'élément HTML
+        if (document.body.hasAttribute('data-shop-id')) {
+            shopId = document.body.getAttribute('data-shop-id');
+            console.log('ID du magasin trouvé dans data-shop-id:', shopId);
+        } 
+        // Sinon, essayer de le récupérer depuis le localStorage ou sessionStorage
+        else if (localStorage.getItem('shop_id')) {
+            shopId = localStorage.getItem('shop_id');
+            console.log('ID du magasin trouvé dans localStorage:', shopId);
+        } else if (sessionStorage.getItem('shop_id')) {
+            shopId = sessionStorage.getItem('shop_id');
+            console.log('ID du magasin trouvé dans sessionStorage:', shopId);
+        }
+        
+        // Construire l'URL avec l'ID de la réparation et l'ID du magasin s'il est disponible
+        let apiUrl = `${this.config.apiUrl}?id=${repairId}`;
+        if (shopId) {
+            apiUrl += `&shop_id=${shopId}`;
+        }
+        console.log('URL de l\'API complète:', apiUrl);
+        
         // Récupérer les données
-        fetch(`${this.config.apiUrl}?id=${repairId}`)
+        fetch(apiUrl)
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`Erreur HTTP ${response.status}`);
@@ -387,21 +411,14 @@ window.RepairModal = window.RepairModal || {
                         <div class="card-body">
                             <div class="device-info">
                                 <div class="device-info-item">
-                                    <div class="device-info-label">Type</div>
-                                    <div class="device-info-value">${repair.type_appareil || 'Non spécifié'}</div>
+                                    <div class="device-info-label">Modèle</div>
+                                    <div class="device-info-value">${repair.modele || 'Non spécifié'}</div>
                                 </div>
                                 
                                 <div class="device-info-item">
-                                    <div class="device-info-label">Marque/Modèle</div>
-                                    <div class="device-info-value">${repair.marque || 'Non spécifiée'} ${repair.modele || ''}</div>
+                                    <div class="device-info-label">Mot de passe</div>
+                                    <div class="device-info-value">${repair.mot_de_passe || 'Aucun mot de passe'}</div>
                                 </div>
-                                
-                                ${repair.mot_de_passe ? `
-                                <div class="device-info-item" style="background-color: #f8f9fa; padding: 8px; border-radius: 6px; margin-top: 10px; margin-bottom: 10px; border-left: 4px solid #6c757d;">
-                                    <div class="device-info-label"><i class="fas fa-key me-2"></i>Mot de passe</div>
-                                    <div class="device-info-value">${repair.mot_de_passe}</div>
-                                </div>
-                                ` : ''}
                                 
                                 <div class="device-info-item">
                                     <div class="device-info-label">Problème</div>
@@ -606,18 +623,41 @@ window.RepairModal = window.RepairModal || {
                 // Désactiver le bouton pendant l'envoi
                 btn.disabled = true;
                 
+                // Récupérer l'ID du magasin
+                let shopId = null;
+                if (typeof SessionHelper !== 'undefined' && SessionHelper.getShopId) {
+                    shopId = SessionHelper.getShopId();
+                } else if (localStorage.getItem('shop_id')) {
+                    shopId = localStorage.getItem('shop_id');
+                } else if (document.body.hasAttribute('data-shop-id')) {
+                    shopId = document.body.getAttribute('data-shop-id');
+                }
+                
                 // Préparer les données à envoyer
                 const formData = new FormData();
                 formData.append('repair_id', repairId);
                 formData.append('urgent', newState ? 1 : 0);
+                
+                // Ajouter l'ID du magasin s'il est disponible
+                if (shopId) {
+                    formData.append('shop_id', shopId);
+                    console.log("ID du magasin ajouté à la requête urgent:", shopId);
+                }
+                
+                console.log("Données à envoyer pour urgent:", Object.fromEntries(formData));
                 
                 // Effectuer la requête AJAX
                 fetch('ajax/toggle_repair_urgent.php', {
                     method: 'POST',
                     body: formData
                 })
-                .then(response => response.json())
+                .then(response => {
+                    console.log("Réponse urgent statut:", response.status);
+                    return response.json();
+                })
                 .then(data => {
+                    console.log("Données de réponse urgent:", data);
+                    
                     // Réactiver le bouton
                     btn.disabled = false;
                     
@@ -852,11 +892,28 @@ Remplacement du Micro-Controlleur 89 euro">${repair.notes_techniques || ''}</tex
                                     formData.append('notes_techniques', notesTechniques);
                                 }
                                 
+                                // Récupérer l'ID du magasin
+                                let shopId = null;
+                                if (typeof SessionHelper !== 'undefined' && SessionHelper.getShopId) {
+                                    shopId = SessionHelper.getShopId();
+                                } else if (localStorage.getItem('shop_id')) {
+                                    shopId = localStorage.getItem('shop_id');
+                                } else if (document.body.hasAttribute('data-shop-id')) {
+                                    shopId = document.body.getAttribute('data-shop-id');
+                                }
+                                
+                                // Ajouter l'ID du magasin s'il est disponible
+                                if (shopId) {
+                                    formData.append('shop_id', shopId);
+                                    console.log("ID du magasin ajouté à la requête:", shopId);
+                                }
+                                
                                 console.log("FormData préparée:", {
                                     repair_id: repairId, 
                                     sms_type: 4, 
                                     prix: prix,
                                     type_message: typeMessage,
+                                    shop_id: shopId,
                                     ...(typeMessage === 'detaille' ? {notes_techniques: notesTechniques} : {})
                                 });
                                 
@@ -960,8 +1017,8 @@ Remplacement du Micro-Controlleur 89 euro">${repair.notes_techniques || ''}</tex
                 break;
                 
             case 'print':
-                // Ouvrir la page d'impression d'étiquette au lieu de print_repair.php
-                window.open(`index.php?page=imprimer_etiquette&id=${repairId}`, '_blank');
+                // Ouvrir la page d'impression d'étiquette avec le domaine mdgeek.top
+                window.open(`https://mdgeek.top/index.php?page=imprimer_etiquette&id=${repairId}`, '_blank');
                 break;
         }
     },
@@ -1118,13 +1175,34 @@ Remplacement du Micro-Controlleur 89 euro">${repair.notes_techniques || ''}</tex
             saveBtn.disabled = true;
             saveBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Sauvegarde en cours...';
             
+            // Récupérer l'ID du magasin
+            let shopId = null;
+            if (typeof SessionHelper !== 'undefined' && SessionHelper.getShopId) {
+                shopId = SessionHelper.getShopId();
+            } else if (localStorage.getItem('shop_id')) {
+                shopId = localStorage.getItem('shop_id');
+            } else if (document.body.hasAttribute('data-shop-id')) {
+                shopId = document.body.getAttribute('data-shop-id');
+            }
+            
+            // Créer le corps de la requête
+            let requestBody = `repair_id=${repairId}&notes=${encodeURIComponent(notes)}`;
+            
+            // Ajouter l'ID du magasin s'il est disponible
+            if (shopId) {
+                requestBody += `&shop_id=${shopId}`;
+                console.log("ID du magasin ajouté à la requête de notes:", shopId);
+            }
+            
+            console.log("Données à envoyer pour notes:", requestBody);
+            
             // Envoyer les données via AJAX
             fetch('ajax/update_repair_notes.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
                 },
-                body: `repair_id=${repairId}&notes=${encodeURIComponent(notes)}`
+                body: requestBody
             })
             .then(response => {
                 // Vérifier si la réponse est de type JSON
@@ -1344,6 +1422,22 @@ Remplacement du Micro-Controlleur 89 euro">${repair.notes_techniques || ''}</tex
             formData.append('repair_id', repairId);
             formData.append('photo', photoData);
             formData.append('description', description);
+            
+            // Récupérer l'ID du magasin
+            let shopId = null;
+            if (typeof SessionHelper !== 'undefined' && SessionHelper.getShopId) {
+                shopId = SessionHelper.getShopId();
+            } else if (localStorage.getItem('shop_id')) {
+                shopId = localStorage.getItem('shop_id');
+            } else if (document.body.hasAttribute('data-shop-id')) {
+                shopId = document.body.getAttribute('data-shop-id');
+            }
+            
+            // Ajouter l'ID du magasin s'il est disponible
+            if (shopId) {
+                formData.append('shop_id', shopId);
+                console.log("ID du magasin ajouté à la requête photo:", shopId);
+            }
             
             console.log('Envoi de la photo pour la réparation ID:', repairId);
             

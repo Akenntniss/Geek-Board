@@ -16,6 +16,7 @@ function send_json_response($success, $message, $data = []) {
 try {
     // Inclure les fichiers nécessaires
     require_once '../config/config.php';
+    require_once '../config/database.php';
     
     // Vérifier la méthode de requête
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -26,6 +27,16 @@ try {
     $repair_id = isset($_POST['repair_id']) ? intval($_POST['repair_id']) : 0;
     $photo = isset($_POST['photo']) ? $_POST['photo'] : '';
     $description = isset($_POST['description']) ? trim($_POST['description']) : '';
+    
+    // Récupérer l'ID du magasin, soit de POST, soit de GET
+    $shop_id = isset($_POST['shop_id']) ? intval($_POST['shop_id']) : null;
+    if ($shop_id === null) {
+        $shop_id = isset($_GET['shop_id']) ? intval($_GET['shop_id']) : null;
+    }
+    
+    error_log("Upload photo - POST data: " . print_r($_POST, true));
+    error_log("Upload photo - GET data: " . print_r($_GET, true));
+    error_log("Upload photo - shop_id: " . ($shop_id ?? 'null'));
     
     if ($repair_id <= 0) {
         send_json_response(false, 'ID de réparation invalide');
@@ -69,9 +80,23 @@ try {
     // Chemin relatif pour la base de données
     $db_path = 'assets/images/reparations/' . $repair_id . '/' . $filename;
     
-    // Connexion à la base de données
-    $db = new PDO('mysql:host='.DB_HOST.';dbname='.DB_NAME.';charset=utf8', DB_USER, DB_PASS);
-    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    // Démarrer la session si ce n'est pas déjà fait
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
+    
+    // Si shop_id n'est pas défini dans la requête, essayer de le récupérer de la session
+    if ($shop_id === null) {
+        $shop_id = isset($_SESSION['shop_id']) ? $_SESSION['shop_id'] : 1;
+    }
+    
+    // Utiliser la connexion à la base de données du magasin
+    $db = getShopDBConnection();
+    
+    if (!$db) {
+        error_log("Impossible d'obtenir la connexion à la base de données du magasin dans upload_repair_photo.php");
+        send_json_response(false, "Erreur de connexion à la base de données");
+    }
     
     // Vérifier si la table photos_reparation existe
     $check_table = $db->query("SHOW TABLES LIKE 'photos_reparation'");
@@ -100,6 +125,15 @@ try {
     }
     error_log('Colonnes de la table ' . $table_name . ': ' . implode(', ', $column_names));
     
+    // Vérifier si la réparation existe dans cette base de données
+    $check_repair = $db->prepare("SELECT id FROM reparations WHERE id = ?");
+    $check_repair->execute([$repair_id]);
+    if (!$check_repair->fetch()) {
+        error_log("La réparation avec ID $repair_id n'existe pas dans cette base de données");
+        send_json_response(false, "Réparation non trouvée dans ce magasin");
+        exit;
+    }
+    
     // Insérer la photo dans la base de données
     $date_column = in_array('date_upload', $column_names) ? 'date_upload' : (in_array('date_creation', $column_names) ? 'date_creation' : null);
     
@@ -118,11 +152,7 @@ try {
         $photo_id = $db->lastInsertId();
         error_log("Photo ajoutée avec succès. ID: $photo_id, URL: $db_path, Description: $description");
         
-        // Enregistrer l'action dans les logs s'il y a une session
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
-        
+        // Enregistrer l'action dans les logs
         $employe_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 0;
         $log_message = "Photo ajoutée: " . ($description ? $description : 'Sans description');
         

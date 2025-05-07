@@ -188,9 +188,16 @@ function create_reparation_sms_table() {
               `message` TEXT NOT NULL,
               `date_envoi` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
               `statut_id` INT NULL,
+              `statut_envoi` ENUM('en_attente', 'envoyé', 'échec') DEFAULT 'en_attente',
+              `reponse_api` TEXT NULL,
+              `date_maj` TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP,
               INDEX `idx_reparation_id` (`reparation_id`),
               INDEX `idx_template_id` (`template_id`),
-              INDEX `idx_statut_id` (`statut_id`)
+              INDEX `idx_statut_id` (`statut_id`),
+              INDEX `idx_date_envoi` (`date_envoi`),
+              FOREIGN KEY (`reparation_id`) REFERENCES `reparations` (`id`) ON DELETE CASCADE,
+              FOREIGN KEY (`template_id`) REFERENCES `sms_templates` (`id`) ON DELETE CASCADE,
+              FOREIGN KEY (`statut_id`) REFERENCES `statuts` (`id`) ON DELETE SET NULL
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
         ");
         
@@ -203,9 +210,12 @@ function create_reparation_sms_table() {
               `status` INT NULL,
               `response` TEXT NULL,
               `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+              `reparation_id` INT NULL,
               INDEX `idx_recipient` (`recipient`),
               INDEX `idx_status` (`status`),
-              INDEX `idx_created_at` (`created_at`)
+              INDEX `idx_created_at` (`created_at`),
+              INDEX `idx_reparation_id` (`reparation_id`),
+              FOREIGN KEY (`reparation_id`) REFERENCES `reparations` (`id`) ON DELETE SET NULL
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
         ");
         

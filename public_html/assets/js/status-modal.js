@@ -118,6 +118,16 @@ const StatusModal = {
             this.elements.repairIdInput.value = repairId;
         }
         
+        // Récupérer l'ID du magasin
+        let shopId = null;
+        if (typeof SessionHelper !== 'undefined' && SessionHelper.getShopId) {
+            shopId = SessionHelper.getShopId();
+        } else if (localStorage.getItem('shop_id')) {
+            shopId = localStorage.getItem('shop_id');
+        } else if (document.body.hasAttribute('data-shop-id')) {
+            shopId = document.body.getAttribute('data-shop-id');
+        }
+        
         // Mettre à jour le titre
         if (this.elements.title) {
             this.elements.title.innerHTML = `<i class="fas fa-tasks me-2"></i> Sélectionner un statut`;
@@ -158,10 +168,21 @@ const StatusModal = {
             });
         }
         
+        // Créer l'URL de chargement des statuts avec l'ID du magasin si disponible
+        let apiUrl = 'ajax/get_all_statuts.php';
+        if (shopId) {
+            apiUrl += `?shop_id=${shopId}`;
+            console.log("URL de l'API avec ID du magasin:", apiUrl);
+        }
+        
         // Charger tous les statuts disponibles
-        fetch('ajax/get_all_statuts.php')
-            .then(response => response.json())
+        fetch(apiUrl)
+            .then(response => {
+                console.log("Réponse statut:", response.status);
+                return response.json();
+            })
             .then(data => {
+                console.log("Données de réponse des statuts:", data);
                 if (data.success && data.statuts) {
                     this.renderAllStatusButtons(data.statuts, repairId);
                 } else {
@@ -258,11 +279,29 @@ const StatusModal = {
             </div>
         `;
         
+        // Récupérer l'ID du magasin
+        let shopId = null;
+        if (typeof SessionHelper !== 'undefined' && SessionHelper.getShopId) {
+            shopId = SessionHelper.getShopId();
+        } else if (localStorage.getItem('shop_id')) {
+            shopId = localStorage.getItem('shop_id');
+        } else if (document.body.hasAttribute('data-shop-id')) {
+            shopId = document.body.getAttribute('data-shop-id');
+        }
+        
         // Préparer les données
         const data = {
             repair_id: repairId,
             status_id: statusId
         };
+        
+        // Ajouter l'ID du magasin s'il est disponible
+        if (shopId) {
+            data.shop_id = shopId;
+            console.log("ID du magasin ajouté à la requête:", shopId);
+        }
+        
+        console.log("Données à envoyer:", data);
         
         // Envoyer la requête
         fetch(this.config.updateApiUrl, {
@@ -272,8 +311,12 @@ const StatusModal = {
             },
             body: JSON.stringify(data)
         })
-        .then(response => response.json())
+        .then(response => {
+            console.log("Réponse statut:", response.status);
+            return response.json();
+        })
         .then(data => {
+            console.log("Données de réponse:", data);
             if (data.success) {
                 // Fermer le modal
                 const modal = bootstrap.Modal.getInstance(this.elements.modal);

@@ -8,6 +8,18 @@ ini_set('log_errors', 1);
 ini_set('error_log', __DIR__ . '/../logs/errors/app_errors.log');
 error_log("Démarrage de send_devis_sms.php");
 
+// Démarrer la session pour récupérer l'ID du magasin
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+// Récupérer l'ID du magasin depuis les paramètres POST ou GET
+$shop_id_from_request = $_POST['shop_id'] ?? $_GET['shop_id'] ?? null;
+if ($shop_id_from_request) {
+    $_SESSION['shop_id'] = $shop_id_from_request;
+    error_log("ID du magasin récupéré depuis la requête: $shop_id_from_request");
+}
+
 // S'assurer que nous envoyons du JSON
 header('Content-Type: application/json');
 
@@ -17,14 +29,26 @@ error_log("Méthode HTTP reçue: " . $method);
 
 require_once('../config/database.php');
 
+// Utiliser la connexion à la base de données du magasin
+$shop_pdo = getShopDBConnection();
+
 // Vérifier si la connexion à la base de données est établie
-if (!isset($pdo) || $pdo === null) {
+if (!isset($shop_pdo) || $shop_pdo === null) {
     error_log("Erreur: Connexion à la base de données non établie dans send_devis_sms.php");
     echo json_encode([
         'success' => false,
         'error' => 'Erreur de connexion à la base de données'
     ]);
     exit;
+}
+
+// Vérifier quelle base de données nous utilisons réellement
+try {
+    $db_stmt = $shop_pdo->query("SELECT DATABASE() as current_db");
+    $db_info = $db_stmt->fetch(PDO::FETCH_ASSOC);
+    error_log("Base de données connectée dans send_devis_sms.php: " . ($db_info['current_db'] ?? 'Inconnue'));
+} catch (Exception $e) {
+    error_log("Erreur lors de la vérification de la base: " . $e->getMessage());
 }
 
 // Journaliser les données reçues pour le débogage
@@ -66,7 +90,7 @@ if ($sms_type !== 4) {
 try {
     // 1. Récupérer les informations de la réparation et du client
     error_log("Étape 1: Récupération des informations de la réparation et du client");
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         SELECT r.*, c.telephone, c.nom, c.prenom, c.id as client_id, c.email
         FROM reparations r
         JOIN clients c ON r.client_id = c.id
@@ -77,7 +101,7 @@ try {
     $repair = $stmt->fetch(PDO::FETCH_ASSOC);
     
     if (!$repair) {
-        error_log("Réparation non trouvée avec ID: $repair_id");
+        error_log("Réparation non trouvée avec ID: $repair_id dans la base " . ($db_info['current_db'] ?? 'Inconnue'));
         echo json_encode([
             'success' => false,
             'error' => 'Réparation non trouvée'
@@ -97,7 +121,7 @@ try {
     $statut_code = "en_attente_accord_client";
     
     // Récupérer l'ID du statut pour la journalisation
-    $statusIdStmt = $pdo->prepare("SELECT id FROM statuts WHERE code = ?");
+    $statusIdStmt = $shop_pdo->prepare("SELECT id FROM statuts WHERE code = ?");
     $statusIdStmt->execute([$statut_code]);
     $statusRow = $statusIdStmt->fetch(PDO::FETCH_ASSOC);
     $statut_id = $statusRow ? $statusRow['id'] : null;
@@ -105,7 +129,7 @@ try {
     error_log("ID du statut trouvé: " . ($statut_id ? $statut_id : "null"));
     
     // Mettre à jour le statut
-    $updateStmt = $pdo->prepare("
+    $updateStmt = $shop_pdo->prepare("
         UPDATE reparations 
         SET statut = ?, statut_id = ?, date_modification = NOW() 
         WHERE id = ?
@@ -123,7 +147,7 @@ try {
     
     // 3. Enregistrer le changement dans l'historique
     error_log("Étape 3: Enregistrement du changement dans l'historique");
-    $logStmt = $pdo->prepare("
+    $logStmt = $shop_pdo->prepare("
         INSERT INTO reparation_logs (reparation_id, employe_id, action_type, date_action, statut_avant, statut_apres, details) 
         VALUES (?, ?, 'changement_statut', NOW(), ?, ?, ?)
     ");
@@ -143,7 +167,7 @@ try {
     // 4. Envoyer le SMS de devis au client
     error_log("Étape 4: Préparation du SMS de devis");
     // Récupérer le modèle de SMS type 4 (Devis)
-    $templateStmt = $pdo->prepare("
+    $templateStmt = $shop_pdo->prepare("
         SELECT * FROM sms_templates WHERE id = ?
     ");
     
@@ -217,7 +241,7 @@ try {
     
     // Enregistrer l'envoi du SMS dans la base de données
     error_log("Étape 5: Enregistrement de l'envoi du SMS dans la base de données");
-    $smsLogStmt = $pdo->prepare("
+    $smsLogStmt = $shop_pdo->prepare("
         INSERT INTO reparation_sms (reparation_id, template_id, telephone, message, date_envoi, statut_id)
         VALUES (?, ?, ?, ?, NOW(), ?)
     ");
@@ -234,7 +258,7 @@ try {
         error_log("Avertissement: Impossible d'enregistrer le SMS dans l'historique: " . json_encode($smsLogStmt->errorInfo()));
     }
     
-    $sms_id = $pdo->lastInsertId();
+    $sms_id = $shop_pdo->lastInsertId();
     error_log("SMS enregistré dans l'historique avec ID: " . $sms_id);
     
     // Ici, nous allons implémenter directement l'envoi de SMS sans passer par la fonction send_sms()
@@ -343,7 +367,7 @@ try {
     }
     
     // Après l'envoi, journaliser le statut du SMS dans sms_logs
-    $smsLogsStmt = $pdo->prepare("
+    $smsLogsStmt = $shop_pdo->prepare("
         INSERT INTO sms_logs (recipient, message, status, response)
         VALUES (?, ?, ?, ?)
     ");
@@ -374,7 +398,7 @@ try {
     // Mettre à jour le prix de la réparation si fourni
     if ($prix_update !== null) {
         try {
-            $updatePrixStmt = $pdo->prepare("
+            $updatePrixStmt = $shop_pdo->prepare("
                 UPDATE reparations 
                 SET prix_reparation = ? 
                 WHERE id = ?

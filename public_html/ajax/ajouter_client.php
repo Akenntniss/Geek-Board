@@ -4,17 +4,18 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-// Gestion CORS pour permettre les requêtes cross-origin
-$allowed_origins = [
+// Liste des domaines autorisés
+$allowed_domains = [
     'https://mdgeek.top',
     'http://mdgeek.top',
     'https://www.mdgeek.top',
-    'http://localhost'
+    'http://localhost:8080',
+    'http://127.0.0.1:8080'
 ];
 
 $origin = isset($_SERVER['HTTP_ORIGIN']) ? $_SERVER['HTTP_ORIGIN'] : '';
 
-if (in_array($origin, $allowed_origins)) {
+if (in_array($origin, $allowed_domains)) {
     header("Access-Control-Allow-Origin: $origin");
     header('Access-Control-Allow-Credentials: true');
     header('Access-Control-Allow-Methods: GET, POST, OPTIONS');

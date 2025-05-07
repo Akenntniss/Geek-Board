@@ -7,6 +7,18 @@
 ini_set('display_errors', 0);
 error_reporting(E_ALL);
 
+// Démarrer la session pour récupérer l'ID du magasin
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+// Récupérer l'ID du magasin depuis les paramètres POST ou GET
+$shop_id_from_request = $_POST['shop_id'] ?? $_GET['shop_id'] ?? null;
+if ($shop_id_from_request) {
+    $_SESSION['shop_id'] = $shop_id_from_request;
+    error_log("ID du magasin récupéré depuis la requête: $shop_id_from_request");
+}
+
 // Définir le type de contenu comme JSON dès le début
 header('Content-Type: application/json');
 
@@ -19,7 +31,7 @@ function send_json_response($success, $message, $data = []) {
 
 try {
     // Inclure les fichiers nécessaires
-    require_once '../config/config.php';
+    require_once '../config/database.php';
     
     // Vérifier la méthode de requête
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -38,27 +50,43 @@ try {
         send_json_response(false, 'Prix invalide');
     }
     
-    // Connexion à la base de données
-    $db = new PDO('mysql:host='.DB_HOST.';dbname='.DB_NAME.';charset=utf8', DB_USER, DB_PASS);
-    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    // Utiliser la connexion à la base de données du magasin
+    $shop_pdo = getShopDBConnection();
+    
+    if (!$shop_pdo) {
+        send_json_response(false, 'Erreur de connexion à la base de données du magasin');
+    }
+    
+    // Vérifier quelle base de données nous utilisons réellement
+    try {
+        $db_stmt = $shop_pdo->query("SELECT DATABASE() as current_db");
+        $db_info = $db_stmt->fetch(PDO::FETCH_ASSOC);
+        error_log("Base de données connectée dans update_repair_price.php: " . ($db_info['current_db'] ?? 'Inconnue'));
+    } catch (Exception $e) {
+        error_log("Erreur lors de la vérification de la base: " . $e->getMessage());
+    }
     
     // Mettre à jour le prix
-    $stmt = $db->prepare('UPDATE reparations SET prix_reparation = :prix, date_modification = NOW() WHERE id = :id');
+    $stmt = $shop_pdo->prepare('UPDATE reparations SET prix_reparation = :prix, date_modification = NOW() WHERE id = :id');
     $stmt->bindParam(':prix', $price, PDO::PARAM_INT);
     $stmt->bindParam(':id', $repair_id, PDO::PARAM_INT);
     $success = $stmt->execute();
     
     if ($success) {
-        // Enregistrer l'action dans les logs s'il y a une session
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
+        // Vérifier si la mise à jour a réellement affecté une ligne
+        $affected_rows = $stmt->rowCount();
+        if ($affected_rows === 0) {
+            error_log("Avertissement: Mise à jour du prix pour réparation ID $repair_id a réussi, mais aucune ligne n'a été affectée");
+        } else {
+            error_log("Succès: Prix de la réparation ID $repair_id mis à jour à $price € ($affected_rows lignes affectées)");
         }
         
+        // Enregistrer l'action dans les logs
         $employe_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 0;
         $log_message = "Prix mis à jour: {$price} €";
         
         try {
-            $log_stmt = $db->prepare('INSERT INTO reparation_logs (reparation_id, employe_id, action_type, details, date_action) VALUES (:reparation_id, :employe_id, :action_type, :details, NOW())');
+            $log_stmt = $shop_pdo->prepare('INSERT INTO reparation_logs (reparation_id, employe_id, action_type, details, date_action) VALUES (:reparation_id, :employe_id, :action_type, :details, NOW())');
             $log_stmt->bindParam(':reparation_id', $repair_id, PDO::PARAM_INT);
             $log_stmt->bindParam(':employe_id', $employe_id, PDO::PARAM_INT);
             $log_stmt->bindParam(':action_type', $action_type, PDO::PARAM_STR);

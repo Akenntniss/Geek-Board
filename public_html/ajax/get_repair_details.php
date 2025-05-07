@@ -6,13 +6,42 @@ ini_set('display_errors', 0);
 ini_set('log_errors', 1);
 error_log("Démarrage de get_repair_details.php");
 
+// Démarrer la session pour avoir accès à l'ID du magasin
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+// Récupérer l'ID du magasin depuis les paramètres POST ou GET
+$shop_id_from_request = $_POST['shop_id'] ?? $_GET['shop_id'] ?? null;
+if ($shop_id_from_request) {
+    $_SESSION['shop_id'] = $shop_id_from_request;
+    error_log("ID du magasin récupéré depuis la requête: $shop_id_from_request");
+}
+
+// Afficher les infos de session pour le débogage
+error_log("Session ID: " . session_id());
+error_log("Session shop_id: " . ($_SESSION['shop_id'] ?? 'non défini'));
+
 // S'assurer que nous envoyons du JSON
 header('Content-Type: application/json');
 
 require_once('../config/database.php');
 
+// IMPORTANT: Forcer la connexion à la base du magasin et non la base principale
+// car les réparations sont uniquement dans la base du magasin
+$shop_pdo = getShopDBConnection();
+
+// Vérifier quelle base de données nous utilisons réellement
+try {
+    $db_stmt = $shop_pdo->query("SELECT DATABASE() as current_db");
+    $db_info = $db_stmt->fetch(PDO::FETCH_ASSOC);
+    error_log("Base de données connectée: " . ($db_info['current_db'] ?? 'Inconnue'));
+} catch (Exception $e) {
+    error_log("Erreur lors de la vérification de la base: " . $e->getMessage());
+}
+
 // Vérifier si la connexion à la base de données est établie
-if (!isset($pdo) || $pdo === null) {
+if (!isset($shop_pdo) || $shop_pdo === null) {
     error_log("Erreur: Connexion à la base de données non établie dans get_repair_details.php");
     echo json_encode([
         'success' => false,
@@ -35,6 +64,20 @@ $repair_id = (int)$_GET['id'];
 error_log("Récupération des détails pour la réparation ID: $repair_id");
 
 try {
+    // Vérifier si la table reparations existe
+    try {
+        $tables_check = $shop_pdo->query("SHOW TABLES LIKE 'reparations'");
+        if ($tables_check->rowCount() === 0) {
+            error_log("ERREUR: Table 'reparations' inexistante dans la base " . ($db_info['current_db'] ?? 'Inconnue'));
+            // Lister les tables disponibles
+            $all_tables = $shop_pdo->query("SHOW TABLES")->fetchAll(PDO::FETCH_COLUMN);
+            error_log("Tables disponibles: " . implode(', ', $all_tables));
+            throw new Exception("Table 'reparations' introuvable dans la base de données");
+        }
+    } catch (Exception $e) {
+        error_log("Erreur lors de la vérification des tables: " . $e->getMessage());
+    }
+
     // Requête améliorée pour inclure le nom et la couleur du statut
     $sql = "
         SELECT 
@@ -52,9 +95,9 @@ try {
         WHERE r.id = ?
     ";
     
-    $stmt = $pdo->prepare($sql);
+    $stmt = $shop_pdo->prepare($sql);
     if (!$stmt) {
-        $error = $pdo->errorInfo();
+        $error = $shop_pdo->errorInfo();
         error_log("Erreur de préparation SQL: " . json_encode($error));
         throw new PDOException("Erreur lors de la préparation de la requête: " . $error[2]);
     }
@@ -70,6 +113,22 @@ try {
     
     if (!$repair) {
         error_log("Réparation non trouvée avec ID: $repair_id");
+        
+        // Vérifier si la réparation existe directement - recherche simple
+        try {
+            $check_repair = $shop_pdo->prepare("SELECT COUNT(*) as count FROM reparations WHERE id = ?");
+            $check_repair->execute([$repair_id]);
+            $exists = $check_repair->fetch(PDO::FETCH_ASSOC);
+            error_log("Vérification directe - Nombre de réparations avec ID $repair_id: " . ($exists['count'] ?? 0));
+            
+            // Liste des ID de réparations proches pour aider au débogage
+            $ids_query = $shop_pdo->query("SELECT id FROM reparations ORDER BY id DESC LIMIT 10");
+            $ids = $ids_query->fetchAll(PDO::FETCH_COLUMN);
+            error_log("IDs de réparations disponibles: " . implode(', ', $ids));
+        } catch (Exception $e) {
+            error_log("Erreur lors de la vérification directe: " . $e->getMessage());
+        }
+        
         echo json_encode([
             'success' => false,
             'error' => 'Réparation non trouvée'
@@ -96,7 +155,7 @@ try {
         $photos_sql = "SELECT * FROM photos_reparation WHERE reparation_id = ? ORDER BY date_upload DESC";
         error_log("Exécution de la requête SQL: $photos_sql avec ID: $repair_id");
         
-        $photos_stmt = $pdo->prepare($photos_sql);
+        $photos_stmt = $shop_pdo->prepare($photos_sql);
         $photos_stmt->execute([$repair_id]);
         $photos = $photos_stmt->fetchAll(PDO::FETCH_ASSOC);
         
@@ -110,7 +169,7 @@ try {
             
             // Essayer avec une autre requête si aucune photo n'est trouvée
             $alt_photos_sql = "SHOW TABLES LIKE 'photos_reparation%'";
-            $alt_stmt = $pdo->query($alt_photos_sql);
+            $alt_stmt = $shop_pdo->query($alt_photos_sql);
             $tables = $alt_stmt->fetchAll(PDO::FETCH_COLUMN);
             error_log("Tables similaires trouvées: " . implode(', ', $tables));
         }

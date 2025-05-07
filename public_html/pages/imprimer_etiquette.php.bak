@@ -1,44 +1,4 @@
 <?php
-// Débogage de session
-error_log("============= DÉBUT IMPRIMER_ETIQUETTE =============");
-error_log("Session ID: " . session_id());
-error_log("Variables de session: " . print_r($_SESSION, true));
-error_log("Cookies: " . print_r($_COOKIE, true));
-error_log("shop_id en session: " . (isset($_SESSION['shop_id']) ? $_SESSION['shop_id'] : 'non défini'));
-error_log("user_id en session: " . (isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 'non défini'));
-error_log("============= FIN DEBUG SESSION =============");
-
-// Si la session utilisateur n'est pas active, essayer une autre méthode d'authentification
-if (!isset($_SESSION['user_id'])) {
-    error_log("Tentative d'accès à imprimer_etiquette sans session utilisateur");
-    
-    // Validation de l'ID de réparation comme critère minimal de sécurité
-    $repair_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
-    if ($repair_id <= 0) {
-        error_log("ID de réparation invalide pour imprimer_etiquette: " . $_GET['id']);
-        redirect("reparations");
-        exit;
-    }
-    
-    // Si l'ID du magasin n'est pas défini, utiliser une valeur par défaut ou essayer de la récupérer
-    if (!isset($_SESSION['shop_id'])) {
-        // Essayer de récupérer depuis un cookie
-        if (isset($_COOKIE['current_shop'])) {
-            $_SESSION['shop_id'] = $_COOKIE['current_shop'];
-            error_log("Shop ID récupéré depuis cookie pour impression: " . $_SESSION['shop_id']);
-        }
-        // Ou définir une valeur par défaut (généralement shop_id=1 pour le magasin principal)
-        else {
-            $_SESSION['shop_id'] = 1;
-            error_log("Utilisation du shop_id par défaut (1) pour impression");
-        }
-    }
-    
-    // Définir un user_id temporaire pour l'opération d'impression
-    $_SESSION['temp_auth_for_print'] = true;
-    error_log("Session temporaire créée pour impression d'étiquette");
-}
-
 // Vérifier si l'ID de la réparation est fourni
 if (!isset($_GET['id']) || empty($_GET['id'])) {
     set_message("ID réparation non spécifié.", "danger");
@@ -49,14 +9,7 @@ $reparation_id = (int)$_GET['id'];
 
 // Récupérer les informations de la réparation
 try {
-    // Utiliser explicitement la connexion à la base de données du magasin
-    $shop_pdo = getShopDBConnection();
-    if (!$shop_pdo) {
-        error_log("Impossible d'obtenir une connexion à la base de données du magasin");
-        throw new Exception("Impossible de se connecter à la base de données.");
-    }
-    
-    $stmt = $shop_pdo->prepare("
+    $stmt = $pdo->prepare("
         SELECT r.*, c.nom as client_nom, c.prenom as client_prenom, c.telephone as client_telephone
         FROM reparations r
         JOIN clients c ON r.client_id = c.id
@@ -70,12 +23,7 @@ try {
         redirect("reparations");
     }
 } catch (PDOException $e) {
-    error_log("Erreur PDO dans imprimer_etiquette.php: " . $e->getMessage());
     set_message("Erreur lors de la récupération des informations de la réparation: " . $e->getMessage(), "danger");
-    redirect("reparations");
-} catch (Exception $e) {
-    error_log("Exception dans imprimer_etiquette.php: " . $e->getMessage());
-    set_message("Erreur: " . $e->getMessage(), "danger");
     redirect("reparations");
 }
 
@@ -365,10 +313,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     // Configurer le bouton de retour
                     document.getElementById('backButton')?.addEventListener('click', function() {
                         const actionsMenu = document.getElementById('actionsMenu');
+                        if (actionsMenu) {
                             if (actionsMenu.style.display === 'block') {
                                 actionsMenu.style.display = 'none';
                             } else {
                                 actionsMenu.style.display = 'block';
+                            }
                         }
                     });
                     
@@ -876,7 +826,7 @@ document.addEventListener('DOMContentLoaded', function() {
             newWindow.document.write('    menu.style.display = menu.style.display === "block" ? "none" : "block";');
             newWindow.document.write('  });');
             newWindow.document.write('  document.getElementById("btnReturnToApp").addEventListener("click", function() {');
-            newWindow.document.write('    window.location.href = "index.php?page=reparations";');
+            newWindow.document.write('    window.history.back();');
             newWindow.document.write('  });');
             newWindow.document.write('  document.getElementById("btnReprint").addEventListener("click", function() {');
             newWindow.document.write('    window.print();');

@@ -349,31 +349,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $photo_path = null;
             if (!empty($_POST['photo_appareil'])) {
                 $photo_data = $_POST['photo_appareil'];
-                error_log("Données photo reçues, longueur: " . strlen($photo_data) . " caractères");
-                
-                // Vérifier l'existence et les permissions du dossier assets/images
-                $base_dir = __DIR__ . '/../assets/';
-                $images_dir = $base_dir . 'images/';
-                
-                if (!file_exists($base_dir)) {
-                    error_log("DOSSIER PARENT BASE NON EXISTANT: " . $base_dir . " - Tentative de création");
-                    if (!mkdir($base_dir, 0777, true)) {
-                        error_log("ÉCHEC création du dossier de base: " . $base_dir);
-                    }
-                }
-                
-                if (!file_exists($images_dir)) {
-                    error_log("DOSSIER IMAGES NON EXISTANT: " . $images_dir . " - Tentative de création");
-                    if (!mkdir($images_dir, 0777, true)) {
-                        error_log("ÉCHEC création du dossier images: " . $images_dir);
-                    }
-                }
                 
                 // Vérifier que la photo est correctement formatée (doit contenir un point-virgule pour le format base64)
                 if (strpos($photo_data, ';') !== false && strpos($photo_data, ',') !== false) {
                     // Extraire les données binaires de l'image
                     list($type, $data_part) = explode(';', $photo_data);
-                    error_log("Type de données photo: " . $type);
                     
                     if (!empty($data_part)) {
                         list(, $base64_data) = explode(',', $data_part);
@@ -384,45 +364,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             // Vérifier que le décodage a réussi
                             if ($decoded_data !== false) {
                                 // Créer le dossier d'upload s'il n'existe pas
-                                $upload_dir = __DIR__ . '/../assets/images/reparations/';
-                                error_log("Chemin absolu du dossier upload: " . $upload_dir);
-                                
+                                $upload_dir = 'assets/images/reparations/';
                                 if (!file_exists($upload_dir)) {
-                                    error_log("Le dossier d'upload n'existe pas, tentative de création");
-                                    if (mkdir($upload_dir, 0777, true)) {
-                                        error_log("Dossier d'upload créé avec succès: " . $upload_dir);
-                                    } else {
-                                        error_log("ERREUR: Impossible de créer le dossier d'upload: " . $upload_dir);
-                                        error_log("Permissions actuelles: " . substr(sprintf('%o', fileperms(dirname($upload_dir))), -4));
-                                    }
-                                } else {
-                                    error_log("Le dossier d'upload existe déjà");
-                                    // Vérifier les permissions d'écriture
-                                    if (is_writable($upload_dir)) {
-                                        error_log("Le dossier d'upload a les permissions d'écriture");
-                                    } else {
-                                        error_log("ERREUR: Le dossier d'upload n'a pas les permissions d'écriture");
-                                        chmod($upload_dir, 0777);
-                                        error_log("Tentative de modification des permissions à 777");
-                                    }
+                                    mkdir($upload_dir, 0777, true);
                                 }
                                 
                                 // Générer un nom unique pour la photo
                                 $photo_name = uniqid('repair_') . '.jpg';
-                                $photo_path_abs = $upload_dir . $photo_name;
-                                $photo_path = 'assets/images/reparations/' . $photo_name; // Chemin relatif pour la BDD
-                                
-                                error_log("Tentative d'enregistrement de la photo: " . $photo_path_abs);
-                                error_log("Taille des données décodées: " . strlen($decoded_data) . " bytes");
+                                $photo_path = $upload_dir . $photo_name;
                                 
                                 // Sauvegarder la photo
-                                $save_result = file_put_contents($photo_path_abs, $decoded_data);
-                                if ($save_result === false) {
-                                    error_log("ERREUR lors de l'enregistrement de la photo avec file_put_contents");
-                                    error_log("Dernier message d'erreur PHP: " . error_get_last()['message']);
+                                if (file_put_contents($photo_path, $decoded_data) === false) {
+                                    error_log("Erreur lors de l'enregistrement de la photo");
                                     $photo_path = null;
-                                } else {
-                                    error_log("Photo enregistrée avec succès: " . $photo_path_abs . " (" . $save_result . " bytes écrits)");
                                 }
                             } else {
                                 error_log("Échec du décodage base64 de la photo");
@@ -720,96 +674,126 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     ");
                     $query_info->execute([$real_repair_id]);
                     $info = $query_info->fetch(PDO::FETCH_ASSOC);
-
-                    if (!$info || empty($info['telephone'])) {
-                        $log_message("ERREUR: Informations client ou téléphone manquantes");
-                        throw new Exception("Informations client ou téléphone manquantes");
-                    }
-
-                    // Nettoyer et formater le numéro de téléphone
-                    $telephone = preg_replace('/[^0-9+]/', '', $info['telephone']);
                     
-                    // Si le numéro commence par 0, le remplacer par +33
-                    if (substr($telephone, 0, 1) === '0') {
-                        $telephone = '+33' . substr($telephone, 1);
-                    }
-                    // Si le numéro commence par 33, ajouter le +
-                    elseif (substr($telephone, 0, 2) === '33') {
-                        $telephone = '+' . $telephone;
-                    }
-                    // Si le numéro ne commence pas par +, l'ajouter
-                    elseif (substr($telephone, 0, 1) !== '+') {
-                        $telephone = '+' . $telephone;
-                    }
-
-                    // S'assurer que nous avons exactement 9 chiffres après le +33
-                    if (substr($telephone, 0, 3) === '+33') {
-                        $digits = substr($telephone, 3);
-                        // Si plus de 9 chiffres, ne garder que les 9 derniers
-                        if (strlen($digits) > 9) {
-                            $telephone = '+33' . substr($digits, -9);
-                        }
-                        // Si moins de 9 chiffres, le numéro est invalide
-                        elseif (strlen($digits) < 9) {
-                            $log_message("ERREUR: Numéro trop court après +33: $telephone");
-                            throw new Exception("Format de numéro de téléphone invalide (trop court)");
-                        }
-                    }
-
-                    // Vérifier que le numéro a le bon format (+33 suivi de 9 chiffres)
-                    if (!preg_match('/^\+33[0-9]{9}$/', $telephone)) {
-                        $log_message("ERREUR: Format de numéro invalide: $telephone");
-                        throw new Exception("Format de numéro de téléphone invalide");
-                    }
-
-                    $log_message("Numéro formaté: $telephone");
-
-                    // Préparer le message avec les variables remplacées
-                    $message = "Bonjour {$info['prenom']}, votre réparation #$real_repair_id a été enregistrée. ";
-                    $message .= "Appareil: {$info['type_appareil']} {$info['modele']}. ";
-                    if (!empty($info['prix_reparation'])) {
-                        $message .= "Prix estimé: " . number_format($info['prix_reparation'], 2, ',', ' ') . "€. ";
-                    }
-                    $message .= "Nous vous tiendrons informé de l'avancement.";
-
-                    $log_message("Message préparé: $message");
-
-                    // Envoyer le SMS via l'API
-                    $ch = curl_init('https://api.sms-gate.app/3rdparty/v1/message');
-                    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-                    curl_setopt($ch, CURLOPT_POST, true);
-                    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode([
-                        'message' => $message,
-                        'phoneNumbers' => [$telephone]
-                    ]));
-                    curl_setopt($ch, CURLOPT_HTTPHEADER, [
-                        'Content-Type: application/json',
-                        'Authorization: Basic ' . base64_encode('-GCB75:Mamanmaman06400')
-                    ]);
-
-                    $response = curl_exec($ch);
-                    $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-                    $curl_error = curl_error($ch);
-                    curl_close($ch);
-
-                    $log_message("Réponse API (HTTP $http_code): $response");
-
-                    if ($http_code >= 200 && $http_code < 300) {
-                        // Enregistrer l'envoi dans la base de données
-                        $stmt = $shop_pdo->prepare("
-                            INSERT INTO reparation_sms (reparation_id, template_id, telephone, message, date_envoi)
-                            VALUES (?, ?, ?, ?, NOW())
+                    $log_message("Informations récupérées: " . ($info ? "OUI" : "NON"));
+                    
+                    if ($info && !empty($info['telephone'])) {
+                        $log_message("Téléphone du client: " . $info['telephone']);
+                        
+                        // Récupérer le template SMS
+                        $conn_settings = getMainDBConnection(); // Utiliser la connexion principale pour les templates
+                        $query_template = $conn_settings->prepare("
+                            SELECT * FROM sms_templates WHERE id = 5 AND est_actif = 1
                         ");
-                        $stmt->execute([
-                            $real_repair_id,
-                            1, // ID du template par défaut
-                            $telephone,
-                            $message
-                        ]);
-                        $log_message("SMS enregistré dans la base de données");
+                        $query_template->execute();
+                        $template = $query_template->fetch(PDO::FETCH_ASSOC);
+                        
+                        $log_message("Template trouvé: " . ($template ? "OUI" : "NON"));
+                        
+                        if ($template) {
+                            // Formatage correct du numéro pour l'API SMS-Gate
+                            // Utiliser exactement la même méthode que dans send_sms.php
+                            $recipient = $info['telephone'];
+                            $recipient = preg_replace('/[^0-9+]/', '', $recipient); // Supprimer tous les caractères non numériques sauf +
+                            
+                            // S'assurer que le numéro commence par un +
+                            if (substr($recipient, 0, 1) !== '+') {
+                                if (substr($recipient, 0, 1) === '0') {
+                                    // Si le numéro commence par 0, le remplacer par +33
+                                    $recipient = '+33' . substr($recipient, 1);
+                                } else if (substr($recipient, 0, 2) === '33') {
+                                    // Si le numéro commence par 33, ajouter simplement un +
+                                    $recipient = '+' . $recipient;
+                                } else {
+                                    // Pour tout autre format, ajouter un +
+                                    $recipient = '+' . $recipient;
+                                }
+                            }
+                            
+                            $log_message("Numéro formaté exactement comme send_sms.php: " . $recipient);
+                            
+                            // *** FIX POUR NUMERO AVEC PRÉFIXE DUPLIQUÉ ***
+                            // Si le numéro commence par +33 et contient 337, c'est probablement un double préfixe
+                            if (substr($recipient, 0, 3) === '+33' && substr($recipient, 3, 2) === '33') {
+                                // Corriger en enlevant le second 33
+                                $recipient = '+33' . substr($recipient, 5);
+                                $log_message("Correction double préfixe: " . $recipient);
+                            }
+                            
+                            // Utiliser le numéro formaté pour l'API
+                            $telephone = $recipient;
+                            
+                            // Préparer le message
+                            $message = $template['contenu'];
+                            
+                            // Remplacements
+                            $replacements = [
+                                '[CLIENT_NOM]' => $info['nom'] ?? '',
+                                '[CLIENT_PRENOM]' => $info['prenom'] ?? '',
+                                '[CLIENT_TELEPHONE]' => $telephone,
+                                '[REPARATION_ID]' => $real_repair_id,
+                                '[APPAREIL_TYPE]' => $info['type_appareil'] ?? '',
+                                '[APPAREIL_MODELE]' => $info['modele'] ?? '',
+                                '[DATE_RECEPTION]' => isset($info['date_reception']) ? date('d/m/Y', strtotime($info['date_reception'])) : date('d/m/Y'),
+                                '[PRIX]' => isset($info['prix_reparation']) ? number_format((float)$info['prix_reparation'], 2, ',', '') : '0,00'
+                            ];
+                            
+                            foreach ($replacements as $var => $value) {
+                                $message = str_replace($var, $value, $message);
+                            }
+                            
+                            $log_message("Message préparé: " . $message);
+                            
+                            // API SMS Gateway
+                            $API_URL = 'https://api.sms-gate.app/3rdparty/v1/message';
+                            $API_USERNAME = '-GCB75';
+                            $API_PASSWORD = 'Mamanmaman06400';
+                            
+                            $sms_data = json_encode([
+                                'message' => $message,
+                                'phoneNumbers' => [$telephone]
+                            ]);
+                            
+                            $curl = curl_init($API_URL);
+                            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+                            curl_setopt($curl, CURLOPT_POST, true);
+                            curl_setopt($curl, CURLOPT_POSTFIELDS, $sms_data);
+                            curl_setopt($curl, CURLOPT_HTTPHEADER, [
+                                'Content-Type: application/json',
+                                'Content-Length: ' . strlen($sms_data)
+                            ]);
+                            curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+                            curl_setopt($curl, CURLOPT_USERPWD, "$API_USERNAME:$API_PASSWORD");
+                            curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+                            curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
+                            curl_setopt($curl, CURLOPT_TIMEOUT, 30);
+                            
+                            // Exécution de la requête
+                            $start_time = microtime(true);
+                            $response = curl_exec($curl);
+                            $end_time = microtime(true);
+                            $duration = round(($end_time - $start_time) * 1000); // en millisecondes
+                            
+                            $status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+                            
+                            $log_message("Code HTTP: $status");
+                            $log_message("Temps d'exécution: $duration ms");
+                            
+                            if ($response === false) {
+                                $error = curl_error($curl);
+                                $log_message("Erreur cURL: " . $error);
+                            } else {
+                                $log_message("Réponse API: $response");
+                                $log_message("SMS envoyé avec succès");
+                                set_message("Réparation ajoutée et SMS envoyé au client!", "success");
+                            }
+                            
+                            curl_close($curl);
+                        } else {
+                            $log_message("ERREUR: Template SMS ID 5 non trouvé ou inactif");
+                        }
                     } else {
-                        $log_message("ERREUR: Échec de l'envoi du SMS - Code HTTP: $http_code, Erreur: $curl_error");
-                        throw new Exception("Échec de l'envoi du SMS");
+                        $log_message("ERREUR: Client sans numéro de téléphone ou infos non trouvées");
                     }
                 } else {
                     error_log("Impossible de récupérer l'ID de réparation pour l'envoi du SMS");
@@ -821,7 +805,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             
             // Rediriger directement vers la page d'impression d'étiquette
             if (isset($real_repair_id) && is_numeric($real_repair_id) && $real_repair_id > 0) {
-                $redirect_url = "https://mdgeek.top/index.php?page=imprimer_etiquette&id=" . $real_repair_id;
+                $redirect_url = "https://mdgeek.fr/index.php?page=imprimer_etiquette&id=" . $real_repair_id;
                 // Remplacer la redirection directe par une redirection JavaScript
                 echo "<script>window.location.href = '$redirect_url';</script>";
                 // Ajouter également une solution de secours au cas où JavaScript est désactivé
@@ -1220,9 +1204,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <input type="text" class="form-control form-control-lg" id="nouveau_prenom_reparation" required>
                     </div>
                     <div class="mb-3">
-                        <label for="nouveau_telephone_reparation" class="form-label">Téléphone * <small class="text-muted">Format international : 331234567890</small></label>
-                        <input type="tel" inputmode="tel" class="form-control form-control-lg" id="nouveau_telephone_reparation" placeholder="331234567890" pattern="[0-9]{11}" maxlength="11" required>
-                        <div class="form-text">Format : 11 chiffres (ex: 331234567890)</div>
+                        <label for="nouveau_telephone_reparation" class="form-label">Téléphone *</label>
+                        <input type="tel" inputmode="tel" class="form-control form-control-lg" id="nouveau_telephone_reparation" required>
                     </div>
                     <!-- Suppression des champs email et adresse selon la demande -->
                 </form>
@@ -2753,22 +2736,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Fonction pour optimiser l'image (réduire la résolution et la compression)
     function optimizeImage(imageDataUrl, callback) {
-        console.log("Optimisation de l'image, format d'entrée:", 
-            imageDataUrl.substring(0, 30) + "..." + imageDataUrl.substring(imageDataUrl.length - 10));
-
-        // Vérifier le format de l'image
-        if (!imageDataUrl.startsWith('data:image/')) {
-            console.error("Format d'image invalide:", imageDataUrl.substring(0, 30));
-            // Essayer de corriger le format s'il manque le préfixe
-            if (imageDataUrl.includes(',')) {
-                imageDataUrl = 'data:image/jpeg;base64,' + imageDataUrl.split(',')[1];
-                console.log("Format corrigé:", imageDataUrl.substring(0, 30) + "...");
-            } else {
-                console.error("Impossible de corriger le format d'image");
-                imageDataUrl = 'data:image/jpeg;base64,' + imageDataUrl;
-            }
-        }
-
         const img = new Image();
         img.onload = function() {
             // Définir des dimensions maximales
@@ -2828,18 +2795,8 @@ document.addEventListener('DOMContentLoaded', function() {
             // Convertir en URL de données
             try {
                 const optimizedDataUrl = canvas.toDataURL('image/jpeg', quality);
-                console.log("Image optimisée avec succès:", 
-                    optimizedDataUrl.substring(0, 30) + "..." + optimizedDataUrl.substring(optimizedDataUrl.length - 10));
-                
-                // Vérifier que le format est correct
-                if (!optimizedDataUrl.startsWith('data:image/')) {
-                    console.error("Format de sortie incorrect, application d'une correction");
-                    const correctedUrl = 'data:image/jpeg;base64,' + optimizedDataUrl.split(',')[1];
-                    callback(correctedUrl);
-                } else {
-                    // Appeler le callback avec l'image optimisée
-                    callback(optimizedDataUrl);
-                }
+                // Appeler le callback avec l'image optimisée
+                callback(optimizedDataUrl);
             } catch (e) {
                 console.error("Erreur lors de l'optimisation de l'image:", e);
                 // En cas d'erreur, utiliser l'image d'origine
@@ -2847,8 +2804,8 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         };
         
-        img.onerror = function(e) {
-            console.error("Erreur lors du chargement de l'image pour optimisation:", e);
+        img.onerror = function() {
+            console.error("Erreur lors du chargement de l'image pour optimisation");
             callback(imageDataUrl); // Utiliser l'image d'origine en cas d'erreur
         };
         
@@ -2900,13 +2857,6 @@ document.addEventListener('DOMContentLoaded', function() {
         // Ajouter un timestamp pour éviter les problèmes de cache
         formData.append('submission_time', Date.now());
         
-        // Log pour débogage des photos
-        console.log('Soumission du formulaire avec photo:', !!document.getElementById('rep_photo_appareil').value);
-        if (document.getElementById('rep_photo_appareil').value) {
-            console.log('Longueur des données photo:', document.getElementById('rep_photo_appareil').value.length);
-            console.log('Début des données photo:', document.getElementById('rep_photo_appareil').value.substring(0, 50) + '...');
-        }
-        
         // Effectuer une requête AJAX pour soumettre le formulaire
         fetch('/index.php?page=ajouter_reparation', {
             method: 'POST',
@@ -2929,7 +2879,7 @@ document.addEventListener('DOMContentLoaded', function() {
             } else if (html.includes('imprimer_etiquette')) {
                 // Si nous pouvons identifier que le HTML contient une référence à imprimer_etiquette
                 const repairId = html.match(/id=(\d+)/i) ? html.match(/id=(\d+)/i)[1] : '';
-                window.location.href = 'https://mdgeek.top/index.php?page=imprimer_etiquette&id=' + repairId;
+                window.location.href = 'https://mdgeek.fr/index.php?page=imprimer_etiquette&id=' + repairId;
             } else {
                 // Soumettre directement le formulaire de manière traditionnelle
                 document.getElementById('rep_reparationForm').removeEventListener('submit', this);

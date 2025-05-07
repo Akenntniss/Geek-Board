@@ -7,6 +7,18 @@ error_reporting(E_ALL);
 // Obtenir la connexion à la base de données du magasin de l'utilisateur
 $shop_pdo = getShopDBConnection();
 
+// Récupérer et stocker l'ID du magasin actuel
+$current_shop_id = $_SESSION['shop_id'] ?? null;
+if (!$current_shop_id) {
+    // Essayer de récupérer depuis l'URL
+    $current_shop_id = $_GET['shop_id'] ?? null;
+    if ($current_shop_id) {
+        $_SESSION['shop_id'] = $current_shop_id;
+    } else {
+        error_log("ALERTE: ID du magasin non trouvé dans la session ou l'URL pour reparations.php");
+    }
+}
+
 // Vérifier que $shop_pdo est accessible et initialisé
 if (!isset($shop_pdo) || $shop_pdo === null) {
     echo "<div class='alert alert-danger'>Erreur de connexion à la base de données. La variable \$shop_pdo n'est pas disponible. Veuillez contacter l'administrateur.</div>";
@@ -4914,3 +4926,26 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 </script>
+
+<!-- Scripts pour gérer l'ID du magasin dans les requêtes AJAX -->
+<script src="../assets/js/session-helper.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Stocker l'ID du magasin pour les requêtes AJAX
+    const shopId = "<?php echo $current_shop_id ?: ''; ?>";
+    if (shopId) {
+        // Stocker l'ID du magasin sur l'élément body
+        document.body.setAttribute('data-shop-id', shopId);
+        console.log('ID du magasin défini sur la page:', shopId);
+        
+        // Si le SessionHelper est disponible, stocker l'ID
+        if (window.SessionHelper) {
+            window.SessionHelper.storeShopId(shopId);
+        }
+    } else {
+        console.warn('Aucun ID de magasin trouvé en session');
+    }
+});
+</script>
+</body>
+</html>

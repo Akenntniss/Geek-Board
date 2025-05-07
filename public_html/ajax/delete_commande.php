@@ -62,12 +62,10 @@ else if (in_array($_SERVER['REMOTE_ADDR'], ['127.0.0.1', '::1']) ||
     error_log("Authentification basée sur IP locale acceptée: " . $_SERVER['REMOTE_ADDR']);
 }
 
-// Contournement spécifique pour le site en production
-$site_domain = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : '';
+// Détection environnement
+$site_domain = $_SERVER['HTTP_HOST'];
 if (strpos($site_domain, 'mdgeek.top') !== false) {
-    // Force l'autorisation si nous sommes sur le domaine de production
-    $is_authorized = true;
-    error_log("Autorisation forcée pour le domaine de production: " . $site_domain);
+    $use_main_connection = true;
 }
 
 // Si l'utilisateur n'est pas autorisé

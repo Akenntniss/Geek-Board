@@ -40,6 +40,33 @@ file_put_contents($logFile, "Session status after start: " . session_status() . 
 file_put_contents($logFile, "Session ID after start: " . session_id() . "\n", FILE_APPEND);
 file_put_contents($logFile, "SESSION data: " . print_r($_SESSION, true) . "\n", FILE_APPEND);
 
+// Récupérer l'ID du magasin, soit de GET, soit de SESSION
+$shop_id = isset($_GET['shop_id']) ? intval($_GET['shop_id']) : null;
+if ($shop_id === null) {
+    $shop_id = isset($_SESSION['shop_id']) ? $_SESSION['shop_id'] : null;
+}
+file_put_contents($logFile, "Shop ID utilisé: " . ($shop_id ?: 'non défini') . "\n", FILE_APPEND);
+
+// Utiliser la connexion à la base de données du magasin
+$pdo = getShopDBConnection();
+if (!$pdo) {
+    file_put_contents($logFile, "ERREUR: Impossible d'obtenir une connexion à la base de données du magasin\n", FILE_APPEND);
+    echo json_encode([
+        'success' => false,
+        'message' => "Erreur de connexion à la base de données"
+    ]);
+    exit;
+}
+
+// Vérifier que nous sommes connectés à la bonne base de données
+try {
+    $check_db_stmt = $pdo->query("SELECT DATABASE() as current_db");
+    $current_db_info = $check_db_stmt->fetch(PDO::FETCH_ASSOC);
+    file_put_contents($logFile, "Base de données connectée: " . ($current_db_info['current_db'] ?? 'inconnue') . "\n", FILE_APPEND);
+} catch (Exception $e) {
+    file_put_contents($logFile, "Erreur lors de la vérification de la base de données: " . $e->getMessage() . "\n", FILE_APPEND);
+}
+
 // Vérifier si l'utilisateur est connecté
 if (!isset($_SESSION['user_id'])) {
     file_put_contents($logFile, "ERROR: Utilisateur non connecté\n", FILE_APPEND);
@@ -188,31 +215,14 @@ function completeActiveRepair($pdo, $user_id, $repair_id, $new_status = 'reparat
         $sms_sent = false;
         $sms_message = '';
         
-        // Déterminer le statut_id en fonction du new_status
-        $statut_id = 0;
-        switch ($new_status) {
-            case 'reparation_effectue':
-                $statut_id = 9;
-                break;
-            case 'reparation_annule':
-                $statut_id = 10;
-                break;
-            case 'restitue':
-                $statut_id = 11;
-                break;
-            case 'nouvelle_commande':
-                $statut_id = 12;  // Assurez-vous que cet ID correspond à "nouvelle_commande" dans votre table statuts
-                break;
-            case 'en_attente_livraison':
-                $statut_id = 13;  // Assurez-vous que cet ID correspond à "en_attente_livraison" dans votre table statuts
-                break;
-            default:
-                // Pour les autres statuts, essayer de le récupérer depuis la base de données
-                $stmt = $pdo->prepare("SELECT id FROM statuts WHERE code = ?");
-                $stmt->execute([$new_status]);
-                $result = $stmt->fetch(PDO::FETCH_ASSOC);
-                $statut_id = $result ? $result['id'] : 0;
-        }
+        // Récupérer directement le statut_id depuis la table statuts pour le nouveau statut
+        $stmt = $pdo->prepare("SELECT id FROM statuts WHERE code = ?");
+        $stmt->execute([$new_status]);
+        $status_result = $stmt->fetch(PDO::FETCH_ASSOC);
+        $statut_id = $status_result ? $status_result['id'] : 0;
+        
+        // Log pour débogage
+        error_log("SMS: Statut code = $new_status, Statut ID trouvé = " . ($statut_id ?: 'non trouvé'));
         
         if ($statut_id > 0) {
             // Vérifier s'il existe un modèle SMS pour ce statut
@@ -225,6 +235,9 @@ function completeActiveRepair($pdo, $user_id, $repair_id, $new_status = 'reparat
             $template = $stmt->fetch(PDO::FETCH_ASSOC);
             
             if ($template) {
+                // Log pour débogage
+                error_log("SMS: Modèle trouvé - " . $template['nom']);
+                
                 // Récupérer les infos du client
                 $stmt = $pdo->prepare("
                     SELECT c.nom as client_nom, c.prenom as client_prenom, c.telephone as client_telephone,
@@ -279,6 +292,9 @@ function completeActiveRepair($pdo, $user_id, $repair_id, $new_status = 'reparat
                         }
                     }
                     
+                    // Log pour débogage
+                    error_log("SMS: Tentative d'envoi à $recipient pour la réparation #$repair_id");
+                    
                     // Préparation des données JSON pour l'API
                     $sms_data = json_encode([
                         'message' => $message,
@@ -320,6 +336,7 @@ function completeActiveRepair($pdo, $user_id, $repair_id, $new_status = 'reparat
                             'message' => "Erreur cURL: $curl_error",
                             'response' => null
                         ];
+                        error_log("SMS: Erreur cURL - $curl_error");
                     } else {
                         // Traitement de la réponse
                         $response_data = json_decode($response, true);
@@ -332,12 +349,14 @@ function completeActiveRepair($pdo, $user_id, $repair_id, $new_status = 'reparat
                                 'response' => $response_data
                             ];
                             $sms_sent = true;
+                            error_log("SMS: Envoyé avec succès - Code $status");
                         } else {
                             $sms_result = [
                                 'success' => false,
                                 'message' => "Erreur lors de l'envoi du SMS: Code $status",
                                 'response' => $response_data
                             ];
+                            error_log("SMS: Échec - Code $status - Réponse: " . json_encode($response_data));
                         }
                     }
                     
@@ -356,15 +375,19 @@ function completeActiveRepair($pdo, $user_id, $repair_id, $new_status = 'reparat
                             $message, 
                             $statut_id
                         ]);
+                        error_log("SMS: Enregistré dans la base de données - template_id: " . $template['id']);
                     }
                 } else {
                     $sms_message = "Le client n'a pas de numéro de téléphone pour SMS.";
-                    error_log("Client sans téléphone pour SMS dans repair_assignment.php");
+                    error_log("SMS: Client sans téléphone pour la réparation #$repair_id");
                 }
             } else {
                 $sms_message = "Aucun modèle SMS disponible pour ce statut.";
-                error_log("Pas de modèle SMS pour statut_id=$statut_id dans repair_assignment.php");
+                error_log("SMS: Pas de modèle SMS pour statut_id=$statut_id dans repair_assignment.php");
             }
+        } else {
+            $sms_message = "Statut non reconnu pour envoi de SMS.";
+            error_log("SMS: Statut non reconnu: $new_status (aucun statut_id trouvé)");
         }
         
         // Valider la transaction

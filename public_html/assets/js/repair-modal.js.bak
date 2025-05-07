@@ -1,7 +1,7 @@
 /**
  * Module de gestion du modal des réparations
  */
-const RepairModal = {
+window.RepairModal = window.RepairModal || {
     // Éléments DOM
     elements: {
         modal: null,
@@ -13,11 +13,20 @@ const RepairModal = {
     config: {
         apiUrl: 'ajax/get_repair_details.php',
     },
+    
+    // Flag d'initialisation
+    _isInitialized: false,
 
     /**
      * Initialise le module
      */
     init() {
+        // Vérifier si déjà initialisé
+        if (this._isInitialized) {
+            console.log('RepairModal déjà initialisé, initialisation ignorée');
+            return;
+        }
+        
         // Récupérer les éléments
         this.elements.modal = document.getElementById('repairDetailsModal');
         this.elements.detailsContainer = document.getElementById('repairDetailsContent');
@@ -54,6 +63,9 @@ const RepairModal = {
         
         // Initialiser les écouteurs pour les actions du modal
         this.initModalActions();
+        
+        // Marquer comme initialisé
+        this._isInitialized = true;
         
         console.log('RepairModal initialisé avec succès');
     },
@@ -100,8 +112,32 @@ const RepairModal = {
         console.log('Chargement des détails pour la réparation ID:', repairId);
         console.log('URL de l\'API:', this.config.apiUrl);
         
+        // Récupérer l'ID du magasin depuis les données de session ou un attribut data
+        let shopId = null;
+        
+        // Tenter de récupérer l'ID du magasin depuis l'élément HTML
+        if (document.body.hasAttribute('data-shop-id')) {
+            shopId = document.body.getAttribute('data-shop-id');
+            console.log('ID du magasin trouvé dans data-shop-id:', shopId);
+        } 
+        // Sinon, essayer de le récupérer depuis le localStorage ou sessionStorage
+        else if (localStorage.getItem('shop_id')) {
+            shopId = localStorage.getItem('shop_id');
+            console.log('ID du magasin trouvé dans localStorage:', shopId);
+        } else if (sessionStorage.getItem('shop_id')) {
+            shopId = sessionStorage.getItem('shop_id');
+            console.log('ID du magasin trouvé dans sessionStorage:', shopId);
+        }
+        
+        // Construire l'URL avec l'ID de la réparation et l'ID du magasin s'il est disponible
+        let apiUrl = `${this.config.apiUrl}?id=${repairId}`;
+        if (shopId) {
+            apiUrl += `&shop_id=${shopId}`;
+        }
+        console.log('URL de l\'API complète:', apiUrl);
+        
         // Récupérer les données
-        fetch(`${this.config.apiUrl}?id=${repairId}`)
+        fetch(apiUrl)
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`Erreur HTTP ${response.status}`);
@@ -196,6 +232,87 @@ const RepairModal = {
         // Générer le contenu HTML
         let html = `
             <div class="row g-4">
+                <!-- Actions -->
+                <div class="col-12 mb-2">
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-header bg-light py-2">
+                            <h5 class="card-title mb-0">
+                                <i class="fas fa-cogs text-primary me-2"></i>
+                                Actions
+                            </h5>
+                        </div>
+                        <div class="card-body pb-0">
+                            <div class="action-buttons">
+                                <!-- Première ligne de 3 boutons -->
+                                <div class="col-4">
+                                    <button class="btn btn-outline-primary w-100 action-btn" data-action="devis">
+                                        <i class="fas fa-file-invoice-dollar"></i>
+                                        <span class="d-block small mt-1">ENVOYER UN DEVIS</span>
+                                    </button>
+                                </div>
+                                <div class="col-4">
+                                    <button class="btn btn-outline-success w-100 action-btn" data-action="status">
+                                        <i class="fas fa-tasks"></i>
+                                        <span class="d-block small mt-1">STATUT</span>
+                                    </button>
+                                </div>
+                                <div class="col-4">
+                                    <button class="btn btn-outline-warning w-100 action-btn" data-action="price">
+                                        <i class="fas fa-euro-sign"></i>
+                                        <span class="d-block small mt-1">PRIX</span>
+                                    </button>
+                                </div>
+                                
+                                <!-- Deuxième ligne de 3 boutons -->
+                                <div class="col-4">
+                                    <button class="btn btn-outline-info w-100 action-btn" data-action="order">
+                                        <i class="fas fa-shopping-cart"></i>
+                                        <span class="d-block small mt-1">COMMANDER</span>
+                                    </button>
+                                </div>
+                                <div class="col-4">
+                                    <button class="btn ${repair.urgent == 1 ? 'btn-danger' : 'btn-outline-danger'} w-100 action-btn toggle-urgent-btn" data-urgent="${repair.urgent == 1 ? '1' : '0'}">
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                        <span class="d-block small mt-1">URGENT</span>
+                                    </button>
+                                </div>
+                                <div class="col-4">
+                                    <button class="btn btn-outline-secondary w-100 action-btn" data-action="print">
+                                        <i class="fas fa-print"></i>
+                                        <span class="d-block small mt-1">IMPRIMER</span>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Ligne pour les boutons client juste en dessous -->
+                            <div class="client-action-buttons mt-2">
+                                <div class="col-4">
+                                    <a href="tel:${repair.client_telephone}" class="btn btn-outline-success w-100 client-action-btn">
+                                        <i class="fas fa-phone-alt"></i>
+                                        <span class="d-block small mt-1">APPEL</span>
+                                    </a>
+                                </div>
+                                <div class="col-4">
+                                    <button class="btn btn-outline-primary w-100 client-action-btn send-sms-btn" 
+                                            data-client-id="${repair.client_id}"
+                                            data-client-nom="${repair.client_nom}"
+                                            data-client-prenom="${repair.client_prenom}"
+                                            data-client-tel="${repair.client_telephone}">
+                                        <i class="fas fa-comment-alt"></i>
+                                        <span class="d-block small mt-1">SMS</span>
+                                    </button>
+                                </div>
+                                <div class="col-4">
+                                    <a href="index.php?page=clients&id=${repair.client_id}" class="btn btn-outline-info w-100 client-action-btn">
+                                        <i class="fas fa-user"></i>
+                                        <span class="d-block small mt-1">DÉTAILS</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Informations client et appareil -->
                 <div class="col-md-6">
                     <div class="card h-100 border-0 shadow-sm mb-3">
@@ -403,65 +520,6 @@ const RepairModal = {
                         </div>
                     </div>
                 </div>
-                
-                <!-- Actions -->
-                <div class="col-12">
-                    <div class="card border-0 shadow-sm">
-                        <div class="card-header bg-light py-2">
-                            <h5 class="card-title mb-0">
-                                <i class="fas fa-cogs text-primary me-2"></i>
-                                Actions
-                            </h5>
-                        </div>
-                        <div class="card-body py-2">
-                            <div class="row g-2 action-buttons">
-                                <!-- Première ligne de 3 icônes -->
-                                <div class="row-icons w-100 mb-2">
-                                    <div class="col-4">
-                                        <button class="btn btn-outline-primary w-100 action-btn" data-action="edit">
-                                            <i class="fas fa-edit"></i>
-                                            <span class="d-block small mt-1">Modifier</span>
-                                        </button>
-                                    </div>
-                                    <div class="col-4">
-                                        <button class="btn btn-outline-success w-100 action-btn" data-action="status">
-                                            <i class="fas fa-tasks"></i>
-                                            <span class="d-block small mt-1">Statut</span>
-                                        </button>
-                                    </div>
-                                    <div class="col-4">
-                                        <button class="btn btn-outline-warning w-100 action-btn" data-action="price">
-                                            <i class="fas fa-euro-sign"></i>
-                                            <span class="d-block small mt-1">Prix</span>
-                                        </button>
-                                    </div>
-                                </div>
-                                
-                                <!-- Deuxième ligne de 3 icônes -->
-                                <div class="row-icons w-100">
-                                    <div class="col-4">
-                                        <button class="btn btn-outline-info w-100 action-btn" data-action="order">
-                                            <i class="fas fa-shopping-cart"></i>
-                                            <span class="d-block small mt-1">Commander</span>
-                                        </button>
-                                    </div>
-                                    <div class="col-4">
-                                        <button class="btn ${repair.urgent == 1 ? 'btn-danger' : 'btn-outline-danger'} w-100 action-btn toggle-urgent-btn" data-urgent="${repair.urgent == 1 ? '1' : '0'}">
-                                            <i class="fas fa-exclamation-triangle"></i>
-                                            <span class="d-block small mt-1">Urgent</span>
-                                        </button>
-                                    </div>
-                                    <div class="col-4">
-                                        <button class="btn btn-outline-secondary w-100 action-btn" data-action="print">
-                                            <i class="fas fa-print"></i>
-                                            <span class="d-block small mt-1">Imprimer</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         `;
         
@@ -572,18 +630,41 @@ const RepairModal = {
                 // Désactiver le bouton pendant l'envoi
                 btn.disabled = true;
                 
+                // Récupérer l'ID du magasin
+                let shopId = null;
+                if (typeof SessionHelper !== 'undefined' && SessionHelper.getShopId) {
+                    shopId = SessionHelper.getShopId();
+                } else if (localStorage.getItem('shop_id')) {
+                    shopId = localStorage.getItem('shop_id');
+                } else if (document.body.hasAttribute('data-shop-id')) {
+                    shopId = document.body.getAttribute('data-shop-id');
+                }
+                
                 // Préparer les données à envoyer
                 const formData = new FormData();
                 formData.append('repair_id', repairId);
                 formData.append('urgent', newState ? 1 : 0);
+                
+                // Ajouter l'ID du magasin s'il est disponible
+                if (shopId) {
+                    formData.append('shop_id', shopId);
+                    console.log("ID du magasin ajouté à la requête urgent:", shopId);
+                }
+                
+                console.log("Données à envoyer pour urgent:", Object.fromEntries(formData));
                 
                 // Effectuer la requête AJAX
                 fetch('ajax/toggle_repair_urgent.php', {
                     method: 'POST',
                     body: formData
                 })
-                .then(response => response.json())
+                .then(response => {
+                    console.log("Réponse urgent statut:", response.status);
+                    return response.json();
+                })
                 .then(data => {
+                    console.log("Données de réponse urgent:", data);
+                    
                     // Réactiver le bouton
                     btn.disabled = false;
                     
@@ -647,6 +728,19 @@ const RepairModal = {
                 this.executeAction(action, repairId);
             });
         });
+        
+        // Initialiser les écouteurs d'événements pour les boutons d'action client
+        document.querySelectorAll('.client-action-btn.send-sms-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const clientId = btn.getAttribute('data-client-id');
+                const clientNom = btn.getAttribute('data-client-nom');
+                const clientPrenom = btn.getAttribute('data-client-prenom');
+                const clientTel = btn.getAttribute('data-client-tel');
+                if (window.openSmsModal && clientId) {
+                    window.openSmsModal(clientId, clientNom, clientPrenom, clientTel);
+                }
+            });
+        });
     },
 
     /**
@@ -658,6 +752,243 @@ const RepairModal = {
         console.log(`Exécution de l'action ${action} pour la réparation ${repairId}`);
         
         switch (action) {
+            case 'devis':
+                // Récupérer les détails de la réparation pour obtenir le prix
+                fetch(`ajax/get_repair_details.php?id=${repairId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success && data.repair) {
+                            const repair = data.repair;
+                            const prix = repair.prix_reparation || '0';
+                            
+                            // Créer une boîte de dialogue personnalisée
+                            const dialogHTML = `
+                                <div class="modal fade" id="devisConfirmModal" tabindex="-1" aria-labelledby="devisConfirmModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header bg-primary text-white">
+                                                <h5 class="modal-title" id="devisConfirmModalLabel">
+                                                    <i class="fas fa-paper-plane me-2"></i>Envoi du devis par SMS
+                                                </h5>
+                                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fermer"></button>
+                                            </div>
+                                            <div class="modal-body pb-0">
+                                                <div class="mb-4">
+                                                    <label for="prixDevis" class="form-label fw-bold fs-5">Montant du devis :</label>
+                                                    <div class="input-group input-group-lg">
+                                                        <input type="number" class="form-control form-control-lg" id="prixDevis" value="${prix}" step="0.01" min="0">
+                                                        <span class="input-group-text">€</span>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="mb-4">
+                                                    <label class="form-label fw-bold fs-5">Type de message :</label>
+                                                    <div class="message-options-container d-flex gap-3">
+                                                        <div class="form-check p-0 message-type-option flex-grow-1 active" id="simpleMessageOption">
+                                                            <label class="w-100 d-flex flex-column align-items-center justify-content-center p-3 text-center">
+                                                                <input class="form-check-input mb-2" type="radio" name="typeMessage" id="messageSimple" value="simple" checked>
+                                                                <i class="fas fa-comment-dollar fs-3 mb-2 option-icon"></i>
+                                                                <strong class="d-block mb-1">Message simple</strong>
+                                                                <span class="text-muted small">Prix uniquement</span>
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check p-0 message-type-option flex-grow-1" id="detailleMessageOption">
+                                                            <label class="w-100 d-flex flex-column align-items-center justify-content-center p-3 text-center">
+                                                                <input class="form-check-input mb-2" type="radio" name="typeMessage" id="messageDetaille" value="detaille">
+                                                                <i class="fas fa-comment-dots fs-3 mb-2 option-icon"></i>
+                                                                <strong class="d-block mb-1">Message détaillé</strong>
+                                                                <span class="text-muted small">Avec notes techniques</span>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div id="notesTechniquesSection" class="mb-4 d-none">
+                                                    <label for="notesTechniques" class="form-label fw-bold fs-5">Notes techniques à inclure :</label>
+                                                    <div class="text-muted mb-2 example-text">
+                                                        <small><i>Exemple : Remplacement Controlleur HS - 89 euro</i></small>
+                                                    </div>
+                                                    <textarea class="form-control notes-techniques" id="notesTechniques" rows="4" placeholder="Exemple:
+Carte Mere HS
+Remplacement du Micro-Controlleur 89 euro">${repair.notes_techniques || ''}</textarea>
+                                                    <small class="text-muted mt-2 d-block notes-help">Ces notes seront ajoutées à la fin du SMS.</small>
+                                                </div>
+                                                
+                                                <div class="alert alert-warning text-dark border border-warning mb-4" style="background-color: rgba(255, 193, 7, 0.15);">
+                                                    <i class="fas fa-info-circle me-2"></i>
+                                                    <span>Le statut de la réparation sera changé à "En attente d'accord client".</span>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-lg btn-outline-secondary" data-bs-dismiss="modal">Annuler</button>
+                                                <button type="button" class="btn btn-lg btn-primary" id="confirmerDevisBtn">
+                                                    <i class="fas fa-paper-plane me-2"></i>Envoyer le devis
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                            
+                            // Ajouter la boîte de dialogue au DOM
+                            const dialogContainer = document.createElement('div');
+                            dialogContainer.innerHTML = dialogHTML;
+                            document.body.appendChild(dialogContainer);
+                            
+                            // Afficher la boîte de dialogue
+                            const devisModal = new bootstrap.Modal(document.getElementById('devisConfirmModal'));
+                            devisModal.show();
+                            
+                            // Gérer l'affichage des notes techniques en fonction du choix
+                            const messageType = document.querySelectorAll('input[name="typeMessage"]');
+                            const notesTechniquesSection = document.getElementById('notesTechniquesSection');
+                            const simpleOption = document.getElementById('simpleMessageOption');
+                            const detailleOption = document.getElementById('detailleMessageOption');
+                            
+                            messageType.forEach(radio => {
+                                radio.addEventListener('change', function() {
+                                    if (this.value === 'detaille') {
+                                        notesTechniquesSection.classList.remove('d-none');
+                                        simpleOption.classList.remove('active');
+                                        detailleOption.classList.add('active');
+                                    } else {
+                                        notesTechniquesSection.classList.add('d-none');
+                                        simpleOption.classList.add('active');
+                                        detailleOption.classList.remove('active');
+                                    }
+                                });
+                            });
+                            
+                            // Ajouter des écouteurs d'événements pour les options entières (pas juste le radio)
+                            simpleOption.addEventListener('click', function() {
+                                document.getElementById('messageSimple').checked = true;
+                                notesTechniquesSection.classList.add('d-none');
+                                simpleOption.classList.add('active');
+                                detailleOption.classList.remove('active');
+                            });
+                            
+                            detailleOption.addEventListener('click', function() {
+                                document.getElementById('messageDetaille').checked = true;
+                                notesTechniquesSection.classList.remove('d-none');
+                                simpleOption.classList.remove('active');
+                                detailleOption.classList.add('active');
+                            });
+                            
+                            // Gérer la soumission du formulaire
+                            document.getElementById('confirmerDevisBtn').addEventListener('click', () => {
+                                // Récupérer les valeurs du formulaire
+                                const prix = document.getElementById('prixDevis').value;
+                                const typeMessage = document.querySelector('input[name="typeMessage"]:checked').value;
+                                const notesTechniques = document.getElementById('notesTechniques').value;
+                                
+                                // Fermer la boîte de dialogue
+                                devisModal.hide();
+                                
+                                // Supprimer la boîte de dialogue du DOM après fermeture
+                                document.getElementById('devisConfirmModal').addEventListener('hidden.bs.modal', function () {
+                                    this.remove();
+                                });
+                                
+                                // Préparer les données
+                                const formData = new FormData();
+                                formData.append('repair_id', repairId);
+                                formData.append('sms_type', 4); // ID du SMS de devis
+                                formData.append('prix', prix);
+                                formData.append('type_message', typeMessage);
+                                if (typeMessage === 'detaille') {
+                                    formData.append('notes_techniques', notesTechniques);
+                                }
+                                
+                                // Récupérer l'ID du magasin
+                                let shopId = null;
+                                if (typeof SessionHelper !== 'undefined' && SessionHelper.getShopId) {
+                                    shopId = SessionHelper.getShopId();
+                                } else if (localStorage.getItem('shop_id')) {
+                                    shopId = localStorage.getItem('shop_id');
+                                } else if (document.body.hasAttribute('data-shop-id')) {
+                                    shopId = document.body.getAttribute('data-shop-id');
+                                }
+                                
+                                // Ajouter l'ID du magasin s'il est disponible
+                                if (shopId) {
+                                    formData.append('shop_id', shopId);
+                                    console.log("ID du magasin ajouté à la requête:", shopId);
+                                }
+                                
+                                console.log("FormData préparée:", {
+                                    repair_id: repairId, 
+                                    sms_type: 4, 
+                                    prix: prix,
+                                    type_message: typeMessage,
+                                    shop_id: shopId,
+                                    ...(typeMessage === 'detaille' ? {notes_techniques: notesTechniques} : {})
+                                });
+                                
+                                // Désactiver les boutons d'action pendant l'envoi
+                                document.querySelectorAll('.action-btn').forEach(btn => {
+                                    btn.disabled = true;
+                                });
+                                
+                                // Envoyer la requête
+                                console.log("Envoi de la requête AJAX à send_devis_sms.php...");
+                                
+                                try {
+                                    fetch('ajax/send_devis_sms.php', {
+                                        method: 'POST',
+                                        body: formData
+                                    })
+                                    .then(response => {
+                                        console.log("Réponse reçue:", response.status, response.statusText);
+                                        if (!response.ok) {
+                                            throw new Error(`Erreur HTTP ${response.status}: ${response.statusText}`);
+                                        }
+                                        return response.json();
+                                    })
+                                    .then(data => {
+                                        console.log("Données de réponse:", data);
+                                        // Réactiver les boutons
+                                        document.querySelectorAll('.action-btn').forEach(btn => {
+                                            btn.disabled = false;
+                                        });
+                                        
+                                        if (data.success) {
+                                            console.log("Devis envoyé avec succès:", data);
+                                            alert('Devis envoyé avec succès');
+                                            // Rafraîchir la page pour voir les modifications
+                                            window.location.reload();
+                                        } else {
+                                            console.error("Erreur d'envoi de devis:", data.error || data.message || "Erreur inconnue");
+                                            alert('Erreur: ' + (data.error || data.message || 'Erreur lors de l\'envoi du devis'));
+                                        }
+                                    })
+                                    .catch(error => {
+                                        console.error('Erreur lors de l\'envoi du devis:', error);
+                                        // Réactiver les boutons
+                                        document.querySelectorAll('.action-btn').forEach(btn => {
+                                            btn.disabled = false;
+                                        });
+                                        alert('Erreur de connexion: ' + error.message);
+                                    });
+                                } catch (e) {
+                                    console.error("Exception critique lors de l'envoi du devis:", e);
+                                    // Réactiver les boutons même en cas d'erreur critique
+                                    document.querySelectorAll('.action-btn').forEach(btn => {
+                                        btn.disabled = false;
+                                    });
+                                    alert('Erreur critique: ' + e.message);
+                                }
+                            });
+                        } else {
+                            console.error('Erreur lors de la récupération des détails de la réparation');
+                            alert('Erreur lors de la récupération des détails de la réparation');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Erreur:', error);
+                        alert('Erreur de connexion: ' + error.message);
+                    });
+                break;
+                
             case 'edit':
                 // Rediriger vers la page de modification
                 window.location.href = `index.php?page=modifier_reparation&id=${repairId}`;
@@ -693,8 +1024,8 @@ const RepairModal = {
                 break;
                 
             case 'print':
-                // Ouvrir la page d'impression d'étiquette au lieu de print_repair.php
-                window.open(`index.php?page=imprimer_etiquette&id=${repairId}`, '_blank');
+                // Ouvrir la page d'impression d'étiquette avec le domaine mdgeek.fr
+                window.open(`https://mdgeek.fr/index.php?page=imprimer_etiquette&id=${repairId}`, '_blank');
                 break;
         }
     },
