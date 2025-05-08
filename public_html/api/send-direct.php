@@ -39,10 +39,26 @@ if (empty($recipient) || empty($message)) {
     exit;
 }
 
+// Formater correctement le numéro de téléphone
+$recipient = preg_replace('/[^0-9+]/', '', $recipient);
+
+// Si le numéro commence par un 0, le remplacer par +33 (pour la France)
+if (substr($recipient, 0, 1) === '0') {
+    $recipient = '+33' . substr($recipient, 1);
+} 
+// Si le numéro commence par 33 sans +, ajouter le +
+elseif (substr($recipient, 0, 2) === '33') {
+    $recipient = '+' . $recipient;
+}
+// Si le numéro ne commence pas par +, l'ajouter
+elseif (substr($recipient, 0, 1) !== '+') {
+    $recipient = '+' . $recipient;
+}
+
 // Vérifier le format du numéro de téléphone
 if (!preg_match('/^\+[0-9]{10,15}$/', $recipient)) {
     http_response_code(400);
-    echo json_encode(['success' => false, 'message' => 'Format de numéro invalide. Utilisez le format international (ex: +33612345678)']);
+    echo json_encode(['success' => false, 'message' => 'Format de numéro invalide après formatage: ' . $recipient]);
     exit;
 }
 

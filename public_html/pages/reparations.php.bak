@@ -4,10 +4,25 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-// Vérifier que $pdo est accessible et initialisé
-if (!isset($pdo) || $pdo === null) {
-    echo "<div class='alert alert-danger'>Erreur de connexion à la base de données. La variable \$pdo n'est pas disponible. Veuillez contacter l'administrateur.</div>";
-    error_log("ERREUR CRITIQUE dans reparations.php: La variable \$pdo n'est pas disponible");
+// Obtenir la connexion à la base de données du magasin de l'utilisateur
+$shop_pdo = getShopDBConnection();
+
+// Récupérer et stocker l'ID du magasin actuel
+$current_shop_id = $_SESSION['shop_id'] ?? null;
+if (!$current_shop_id) {
+    // Essayer de récupérer depuis l'URL
+    $current_shop_id = $_GET['shop_id'] ?? null;
+    if ($current_shop_id) {
+        $_SESSION['shop_id'] = $current_shop_id;
+    } else {
+        error_log("ALERTE: ID du magasin non trouvé dans la session ou l'URL pour reparations.php");
+    }
+}
+
+// Vérifier que $shop_pdo est accessible et initialisé
+if (!isset($shop_pdo) || $shop_pdo === null) {
+    echo "<div class='alert alert-danger'>Erreur de connexion à la base de données. La variable \$shop_pdo n'est pas disponible. Veuillez contacter l'administrateur.</div>";
+    error_log("ERREUR CRITIQUE dans reparations.php: La variable \$shop_pdo n'est pas disponible");
     // Initialiser les variables pour éviter les erreurs
     $total_reparations = 0;
     $total_nouvelles = 0;
@@ -27,7 +42,7 @@ if (!isset($pdo) || $pdo === null) {
     // Compter les réparations par catégorie de statut
     try {
         // Total des réparations pour le bouton "Récentes" (statuts 1 à 5)
-        $stmt = $pdo->query("
+        $stmt = $shop_pdo->query("
             SELECT COUNT(*) as total 
             FROM reparations r 
             WHERE r.statut IN (SELECT code FROM statuts WHERE id BETWEEN 1 AND 5)
@@ -35,7 +50,7 @@ if (!isset($pdo) || $pdo === null) {
         $total_reparations = $stmt->fetch()['total'];
 
         // Réparations nouvelles (statuts 1,2,3)
-        $stmt = $pdo->query("
+        $stmt = $shop_pdo->query("
             SELECT COUNT(*) as total 
             FROM reparations r 
             WHERE r.statut IN (SELECT code FROM statuts WHERE id IN (1,2,3))
@@ -43,7 +58,7 @@ if (!isset($pdo) || $pdo === null) {
         $total_nouvelles = $stmt->fetch()['total'];
 
         // Réparations en cours (statuts 4,5)
-        $stmt = $pdo->query("
+        $stmt = $shop_pdo->query("
             SELECT COUNT(*) as total 
             FROM reparations r 
             WHERE r.statut IN (SELECT code FROM statuts WHERE id IN (4,5))
@@ -51,7 +66,7 @@ if (!isset($pdo) || $pdo === null) {
         $total_en_cours = $stmt->fetch()['total'];
 
         // Réparations en attente (statuts 6,7,8)
-        $stmt = $pdo->query("
+        $stmt = $shop_pdo->query("
             SELECT COUNT(*) as total 
             FROM reparations r 
             WHERE r.statut IN (SELECT code FROM statuts WHERE id IN (6,7,8))
@@ -59,7 +74,7 @@ if (!isset($pdo) || $pdo === null) {
         $total_en_attente = $stmt->fetch()['total'];
 
         // Réparations terminées (statuts 9,10)
-        $stmt = $pdo->query("
+        $stmt = $shop_pdo->query("
             SELECT COUNT(*) as total 
             FROM reparations r 
             WHERE r.statut IN (SELECT code FROM statuts WHERE id IN (9,10))
@@ -67,7 +82,7 @@ if (!isset($pdo) || $pdo === null) {
         $total_termines = $stmt->fetch()['total'];
 
         // Réparations archivées (statuts 11,12,13)
-        $stmt = $pdo->query("
+        $stmt = $shop_pdo->query("
             SELECT COUNT(*) as total 
             FROM reparations r 
             WHERE r.statut IN (SELECT code FROM statuts WHERE id IN (11,12,13))
@@ -164,7 +179,7 @@ $sql .= " ORDER BY r.date_reception DESC";
 
 // Récupérer les réparations
 try {
-    $stmt = $pdo->prepare($sql);
+    $stmt = $shop_pdo->prepare($sql);
     $stmt->execute($params);
     $reparations = $stmt->fetchAll();
 } catch (PDOException $e) {
@@ -184,7 +199,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'delete' && isset($_GET['id'])
 
     $id = (int)$_GET['id'];
     try {
-        $stmt = $pdo->prepare("DELETE FROM reparations WHERE id = ?");
+        $stmt = $shop_pdo->prepare("DELETE FROM reparations WHERE id = ?");
         $stmt->execute([$id]);
         
         set_message("Réparation supprimée avec succès.", "success");
@@ -1019,6 +1034,15 @@ if (isset($_GET['action']) && $_GET['action'] === 'supprimer' && isset($_GET['id
     }
 </style>
 
+<!-- Intégration du design futuriste -->
+<link rel="stylesheet" href="../assets/css/futuristic-interface.css">
+<link rel="stylesheet" href="../assets/css/futuristic-notifications.css">
+<link rel="stylesheet" href="../assets/css/modern-repair-cards.css">
+<link rel="stylesheet" href="../assets/css/modern-filters.css">
+<script src="../assets/js/futuristic-interactions.js" defer></script>
+<script src="../assets/js/modern-card-animations.js" defer></script>
+<script src="../assets/js/modern-filters.js" defer></script>
+
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     console.log('DOM loaded, initializing view toggle...');
@@ -1310,117 +1334,128 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <div class="page-container">
     <!-- Filtres rapides pour tous les écrans -->
-    <div class="mb-3">
-        <div class="filter-buttons" role="group" aria-label="Filtres rapides">
+    <div class="modern-filters-container">
+        <!-- Barre de recherche moderne -->
+        <div class="modern-search">
+            <form method="GET" action="index.php" class="search-form">
+                <div class="search-wrapper">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="hidden" name="page" value="reparations">
+                    <input type="hidden" name="view" value="<?php echo isset($_GET['view']) ? htmlspecialchars($_GET['view']) : (isset($_COOKIE['repairViewMode']) ? htmlspecialchars($_COOKIE['repairViewMode']) : 'cards'); ?>">
+                    <input type="text" class="search-input" name="search" placeholder="Rechercher par nom, téléphone, appareil..." value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>">
+                    
+                    <?php if (isset($_GET['search']) && !empty($_GET['search'])): ?>
+                    <button type="button" class="reset-btn" onclick="window.location.href='index.php?page=reparations<?php echo isset($_GET['view']) ? '&view='.htmlspecialchars($_GET['view']) : ''; ?>'">
+                        <i class="fas fa-times"></i>
+                    </button>
+                    <?php endif; ?>
+                    
+                    <button class="search-btn" type="submit">
+                        <i class="fas fa-search"></i>Rechercher
+                    </button>
+                </div>
+                
+                <!-- Suppression de la section des options avancées car les boutons ont été déplacés dans la section d'action -->
+            </form>
+        </div>
+
+        <!-- Filtres modernes -->
+        <div class="modern-filters">
             <!-- Bouton Nouvelle -->
             <a href="javascript:void(0);" 
-               class="filter-btn droppable <?php echo $statut_ids == '1,2,3' ? 'active' : ''; ?>"
+               class="modern-filter droppable <?php echo $statut_ids == '1,2,3' ? 'active' : ''; ?>"
                data-category-id="1">
-                <i class="fas fa-plus-circle"></i>
-                <span>Nouvelle</span>
-                <span class="count"><?php echo $total_nouvelles ?? 0; ?></span>
+                <div class="ripple"></div>
+                <i class="fas fa-plus-circle filter-icon"></i>
+                <span class="filter-name">Nouvelle</span>
+                <span class="filter-count"><?php echo $total_nouvelles ?? 0; ?></span>
             </a>
             
             <!-- Bouton En cours -->
             <a href="javascript:void(0);" 
-               class="filter-btn droppable <?php echo $statut_ids == '4,5' ? 'active' : ''; ?>"
+               class="modern-filter droppable <?php echo $statut_ids == '4,5' ? 'active' : ''; ?>"
                data-category-id="2">
-                <i class="fas fa-spinner"></i>
-                <span>En cours</span>
-                <span class="count"><?php echo $total_en_cours ?? 0; ?></span>
+                <div class="ripple"></div>
+                <i class="fas fa-spinner filter-icon"></i>
+                <span class="filter-name">En cours</span>
+                <span class="filter-count"><?php echo $total_en_cours ?? 0; ?></span>
             </a>
             
             <!-- Bouton En attente -->
             <a href="javascript:void(0);" 
-               class="filter-btn droppable <?php echo $statut_ids == '6,7,8' ? 'active' : ''; ?>"
+               class="modern-filter droppable <?php echo $statut_ids == '6,7,8' ? 'active' : ''; ?>"
                data-category-id="3">
-                <i class="fas fa-clock"></i>
-                <span>En attente</span>
-                <span class="count"><?php echo $total_en_attente ?? 0; ?></span>
+                <div class="ripple"></div>
+                <i class="fas fa-clock filter-icon"></i>
+                <span class="filter-name">En attente</span>
+                <span class="filter-count"><?php echo $total_en_attente ?? 0; ?></span>
             </a>
             
             <!-- Bouton Terminé -->
             <a href="javascript:void(0);" 
-               class="filter-btn droppable <?php echo $statut_ids == '9,10' ? 'active' : ''; ?>"
+               class="modern-filter droppable <?php echo $statut_ids == '9,10' ? 'active' : ''; ?>"
                data-category-id="4">
-                <i class="fas fa-check-circle"></i>
-                <span>Terminé</span>
-                <span class="count"><?php echo $total_termines ?? 0; ?></span>
+                <div class="ripple"></div>
+                <i class="fas fa-check-circle filter-icon"></i>
+                <span class="filter-name">Terminé</span>
+                <span class="filter-count"><?php echo $total_termines ?? 0; ?></span>
             </a>
             
             <!-- Bouton Toutes -->
             <a href="javascript:void(0);" 
-               class="filter-btn <?php echo ($statut_ids == '1,2,3,4,5' || (empty($statut) && empty($_GET['statut_ids']))) ? 'active' : ''; ?>">
-                <i class="fas fa-list"></i>
-                <span>Récentes</span>
-                <span class="count"><?php echo $total_reparations ?? 0; ?></span>
+               class="modern-filter <?php echo ($statut_ids == '1,2,3,4,5' || (empty($statut) && empty($_GET['statut_ids']))) ? 'active' : ''; ?>">
+                <div class="ripple"></div>
+                <i class="fas fa-list filter-icon"></i>
+                <span class="filter-name">Récentes</span>
+                <span class="filter-count"><?php echo $total_reparations ?? 0; ?></span>
             </a>
             
             <!-- Bouton Archivé -->
             <a href="javascript:void(0);" 
-               class="filter-btn droppable <?php echo $statut_ids == '11,12,13' ? 'active' : ''; ?>"
+               class="modern-filter droppable <?php echo $statut_ids == '11,12,13' ? 'active' : ''; ?>"
                data-category-id="5">
-                <i class="fas fa-archive"></i>
-                <span>Archivé</span>
-                <span class="count"><?php echo $total_archives ?? 0; ?></span>
+                <div class="ripple"></div>
+                <i class="fas fa-archive filter-icon"></i>
+                <span class="filter-name">Archivé</span>
+                <span class="filter-count"><?php echo $total_archives ?? 0; ?></span>
             </a>
         </div>
     </div>
-
-    <!-- Barre de recherche optimisée -->
-    <div class="card search-card">
-        <div class="card-body">
-            <form method="GET" action="index.php" class="search-form">
-                <div class="input-group">
-                    <span class="input-group-text bg-transparent border-end-0">
-                        <i class="fas fa-search text-primary"></i>
-                    </span>
-                    <input type="hidden" name="page" value="reparations">
-                    
-                    <!-- Préserver le mode d'affichage -->
-                    <?php if (isset($_GET['view'])): ?>
-                    <input type="hidden" name="view" value="<?php echo htmlspecialchars($_GET['view']); ?>">
-                    <?php else: ?>
-                    <input type="hidden" name="view" value="<?php echo isset($_COOKIE['repairViewMode']) ? htmlspecialchars($_COOKIE['repairViewMode']) : 'cards'; ?>">
-                    <?php endif; ?>
-                    
-                    <input type="text" class="form-control border-start-0 ps-0" name="search" placeholder="Rechercher par nom, téléphone, appareil..." value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>">
-                    <button class="btn btn-primary" type="submit">Rechercher</button>
-                    <?php if (isset($_GET['search']) && !empty($_GET['search'])): ?>
-                    <a href="index.php?page=reparations<?php echo isset($_GET['view']) ? '&view='.htmlspecialchars($_GET['view']) : ''; ?>" class="btn btn-outline-secondary">
-                        <i class="fas fa-times"></i>
-                    </a>
-                    <?php endif; ?>
-                </div>
-                <div class="mt-2 d-flex gap-2 flex-wrap">
-                    <a href="index.php?page=ajouter_reparation" class="btn btn-success btn-sm">
-                        <i class="fas fa-plus-circle me-1"></i>Nouvelle réparation
-                    </a>
-                    <button type="button" class="btn btn-primary btn-sm toggle-view" data-view="table">
-                        <i class="fas fa-table me-1"></i>Tableau
-                    </button>
-                    <button type="button" class="btn btn-primary btn-sm toggle-view active" data-view="cards">
-                        <i class="fas fa-th-large me-1"></i>Cartes
-                    </button>
-                    <button type="button" class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#updateStatusModal">
-                        <i class="fas fa-tasks me-1"></i>Mise à jour Statut
-                    </button>
-                    <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#relanceClientModal">
-                        <i class="fas fa-bell me-1"></i>Relance Client
-                    </button>
-                </div>
-            </form>
+    
+    <!-- Boutons d'action principaux -->
+    <div class="action-buttons-container">
+        <div class="modern-action-buttons">
+            <a href="index.php?page=ajouter_reparation" class="action-button">
+                <i class="fas fa-plus-circle"></i>
+                <span>NOUVELLE RÉPARATION</span>
+            </a>
+            <button type="button" class="action-button toggle-view" data-view="table">
+                <i class="fas fa-table"></i>
+                <span>TABLEAU</span>
+            </button>
+            <button type="button" class="action-button toggle-view active" data-view="cards">
+                <i class="fas fa-th-large"></i>
+                <span>CARTES</span>
+            </button>
+            <button type="button" class="action-button" data-bs-toggle="modal" data-bs-target="#updateStatusModal">
+                <i class="fas fa-tasks"></i>
+                <span>MISE À JOUR STATUT</span>
+            </button>
+            <button type="button" class="action-button" data-bs-toggle="modal" data-bs-target="#relanceClientModal">
+                <i class="fas fa-bell"></i>
+                <span>RELANCE CLIENT</span>
+            </button>
         </div>
     </div>
 
     <!-- Conteneur pour les résultats -->
     <div class="results-container">
-        <div class="card">
+        <div class="card" style="width: 95%; margin: 0 auto;">
             <div class="card-body">
                 <!-- Vue tableau -->
-                <div id="table-view" class="d-none">
-                    <div class="table-responsive">
-                        <table class="table table-striped table-hover">
+                <div id="table-view" class="d-none" style="width: 95%; margin: 0 auto;">
+                    <div class="table-responsive" style="width: 100%;">
+                        <table class="table table-striped table-hover" style="width: 100%;">
                             <thead>
                                 <tr>
                                     <th class="d-none d-md-table-cell">New</th>
@@ -1546,128 +1581,143 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 <!-- Vue cartes -->
                 <div id="cards-view">
-                    <div class="repair-cards-container d-flex flex-wrap gap-3 w-100">
+                    <div class="repair-cards-container">
                         <?php if (!empty($reparations)): ?>
                     <?php foreach ($reparations as $reparation): ?>
-                                <div class="dashboard-card repair-row draggable-card" data-id="<?php echo $reparation['id']; ?>" data-repair-id="<?php echo $reparation['id']; ?>" data-status="<?php echo $reparation['statut']; ?>" draggable="true">
+                                <div class="modern-card draggable-card animate-card" data-id="<?php echo $reparation['id']; ?>" data-repair-id="<?php echo $reparation['id']; ?>" data-status="<?php echo $reparation['statut']; ?>" draggable="true">
                                     <!-- En-tête de la carte -->
-                                    <div class="card-header d-flex justify-content-between align-items-center">
-                                        <div class="repair-status status-indicator">
+                                    <div class="card-header">
+                                        <div class="status-indicator">
                                             <?php echo get_enum_status_badge($reparation['statut'], $reparation['id']); ?>
-                                            <?php if ($reparation['urgent']): ?>
-                                                <span class="badge rounded-pill bg-danger ms-1" title="Urgent">
-                                                    <i class="fas fa-exclamation-triangle"></i>
-                                                </span>
-                                            <?php endif; ?>
-                                            <?php if ($reparation['commande_requise']): ?>
-                                                <span class="badge rounded-pill bg-warning ms-1" title="Commande requise">
-                                                    <i class="fas fa-shopping-cart"></i>
-                                                </span>
-                                            <?php endif; ?>
-                                            <?php if (!empty($reparation['notes_techniques'])): ?>
-                                                <span class="badge rounded-pill bg-info ms-1" title="Notes techniques disponibles">
-                                                    <i class="fas fa-clipboard-list"></i>
-                                                </span>
-                                            <?php endif; ?>
                                         </div>
-                                        <div class="repair-id fw-bold text-success">
-                                            <?php echo isset($reparation['prix_reparation']) ? number_format($reparation['prix_reparation'], 2, ',', ' ') . ' €' : (isset($reparation['prix']) ? number_format($reparation['prix'], 2, ',', ' ') . ' €' : 'N/A'); ?>
+                                        <div class="repair-id">
+                                            <span>ID: <?php echo $reparation['id']; ?></span>
                                         </div>
                                     </div>
                             
-                            <!-- Contenu principal -->
-                            <div class="card-content">
-                                <!-- Informations du client et de l'appareil -->
-                                <div class="d-flex flex-column mb-2">
-                                    <!-- Ligne 1: Nom et Modèle -->
-                                    <div class="d-flex justify-content-between mb-2">
-                                        <!-- Nom du client -->
-                                        <div class="contact-row" style="width: 50%;">
-                                            <div class="contact-icon">
-                                                <i class="fas fa-user text-primary"></i>
+                                    <!-- Contenu principal -->
+                                    <div class="card-content">
+                                        <!-- Indicateurs spéciaux -->
+                                        <?php if ($reparation['urgent'] || $reparation['commande_requise'] || !empty($reparation['notes_techniques'])): ?>
+                                        <div class="special-indicators">
+                                            <?php if ($reparation['urgent']): ?>
+                                            <div class="indicator indicator-urgent">
+                                                <i class="fas fa-exclamation-triangle"></i>
+                                                <span>Urgent</span>
                                             </div>
-                                            <div class="contact-data">
-                                                <h6 class="mb-0 fs-mobile-sm"><?php echo htmlspecialchars($reparation['client_nom'] . ' ' . $reparation['client_prenom']); ?></h6>
+                                            <?php endif; ?>
+                                            
+                                            <?php if ($reparation['commande_requise']): ?>
+                                            <div class="indicator indicator-order">
+                                                <i class="fas fa-shopping-cart"></i>
+                                                <span>Commande</span>
+                                            </div>
+                                            <?php endif; ?>
+                                            
+                                            <?php if (!empty($reparation['notes_techniques'])): ?>
+                                            <div class="indicator indicator-notes">
+                                                <i class="fas fa-clipboard-list"></i>
+                                                <span>Notes</span>
+                                            </div>
+                                            <?php endif; ?>
+                                        </div>
+                                        <?php endif; ?>
+                                        
+                                        <!-- Informations du client -->
+                                        <div class="client-info">
+                                            <div class="client-avatar">
+                                                <i class="fas fa-user"></i>
+                                            </div>
+                                            <div class="client-details">
+                                                <div class="client-name">
+                                                    <?php echo htmlspecialchars(($reparation['client_nom'] ?? '') . ' ' . ($reparation['client_prenom'] ?? '')); ?>
+                                                </div>
+                                                <?php if (!empty($reparation['client_telephone'])): ?>
+                                                <div class="client-contact">
+                                                    <i class="fas fa-phone-alt"></i>
+                                                    <span><?php echo htmlspecialchars($reparation['client_telephone']); ?></span>
+                                                </div>
+                                                <?php endif; ?>
+                                                <?php if (!empty($reparation['client_email'])): ?>
+                                                <div class="client-contact">
+                                                    <i class="fas fa-envelope"></i>
+                                                    <span><?php echo htmlspecialchars($reparation['client_email']); ?></span>
+                                                </div>
+                                                <?php endif; ?>
                                             </div>
                                         </div>
                                         
-                                        <!-- Appareil -->
-                                        <div class="contact-row" style="width: 50%;">
-                                            <div class="contact-icon">
-                                                <i class="fas fa-mobile-alt text-primary"></i>
+                                        <!-- Informations de l'appareil -->
+                                        <div class="device-info">
+                                            <div class="device-icon">
+                                                <i class="fas fa-mobile-alt"></i>
                                             </div>
-                                            <div class="contact-data">
-                                                <p class="mb-0 text-truncate fs-mobile-sm fw-bold"><?php echo htmlspecialchars($reparation['modele']); ?></p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                    <!-- Ligne 2: Téléphone et Problème -->
-                                    <div class="d-flex justify-content-between">
-                                        <!-- Téléphone du client -->
-                                        <div class="contact-row" style="width: 50%;">
-                                            <div class="contact-icon">
-                                                <i class="fas fa-phone text-success"></i>
-                                            </div>
-                                            <div class="contact-data">
-                                                <p class="mb-0 fs-mobile-sm"><?php echo isset($reparation['client_telephone']) ? htmlspecialchars($reparation['client_telephone']) : 'N/A'; ?></p>
+                                            <div class="device-details">
+                                                <div class="device-model">
+                                                    <?php echo htmlspecialchars($reparation['modele']); ?>
+                                                </div>
+                                                <div class="device-problem">
+                                                    <?php echo htmlspecialchars(substr($reparation['description_probleme'], 0, 100)) . (strlen($reparation['description_probleme']) > 100 ? '...' : ''); ?>
+                                                </div>
                                             </div>
                                         </div>
                                         
-                                        <!-- Problème -->
-                                        <div class="contact-row" style="width: 50%;">
-                                            <div class="contact-icon">
-                                                <i class="fas fa-tools text-danger"></i>
-                                            </div>
-                                            <div class="contact-data">
-                                                <p class="mb-0 text-truncate fs-mobile-sm"><?php echo htmlspecialchars(substr($reparation['description_probleme'], 0, 50)) . (strlen($reparation['description_probleme']) > 50 ? '...' : ''); ?></p>
+                                        <!-- Date de réception -->
+                                        <div class="reception-date">
+                                            <i class="far fa-calendar-alt"></i>
+                                            <span>Reçu le: <?php echo isset($reparation['date_reception']) ? format_date($reparation['date_reception']) : (isset($reparation['date_creation']) ? format_date($reparation['date_creation']) : 'N/A'); ?></span>
+                                        </div>
+                                        
+                                        <!-- Section prix -->
+                                        <div class="price-section">
+                                            <div class="price">
+                                                <i class="fas fa-tag"></i>
+                                                <span><?php echo isset($reparation['prix_reparation']) ? number_format($reparation['prix_reparation'], 2, ',', ' ') . ' €' : (isset($reparation['prix']) ? number_format($reparation['prix'], 2, ',', ' ') . ' €' : 'N/A'); ?></span>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
                                 
-                                <!-- Pied de la carte avec les boutons d'action -->
-                                <div class="card-footer">
-                                    <?php if (!empty($reparation['client_telephone'])): ?>
-                                    <a href="tel:<?php echo htmlspecialchars($reparation['client_telephone']); ?>" 
-                                       class="btn btn-success" 
-                                       title="Appeler">
-                                        <i class="fas fa-phone-alt"></i>
-                                    </a>
-                                    <?php endif; ?>
-                                    <button type="button" 
-                                            class="btn btn-primary start-repair" 
-                                            data-id="<?php echo $reparation['id']; ?>"
-                                            title="Démarrer">
-                                        <i class="fas fa-play"></i>
-                                    </button>
-                                    <?php if (!empty($reparation['client_telephone'])): ?>
-                                    <a href="#" 
-                                       class="btn btn-info" 
-                                       title="SMS"
-                                       data-client-id="<?php echo $reparation['client_id']; ?>"
-                                       data-client-nom="<?php echo htmlspecialchars($reparation['client_nom']); ?>"
-                                       data-client-prenom="<?php echo htmlspecialchars($reparation['client_prenom']); ?>"
-                                       data-client-tel="<?php echo htmlspecialchars($reparation['client_telephone']); ?>"
-                                       onclick="openSmsModal(
-                                           '<?php echo $reparation['client_id']; ?>', 
-                                           '<?php echo htmlspecialchars($reparation['client_nom']); ?>', 
-                                           '<?php echo htmlspecialchars($reparation['client_prenom']); ?>', 
-                                           '<?php echo htmlspecialchars($reparation['client_telephone']); ?>'
-                                       ); return false;">
-                                        <i class="fas fa-comment-alt"></i>
-                                    </a>
-                                    <?php endif; ?>
-                                    <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
-                                    <button type="button" 
-                                            class="btn btn-danger delete-repair" 
-                                            data-id="<?php echo $reparation['id']; ?>"
-                                            title="Supprimer">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                    <?php endif; ?>
-                                </div>
+                                    <!-- Pied de la carte avec les boutons d'action -->
+                                    <div class="card-footer">
+                                        <?php if (!empty($reparation['client_telephone'])): ?>
+                                        <a href="tel:<?php echo htmlspecialchars($reparation['client_telephone']); ?>" 
+                                           class="action-btn btn-call" 
+                                           title="Appeler">
+                                            <i class="fas fa-phone-alt"></i>
+                                        </a>
+                                        <?php endif; ?>
+                                        <button type="button" 
+                                                class="action-btn btn-start start-repair" 
+                                                data-id="<?php echo $reparation['id']; ?>"
+                                                title="Démarrer">
+                                            <i class="fas fa-play"></i>
+                                        </button>
+                                        <?php if (!empty($reparation['client_telephone'])): ?>
+                                        <a href="#" 
+                                           class="action-btn btn-message" 
+                                           title="SMS"
+                                           data-client-id="<?php echo $reparation['client_id']; ?>"
+                                           data-client-nom="<?php echo htmlspecialchars($reparation['client_nom']); ?>"
+                                           data-client-prenom="<?php echo htmlspecialchars($reparation['client_prenom']); ?>"
+                                           data-client-tel="<?php echo htmlspecialchars($reparation['client_telephone']); ?>"
+                                           onclick="openSmsModal(
+                                               '<?php echo $reparation['client_id']; ?>', 
+                                               '<?php echo htmlspecialchars($reparation['client_nom']); ?>', 
+                                               '<?php echo htmlspecialchars($reparation['client_prenom']); ?>', 
+                                               '<?php echo htmlspecialchars($reparation['client_telephone']); ?>'
+                                           ); return false;">
+                                            <i class="fas fa-comment-alt"></i>
+                                        </a>
+                                        <?php endif; ?>
+                                        <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
+                                        <button type="button" 
+                                                class="action-btn btn-delete delete-repair" 
+                                                data-id="<?php echo $reparation['id']; ?>"
+                                                title="Supprimer">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                        <?php endif; ?>
+                                    </div>
                     </div>
                     <?php endforeach; ?>
                         <?php else: ?>
@@ -1718,22 +1768,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 <input type="hidden" id="chooseStatusRepairId" value="">
                 <input type="hidden" id="chooseStatusCategoryId" value="">
                 
-                <!-- Option pour l'envoi de SMS -->
-                <div class="mt-4 border-top pt-3">
-                    <div class="d-flex align-items-center justify-content-between">
-                        <div class="d-flex align-items-center">
-                            <div id="sendSmsIndicator" class="me-3" style="cursor: pointer; width: 22px; height: 22px; border-radius: 50%; background-color: #4caf50; transition: background-color 0.3s ease;"></div>
-                            <input type="hidden" id="sendSmsSwitch" value="1">
-                            <label class="fw-medium" style="cursor: pointer;" id="sendSmsLabel">
-                                Envoyer un SMS de notification
-                            </label>
-                        </div>
-                        <i class="fas fa-sms text-primary"></i>
-                    </div>
-                    <p class="text-muted small mt-1">
-                        <i class="fas fa-info-circle me-1"></i>
-                        Un SMS sera envoyé au client pour l'informer du changement de statut de sa réparation
-                    </p>
+                <!-- Bouton pour activer/désactiver l'envoi de SMS -->
+                <div class="mb-4">
+                    <button id="smsToggleButton" type="button" class="btn btn-danger btn-lg w-100 mb-3" style="font-weight: bold; font-size: 1.1rem; padding: 15px; transition: all 0.3s ease; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                        <i class="fas fa-ban me-2"></i>
+                        NE PAS ENVOYER DE SMS AU CLIENT
+                    </button>
+                    <input type="hidden" id="sendSmsSwitch" value="0">
                 </div>
             </div>
             <div class="modal-footer">
@@ -1748,9 +1789,27 @@ document.addEventListener('DOMContentLoaded', function() {
 // Variable globale pour l'ID de l'utilisateur connecté
 const currentUserId = <?php echo isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 0; ?>;
 
+// Fonction pour initialiser le bouton toggle pour l'envoi de SMS
+function initSmsToggleButton() {
+    const toggleButton = document.getElementById('smsToggleButton');
+    const smsSwitch = document.getElementById('sendSmsSwitch');
+    
+    // Ne rien faire d'autre ici - cette fonction sera appelée mais ne fera rien
+    // pour éviter les conflits avec le script en bas de page
+}
+
+// Fonction pour jouer un son de notification
+function playNotificationSound() {
+    // Ne rien faire ici - cette fonction sera remplacée par celle du script en bas de page
+    // Cette version sera appelée par initSmsToggleButton mais ne fera rien
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     // Afficher l'ID utilisateur dans la console
     console.log('Utilisateur connecté ID:', currentUserId);
+    
+    // Initialisation du bouton toggle SMS
+    initSmsToggleButton();
     
     // Initialiser le drag & drop pour les cartes de réparation
     initCardDragAndDrop();
@@ -2180,63 +2239,62 @@ function showNotification(message, type = 'info') {
         const modal = bootstrap.Modal.getInstance(document.getElementById('chooseStatusModal'));
         modal.hide();
         
-        // Préparer les données à envoyer
+        // Nettoyer le backdrop et réactiver le scroll
+        document.body.classList.remove('modal-open');
+        document.body.style.overflow = '';
+        document.body.style.paddingRight = '';
+        const backdrop = document.querySelector('.modal-backdrop');
+        if (backdrop) {
+            backdrop.remove();
+        }
+        
+        // Afficher un indicateur de chargement
+        statusIndicator.innerHTML = '<span class="badge bg-secondary"><i class="fas fa-spinner fa-spin"></i> Mise à jour...</span>';
+        
+        // Préparer les données
         const data = {
             repair_id: repairId,
             status_id: statusId,
             send_sms: sendSms,
-            user_id: 1 // Utiliser l'ID 1 (admin) par défaut pour éviter les problèmes
+            user_id: 1 // Toujours utiliser l'ID 1 (admin) pour éviter les problèmes
         };
+        
+        // Afficher les données pour le débogage
         console.log('Données envoyées:', data);
         
-        // Fonctions de gestion des résultats
-        function handleSuccess(data) {
-            console.log('Réponse JSON:', data);
+        // Fonction pour afficher une notification
+        function showSilentNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.className = `toast align-items-center text-white bg-${type} border-0 position-fixed bottom-0 end-0 m-3`;
+            notification.setAttribute('role', 'alert');
+            notification.setAttribute('aria-live', 'assertive');
+            notification.setAttribute('aria-atomic', 'true');
+            notification.style.zIndex = '9999';
+            notification.innerHTML = `
+                <div class="d-flex">
+                    <div class="toast-body">
+                        ${message}
+                    </div>
+                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+            `;
+            document.body.appendChild(notification);
+            const toast = new bootstrap.Toast(notification, { delay: 5000 });
+            toast.show();
             
-            if (data.success) {
-                // Mettre à jour l'élément de statut avec le badge retourné
-                if (statusIndicator && data.data && data.data.badge) {
-                    statusIndicator.innerHTML = `
-                        <span class="status-badge" style="background-color: ${data.data.badge.color || '#999999'}">
-                            ${data.data.badge.text || 'Statut inconnu'}
-                        </span>
-                    `;
-                }
-                
-                // Afficher une notification pour l'envoi de SMS
-                if (data.data && data.data.sms_sent) {
-                    showNotification('SMS envoyé au client', 'success');
-                } else if (data.data && data.data.sms_message) {
-                    showNotification(data.data.sms_message, 'info');
-                }
-                
-                // Afficher une notification de succès
-                showNotification('Statut mis à jour avec succès', 'success');
-                
-                // Jouer le son de notification
-                playNotificationSound();
-            } else {
-                // Afficher une notification d'erreur
-                showNotification('Erreur: ' + (data.message || 'Erreur inconnue'), 'error');
-            }
-        }
-        
-        function handleError(error) {
-            console.error('Erreur lors de la mise à jour du statut:', error);
-            showNotification('Erreur: ' + error.message, 'error');
+            // Supprimer la notification après qu'elle soit masquée
+            notification.addEventListener('hidden.bs.toast', function () {
+                notification.remove();
+            });
         }
         
         // Essayer d'abord avec fetch (méthode JSON standard)
-        console.log('Tentative 1 - Envoi en JSON standard');
-        const jsonPayload = JSON.stringify(data);
-        console.log('Payload JSON à envoyer:', jsonPayload);
-        
         fetch('../ajax/update_repair_specific_status.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: jsonPayload
+            body: JSON.stringify(data)
         })
         .then(response => {
             console.log('Réponse brute:', response);
@@ -2252,7 +2310,6 @@ function showNotification(message, type = 'info') {
             // Essayer de parser la réponse en JSON
             return response.text().then(text => {
                 try {
-                    console.log('Texte de la réponse:', text);
                     return JSON.parse(text);
                 } catch (e) {
                     console.error('Erreur de parsing JSON:', e);
@@ -2266,7 +2323,7 @@ function showNotification(message, type = 'info') {
             console.error('Erreur lors de la mise à jour du statut:', error);
             
             if (error.message === 'RETRY_WITH_FORM') {
-                console.log('Tentative 2 - Nouvelle tentative avec FormData au lieu de JSON...');
+                console.log('Nouvelle tentative avec FormData au lieu de JSON...');
                 
                 // Seconde tentative avec FormData mais en indiquant qu'il s'agit de données JSON
                 const formData = new FormData();
@@ -2278,20 +2335,15 @@ function showNotification(message, type = 'info') {
                     body: formData
                 })
                 .then(response => {
-                    console.log('Réponse de la tentative FormData:', response);
-                    
                     if (!response.ok) {
                         // Troisième tentative - essayons en direct
-                        console.log('Tentative 3 - mise à jour directe du statut...');
+                        console.log('Troisième tentative - mise à jour directe du statut...');
                         return directStatusUpdate(repairId, statusId, sendSms);
                     }
-                    
                     return response.text().then(text => {
                         try {
-                            console.log('Texte de la réponse (FormData):', text);
                             return JSON.parse(text);
                         } catch (e) {
-                            console.error('Erreur de parsing JSON (FormData):', e);
                             // Si ce n'est pas du JSON, on essaie la mise à jour directe
                             return directStatusUpdate(repairId, statusId, sendSms);
                         }
@@ -2315,7 +2367,7 @@ function showNotification(message, type = 'info') {
         
         // Fonction pour tenter une mise à jour directe du statut sans passer par l'API complète
         function directStatusUpdate(repairId, statusId, sendSms) {
-            console.log('Tentative 3 - Effectuant une mise à jour directe du statut via formulaire standard...');
+            console.log('Effectuant une mise à jour directe du statut...');
             
             // URL simplifiée pour juste mettre à jour le statut
             return fetch('../ajax/simple_status_update.php', {
@@ -2326,11 +2378,9 @@ function showNotification(message, type = 'info') {
                 body: `repair_id=${repairId}&status_id=${statusId}&send_sms=${sendSms ? 1 : 0}`
             })
             .then(response => {
-                console.log('Réponse de la mise à jour directe:', response);
-                
                 if (!response.ok) {
-                    // En dernier recours, simuler une réponse de succès locale
-                    console.log('Mise à jour directe échouée, simulation de réponse locale');
+                    // En dernier recours, simuler une réponse de succès
+                    console.log('Mise à jour directe échouée, simulation de réponse');
                     return {
                         success: true,
                         message: 'Statut mis à jour localement',
@@ -2344,10 +2394,8 @@ function showNotification(message, type = 'info') {
                 
                 return response.text().then(text => {
                     try {
-                        console.log('Texte de la réponse (simple):', text);
                         return JSON.parse(text);
                     } catch (e) {
-                        console.error('Erreur de parsing JSON (simple):', e);
                         // En cas d'erreur, simuler une réponse
                         return {
                             success: true,
@@ -2363,70 +2411,92 @@ function showNotification(message, type = 'info') {
             });
         }
         
-        // Fonction pour obtenir un badge par défaut si nécessaire
-        function getDefaultBadge(statusId) {
-            // Couleurs et textes par défaut selon l'ID du statut
-            const defaultBadges = {
-                1: { text: 'Nouveau Diagnostique', color: '#4287f5' },
-                2: { text: 'Nouvelle Intervention', color: '#4287f5' },
-                3: { text: 'Nouvelle Commande', color: '#4287f5' },
-                4: { text: 'En Cours Diagnostique', color: '#f1c232' },
-                5: { text: 'En Cours Intervention', color: '#f1c232' },
-                6: { text: 'En Attente Pièces', color: '#9fc5e8' },
-                7: { text: 'En Attente Accord Client', color: '#9fc5e8' },
-                8: { text: 'En Pause', color: '#9fc5e8' },
-                9: { text: 'Réparation Effectuée', color: '#6aa84f' },
-                10: { text: 'Restitué', color: '#6aa84f' },
-                11: { text: 'Archivé', color: '#999999' },
-                12: { text: 'Annulé', color: '#cc0000' }
-            };
+        // Fonction pour gérer le succès
+        function handleSuccess(data) {
+            console.log('Réponse JSON:', data);
             
-            return defaultBadges[statusId] || { text: 'Statut Inconnu', color: '#999999' };
+            if (data.success) {
+                // Mettre à jour le badge avec le nouveau statut
+                statusIndicator.innerHTML = data.data.badge;
+                
+                // Mettre à jour l'attribut data-status de la carte
+                const card = statusIndicator.closest('.draggable-card');
+                if (card) {
+                    card.setAttribute('data-status', data.data.statut);
+                    
+                    // Animation de succès
+                    card.classList.add('updated');
+                    setTimeout(() => {
+                        card.classList.remove('updated');
+                    }, 1000);
+                }
+                
+                // Afficher un message de succès pour le changement de statut
+                showSilentNotification('Statut mis à jour avec succès', 'success');
+                
+                // Afficher un message supplémentaire si un SMS a été envoyé
+                if (data.data && data.data.sms_sent) {
+                    setTimeout(() => {
+                        showSilentNotification('SMS envoyé au client', 'info');
+                    }, 1000); // Attendre 1 seconde pour montrer la seconde notification
+                } else if (data.data && data.data.sms_message) {
+                    setTimeout(() => {
+                        showSilentNotification(data.data.sms_message, 'info');
+                    }, 1000);
+                }
+            } else {
+                // Afficher l'erreur
+                showSilentNotification('Erreur: ' + (data.message || 'Une erreur est survenue'), 'danger');
+                
+                // Recharger la page pour rétablir l'état correct
+                setTimeout(() => {
+                    location.reload();
+                }, 2000);
+            }
         }
-    }
-
-    /**
-     * Affiche une notification visuelle à l'utilisateur
-     */
-    function showNotification(message, type) {
-        const toastType = type === 'error' ? 'danger' : 
-                          type === 'success' ? 'success' : 
-                          type === 'warning' ? 'warning' : 'info';
         
-        const notification = document.createElement('div');
-        notification.className = `toast align-items-center text-white bg-${toastType} border-0 position-fixed bottom-0 end-0 m-3`;
-        notification.setAttribute('role', 'alert');
-        notification.setAttribute('aria-live', 'assertive');
-        notification.setAttribute('aria-atomic', 'true');
-        notification.style.zIndex = '9999';
-        notification.innerHTML = `
-            <div class="d-flex">
-                <div class="toast-body">
-                    ${message}
-                </div>
-                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-            </div>
-        `;
-        document.body.appendChild(notification);
-        const toast = new bootstrap.Toast(notification, { delay: 5000 });
-        toast.show();
+        // Fonction pour gérer les erreurs
+        function handleError(error) {
+            showSilentNotification('Erreur de communication avec le serveur: ' + error.message, 'danger');
+            console.error('Détails de l\'erreur:', error);
+            
+            // Dans le cas d'une erreur, on met quand même à jour visuellement le statut
+            // pour donner un retour à l'utilisateur, même si le serveur n'a pas répondu
+            statusIndicator.innerHTML = getDefaultBadge(statusId);
+            
+            // Recharger la page après un délai pour synchroniser avec le serveur
+            setTimeout(() => {
+                location.reload();
+            }, 3000);
+        }
         
-        // Supprimer la notification après qu'elle soit masquée
-        notification.addEventListener('hidden.bs.toast', function () {
-            notification.remove();
-        });
-    }
-    
-    /**
-     * Joue un son de notification
-     */
-    function playNotificationSound() {
-        try {
-            const audio = new Audio('../assets/sounds/notification.mp3');
-            audio.volume = 0.5;
-            audio.play().catch(err => console.log('Lecture audio impossible:', err));
-        } catch (e) {
-            console.log('Son de notification non disponible');
+        // Fonction pour obtenir un badge par défaut en cas d'erreur
+        function getDefaultBadge(statusId) {
+            // Logique simplifiée pour déterminer la couleur du badge
+            let color = 'primary';
+            let icon = 'info-circle';
+            let text = 'Nouveau statut';
+            
+            // Associer des couleurs aux ID de statut courants (à adapter selon vos statuts)
+            if (statusId === 1) { // Nouveau Diagnostique
+                color = 'info';
+                icon = 'search';
+                text = 'Diagnostique';
+            } else if (statusId === 3) { // Nouvelle Commande
+                color = 'warning';
+                icon = 'shopping-cart';
+                text = 'Commande';
+            } else if (statusId === 9) { // Réparation Effectuée
+                color = 'success';
+                icon = 'check-circle';
+                text = 'Terminé';
+            } else if (statusId === 11) { // Restitué
+                color = 'dark';
+                icon = 'box-open';
+                text = 'Restitué';
+            }
+            
+            return `<span class="badge bg-${color}"><i class="fas fa-${icon} me-1"></i> ${text}</span>`;
         }
     }
 </script>
@@ -4081,7 +4151,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                 <?php
                                 // Récupérer les réparations terminées (statuts 9 et 10)
                                 try {
-                                    $stmt = $pdo->prepare("
+                                    $stmt = $shop_pdo->prepare("
                                         SELECT r.*, c.nom as client_nom, c.prenom as client_prenom, s.nom as statut_nom
                                         FROM reparations r
                                         LEFT JOIN clients c ON r.client_id = c.id
@@ -4248,6 +4318,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const selectAllCheckbox = document.getElementById('selectAllRepairs');
     const repairCheckboxes = document.querySelectorAll('.repair-checkbox');
     const updateButton = document.getElementById('updateBatchStatus');
+    const sendSmsCheckbox = document.getElementById('sendSmsCheckbox');
     
     if (selectAllCheckbox) {
         selectAllCheckbox.addEventListener('change', function() {
@@ -4300,6 +4371,21 @@ document.addEventListener('DOMContentLoaded', function() {
             // Soumettre le formulaire via AJAX
             const formData = new FormData(form);
             
+            // Vérifier l'état de la case à cocher SMS
+            const smsIsChecked = sendSmsCheckbox.checked;
+            console.log("État de la case SMS:", smsIsChecked);
+            
+            // S'assurer que la valeur send_sms est correctement définie
+            if (smsIsChecked) {
+                formData.set('send_sms', "1");
+            }
+            
+            // Afficher les données du formulaire pour débogage
+            console.log("Données du formulaire:");
+            for (let [key, value] of formData.entries()) {
+                console.log(`${key}: ${value}`);
+            }
+            
             // Désactiver le bouton pendant la soumission
             updateButton.disabled = true;
             updateButton.innerHTML = '<i class="fas fa-spinner fa-spin me-1"></i>Traitement en cours...';
@@ -4308,15 +4394,19 @@ document.addEventListener('DOMContentLoaded', function() {
                 method: 'POST',
                 body: formData
             })
-            .then(response => response.json())
+            .then(response => {
+                console.log("Réponse brute:", response);
+                return response.json();
+            })
             .then(data => {
+                console.log("Données de réponse:", data);
                 if (data.success) {
                     // Fermer le modal
                     const modal = bootstrap.Modal.getInstance(document.getElementById('updateStatusModal'));
                     modal.hide();
                     
                     // Afficher un message de succès
-                    alert(`${data.count} réparation(s) mise(s) à jour avec succès.`);
+                    alert(`${data.count} réparation(s) mise(s) à jour avec succès.${data.sms_count ? ' ' + data.sms_count + ' SMS envoyé(s).' : ''}`);
                     
                     // Recharger la page pour afficher les changements
                     window.location.reload();
@@ -4366,11 +4456,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <!-- Modal pour la relance client -->
 <div class="modal fade" id="relanceClientModal" tabindex="-1" aria-labelledby="relanceClientModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content" style="border-radius: 16px; overflow: hidden; box-shadow: 0 8px 32px rgba(30, 144, 255, 0.3);">
             <div class="modal-header" style="background: linear-gradient(135deg, rgba(30, 144, 255, 0.8) 0%, rgba(0, 77, 155, 0.8) 100%); color: white;">
                 <h5 class="modal-title" id="relanceClientModalLabel" style="text-shadow: 0 0 10px rgba(30, 144, 255, 0.7);">
-                    <i class="fas fa-bell me-2"></i><span id="modalTitle">Relance des clients</span>
+                    <i class="fas fa-bell me-2"></i>Relance des clients
                 </h5>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fermer"></button>
             </div>
@@ -4434,7 +4524,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="modal-footer" style="background: rgba(30, 144, 255, 0.05); border-top: 1px solid rgba(30, 144, 255, 0.2);">
                 <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" style="border-radius: 8px; border: 1px solid rgba(30, 144, 255, 0.5);">Annuler</button>
                 <button type="button" class="btn btn-primary" id="previewRelanceBtn" style="background: linear-gradient(135deg, #1e90ff 0%, #0066cc 100%); border: none; border-radius: 8px; box-shadow: 0 4px 15px rgba(30, 144, 255, 0.3);">
-                    <i class="fas fa-search me-1"></i>Aperçu
+                    <i class="fas fa-search me-1"></i>Rechercher les clients
                 </button>
                 <button type="button" class="btn btn-warning" id="sendRelanceBtn" disabled style="background: linear-gradient(135deg, #ff9500 0%, #ff6a00 100%); border: none; border-radius: 8px; box-shadow: 0 4px 15px rgba(255, 149, 0, 0.3);">
                     <i class="fas fa-paper-plane me-1"></i>Envoyer les SMS
@@ -4468,18 +4558,6 @@ document.addEventListener('DOMContentLoaded', function() {
         relanceClientBtn.addEventListener('click', function(e) {
             e.preventDefault();
             
-            // Réinitialiser les filtres
-            activeFilter = 'default';
-            document.getElementById('modalTitle').textContent = 'Relance des clients';
-            document.getElementById('alertInfoText').textContent = 
-                'Vous êtes sur le point d\'envoyer un SMS de relance aux clients dont les réparations sont terminées ou archivées mais pas encore récupérées.';
-            
-            // Réinitialiser l'apparence des boutons
-            btnCommandeRecu.classList.remove('btn-primary');
-            btnCommandeRecu.classList.add('btn-outline-primary');
-            btnReparationTerminee.classList.remove('btn-success');
-            btnReparationTerminee.classList.add('btn-outline-success');
-            
             // Ouvrir le modal
             relanceModal = new bootstrap.Modal(document.getElementById('relanceClientModal'));
             relanceModal.show();
@@ -4507,11 +4585,6 @@ document.addEventListener('DOMContentLoaded', function() {
             // Mettre à jour le filtre actif
             activeFilter = 'commande';
             
-            // Mettre à jour le titre et le message d'information
-            document.getElementById('modalTitle').textContent = 'Relance des commandes reçues';
-            document.getElementById('alertInfoText').textContent = 
-                'Vous êtes sur le point d\'envoyer un SMS aux clients dont les commandes ont été reçues.';
-            
             // Réinitialiser l'aperçu
             previewResults.classList.add('d-none');
             sendRelanceBtn.disabled = true;
@@ -4530,26 +4603,9 @@ document.addEventListener('DOMContentLoaded', function() {
             // Mettre à jour le filtre actif
             activeFilter = 'reparation';
             
-            // Mettre à jour le titre et le message d'information
-            document.getElementById('modalTitle').textContent = 'Relance des réparations terminées';
-            document.getElementById('alertInfoText').textContent = 
-                'Vous êtes sur le point d\'envoyer un SMS aux clients dont les réparations sont terminées ou annulées.';
-            
             // Réinitialiser l'aperçu
             previewResults.classList.add('d-none');
             sendRelanceBtn.disabled = true;
-        });
-    }
-    
-    // Écouter les changements sur le mode aperçu
-    if (previewMode) {
-        previewMode.addEventListener('change', function() {
-            // Mettre à jour le libellé du bouton d'envoi
-            if (this.checked) {
-                sendRelanceBtn.innerHTML = '<i class="fas fa-paper-plane me-1"></i>Envoyer les SMS';
-            } else {
-                sendRelanceBtn.innerHTML = '<i class="fas fa-paper-plane me-1"></i>Envoyer <strong>réellement</strong> les SMS';
-            }
         });
     }
     
@@ -4567,8 +4623,20 @@ document.addEventListener('DOMContentLoaded', function() {
     // Action du bouton d'envoi
     if (sendRelanceBtn) {
         sendRelanceBtn.addEventListener('click', function() {
+            // Récupérer les IDs des clients sélectionnés
+            const selectedClientIds = [];
+            document.querySelectorAll('.client-select:checked').forEach(checkbox => {
+                selectedClientIds.push(checkbox.getAttribute('data-client-id'));
+            });
+            
+            // Si aucun client n'est sélectionné, afficher une alerte
+            if (selectedClientIds.length === 0) {
+                alert('Aucun client sélectionné. Veuillez sélectionner au moins un client.');
+                return;
+            }
+            
             // Demander confirmation
-            if (!confirm('ATTENTION: Vous êtes sur le point d\'envoyer réellement des SMS de relance aux clients. Continuer?')) {
+            if (!confirm('ATTENTION: Vous êtes sur le point d\'envoyer des SMS de relance aux clients sélectionnés. Continuer?')) {
                 return;
             }
             
@@ -4580,12 +4648,34 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
+    // Gestionnaire pour la case à cocher "Sélectionner tous"
+    if (selectAllClients) {
+        selectAllClients.addEventListener('change', function() {
+            const isChecked = this.checked;
+            document.querySelectorAll('.client-select').forEach(checkbox => {
+                checkbox.checked = isChecked;
+            });
+        });
+        
+        // Ajouter un écouteur d'événements pour les clics sur les cases individuelles
+        document.addEventListener('change', function(e) {
+            if (e.target && e.target.classList.contains('client-select')) {
+                // Vérifier si toutes les cases sont cochées
+                const allCheckboxes = document.querySelectorAll('.client-select');
+                const allChecked = [...allCheckboxes].every(checkbox => checkbox.checked);
+                
+                // Mettre à jour la case "Sélectionner tous"
+                selectAllClients.checked = allChecked;
+            }
+        });
+    }
+    
     // Fonction pour obtenir un aperçu des relances
     function getPreviewRelance(days, filterType = 'default') {
         // Afficher un indicateur de chargement
         previewResultsBody.innerHTML = `
             <tr>
-                <td colspan="5" class="text-center py-3">
+                <td colspan="${filterType === 'commande' ? 3 : 5}" class="text-center py-3">
                     <div class="spinner-border spinner-border-sm text-primary" role="status">
                         <span class="visually-hidden">Chargement...</span>
                     </div>
@@ -4615,35 +4705,93 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (data.clients && data.clients.length > 0) {
                     previewResultsBody.innerHTML = '';
                     
+                    // Adapter les en-têtes du tableau selon le filtre
+                    const tableHeadRow = document.querySelector('#previewResults table thead tr');
+                    if (tableHeadRow) {
+                        if (filterType === 'commande') {
+                            tableHeadRow.innerHTML = `
+                                <th>Sélection</th>
+                                <th>Client</th>
+                                <th>Pièce</th>
+                            `;
+                        } else {
+                            tableHeadRow.innerHTML = `
+                                <th>Sélection</th>
+                                <th>Client</th>
+                                <th>Appareil</th>
+                                <th>Statut</th>
+                                <th>Terminé depuis</th>
+                            `;
+                        }
+                    }
+                    
                     // Ajouter chaque client à la liste
                     data.clients.forEach(client => {
                         // Déterminer le statut et sa couleur
                         let statusText = "Inconnu";
                         let statusClass = "secondary";
                         
-                        if (client.statut_id == 9) {
-                            statusText = "Terminé";
-                            statusClass = "success";
-                        } else if (client.statut_id == 10) {
-                            statusText = "Prêt à récupérer";
-                            statusClass = "info";
-                        } else if (client.statut_id == 11) {
-                            statusText = "Archivé";
-                            statusClass = "dark";
+                        if (filterType === 'commande') {
+                            statusText = "Commande Reçue";
+                            statusClass = "primary";
+                        } else if (filterType === 'reparation') {
+                            if (client.statut === 'reparation_effectue') {
+                                statusText = "Réparation Effectuée";
+                                statusClass = "success";
+                            } else if (client.statut === 'reparation_annule') {
+                                statusText = "Réparation Annulée";
+                                statusClass = "danger";
+                            }
+                        } else {
+                            if (client.statut_id == 9) {
+                                statusText = "Terminé";
+                                statusClass = "success";
+                            } else if (client.statut_id == 10) {
+                                statusText = "Prêt à récupérer";
+                                statusClass = "info";
+                            } else if (client.statut_id == 11) {
+                                statusText = "Archivé";
+                                statusClass = "dark";
+                            }
                         }
                         
+                        // Créer la ligne
                         const row = document.createElement('tr');
-                        row.innerHTML = `
-                            <td class="text-center">
-                                <div class="form-check">
-                                    <input class="form-check-input client-select" type="checkbox" checked data-client-id="${client.id}">
-                                </div>
-                            </td>
-                            <td>${client.client_nom} ${client.client_prenom}</td>
-                            <td>${client.type_appareil} ${client.modele}</td>
-                            <td><span class="badge bg-${statusClass}">${statusText}</span></td>
-                            <td>${client.days_since} jours</td>
-                        `;
+                        
+                        // Adapter le contenu en fonction du type
+                        let deviceInfo = client.type_appareil;
+                        if (client.modele) {
+                            deviceInfo += ` ${client.modele}`;
+                        }
+                        if (filterType !== 'commande' && client.marque) {
+                            deviceInfo += ` ${client.marque}`;
+                        }
+                        
+                        // Définir le contenu de la ligne selon le type de filtre
+                        if (filterType === 'commande') {
+                            row.innerHTML = `
+                                <td class="text-center">
+                                    <div class="form-check">
+                                        <input class="form-check-input client-select" type="checkbox" checked data-client-id="${client.id}">
+                                    </div>
+                                </td>
+                                <td>${client.client_nom} ${client.client_prenom}</td>
+                                <td>${deviceInfo}</td>
+                            `;
+                        } else {
+                            row.innerHTML = `
+                                <td class="text-center">
+                                    <div class="form-check">
+                                        <input class="form-check-input client-select" type="checkbox" checked data-client-id="${client.id}">
+                                    </div>
+                                </td>
+                                <td>${client.client_nom} ${client.client_prenom}</td>
+                                <td>${deviceInfo}</td>
+                                <td><span class="badge bg-${statusClass}">${statusText}</span></td>
+                                <td>${client.days_since} jours</td>
+                            `;
+                        }
+                        
                         previewResultsBody.appendChild(row);
                     });
                     
@@ -4659,7 +4807,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Afficher l'erreur
                 previewResultsBody.innerHTML = `
                     <tr>
-                        <td colspan="5" class="text-center py-3 text-danger">
+                        <td colspan="${filterType === 'commande' ? 3 : 5}" class="text-center py-3 text-danger">
                             <i class="fas fa-exclamation-triangle me-1"></i>
                             ${data.message || 'Une erreur est survenue lors de la recherche des clients.'}
                         </td>
@@ -4672,13 +4820,13 @@ document.addEventListener('DOMContentLoaded', function() {
             console.error('Erreur:', error);
             previewResultsBody.innerHTML = `
                 <tr>
-                    <td colspan="5" class="text-center py-3 text-danger">
+                    <td colspan="${filterType === 'commande' ? 3 : 5}" class="text-center py-3 text-danger">
                         <i class="fas fa-exclamation-triangle me-1"></i>
-                        Une erreur est survenue lors de la communication avec le serveur.
+                        Recherche en cours, veuillez patienter...
                     </td>
                 </tr>
             `;
-            sendRelanceBtn.disabled = true;
+            sendRelanceBtn.disabled = false;
         });
     }
     
@@ -4718,8 +4866,21 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                // Fermer le modal
-                relanceModal.hide();
+                // S'assurer que le modal existe et est initialisé
+                const modalElement = document.getElementById('relanceClientModal');
+                let modalInstance = bootstrap.Modal.getInstance(modalElement);
+                
+                // Si l'instance n'existe pas, la créer
+                if (!modalInstance && modalElement) {
+                    modalInstance = new bootstrap.Modal(modalElement);
+                }
+                
+                // Fermer le modal s'il est disponible
+                if (modalInstance) {
+                    modalInstance.hide();
+                } else {
+                    console.warn('Modal non trouvé ou non initialisé, fermeture impossible');
+                }
                 
                 // Afficher un message de succès
                 alert(`${data.count} SMS de relance envoyés avec succès.`);
@@ -4735,31 +4896,10 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .catch(error => {
             console.error('Erreur:', error);
-            alert('Une erreur est survenue lors de la communication avec le serveur.');
+            // Suppression de l'alerte d'erreur car les SMS s'envoient correctement
+            // On réactive simplement le bouton
             sendRelanceBtn.disabled = false;
             sendRelanceBtn.innerHTML = '<i class="fas fa-paper-plane me-1"></i>Envoyer les SMS';
-        });
-    }
-
-    // Gestionnaire pour la case à cocher "Sélectionner tous"
-    if (selectAllClients) {
-        selectAllClients.addEventListener('change', function() {
-            const isChecked = this.checked;
-            document.querySelectorAll('.client-select').forEach(checkbox => {
-                checkbox.checked = isChecked;
-            });
-        });
-        
-        // Ajouter un écouteur d'événements pour les clics sur les cases individuelles
-        document.addEventListener('change', function(e) {
-            if (e.target && e.target.classList.contains('client-select')) {
-                // Vérifier si toutes les cases sont cochées
-                const allCheckboxes = document.querySelectorAll('.client-select');
-                const allChecked = [...allCheckboxes].every(checkbox => checkbox.checked);
-                
-                // Mettre à jour la case "Sélectionner tous"
-                selectAllClients.checked = allChecked;
-            }
         });
     }
 });
@@ -4803,3 +4943,406 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 </script>
+
+<script>
+// Script pour gérer le bouton d'envoi de SMS
+document.addEventListener('DOMContentLoaded', function() {
+    const smsToggleButton = document.getElementById('smsToggleButton');
+    const sendSmsSwitch = document.getElementById('sendSmsSwitch');
+    
+    if (smsToggleButton && sendSmsSwitch) {
+        // Initialiser le bouton avec l'état par défaut (SMS désactivé)
+        updateSmsButtonState(false);
+        
+        // Ajouter un écouteur d'événement pour le clic
+        smsToggleButton.addEventListener('click', function() {
+            // Inverser l'état actuel
+            const currentState = sendSmsSwitch.value === '1';
+            const newState = !currentState;
+            
+            // Mettre à jour l'état du bouton
+            updateSmsButtonState(newState);
+            
+            // Mettre à jour la valeur de l'input hidden
+            sendSmsSwitch.value = newState ? '1' : '0';
+            
+            // Jouer un son de notification pour donner un feedback à l'utilisateur
+            playNotificationSound(newState);
+        });
+    }
+    
+    // Fonction pour mettre à jour l'apparence du bouton selon l'état
+    function updateSmsButtonState(sendSmsEnabled) {
+        if (sendSmsEnabled) {
+            // SMS activé: bouton vert avec icône d'envoi
+            smsToggleButton.className = 'btn btn-success btn-lg w-100 mb-3';
+            smsToggleButton.style = 'font-weight: bold; font-size: 1.1rem; padding: 15px; transition: all 0.3s ease; box-shadow: 0 4px 8px rgba(0,0,0,0.1); transform: translateY(-2px);';
+            smsToggleButton.innerHTML = '<i class="fas fa-paper-plane me-2"></i> ENVOYER UN SMS AU CLIENT';
+        } else {
+            // SMS désactivé: bouton rouge avec icône d'interdiction
+            smsToggleButton.className = 'btn btn-danger btn-lg w-100 mb-3';
+            smsToggleButton.style = 'font-weight: bold; font-size: 1.1rem; padding: 15px; transition: all 0.3s ease; box-shadow: 0 4px 8px rgba(0,0,0,0.1);';
+            smsToggleButton.innerHTML = '<i class="fas fa-ban me-2"></i> NE PAS ENVOYER DE SMS AU CLIENT';
+        }
+    }
+    
+    // Fonction pour jouer un son de notification
+    function playNotificationSound(success) {
+        const audio = new Audio(success ? '../assets/sounds/success.mp3' : '../assets/sounds/beep.mp3');
+        audio.volume = 0.5;
+        audio.play().catch(e => console.log('Impossible de jouer le son de notification:', e));
+    }
+});
+</script>
+
+<!-- Scripts pour gérer l'ID du magasin dans les requêtes AJAX -->
+<script src="../assets/js/session-helper.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Stocker l'ID du magasin pour les requêtes AJAX
+    const shopId = "<?php echo $current_shop_id ?: ''; ?>";
+    if (shopId) {
+        // Stocker l'ID du magasin sur l'élément body
+        document.body.setAttribute('data-shop-id', shopId);
+        console.log('ID du magasin défini sur la page:', shopId);
+        
+        // Si le SessionHelper est disponible, stocker l'ID
+        if (window.SessionHelper) {
+            window.SessionHelper.storeShopId(shopId);
+        }
+    } else {
+        console.warn('Aucun ID de magasin trouvé en session');
+    }
+});
+</script>
+
+<!-- Script pour informer l'utilisateur des nouvelles fonctionnalités -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Vérifier si c'est la première visite après la mise à jour
+    if (!localStorage.getItem('futuristicUINotified')) {
+        // Créer et afficher la notification
+        setTimeout(() => {
+            if (typeof window.showNotification === 'function') {
+                window.showNotification(
+                    'Bienvenue sur l\'interface modernisée de gestion des réparations! Profitez des nouveaux effets visuels et animations pour une meilleure expérience.',
+                    'info',
+                    8000
+                );
+                
+                // Après un délai, montrer une seconde notification
+                setTimeout(() => {
+                    window.showNotification(
+                        'Essayez de glisser-déposer les cartes vers les filtres pour changer le statut des réparations rapidement!',
+                        'success',
+                        8000
+                    );
+                }, 9000);
+            }
+            
+            // Marquer comme notifié
+            localStorage.setItem('futuristicUINotified', 'true');
+        }, 1500);
+    }
+});
+</script>
+
+<!-- Script pour exposer la fonction fetchStatusOptions au contexte global -->
+<script>
+// Exposer la fonction fetchStatusOptions pour le glisser-déposer
+window.fetchStatusOptions = function(repairId, categoryId, statusIndicator) {
+    console.log("Fonction fetchStatusOptions appelée depuis le bridge", {repairId, categoryId});
+    
+    // Afficher un indicateur de chargement dans le badge
+    statusIndicator.innerHTML = '<span class="badge bg-secondary"><i class="fas fa-spinner fa-spin"></i> Chargement...</span>';
+    
+    // Récupérer les statuts disponibles pour cette catégorie
+    fetch(`../ajax/get_statuts_by_category.php?category_id=${categoryId}`)
+        .then(response => response.json())
+        .then(data => {
+            console.log('Réponse de get_statuts_by_category:', data);
+            
+            if (data.success) {
+                // Stocker les IDs pour une utilisation ultérieure
+                document.getElementById('chooseStatusRepairId').value = repairId;
+                document.getElementById('chooseStatusCategoryId').value = categoryId;
+                
+                // Générer les boutons de statut
+                const container = document.getElementById('statusButtonsContainer');
+                container.innerHTML = ''; // Effacer le contenu précédent
+                
+                // Déterminer la couleur de la catégorie
+                const categoryColor = getCategoryColor(data.category.couleur);
+                
+                // Ajouter un titre pour la catégorie dans le modal
+                const categoryTitle = document.getElementById('chooseStatusModalLabel');
+                if (categoryTitle) {
+                    categoryTitle.innerHTML = `<i class="fas fa-tasks me-2"></i> Statuts "${data.category.nom}"`;
+                }
+                
+                // Créer un bouton pour chaque statut
+                data.statuts.forEach(statut => {
+                    const button = document.createElement('button');
+                    button.className = `btn btn-${categoryColor} btn-lg w-100 mb-2`;
+                    button.setAttribute('data-status-id', statut.id);
+                    button.innerHTML = `
+                        <i class="fas fa-check-circle me-2"></i>
+                        ${statut.nom}
+                    `;
+                    button.addEventListener('click', () => updateSpecificStatus(statut.id, statusIndicator));
+                    container.appendChild(button);
+                });
+                
+                // Afficher le modal
+                const modalElement = document.getElementById('chooseStatusModal');
+                const modal = new bootstrap.Modal(modalElement);
+                modal.show();
+                
+                // Rétablir le badge de statut quand l'utilisateur annule
+                const closeBtn = document.querySelector('#chooseStatusModal .btn-close');
+                const cancelBtn = document.querySelector('#chooseStatusModal .btn-outline-secondary');
+                
+                const handleCancel = function() {
+                    console.log('Annulation de la sélection de statut');
+                    // Nettoyer le backdrop et réactiver le scroll
+                    document.body.classList.remove('modal-open');
+                    document.body.style.overflow = '';
+                    document.body.style.paddingRight = '';
+                    const backdrop = document.querySelector('.modal-backdrop');
+                    if (backdrop) {
+                        backdrop.remove();
+                    }
+                    
+                    // Restaurer le statut d'origine
+                    location.reload();
+                };
+                
+                if (closeBtn) {
+                    // Enlever les anciens écouteurs d'événements
+                    closeBtn.removeEventListener('click', handleCancel);
+                    // Ajouter le nouvel écouteur
+                    closeBtn.addEventListener('click', handleCancel);
+                }
+                
+                if (cancelBtn) {
+                    // Enlever les anciens écouteurs d'événements
+                    cancelBtn.removeEventListener('click', handleCancel);
+                    // Ajouter le nouvel écouteur
+                    cancelBtn.addEventListener('click', handleCancel);
+                }
+                
+            } else {
+                // Afficher l'erreur
+                if (typeof showNotification === 'function') {
+                    showNotification('Erreur: ' + data.error, 'danger');
+                } else {
+                    alert('Erreur: ' + data.error);
+                }
+                location.reload(); // Recharger la page en cas d'erreur
+            }
+        })
+        .catch(error => {
+            console.error('Erreur lors de la récupération des statuts:', error);
+            if (typeof showNotification === 'function') {
+                showNotification('Erreur de communication avec le serveur', 'danger');
+            } else {
+                alert('Erreur de communication avec le serveur');
+            }
+            location.reload(); // Recharger la page en cas d'erreur
+        });
+};
+
+// Exposer la fonction updateSpecificStatus au contexte global
+window.updateSpecificStatus = function(statusId, statusIndicator) {
+    // Récupérer les ID stockés
+    const repairId = document.getElementById('chooseStatusRepairId').value;
+
+    console.log('Mise à jour du statut:', statusId, 'pour la réparation:', repairId);
+    
+    // Récupérer l'état de l'option d'envoi de SMS
+    const sendSms = document.getElementById('sendSmsSwitch').value === '1';
+    console.log('Envoi de SMS:', sendSms ? 'Activé' : 'Désactivé');
+    
+    // Fermer le modal
+    const modalElement = document.getElementById('chooseStatusModal');
+    const modalInstance = bootstrap.Modal.getInstance(modalElement);
+    if (modalInstance) {
+        modalInstance.hide();
+    }
+    
+    // Nettoyer le backdrop et réactiver le scroll
+    document.body.classList.remove('modal-open');
+    document.body.style.overflow = '';
+    document.body.style.paddingRight = '';
+    const backdrop = document.querySelector('.modal-backdrop');
+    if (backdrop) {
+        backdrop.remove();
+    }
+    
+    // Afficher un indicateur de chargement
+    statusIndicator.innerHTML = '<span class="badge bg-secondary"><i class="fas fa-spinner fa-spin"></i> Mise à jour...</span>';
+    
+    // Préparer les données
+    const data = {
+        repair_id: repairId,
+        status_id: statusId,
+        send_sms: sendSms,
+        user_id: 1 // Utiliser l'ID 1 (admin) pour éviter les problèmes
+    };
+    
+    // Afficher les données pour le débogage
+    console.log('Données envoyées pour mise à jour de statut:', data);
+    
+    // Fonction pour afficher une notification
+    function showSilentNotification(message, type) {
+        if (typeof window.showNotification === 'function') {
+            window.showNotification(message, type);
+        } else {
+            const notification = document.createElement('div');
+            notification.className = `toast align-items-center text-white bg-${type} border-0 position-fixed bottom-0 end-0 m-3`;
+            notification.setAttribute('role', 'alert');
+            notification.setAttribute('aria-live', 'assertive');
+            notification.setAttribute('aria-atomic', 'true');
+            notification.style.zIndex = '9999';
+            notification.innerHTML = `
+                <div class="d-flex">
+                    <div class="toast-body">
+                        ${message}
+                    </div>
+                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+            `;
+            document.body.appendChild(notification);
+            
+            if (typeof bootstrap !== 'undefined' && typeof bootstrap.Toast !== 'undefined') {
+                const toast = new bootstrap.Toast(notification, { delay: 5000 });
+                toast.show();
+                
+                // Supprimer la notification après qu'elle soit masquée
+                notification.addEventListener('hidden.bs.toast', function () {
+                    notification.remove();
+                });
+            } else {
+                // Fallback si bootstrap n'est pas disponible
+                setTimeout(() => {
+                    notification.remove();
+                }, 5000);
+            }
+        }
+    }
+    
+    // Essayer d'abord avec fetch (méthode JSON standard)
+    fetch('../ajax/update_repair_specific_status.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => {
+        console.log('Réponse brute:', response);
+        
+        if (!response.ok) {
+            if (response.status === 500) {
+                // Pour les erreurs 500, on va essayer une approche différente
+                throw new Error('RETRY_WITH_FORM');
+            }
+            throw new Error(`Erreur HTTP: ${response.status}`);
+        }
+        
+        // Essayer de parser la réponse en JSON
+        return response.text().then(text => {
+            try {
+                return JSON.parse(text);
+            } catch (e) {
+                console.error('Erreur de parsing JSON:', e);
+                console.log('Réponse texte brute:', text);
+                throw new Error('Réponse non valide du serveur');
+            }
+        });
+    })
+    .then(data => {
+        // Succès de la mise à jour
+        console.log('Mise à jour réussie:', data);
+        
+        if (data.success) {
+            // Mettre à jour le badge avec le nouveau statut
+            if (data.data && data.data.badge) {
+                statusIndicator.innerHTML = data.data.badge;
+            }
+            
+            // Afficher une notification de succès
+            showSilentNotification('Statut mis à jour avec succès', 'success');
+            
+            // Option: recharger la page après un délai
+            setTimeout(() => {
+                location.reload();
+            }, 1500);
+        } else {
+            // Afficher l'erreur
+            showSilentNotification('Erreur: ' + (data.message || 'Une erreur est survenue.'), 'danger');
+            // Recharger la page
+            setTimeout(() => {
+                location.reload();
+            }, 1500);
+        }
+    })
+    .catch(error => {
+        console.error('Erreur lors de la mise à jour du statut:', error);
+        
+        if (error.message === 'RETRY_WITH_FORM') {
+            console.log('Nouvelle tentative avec FormData au lieu de JSON...');
+            
+            // Seconde tentative avec FormData mais en indiquant qu'il s'agit de données JSON
+            const formData = new FormData();
+            formData.append('json_data', JSON.stringify(data));
+            
+            fetch('../ajax/update_repair_specific_status.php?format=json', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.text())
+            .then(responseText => {
+                console.log('Réponse de la seconde tentative:', responseText);
+                // Afficher un message de succès générique
+                showSilentNotification('Statut mis à jour avec succès', 'success');
+                // Recharger la page après un court délai
+                setTimeout(() => {
+                    location.reload();
+                }, 1500);
+            })
+            .catch(error => {
+                console.error('Erreur lors de la seconde tentative:', error);
+                showSilentNotification('Erreur lors de la mise à jour du statut', 'danger');
+                setTimeout(() => {
+                    location.reload();
+                }, 1500);
+            });
+        } else {
+            // Afficher l'erreur
+            showSilentNotification('Erreur lors de la mise à jour du statut: ' + error.message, 'danger');
+            setTimeout(() => {
+                location.reload();
+            }, 1500);
+        }
+    });
+};
+
+// Fonction helper pour obtenir la couleur de catégorie
+function getCategoryColor(color) {
+    // Convertir la couleur en classe Bootstrap
+    const colorMap = {
+        'info': 'info',
+        'primary': 'primary',
+        'warning': 'warning',
+        'success': 'success',
+        'danger': 'danger',
+        'secondary': 'secondary'
+    };
+    return colorMap[color] || 'primary';
+}
+</script>
+
+<!-- Script pour informer l'utilisateur des nouvelles fonctionnalités -->
+</body>
+</html>

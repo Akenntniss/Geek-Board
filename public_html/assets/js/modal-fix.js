@@ -15,6 +15,9 @@
             return; // On s'arrête ici, loadBootstrap rappellera initModalFix après chargement
         }
         
+        // Patcher Bootstrap avant d'utiliser les modales
+        patchBootstrapModal();
+        
         // Réparation des modales spécifiques qui posent problème
         fixSpecificModals();
         
@@ -62,6 +65,30 @@
             {
                 modalId: 'rechercheClientModal',
                 buttonSelector: '[data-bs-target="#rechercheClientModal"]'
+            },
+            {
+                modalId: 'changeStatusModal',
+                buttonSelector: '[data-bs-target="#changeStatusModal"], .status-badge'
+            },
+            {
+                modalId: 'editCommandeModal',
+                buttonSelector: '[data-bs-target="#editCommandeModal"]'
+            },
+            {
+                modalId: 'editFieldModal',
+                buttonSelector: '[data-bs-target="#editFieldModal"], .editable-field'
+            },
+            {
+                modalId: 'editFournisseurModal',
+                buttonSelector: '[data-bs-target="#editFournisseurModal"]'
+            },
+            {
+                modalId: 'fournisseursModal',
+                buttonSelector: '[data-bs-target="#fournisseursModal"], #fournisseurBouton'
+            },
+            {
+                modalId: 'periodesModal',
+                buttonSelector: '[data-bs-target="#periodesModal"], #periodeButton'
             }
         ];
         
@@ -102,10 +129,52 @@
         
         // Autres attributs importants
         modalElement.setAttribute('tabindex', '-1');
+        modalElement.setAttribute('aria-hidden', 'true');
         
-        // On s'assure que le backdrop est statique pour éviter les problèmes
+        // S'assurer que le dialog existe
+        let dialogElement = modalElement.querySelector('.modal-dialog');
+        if (!dialogElement) {
+            console.warn(`Élément .modal-dialog manquant dans #${modalElement.id}, création...`);
+            dialogElement = document.createElement('div');
+            dialogElement.className = 'modal-dialog modal-dialog-centered';
+            
+            // Déplacer le contenu existant dans le dialog
+            const contentElements = Array.from(modalElement.childNodes);
+            contentElements.forEach(node => {
+                if (node.nodeType === 1 && !node.classList.contains('modal-backdrop')) {
+                    dialogElement.appendChild(node);
+                }
+            });
+            
+            modalElement.appendChild(dialogElement);
+        }
+        
+        // S'assurer que le content existe
+        let contentElement = dialogElement.querySelector('.modal-content');
+        if (!contentElement) {
+            console.warn(`Élément .modal-content manquant dans #${modalElement.id}, création...`);
+            contentElement = document.createElement('div');
+            contentElement.className = 'modal-content';
+            
+            // Déplacer le contenu existant dans le content
+            const dialogContentElements = Array.from(dialogElement.childNodes);
+            dialogContentElements.forEach(node => {
+                if (node.nodeType === 1 && 
+                    !node.classList.contains('modal-content') && 
+                    !node.classList.contains('modal-dialog')) {
+                    contentElement.appendChild(node);
+                }
+            });
+            
+            dialogElement.appendChild(contentElement);
+        }
+        
+        // Définir explicitement backdrop et keyboard
         modalElement.setAttribute('data-bs-backdrop', 'static');
         modalElement.setAttribute('data-bs-keyboard', 'false');
+        
+        // Ajouter un attribut data-fixed="true" pour marquer les modales corrigées
+        modalElement.setAttribute('data-fixed', 'true');
         
         // Réinitialiser l'instance Bootstrap
         try {
@@ -148,8 +217,18 @@
             console.log(`Clic sur bouton pour ouvrir la modale #${modalElement.id}`);
             
             try {
-                // Créer une nouvelle instance à chaque fois
-                const modalInstance = new bootstrap.Modal(modalElement);
+                // S'assurer que la modale est correctement configurée avant de l'ouvrir
+                ensureModalAttributes(modalElement);
+                
+                // Créer une nouvelle instance avec des options explicites
+                const modalOptions = {
+                    backdrop: true,
+                    keyboard: true,
+                    focus: true
+                };
+                
+                // Créer une nouvelle instance à chaque fois avec les options
+                const modalInstance = new bootstrap.Modal(modalElement, modalOptions);
                 modalInstance.show();
                 console.log(`Modale #${modalElement.id} ouverte avec succès via Bootstrap`);
             } catch (error) {
@@ -164,6 +243,9 @@
     function manuallyOpenModal(modalElement) {
         console.log(`Ouverture manuelle de la modale #${modalElement.id}`);
         
+        // S'assurer que la structure de la modale est correcte
+        ensureModalAttributes(modalElement);
+        
         // Ajouter les classes nécessaires pour afficher la modale
         modalElement.classList.add('show');
         modalElement.style.display = 'block';
@@ -171,10 +253,13 @@
         modalElement.setAttribute('role', 'dialog');
         modalElement.removeAttribute('aria-hidden');
         
-        // Ajouter le backdrop
-        const backdrop = document.createElement('div');
+        // Ajouter le backdrop s'il n'existe pas déjà
+        let backdrop = document.querySelector('.modal-backdrop');
+        if (!backdrop) {
+            backdrop = document.createElement('div');
         backdrop.classList.add('modal-backdrop', 'fade', 'show');
         document.body.appendChild(backdrop);
+        }
         
         // Empêcher le défilement du body
         document.body.classList.add('modal-open');
@@ -228,7 +313,7 @@
         console.log('Application des corrections spécifiques pour mobile...');
         
         // Liste des modales critiques sur mobile
-        const mobileModalIds = ['ajouterCommandeModal', 'rechercheClientModal'];
+        const mobileModalIds = ['ajouterCommandeModal', 'rechercheClientModal', 'changeStatusModal'];
         
         mobileModalIds.forEach(modalId => {
             const modal = document.getElementById(modalId);
@@ -242,63 +327,255 @@
             // Ajouter une classe spécifique pour le style mobile
             modal.classList.add('mobile-optimized-modal');
             
+            // Correction spécifique pour s'assurer que le backdrop fonctionne sur mobile
+            if (modal._backdrop === undefined || modal._backdrop === null) {
+                try {
+                    // Réinitialiser l'instance
+                    const oldInstance = bootstrap.Modal.getInstance(modal);
+                    if (oldInstance) {
+                        oldInstance.dispose();
+                    }
+                    
+                    // S'assurer que la structure est correcte
+                    ensureModalAttributes(modal);
+                    
+                    // Créer une nouvelle instance avec options explicites
+                    const modalOptions = {
+                        backdrop: true,
+                        keyboard: true,
+                        focus: true
+                    };
+                    new bootstrap.Modal(modal, modalOptions);
+                } catch (e) {
+                    console.warn(`Erreur lors de la réinitialisation de la modale mobile #${modalId}:`, e);
+                }
+            }
+            
             // Pour la modale de commande, on s'assure que tous les boutons qui l'ouvrent fonctionnent
             if (modalId === 'ajouterCommandeModal') {
                 // Ajouter une correction spécifique sur mobile pour les actions rapides
                 const actionButtons = document.querySelectorAll('.action-card[data-bs-target="#ajouterCommandeModal"]');
                 
                 actionButtons.forEach((button, index) => {
-                    console.log(`- Correction de l'action rapide ${index + 1} pour la modale #${modalId}`);
+                    console.log(`  - Correction du bouton d'action rapide ${index + 1} pour mobile`);
                     
-                    // Ajouter une classe pour le debugging
-                    button.classList.add('mobile-fixed-button');
-                    
-                    // Supprimer tous les gestionnaires d'événements existants
+                    // Cloner et remplacer pour éliminer les gestionnaires existants
                     const newButton = button.cloneNode(true);
                     button.parentNode.replaceChild(newButton, button);
                     
-                    // Ajouter un gestionnaire d'événement direct avec feedback tactile
+                    // Ajouter un nouveau gestionnaire pour le clic
                     newButton.addEventListener('click', function(e) {
                         e.preventDefault();
-                        e.stopPropagation();
                         
-                        console.log(`Clic sur action rapide pour ouvrir #${modalId} sur mobile`);
+                        console.log(`Clic sur bouton d'action rapide pour #${modalId} sur mobile`);
                         
-                        // Feedback tactile sur appareils mobiles
-                        if ('vibrate' in navigator) {
-                            navigator.vibrate(50);
-                        }
-                        
-                        // Forcer l'ouverture du modal
-                        setTimeout(() => {
-                            try {
-                                // Tenter d'utiliser l'API Bootstrap
-                                let modalInstance = bootstrap.Modal.getInstance(modal);
-                                if (!modalInstance) {
-                                    modalInstance = new bootstrap.Modal(modal);
-                                }
+                        try {
+                            // Créer une nouvelle instance avec des options explicites
+                            const modalOptions = {
+                                backdrop: true,
+                                keyboard: true,
+                                focus: true
+                            };
+                            
+                            // Assurez-vous que la modale a la structure requise
+                            ensureModalAttributes(modal);
+                            
+                            const modalInstance = new bootstrap.Modal(modal, modalOptions);
                                 modalInstance.show();
-                                console.log(`Modale #${modalId} ouverte avec succès via Bootstrap sur mobile`);
                             } catch (error) {
-                                console.error(`Échec de l'ouverture Bootstrap sur mobile:`, error);
+                            console.error(`Erreur lors de l'ouverture de #${modalId} depuis l'action rapide:`, error);
+                            // En cas d'échec, utiliser la méthode manuelle
                                 manuallyOpenModal(modal);
                             }
-                        }, 100);
                     });
                 });
             }
         });
     }
     
-    // Exécuter la fonction d'initialisation après le chargement du DOM
-    document.addEventListener('DOMContentLoaded', initModalFix);
+    // Patch de secours : remplacer les fonctions problématiques dans bootstrap.Modal
+    function patchBootstrapModal() {
+        if (typeof bootstrap === 'undefined' || !bootstrap.Modal) {
+            console.log('Bootstrap Modal non disponible pour patch');
+            return;
+        }
+        
+        try {
+            console.log('Application du patch pour bootstrap.Modal...');
+            
+            // Patch pour _initializeFocusTrap (erreur trapElement)
+            if (bootstrap.Modal.prototype._initializeFocusTrap) {
+                const originalInitializeFocusTrap = bootstrap.Modal.prototype._initializeFocusTrap;
+                
+                bootstrap.Modal.prototype._initializeFocusTrap = function() {
+                    try {
+                        // Vérifier que this._element existe
+                        if (!this._element) {
+                            console.warn('Element manquant dans _initializeFocusTrap, création');
+                            this._element = document.createElement('div');
+                            this._element.className = 'modal';
+                            document.body.appendChild(this._element);
+                        }
+                        
+                        return originalInitializeFocusTrap.call(this);
+                    } catch (e) {
+                        console.warn('Erreur évitée dans _initializeFocusTrap:', e);
+                        // Ne pas initialiser le trap si ça échoue
+                        this._focustrap = { activate: function() {}, deactivate: function() {} };
+                    }
+                };
+            }
+            
+            // Sauvegarde des méthodes originales
+            const originalInitializeBackDrop = bootstrap.Modal.prototype._initializeBackDrop;
+            const originalIsAnimated = bootstrap.Modal.prototype._isAnimated;
+            
+            // Patch pour _isAnimated
+            bootstrap.Modal.prototype._isAnimated = function() {
+                try {
+                    if (!this._element) {
+                        console.warn('Element manquant dans _isAnimated');
+                        return false;
+                    }
+                    
+                    if (!this._element.classList) {
+                        console.warn('ClassList manquante dans _isAnimated');
+                        return false;
+                    }
+                    
+                    return originalIsAnimated.call(this);
+                } catch (e) {
+                    console.warn('Erreur évitée dans _isAnimated:', e);
+                    return false;
+                }
+            };
+            
+            // Patch pour _initializeBackDrop
+            bootstrap.Modal.prototype._initializeBackDrop = function() {
+                try {
+                    // Si this._config est undefined, créer un objet par défaut
+                    if (!this._config) {
+                        console.warn('Config manquante dans _initializeBackDrop, création');
+                        this._config = {
+                            backdrop: true,
+                            keyboard: true,
+                            focus: true
+                        };
+                    }
+                    
+                    // S'assurer que backdrop est défini
+                    if (this._config.backdrop === undefined) {
+                        this._config.backdrop = true;
+                    }
+                    
+                    return originalInitializeBackDrop.call(this);
+                } catch (e) {
+                    console.warn('Erreur évitée dans _initializeBackDrop:', e);
+                    // Implémentation minimale de secours
+                    this._backdrop = document.createElement('div');
+                    this._backdrop.className = 'modal-backdrop fade show';
+                    document.body.appendChild(this._backdrop);
+                }
+            };
+            
+            // Patch pour getOrCreateInstance
+            const originalGetOrCreateInstance = bootstrap.Modal.getOrCreateInstance;
+            
+            bootstrap.Modal.getOrCreateInstance = function(element, config) {
+                try {
+                    if (!element) {
+                        throw new Error('Élément manquant pour getOrCreateInstance');
+                    }
+                    
+                    // Vérifier si l'élément est un sélecteur de chaîne
+                    if (typeof element === 'string') {
+                        element = document.querySelector(element);
+                        if (!element) {
+                            throw new Error(`Élément "${element}" non trouvé`);
+                        }
+                    }
+                    
+                    // S'assurer que l'élément a la structure nécessaire
+                    if (element.classList && !element.classList.contains('modal')) {
+                        element.classList.add('modal');
+                    }
+                    
+                    // Configurer un objet config par défaut
+                    const safeConfig = config || {
+                        backdrop: true,
+                        keyboard: true,
+                        focus: true
+                    };
+                    
+                    return originalGetOrCreateInstance.call(this, element, safeConfig);
+                } catch (e) {
+                    console.error('Erreur dans getOrCreateInstance:', e);
+                    // Créer une nouvelle instance en cas d'erreur
+                    return new bootstrap.Modal(element, {
+                        backdrop: true,
+                        keyboard: true,
+                        focus: true
+                    });
+                }
+            };
+            
+            console.log('Patch appliqué avec succès à bootstrap.Modal');
+        } catch (e) {
+            console.error('Erreur lors de l\'application du patch bootstrap.Modal:', e);
+        }
+    }
     
-    // Réexécuter après un court délai pour s'assurer que tout est chargé
-    setTimeout(initModalFix, 1000);
+    // Exécuter l'initialisation et les correctifs quand le DOM est chargé
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function() {
+            initModalFix();
+        });
+    } else {
+        initModalFix();
+    }
     
-    // Réappliquer lorsque la page change de taille (orientation mobile)
+    // Appliquer à nouveau les correctifs lors des changements de taille d'écran
     window.addEventListener('resize', function() {
-        console.log('Détection de changement de taille d\'écran, réapplication des corrections...');
-        setTimeout(initModalFix, 300);
+        if (window.innerWidth <= 768) {
+            fixMobileModals();
+        }
     });
+    
+    // Observer les modifications du DOM pour réparer les modales ajoutées dynamiquement
+    if (typeof MutationObserver !== 'undefined') {
+        const observer = new MutationObserver(function(mutations) {
+            for (const mutation of mutations) {
+                if (mutation.type === 'childList') {
+                    for (const node of mutation.addedNodes) {
+                        if (node.nodeType === 1) { // Élément
+                            // Vérifier si c'est une modale ou si elle contient des modales
+                            if (node.classList && node.classList.contains('modal')) {
+                                console.log('Nouvelle modale détectée dans le DOM:', node.id);
+                                ensureModalAttributes(node);
+                            } else if (node.querySelectorAll) {
+                                const modals = node.querySelectorAll('.modal');
+                                if (modals.length > 0) {
+                                    console.log(`${modals.length} nouvelles modales détectées dans les éléments ajoutés`);
+                                    modals.forEach(modal => ensureModalAttributes(modal));
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        });
+        
+        // Observer les modifications du body
+        observer.observe(document.body, { childList: true, subtree: true });
+        console.log('Observateur de modales configuré');
+    }
+    
+    // Réexporter les fonctions pour pouvoir les utiliser depuis d'autres scripts
+    window.modalFixUtils = {
+        fixModalButton: fixModalButton,
+        manuallyOpenModal: manuallyOpenModal,
+        ensureModalAttributes: ensureModalAttributes,
+        patchBootstrapModal: patchBootstrapModal,
+        fixSpecificModals: fixSpecificModals
+    };
 })(); 

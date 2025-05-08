@@ -1,0 +1,268 @@
+# Prompt détaillé pour générer une interface de gestion de réparations
+
+## Contexte
+Vous êtes chargé de concevoir une interface utilisateur pour une application web de gestion de réparations d'appareils électroniques pour un magasin nommé "MAISON DU GEEK". Cette application doit permettre aux techniciens et aux employés de suivre les réparations, de communiquer avec les clients, et de gérer efficacement leur flux de travail quotidien.
+
+## Description générale
+L'application doit présenter une interface moderne, intuitive et efficace avec les fonctionnalités suivantes:
+- Affichage des réparations en cours sous forme de cartes ou de tableau
+- Filtrage par statut, type d'appareil et date
+- Système de recherche
+- Possibilité d'envoyer des SMS aux clients
+- Suivi du statut des réparations
+- Gestion des devis et paiements
+
+## Identité visuelle
+- Nom de l'entreprise: MAISON DU GEEK
+- Numéro de téléphone: 04 93 46 71 63
+- URL de suivi: http://Mdgeek.top/suivi.php
+- Palette de couleurs:
+  - Primaire (bleu): #3b82f6
+  - Secondaire (gris): #64748b
+  - Succès (vert): #16a34a
+  - Danger (rouge): #dc2626
+  - Warning (jaune): #ca8a04
+  - Info (bleu clair): #4f46e5
+  - Fond: #f1f5f9
+  - Texte: #1e293b
+  - Blanc: #ffffff
+
+## Spécifications détaillées de l'interface
+
+### 1. Barre de navigation
+- Logo "MAISON DU GEEK" à gauche
+- Menu avec options: Tableau de bord, Réparations, Clients, Stock, Comptabilité
+- Icône de notification
+- Menu utilisateur avec photo de profil et nom de l'utilisateur connecté
+
+### 2. En-tête de la page
+- Titre "GESTION DES RÉPARATIONS" en grand
+- Boutons de filtrage rapide: "Récentes (42)", "Nouvelles (15)", "En cours (8)", "En attente (12)", "Terminées (35)", "Archivées (78)"
+- Ces boutons doivent afficher le nombre de réparations dans chaque catégorie
+- Style des boutons: arrondi, légèrement surélevé avec ombre, couleur correspondant au statut
+
+### 3. Barre de recherche et filtres
+- Champ de recherche large avec placeholder "Rechercher par nom, téléphone, appareil..."
+- Icône de loupe à droite du champ de recherche
+- Filtres déroulants: Type d'appareil, Date, Statut
+- Options de filtres visibles sous forme de badges qui peuvent être supprimés (ex: 📱 Smartphone)
+
+### 4. Vue principale - Cartes de réparations
+- Organisation en grille responsive (4 colonnes sur grand écran, 2 sur tablette, 1 sur mobile)
+- Chaque carte contient:
+  - Icône et type d'appareil (ex: 📱 iPhone 13 Pro Max)
+  - Numéro de réparation et nom du client (ex: #458 - Martin Paul)
+  - Description du problème (ex: 🔧 Réparation d'écran)
+  - Date de réception (ex: 📅 Reçu: 05/05/2025)
+  - Prix (ex: 💰 Prix: 155,00 €)
+  - Statut avec code couleur (ex: 🟢 Prêt à être récupéré)
+  - Boutons d'action: SMS et Appeler
+- Animation subtile au survol des cartes
+- Ombre portée légère pour effet de profondeur
+- Coins arrondis (border-radius: 12px)
+
+### 5. Bouton d'ajout et rafraîchissement
+- Bouton "+" flottant en bas à gauche pour ajouter une nouvelle réparation
+- Icône de rafraîchissement en bas à droite
+- Style: cercle avec ombre portée et effet au survol
+
+### 6. Modal d'envoi de SMS
+- En-tête avec titre "ENVOYER UN SMS" sur fond bleu primaire
+- Informations du destinataire: nom et numéro de téléphone formaté
+- Sélecteur de modèle de SMS avec liste déroulante
+- Zone de texte pour le message avec contenu pré-rempli selon le modèle
+- Compteur de caractères et nombre de SMS
+- Boutons d'action: Annuler (gris) et Envoyer (vert)
+- Animation d'entrée et de sortie fluide
+
+### 7. Statuts et leur représentation visuelle
+- Nouveau / Diagnostic: badge jaune avec icône 🟡
+- En cours de réparation: badge bleu avec icône 🔵
+- En attente (pièce/client): badge orange avec icône 🟠
+- Terminé / Prêt: badge vert avec icône 🟢
+- Annulé / Problème: badge rouge avec icône 🔴
+- Archivé: badge gris avec icône ⚪
+
+## Maquette de référence pour l'interface principale
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│  MAISON DU GEEK                                      👤 Thomas Dupont ▼ │
+├─────────────────────────────────────────────────────────────────────────┤
+│                        GESTION DES RÉPARATIONS                          │
+├─────────────────────────────────────────────────────────────────────────┤
+│ ┌───────┐ ┌───────┐ ┌───────┐ ┌───────┐ ┌───────┐ ┌───────┐ ┌───────┐  │
+│ │Récentes│ │Nouvelles│ │En cours│ │En attente│ │Terminées│ │Archivées│  │
+│ │   42   │ │   15   │ │   8    │ │   12    │ │   35    │ │   78    │  │
+│ └───────┘ └───────┘ └───────┘ └───────┘ └───────┘ └───────┘ └───────┘  │
+├─────────────────────────────────────────────────────────────────────────┤
+│  Recherche: [                                        ]  🔍               │
+├─────────────────────────────────────────────────────────────────────────┤
+│  Filtres: ▼ Type d'appareil  ▼ Date  ▼ Status                           │
+│           📱 Smartphone      📅 Cette semaine  🔵 En cours               │
+├─────────────────────────────────────────────────────────────────────────┤
+│ ┌─────────────────────────┐ ┌─────────────────────────┐                 │
+│ │ 📱 iPhone 13 Pro Max    │ │ 💻 MacBook Pro 2021     │                 │
+│ │ 📋 #458 - Martin Paul   │ │ 📋 #459 - Dubois Sophie │                 │
+│ │ 🔧 Réparation d'écran   │ │ 🔧 Remplacement batterie │                 │
+│ │ 📅 Reçu: 05/05/2025     │ │ 📅 Reçu: 05/05/2025     │                 │
+│ │ 💰 Prix: 155,00 €       │ │ 💰 Prix: 95,00 €        │                 │
+│ │ 🟢 Prêt à être récupéré │ │ 🔵 En cours             │                 │
+│ │ ✉️ SMS  📞 Appeler      │ │ ✉️ SMS  📞 Appeler      │                 │
+│ └─────────────────────────┘ └─────────────────────────┘                 │
+│ ┌─────────────────────────┐ ┌─────────────────────────┐                 │
+│ │ 📱 Samsung Galaxy S22   │ │ 💻 HP Pavilion          │                 │
+│ │ 📋 #460 - Dupont Marie  │ │ 📋 #461 - Lefebvre Jean │                 │
+│ │ 🔧 Problème logiciel    │ │ 🔧 Problème démarrage   │                 │
+│ │ 📅 Reçu: 06/05/2025     │ │ 📅 Reçu: 06/05/2025     │                 │
+│ │ 💰 Prix: 50,00 €        │ │ 💰 Prix: 120,00 €       │                 │
+│ │ 🟡 Diagnostic en cours  │ │ 🟠 En attente pièce     │                 │
+│ │ ✉️ SMS  📞 Appeler      │ │ ✉️ SMS  📞 Appeler      │                 │
+│ └─────────────────────────┘ └─────────────────────────┘                 │
+│                                                                         │
+│ ⊕ Ajouter une réparation                                       🔄       │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+## Maquette de référence pour le modal d'envoi de SMS
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                       ENVOYER UN SMS                            │
+├─────────────────────────────────────────────────────────────────┤
+│ Destinataire: Dupont Marie                                      │
+│ Téléphone: +33 6 12 34 56 78                                    │
+│                                                                 │
+│ Modèle de SMS: ▼ [Diagnostic terminé]                           │
+│                                                                 │
+│ Message:                                                        │
+│ ┌─────────────────────────────────────────────────────────────┐ │
+│ │ Bonjour, Marie,                                             │ │
+│ │ le devis de votre Samsung Galaxy S22 est disponible.        │ │
+│ │ Montant : 50,00 €                                           │ │
+│ │ Consultez-le ici :                                          │ │
+│ │ 📄 http://Mdgeek.top/suivi.php?id=460                       │ │
+│ │ Une question ? Appelez-nous au 04 93 46 71 63               │ │
+│ │ MAISON DU GEEK                                              │ │
+│ └─────────────────────────────────────────────────────────────┘ │
+│                                                                 │
+│ Caractères: 152/160 | SMS: 1                                    │
+│                                                                 │
+│ [ Annuler ]                               [ Envoyer le SMS ✓ ]  │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+## Système de templates SMS
+
+### Structure des variables
+Votre système doit supporter les variables suivantes pour les SMS:
+
+- `[CLIENT_NOM]` - Nom de famille du client
+- `[CLIENT_PRENOM]` - Prénom du client
+- `[CLIENT_TELEPHONE]` - Numéro de téléphone formaté du client
+- `[REPARATION_ID]` - Identifiant unique de la réparation
+- `[APPAREIL_TYPE]` - Catégorie de l'appareil (Smartphone, Ordinateur, Tablette, etc.)
+- `[APPAREIL_MARQUE]` - Marque de l'appareil (Apple, Samsung, etc.)
+- `[APPAREIL_MODELE]` - Modèle spécifique de l'appareil
+- `[DATE_RECEPTION]` - Date à laquelle l'appareil a été déposé
+- `[DATE_FIN_PREVUE]` - Date estimée de fin de réparation
+- `[PRIX]` - Montant du devis ou de la réparation
+
+### Templates SMS prédéfinis
+L'application doit proposer au minimum les templates suivants:
+
+#### 1. Diagnostic terminé / Devis
+```
+Bonjour, [CLIENT_PRENOM], 
+le devis de votre [APPAREIL_MODELE] est disponible. 
+Montant : [PRIX]
+Consultez-le ici :
+📄 http://Mdgeek.top/suivi.php?id=[REPARATION_ID]
+Une question ? Appelez-nous au 04 93 46 71 63
+MAISON DU GEEK
+```
+
+#### 2. Réparation terminée
+```
+Bonjour [CLIENT_PRENOM],
+Votre [APPAREIL_TYPE] [APPAREIL_MODELE] est prêt à être récupéré.
+Montant : [PRIX]
+Nous sommes ouverts du lundi au vendredi de 9h à 19h.
+MAISON DU GEEK - 04 93 46 71 63
+```
+
+#### 3. En attente de pièce
+```
+Bonjour [CLIENT_PRENOM],
+Concernant votre [APPAREIL_TYPE] [APPAREIL_MODELE] (dossier #[REPARATION_ID]) :
+Nous sommes en attente de pièces pour finaliser la réparation.
+Délai estimé : 3-5 jours ouvrés.
+Nous vous tiendrons informé.
+MAISON DU GEEK - 04 93 46 71 63
+```
+
+#### 4. Rappel de réparation non récupérée
+```
+Bonjour [CLIENT_PRENOM],
+Votre [APPAREIL_TYPE] [APPAREIL_MODELE] est prêt depuis le [DATE_FIN_PREVUE].
+Nous vous rappelons qu'au-delà de 30 jours, des frais de gardiennage de 2€/jour seront appliqués.
+MAISON DU GEEK - 04 93 46 71 63
+```
+
+## Flux de travail et interactions
+
+### Consultation des réparations
+1. L'utilisateur accède à la page principale
+2. Il peut filtrer les réparations par statut en cliquant sur les boutons en haut
+3. Les réparations sont affichées sous forme de cartes dans la vue principale
+4. L'utilisateur peut utiliser la recherche ou les filtres avancés pour affiner les résultats
+
+### Envoi d'un SMS
+1. L'utilisateur clique sur le bouton SMS d'une carte de réparation
+2. Le modal d'envoi de SMS s'ouvre avec les informations du client pré-remplies
+3. L'utilisateur sélectionne un modèle de SMS dans la liste déroulante
+4. Le texte du message est automatiquement généré avec les variables remplacées
+5. L'utilisateur peut modifier le texte si nécessaire
+6. Le compteur de caractères et de SMS se met à jour en temps réel
+7. L'utilisateur clique sur "Envoyer le SMS" pour confirmer l'envoi
+
+### Ajout d'une nouvelle réparation
+1. L'utilisateur clique sur le bouton "+" en bas de l'écran
+2. Un formulaire s'ouvre avec les champs suivants:
+   - Sélection du client (avec possibilité d'en créer un nouveau)
+   - Type d'appareil, marque et modèle
+   - Description du problème
+   - Estimation du prix
+   - Date de réception
+   - Notes techniques internes
+3. L'utilisateur remplit les informations et soumet le formulaire
+4. La nouvelle réparation apparaît dans la liste des réparations
+
+## Fonctionnalités avancées à considérer
+
+1. **Mode sombre/clair** - Permettre à l'utilisateur de changer le thème de l'interface
+2. **Notifications** - Alerter l'utilisateur des actions importantes (nouveaux clients, réparations en retard)
+3. **Historique des SMS** - Conserver et afficher l'historique des communications avec le client
+4. **Gestion des pièces détachées** - Intégrer un système de gestion de stock pour les pièces
+5. **Statistiques** - Afficher des graphiques sur les performances, les types de réparations les plus fréquents
+6. **Gestion des rendez-vous** - Intégrer un calendrier pour gérer les rendez-vous avec les clients
+
+## Exigences techniques
+
+1. Interface responsive fonctionnant sur desktop, tablette et mobile
+2. Temps de chargement rapide et expérience fluide
+3. Validation des numéros de téléphone pour éviter les erreurs d'envoi de SMS
+4. Gestion des erreurs avec messages clairs
+5. Conformité RGPD pour la gestion des données clients
+6. Système de sauvegarde automatique des brouillons de messages
+
+## Instructions spécifiques pour l'IA
+
+En générant l'interface, assurez-vous de:
+1. Respecter fidèlement la palette de couleurs fournie
+2. Utiliser des icônes cohérentes et modernes pour les différentes actions
+3. Créer un design responsive qui s'adapte à toutes les tailles d'écran
+4. Inclure des micro-interactions subtiles pour améliorer l'expérience utilisateur
+5. Garantir l'accessibilité de l'interface pour tous les utilisateurs
+6. Maintenir une cohérence visuelle avec l'identité de "MAISON DU GEEK"
+7. Privilégier la clarté et l'efficacité pour les techniciens qui utilisent l'application quotidiennement 

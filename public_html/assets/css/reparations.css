@@ -699,3 +699,41 @@
         color: white;
     }
 } 
+
+/* Styles pour le tableau principal des réparations */
+.results-container {
+    width: 95%;
+    max-width: 95%;
+    margin: 0 auto;
+}
+
+.results-container .card {
+    width: 100%;
+    margin: 0 auto;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.results-container .card-body {
+    padding: 1rem;
+}
+
+#table-view {
+    width: 100%;
+    margin: 0;
+}
+
+#table-view .table-responsive {
+    width: 100%;
+    overflow-x: auto;
+}
+
+#table-view .table {
+    width: 100%;
+    margin-bottom: 0;
+}
+
+#cards-view {
+    width: 100%;
+    margin: 0;
+} 

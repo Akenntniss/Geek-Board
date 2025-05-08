@@ -427,7 +427,7 @@ function getShopDBConnection() {
 }
 
 // Pour la compatibilité avec le code existant
-$pdo = getMainDBConnection();
+$pdo = getShopDBConnection();
 
 // Fonction de compatibilité pour l'ancien code
 function getDBConnection() {

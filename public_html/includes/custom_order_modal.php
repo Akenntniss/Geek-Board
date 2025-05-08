@@ -192,6 +192,18 @@ $dark_mode = isset($dark_mode) ? $dark_mode : (isset($_SESSION['dark_mode']) && 
                         <i class="fas fa-plus-circle"></i> Ajouter une autre pièce
                     </button>
 
+                    <!-- Bouton pour activer/désactiver l'envoi de SMS -->
+                    <div class="order-section">
+                        <div class="order-section-title">
+                            <i class="fas fa-sms"></i> Notification client
+                        </div>
+                        <button id="smsToggleButtonAjout" type="button" class="btn btn-danger w-100 py-3" style="font-weight: bold; font-size: 1rem; transition: all 0.3s ease; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                            <i class="fas fa-ban me-2"></i>
+                            NE PAS ENVOYER DE SMS AU CLIENT
+                        </button>
+                        <input type="hidden" id="sendSmsSwitchAjout" name="send_sms" value="0">
+                    </div>
+
                     <!-- Pied de page avec boutons d'actions -->
                     <div class="order-footer">
                         <div>

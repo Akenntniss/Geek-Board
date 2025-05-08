@@ -1,0 +1,513 @@
+/**
+ * Solution complète pour les problèmes de modales
+ * Cette version remplace complètement le mécanisme des modales Bootstrap si nécessaire
+ */
+
+(function() {
+    // Configuration
+    const DEBUG = true;  // Activer/désactiver les logs
+    
+    // Journalisation conditionnelle
+    function log(message, type = 'log') {
+        if (!DEBUG) return;
+        const prefix = '[Modal Fix]';
+        switch (type) {
+            case 'error': console.error(prefix, message); break;
+            case 'warn': console.warn(prefix, message); break;
+            case 'info': console.info(prefix, message); break;
+            default: console.log(prefix, message);
+        }
+    }
+    
+    log('Initialisation du correctif modal v2.0...');
+    
+    // Vérifier si Bootstrap est présent
+    const isBootstrapLoaded = () => typeof bootstrap !== 'undefined' && typeof bootstrap.Modal !== 'undefined';
+    
+    // Liste des modales problématiques et leurs sélecteurs
+    const MODAL_CONFIGS = [
+        {
+            id: 'nouvelleActionModal',
+            selector: '#nouvelleActionModal',
+            triggerSelector: '.btn-nouvelle-action, [data-bs-target="#nouvelleActionModal"]'
+        },
+        {
+            id: 'menuPrincipalModal',
+            selector: '#menuPrincipalModal',
+            triggerSelector: 'a.dock-item[data-bs-target="#menuPrincipalModal"], [data-bs-target="#menuPrincipalModal"]'
+        },
+        {
+            id: 'ajouterCommandeModal',
+            selector: '#ajouterCommandeModal',
+            triggerSelector: '[data-bs-target="#ajouterCommandeModal"]'
+        },
+        {
+            id: 'rechercheClientModal',
+            selector: '#rechercheClientModal',
+            triggerSelector: '[data-bs-target="#rechercheClientModal"]'
+        },
+        {
+            id: 'changeStatusModal',
+            selector: '#changeStatusModal',
+            triggerSelector: '[data-bs-target="#changeStatusModal"], .status-badge'
+        },
+        {
+            id: 'editCommandeModal',
+            selector: '#editCommandeModal',
+            triggerSelector: '[data-bs-target="#editCommandeModal"]'
+        },
+        {
+            id: 'editFieldModal',
+            selector: '#editFieldModal',
+            triggerSelector: '[data-bs-target="#editFieldModal"], .editable-field'
+        },
+        {
+            id: 'editFournisseurModal',
+            selector: '#editFournisseurModal',
+            triggerSelector: '[data-bs-target="#editFournisseurModal"]'
+        },
+        {
+            id: 'fournisseursModal',
+            selector: '#fournisseursModal',
+            triggerSelector: '[data-bs-target="#fournisseursModal"], #fournisseurBouton'
+        },
+        {
+            id: 'periodesModal',
+            selector: '#periodesModal',
+            triggerSelector: '[data-bs-target="#periodesModal"], #periodeButton'
+        }
+    ];
+    
+    // Classe pour la gestion des modales
+    class SafeModal {
+        constructor(element, options = {}) {
+            // Si element est une chaîne, la convertir en élément DOM
+            if (typeof element === 'string') {
+                element = document.querySelector(element);
+                if (!element) {
+                    log(`Modal element not found: ${element}`, 'error');
+                    return null;
+                }
+            }
+            
+            this.element = element;
+            this.id = element.id || 'modal-' + Math.random().toString(36).substr(2, 9);
+            this.isOpen = false;
+            this.options = Object.assign({
+                backdrop: true,
+                keyboard: true,
+                onShow: null,
+                onHide: null
+            }, options);
+            
+            // S'assurer que la structure est correcte
+            this.ensureModalStructure();
+            
+            // Stocker l'instance dans l'élément
+            element._safeModal = this;
+            
+            // Initialiser les gestionnaires d'événements
+            this.initEventHandlers();
+            
+            return this;
+        }
+        
+        // S'assurer que la structure de la modale est correcte
+        ensureModalStructure() {
+            const element = this.element;
+            
+            // Ajouter les classes de base
+            if (!element.classList.contains('modal')) {
+                element.classList.add('modal');
+            }
+            if (!element.classList.contains('fade')) {
+                element.classList.add('fade');
+            }
+            
+            // Ajouter des attributs ARIA
+            element.setAttribute('tabindex', '-1');
+            element.setAttribute('aria-hidden', 'true');
+            element.setAttribute('role', 'dialog');
+            
+            // S'assurer que la boîte de dialogue existe
+            let dialogElement = element.querySelector('.modal-dialog');
+            if (!dialogElement) {
+                log(`Creating missing dialog for modal #${this.id}`);
+                dialogElement = document.createElement('div');
+                dialogElement.className = 'modal-dialog modal-dialog-centered';
+                
+                // Déplacer tout le contenu existant dans le dialog
+                Array.from(element.childNodes).forEach(node => {
+                    if (node.nodeType === 1 && !node.classList.contains('modal-backdrop')) {
+                        dialogElement.appendChild(node.cloneNode(true));
+                    }
+                });
+                
+                // Vider la modale et ajouter le dialog
+                element.innerHTML = '';
+                element.appendChild(dialogElement);
+            }
+            
+            // S'assurer que le contenu existe
+            let contentElement = dialogElement.querySelector('.modal-content');
+            if (!contentElement) {
+                log(`Creating missing content for modal #${this.id}`);
+                contentElement = document.createElement('div');
+                contentElement.className = 'modal-content';
+                
+                // Déplacer tout le contenu du dialog dans le content
+                Array.from(dialogElement.childNodes).forEach(node => {
+                    if (node.nodeType === 1 && 
+                        !node.classList.contains('modal-content') && 
+                        !node.classList.contains('modal-dialog')) {
+                        contentElement.appendChild(node.cloneNode(true));
+                    }
+                });
+                
+                // Vider le dialog et ajouter le content
+                dialogElement.innerHTML = '';
+                dialogElement.appendChild(contentElement);
+            }
+            
+            // Marquer comme corrigé
+            element.setAttribute('data-fixed', 'true');
+        }
+        
+        // Initialiser les gestionnaires d'événements
+        initEventHandlers() {
+            // Trouver les boutons de fermeture
+            const closeButtons = this.element.querySelectorAll('[data-bs-dismiss="modal"], .btn-close');
+            closeButtons.forEach(button => {
+                button.addEventListener('click', this.hide.bind(this));
+            });
+            
+            // Fermeture par la touche Escape
+            if (this.options.keyboard) {
+                this.handleKeyDown = (e) => {
+                    if (e.key === 'Escape') {
+                        this.hide();
+                    }
+                };
+            }
+        }
+        
+        // Ouvrir la modale
+        show() {
+            if (this.isOpen) return;
+            
+            log(`Opening modal #${this.id}`);
+            
+            // Avant d'ouvrir la modale, fermer toutes les autres
+            document.querySelectorAll('.modal.show').forEach(modal => {
+                if (modal !== this.element && modal._safeModal) {
+                    modal._safeModal.hide();
+                }
+            });
+            
+            // Créer le backdrop si nécessaire
+            if (this.options.backdrop) {
+                this.createBackdrop();
+            }
+            
+            // Afficher la modale
+            this.element.style.display = 'block';
+            this.element.removeAttribute('aria-hidden');
+            this.element.setAttribute('aria-modal', 'true');
+            
+            // Délai pour animation
+            setTimeout(() => {
+                this.element.classList.add('show');
+                document.body.classList.add('modal-open');
+                document.body.style.overflow = 'hidden';
+                
+                // Empêcher le défilement
+                const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+                if (scrollbarWidth > 0) {
+                    document.body.style.paddingRight = scrollbarWidth + 'px';
+                }
+                
+                // Ajouter les gestionnaires clavier
+                if (this.options.keyboard) {
+                    document.addEventListener('keydown', this.handleKeyDown);
+                }
+                
+                this.isOpen = true;
+                
+                // Exécuter le callback onShow
+                if (typeof this.options.onShow === 'function') {
+                    this.options.onShow.call(this);
+                }
+            }, 10);
+        }
+        
+        // Créer le backdrop
+        createBackdrop() {
+            // Supprimer tout backdrop existant
+            document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+            
+            // Créer un nouveau backdrop
+            this.backdrop = document.createElement('div');
+            this.backdrop.className = 'modal-backdrop fade';
+            document.body.appendChild(this.backdrop);
+            
+            // Ajouter un gestionnaire de clic pour fermer la modale
+            if (this.options.backdrop !== 'static') {
+                this.backdrop.addEventListener('click', this.hide.bind(this));
+            }
+            
+            // Animer l'apparition
+            setTimeout(() => {
+                this.backdrop.classList.add('show');
+            }, 10);
+        }
+        
+        // Fermer la modale
+        hide() {
+            if (!this.isOpen) return;
+            
+            log(`Closing modal #${this.id}`);
+            
+            // Retirer les classes d'affichage
+            this.element.classList.remove('show');
+            
+            // Retirer le backdrop
+            if (this.backdrop) {
+                this.backdrop.classList.remove('show');
+            }
+            
+            // Délai pour animation
+            setTimeout(() => {
+                this.element.style.display = 'none';
+                this.element.setAttribute('aria-hidden', 'true');
+                this.element.removeAttribute('aria-modal');
+                
+                // Supprimer le backdrop
+                if (this.backdrop) {
+                    this.backdrop.remove();
+                    this.backdrop = null;
+                }
+                
+                // Rétablir le défilement
+                document.body.classList.remove('modal-open');
+                document.body.style.overflow = '';
+                document.body.style.paddingRight = '';
+                
+                // Supprimer les gestionnaires clavier
+                if (this.options.keyboard) {
+                    document.removeEventListener('keydown', this.handleKeyDown);
+                }
+                
+                this.isOpen = false;
+                
+                // Exécuter le callback onHide
+                if (typeof this.options.onHide === 'function') {
+                    this.options.onHide.call(this);
+                }
+            }, 300); // Durée de l'animation
+        }
+        
+        // Récupérer ou créer une instance
+        static getInstance(element) {
+            if (typeof element === 'string') {
+                element = document.querySelector(element);
+            }
+            
+            if (!element) {
+                log('Element not found', 'error');
+                return null;
+            }
+            
+            return element._safeModal || new SafeModal(element);
+        }
+        
+        // Méthode statique pour initialiser les modales
+        static init() {
+            document.querySelectorAll('.modal').forEach(modal => {
+                if (!modal._safeModal) {
+                    new SafeModal(modal);
+                }
+            });
+        }
+    }
+    
+    // Remplacer les fonctions de Bootstrap
+    function replaceBootstrapModal() {
+        // Sauvegarder la référence originale
+        if (isBootstrapLoaded()) {
+            log('Remplaçant les fonctions de Bootstrap Modal...');
+            window._originalBootstrapModal = bootstrap.Modal;
+            
+            // Remplacer les fonctions à problème
+            bootstrap.Modal = function(element, options) {
+                return new SafeModal(element, options);
+            };
+            
+            bootstrap.Modal.getInstance = function(element) {
+                return SafeModal.getInstance(element);
+            };
+            
+            bootstrap.Modal.getOrCreateInstance = function(element, options) {
+                const instance = SafeModal.getInstance(element);
+                return instance || new SafeModal(element, options);
+            };
+            
+            log('Bootstrap Modal remplacé avec succès');
+        } else {
+            log('Bootstrap non détecté, utilisation du mode standalone');
+        }
+    }
+    
+    // Initialiser les déclencheurs pour les modales
+    function initModalTriggers() {
+        // Pour chaque configuration modale
+        MODAL_CONFIGS.forEach(config => {
+            const modalElement = document.querySelector(config.selector);
+            if (!modalElement) {
+                log(`Modal ${config.id} not found`, 'warn');
+                return;
+            }
+            
+            // Créer une instance sécurisée
+            const safeModal = new SafeModal(modalElement);
+            
+            // Trouver et initialiser tous les déclencheurs
+            document.querySelectorAll(config.triggerSelector).forEach(trigger => {
+                log(`Configuring trigger for ${config.id}: ${trigger.outerHTML.substring(0, 50)}...`);
+                
+                // Supprimer les anciens gestionnaires en clonant
+                const newTrigger = trigger.cloneNode(true);
+                trigger.parentNode.replaceChild(newTrigger, trigger);
+                
+                // Ajouter le nouveau gestionnaire
+                newTrigger.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    safeModal.show();
+                });
+            });
+        });
+    }
+    
+    // Initialiser les gestionnaires globaux pour les modales génériques
+    function initGenericTriggers() {
+        // Trouver tous les boutons avec data-bs-toggle="modal"
+        document.querySelectorAll('[data-bs-toggle="modal"]').forEach(trigger => {
+            // Ignorer ceux qui sont déjà traités par MODAL_CONFIGS
+            let isConfigured = false;
+            MODAL_CONFIGS.forEach(config => {
+                if (trigger.matches(config.triggerSelector)) {
+                    isConfigured = true;
+                }
+            });
+            
+            if (isConfigured) return;
+            
+            // Obtenir la cible
+            const targetSelector = trigger.getAttribute('data-bs-target');
+            if (!targetSelector) return;
+            
+            const modalElement = document.querySelector(targetSelector);
+            if (!modalElement) {
+                log(`Target modal not found: ${targetSelector}`, 'warn');
+                return;
+            }
+            
+            // Créer une instance sécurisée
+            const safeModal = new SafeModal(modalElement);
+            
+            // Supprimer les anciens gestionnaires en clonant
+            const newTrigger = trigger.cloneNode(true);
+            trigger.parentNode.replaceChild(newTrigger, trigger);
+            
+            // Ajouter le nouveau gestionnaire
+            newTrigger.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                safeModal.show();
+            });
+        });
+    }
+    
+    // Surveiller les modifications du DOM pour les nouveaux déclencheurs
+    function initMutationObserver() {
+        if (typeof MutationObserver === 'undefined') return;
+        
+        const observer = new MutationObserver(mutations => {
+            let shouldReinitialize = false;
+            
+            mutations.forEach(mutation => {
+                if (mutation.type === 'childList') {
+                    // Vérifier si des modales ont été ajoutées
+                    mutation.addedNodes.forEach(node => {
+                        if (node.nodeType === 1) { // Élément
+                            if (node.classList && node.classList.contains('modal')) {
+                                new SafeModal(node);
+                                shouldReinitialize = true;
+                            } else if (node.querySelectorAll) {
+                                const modals = node.querySelectorAll('.modal');
+                                if (modals.length > 0) {
+                                    modals.forEach(modal => new SafeModal(modal));
+                                    shouldReinitialize = true;
+                                }
+                                
+                                // Vérifier les déclencheurs
+                                const triggers = node.querySelectorAll('[data-bs-toggle="modal"]');
+                                if (triggers.length > 0) {
+                                    shouldReinitialize = true;
+                                }
+                            }
+                        }
+                    });
+                }
+            });
+            
+            // Réinitialiser les déclencheurs si nécessaire
+            if (shouldReinitialize) {
+                log('DOM changes detected, reinitializing modal triggers');
+                initModalTriggers();
+                initGenericTriggers();
+            }
+        });
+        
+        // Observer les modifications du body
+        observer.observe(document.body, {
+            childList: true,
+            subtree: true
+        });
+        
+        log('MutationObserver initialized');
+    }
+    
+    // Fonction principale d'initialisation
+    function init() {
+        log('Initializing modal fix...');
+        
+        // Remplacer Bootstrap Modal
+        replaceBootstrapModal();
+        
+        // Initialiser les déclencheurs spécifiques
+        initModalTriggers();
+        
+        // Initialiser les déclencheurs génériques
+        initGenericTriggers();
+        
+        // Initialiser l'observateur de mutations
+        initMutationObserver();
+        
+        log('Modal fix initialization complete');
+    }
+    
+    // Initialiser quand le DOM est prêt
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
+    }
+    
+    // Exporter les fonctions pour une utilisation externe
+    window.SafeModal = SafeModal;
+    window.safeModalUtils = {
+        init: init,
+        initModalTriggers: initModalTriggers
+    };
+})(); 

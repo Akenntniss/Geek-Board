@@ -289,10 +289,15 @@ const StatusModal = {
             shopId = document.body.getAttribute('data-shop-id');
         }
         
+        // Récupérer l'état d'envoi de SMS
+        const sendSms = document.getElementById('sendSmsSwitch') ? document.getElementById('sendSmsSwitch').value === '1' : false;
+        console.log('Envoi de SMS:', sendSms ? 'Activé' : 'Désactivé');
+        
         // Préparer les données
         const data = {
             repair_id: repairId,
-            status_id: statusId
+            status_id: statusId,
+            send_sms: sendSms
         };
         
         // Ajouter l'ID du magasin s'il est disponible

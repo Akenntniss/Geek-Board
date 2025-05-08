@@ -1,4 +1,16 @@
 <?php
+// Assurons-nous d'utiliser la connexion à la base de données du magasin
+$pdo = getShopDBConnection();
+
+// Vérification de la base de données actuelle
+try {
+    $db_check = $pdo->query("SELECT DATABASE() as current_db");
+    $current_db = $db_check->fetch(PDO::FETCH_ASSOC);
+    error_log("Page employes.php - Base de données utilisée: " . $current_db['current_db']);
+} catch (PDOException $e) {
+    error_log("Erreur lors de la vérification de la base: " . $e->getMessage());
+}
+
 // Récupération de la liste des utilisateurs
 try {
     $stmt = $pdo->query("

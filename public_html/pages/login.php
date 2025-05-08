@@ -121,6 +121,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $selected_shop_id = isset($_POST['shop_id']) ? (int)$_POST['shop_id'] : null;
 
     debugLog("Données POST - Username: " . $username . ", Shop ID: " . ($selected_shop_id ? $selected_shop_id : "non défini") . ", Superadmin mode: " . ($superadmin_mode ? "oui" : "non"));
+    
+    // Vérifier si l'utilisateur a changé de magasin
+    if (isset($_SESSION['shop_id']) && $selected_shop_id && $_SESSION['shop_id'] != $selected_shop_id) {
+        debugLog("Changement de magasin détecté: " . $_SESSION['shop_id'] . " -> " . $selected_shop_id);
+        // Réinitialiser les données de session liées au magasin précédent
+        unset($_SESSION['user_id']);
+        unset($_SESSION['username']);
+        unset($_SESSION['user_role']);
+        // Conserver uniquement les informations du nouveau magasin
+        $_SESSION['shop_id'] = $selected_shop_id;
+        // Les autres informations du magasin seront mises à jour pendant la connexion
+    }
 
     if (empty($username) || empty($password)) {
         $error = 'Veuillez remplir tous les champs';
@@ -798,7 +810,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <?php endif; ?>
 
             <form method="POST" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF'] . ($superadmin_mode ? '?superadmin=1' : '')); ?>">
-                <?php if (count($shopList) > 0 && !isset($_SESSION['shop_id']) && !$superadmin_mode): ?>
+                <?php if (count($shopList) > 0 && !$superadmin_mode): ?>
                 <div class="mb-4">
                     <label for="shop_id" class="form-label">
                         <i class="fas fa-store me-2"></i>Votre magasin
@@ -811,14 +823,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </option>
                         <?php endforeach; ?>
                     </select>
-                </div>
-                <?php elseif (isset($_SESSION['shop_id']) && isset($_SESSION['shop_name']) && !$superadmin_mode): ?>
-                <div class="mb-4 text-center">
-                    <div class="alert alert-info">
-                        <i class="fas fa-store-alt me-2"></i>
-                        Connexion au magasin: <strong><?php echo htmlspecialchars($_SESSION['shop_name']); ?></strong>
-                    </div>
-                    <input type="hidden" name="shop_id" value="<?php echo $_SESSION['shop_id']; ?>">
                 </div>
                 <?php elseif ($superadmin_mode): ?>
                 <div class="mb-4 text-center">
@@ -868,11 +872,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </button>
                 
                 <?php if (isset($_SESSION['shop_id'])): ?>
-                <div class="mt-3 text-center">
-                    <a href="login.php" class="text-decoration-none">
-                        <i class="fas fa-exchange-alt me-1"></i> Changer de magasin
-                    </a>
-                </div>
+                <!-- Suppression du lien "Changer de magasin" car le menu déroulant est toujours visible -->
                 <?php endif; ?>
                 
                 <!-- Ajout du lien pour les superadmins -->

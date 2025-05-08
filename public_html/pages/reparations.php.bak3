@@ -1421,41 +1421,41 @@ document.addEventListener('DOMContentLoaded', function() {
             </a>
         </div>
     </div>
-
+    
     <!-- Boutons d'action principaux -->
     <div class="action-buttons-container">
         <div class="modern-action-buttons">
             <a href="index.php?page=ajouter_reparation" class="action-button">
                 <i class="fas fa-plus-circle"></i>
                 <span>NOUVELLE RÉPARATION</span>
-                    </a>
+            </a>
             <button type="button" class="action-button toggle-view" data-view="table">
                 <i class="fas fa-table"></i>
                 <span>TABLEAU</span>
-                    </button>
+            </button>
             <button type="button" class="action-button toggle-view active" data-view="cards">
                 <i class="fas fa-th-large"></i>
                 <span>CARTES</span>
-                    </button>
+            </button>
             <button type="button" class="action-button" data-bs-toggle="modal" data-bs-target="#updateStatusModal">
                 <i class="fas fa-tasks"></i>
                 <span>MISE À JOUR STATUT</span>
-                    </button>
+            </button>
             <button type="button" class="action-button" data-bs-toggle="modal" data-bs-target="#relanceClientModal">
                 <i class="fas fa-bell"></i>
                 <span>RELANCE CLIENT</span>
-                    </button>
+            </button>
         </div>
     </div>
 
     <!-- Conteneur pour les résultats -->
     <div class="results-container">
-        <div class="card">
+        <div class="card" style="width: 95%; margin: 0 auto;">
             <div class="card-body">
                 <!-- Vue tableau -->
-                <div id="table-view" class="d-none">
-                    <div class="table-responsive">
-                        <table class="table table-striped table-hover">
+                <div id="table-view" class="d-none" style="width: 95%; margin: 0 auto;">
+                    <div class="table-responsive" style="width: 100%;">
+                        <table class="table table-striped table-hover" style="width: 100%;">
                             <thead>
                                 <tr>
                                     <th class="d-none d-md-table-cell">New</th>
@@ -1602,21 +1602,21 @@ document.addEventListener('DOMContentLoaded', function() {
                                         <div class="special-indicators">
                                             <?php if ($reparation['urgent']): ?>
                                             <div class="indicator indicator-urgent">
-                                                    <i class="fas fa-exclamation-triangle"></i>
+                                                <i class="fas fa-exclamation-triangle"></i>
                                                 <span>Urgent</span>
                                             </div>
                                             <?php endif; ?>
                                             
                                             <?php if ($reparation['commande_requise']): ?>
                                             <div class="indicator indicator-order">
-                                                    <i class="fas fa-shopping-cart"></i>
+                                                <i class="fas fa-shopping-cart"></i>
                                                 <span>Commande</span>
                                             </div>
                                             <?php endif; ?>
                                             
                                             <?php if (!empty($reparation['notes_techniques'])): ?>
                                             <div class="indicator indicator-notes">
-                                                    <i class="fas fa-clipboard-list"></i>
+                                                <i class="fas fa-clipboard-list"></i>
                                                 <span>Notes</span>
                                             </div>
                                             <?php endif; ?>
@@ -1631,22 +1631,22 @@ document.addEventListener('DOMContentLoaded', function() {
                                             <div class="client-details">
                                                 <div class="client-name">
                                                     <?php echo htmlspecialchars(($reparation['client_nom'] ?? '') . ' ' . ($reparation['client_prenom'] ?? '')); ?>
-                                            </div>
+                                                </div>
                                                 <?php if (!empty($reparation['client_telephone'])): ?>
                                                 <div class="client-contact">
                                                     <i class="fas fa-phone-alt"></i>
                                                     <span><?php echo htmlspecialchars($reparation['client_telephone']); ?></span>
-                                        </div>
+                                                </div>
                                                 <?php endif; ?>
                                                 <?php if (!empty($reparation['client_email'])): ?>
                                                 <div class="client-contact">
                                                     <i class="fas fa-envelope"></i>
                                                     <span><?php echo htmlspecialchars($reparation['client_email']); ?></span>
-                                            </div>
+                                                </div>
                                                 <?php endif; ?>
+                                            </div>
                                         </div>
-                                    </div>
-                                    
+                                        
                                         <!-- Informations de l'appareil -->
                                         <div class="device-info">
                                             <div class="device-icon">
@@ -1655,12 +1655,12 @@ document.addEventListener('DOMContentLoaded', function() {
                                             <div class="device-details">
                                                 <div class="device-model">
                                                     <?php echo htmlspecialchars($reparation['modele']); ?>
-                                            </div>
+                                                </div>
                                                 <div class="device-problem">
                                                     <?php echo htmlspecialchars(substr($reparation['description_probleme'], 0, 100)) . (strlen($reparation['description_probleme']) > 100 ? '...' : ''); ?>
+                                                </div>
+                                            </div>
                                         </div>
-                                            </div>
-                                            </div>
                                         
                                         <!-- Date de réception -->
                                         <div class="reception-date">
@@ -1673,51 +1673,51 @@ document.addEventListener('DOMContentLoaded', function() {
                                             <div class="price">
                                                 <i class="fas fa-tag"></i>
                                                 <span><?php echo isset($reparation['prix_reparation']) ? number_format($reparation['prix_reparation'], 2, ',', ' ') . ' €' : (isset($reparation['prix']) ? number_format($reparation['prix'], 2, ',', ' ') . ' €' : 'N/A'); ?></span>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
                                 
-                                <!-- Pied de la carte avec les boutons d'action -->
-                                <div class="card-footer">
-                                    <?php if (!empty($reparation['client_telephone'])): ?>
-                                    <a href="tel:<?php echo htmlspecialchars($reparation['client_telephone']); ?>" 
+                                    <!-- Pied de la carte avec les boutons d'action -->
+                                    <div class="card-footer">
+                                        <?php if (!empty($reparation['client_telephone'])): ?>
+                                        <a href="tel:<?php echo htmlspecialchars($reparation['client_telephone']); ?>" 
                                            class="action-btn btn-call" 
-                                       title="Appeler">
-                                        <i class="fas fa-phone-alt"></i>
-                                    </a>
-                                    <?php endif; ?>
-                                    <button type="button" 
+                                           title="Appeler">
+                                            <i class="fas fa-phone-alt"></i>
+                                        </a>
+                                        <?php endif; ?>
+                                        <button type="button" 
                                                 class="action-btn btn-start start-repair" 
-                                            data-id="<?php echo $reparation['id']; ?>"
-                                            title="Démarrer">
-                                        <i class="fas fa-play"></i>
-                                    </button>
-                                    <?php if (!empty($reparation['client_telephone'])): ?>
-                                    <a href="#" 
+                                                data-id="<?php echo $reparation['id']; ?>"
+                                                title="Démarrer">
+                                            <i class="fas fa-play"></i>
+                                        </button>
+                                        <?php if (!empty($reparation['client_telephone'])): ?>
+                                        <a href="#" 
                                            class="action-btn btn-message" 
-                                       title="SMS"
-                                       data-client-id="<?php echo $reparation['client_id']; ?>"
-                                       data-client-nom="<?php echo htmlspecialchars($reparation['client_nom']); ?>"
-                                       data-client-prenom="<?php echo htmlspecialchars($reparation['client_prenom']); ?>"
-                                       data-client-tel="<?php echo htmlspecialchars($reparation['client_telephone']); ?>"
-                                       onclick="openSmsModal(
-                                           '<?php echo $reparation['client_id']; ?>', 
-                                           '<?php echo htmlspecialchars($reparation['client_nom']); ?>', 
-                                           '<?php echo htmlspecialchars($reparation['client_prenom']); ?>', 
-                                           '<?php echo htmlspecialchars($reparation['client_telephone']); ?>'
-                                       ); return false;">
-                                        <i class="fas fa-comment-alt"></i>
-                                    </a>
-                                    <?php endif; ?>
-                                    <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
-                                    <button type="button" 
+                                           title="SMS"
+                                           data-client-id="<?php echo $reparation['client_id']; ?>"
+                                           data-client-nom="<?php echo htmlspecialchars($reparation['client_nom']); ?>"
+                                           data-client-prenom="<?php echo htmlspecialchars($reparation['client_prenom']); ?>"
+                                           data-client-tel="<?php echo htmlspecialchars($reparation['client_telephone']); ?>"
+                                           onclick="openSmsModal(
+                                               '<?php echo $reparation['client_id']; ?>', 
+                                               '<?php echo htmlspecialchars($reparation['client_nom']); ?>', 
+                                               '<?php echo htmlspecialchars($reparation['client_prenom']); ?>', 
+                                               '<?php echo htmlspecialchars($reparation['client_telephone']); ?>'
+                                           ); return false;">
+                                            <i class="fas fa-comment-alt"></i>
+                                        </a>
+                                        <?php endif; ?>
+                                        <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
+                                        <button type="button" 
                                                 class="action-btn btn-delete delete-repair" 
-                                            data-id="<?php echo $reparation['id']; ?>"
-                                            title="Supprimer">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                    <?php endif; ?>
-                                </div>
+                                                data-id="<?php echo $reparation['id']; ?>"
+                                                title="Supprimer">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                        <?php endif; ?>
+                                    </div>
                     </div>
                     <?php endforeach; ?>
                         <?php else: ?>
@@ -5354,8 +5354,7 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 </script>
 
-<!-- Inclusion du script pour l'ajustement du tableau -->
-<script src="../assets/js/reparations-table.js"></script>
-
+</body>
+</html>
 </body>
 </html>

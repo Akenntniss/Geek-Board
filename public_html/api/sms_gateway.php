@@ -9,11 +9,11 @@
 // Configuration de l'API
 $CONFIG = [
     // URL de l'API - utilisez celle qui correspond à votre mode d'utilisation
-    'api_url' => 'https://api.sms-gate.app/3rdparty/v1/message', // URL correcte selon la documentation
+    'api_url' => 'https://api.sms-gate.app/api/v1/messages', // URL mise à jour pour correspondre à la documentation
     
     // Identifiants d'authentification
     'username' => '-GCB75',
-    'password' => 'Mamanmaman06400',
+    'password' => 'wkbteo4zox0p4q', // Mot de passe mis à jour
     
     // Paramètres optionnels
     'debug' => true, // Activer les logs détaillés
@@ -30,18 +30,34 @@ $CONFIG = [
 function send_sms_example($to, $message) {
     global $CONFIG;
     
+    // Formatage correct du numéro de téléphone
+    $to = preg_replace('/[^0-9+]/', '', $to);
+    
+    // Si le numéro commence par un 0, le remplacer par +33 (pour la France)
+    if (substr($to, 0, 1) === '0') {
+        $to = '+33' . substr($to, 1);
+    } 
+    // Si le numéro commence par 33 sans +, ajouter le +
+    elseif (substr($to, 0, 2) === '33') {
+        $to = '+' . $to;
+    }
+    // Si le numéro ne commence pas par +, l'ajouter
+    elseif (substr($to, 0, 1) !== '+') {
+        $to = '+' . $to;
+    }
+    
     // Vérification du format du numéro
     if (!preg_match('/^\+[0-9]{10,15}$/', $to)) {
         return [
             'success' => false,
-            'message' => 'Format de numéro invalide. Utilisez le format international (ex: +33612345678)'
+            'message' => 'Format de numéro invalide après formatage: ' . $to
         ];
     }
     
-    // Préparation des données selon le format officiel
+    // Préparation des données selon le format correct de l'API
     $data = json_encode([
         'message' => $message,
-        'phoneNumbers' => [$to] // IMPORTANT: doit être un tableau
+        'phone' => $to // Format correct pour l'API
     ]);
     
     // Configuration de la requête cURL
@@ -69,6 +85,22 @@ function send_sms_example($to, $message) {
     $response = curl_exec($curl);
     $http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
     
+    // Log détaillé pour le débogage
+    if ($CONFIG['debug']) {
+        $log_file = '../logs/sms_' . date('Y-m-d') . '.log';
+        $log_dir = dirname($log_file);
+        if (!is_dir($log_dir)) {
+            mkdir($log_dir, 0755, true);
+        }
+        
+        $log_message = date('[Y-m-d H:i:s]') . " Requête API SMS:\n";
+        $log_message .= "URL: " . $CONFIG['api_url'] . "\n";
+        $log_message .= "Données: " . $data . "\n";
+        $log_message .= "Code HTTP: " . $http_code . "\n";
+        $log_message .= "Réponse: " . $response . "\n\n";
+        file_put_contents($log_file, $log_message, FILE_APPEND);
+    }
+    
     // Gestion des erreurs
     if ($response === false) {
         $error = curl_error($curl);
@@ -78,6 +110,9 @@ function send_sms_example($to, $message) {
             rewind($verbose);
             $verbose_log = stream_get_contents($verbose);
             error_log("SMS Gateway Debug: $verbose_log");
+            if (isset($log_file)) {
+                file_put_contents($log_file, date('[Y-m-d H:i:s]') . " Erreur détaillée: $verbose_log\n", FILE_APPEND);
+            }
             fclose($verbose);
         }
         

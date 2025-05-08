@@ -118,41 +118,301 @@ function formatUrgence($urgence) {
 <!-- Inclure le header -->
 <?php include_once 'includes/header.php'; ?>
 
-<!-- Contenu principal de la page -->
+<!-- Contenu principal de la page avec design amélioré -->
 <div class="container-fluid py-4">
     <style>
-        /* Style pour le bouton Google */
-        .btn-google {
-            background-color: white;
-            color: #4285F4;
-            border: 1px solid #4285F4;
-            transition: all 0.2s ease;
+        /* Variables CSS pour la palette de couleurs */
+        :root {
+            --primary: #3b82f6;
+            --secondary: #64748b;
+            --success: #16a34a;
+            --danger: #dc2626;
+            --warning: #ca8a04;
+            --info: #4f46e5;
+            --bg-light: #f1f5f9;
+            --text-dark: #1e293b;
+            --white: #ffffff;
+            --card-border-radius: 12px;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+            --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+            --shadow-lg: 0 10px 15px rgba(0,0,0,0.1);
+            --transition: all 0.3s ease;
         }
+        
+        /* Styles généraux pour la page */
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+        }
+        
+        /* Titre de la page amélioré */
+        .h3.mb-4 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--primary);
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem !important;
+        }
+        
+        /* Style moderne pour les cartes */
+        .card {
+            border-radius: var(--card-border-radius);
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+            border: none;
+            overflow: hidden;
+        }
+        
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .card-header {
+            background: linear-gradient(to right, var(--primary), rgba(59, 130, 246, 0.8));
+            color: var(--white);
+            font-weight: 600;
+            border-bottom: none;
+            padding: 1rem 1.25rem;
+        }
+        
+        .card-footer {
+            background-color: rgba(241, 245, 249, 0.5);
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+            padding: 0.75rem 1.25rem;
+        }
+        
+        /* Style amélioré pour les badges de statut */
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.35rem 0.75rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            border-radius: 999px;
+            box-shadow: var(--shadow-sm);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .status-badge:hover {
+            transform: scale(1.05);
+        }
+        
+        .status-badge::before {
+            content: "";
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-right: 6px;
+            background-color: currentColor;
+        }
+        
+        /* Style amélioré pour les badges de date */
+        .date-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+        
+        .date-badge:hover {
+            transform: scale(1.03);
+        }
+        
+        /* Style pour les boutons de filtre */
+        .status-filter {
+            border-radius: 8px;
+            font-weight: 500;
+            padding: 0.4rem 0.75rem;
+            transition: var(--transition);
+        }
+        
+        .status-filter:hover, .status-filter.active {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        /* Style pour la barre de recherche */
+        #searchCommandes {
+            border-radius: 10px;
+            padding: 0.75rem 1rem;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+        
+        #searchCommandes:focus {
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
+        }
+        
+        /* Animation pour les boutons Google */
         .btn-google:hover {
-            background-color: #4285F4;
-            color: white;
-            box-shadow: 0 2px 5px rgba(66, 133, 244, 0.3);
+            animation: pulse 1s;
         }
-        /* Animation pour indiquer que la recherche a été lancée */
-        .btn-google.clicked {
-            animation: pulse-google 0.5s;
-        }
-        @keyframes pulse-google {
+        
+        @keyframes pulse {
             0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
+            50% { transform: scale(1.05); }
             100% { transform: scale(1); }
         }
-
-        /* Styles pour le mode nuit */
-        .dark-mode .btn-google {
-            background-color: #1a1a1a;
-            color: #4285F4;
-            border: 1px solid #4285F4;
+        
+        /* Style pour les boutons d'action */
+        .btn-group .btn {
+            border-radius: 6px;
+            margin: 0 2px;
+            transition: var(--transition);
         }
-        .dark-mode .btn-google:hover {
-            background-color: #4285F4;
-            color: white;
-            box-shadow: 0 2px 5px rgba(66, 133, 244, 0.5);
+        
+        .btn-outline-primary:hover {
+            background-color: var(--primary);
+            border-color: var(--primary);
+        }
+        
+        .btn-outline-danger:hover {
+            background-color: var(--danger);
+            border-color: var(--danger);
+        }
+        
+        /* Style pour le tableau des commandes */
+        .table {
+            border-radius: var(--card-border-radius);
+            overflow: hidden;
+        }
+        
+        .table th {
+            background-color: rgba(59, 130, 246, 0.1);
+            color: var(--primary);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 0.5px;
+            padding: 1rem 0.75rem;
+        }
+        
+        .table td {
+            padding: 0.85rem 0.75rem;
+            vertical-align: middle;
+        }
+        
+        .table tr {
+            transition: var(--transition);
+        }
+        
+        .table tr:hover {
+            background-color: rgba(59, 130, 246, 0.05);
+        }
+        
+        /* Avatar pour le client */
+        .avatar-circle {
+            width: 32px;
+            height: 32px;
+            background-color: var(--primary);
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-size: 0.8rem;
+        }
+        
+        /* Lien client plus visible */
+        .client-info-link {
+            color: var(--primary);
+            font-weight: 500;
+            transition: var(--transition);
+        }
+        
+        .client-info-link:hover {
+            color: var(--info);
+            text-decoration: underline !important;
+        }
+        
+        /* Style pour les champs éditables */
+        .editable-field {
+            position: relative;
+            cursor: pointer;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+        
+        .editable-field:hover {
+            background-color: rgba(59, 130, 246, 0.1);
+        }
+        
+        .editable-field::after {
+            content: "✏️";
+            position: absolute;
+            right: -15px;
+            top: 50%;
+            transform: translateY(-50%);
+            opacity: 0;
+            transition: var(--transition);
+            font-size: 0.75rem;
+        }
+        
+        .editable-field:hover::after {
+            opacity: 1;
+            right: -20px;
+        }
+        
+        /* Modales améliorés */
+        .modal-content {
+            border-radius: 16px;
+            overflow: hidden;
+        }
+        
+        .modal-header {
+            background: linear-gradient(45deg, var(--primary), var(--info));
+            color: var(--white);
+            border-bottom: none;
+        }
+        
+        .modal-body {
+            padding: 1.5rem;
+        }
+        
+        .modal-footer {
+            border-top: none;
+            padding: 1rem 1.5rem 1.5rem;
+        }
+        
+        /* Animation d'apparition des modales */
+        .modal.fade .modal-dialog {
+            transition: transform 0.3s ease-out;
+            transform: scale(0.95);
+        }
+        
+        .modal.show .modal-dialog {
+            transform: scale(1);
+        }
+        
+        /* Effets des filtres */
+        #status-filter-group {
+            box-shadow: var(--shadow-sm);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        /* Style pour les boutons d'exportation et nouvelle commande */
+        #export-pdf-btn, .btn-primary[data-bs-toggle="modal"] {
+            background: linear-gradient(45deg, var(--success), #22c55e);
+            border: none;
+            border-radius: 8px;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+        
+        #export-pdf-btn:hover, .btn-primary[data-bs-toggle="modal"]:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .btn-primary[data-bs-toggle="modal"] {
+            background: linear-gradient(45deg, var(--primary), var(--info));
         }
     </style>
     <div class="row">
@@ -279,6 +539,16 @@ function formatUrgence($urgence) {
                 <input type="hidden" id="commandeIdInput" value="">
                 <input type="hidden" id="currentStatusInput" value="">
             </div>
+            
+            <!-- Bouton pour activer/désactiver l'envoi de SMS -->
+            <div class="p-4 border-top">
+                <button id="smsToggleButtonStatus" type="button" class="btn btn-danger w-100 py-3" style="font-weight: bold; font-size: 1rem; transition: all 0.3s ease; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                    <i class="fas fa-ban me-2"></i>
+                    NE PAS ENVOYER DE SMS AU CLIENT
+                </button>
+                <input type="hidden" id="sendSmsSwitchStatus" name="send_sms" value="0">
+            </div>
+            
             <div class="modal-footer border-top-0 d-flex justify-content-end py-3">
                 <button type="button" class="btn btn-outline-secondary btn-sm px-3" data-bs-dismiss="modal">
                     <i class="fas fa-times me-1"></i> Fermer
@@ -953,6 +1223,15 @@ document.addEventListener('DOMContentLoaded', function() {
                             </div>
                             <input type="hidden" id="edit_statut" name="statut" value="en_attente">
                         </div>
+                        
+                        <!-- Bouton pour activer/désactiver l'envoi de SMS -->
+                        <div class="col-12 mt-4">
+                            <button id="smsToggleButton" type="button" class="btn btn-danger w-100 py-3" style="font-weight: bold; font-size: 1rem; transition: all 0.3s ease; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                                <i class="fas fa-ban me-2"></i>
+                                NE PAS ENVOYER DE SMS AU CLIENT
+                            </button>
+                            <input type="hidden" id="sendSmsSwitch" name="send_sms" value="0">
+                        </div>
                     </div>
                 </form>
             </div>
@@ -965,3 +1244,589 @@ document.addEventListener('DOMContentLoaded', function() {
         </div>
     </div>
 </div>
+
+<!-- Modal pour filtrer par fournisseur -->
+<div class="modal fade" id="fournisseursModal" tabindex="-1" aria-labelledby="fournisseursModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow">
+            <div class="modal-header">
+                <h5 class="modal-title" id="fournisseursModalLabel">
+                    <i class="fas fa-filter me-2 text-primary"></i>
+                    Filtrer par fournisseur
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <div class="input-group">
+                        <span class="input-group-text bg-light border-0 shadow-sm">
+                            <i class="fas fa-search text-primary"></i>
+                        </span>
+                        <input type="text" id="searchFournisseur" class="form-control bg-light border-0 shadow-sm" placeholder="Rechercher un fournisseur...">
+                    </div>
+                </div>
+                
+                <div class="list-group fournisseurs-list" style="max-height: 300px; overflow-y: auto;">
+                    <button type="button" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" data-fournisseur-id="all">
+                        <span>Tous les fournisseurs</span>
+                        <span class="badge bg-primary rounded-pill" id="count-all">0</span>
+                    </button>
+                    
+                    <?php
+                    try {
+                        $stmt = $pdo->query("SELECT f.id, f.nom, COUNT(c.id) as count_commandes 
+                                          FROM fournisseurs f 
+                                          LEFT JOIN commandes_pieces c ON f.id = c.fournisseur_id 
+                                          GROUP BY f.id 
+                                          ORDER BY f.nom");
+                        $fournisseurs = $stmt->fetchAll();
+                        
+                        $totalCommandes = 0;
+                        foreach ($fournisseurs as $fournisseur) {
+                            $totalCommandes += $fournisseur['count_commandes'];
+                            echo '<button type="button" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center fournisseur-item" data-fournisseur-id="' . $fournisseur['id'] . '" data-fournisseur-nom="' . htmlspecialchars($fournisseur['nom']) . '">';
+                            echo '<span>' . htmlspecialchars($fournisseur['nom']) . '</span>';
+                            echo '<span class="badge bg-primary rounded-pill">' . $fournisseur['count_commandes'] . '</span>';
+                            echo '</button>';
+                        }
+                        
+                        // Mettre à jour le compteur "Tous les fournisseurs"
+                        echo '<script>document.getElementById("count-all").textContent = "' . $totalCommandes . '";</script>';
+                    } catch (PDOException $e) {
+                        echo '<div class="alert alert-danger">Erreur lors de la récupération des fournisseurs: ' . $e->getMessage() . '</div>';
+                    }
+                    ?>
+                </div>
+            </div>
+            <div class="modal-footer border-top-0">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal pour filtrer par période -->
+<div class="modal fade" id="periodesModal" tabindex="-1" aria-labelledby="periodesModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow">
+            <div class="modal-header">
+                <h5 class="modal-title" id="periodesModalLabel">
+                    <i class="fas fa-calendar-alt me-2 text-primary"></i>
+                    Filtrer par période
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="list-group">
+                    <button type="button" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center periode-item" data-periode="all">
+                        <div>
+                            <span class="fw-medium">Toutes les périodes</span>
+                            <small class="d-block text-muted">Afficher toutes les commandes</small>
+                        </div>
+                        <i class="fas fa-check text-primary periode-check d-none"></i>
+                    </button>
+                    
+                    <button type="button" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center periode-item" data-periode="today">
+                        <div>
+                            <span class="fw-medium">Aujourd'hui</span>
+                            <small class="d-block text-muted"><?= date('d/m/Y') ?></small>
+                        </div>
+                        <i class="fas fa-check text-primary periode-check d-none"></i>
+                    </button>
+                    
+                    <button type="button" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center periode-item" data-periode="yesterday">
+                        <div>
+                            <span class="fw-medium">Hier</span>
+                            <small class="d-block text-muted"><?= date('d/m/Y', strtotime('-1 day')) ?></small>
+                        </div>
+                        <i class="fas fa-check text-primary periode-check d-none"></i>
+                    </button>
+                    
+                    <button type="button" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center periode-item" data-periode="this_week">
+                        <div>
+                            <span class="fw-medium">Cette semaine</span>
+                            <small class="d-block text-muted">Du <?= date('d/m/Y', strtotime('monday this week')) ?> au <?= date('d/m/Y', strtotime('sunday this week')) ?></small>
+                        </div>
+                        <i class="fas fa-check text-primary periode-check d-none"></i>
+                    </button>
+                    
+                    <button type="button" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center periode-item" data-periode="last_week">
+                        <div>
+                            <span class="fw-medium">Semaine dernière</span>
+                            <small class="d-block text-muted">Du <?= date('d/m/Y', strtotime('monday last week')) ?> au <?= date('d/m/Y', strtotime('sunday last week')) ?></small>
+                        </div>
+                        <i class="fas fa-check text-primary periode-check d-none"></i>
+                    </button>
+                    
+                    <button type="button" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center periode-item" data-periode="this_month">
+                        <div>
+                            <span class="fw-medium">Ce mois</span>
+                            <small class="d-block text-muted"><?= date('F Y') ?></small>
+                        </div>
+                        <i class="fas fa-check text-primary periode-check d-none"></i>
+                    </button>
+                    
+                    <button type="button" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center periode-item" data-periode="last_month">
+                        <div>
+                            <span class="fw-medium">Mois dernier</span>
+                            <small class="d-block text-muted"><?= date('F Y', strtotime('first day of last month')) ?></small>
+                        </div>
+                        <i class="fas fa-check text-primary periode-check d-none"></i>
+                    </button>
+                    
+                    <div class="list-group-item">
+                        <p class="mb-2 fw-medium">Période personnalisée</p>
+                        <div class="row g-2">
+                            <div class="col-md-6">
+                                <label class="form-label small">Date de début</label>
+                                <input type="date" id="startDate" class="form-control">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label small">Date de fin</label>
+                                <input type="date" id="endDate" class="form-control">
+                            </div>
+                        </div>
+                        <button type="button" id="applyCustomPeriod" class="btn btn-primary w-100 mt-2">
+                            <i class="fas fa-filter me-1"></i> Appliquer
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer border-top-0">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Ajoutons également du code JavaScript pour gérer les filtres -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Gestion du filtre par fournisseur
+    const fournisseurBouton = document.getElementById('fournisseurBouton');
+    const fournisseurItems = document.querySelectorAll('.fournisseur-item');
+    let currentFournisseurFilter = 'all';
+    
+    fournisseurItems.forEach(item => {
+        item.addEventListener('click', function() {
+            const fournisseurId = this.getAttribute('data-fournisseur-id');
+            const fournisseurNom = this.getAttribute('data-fournisseur-nom');
+            
+            // Mettre à jour le bouton
+            if (fournisseurId === 'all') {
+                fournisseurBouton.innerHTML = '<i class="fas fa-filter"></i> Tous les fournisseurs';
+            } else {
+                fournisseurBouton.innerHTML = '<i class="fas fa-filter"></i> ' + fournisseurNom;
+            }
+            
+            currentFournisseurFilter = fournisseurId;
+            
+            // Fermer le modal
+            const modal = bootstrap.Modal.getInstance(document.getElementById('fournisseursModal'));
+            if (modal) {
+                modal.hide();
+            }
+            
+            // Appliquer le filtre
+            filterCommandes();
+        });
+    });
+
+    // Gestion du filtre par période
+    const periodeButton = document.getElementById('periodeButton');
+    const periodeItems = document.querySelectorAll('.periode-item');
+    let currentPeriodFilter = 'all';
+    
+    periodeItems.forEach(item => {
+        item.addEventListener('click', function() {
+            const periode = this.getAttribute('data-periode');
+            
+            // Mettre à jour visuellement l'élément sélectionné
+            periodeItems.forEach(el => {
+                el.querySelector('.periode-check').classList.add('d-none');
+            });
+            this.querySelector('.periode-check').classList.remove('d-none');
+            
+            // Mettre à jour le bouton
+            switch(periode) {
+                case 'all':
+                    periodeButton.innerHTML = '<i class="fas fa-calendar-alt"></i> Toutes les périodes';
+                    break;
+                case 'today':
+                    periodeButton.innerHTML = '<i class="fas fa-calendar-alt"></i> Aujourd\'hui';
+                    break;
+                case 'yesterday':
+                    periodeButton.innerHTML = '<i class="fas fa-calendar-alt"></i> Hier';
+                    break;
+                case 'this_week':
+                    periodeButton.innerHTML = '<i class="fas fa-calendar-alt"></i> Cette semaine';
+                    break;
+                case 'last_week':
+                    periodeButton.innerHTML = '<i class="fas fa-calendar-alt"></i> Semaine dernière';
+                    break;
+                case 'this_month':
+                    periodeButton.innerHTML = '<i class="fas fa-calendar-alt"></i> Ce mois';
+                    break;
+                case 'last_month':
+                    periodeButton.innerHTML = '<i class="fas fa-calendar-alt"></i> Mois dernier';
+                    break;
+                default:
+                    periodeButton.innerHTML = '<i class="fas fa-calendar-alt"></i> Période personnalisée';
+            }
+            
+            currentPeriodFilter = periode;
+            
+            // Fermer le modal
+            const modal = bootstrap.Modal.getInstance(document.getElementById('periodesModal'));
+            if (modal) {
+                modal.hide();
+            }
+            
+            // Appliquer le filtre
+            filterCommandes();
+        });
+    });
+    
+    // Période personnalisée
+    document.getElementById('applyCustomPeriod').addEventListener('click', function() {
+        const startDate = document.getElementById('startDate').value;
+        const endDate = document.getElementById('endDate').value;
+        
+        if (!startDate || !endDate) {
+            alert('Veuillez sélectionner une date de début et de fin');
+            return;
+        }
+        
+        // Mettre à jour le bouton
+        periodeButton.innerHTML = `<i class="fas fa-calendar-alt"></i> Du ${formatDate(startDate)} au ${formatDate(endDate)}`;
+        
+        currentPeriodFilter = 'custom';
+        
+        // Fermer le modal
+        const modal = bootstrap.Modal.getInstance(document.getElementById('periodesModal'));
+        if (modal) {
+            modal.hide();
+        }
+        
+        // Appliquer le filtre
+        filterCommandes(startDate, endDate);
+    });
+    
+    // Fonction pour formater la date affichée
+    function formatDate(dateString) {
+        const date = new Date(dateString);
+        return date.toLocaleDateString('fr-FR');
+    }
+    
+    // Recherche de fournisseur
+    const searchFournisseur = document.getElementById('searchFournisseur');
+    if (searchFournisseur) {
+        searchFournisseur.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            document.querySelectorAll('.fournisseur-item').forEach(item => {
+                const fournisseurNom = item.getAttribute('data-fournisseur-nom').toLowerCase();
+                if (fournisseurNom.includes(searchTerm)) {
+                    item.style.display = '';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+    }
+    
+    // Fonction pour filtrer les commandes
+    function filterCommandes(customStartDate, customEndDate) {
+        const rows = document.querySelectorAll('#commandesTableBody tr');
+        let visibleRows = 0;
+        
+        rows.forEach(row => {
+            let showRow = true;
+            
+            // Filtre par fournisseur
+            if (currentFournisseurFilter !== 'all') {
+                const rowFournisseurId = row.getAttribute('data-fournisseur-id');
+                if (rowFournisseurId !== currentFournisseurFilter) {
+                    showRow = false;
+                }
+            }
+            
+            // Filtre par période
+            if (showRow && currentPeriodFilter !== 'all') {
+                const rowDate = new Date(row.getAttribute('data-date'));
+                const today = new Date();
+                today.setHours(0, 0, 0, 0);
+                
+                const yesterday = new Date(today);
+                yesterday.setDate(yesterday.getDate() - 1);
+                
+                switch(currentPeriodFilter) {
+                    case 'today':
+                        showRow = rowDate.toDateString() === today.toDateString();
+                        break;
+                    case 'yesterday':
+                        showRow = rowDate.toDateString() === yesterday.toDateString();
+                        break;
+                    case 'this_week': {
+                        const firstDay = new Date(today);
+                        firstDay.setDate(today.getDate() - today.getDay() + (today.getDay() === 0 ? -6 : 1));
+                        const lastDay = new Date(firstDay);
+                        lastDay.setDate(firstDay.getDate() + 6);
+                        showRow = rowDate >= firstDay && rowDate <= lastDay;
+                        break;
+                    }
+                    case 'last_week': {
+                        const firstDay = new Date(today);
+                        firstDay.setDate(today.getDate() - today.getDay() - 6);
+                        const lastDay = new Date(firstDay);
+                        lastDay.setDate(firstDay.getDate() + 6);
+                        showRow = rowDate >= firstDay && rowDate <= lastDay;
+                        break;
+                    }
+                    case 'this_month': {
+                        const firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
+                        const lastDay = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+                        showRow = rowDate >= firstDay && rowDate <= lastDay;
+                        break;
+                    }
+                    case 'last_month': {
+                        const firstDay = new Date(today.getFullYear(), today.getMonth() - 1, 1);
+                        const lastDay = new Date(today.getFullYear(), today.getMonth(), 0);
+                        showRow = rowDate >= firstDay && rowDate <= lastDay;
+                        break;
+                    }
+                    case 'custom': {
+                        if (customStartDate && customEndDate) {
+                            const startDate = new Date(customStartDate);
+                            const endDate = new Date(customEndDate);
+                            endDate.setHours(23, 59, 59, 999);
+                            showRow = rowDate >= startDate && rowDate <= endDate;
+                        }
+                        break;
+                    }
+                }
+            }
+            
+            // Appliquer le filtre
+            if (showRow) {
+                row.style.display = '';
+                visibleRows++;
+            } else {
+                row.style.display = 'none';
+            }
+        });
+        
+        // Mettre à jour les compteurs
+        document.getElementById('visibleRowsCount').textContent = visibleRows;
+        document.getElementById('totalRowsCount').textContent = rows.length;
+        
+        // Afficher/masquer le bouton de réinitialisation
+        const resetButton = document.getElementById('resetFilters');
+        if (currentFournisseurFilter !== 'all' || currentPeriodFilter !== 'all') {
+            resetButton.classList.remove('d-none');
+        } else {
+            resetButton.classList.add('d-none');
+        }
+    }
+    
+    // Réinitialiser les filtres
+    document.getElementById('resetFilters').addEventListener('click', function() {
+        fournisseurBouton.innerHTML = '<i class="fas fa-filter"></i> Choisir un fournisseur';
+        periodeButton.innerHTML = '<i class="fas fa-calendar-alt"></i> Toutes les périodes';
+        currentFournisseurFilter = 'all';
+        currentPeriodFilter = 'all';
+        
+        // Réinitialiser la sélection visuelle
+        periodeItems.forEach(el => {
+            el.querySelector('.periode-check').classList.add('d-none');
+        });
+        document.querySelector('.periode-item[data-periode="all"]').querySelector('.periode-check').classList.remove('d-none');
+        
+        filterCommandes();
+        this.classList.add('d-none');
+    });
+    
+    // Initialiser les filtres au chargement
+    filterCommandes();
+});
+</script>
+
+<!-- Ajoutons le script JavaScript pour gérer le bouton SMS -->
+<script>
+// Initialisation du bouton toggle SMS après le chargement du DOM
+document.addEventListener('DOMContentLoaded', function() {
+    initSmsToggleButton();
+    
+    // Autres initialisations existantes...
+});
+
+// Fonction pour initialiser le bouton toggle pour l'envoi de SMS
+function initSmsToggleButton() {
+    const toggleButton = document.getElementById('smsToggleButton');
+    const smsSwitch = document.getElementById('sendSmsSwitch');
+    
+    if (!toggleButton || !smsSwitch) {
+        console.error('Éléments du bouton SMS toggle non trouvés');
+        return;
+    }
+    
+    // Définir l'état initial (0 = SMS désactivé)
+    smsSwitch.value = '0';
+    
+    // Définir l'apparence initiale du bouton
+    updateSmsButtonAppearance(toggleButton, false);
+    
+    // Ajouter l'écouteur d'événement click
+    toggleButton.addEventListener('click', function() {
+        // Inverser l'état actuel
+        const currentState = smsSwitch.value === '1';
+        const newState = !currentState;
+        
+        // Mettre à jour la valeur dans l'input hidden
+        smsSwitch.value = newState ? '1' : '0';
+        
+        // Mettre à jour l'apparence du bouton
+        updateSmsButtonAppearance(toggleButton, newState);
+        
+        // Vibration pour feedback tactile sur mobile
+        if ('vibrate' in navigator) {
+            navigator.vibrate(50);
+        }
+        
+        // Jouer un son de notification pour confirmer le changement
+        playNotificationSound();
+        
+        console.log('État du SMS mis à jour:', newState ? 'Activé' : 'Désactivé');
+    });
+}
+
+// Fonction pour mettre à jour l'apparence du bouton selon l'état
+function updateSmsButtonAppearance(button, isSmsEnabled) {
+    if (isSmsEnabled) {
+        // SMS activé
+        button.classList.remove('btn-danger');
+        button.classList.add('btn-success');
+        button.innerHTML = '<i class="fas fa-paper-plane me-2"></i> ENVOYER UN SMS AU CLIENT';
+    } else {
+        // SMS désactivé
+        button.classList.remove('btn-success');
+        button.classList.add('btn-danger');
+        button.innerHTML = '<i class="fas fa-ban me-2"></i> NE PAS ENVOYER DE SMS AU CLIENT';
+    }
+}
+
+// Fonction pour jouer un son de notification
+function playNotificationSound() {
+    try {
+        const audio = new Audio('assets/sounds/click.mp3');
+        audio.volume = 0.5;
+        audio.play().catch(e => console.log('Impossible de jouer le son:', e));
+    } catch (e) {
+        console.log('Erreur lors de la lecture du son:', e);
+    }
+}
+
+// Ajouter ces fonctions à l'objet global pour les rendre accessibles
+window.smsToggle = {
+    init: initSmsToggleButton,
+    updateAppearance: updateSmsButtonAppearance,
+    getSmsStatus: function() {
+        return document.getElementById('sendSmsSwitch')?.value === '1';
+    },
+    setSmsStatus: function(status) {
+        const smsSwitch = document.getElementById('sendSmsSwitch');
+        const toggleButton = document.getElementById('smsToggleButton');
+        if (smsSwitch && toggleButton) {
+            smsSwitch.value = status ? '1' : '0';
+            updateSmsButtonAppearance(toggleButton, status);
+        }
+    }
+};
+
+// Mise à jour de la fonction updateCommande pour inclure l'état du SMS
+function updateCommande() {
+    // Récupérer l'ID de la commande
+    const id = document.getElementById('edit_id').value;
+    if (!id) {
+        alert('Erreur: ID de commande manquant');
+        return;
+    }
+    
+    // Récupérer toutes les valeurs du formulaire
+    const formData = new FormData(document.getElementById('editCommandeForm'));
+    
+    // Si disponible, récupérer également l'état du SMS
+    const smsSwitch = document.getElementById('sendSmsSwitch');
+    if (smsSwitch) {
+        formData.append('send_sms', smsSwitch.value);
+        console.log('Mise à jour de la commande avec statut SMS:', smsSwitch.value === '1' ? 'Envoyer' : 'Ne pas envoyer');
+    }
+    
+    // Afficher un indicateur de chargement
+    const saveButton = document.querySelector('.modal-footer .btn-primary');
+    const originalContent = saveButton.innerHTML;
+    saveButton.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Enregistrement...';
+    saveButton.disabled = true;
+    
+    // Envoyer les données au serveur
+    fetch('ajax/update_commande.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Restaurer le bouton
+        saveButton.innerHTML = originalContent;
+        saveButton.disabled = false;
+        
+        if (data.success) {
+            // Fermer le modal
+            bootstrap.Modal.getInstance(document.getElementById('editCommandeModal')).hide();
+            
+            // Afficher un message de succès
+            showNotification('Commande mise à jour avec succès', 'success');
+            
+            // Rafraîchir la page pour afficher les modifications
+            setTimeout(() => {
+                location.reload();
+            }, 1000);
+        } else {
+            // Afficher un message d'erreur
+            showNotification('Erreur lors de la mise à jour de la commande: ' + data.message, 'danger');
+        }
+    })
+    .catch(error => {
+        // Restaurer le bouton
+        saveButton.innerHTML = originalContent;
+        saveButton.disabled = false;
+        
+        // Afficher un message d'erreur
+        console.error('Erreur:', error);
+        showNotification('Erreur de communication avec le serveur', 'danger');
+    });
+}
+
+// Mise à jour de la fonction pour initialiser tous les boutons toggle SMS après le chargement du DOM
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialiser tous les boutons SMS
+    initAllSmsToggleButtons();
+    
+    // Autres initialisations existantes...
+});
+
+// Fonction pour initialiser tous les boutons toggle SMS sur la page
+function initAllSmsToggleButtons() {
+    // Liste des paires bouton/switch à initialiser
+    const smsButtons = [
+        { button: 'smsToggleButton', switch: 'sendSmsSwitch' },
+        { button: 'smsToggleButtonStatus', switch: 'sendSmsSwitchStatus' },
+        { button: 'smsToggleButtonAjout', switch: 'sendSmsSwitchAjout' }
+    ];
+    
+    // Initialiser chaque bouton s'il existe
+    smsButtons.forEach(pair => {
+        const toggleButton = document.getElementById(pair.button);
+        const smsSwitch = document.getElementById(pair.switch);
+        
+        if (toggleButton && smsSwitch) {
+            console.log(`Initialisation du bouton SMS: ${pair.button}`);
+</script>
