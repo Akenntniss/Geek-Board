@@ -20,9 +20,12 @@ require_once(BASE_PATH . '/fpdf/fpdf.php');
 // Pas besoin d'inclure database.php car il est déjà inclus dans index.php
 // require_once(BASE_PATH . '/config/database.php');
 
+// Obtenir la connexion à la base de données de la boutique
+$shop_pdo = getShopDBConnection();
+
 try {
     // Récupérer les informations de la réparation
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         SELECT r.*, c.nom, c.prenom
         FROM reparations r
         JOIN clients c ON r.client_id = c.id

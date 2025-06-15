@@ -46,8 +46,8 @@ function createSmsTableIfNotExist($db) {
 }
 
 // Initialisation
-// Utilisation directe de $pdo défini dans database.php
-$db = $pdo;
+// Utilisation directe de $shop_pdo défini dans database.php
+$db = $shop_pdo;
 createSmsTableIfNotExist($db);
 logRequest('REQUEST', $_REQUEST);
 

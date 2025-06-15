@@ -30,19 +30,19 @@ echo "json_decode existe: " . (function_exists('json_decode') ? 'Oui' : 'Non') .
 echo "<h2>Test de base de données</h2>";
 try {
     require_once '../includes/functions.php';
-    global $pdo;
+    global $shop_pdo;
     
-    if ($pdo) {
+    if ($shop_pdo) {
         echo "Connexion à la base de données: <span style='color:green'>OK</span><br>";
-        echo "Type de base de données: " . $pdo->getAttribute(PDO::ATTR_DRIVER_NAME) . "<br>";
-        echo "Version serveur: " . $pdo->getAttribute(PDO::ATTR_SERVER_VERSION) . "<br>";
+        echo "Type de base de données: " . $shop_pdo->getAttribute(PDO::ATTR_DRIVER_NAME) . "<br>";
+        echo "Version serveur: " . $shop_pdo->getAttribute(PDO::ATTR_SERVER_VERSION) . "<br>";
         
         // Vérifier si les tables existent
         $tables = ["conversations", "conversation_participants", "messages", "message_reads", "message_attachments", "message_reactions"];
         echo "<h3>Vérification des tables:</h3>";
         echo "<ul>";
         foreach ($tables as $table) {
-            $stmt = $pdo->prepare("SHOW TABLES LIKE :table");
+            $stmt = $shop_pdo->prepare("SHOW TABLES LIKE :table");
             $stmt->execute([':table' => $table]);
             $exists = $stmt->rowCount() > 0;
             echo "<li>$table: " . ($exists ? '<span style="color:green">Existe</span>' : '<span style="color:red">N\'existe pas</span>') . "</li>";
@@ -52,7 +52,7 @@ try {
         // Tester une requête JSON
         echo "<h3>Test fonctions JSON SQL:</h3>";
         try {
-            $stmt = $pdo->prepare("SELECT JSON_OBJECT('test', 'value') as json_test");
+            $stmt = $shop_pdo->prepare("SELECT JSON_OBJECT('test', 'value') as json_test");
             $stmt->execute();
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
             echo "Test JSON_OBJECT: " . ($result ? '<span style="color:green">OK</span>' : '<span style="color:red">Échec</span>') . "<br>";
@@ -62,7 +62,7 @@ try {
         }
         
         try {
-            $stmt = $pdo->prepare("SELECT JSON_ARRAYAGG('test') as json_test");
+            $stmt = $shop_pdo->prepare("SELECT JSON_ARRAYAGG('test') as json_test");
             $stmt->execute();
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
             echo "Test JSON_ARRAYAGG: " . ($result ? '<span style="color:green">OK</span>' : '<span style="color:red">Échec</span>') . "<br>";

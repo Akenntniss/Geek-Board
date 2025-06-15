@@ -33,24 +33,24 @@ try {
     
     // Tester la connexion à la base de données
     $log[] = "Test de connexion à la base de données...";
-    if (isset($pdo)) {
+    if (isset($shop_pdo)) {
         $log[] = "Connexion PDO établie";
         
         // Vérifier si la table messages existe
-        $stmt = $pdo->query("SHOW TABLES LIKE 'messages'");
+        $stmt = $shop_pdo->query("SHOW TABLES LIKE 'messages'");
         if ($stmt->rowCount() > 0) {
             $log[] = "Table 'messages' existe";
             
             // Vérifier s'il y a des messages dans la conversation
             if (isset($_GET['conversation_id'])) {
                 $conversation_id = (int)$_GET['conversation_id'];
-                $stmt = $pdo->prepare("SELECT COUNT(*) as count FROM messages WHERE conversation_id = ?");
+                $stmt = $shop_pdo->prepare("SELECT COUNT(*) as count FROM messages WHERE conversation_id = ?");
                 $stmt->execute([$conversation_id]);
                 $count = $stmt->fetch(PDO::FETCH_ASSOC)['count'];
                 $log[] = "Nombre de messages dans la conversation $conversation_id: $count";
                 
                 // Vérifier les participants de la conversation
-                $stmt = $pdo->prepare("SELECT user_id FROM conversation_participants WHERE conversation_id = ?");
+                $stmt = $shop_pdo->prepare("SELECT user_id FROM conversation_participants WHERE conversation_id = ?");
                 $stmt->execute([$conversation_id]);
                 $participants = $stmt->fetchAll(PDO::FETCH_COLUMN);
                 $log[] = "Participants: " . implode(', ', $participants);
@@ -61,7 +61,7 @@ try {
                 
                 // Essayer de charger quelques messages directement
                 $log[] = "Essai de chargement des messages...";
-                $stmt = $pdo->prepare("
+                $stmt = $shop_pdo->prepare("
                     SELECT m.*, u.full_name as sender_name
                     FROM messages m
                     LEFT JOIN users u ON m.sender_id = u.id

@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 // Fonction pour ajouter un retour
 function ajouterRetour() {
-    global $pdo;
+    $shop_pdo = getShopDBConnection();
     
     try {
         // Vérifier les données requises
@@ -47,7 +47,8 @@ function ajouterRetour() {
         $notes = $_POST['notes'] ?? '';
         
         // Vérifier si le produit existe et est en statut temporaire
-        $stmt = $pdo->prepare("SELECT id, status FROM stock WHERE id = ?");
+        $shop_pdo = getShopDBConnection();
+$stmt = $shop_pdo->prepare("SELECT id, status FROM stock WHERE id = ?");
         $stmt->execute([$produit_id]);
         $produit = $stmt->fetch();
         
@@ -60,25 +61,25 @@ function ajouterRetour() {
         }
         
         // Commencer une transaction
-        $pdo->beginTransaction();
+        $shop_pdo->beginTransaction();
         
         // Créer le retour
-        $stmt = $pdo->prepare("
+        $stmt = $shop_pdo->prepare("
             INSERT INTO retours (produit_id, date_limite, notes)
             VALUES (?, ?, ?)
         ");
         $stmt->execute([$produit_id, $date_limite, $notes]);
         
         // Mettre à jour le statut du produit
-        $stmt = $pdo->prepare("UPDATE stock SET status = 'a_retourner' WHERE id = ?");
+        $stmt = $shop_pdo->prepare("UPDATE stock SET status = 'a_retourner' WHERE id = ?");
         $stmt->execute([$produit_id]);
         
-        $pdo->commit();
+        $shop_pdo->commit();
         set_message("Retour ajouté avec succès", 'success');
         
     } catch (Exception $e) {
-        if ($pdo->inTransaction()) {
-            $pdo->rollBack();
+        if ($shop_pdo->inTransaction()) {
+            $shop_pdo->rollBack();
         }
         set_message("Erreur lors de l'ajout du retour: " . $e->getMessage(), 'danger');
     }
@@ -88,7 +89,7 @@ function ajouterRetour() {
 
 // Fonction pour modifier un retour
 function modifierRetour() {
-    global $pdo;
+    $shop_pdo = getShopDBConnection();
     
     try {
         // Vérifier les données requises
@@ -104,7 +105,7 @@ function modifierRetour() {
         $notes = $_POST['notes'] ?? '';
         
         // Vérifier si le retour existe
-        $stmt = $pdo->prepare("SELECT id, produit_id FROM retours WHERE id = ?");
+        $stmt = $shop_pdo->prepare("SELECT id, produit_id FROM retours WHERE id = ?");
         $stmt->execute([$retour_id]);
         $retour = $stmt->fetch();
         
@@ -113,10 +114,10 @@ function modifierRetour() {
         }
         
         // Commencer une transaction
-        $pdo->beginTransaction();
+        $shop_pdo->beginTransaction();
         
         // Mettre à jour le retour
-        $stmt = $pdo->prepare("
+        $stmt = $shop_pdo->prepare("
             UPDATE retours 
             SET statut = ?, 
                 numero_suivi = ?, 
@@ -136,16 +137,16 @@ function modifierRetour() {
         
         // Si le retour est terminé, mettre à jour le statut du produit
         if ($statut === 'termine') {
-            $stmt = $pdo->prepare("UPDATE stock SET status = 'normal' WHERE id = ?");
+            $stmt = $shop_pdo->prepare("UPDATE stock SET status = 'normal' WHERE id = ?");
             $stmt->execute([$retour['produit_id']]);
         }
         
-        $pdo->commit();
+        $shop_pdo->commit();
         set_message("Retour modifié avec succès", 'success');
         
     } catch (Exception $e) {
-        if ($pdo->inTransaction()) {
-            $pdo->rollBack();
+        if ($shop_pdo->inTransaction()) {
+            $shop_pdo->rollBack();
         }
         set_message("Erreur lors de la modification du retour: " . $e->getMessage(), 'danger');
     }
@@ -155,7 +156,7 @@ function modifierRetour() {
 
 // Fonction pour ajouter un colis
 function ajouterColis() {
-    global $pdo;
+    $shop_pdo = getShopDBConnection();
     
     try {
         // Vérifier les données requises
@@ -167,7 +168,7 @@ function ajouterColis() {
         $notes = $_POST['notes'] ?? '';
         
         // Créer le colis
-        $stmt = $pdo->prepare("
+        $stmt = $shop_pdo->prepare("
             INSERT INTO colis_retour (numero_suivi, notes)
             VALUES (?, ?)
         ");
@@ -184,7 +185,7 @@ function ajouterColis() {
 
 // Fonction pour modifier un colis
 function modifierColis() {
-    global $pdo;
+    $shop_pdo = getShopDBConnection();
     
     try {
         // Vérifier les données requises
@@ -197,17 +198,17 @@ function modifierColis() {
         $notes = $_POST['notes'] ?? '';
         
         // Vérifier si le colis existe
-        $stmt = $pdo->prepare("SELECT id FROM colis_retour WHERE id = ?");
+        $stmt = $shop_pdo->prepare("SELECT id FROM colis_retour WHERE id = ?");
         $stmt->execute([$colis_id]);
         if (!$stmt->fetch()) {
             throw new Exception("Colis non trouvé");
         }
         
         // Commencer une transaction
-        $pdo->beginTransaction();
+        $shop_pdo->beginTransaction();
         
         // Mettre à jour le colis
-        $stmt = $pdo->prepare("
+        $stmt = $shop_pdo->prepare("
             UPDATE colis_retour 
             SET statut = ?, 
                 notes = ?,
@@ -222,7 +223,7 @@ function modifierColis() {
         
         // Si le colis est livré, mettre à jour les retours associés
         if ($statut === 'livre') {
-            $stmt = $pdo->prepare("
+            $stmt = $shop_pdo->prepare("
                 UPDATE retours 
                 SET statut = 'a_verifier' 
                 WHERE colis_id = ? AND statut = 'expedie'
@@ -230,12 +231,12 @@ function modifierColis() {
             $stmt->execute([$colis_id]);
         }
         
-        $pdo->commit();
+        $shop_pdo->commit();
         set_message("Colis modifié avec succès", 'success');
         
     } catch (Exception $e) {
-        if ($pdo->inTransaction()) {
-            $pdo->rollBack();
+        if ($shop_pdo->inTransaction()) {
+            $shop_pdo->rollBack();
         }
         set_message("Erreur lors de la modification du colis: " . $e->getMessage(), 'danger');
     }

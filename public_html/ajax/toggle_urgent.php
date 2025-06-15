@@ -26,13 +26,13 @@ try {
     $urgent = (bool)$data['urgent'];
 
     // Mettre à jour le statut urgent
-    $stmt = $pdo->prepare("UPDATE reparations SET urgent = ? WHERE id = ?");
+    $stmt = $shop_pdo->prepare("UPDATE reparations SET urgent = ? WHERE id = ?");
     if (!$stmt->execute([$urgent, $id])) {
         throw new Exception('Erreur lors de la mise à jour');
     }
 
     // Récupérer le nouveau badge de statut
-    $stmt = $pdo->prepare("SELECT statut FROM reparations WHERE id = ?");
+    $stmt = $shop_pdo->prepare("SELECT statut FROM reparations WHERE id = ?");
     $stmt->execute([$id]);
     $reparation = $stmt->fetch(PDO::FETCH_ASSOC);
 

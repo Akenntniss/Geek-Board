@@ -28,7 +28,7 @@ try {
     $sms_text = isset($data['sms_text']) ? $data['sms_text'] : '';
 
     // Récupérer les informations sur la réparation et le client
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         SELECT r.*, c.nom as client_nom, c.prenom as client_prenom, c.email as client_email, c.telephone as client_telephone
         FROM reparations r
         JOIN clients c ON r.client_id = c.id
@@ -140,7 +140,7 @@ try {
     $employe_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
     
     if ($employe_id) {
-        $stmt = $pdo->prepare("
+        $stmt = $shop_pdo->prepare("
             INSERT INTO reparation_logs 
             (reparation_id, employe_id, action_type, date_action, details) 
             VALUES (?, ?, 'envoi_lien_devis', NOW(), ?)

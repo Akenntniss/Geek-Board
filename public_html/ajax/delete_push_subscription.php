@@ -29,7 +29,7 @@ if (!$data || !isset($data['endpoint'])) {
 
 try {
     // Connexion à la base de données
-    $pdo = new PDO(
+    $shop_pdo = new PDO(
         "mysql:host=" . DB_HOST . ";port=" . DB_PORT . ";dbname=" . DB_NAME . ";charset=utf8mb4",
         DB_USER,
         DB_PASS,
@@ -37,7 +37,7 @@ try {
     );
 
     // Supprimer l'abonnement
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         DELETE FROM push_subscriptions 
         WHERE endpoint = ? AND user_id = ?
     ");

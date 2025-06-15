@@ -68,7 +68,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             }
             
             // Exécution de la requête
-            $stmt = $pdo->prepare($sql);
+            $shop_pdo = getShopDBConnection();
+$stmt = $shop_pdo->prepare($sql);
             $stmt->execute($params);
             $clients = $stmt->fetchAll(PDO::FETCH_ASSOC);
             
@@ -91,7 +92,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                 $message = '';
                 if ($template_id > 0) {
                     // Récupération du modèle SMS
-                    $template_stmt = $pdo->prepare("SELECT contenu FROM sms_templates WHERE id = ?");
+                    $template_stmt = $shop_pdo->prepare("SELECT contenu FROM sms_templates WHERE id = ?");
                     $template_stmt->execute([$template_id]);
                     $template = $template_stmt->fetch(PDO::FETCH_ASSOC);
                     
@@ -110,14 +111,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                     $error_count = 0;
                     
                     // Enregistrement de la campagne
-                    $stmt = $pdo->prepare("
+                    $stmt = $shop_pdo->prepare("
                         INSERT INTO sms_campaigns (
                             nom, message, date_envoi, nb_destinataires, user_id
                         ) VALUES (?, ?, NOW(), ?, ?)
                     ");
                     $campaign_name = "Campagne du " . date('d/m/Y H:i');
                     $stmt->execute([$campaign_name, $message, count($clients), $_SESSION['user_id']]);
-                    $campaign_id = $pdo->lastInsertId();
+                    $campaign_id = $shop_pdo->lastInsertId();
                     
                     // Envoi à chaque client
                     foreach ($clients as $client) {
@@ -132,7 +133,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                         $result = send_sms($client['telephone'], $personalized_message);
                         
                         // Enregistrement du résultat
-                        $stmt = $pdo->prepare("
+                        $stmt = $shop_pdo->prepare("
                             INSERT INTO sms_campaign_details (
                                 campaign_id, client_id, telephone, message, statut, date_envoi
                             ) VALUES (?, ?, ?, ?, ?, NOW())
@@ -155,7 +156,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                     }
                     
                     // Mise à jour des statistiques de la campagne
-                    $stmt = $pdo->prepare("UPDATE sms_campaigns SET nb_envoyes = ?, nb_echecs = ? WHERE id = ?");
+                    $stmt = $shop_pdo->prepare("UPDATE sms_campaigns SET nb_envoyes = ?, nb_echecs = ? WHERE id = ?");
                     $stmt->execute([$success_count, $error_count, $campaign_id]);
                     
                     // Message de succès
@@ -177,7 +178,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 
 // Récupération des modèles de SMS
 try {
-    $stmt = $pdo->query("
+    $stmt = $shop_pdo->query("
         SELECT id, nom, contenu 
         FROM sms_templates 
         WHERE est_actif = 1
@@ -191,7 +192,7 @@ try {
 
 // Récupération des campagnes précédentes (les 10 dernières)
 try {
-    $stmt = $pdo->query("
+    $stmt = $shop_pdo->query("
         SELECT c.*, u.nom as user_nom, u.prenom as user_prenom
         FROM sms_campaigns c
         LEFT JOIN users u ON c.user_id = u.id

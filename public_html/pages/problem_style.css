@@ -1,0 +1,9 @@
+/* Style pour le texte du problème dans le modal */
+#activeRepairProblem {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+} 

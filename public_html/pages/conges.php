@@ -1,7 +1,8 @@
 <?php
 // Vérifier le rôle de l'utilisateur
 try {
-    $stmt = $pdo->prepare("SELECT role FROM users WHERE id = ?");
+    $shop_pdo = getShopDBConnection();
+$stmt = $shop_pdo->prepare("SELECT role FROM users WHERE id = ?");
     $stmt->execute([$_SESSION['user_id']]);
     $user = $stmt->fetch();
 
@@ -31,7 +32,7 @@ try {
                             // Récupérer les statistiques
                             try {
                                 // Nombre total de jours de congés pris
-                                $stmt = $pdo->query("
+                                $stmt = $shop_pdo->query("
                                     SELECT COALESCE(SUM(nb_jours), 0) as total_jours
                                     FROM conges_demandes 
                                     WHERE statut = 'approuve'
@@ -39,7 +40,7 @@ try {
                                 $total_jours = $stmt->fetch()['total_jours'] ?? 0;
 
                                 // Nombre de demandes en attente
-                                $stmt = $pdo->query("
+                                $stmt = $shop_pdo->query("
                                     SELECT COUNT(*) as nb_attente
                                     FROM conges_demandes 
                                     WHERE statut = 'en_attente'
@@ -47,7 +48,7 @@ try {
                                 $nb_attente = $stmt->fetch()['nb_attente'] ?? 0;
 
                                 // Moyenne des jours restants
-                                $stmt = $pdo->query("
+                                $stmt = $shop_pdo->query("
                                     SELECT COALESCE(AVG(solde_actuel), 0) as moyenne_solde
                                     FROM conges_solde
                                 ");
@@ -88,7 +89,7 @@ try {
                     <div class="card-body">
                         <?php
                         try {
-                            $stmt = $pdo->query("
+                            $stmt = $shop_pdo->query("
                                 SELECT cd.*, u.full_name, cs.solde_actuel
                                 FROM conges_demandes cd
                                 JOIN users u ON cd.user_id = u.id
@@ -161,7 +162,7 @@ try {
                     <div class="card-body">
                         <?php
                         try {
-                            $stmt = $pdo->query("
+                            $stmt = $shop_pdo->query("
                                 SELECT cd.*, u.full_name
                                 FROM conges_demandes cd
                                 JOIN users u ON cd.user_id = u.id

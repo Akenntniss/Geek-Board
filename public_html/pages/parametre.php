@@ -13,7 +13,8 @@ if (!isset($_SESSION['user_id'])) {
 $user_id = $_SESSION['user_id'];
 
 try {
-    $stmt = $pdo->prepare("SELECT * FROM utilisateurs WHERE id = ?");
+    $shop_pdo = getShopDBConnection();
+$stmt = $shop_pdo->prepare("SELECT * FROM utilisateurs WHERE id = ?");
     $stmt->execute([$user_id]);
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
@@ -33,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $telephone = cleanInput($_POST['telephone']);
         
         try {
-            $stmt = $pdo->prepare("UPDATE utilisateurs SET nom = ?, prenom = ?, email = ?, telephone = ? WHERE id = ?");
+            $stmt = $shop_pdo->prepare("UPDATE utilisateurs SET nom = ?, prenom = ?, email = ?, telephone = ? WHERE id = ?");
             $result = $stmt->execute([$nom, $prenom, $email, $telephone, $user_id]);
             
             if ($result) {
@@ -57,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             try {
                 // Vérifier le mot de passe actuel
-                $stmt = $pdo->prepare("SELECT password FROM utilisateurs WHERE id = ?");
+                $stmt = $shop_pdo->prepare("SELECT password FROM utilisateurs WHERE id = ?");
                 $stmt->execute([$user_id]);
                 $user_data = $stmt->fetch(PDO::FETCH_ASSOC);
                 
@@ -66,7 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
                     
                     // Mettre à jour le mot de passe
-                    $stmt = $pdo->prepare("UPDATE utilisateurs SET password = ? WHERE id = ?");
+                    $stmt = $shop_pdo->prepare("UPDATE utilisateurs SET password = ? WHERE id = ?");
                     $result = $stmt->execute([$hashed_password, $user_id]);
                     
                     if ($result) {
@@ -91,17 +92,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
         try {
             // Vérifier si les préférences existent déjà
-            $stmt = $pdo->prepare("SELECT COUNT(*) FROM preferences WHERE user_id = ?");
+            $stmt = $shop_pdo->prepare("SELECT COUNT(*) FROM preferences WHERE user_id = ?");
             $stmt->execute([$user_id]);
             $exists = $stmt->fetchColumn();
             
             if ($exists) {
                 // Mettre à jour les préférences existantes
-                $stmt = $pdo->prepare("UPDATE preferences SET theme = ?, notifications = ?, elements_per_page = ?, timezone_offset = ? WHERE user_id = ?");
+                $stmt = $shop_pdo->prepare("UPDATE preferences SET theme = ?, notifications = ?, elements_per_page = ?, timezone_offset = ? WHERE user_id = ?");
                 $result = $stmt->execute([$theme, $notifications, $elements_per_page, $timezone_offset, $user_id]);
             } else {
                 // Créer de nouvelles préférences
-                $stmt = $pdo->prepare("INSERT INTO preferences (user_id, theme, notifications, elements_per_page, timezone_offset) VALUES (?, ?, ?, ?, ?)");
+                $stmt = $shop_pdo->prepare("INSERT INTO preferences (user_id, theme, notifications, elements_per_page, timezone_offset) VALUES (?, ?, ?, ?, ?)");
                 $result = $stmt->execute([$user_id, $theme, $notifications, $elements_per_page, $timezone_offset]);
             }
             
@@ -140,7 +141,7 @@ $preferences = [
 ];
 
 try {
-    $stmt = $pdo->prepare("SELECT * FROM preferences WHERE user_id = ?");
+    $stmt = $shop_pdo->prepare("SELECT * FROM preferences WHERE user_id = ?");
     $stmt->execute([$user_id]);
     $user_preferences = $stmt->fetch(PDO::FETCH_ASSOC);
     

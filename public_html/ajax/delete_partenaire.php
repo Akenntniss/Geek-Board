@@ -21,7 +21,7 @@ if (!$partenaire_id) {
 
 try {
     // Vérifier s'il y a des transactions liées
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         SELECT COUNT(*) as count 
         FROM transactions_partenaires 
         WHERE partenaire_id = ?
@@ -31,7 +31,7 @@ try {
 
     if ($result['count'] > 0) {
         // Si des transactions existent, désactiver le partenaire au lieu de le supprimer
-        $stmt = $pdo->prepare("
+        $stmt = $shop_pdo->prepare("
             UPDATE partenaires 
             SET actif = FALSE 
             WHERE id = ?
@@ -42,25 +42,25 @@ try {
         echo json_encode(['success' => true, 'message' => 'Partenaire désactivé']);
     } else {
         // Si aucune transaction, supprimer le partenaire et son solde
-        $pdo->beginTransaction();
+        $shop_pdo->beginTransaction();
         
         // Supprimer le solde
-        $stmt = $pdo->prepare("DELETE FROM soldes_partenaires WHERE partenaire_id = ?");
+        $stmt = $shop_pdo->prepare("DELETE FROM soldes_partenaires WHERE partenaire_id = ?");
         $stmt->execute([$partenaire_id]);
         
         // Supprimer le partenaire
-        $stmt = $pdo->prepare("DELETE FROM partenaires WHERE id = ?");
+        $stmt = $shop_pdo->prepare("DELETE FROM partenaires WHERE id = ?");
         $stmt->execute([$partenaire_id]);
         
-        $pdo->commit();
+        $shop_pdo->commit();
         
         header('Content-Type: application/json');
         echo json_encode(['success' => true, 'message' => 'Partenaire supprimé']);
     }
 
 } catch (PDOException $e) {
-    if (isset($pdo) && $pdo->inTransaction()) {
-        $pdo->rollBack();
+    if (isset($shop_pdo) && $shop_pdo->inTransaction()) {
+        $shop_pdo->rollBack();
     }
     error_log("Erreur lors de la suppression du partenaire : " . $e->getMessage());
     header('Content-Type: application/json');

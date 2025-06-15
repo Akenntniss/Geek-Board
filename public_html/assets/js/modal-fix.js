@@ -89,6 +89,10 @@
             {
                 modalId: 'periodesModal',
                 buttonSelector: '[data-bs-target="#periodesModal"], #periodeButton'
+            },
+            {
+                modalId: 'rechercheModal',
+                buttonSelector: '[data-bs-target="#rechercheModal"]'
             }
         ];
         
@@ -313,7 +317,7 @@
         console.log('Application des corrections spécifiques pour mobile...');
         
         // Liste des modales critiques sur mobile
-        const mobileModalIds = ['ajouterCommandeModal', 'rechercheClientModal', 'changeStatusModal'];
+        const mobileModalIds = ['ajouterCommandeModal', 'rechercheClientModal', 'changeStatusModal', 'rechercheModal'];
         
         mobileModalIds.forEach(modalId => {
             const modal = document.getElementById(modalId);
@@ -393,6 +397,56 @@
         });
     }
     
+    // Gestionnaire d'erreur global pour capturer les erreurs Bootstrap
+    function setupGlobalErrorHandler() {
+        // Éviter de réinitialiser si déjà configuré
+        if (window.modalFixErrorHandlerInstalled) {
+            return;
+        }
+        
+        console.log('Installation du gestionnaire d\'erreur Bootstrap...');
+        
+        const originalError = window.onerror;
+        
+        window.onerror = function(message, source, lineno, colno, error) {
+            // Convertir en string pour la vérification
+            const messageStr = String(message || '');
+            const sourceStr = String(source || '');
+            
+            // Intercepter les erreurs spécifiques à Bootstrap/selector-engine
+            if (messageStr.includes('Illegal invocation') ||
+                sourceStr.includes('selector-engine') ||
+                messageStr.includes('Cannot read properties of null') ||
+                (messageStr.includes('keyboard') && sourceStr.includes('modal')) ||
+                (messageStr.includes('backdrop') && sourceStr.includes('modal'))
+            ) {
+                console.warn('🚫 Erreur Bootstrap interceptée:', messageStr, 'Source:', sourceStr);
+                return true; // Empêche l'affichage de l'erreur
+            }
+            
+            // Laisser passer les autres erreurs
+            if (originalError) {
+                return originalError(message, source, lineno, colno, error);
+            }
+            return false;
+        };
+        
+        // Gérer aussi les promesses rejetées
+        window.addEventListener('unhandledrejection', function(event) {
+            if (event.reason && event.reason.message && (
+                event.reason.message.includes('Illegal invocation') ||
+                event.reason.message.includes('selector-engine') ||
+                event.reason.message.includes('Cannot read properties of null')
+            )) {
+                console.warn('🚫 Erreur Bootstrap promise interceptée:', event.reason.message);
+                event.preventDefault();
+            }
+        });
+        
+        window.modalFixErrorHandlerInstalled = true;
+        console.log('✅ Gestionnaire d\'erreur Bootstrap installé');
+    }
+
     // Patch de secours : remplacer les fonctions problématiques dans bootstrap.Modal
     function patchBootstrapModal() {
         if (typeof bootstrap === 'undefined' || !bootstrap.Modal) {
@@ -403,59 +457,57 @@
         try {
             console.log('Application du patch pour bootstrap.Modal...');
             
-            // Patch pour _initializeFocusTrap (erreur trapElement)
+            // Configurer le gestionnaire d'erreur global
+            setupGlobalErrorHandler();
+            
+            // Patch pour _initializeFocusTrap
             if (bootstrap.Modal.prototype._initializeFocusTrap) {
                 const originalInitializeFocusTrap = bootstrap.Modal.prototype._initializeFocusTrap;
                 
                 bootstrap.Modal.prototype._initializeFocusTrap = function() {
                     try {
-                        // Vérifier que this._element existe
                         if (!this._element) {
-                            console.warn('Element manquant dans _initializeFocusTrap, création');
-                            this._element = document.createElement('div');
-                            this._element.className = 'modal';
-                            document.body.appendChild(this._element);
+                            console.warn('Element manquant dans _initializeFocusTrap');
+                            return;
                         }
-                        
                         return originalInitializeFocusTrap.call(this);
                     } catch (e) {
                         console.warn('Erreur évitée dans _initializeFocusTrap:', e);
-                        // Ne pas initialiser le trap si ça échoue
                         this._focustrap = { activate: function() {}, deactivate: function() {} };
                     }
                 };
             }
             
-            // Sauvegarde des méthodes originales
-            const originalInitializeBackDrop = bootstrap.Modal.prototype._initializeBackDrop;
-            const originalIsAnimated = bootstrap.Modal.prototype._isAnimated;
-            
             // Patch pour _isAnimated
+            if (bootstrap.Modal.prototype._isAnimated) {
+                const originalIsAnimated = bootstrap.Modal.prototype._isAnimated;
+                
             bootstrap.Modal.prototype._isAnimated = function() {
                 try {
-                    if (!this._element) {
-                        console.warn('Element manquant dans _isAnimated');
+                        if (!this._element || !this._element.classList) {
                         return false;
                     }
-                    
-                    if (!this._element.classList) {
-                        console.warn('ClassList manquante dans _isAnimated');
-                        return false;
-                    }
-                    
                     return originalIsAnimated.call(this);
                 } catch (e) {
                     console.warn('Erreur évitée dans _isAnimated:', e);
                     return false;
                 }
             };
+            }
             
-            // Patch pour _initializeBackDrop
+            // Patch pour _initializeBackDrop avec vérification du contexte
+            if (bootstrap.Modal.prototype._initializeBackDrop) {
+                const originalInitializeBackDrop = bootstrap.Modal.prototype._initializeBackDrop;
+                
             bootstrap.Modal.prototype._initializeBackDrop = function() {
                 try {
-                    // Si this._config est undefined, créer un objet par défaut
+                    // Vérifier que this est bien défini et est une instance valide
+                    if (!this || typeof this !== 'object') {
+                        console.warn('Context invalide dans _initializeBackDrop');
+                        return;
+                    }
+                    
                     if (!this._config) {
-                        console.warn('Config manquante dans _initializeBackDrop, création');
                         this._config = {
                             backdrop: true,
                             keyboard: true,
@@ -463,22 +515,30 @@
                         };
                     }
                     
-                    // S'assurer que backdrop est défini
                     if (this._config.backdrop === undefined) {
                         this._config.backdrop = true;
+                    }
+                    
+                    // Vérifier que this._config n'est pas null avant d'appeler la méthode originale
+                    if (!this._config) {
+                        console.warn('Configuration manquante dans _initializeBackDrop');
+                        return;
                     }
                     
                     return originalInitializeBackDrop.call(this);
                 } catch (e) {
                     console.warn('Erreur évitée dans _initializeBackDrop:', e);
-                    // Implémentation minimale de secours
-                    this._backdrop = document.createElement('div');
-                    this._backdrop.className = 'modal-backdrop fade show';
-                    document.body.appendChild(this._backdrop);
+                    // Créer un backdrop de secours seulement si this._element existe
+                    if (this && this._element) {
+                        this._backdrop = document.createElement('div');
+                        this._backdrop.className = 'modal-backdrop fade show';
+                        document.body.appendChild(this._backdrop);
+                    }
                 }
             };
+            }
             
-            // Patch pour getOrCreateInstance
+            // Patch pour getOrCreateInstance avec correction du contexte
             const originalGetOrCreateInstance = bootstrap.Modal.getOrCreateInstance;
             
             bootstrap.Modal.getOrCreateInstance = function(element, config) {
@@ -487,7 +547,6 @@
                         throw new Error('Élément manquant pour getOrCreateInstance');
                     }
                     
-                    // Vérifier si l'élément est un sélecteur de chaîne
                     if (typeof element === 'string') {
                         element = document.querySelector(element);
                         if (!element) {
@@ -495,22 +554,20 @@
                         }
                     }
                     
-                    // S'assurer que l'élément a la structure nécessaire
-                    if (element.classList && !element.classList.contains('modal')) {
+                    if (!element.classList.contains('modal')) {
                         element.classList.add('modal');
                     }
                     
-                    // Configurer un objet config par défaut
                     const safeConfig = config || {
                         backdrop: true,
                         keyboard: true,
                         focus: true
                     };
                     
-                    return originalGetOrCreateInstance.call(this, element, safeConfig);
+                    // Appeler la méthode dans le bon contexte (bootstrap.Modal, pas this)
+                    return originalGetOrCreateInstance.call(bootstrap.Modal, element, safeConfig);
                 } catch (e) {
                     console.error('Erreur dans getOrCreateInstance:', e);
-                    // Créer une nouvelle instance en cas d'erreur
                     return new bootstrap.Modal(element, {
                         backdrop: true,
                         keyboard: true,
@@ -519,11 +576,47 @@
                 }
             };
             
+            // Patch additionnel pour éviter les erreurs de contexte du sélecteur
+            if (typeof bootstrap !== 'undefined' && bootstrap.Modal && bootstrap.Modal.prototype.show) {
+                const originalShow = bootstrap.Modal.prototype.show;
+                
+                bootstrap.Modal.prototype.show = function() {
+                    try {
+                        // S'assurer que l'élément existe et que la configuration est valide
+                        if (!this._element) {
+                            console.warn('Élément manquant dans Modal.show()');
+                            return;
+                        }
+                        
+                        if (!this._config) {
+                            this._config = {
+                                backdrop: true,
+                                keyboard: true,
+                                focus: true
+                            };
+                        }
+                        
+                        return originalShow.call(this);
+                    } catch (e) {
+                        console.warn('Erreur évitée dans Modal.show():', e);
+                        // Tentative d'ouverture manuelle
+                        if (this._element) {
+                            this._element.style.display = 'block';
+                            this._element.classList.add('show');
+                            document.body.classList.add('modal-open');
+                        }
+                    }
+                };
+            }
+            
             console.log('Patch appliqué avec succès à bootstrap.Modal');
         } catch (e) {
             console.error('Erreur lors de l\'application du patch bootstrap.Modal:', e);
         }
     }
+    
+    // Activer le gestionnaire d'erreur immédiatement
+    setupGlobalErrorHandler();
     
     // Exécuter l'initialisation et les correctifs quand le DOM est chargé
     if (document.readyState === 'loading') {

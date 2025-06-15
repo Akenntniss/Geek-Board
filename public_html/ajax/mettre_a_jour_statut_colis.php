@@ -28,7 +28,7 @@ if (!in_array($nouveau_statut, $statuts_valides)) {
 
 try {
     // Vérifier si le colis existe
-    $stmt = $pdo->prepare("SELECT id, statut FROM colis_retour WHERE id = ?");
+    $stmt = $shop_pdo->prepare("SELECT id, statut FROM colis_retour WHERE id = ?");
     $stmt->execute([$colis_id]);
     $colis = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -37,10 +37,10 @@ try {
     }
 
     // Démarrer la transaction
-    $pdo->beginTransaction();
+    $shop_pdo->beginTransaction();
 
     // Mettre à jour le statut du colis
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         UPDATE colis_retour 
         SET statut = ?,
             date_expedition = CASE 
@@ -57,7 +57,7 @@ try {
 
     // Si le colis est marqué comme livré, mettre à jour le statut des produits
     if ($nouveau_statut === 'livre') {
-        $stmt = $pdo->prepare("
+        $stmt = $shop_pdo->prepare("
             UPDATE produits_temporaires pt
             JOIN colis_produits_temporaires cpt ON pt.id = cpt.produit_temporaire_id
             SET pt.statut = 'retourne'
@@ -67,14 +67,14 @@ try {
     }
 
     // Valider la transaction
-    $pdo->commit();
+    $shop_pdo->commit();
 
     echo json_encode(['success' => true]);
 
 } catch (Exception $e) {
     // Annuler la transaction en cas d'erreur
-    if ($pdo->inTransaction()) {
-        $pdo->rollBack();
+    if ($shop_pdo->inTransaction()) {
+        $shop_pdo->rollBack();
     }
     echo json_encode(['success' => false, 'message' => $e->getMessage()]);
 } 

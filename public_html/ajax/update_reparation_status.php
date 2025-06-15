@@ -2,6 +2,9 @@
 require_once '../config/database.php';
 require_once '../includes/functions.php';
 
+// Initialiser la connexion à la base de données boutique
+$shop_pdo = getShopDBConnection();
+
 // Vérifier si l'utilisateur est connecté
 session_start();
 if (!isset($_SESSION['user_id'])) {
@@ -26,10 +29,10 @@ $sms_template = isset($data['sms_template']) ? $data['sms_template'] : '';
 
 try {
     // Démarrer une transaction
-    $pdo->beginTransaction();
+    $shop_pdo->beginTransaction();
 
     // Récupérer le code du nouveau statut
-    $stmt = $pdo->prepare("SELECT code FROM statuts_reparation WHERE id = ?");
+    $stmt = $shop_pdo->prepare("SELECT code FROM statuts_reparation WHERE id = ?");
     $stmt->execute([$new_status_id]);
     $new_status = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -38,7 +41,7 @@ try {
     }
 
     // Mettre à jour le statut de la réparation
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         UPDATE reparations 
         SET statut = ?, 
             statut_id = ?,
@@ -50,7 +53,7 @@ try {
     // Si l'envoi de SMS est demandé
     if ($send_sms && !empty($sms_template)) {
         // Récupérer les informations du client
-        $stmt = $pdo->prepare("
+        $stmt = $shop_pdo->prepare("
             SELECT c.telephone, c.nom, c.prenom
             FROM reparations r
             JOIN clients c ON r.client_id = c.id
@@ -61,7 +64,7 @@ try {
 
         if ($client && !empty($client['telephone'])) {
             // Insérer le SMS dans la table sms_reparation
-            $stmt = $pdo->prepare("
+            $stmt = $shop_pdo->prepare("
                 INSERT INTO reparation_sms (
                     reparation_id,
                     telephone,
@@ -80,7 +83,7 @@ try {
     }
 
     // Valider la transaction
-    $pdo->commit();
+    $shop_pdo->commit();
 
     echo json_encode([
         'success' => true,
@@ -89,8 +92,8 @@ try {
 
 } catch (Exception $e) {
     // Annuler la transaction en cas d'erreur
-    if ($pdo->inTransaction()) {
-        $pdo->rollBack();
+    if ($shop_pdo->inTransaction()) {
+        $shop_pdo->rollBack();
     }
     
     http_response_code(500);

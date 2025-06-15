@@ -32,18 +32,22 @@ foreach ($known_domains as $domain) {
 // Configurer le cookie pour qu'il soit accessible uniquement via HTTP
 ini_set('session.cookie_httponly', 1);
 
-// Permettre les sessions sur les requêtes AJAX cross-origin
-ini_set('session.cookie_samesite', 'None');
-
-// Fixer le problème de SameSite pour les cookies de session (nécessite HTTPS)
+// Fixer le problème de SameSite pour les cookies de session
 $is_https = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') || 
             (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https');
 
 // Configurer le cookie pour qu'il soit sécurisé si HTTPS est utilisé
 ini_set('session.cookie_secure', $is_https ? 1 : 0);
 
-// Activer le mode strict pour les sessions (plus sécurisé)
-ini_set('session.use_strict_mode', 1);
+// Configurer SameSite en fonction de HTTPS
+if ($is_https) {
+    ini_set('session.cookie_samesite', 'None');
+} else {
+    ini_set('session.cookie_samesite', 'Lax');
+}
+
+// Désactiver le mode strict pour les sessions (moins sécurisé mais plus compatible)
+ini_set('session.use_strict_mode', 0);
 
 // Définir le nom de la session pour identifier l'application
 session_name('MDGEEK_SESSION');
@@ -97,7 +101,7 @@ function is_pwa_mode() {
 // Si c'est un mode PWA, définir un cookie pour indiquer que c'est une session PWA
 if (is_pwa_mode() || isset($_COOKIE['pwa_mode'])) {
     // Définir un cookie pour indiquer que c'est une session PWA
-    setcookie('pwa_mode', 'true', time() + $session_lifetime, '/', '', isset($_SERVER['HTTPS']), true);
+    setcookie('pwa_mode', 'true', time() + $session_lifetime, '/', '', $is_https, true);
 }
 
 // Démarrer la session avec les paramètres configurés

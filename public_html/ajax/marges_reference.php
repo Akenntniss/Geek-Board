@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     }
     
     try {
-        $stmt = $pdo->prepare("SELECT * FROM marges_reference WHERE categorie = ? ORDER BY type_reparation");
+        $stmt = $shop_pdo->prepare("SELECT * FROM marges_reference WHERE categorie = ? ORDER BY type_reparation");
         $stmt->execute([$categorie]);
         $references = $stmt->fetchAll(PDO::FETCH_ASSOC);
         
@@ -54,10 +54,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         }
         
         try {
-            $stmt = $pdo->prepare("INSERT INTO marges_reference (type_reparation, categorie, prix_achat, marge_pourcentage) VALUES (?, ?, ?, ?)");
+            $stmt = $shop_pdo->prepare("INSERT INTO marges_reference (type_reparation, categorie, prix_achat, marge_pourcentage) VALUES (?, ?, ?, ?)");
             $stmt->execute([$type_reparation, $categorie, $prix_achat, $marge_pourcentage]);
             
-            echo json_encode(['success' => true, 'id' => $pdo->lastInsertId()]);
+            echo json_encode(['success' => true, 'id' => $shop_pdo->lastInsertId()]);
         } catch (PDOException $e) {
             echo json_encode(['success' => false, 'message' => 'Erreur lors de l\'ajout: ' . $e->getMessage()]);
         }
@@ -71,7 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         }
         
         try {
-            $stmt = $pdo->prepare("DELETE FROM marges_reference WHERE id = ?");
+            $stmt = $shop_pdo->prepare("DELETE FROM marges_reference WHERE id = ?");
             $stmt->execute([$id]);
             
             if ($stmt->rowCount() > 0) {

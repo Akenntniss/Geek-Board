@@ -18,9 +18,21 @@ if (!isset($_POST['client_id']) || empty($_POST['client_id'])) {
 $client_id = intval($_POST['client_id']);
 
 try {
+    // Utiliser la connexion à la base de données du magasin actuel
+    $shop_pdo = getShopDBConnection();
+    
     // Vérifier la connexion à la base de données
-    if (!isset($pdo) || !($pdo instanceof PDO)) {
-        throw new Exception('Connexion à la base de données non disponible');
+    if (!isset($shop_pdo) || !($shop_pdo instanceof PDO)) {
+        throw new Exception('Connexion à la base de données du magasin non disponible');
+    }
+    
+    // Journaliser l'information sur la base de données utilisée
+    try {
+        $stmt_db = $shop_pdo->query("SELECT DATABASE() as db_name");
+        $db_info = $stmt_db->fetch(PDO::FETCH_ASSOC);
+        error_log("Get client commandes - BASE DE DONNÉES UTILISÉE: " . ($db_info['db_name'] ?? 'Inconnue'));
+    } catch (Exception $e) {
+        error_log("Erreur lors de la vérification de la base de données: " . $e->getMessage());
     }
     
     // Récupérer les commandes du client
@@ -31,7 +43,7 @@ try {
         ORDER BY cp.date_creation DESC
     ";
     
-    $stmt = $pdo->prepare($sql);
+    $stmt = $shop_pdo->prepare($sql);
     $stmt->bindParam(':client_id', $client_id, PDO::PARAM_INT);
     $stmt->execute();
     

@@ -6,7 +6,8 @@ if ($_SESSION['user_role'] !== 'admin') {
 
 // Récupération des employés
 try {
-    $stmt = $pdo->query("
+    $shop_pdo = getShopDBConnection();
+$stmt = $shop_pdo->query("
         SELECT u.id, u.full_name, cs.solde_actuel
         FROM users u
         LEFT JOIN conges_solde cs ON u.id = cs.user_id
@@ -52,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
             
             // Insertion des congés imposés pour chaque employé
-            $stmt = $pdo->prepare("
+            $stmt = $shop_pdo->prepare("
                 INSERT INTO conges_demandes (
                     user_id, date_debut, date_fin, nb_jours, 
                     statut, type, commentaire, created_by
@@ -70,7 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ]);
                 
                 // Mise à jour du solde de congés
-                $stmt2 = $pdo->prepare("
+                $stmt2 = $shop_pdo->prepare("
                     UPDATE conges_solde 
                     SET solde_actuel = solde_actuel - ? 
                     WHERE user_id = ?

@@ -54,7 +54,7 @@ try {
     $commentaire = isset($data['commentaire']) ? cleanInput($data['commentaire']) : '';
     
     // Vérifier si la connexion à la base de données est établie
-    if (!isset($pdo) || !$pdo) {
+    if (!isset($shop_pdo) || !$shop_pdo) {
         error_log("Connexion PDO non disponible globalement, création d'une nouvelle connexion");
         
         // Recréer une connexion directement
@@ -69,7 +69,7 @@ try {
             ]
         );
     } else {
-        $db_pdo = $pdo;
+        $db_pdo = $shop_pdo;
     }
     
     // Vérifier d'abord si la tâche existe

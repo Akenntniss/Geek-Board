@@ -1,6 +1,8 @@
 <?php
 // Inclure la configuration et les fonctions
 require_once 'config/database.php';
+
+$shop_pdo = getShopDBConnection();
 require_once 'includes/functions.php';
 
 // Vérifier si l'utilisateur est connecté
@@ -18,11 +20,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
         // Mise à jour du fournisseur uniquement
         $sql = "UPDATE produits SET fournisseur_id = ? WHERE id = ?";
-        $stmt = $pdo->prepare($sql);
+        $stmt = $shop_pdo->prepare($sql);
         $stmt->execute([$fournisseur_id, $produit_id]);
         
         // Vérifier si la mise à jour a fonctionné
-        $stmt = $pdo->prepare("SELECT fournisseur_id FROM produits WHERE id = ?");
+        $stmt = $shop_pdo->prepare("SELECT fournisseur_id FROM produits WHERE id = ?");
         $stmt->execute([$produit_id]);
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         
@@ -36,11 +38,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 // Récupérer la liste des produits
-$stmt = $pdo->query("SELECT id, reference, nom FROM produits ORDER BY nom LIMIT 10");
+$stmt = $shop_pdo->query("SELECT id, reference, nom FROM produits ORDER BY nom LIMIT 10");
 $produits = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // Récupérer la liste des fournisseurs
-$stmt = $pdo->query("SELECT id, nom FROM fournisseurs ORDER BY nom");
+$stmt = $shop_pdo->query("SELECT id, nom FROM fournisseurs ORDER BY nom");
 $fournisseurs = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 

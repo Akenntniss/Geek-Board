@@ -22,7 +22,7 @@ if (!$status_id || !$reparation_id) {
 
 try {
     // Récupérer les informations de la réparation
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         SELECT r.*, c.nom as client_nom, c.prenom as client_prenom, c.telephone as client_telephone
         FROM reparations r
         JOIN clients c ON r.client_id = c.id
@@ -36,7 +36,7 @@ try {
     }
 
     // Récupérer le template SMS
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         SELECT contenu 
         FROM sms_templates 
         WHERE statut_id = ? AND est_actif = 1

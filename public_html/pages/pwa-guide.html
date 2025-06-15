@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Guide PWA GeekBoard</title>
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="manifest" href="/manifest-optimized.json">
+    <meta name="theme-color" content="#0078e8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="GeekBoard">
+    <style>
+        .feature-card {
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+        }
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: #0078e8;
+        }
+        .installation-step {
+            padding: 15px;
+            border-left: 3px solid #0078e8;
+            background-color: #f8f9fa;
+            margin-bottom: 15px;
+            border-radius: 0 8px 8px 0;
+        }
+        .step-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 30px;
+            height: 30px;
+            background-color: #0078e8;
+            color: white;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        .offline-badge {
+            background-color: #ff9800;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-left: 8px;
+        }
+        .header-section {
+            background-color: #0078e8;
+            color: white;
+            padding: 60px 0 80px;
+            position: relative;
+            overflow: hidden;
+        }
+        .header-section::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 40px;
+            background-color: white;
+            border-radius: 50% 50% 0 0;
+        }
+        .device-mockup {
+            max-width: 300px;
+            border-radius: 36px;
+            border: 10px solid #333;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            position: relative;
+            overflow: hidden;
+            margin: 0 auto;
+        }
+        .device-mockup img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        .device-notch {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 25px;
+            background-color: #333;
+            border-radius: 0 0 15px 15px;
+            z-index: 10;
+        }
+        @media (max-width: 768px) {
+            .header-section {
+                padding: 40px 0 60px;
+            }
+            .device-mockup {
+                max-width: 220px;
+                border-width: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 mb-4 mb-lg-0">
+                    <h1 class="display-4 fw-bold mb-3">GeekBoard PWA</h1>
+                    <p class="lead mb-4">Une expérience mobile optimisée pour la gestion de vos réparations et commandes, même sans connexion internet.</p>
+                    <button id="install-button" class="btn btn-light btn-lg px-4 py-2 fw-semibold">
+                        <i class="fas fa-download me-2"></i> Installer l'application
+                    </button>
+                </div>
+                <div class="col-lg-6 text-center">
+                    <div class="device-mockup">
+                        <div class="device-notch"></div>
+                        <img src="/assets/images/pwa-screenshots/commandes-mobile.png" alt="GeekBoard sur mobile" class="img-fluid">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container py-5">
+        <h2 class="text-center mb-5">Fonctionnalités PWA Optimisées</h2>
+        
+        <div class="row">
+            <div class="col-md-4">
+                <div class="feature-card p-4 h-100">
+                    <div class="text-center">
+                        <i class="fas fa-wifi-slash feature-icon"></i>
+                    </div>
+                    <h4 class="mb-3">Mode Hors Ligne</h4>
+                    <p>Continuez à travailler même sans connexion internet. Consultez et créez des commandes qui seront synchronisées automatiquement dès le retour en ligne.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card p-4 h-100">
+                    <div class="text-center">
+                        <i class="fas fa-bolt feature-icon"></i>
+                    </div>
+                    <h4 class="mb-3">Chargement Rapide</h4>
+                    <p>Profitez d'une application rapide et réactive grâce à la mise en cache intelligente des ressources et à l'architecture App Shell.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card p-4 h-100">
+                    <div class="text-center">
+                        <i class="fas fa-bell feature-icon"></i>
+                    </div>
+                    <h4 class="mb-3">Notifications Push</h4>
+                    <p>Recevez des alertes en temps réel pour les nouvelles commandes, les changements de statut et les rappels importants.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-md-4">
+                <div class="feature-card p-4 h-100">
+                    <div class="text-center">
+                        <i class="fas fa-mobile-alt feature-icon"></i>
+                    </div>
+                    <h4 class="mb-3">Installation Facile</h4>
+                    <p>Ajoutez GeekBoard à votre écran d'accueil en quelques clics pour un accès rapide sans ouvrir le navigateur.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card p-4 h-100">
+                    <div class="text-center">
+                        <i class="fas fa-sync feature-icon"></i>
+                    </div>
+                    <h4 class="mb-3">Synchronisation Automatique</h4>
+                    <p>Toutes vos modifications hors ligne sont automatiquement synchronisées avec le serveur dès que la connexion est rétablie.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card p-4 h-100">
+                    <div class="text-center">
+                        <i class="fas fa-shield-alt feature-icon"></i>
+                    </div>
+                    <h4 class="mb-3">Sécurité Renforcée</h4>
+                    <p>Vos données sont stockées de manière sécurisée sur votre appareil et protégées lors de la synchronisation avec le serveur.</p>
+                </div>
+            </div>
+        </div>
+
+        <hr class="my-5">
+
+        <h2 class="text-center mb-5">Guide d'Installation</h2>
+
+        <div class="row">
+            <div class="col-lg-6 mb-4">
+                <h4>Installation sur iOS (iPhone/iPad)</h4>
+                <div class="installation-step">
+                    <span class="step-number">1</span>
+                    <span>Ouvrez GeekBoard dans Safari</span>
+                </div>
+                <div class="installation-step">
+                    <span class="step-number">2</span>
+                    <span>Appuyez sur l'icône de partage <i class="fas fa-share-square"></i></span>
+                </div>
+                <div class="installation-step">
+                    <span class="step-number">3</span>
+                    <span>Faites défiler et appuyez sur "Ajouter à l'écran d'accueil"</span>
+                </div>
+                <div class="installation-step">
+                    <span class="step-number">4</span>
+                    <span>Appuyez sur "Ajouter" en haut à droite</span>
+                </div>
+                <div class="text-center mt-4">
+                    <img src="/assets/images/pwa-guide/ios-install.png" alt="Installation sur iOS" class="img-fluid rounded shadow-sm" style="max-width: 300px;">
+                </div>
+            </div>
+            <div class="col-lg-6 mb-4">
+                <h4>Installation sur Android</h4>
+                <div class="installation-step">
+                    <span class="step-number">1</span>
+                    <span>Ouvrez GeekBoard dans Chrome</span>
+                </div>
+                <div class="installation-step">
+                    <span class="step-number">2</span>
+                    <span>Appuyez sur le menu <i class="fas fa-ellipsis-v"></i> en haut à droite</span>
+                </div>
+                <div class="installation-step">
+                    <span class="step-number">3</span>
+                    <span>Sélectionnez "Ajouter à l'écran d'accueil"</span>
+                </div>
+                <div class="installation-step">
+                    <span class="step-number">4</span>
+                    <span>Confirmez en appuyant sur "Ajouter"</span>
+                </div>
+                <div class="text-center mt-4">
+                    <img src="/assets/images/pwa-guide/android-install.png" alt="Installation sur Android" class="img-fluid rounded shadow-sm" style="max-width: 300px;">
+                </div>
+            </div>
+        </div>
+
+        <hr class="my-5">
+
+        <h2 class="text-center mb-5">Utilisation du Mode Hors Ligne</h2>
+
+        <div class="row">
+            <div class="col-lg-6 mb-4">
+                <h4>Fonctionnalités disponibles hors ligne <span class="offline-badge">OFFLINE</span></h4>
+                <ul class="list-group mb-4">
+                    <li class="list-group-item d-flex align-items-center">
+                        <i class="fas fa-check-circle text-success me-3"></i>
+                        Consultation des commandes existantes
+                    </li>
+                    <li class="list-group-item d-flex align-items-center">
+                        <i class="fas fa-check-circle text-success me-3"></i>
+                        Création de nouvelles commandes
+                    </li>
+                    <li class="list-group-item d-flex align-items-center">
+                        <i class="fas fa-check-circle text-success me-3"></i>
+                        Modification des commandes
+                    </li>
+                    <li class="list-group-item d-flex align-items-center">
+                        <i class="fas fa-check-circle text-success me-3"></i>
+                        Changement de statut des commandes
+                    </li>
+                    <li class="list-group-item d-flex align-items-center">
+                        <i class="fas fa-check-circle text-success me-3"></i>
+                        Consultation des clients et fournisseurs
+                    </li>
+                </ul>
+
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle me-2"></i>
+                    Les modifications effectuées hors ligne sont marquées visuellement et seront synchronisées automatiquement dès le retour en ligne.
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <h4>Indicateurs de mode hors ligne</h4>
+                <p>Lorsque vous êtes hors ligne, plusieurs indicateurs vous informent de l'état de connexion :</p>
+                
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">Bannière de statut</h5>
+                        <p class="card-text">Une bannière rouge apparaît en haut de l'écran pour indiquer que vous êtes en mode hors ligne.</p>
+                        <div class="bg-danger text-white p-2 rounded text-center">
+                            <i class="fas fa-wifi-slash me-2"></i> Mode hors ligne
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">Indicateur de synchronisation</h5>
+                        <p class="card-text">Un badge apparaît pour indiquer le nombre d'éléments en attente de synchronisation.</p>
+                        <div class="d-flex align-items-center">
+                            <span class="badge bg-warning rounded-pill me-2">3</span>
+                            <span>Modifications en attente de synchronisation</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Éléments modifiés hors ligne</h5>
+                        <p class="card-text">Les commandes créées ou modifiées hors ligne sont surlignées en jaune pâle.</p>
+                        <div style="background-color: rgba(255, 248, 225, 0.3); padding: 10px; border-left: 3px solid #ffc107;">
+                            Commande #123 - Carte mère MacBook Pro
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-dark text-white py-4 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>GeekBoard PWA</h5>
+                    <p>Application de gestion des réparations et commandes optimisée pour une utilisation mobile et hors ligne.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p>Version PWA 4.0</p>
+                    <p>© 2023 GeekBoard. Tous droits réservés.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/assets/js/bootstrap.bundle.min.js"></script>
+    <script src="/assets/js/fontawesome.min.js"></script>
+    <script src="/assets/js/pwa-integration.js"></script>
+    <script>
+        // Gestion du bouton d'installation
+        document.addEventListener('DOMContentLoaded', () => {
+            const installButton = document.getElementById('install-button');
+            if (installButton) {
+                installButton.addEventListener('click', () => {
+                    if (window.PwaIntegration) {
+                        window.PwaIntegration.showInstallPrompt();
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

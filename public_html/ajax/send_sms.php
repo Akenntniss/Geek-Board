@@ -1,4 +1,9 @@
 <?php
+// Démarrer la session si nécessaire
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 // Définir le type de contenu comme JSON
 header('Content-Type: application/json');
 
@@ -17,6 +22,46 @@ if (!file_exists($config_path) || !file_exists($functions_path)) {
 // Inclure les fichiers nécessaires
 require_once $config_path;
 require_once $functions_path;
+
+// Récupérer l'ID du magasin depuis les paramètres ou la session
+$shop_id = null;
+if (isset($_GET['shop_id'])) {
+    $shop_id = (int)$_GET['shop_id'];
+} elseif (isset($_POST['shop_id'])) {
+    $shop_id = (int)$_POST['shop_id'];
+} elseif (isset($_SESSION['shop_id'])) {
+    $shop_id = (int)$_SESSION['shop_id'];
+}
+
+if (!$shop_id) {
+    echo json_encode([
+        'success' => false,
+        'message' => 'ID du magasin manquant. Veuillez rafraîchir la page.'
+    ]);
+    exit;
+}
+
+// Stocker l'ID du magasin dans la session pour la fonction getShopDBConnection
+$_SESSION['shop_id'] = $shop_id;
+
+// Obtenir la connexion à la base de données du magasin
+try {
+    $shop_pdo = getShopDBConnection();
+    
+    if (!$shop_pdo) {
+        echo json_encode([
+            'success' => false,
+            'message' => 'Impossible de se connecter à la base de données du magasin.'
+        ]);
+        exit;
+    }
+} catch (Exception $e) {
+    echo json_encode([
+        'success' => false,
+        'message' => 'Erreur de connexion à la base de données: ' . $e->getMessage()
+    ]);
+    exit;
+}
 
 // Journal de logs pour le débogage
 $log_dir = $_SERVER['DOCUMENT_ROOT'] . '/logs';
@@ -85,12 +130,12 @@ if (!empty($variables_found) && $client_id > 0) {
     
     try {
         // Récupérer les informations du client
-        $stmt = $pdo->prepare("SELECT * FROM clients WHERE id = ?");
+        $stmt = $shop_pdo->prepare("SELECT * FROM clients WHERE id = ?");
         $stmt->execute([$client_id]);
         $client = $stmt->fetch(PDO::FETCH_ASSOC);
         
         // Récupérer la dernière réparation du client
-        $stmt = $pdo->prepare("
+        $stmt = $shop_pdo->prepare("
             SELECT * FROM reparations 
             WHERE client_id = ? 
             ORDER BY date_reception DESC, id DESC 
@@ -142,124 +187,20 @@ if (!empty($variables_found) && $client_id > 0) {
 // Envoyer le SMS
 try {
     log_message("Envoi du SMS au numéro: " . $telephone);
+    log_message("MIGRATION: Utilisation de la nouvelle API SMS Gateway");
     
-    // Configuration de l'API SMS Gateway
-    $API_URL = 'https://api.sms-gate.app/3rdparty/v1/message'; // URL CORRECTE selon la documentation
-    $API_USERNAME = '-GCB75';
-    $API_PASSWORD = 'Mamanmaman06400';
-    
-    // Formatage du numéro de téléphone si nécessaire
-    $recipient = $telephone;
-    $recipient = preg_replace('/[^0-9+]/', '', $recipient); // Supprimer tous les caractères non numériques sauf +
-    
-    // S'assurer que le numéro commence par un +
-    if (substr($recipient, 0, 1) !== '+') {
-        if (substr($recipient, 0, 1) === '0') {
-            $recipient = '+33' . substr($recipient, 1);
-        } else if (substr($recipient, 0, 2) === '33') {
-            $recipient = '+' . $recipient;
-        } else {
-            $recipient = '+' . $recipient;
-        }
+    // Utiliser la nouvelle fonction send_sms unifiée
+    if (!function_exists('send_sms')) {
+        require_once(__DIR__ . '/../includes/sms_functions.php');
     }
     
-    log_message("Numéro formaté: $recipient");
+    // Utiliser la nouvelle fonction send_sms
+    log_message("Appel de send_sms() avec numéro: $telephone");
     
-    // Préparation des données JSON pour l'API
-    $sms_data = json_encode([
-        'message' => $message,
-        'phoneNumbers' => [$recipient]
-    ]);
+    $result = send_sms($telephone, $message, 'manual_sms', $client_id, $_SESSION['user_id'] ?? null);
     
-    log_message("Données JSON: $sms_data");
-    
-    // Envoi du SMS via l'API SMS Gateway
-    $curl = curl_init($API_URL);
-    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($curl, CURLOPT_POST, true);
-    curl_setopt($curl, CURLOPT_POSTFIELDS, $sms_data);
-    curl_setopt($curl, CURLOPT_HTTPHEADER, [
-        'Content-Type: application/json',
-        'Content-Length: ' . strlen($sms_data)
-    ]);
-    
-    // Configuration de l'authentification Basic
-    curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-    curl_setopt($curl, CURLOPT_USERPWD, "$API_USERNAME:$API_PASSWORD");
-    
-    // Ajouter des options pour le débogage
-    curl_setopt($curl, CURLOPT_VERBOSE, true);
-    curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false); 
-    curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0); 
-    curl_setopt($curl, CURLOPT_TIMEOUT, 30);
-    
-    // Capturer les messages d'erreur détaillés
-    $verbose = fopen('php://temp', 'w+');
-    curl_setopt($curl, CURLOPT_STDERR, $verbose);
-    
-    // Exécution de la requête
-    log_message("Exécution de la requête cURL...");
-    $response = curl_exec($curl);
-    $status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-    
-    log_message("Code HTTP: $status");
-    
-    // Récupérer les informations d'erreur curl si échec
-    $curl_error = '';
-    if ($response === false) {
-        $curl_error = curl_error($curl);
-        rewind($verbose);
-        $verbose_log = stream_get_contents($verbose);
-        log_message("Erreur cURL: $curl_error");
-        log_message("Détails: $verbose_log");
-        $result = [
-            'success' => false,
-            'message' => "Erreur cURL: $curl_error",
-            'response' => null
-        ];
-    } else {
-        log_message("Réponse: $response");
-        // Traitement de la réponse
-        $response_data = json_decode($response, true);
-        
-        // Le code 202 indique une acceptation (Accepted) pour traitement asynchrone
-        if (($status == 200 || $status == 202) && $response_data) {
-            log_message("Envoi SMS réussi");
-            $result = [
-                'success' => true, 
-                'message' => 'SMS envoyé avec succès',
-                'response' => $response_data
-            ];
-        } else {
-            log_message("Échec de l'envoi SMS: Code $status");
-            $result = [
-                'success' => false,
-                'message' => "Erreur lors de l'envoi du SMS: Code $status",
-                'response' => $response_data
-            ];
-        }
-    }
-    
-    curl_close($curl);
-    if (isset($verbose) && is_resource($verbose)) {
-        fclose($verbose);
-    }
-    
-    // Enregistrer l'envoi dans la table sms_logs
-    if (isset($pdo) && $pdo instanceof PDO) {
-        try {
-            $status_code = $status ?: ($result['success'] ? 200 : 400);
-            $response_str = isset($result['response']) ? json_encode($result['response']) : '';
-            
-            $stmt = $pdo->prepare("INSERT INTO sms_logs (recipient, message, status, response, client_id) VALUES (?, ?, ?, ?, ?)");
-            $stmt->execute([$recipient, $message, $status_code, $response_str, $client_id]);
-            
-            $result['log_id'] = $pdo->lastInsertId();
-            log_message("SMS enregistré dans les logs avec ID: " . $result['log_id']);
-        } catch (PDOException $e) {
-            log_message("Erreur lors de l'enregistrement du SMS: " . $e->getMessage());
-        }
-    }
+    // L'enregistrement en base de données est maintenant géré par log_sms_to_database() 
+    // dans la fonction send_sms() unifiée
     
     log_message("Résultat final: " . json_encode($result));
     echo json_encode($result);

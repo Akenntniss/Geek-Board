@@ -21,13 +21,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             $barcode = cleanInput($_POST['barcode']);
             
             // Recherche dans la table stock
-            $stmt = $pdo->prepare("SELECT * FROM stock WHERE barcode = ?");
+            $shop_pdo = getShopDBConnection();
+$stmt = $shop_pdo->prepare("SELECT * FROM stock WHERE barcode = ?");
             $stmt->execute([$barcode]);
             $product = $stmt->fetch(PDO::FETCH_ASSOC);
             
             if (!$product) {
                 // Si produit non trouvé dans stock, chercher dans produits
-                $stmt = $pdo->prepare("SELECT * FROM produits WHERE reference = ? OR barcode = ?");
+                $stmt = $shop_pdo->prepare("SELECT * FROM produits WHERE reference = ? OR barcode = ?");
                 $stmt->execute([$barcode, $barcode]);
                 $product = $stmt->fetch(PDO::FETCH_ASSOC);
                 
@@ -38,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
                     $product['category'] = '';
                     if (isset($product['categorie_id'])) {
                         // Récupérer le nom de la catégorie
-                        $stmt = $pdo->prepare("SELECT nom FROM categories WHERE id = ?");
+                        $stmt = $shop_pdo->prepare("SELECT nom FROM categories WHERE id = ?");
                         $stmt->execute([$product['categorie_id']]);
                         $category = $stmt->fetch(PDO::FETCH_ASSOC);
                         if ($category) {
@@ -62,27 +63,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             $is_temporaire = isset($_POST['is_temporaire']) && $_POST['is_temporaire'] === '1';
             
             // Vérifier si le produit existe
-            $stmt = $pdo->prepare("SELECT id, quantity FROM stock WHERE barcode = ?");
+            $stmt = $shop_pdo->prepare("SELECT id, quantity FROM stock WHERE barcode = ?");
             $stmt->execute([$barcode]);
             $product = $stmt->fetch(PDO::FETCH_ASSOC);
             
             if ($product) {
                 // Commencer une transaction
-                $pdo->beginTransaction();
+                $shop_pdo->beginTransaction();
                 
                 try {
                     // Mettre à jour la quantité
                     $newQuantity = $product['quantity'] + $quantity;
-                    $stmt = $pdo->prepare("UPDATE stock SET quantity = ?, date_updated = NOW(), status = ? WHERE barcode = ?");
+                    $stmt = $shop_pdo->prepare("UPDATE stock SET quantity = ?, date_updated = NOW(), status = ? WHERE barcode = ?");
                     $status = $is_temporaire ? 'temporaire' : 'normal';
                     $stmt->execute([$newQuantity, $status, $barcode]);
                     
                     // Enregistrer le mouvement de stock
-                    $stmt = $pdo->prepare("INSERT INTO mouvements_stock (produit_id, type_mouvement, quantite, date_mouvement, motif, user_id) VALUES (?, 'entree', ?, NOW(), ?, ?)");
+                    $stmt = $shop_pdo->prepare("INSERT INTO mouvements_stock (produit_id, type_mouvement, quantite, date_mouvement, motif, user_id) VALUES (?, 'entree', ?, NOW(), ?, ?)");
                     $motif_complet = $is_temporaire ? $motif . ' (Produit temporaire)' : $motif;
                     $stmt->execute([$product['id'], $quantity, $motif_complet, $user_id]);
                     
-                    $pdo->commit();
+                    $shop_pdo->commit();
                     echo json_encode([
                         'success' => true, 
                         'message' => 'Quantité ajoutée avec succès', 
@@ -90,7 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
                         'status' => $status
                     ]);
                 } catch (Exception $e) {
-                    $pdo->rollBack();
+                    $shop_pdo->rollBack();
                     echo json_encode([
                         'success' => false, 
                         'message' => 'Erreur lors de l\'ajout de la quantité: ' . $e->getMessage()
@@ -107,7 +108,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             $motif = cleanInput($_POST['motif'] ?? 'Retrait par scanner');
             
             // Vérifier si le produit existe
-            $stmt = $pdo->prepare("SELECT id, quantity FROM stock WHERE barcode = ?");
+            $stmt = $shop_pdo->prepare("SELECT id, quantity FROM stock WHERE barcode = ?");
             $stmt->execute([$barcode]);
             $product = $stmt->fetch(PDO::FETCH_ASSOC);
             
@@ -120,11 +121,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
                 
                 // Mettre à jour la quantité
                 $newQuantity = $product['quantity'] - $quantity;
-                $stmt = $pdo->prepare("UPDATE stock SET quantity = ?, date_updated = NOW() WHERE barcode = ?");
+                $stmt = $shop_pdo->prepare("UPDATE stock SET quantity = ?, date_updated = NOW() WHERE barcode = ?");
                 $stmt->execute([$newQuantity, $barcode]);
                 
                 // Enregistrer le mouvement de stock
-                $stmt = $pdo->prepare("INSERT INTO mouvements_stock (produit_id, type_mouvement, quantite, date_mouvement, motif, user_id) VALUES (?, 'sortie', ?, NOW(), ?, ?)");
+                $stmt = $shop_pdo->prepare("INSERT INTO mouvements_stock (produit_id, type_mouvement, quantite, date_mouvement, motif, user_id) VALUES (?, 'sortie', ?, NOW(), ?, ?)");
                 $stmt->execute([$product['id'], $quantity, $motif, $user_id]);
                 
                 echo json_encode(['success' => true, 'message' => 'Quantité retirée avec succès', 'new_quantity' => $newQuantity]);
@@ -133,7 +134,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             }
         } elseif ($_POST['action'] === 'get_recent_scans') {
             // Récupérer l'historique des derniers scans
-            $stmt = $pdo->prepare("
+            $stmt = $shop_pdo->prepare("
                 SELECT ms.*, s.barcode, s.name, u.nom as user_nom, u.prenom as user_prenom, 
                        DATE_FORMAT(ms.date_mouvement, '%d/%m/%Y %H:%i') as date_formattee
                 FROM mouvements_stock ms
@@ -160,7 +161,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
 // Récupérer l'historique des derniers scans
 $recent_scans = [];
 try {
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         SELECT ms.*, s.barcode, s.name, u.nom as user_nom, u.prenom as user_prenom
         FROM mouvements_stock ms
         JOIN stock s ON ms.produit_id = s.id

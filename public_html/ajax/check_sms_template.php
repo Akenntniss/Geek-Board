@@ -32,7 +32,7 @@ $statut_code = $_GET['statut'];
 
 try {
     // 1. Récupérer l'ID du statut
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         SELECT id 
         FROM statuts 
         WHERE code = ?
@@ -50,7 +50,7 @@ try {
     }
     
     // 2. Vérifier s'il existe un modèle de SMS pour ce statut
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         SELECT id, nom, contenu
         FROM sms_templates 
         WHERE statut_id = ? AND est_actif = 1
@@ -71,7 +71,7 @@ try {
     $preview = $template['contenu'];
     
     // Récupérer les variables disponibles
-    $stmt = $pdo->query("SELECT nom, exemple FROM sms_template_variables");
+    $stmt = $shop_pdo->query("SELECT nom, exemple FROM sms_template_variables");
     $variables = $stmt->fetchAll(PDO::FETCH_KEY_PAIR);
     
     // Effectuer les remplacements avec les exemples

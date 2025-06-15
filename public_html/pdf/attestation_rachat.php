@@ -7,9 +7,12 @@ if (!defined('INCLUDED_FROM_INDEX')) {
 
 require_once __DIR__ . '/../config/database.php';
 
+// Obtenir la connexion à la base de données de la boutique
+$shop_pdo = getShopDBConnection();
+
 // Fonction pour récupérer les données du rachat
 function getRachatDetails($id) {
-    global $pdo;
+    global $shop_pdo;
     
     try {
         // Debug de la requête
@@ -22,7 +25,7 @@ function getRachatDetails($id) {
         error_log("SQL: $sql");
         error_log("ID: $id");
         
-        $stmt = $pdo->prepare($sql);
+        $stmt = $shop_pdo->prepare($sql);
         $stmt->execute([$id]);
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         
@@ -31,7 +34,7 @@ function getRachatDetails($id) {
             error_log("Rachat non trouvé dans la base de données. ID: $id");
             
             // Faire une requête directe pour voir le rachat
-            $directQuery = $pdo->prepare("SELECT * FROM rachat_appareils WHERE id = ?");
+            $directQuery = $shop_pdo->prepare("SELECT * FROM rachat_appareils WHERE id = ?");
             $directQuery->execute([$id]);
             $directResult = $directQuery->fetch(PDO::FETCH_ASSOC);
             
@@ -40,7 +43,7 @@ function getRachatDetails($id) {
                 
                 // Vérifier le client
                 $clientId = $directResult['client_id'];
-                $clientQuery = $pdo->prepare("SELECT * FROM clients WHERE id = ?");
+                $clientQuery = $shop_pdo->prepare("SELECT * FROM clients WHERE id = ?");
                 $clientQuery->execute([$clientId]);
                 $clientResult = $clientQuery->fetch(PDO::FETCH_ASSOC);
                 
@@ -57,24 +60,24 @@ function getRachatDetails($id) {
             }
             
             try {
-                $checkTable = $pdo->query("SHOW TABLES LIKE 'rachat_appareils'");
+                $checkTable = $shop_pdo->query("SHOW TABLES LIKE 'rachat_appareils'");
                 $tableExists = $checkTable->rowCount() > 0;
                 error_log("Table 'rachat_appareils' existe: " . ($tableExists ? 'Oui' : 'Non'));
                 
                 if ($tableExists) {
                     // Vérifier la structure de la table
-                    $columns = $pdo->query("DESCRIBE rachat_appareils")->fetchAll(PDO::FETCH_COLUMN);
+                    $columns = $shop_pdo->query("DESCRIBE rachat_appareils")->fetchAll(PDO::FETCH_COLUMN);
                     error_log("Colonnes dans rachat_appareils: " . implode(', ', $columns));
                     
                     // Vérifier si l'ID existe
-                    $checkId = $pdo->prepare("SELECT COUNT(*) FROM rachat_appareils WHERE id = ?");
+                    $checkId = $shop_pdo->prepare("SELECT COUNT(*) FROM rachat_appareils WHERE id = ?");
                     $checkId->execute([$id]);
                     $idExists = $checkId->fetchColumn() > 0;
                     error_log("ID $id existe dans la table rachat_appareils: " . ($idExists ? 'Oui' : 'Non'));
                     
                     if ($idExists) {
                         // Vérifier la jointure
-                        $checkJoin = $pdo->prepare("
+                        $checkJoin = $shop_pdo->prepare("
                             SELECT c.id FROM rachat_appareils r 
                             LEFT JOIN clients c ON r.client_id = c.id 
                             WHERE r.id = ?
@@ -100,11 +103,11 @@ function getRachatDetails($id) {
 
 // Créer une fonction de récupération manuelle des données
 function getFullRachatDetails($id) {
-    global $pdo;
+    global $shop_pdo;
     
     try {
         // 1. Récupérer les données du rachat
-        $rachatQuery = $pdo->prepare("SELECT * FROM rachat_appareils WHERE id = ?");
+        $rachatQuery = $shop_pdo->prepare("SELECT * FROM rachat_appareils WHERE id = ?");
         $rachatQuery->execute([$id]);
         $rachat = $rachatQuery->fetch(PDO::FETCH_ASSOC);
         
@@ -114,7 +117,7 @@ function getFullRachatDetails($id) {
         }
         
         // 2. Récupérer les données du client
-        $clientQuery = $pdo->prepare("SELECT * FROM clients WHERE id = ?");
+        $clientQuery = $shop_pdo->prepare("SELECT * FROM clients WHERE id = ?");
         $clientQuery->execute([$rachat['client_id']]);
         $client = $clientQuery->fetch(PDO::FETCH_ASSOC);
         

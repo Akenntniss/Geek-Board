@@ -1,5 +1,7 @@
 <?php
+require_once __DIR__ . '/../config/database.php';
 // Vérifier si l'utilisateur est connecté
+$shop_pdo = getShopDBConnection();
 if (!isset($_SESSION['user_id'])) {
     header("Location: index.php?page=login");
     exit;
@@ -17,11 +19,11 @@ $article_id = intval($_GET['id']);
 require_once 'includes/db.php';
 
 // Mettre à jour le compteur de vues
-$stmt = $db->prepare("UPDATE kb_articles SET views = views + 1 WHERE id = ?");
+$stmt = $shop_pdo->prepare("UPDATE kb_articles SET views = views + 1 WHERE id = ?");
 $stmt->execute([$article_id]);
 
 // Récupérer l'article
-$stmt = $db->prepare("SELECT a.*, c.name as category_name, c.icon as category_icon 
+$stmt = $shop_pdo->prepare("SELECT a.*, c.name as category_name, c.icon as category_icon 
                       FROM kb_articles a 
                       LEFT JOIN kb_categories c ON a.category_id = c.id 
                       WHERE a.id = ?");
@@ -35,7 +37,7 @@ if (!$article) {
 }
 
 // Récupérer les articles liés de la même catégorie
-$stmt = $db->prepare("SELECT id, title, updated_at 
+$stmt = $shop_pdo->prepare("SELECT id, title, updated_at 
                       FROM kb_articles 
                       WHERE category_id = ? AND id != ? 
                       ORDER BY updated_at DESC 
@@ -44,7 +46,7 @@ $stmt->execute([$article['category_id'], $article_id]);
 $related_articles = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // Récupérer les tags de l'article
-$stmt = $db->prepare("SELECT t.id, t.name 
+$stmt = $shop_pdo->prepare("SELECT t.id, t.name 
                       FROM kb_tags t 
                       JOIN kb_article_tags at ON t.id = at.tag_id 
                       WHERE at.article_id = ?");

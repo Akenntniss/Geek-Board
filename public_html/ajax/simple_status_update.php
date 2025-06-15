@@ -33,19 +33,22 @@ try {
     // Charger la configuration de la base de données
     require_once __DIR__ . '/../config/database.php';
     
-    // Si besoin de la fonction d'envoi de SMS
+    // Obtenir la connexion à la base de données de la boutique
+    $shop_pdo = getShopDBConnection();
+    
+    // Si besoin du service d'envoi de SMS
     if ($send_sms) {
-        require_once __DIR__ . '/../includes/functions.php';
+        require_once __DIR__ . '/../classes/NewSmsService.php';
     }
     
     // Vérifier que la connexion PDO est disponible
-    if (!isset($pdo) || $pdo === null) {
+    if (!isset($shop_pdo) || $shop_pdo === null) {
         file_put_contents($logFile, "ERREUR: Connexion PDO non disponible après inclusion de database.php\n", FILE_APPEND);
         throw new Exception('Connexion à la base de données non disponible');
     }
     
     // Récupérer le code du statut
-    $stmt = $pdo->prepare("SELECT code FROM statuts WHERE id = ?");
+    $stmt = $shop_pdo->prepare("SELECT code FROM statuts WHERE id = ?");
     $stmt->execute([$status_id]);
     $status_code = $stmt->fetchColumn();
     
@@ -55,7 +58,7 @@ try {
     }
     
     // Mise à jour des deux colonnes: statut_id et statut
-    $stmt = $pdo->prepare("UPDATE reparations SET statut_id = ?, statut = ?, date_modification = NOW() WHERE id = ?");
+    $stmt = $shop_pdo->prepare("UPDATE reparations SET statut_id = ?, statut = ?, date_modification = NOW() WHERE id = ?");
     $result = $stmt->execute([$status_id, $status_code, $repair_id]);
     
     if (!$result) {
@@ -71,7 +74,7 @@ try {
         file_put_contents($logFile, "Mise à jour réussie: " . $stmt->rowCount() . " ligne(s) affectée(s)\n", FILE_APPEND);
         
         // Récupérer le statut précédent pour le journal
-        $stmt_prev = $pdo->prepare("SELECT statut_apres FROM reparation_logs WHERE reparation_id = ? AND action_type = 'changement_statut' ORDER BY date_action DESC LIMIT 1");
+        $stmt_prev = $shop_pdo->prepare("SELECT statut_apres FROM reparation_logs WHERE reparation_id = ? AND action_type = 'changement_statut' ORDER BY date_action DESC LIMIT 1");
         $stmt_prev->execute([$repair_id]);
         $previous_status = $stmt_prev->fetchColumn();
         
@@ -85,7 +88,7 @@ try {
         
         // Insérer un enregistrement dans reparation_logs
         try {
-            $stmt_log = $pdo->prepare("
+            $stmt_log = $shop_pdo->prepare("
                 INSERT INTO reparation_logs (
                     reparation_id, employe_id, action_type, statut_avant, statut_apres, details
                 ) VALUES (?, ?, 'changement_statut', ?, ?, ?)
@@ -108,7 +111,7 @@ try {
     }
     
     // Récupérer les informations sur le statut pour l'affichage du badge
-    $stmt = $pdo->prepare("SELECT nom, code FROM statuts WHERE id = ?");
+    $stmt = $shop_pdo->prepare("SELECT nom, code FROM statuts WHERE id = ?");
     $stmt->execute([$status_id]);
     $status = $stmt->fetch();
     
@@ -126,13 +129,16 @@ try {
         ]
     ];
     
-    // Envoi de SMS si demandé et si la fonction existe
-    if ($send_sms && function_exists('send_sms')) {
+    // Envoi de SMS si demandé avec le nouveau service SMS Gateway
+    if ($send_sms) {
         try {
-            file_put_contents($logFile, "Tentative d'envoi de SMS\n", FILE_APPEND);
+            file_put_contents($logFile, "Tentative d'envoi de SMS avec NewSmsService\n", FILE_APPEND);
+            
+            // Initialiser le service SMS
+            $smsService = new NewSmsService();
             
             // Récupérer les informations du client et de la réparation
-            $stmt = $pdo->prepare("
+            $stmt = $shop_pdo->prepare("
                 SELECT r.*, c.telephone, c.nom as client_nom, c.prenom as client_prenom
                 FROM reparations r
                 JOIN clients c ON r.client_id = c.id
@@ -147,7 +153,7 @@ try {
                 $client_prenom = $repair_data['client_prenom'];
                 
                 // Récupérer le template correspondant au statut_id
-                $stmt = $pdo->prepare("
+                $stmt = $shop_pdo->prepare("
                     SELECT id, contenu 
                     FROM sms_templates 
                     WHERE statut_id = ? AND est_actif = 1
@@ -187,18 +193,20 @@ try {
                     $message = "GeekBoard: Votre réparation est maintenant en statut \"$status_name\". Pour plus d'informations, connectez-vous à votre espace client.";
                 }
                 
-                // Envoi du SMS
-                file_put_contents($logFile, "Tentative d'envoi de SMS à $telephone\n", FILE_APPEND);
-                $sms_result = send_sms($telephone, $message);
+                // Envoi du SMS avec la nouvelle API Gateway
+                file_put_contents($logFile, "Tentative d'envoi de SMS à $telephone via API Gateway\n", FILE_APPEND);
+                file_put_contents($logFile, "URL API utilisée: " . $smsService->getApiUrl() . "\n", FILE_APPEND);
                 
-                file_put_contents($logFile, "Résultat de l'envoi SMS: " . print_r($sms_result, true) . "\n", FILE_APPEND);
+                $sms_result = $smsService->sendSMS($telephone, $message, 'normal');
+                
+                file_put_contents($logFile, "Résultat de l'envoi SMS Gateway: " . print_r($sms_result, true) . "\n", FILE_APPEND);
                 
                 // Déterminer si l'envoi a réussi
                 $sms_sent = isset($sms_result['success']) && $sms_result['success'] === true;
                 
                 // Enregistrer dans la table reparation_sms
                 try {
-                    $stmt = $pdo->prepare("
+                    $stmt = $shop_pdo->prepare("
                         INSERT INTO reparation_sms (
                             reparation_id, template_id, statut_id, telephone, message
                         ) VALUES (?, ?, ?, ?, ?)
@@ -208,15 +216,20 @@ try {
                     
                     $stmt->execute([$repair_id, $template_id, $status_id, $telephone, $message]);
                     
-                    file_put_contents($logFile, "SMS enregistré dans reparation_sms: ID=" . $pdo->lastInsertId() . "\n", FILE_APPEND);
+                    file_put_contents($logFile, "SMS enregistré dans reparation_sms: ID=" . $shop_pdo->lastInsertId() . "\n", FILE_APPEND);
                 } catch (Exception $e) {
                     file_put_contents($logFile, "Erreur lors de l'enregistrement dans reparation_sms: " . $e->getMessage() . "\n", FILE_APPEND);
                 }
                 
                 $response['data']['sms_sent'] = $sms_sent;
                 $response['data']['sms_message'] = $sms_sent 
-                    ? "SMS envoyé à $client_nom ($telephone) [mode simplifié]"
+                    ? "SMS envoyé à $client_nom ($telephone) via API Gateway"
                     : "Échec de l'envoi du SMS à $client_nom ($telephone): " . ($sms_result['message'] ?? 'Erreur inconnue');
+                
+                // Ajouter des informations de debug sur l'API utilisée si l'envoi a réussi
+                if ($sms_sent && isset($sms_result['data'])) {
+                    file_put_contents($logFile, "SMS envoyé avec succès via API Gateway. ID: " . ($sms_result['data']['id'] ?? 'N/A') . "\n", FILE_APPEND);
+                }
             } else {
                 file_put_contents($logFile, "Client non trouvé ou sans téléphone\n", FILE_APPEND);
                 $response['data']['sms_message'] = "SMS non envoyé: client non trouvé ou sans téléphone";

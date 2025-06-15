@@ -9,7 +9,8 @@ $user_id = (int)$_GET['id'];
 
 // Récupération des données de l'utilisateur
 try {
-    $stmt = $pdo->prepare("SELECT * FROM users WHERE id = ?");
+    $shop_pdo = getShopDBConnection();
+$stmt = $shop_pdo->prepare("SELECT * FROM users WHERE id = ?");
     $stmt->execute([$user_id]);
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
     
@@ -50,14 +51,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Si un nouveau mot de passe est fourni, l'inclure dans la mise à jour
             if (!empty($_POST['password'])) {
                 $hashed_password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-                $stmt = $pdo->prepare("
+                $stmt = $shop_pdo->prepare("
                     UPDATE users 
                     SET username = ?, password = ?, full_name = ?, role = ?
                     WHERE id = ?
                 ");
                 $stmt->execute([$username, $hashed_password, $full_name, $role, $user_id]);
             } else {
-                $stmt = $pdo->prepare("
+                $stmt = $shop_pdo->prepare("
                     UPDATE users 
                     SET username = ?, full_name = ?, role = ?
                     WHERE id = ?

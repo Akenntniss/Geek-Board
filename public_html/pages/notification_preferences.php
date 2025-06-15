@@ -1,5 +1,7 @@
 <?php
+require_once __DIR__ . '/../config/database.php';
 // Inclure les fonctions de notification
+$shop_pdo = getShopDBConnection();
 require_once 'includes/notification_functions.php';
 
 // Vérifier si l'utilisateur est connecté
@@ -14,7 +16,7 @@ $user_id = $_SESSION['user_id'];
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'update_preferences') {
     
     // Récupérer les types de notification
-    $stmt = $db->prepare("SELECT type_code FROM notification_types");
+    $stmt = $shop_pdo->prepare("SELECT type_code FROM notification_types");
     $stmt->execute();
     $notification_types = $stmt->fetchAll(PDO::FETCH_COLUMN);
     
@@ -41,7 +43,7 @@ set_default_notification_preferences($user_id);
 $preferences = get_notification_preferences($user_id);
 
 // Récupérer les types de notification
-$stmt = $db->prepare("SELECT * FROM notification_types ORDER BY importance DESC, description ASC");
+$stmt = $shop_pdo->prepare("SELECT * FROM notification_types ORDER BY importance DESC, description ASC");
 $stmt->execute();
 $notification_types = $stmt->fetchAll(PDO::FETCH_ASSOC);
 

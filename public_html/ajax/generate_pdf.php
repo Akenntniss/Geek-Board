@@ -10,7 +10,7 @@ $reparation_id = intval($_GET['id']);
 
 try {
     // Récupérer les informations de la réparation
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         SELECT r.*, c.nom as client_nom, c.prenom as client_prenom, c.telephone as client_telephone, c.email as client_email
         FROM reparations r
         INNER JOIN clients c ON r.client_id = c.id

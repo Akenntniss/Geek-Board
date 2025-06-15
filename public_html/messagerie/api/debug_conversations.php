@@ -28,7 +28,7 @@ if (!isset($_SESSION['user_id'])) {
 require_once '../includes/functions.php';
 
 // Inclure la connexion à la base de données s'il n'est pas déjà inclus
-if (!isset($pdo)) {
+if (!isset($shop_pdo)) {
     echo "<h2>Connexion à la base de données</h2>";
     try {
         require_once __DIR__ . '/../../config/database.php';
@@ -43,7 +43,7 @@ if (!isset($pdo)) {
 echo "<h2>Test de get_user_conversations</h2>";
 try {
     // Exécuter une requête simple pour tester la connexion
-    $stmt = $pdo->query("SELECT COUNT(*) as count FROM conversations");
+    $stmt = $shop_pdo->query("SELECT COUNT(*) as count FROM conversations");
     $total = $stmt->fetch(PDO::FETCH_ASSOC)['count'];
     echo "Total de conversations dans la base: " . $total . "<br>";
     

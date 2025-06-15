@@ -28,8 +28,8 @@ try {
 
     // Connexion à la base de données
     try {
-        $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $shop_pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
+        $shop_pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     } catch (PDOException $e) {
         throw new Exception("Erreur de connexion à la base de données: " . $e->getMessage());
     }
@@ -50,7 +50,7 @@ try {
         $query = "SELECT COUNT(*) as count FROM reparations WHERE statut IN ($placeholders)";
         
         // Préparer et exécuter la requête
-        $stmt = $pdo->prepare($query);
+        $stmt = $shop_pdo->prepare($query);
         $stmt->execute($statuts);
         
         // Récupérer le résultat

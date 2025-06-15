@@ -23,6 +23,9 @@ if (!defined('BASE_PATH')) {
 require_once BASE_PATH . '/config/database.php';
 require_once BASE_PATH . '/includes/functions.php';
 
+// Obtenir la connexion à la base de données de la boutique
+$shop_pdo = getShopDBConnection();
+
 // Vérifier si c'est une requête AJAX POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Action par défaut
@@ -51,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
  * Met à jour le statut d'une tâche
  */
 function updateTaskStatus() {
-    global $pdo;
+    global $shop_pdo;
     
     // Récupérer et nettoyer les données
     $task_id = isset($_POST['task_id']) ? (int)$_POST['task_id'] : 0;
@@ -74,7 +77,7 @@ function updateTaskStatus() {
     
     try {
         // Vérifier si la tâche existe
-        $stmt = $pdo->prepare("SELECT id, statut FROM taches WHERE id = ?");
+        $stmt = $shop_pdo->prepare("SELECT id, statut FROM taches WHERE id = ?");
         $stmt->execute([$task_id]);
         $task = $stmt->fetch(PDO::FETCH_ASSOC);
         
@@ -92,7 +95,7 @@ function updateTaskStatus() {
         }
         
         // Mettre à jour le statut
-        $stmt = $pdo->prepare("UPDATE taches SET statut = ?, date_modification = NOW() WHERE id = ?");
+        $stmt = $shop_pdo->prepare("UPDATE taches SET statut = ?, date_modification = NOW() WHERE id = ?");
         $result = $stmt->execute([$new_status, $task_id]);
         
         if ($result) {

@@ -20,7 +20,7 @@ if (!isset($data['etiquettes']) || !is_array($data['etiquettes'])) {
 
 try {
     // Démarrer une transaction
-    $pdo->beginTransaction();
+    $shop_pdo->beginTransaction();
 
     // Mettre à jour la position de chaque étiquette
     foreach ($data['etiquettes'] as $etiquette) {
@@ -28,17 +28,17 @@ try {
             throw new Exception('Données d\'étiquette invalides');
         }
 
-        $stmt = $pdo->prepare("UPDATE etiquettes SET position = ? WHERE id = ?");
+        $stmt = $shop_pdo->prepare("UPDATE etiquettes SET position = ? WHERE id = ?");
         $stmt->execute([$etiquette['position'], $etiquette['id']]);
     }
 
     // Valider la transaction
-    $pdo->commit();
+    $shop_pdo->commit();
 
     echo json_encode(['success' => true, 'message' => 'Ordre des étiquettes mis à jour avec succès']);
 } catch (Exception $e) {
     // Annuler la transaction en cas d'erreur
-    $pdo->rollBack();
+    $shop_pdo->rollBack();
     
     http_response_code(500);
     echo json_encode(['success' => false, 'message' => 'Erreur lors de la mise à jour de l\'ordre des étiquettes: ' . $e->getMessage()]);

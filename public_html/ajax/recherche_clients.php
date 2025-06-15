@@ -1,10 +1,16 @@
 <?php
-// Activer l'affichage des erreurs pour le débogage
-ini_set('display_errors', 1);
+// Désactiver l'affichage des erreurs pour éviter de corrompre le JSON
+ini_set('display_errors', 0);
+// Continuer à logger les erreurs dans le fichier de log
 error_reporting(E_ALL);
 
-// Démarrer la session
-session_start();
+// Inclure la configuration de session avant de démarrer la session
+require_once '../config/session_config.php';
+// La session est déjà démarrée dans session_config.php
+
+// Inclure la configuration pour la gestion des sous-domaines
+require_once '../config/subdomain_config.php';
+// Le sous-domaine est détecté et la session est configurée avec le magasin correspondant
 
 // Définir le type de contenu comme JSON
 header('Content-Type: application/json');
@@ -27,20 +33,13 @@ $terme = trim($_POST['terme']);
 error_log("Recherche de clients avec le terme: " . $terme);
 
 try {
-    // Vérifier qu'un magasin est sélectionné
-    if (!isset($_SESSION['shop_id'])) {
-        error_log("ATTENTION: Aucun magasin sélectionné en session, utilisation de la connexion principale");
-        // Au lieu de renvoyer une erreur, utiliser la connexion principale
-        $shop_pdo = getMainDBConnection();
-        
-        if ($shop_pdo === null) {
-            error_log("ERREUR: Impossible d'obtenir une connexion à la base de données principale");
-            echo json_encode(['success' => false, 'message' => 'Erreur de connexion à la base de données']);
-            exit;
-        }
-    } else {
-        // Utiliser getShopDBConnection() pour obtenir la connexion à la base du magasin
-        $shop_pdo = getShopDBConnection();
+    // Utiliser getShopDBConnection() qui gère automatiquement la sélection de la bonne base
+    $shop_pdo = getShopDBConnection();
+    
+    if ($shop_pdo === null) {
+        error_log("ERREUR: Impossible d'obtenir une connexion à la base de données du magasin");
+        echo json_encode(['success' => false, 'message' => 'Erreur de connexion à la base de données']);
+        exit;
     }
     
     // Vérifier la connexion

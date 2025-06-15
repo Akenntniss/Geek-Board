@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GeekBoard - Hors ligne</title>
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#0078e8">
+    <style>
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: #f5f8fa;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+        .container {
+            max-width: 500px;
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        h1 {
+            color: #0078e8;
+            margin-bottom: 20px;
+        }
+        p {
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        .icon {
+            font-size: 70px;
+            color: #0078e8;
+            margin-bottom: 20px;
+        }
+        .btn {
+            display: inline-block;
+            background-color: #0078e8;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s;
+            margin: 5px;
+            border: none;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background-color: #0061c1;
+        }
+        .btn-secondary {
+            background-color: #f0f0f0;
+            color: #333;
+        }
+        .btn-secondary:hover {
+            background-color: #e0e0e0;
+        }
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: #ff3b30;
+            margin-right: 8px;
+        }
+        .status-text {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 30px;
+        }
+        .offline-functions {
+            margin-top: 30px;
+            text-align: left;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+        }
+        .connection-status {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="icon">🌐</div>
+        <h1>Mode hors ligne</h1>
+        
+        <div class="connection-status">
+            <span class="status-indicator" id="status-dot"></span>
+            <span class="status-text" id="status-text">Non connecté</span>
+        </div>
+        
+        <p>Vous n'avez pas de connexion Internet pour le moment. Certaines fonctionnalités sont disponibles en mode hors ligne :</p>
+        
+        <div class="offline-functions">
+            <ul>
+                <li>Consultation des fiches sauvegardées</li>
+                <li>Création de nouvelles fiches (synchronisation automatique lors de la reconnexion)</li>
+                <li>Accès aux documents téléchargés précédemment</li>
+            </ul>
+        </div>
+        
+        <div style="margin-top: 30px;">
+            <button class="btn" id="retry-button">Réessayer la connexion</button>
+            <a href="/" class="btn btn-secondary">Accéder au mode hors ligne</a>
+        </div>
+    </div>
+
+    <script>
+        // Affiche le statut de connexion
+        function updateConnectionStatus() {
+            const statusDot = document.getElementById('status-dot');
+            const statusText = document.getElementById('status-text');
+            
+            if (navigator.onLine) {
+                statusDot.style.backgroundColor = '#34c759';
+                statusText.textContent = 'Reconnecté ! Redirection en cours...';
+                setTimeout(() => {
+                    window.location.href = '/index.php?pwa=1';
+                }, 1500);
+            } else {
+                statusDot.style.backgroundColor = '#ff3b30';
+                statusText.textContent = 'Non connecté';
+            }
+        }
+        
+        // Vérifier initialement
+        updateConnectionStatus();
+        
+        // Vérifier périodiquement si la connexion est rétablie
+        setInterval(updateConnectionStatus, 3000);
+        
+        // Gestionnaires d'événements en ligne/hors ligne
+        window.addEventListener('online', updateConnectionStatus);
+        window.addEventListener('offline', updateConnectionStatus);
+        
+        // Gestionnaire pour le bouton de réessai
+        document.getElementById('retry-button').addEventListener('click', function(e) {
+            e.preventDefault();
+            this.textContent = 'Vérification...';
+            
+            // Simuler une tentative de connexion
+            fetch('/index.php?ping=' + Date.now(), { 
+                method: 'HEAD',
+                cache: 'no-store'
+            })
+            .then(() => {
+                updateConnectionStatus();
+            })
+            .catch(() => {
+                this.textContent = 'Réessayer la connexion';
+                alert('Toujours hors ligne. Veuillez vérifier votre connexion réseau.');
+            });
+        });
+    </script>
+</body>
+</html> 

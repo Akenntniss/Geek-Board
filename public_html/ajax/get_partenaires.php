@@ -30,7 +30,7 @@ try {
     file_put_contents(dirname(__DIR__) . '/tmp/debug.log', "Tentative de récupération des partenaires\n", FILE_APPEND);
     
     // Récupérer tous les partenaires actifs
-    $stmt = $pdo->query("
+    $stmt = $shop_pdo->query("
         SELECT p.*, 
             COALESCE(s.solde_actuel, 0) as solde_actuel
         FROM partenaires p

@@ -1,0 +1,104 @@
+[2025-06-15 19:39:04] Début de traitement client_relance.php
+[2025-06-15 19:39:04] GET: {"shop_id":"4"}
+[2025-06-15 19:39:04] POST: []
+[2025-06-15 19:39:05] SESSION: {"pwa_mode":false,"shop_id":"4"}
+[2025-06-15 19:39:05] Données JSON reçues: {"action":"preview","days":3,"filterType":"default","shop_id":"4"}
+[2025-06-15 19:39:05] ID du magasin trouvé dans l'URL: 4
+[2025-06-15 19:39:05] ID du magasin 4 stocké en session
+[2025-06-15 19:39:05] Action: preview, Days: 3, FilterType: default
+[2025-06-15 19:39:05] Client IDs sélectionnés: []
+[2025-06-15 19:39:05] Vérification de la connexion à la base de données
+[2025-06-15 19:39:05] Connexion shop_pdo disponible
+[2025-06-15 19:39:05] Recherche du modèle SMS de relance client
+[2025-06-15 19:39:05] Modèle SMS trouvé: ID 17
+[2025-06-15 19:39:05] Construction de la requête SQL pour le type de filtre: default
+[2025-06-15 19:39:05] Requête SQL: 
+            SELECT r.id, r.client_id, r.statut, r.statut_id, r.type_appareil, r.marque, r.modele, 
+                   r.date_modification, c.nom as client_nom, c.prenom as client_prenom, 
+                   c.telephone, c.email,
+                   DATEDIFF(NOW(), r.date_modification) as days_since
+            FROM reparations r
+            JOIN clients c ON r.client_id = c.id
+            WHERE r.statut_id IN (9, 10, 11) AND r.date_modification IS NOT NULL  AND DATEDIFF(NOW(), r.date_modification) >= ?  AND r.id NOT IN (
+                SELECT reparation_id 
+                FROM sms_logs 
+                WHERE message LIKE '%est réparé et attend votre visite%' 
+                AND date_envoi > DATE_SUB(NOW(), INTERVAL 7 DAY)
+            )
+         ORDER BY days_since DESC
+[2025-06-15 19:39:05] Exécution avec paramètre days: 3
+[2025-06-15 19:39:05] Nombre de clients trouvés: 5
+[2025-06-15 19:39:05] Envoi de la réponse d'aperçu avec 5 clients
+[2025-06-15 19:39:24] Début de traitement client_relance.php
+[2025-06-15 19:39:24] GET: {"shop_id":"4"}
+[2025-06-15 19:39:24] POST: []
+[2025-06-15 19:39:25] SESSION: {"pwa_mode":false,"shop_id":"4"}
+[2025-06-15 19:39:25] Données JSON reçues: {"action":"preview","days":3,"filterType":"reparation","shop_id":"4"}
+[2025-06-15 19:39:25] ID du magasin trouvé dans l'URL: 4
+[2025-06-15 19:39:25] ID du magasin 4 stocké en session
+[2025-06-15 19:39:25] Action: preview, Days: 3, FilterType: reparation
+[2025-06-15 19:39:25] Client IDs sélectionnés: []
+[2025-06-15 19:39:25] Vérification de la connexion à la base de données
+[2025-06-15 19:39:25] Connexion shop_pdo disponible
+[2025-06-15 19:39:25] Recherche du modèle SMS de relance client
+[2025-06-15 19:39:25] Modèle SMS trouvé: ID 17
+[2025-06-15 19:39:25] Construction de la requête SQL pour le type de filtre: reparation
+[2025-06-15 19:39:25] Requête SQL: 
+            SELECT r.id, r.client_id, r.statut, r.statut_id, r.type_appareil, r.marque, r.modele, 
+                   r.date_modification, c.nom as client_nom, c.prenom as client_prenom, 
+                   c.telephone, c.email,
+                   DATEDIFF(NOW(), r.date_modification) as days_since
+            FROM reparations r
+            JOIN clients c ON r.client_id = c.id
+            WHERE r.statut IN ('reparation_effectue', 'reparation_annule') AND r.date_modification IS NOT NULL  AND r.id NOT IN (
+                SELECT reparation_id 
+                FROM sms_logs 
+                WHERE message LIKE '%est réparé et attend votre visite%' 
+                AND date_envoi > DATE_SUB(NOW(), INTERVAL 7 DAY)
+            )
+         ORDER BY days_since DESC
+[2025-06-15 19:39:25] Exécution sans paramètres
+[2025-06-15 19:39:25] Nombre de clients trouvés: 2
+[2025-06-15 19:39:25] Envoi de la réponse d'aperçu avec 2 clients
+[2025-06-15 19:39:34] Début de traitement client_relance.php
+[2025-06-15 19:39:34] GET: {"shop_id":"4"}
+[2025-06-15 19:39:34] POST: []
+[2025-06-15 19:39:35] SESSION: {"pwa_mode":false,"shop_id":"4"}
+[2025-06-15 19:39:35] Données JSON reçues: {"action":"send","days":3,"clientIds":["754","758"],"filterType":"reparation","shop_id":"4"}
+[2025-06-15 19:39:35] ID du magasin trouvé dans l'URL: 4
+[2025-06-15 19:39:35] ID du magasin 4 stocké en session
+[2025-06-15 19:39:35] Action: send, Days: 3, FilterType: reparation
+[2025-06-15 19:39:35] Client IDs sélectionnés: ["754","758"]
+[2025-06-15 19:39:35] Vérification de la connexion à la base de données
+[2025-06-15 19:39:35] Connexion shop_pdo disponible
+[2025-06-15 19:39:35] Recherche du modèle SMS de relance client
+[2025-06-15 19:39:35] Modèle SMS trouvé: ID 17
+[2025-06-15 19:39:35] Construction de la requête SQL pour le type de filtre: reparation
+[2025-06-15 19:39:35] Requête SQL: 
+            SELECT r.id, r.client_id, r.statut, r.statut_id, r.type_appareil, r.marque, r.modele, 
+                   r.date_modification, c.nom as client_nom, c.prenom as client_prenom, 
+                   c.telephone, c.email,
+                   DATEDIFF(NOW(), r.date_modification) as days_since
+            FROM reparations r
+            JOIN clients c ON r.client_id = c.id
+            WHERE r.statut IN ('reparation_effectue', 'reparation_annule') AND r.date_modification IS NOT NULL  AND r.id NOT IN (
+                SELECT reparation_id 
+                FROM sms_logs 
+                WHERE message LIKE '%est réparé et attend votre visite%' 
+                AND date_envoi > DATE_SUB(NOW(), INTERVAL 7 DAY)
+            )
+         AND r.id IN (?,?) ORDER BY days_since DESC
+[2025-06-15 19:39:35] Exécution avec IDs clients: ["754","758"]
+[2025-06-15 19:39:35] Nombre de clients trouvés: 2
+[2025-06-15 19:39:35] Début de l'envoi des SMS pour 2 clients via API Gateway
+[2025-06-15 19:39:35] Traitement du client ID: 505, Nom: cannesphones_sample tet
+[2025-06-15 19:39:35] Message préparé: Bonjour tet cannesphones_sample, votre Trottinette  test est réparé et disponible dans notre boutique. A bientôt !
+[2025-06-15 19:39:35] Numéro de téléphone: 33782962906
+[2025-06-15 19:39:36] Résultat envoi SMS: {"success":true,"message":"SMS ajout\u00e9 \u00e0 la queue d'envoi","data":{"message_id":197,"phone_id":"8ea244a4-0a0f-4b2c-9a51-e5dc251ca8af","sim_id":44,"status":"pending","sim_info":{"carrier_name":"Free","phone_number":"+33745520054","is_default":true,"messages_sent":131,"monthly_limit":30000}},"http_code":201}
+[2025-06-15 19:39:36] SMS envoyé avec succès via API Gateway pour le client ID 505
+[2025-06-15 19:39:36] Traitement du client ID: 526, Nom: cannesphones_sample albert
+[2025-06-15 19:39:36] Message préparé: Bonjour albert cannesphones_sample, votre Trottinette  asd est réparé et disponible dans notre boutique. A bientôt !
+[2025-06-15 19:39:36] Numéro de téléphone: 33234567891
+[2025-06-15 19:39:37] Résultat envoi SMS: {"success":true,"message":"SMS ajout\u00e9 \u00e0 la queue d'envoi","data":{"message_id":198,"phone_id":"8ea244a4-0a0f-4b2c-9a51-e5dc251ca8af","sim_id":44,"status":"pending","sim_info":{"carrier_name":"Free","phone_number":"+33745520054","is_default":true,"messages_sent":132,"monthly_limit":30000}},"http_code":201}
+[2025-06-15 19:39:37] SMS envoyé avec succès via API Gateway pour le client ID 526
+[2025-06-15 19:39:37] Fin de traitement: 2 SMS envoyés, 0 erreurs

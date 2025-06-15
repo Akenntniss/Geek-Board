@@ -77,13 +77,14 @@ $params[] = $offset;
 
 // Exécuter les requêtes
 try {
+    $shop_pdo = getShopDBConnection();
     // Compter le nombre total d'enregistrements
-    $stmt_count = $pdo->prepare($sql_count);
+    $stmt_count = $shop_pdo->prepare($sql_count);
     $stmt_count->execute(array_slice($params, 0, -2)); // Exclure les paramètres de pagination
     $total_items = $stmt_count->fetch(PDO::FETCH_ASSOC)['total'];
     
     // Récupérer les données
-    $stmt = $pdo->prepare($sql);
+    $stmt = $shop_pdo->prepare($sql);
     $stmt->execute($params);
     $historique = $stmt->fetchAll(PDO::FETCH_ASSOC);
     
@@ -99,7 +100,7 @@ try {
 
 // Récupérer les statuts pour le filtre
 try {
-    $stmt = $pdo->query("
+    $stmt = $shop_pdo->query("
         SELECT s.id, s.nom, c.nom as categorie_nom
         FROM statuts s
         JOIN statut_categories c ON s.categorie_id = c.id

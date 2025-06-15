@@ -35,7 +35,7 @@ $url = isset($_POST['url']) ? cleanInput($_POST['url']) : '';
 
 try {
     // Vérifier si le fournisseur existe déjà
-    $stmt = $pdo->prepare("SELECT id FROM fournisseurs WHERE nom = ?");
+    $stmt = $shop_pdo->prepare("SELECT id FROM fournisseurs WHERE nom = ?");
     $stmt->execute([$nom]);
     if ($stmt->fetch()) {
         throw new Exception('Un fournisseur avec ce nom existe déjà');
@@ -43,13 +43,13 @@ try {
 
     // Insérer le nouveau fournisseur
     $sql = "INSERT INTO fournisseurs (nom, url) VALUES (?, ?)";
-    $stmt = $pdo->prepare($sql);
+    $stmt = $shop_pdo->prepare($sql);
     $stmt->execute([$nom, $url]);
 
     echo json_encode([
         'success' => true,
         'message' => 'Fournisseur ajouté avec succès',
-        'id' => $pdo->lastInsertId()
+        'id' => $shop_pdo->lastInsertId()
     ]);
 } catch (Exception $e) {
     http_response_code(500);

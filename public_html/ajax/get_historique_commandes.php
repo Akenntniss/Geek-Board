@@ -23,7 +23,7 @@ $clientId = intval($_GET['client_id']);
 
 try {
     // Requête pour récupérer les commandes du client
-    $stmt = $pdo->prepare("SELECT 
+    $stmt = $shop_pdo->prepare("SELECT 
         cp.id, cp.nom_piece, cp.quantite, cp.prix_estime, cp.code_barre, cp.statut, 
         cp.date_creation, cp.reparation_id, f.nom as fournisseur_nom
         FROM commandes_pieces cp

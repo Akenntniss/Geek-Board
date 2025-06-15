@@ -9,6 +9,7 @@
 // Configuration et bases de données
 require_once __DIR__ . '/../config/session_config.php';
 require_once __DIR__ . '/../config/database.php';
+$shop_pdo = getShopDBConnection();
 
 // Vérifier si l'utilisateur est connecté
 if (!isset($_SESSION['user_id'])) {
@@ -117,7 +118,7 @@ function syncRepairs($action, $data) {
             $columns = implode(', ', array_keys($data));
             $placeholders = implode(', ', array_fill(0, count($data), '?'));
             
-            $stmt = $conn->prepare("INSERT INTO repairs ($columns) VALUES ($placeholders)");
+            $stmt = $shop_pdo->prepare("INSERT INTO repairs ($columns) VALUES ($placeholders)");
             
             // Lier les paramètres
             $i = 1;
@@ -129,7 +130,7 @@ function syncRepairs($action, $data) {
             $stmt->execute();
             
             // Récupérer l'ID inséré
-            $id = $conn->lastInsertId();
+            $id = $shop_pdo->lastInsertId();
             
             return [
                 'id' => $id,
@@ -154,7 +155,7 @@ function syncRepairs($action, $data) {
             }
             $updateStr = implode(', ', $updates);
             
-            $stmt = $conn->prepare("UPDATE repairs SET $updateStr WHERE id = ?");
+            $stmt = $shop_pdo->prepare("UPDATE repairs SET $updateStr WHERE id = ?");
             
             // Lier les paramètres
             $i = 1;
@@ -174,7 +175,7 @@ function syncRepairs($action, $data) {
             $id = $data['id'];
             
             // Vérifier si la réparation existe
-            $stmt = $conn->prepare("SELECT id FROM repairs WHERE id = ?");
+            $stmt = $shop_pdo->prepare("SELECT id FROM repairs WHERE id = ?");
             $stmt->bindValue(1, $id);
             $stmt->execute();
             
@@ -183,7 +184,7 @@ function syncRepairs($action, $data) {
             }
             
             // Supprimer la réparation
-            $stmt = $conn->prepare("DELETE FROM repairs WHERE id = ?");
+            $stmt = $shop_pdo->prepare("DELETE FROM repairs WHERE id = ?");
             $stmt->bindValue(1, $id);
             $stmt->execute();
             
@@ -220,7 +221,7 @@ function syncClients($action, $data) {
             $columns = implode(', ', array_keys($data));
             $placeholders = implode(', ', array_fill(0, count($data), '?'));
             
-            $stmt = $conn->prepare("INSERT INTO clients ($columns) VALUES ($placeholders)");
+            $stmt = $shop_pdo->prepare("INSERT INTO clients ($columns) VALUES ($placeholders)");
             
             // Lier les paramètres
             $i = 1;
@@ -232,7 +233,7 @@ function syncClients($action, $data) {
             $stmt->execute();
             
             // Récupérer l'ID inséré
-            $id = $conn->lastInsertId();
+            $id = $shop_pdo->lastInsertId();
             
             return [
                 'id' => $id,
@@ -257,7 +258,7 @@ function syncClients($action, $data) {
             }
             $updateStr = implode(', ', $updates);
             
-            $stmt = $conn->prepare("UPDATE clients SET $updateStr WHERE id = ?");
+            $stmt = $shop_pdo->prepare("UPDATE clients SET $updateStr WHERE id = ?");
             
             // Lier les paramètres
             $i = 1;
@@ -277,7 +278,7 @@ function syncClients($action, $data) {
             $id = $data['id'];
             
             // Vérifier si le client existe
-            $stmt = $conn->prepare("SELECT id FROM clients WHERE id = ?");
+            $stmt = $shop_pdo->prepare("SELECT id FROM clients WHERE id = ?");
             $stmt->bindValue(1, $id);
             $stmt->execute();
             
@@ -286,7 +287,7 @@ function syncClients($action, $data) {
             }
             
             // Supprimer le client
-            $stmt = $conn->prepare("DELETE FROM clients WHERE id = ?");
+            $stmt = $shop_pdo->prepare("DELETE FROM clients WHERE id = ?");
             $stmt->bindValue(1, $id);
             $stmt->execute();
             
@@ -323,7 +324,7 @@ function syncTasks($action, $data) {
             $columns = implode(', ', array_keys($data));
             $placeholders = implode(', ', array_fill(0, count($data), '?'));
             
-            $stmt = $conn->prepare("INSERT INTO tasks ($columns) VALUES ($placeholders)");
+            $stmt = $shop_pdo->prepare("INSERT INTO tasks ($columns) VALUES ($placeholders)");
             
             // Lier les paramètres
             $i = 1;
@@ -335,7 +336,7 @@ function syncTasks($action, $data) {
             $stmt->execute();
             
             // Récupérer l'ID inséré
-            $id = $conn->lastInsertId();
+            $id = $shop_pdo->lastInsertId();
             
             return [
                 'id' => $id,
@@ -360,7 +361,7 @@ function syncTasks($action, $data) {
             }
             $updateStr = implode(', ', $updates);
             
-            $stmt = $conn->prepare("UPDATE tasks SET $updateStr WHERE id = ?");
+            $stmt = $shop_pdo->prepare("UPDATE tasks SET $updateStr WHERE id = ?");
             
             // Lier les paramètres
             $i = 1;
@@ -380,7 +381,7 @@ function syncTasks($action, $data) {
             $id = $data['id'];
             
             // Vérifier si la tâche existe
-            $stmt = $conn->prepare("SELECT id FROM tasks WHERE id = ?");
+            $stmt = $shop_pdo->prepare("SELECT id FROM tasks WHERE id = ?");
             $stmt->bindValue(1, $id);
             $stmt->execute();
             
@@ -389,7 +390,7 @@ function syncTasks($action, $data) {
             }
             
             // Supprimer la tâche
-            $stmt = $conn->prepare("DELETE FROM tasks WHERE id = ?");
+            $stmt = $shop_pdo->prepare("DELETE FROM tasks WHERE id = ?");
             $stmt->bindValue(1, $id);
             $stmt->execute();
             

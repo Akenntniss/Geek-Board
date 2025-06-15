@@ -25,8 +25,9 @@ if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
 }
 
 try {
-    // Vérifier que la connexion à la base de données est établie
-    if (!isset($pdo) || $pdo === null) {
+    // Obtenir la connexion à la base de données du magasin
+    $pdo = getShopDBConnection();
+    if ($pdo === null) {
         throw new Exception("La connexion à la base de données n'est pas disponible");
     }
     

@@ -93,9 +93,10 @@ function saveCommande() {
         return;
     }
     
-    if (!prixEstime || prixEstime <= 0) {
+    // Vérification du prix estimé (facultatif)
+    if (prixEstime && prixEstime < 0) {
         console.error("Erreur: Prix estimé invalide");
-        alert('Veuillez saisir un prix estimé valide');
+        alert('Le prix estimé doit être un nombre positif');
         return;
     }
     
@@ -318,116 +319,155 @@ function showClientInfo(clientId, nom, prenom, telephone) {
 function editCommande(commandeId) {
     console.log("Édition de la commande:", commandeId);
     
-    fetch(`ajax/get_commande.php?id=${commandeId}`)
-    .then(response => response.json())
+    fetch('ajax/get_commande.php?id=' + commandeId)
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`Erreur HTTP: ${response.status}`);
+        }
+        return response.json();
+    })
     .then(data => {
         if (data.success) {
             const commande = data.commande;
-            console.log("Données de la commande reçues:", commande);
-            
-            // Vérifier si le modal existe
             const modal = document.getElementById('editCommandeModal');
+            
             if (!modal) {
                 console.error("Modal d'édition non trouvé");
-                alert("Erreur: Modal d'édition non trouvé");
                 return;
             }
             
-            // Remplir le formulaire d'édition
-            const editIdInput = document.getElementById('edit_id');
-            const editCommandeIdDisplay = document.getElementById('edit_commande_id_display');
-            
-            if (editIdInput) {
-                editIdInput.value = commande.id;
-            } else {
-                console.error("Champ edit_id non trouvé");
-            }
-            
-            if (editCommandeIdDisplay) {
-                editCommandeIdDisplay.textContent = commande.id;
-            } else {
-                console.error("Élément edit_commande_id_display non trouvé");
-            }
-            
-            // Afficher les informations du client
-            const clientNameInput = document.getElementById('edit_client_name');
-            const clientIdInput = document.getElementById('edit_client_id');
-            
-            if (clientNameInput && clientIdInput) {
-                clientIdInput.value = commande.client_id;
-                
-                // Vérifier si nous avons les informations du client
-                if (commande.client_nom && commande.client_prenom) {
-                    clientNameInput.value = `${commande.client_nom} ${commande.client_prenom}`;
-                    console.log("Nom client défini:", clientNameInput.value);
-                } else {
-                    // Si les informations du client ne sont pas dans la commande, faire une requête pour les obtenir
-                    fetch(`ajax/get_client.php?id=${commande.client_id}`)
-                    .then(response => response.json())
-                    .then(clientData => {
-                        if (clientData.success) {
-                            const client = clientData.client;
-                            clientNameInput.value = `${client.nom} ${client.prenom}`;
-                            console.log("Informations client récupérées:", client);
-                        } else {
-                            clientNameInput.value = 'Client non spécifié';
-                            console.error("Erreur lors de la récupération des informations client:", clientData.message);
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Erreur lors de la récupération des informations client:', error);
-                        clientNameInput.value = 'Client non spécifié';
-                    });
-                }
-            } else {
-                console.error("Champs client non trouvés");
-            }
-            
-            // Remplir les autres champs
+            // Remplir les champs du formulaire
             const fields = {
+                'edit_id': commande.id,
+                'edit_commande_id_display': commande.id,
                 'edit_fournisseur_id': commande.fournisseur_id,
                 'edit_nom_piece': commande.nom_piece,
                 'edit_quantite': commande.quantite,
                 'edit_prix_estime': commande.prix_estime,
                 'edit_code_barre': commande.code_barre || '',
-                'edit_date_creation': commande.date_creation
+                'edit_statut': commande.statut
             };
             
             for (const [id, value] of Object.entries(fields)) {
                 const element = document.getElementById(id);
                 if (element) {
+                    if (id === 'edit_commande_id_display') {
+                        element.textContent = value;
+                    } else {
                     element.value = value;
+                    }
                     console.log(`Champ ${id} mis à jour avec la valeur:`, value);
                 } else {
                     console.error(`Champ ${id} non trouvé`);
                 }
             }
             
-            // Mettre à jour le badge de statut
-            const statusBadge = document.getElementById('edit_status_badge');
-            const statusInput = document.getElementById('edit_statut');
-            
-            if (statusBadge && statusInput) {
-                statusInput.value = commande.statut;
-                statusBadge.className = `badge ${get_status_class(commande.statut)}`;
-                statusBadge.textContent = get_status_label(commande.statut);
-                console.log("Statut mis à jour:", commande.statut);
+            // Mettre à jour l'état des boutons de statut
+            const statusButtons = document.querySelectorAll('#editCommandeModal .btn-status-choice');
+            statusButtons.forEach(button => {
+                if (button.dataset.status === commande.statut) {
+                    button.classList.add('active');
             } else {
-                console.error("Éléments de statut non trouvés");
-            }
+                    button.classList.remove('active');
+                }
+            });
+            
+            // Initialiser les événements des boutons de statut
+            setupStatusButtons();
+            
+            // Initialiser le toggle SMS
+            setupSmsToggle();
             
             // Afficher le modal
-            const modalInstance = new bootstrap.Modal(modal);
+            const modalInstance = new bootstrap.Modal(modal, {
+                backdrop: 'static',
+                keyboard: false
+            });
             modalInstance.show();
-            console.log("Modal affiché");
+            
+            console.log("Modal affiché avec succès");
         } else {
             console.error("Erreur serveur:", data.message);
+            if (data.message.includes('Session invalide')) {
+                // Rediriger vers la page de connexion si la session est invalide
+                window.location.href = 'index.php?page=login';
+            } else {
             alert(data.message || 'Erreur lors de la récupération de la commande');
+            }
         }
     })
     .catch(error => {
         console.error('Erreur:', error);
+        if (error.message.includes('401') || error.message.includes('403')) {
+            // Rediriger vers la page de connexion en cas d'erreur d'authentification
+            window.location.href = 'index.php?page=login';
+        } else {
         alert('Erreur lors de la récupération de la commande');
+        }
+    });
+}
+
+// Fonction pour gérer les boutons de statut dans le modal d'édition
+function setupStatusButtons() {
+    const statusButtons = document.querySelectorAll('#editCommandeModal .btn-status-choice');
+    const statusInput = document.getElementById('edit_statut');
+    
+    if (!statusButtons.length || !statusInput) {
+        console.error("Boutons de statut ou input non trouvés");
+        return;
+    }
+    
+    statusButtons.forEach(button => {
+        // Supprimer les anciens gestionnaires d'événements
+        const newButton = button.cloneNode(true);
+        button.parentNode.replaceChild(newButton, button);
+        
+        // Ajouter le nouveau gestionnaire d'événements
+        newButton.addEventListener('click', function() {
+            // Retirer la classe active de tous les boutons
+            statusButtons.forEach(btn => btn.classList.remove('active'));
+            
+            // Ajouter la classe active au bouton cliqué
+            this.classList.add('active');
+            
+            // Mettre à jour la valeur du champ caché
+            statusInput.value = this.dataset.status;
+            
+            console.log("Statut mis à jour:", this.dataset.status);
+        });
+    });
+}
+
+// Fonction pour gérer le bouton de toggle SMS
+function setupSmsToggle() {
+    const smsToggleButton = document.getElementById('smsToggleButton');
+    const sendSmsSwitch = document.getElementById('sendSmsSwitch');
+    
+    if (!smsToggleButton || !sendSmsSwitch) {
+        console.error("Bouton SMS ou switch non trouvés");
+        return;
+    }
+    
+    // Supprimer les anciens gestionnaires d'événements
+    const newButton = smsToggleButton.cloneNode(true);
+    smsToggleButton.parentNode.replaceChild(newButton, smsToggleButton);
+    
+    // Ajouter le nouveau gestionnaire d'événements
+    newButton.addEventListener('click', function() {
+        const currentValue = sendSmsSwitch.value === '1';
+        sendSmsSwitch.value = currentValue ? '0' : '1';
+        
+        if (currentValue) {
+            // Désactiver l'envoi de SMS
+            this.className = 'btn btn-danger w-100 py-3';
+            this.innerHTML = '<i class="fas fa-ban me-2"></i>NE PAS ENVOYER DE SMS AU CLIENT';
+        } else {
+            // Activer l'envoi de SMS
+            this.className = 'btn btn-success w-100 py-3';
+            this.innerHTML = '<i class="fas fa-check me-2"></i>ENVOYER UN SMS AU CLIENT';
+        }
+        
+        console.log("État SMS mis à jour:", sendSmsSwitch.value);
     });
 }
 
@@ -1120,7 +1160,7 @@ function displayArchivedCommandes(commandes, pagination) {
                 <button class="btn btn-sm btn-outline-danger" onclick="deleteCommande(${commande.id})" title="Supprimer">
                     <i class="fas fa-trash"></i>
                 </button>
-                <a href="https://www.google.com/search?q=${encodeURIComponent(commande.nom_piece + ' ' + commande.code_barre + ' ' + commande.fournisseur_nom)}" target="_blank" class="btn btn-sm btn-outline-info" title="Rechercher sur Google">
+                <a href="https://www.google.com/search?q=${encodeURIComponent(commande.fournisseur_nom + ' ' + (commande.code_barre || '') + ' ' + commande.nom_piece)}" target="_blank" class="btn btn-sm btn-outline-info" title="Rechercher '${commande.fournisseur_nom} ${commande.code_barre} ${commande.nom_piece}' sur Google">
                     <i class="fab fa-google"></i>
                 </a>
             </div>
@@ -1271,14 +1311,14 @@ function exportArchivedToPDF() {
         theme: 'grid',
         styles: { fontSize: 8 },
         columnStyles: {
-            0: { cellWidth: 25 },  // Code barre
-            1: { cellWidth: 30 },  // Client
-            2: { cellWidth: 30 },  // Pièce
-            3: { cellWidth: 15 },  // Quantité
-            4: { cellWidth: 20 },  // Prix
+            0: { cellWidth: 20 },  // Code barre
+            1: { cellWidth: 20 },  // Client - réduit
+            2: { cellWidth: 35 },  // Pièce - augmenté
+            3: { cellWidth: 12 },  // Quantité
+            4: { cellWidth: 18 },  // Prix
             5: { cellWidth: 25 },  // Réparation
-            6: { cellWidth: 20 },  // Statut
-            7: { cellWidth: 25 }   // Date
+            6: { cellWidth: 18 },  // Statut
+            7: { cellWidth: 22 }   // Date
         }
     });
     
@@ -1389,16 +1429,15 @@ function exportPDF() {
         if (row.style.display !== 'none') {
             try {
                 const cells = row.querySelectorAll('td');
-                if (cells.length >= 8) {
+                if (cells.length >= 7) {
                     rows.push({
-                        id: cells[0].textContent.trim(),
-                        client: cells[1].textContent.replace(/\s+/g, ' ').trim(),
-                        piece: cells[2].textContent.trim(),
-                        fournisseur: cells[3].textContent.trim(),
+                        client: cells[0].textContent.replace(/\s+/g, ' ').trim(),
+                        date: cells[1].textContent.trim(),
+                        fournisseur: cells[2].textContent.trim(),
+                        piece: cells[3].textContent.trim(),
                         quantite: cells[4].textContent.trim(),
                         prix: cells[5].textContent.trim(),
-                        date: cells[6].textContent.trim(),
-                        statut: cells[7].textContent.trim()
+                        statut: cells[6].textContent.trim()
                     });
                 }
             } catch (e) {
@@ -1454,22 +1493,30 @@ function exportPDF() {
         
         // Créer le tableau
         doc.autoTable({
-            head: [['ID', 'Client', 'Pièce', 'Fournisseur', 'Qté', 'Prix', 'Date', 'Statut']],
+            head: [['Client', 'Date', 'Fournisseur', 'Pièce', 'Qté', 'Prix', 'Statut']],
             body: rows.map(row => [
-                row.id,
                 row.client,
-                row.piece,
+                row.date,
                 row.fournisseur,
+                row.piece,
                 row.quantite,
                 row.prix,
-                row.date,
                 row.statut
             ]),
             startY: filtres.length > 0 ? 42 : 34,
             styles: { fontSize: 8 },
             headStyles: { fillColor: [41, 128, 185], textColor: 255 },
             alternateRowStyles: { fillColor: [242, 242, 242] },
-            margin: { top: 40 }
+            margin: { top: 40 },
+            columnStyles: {
+                0: { cellWidth: 20 },  // Client - réduit
+                1: { cellWidth: 15 },  // Date
+                2: { cellWidth: 20 },  // Fournisseur
+                3: { cellWidth: 40 },  // Pièce - augmenté
+                4: { cellWidth: 12 },  // Quantité
+                5: { cellWidth: 18 },  // Prix
+                6: { cellWidth: 20 }   // Statut
+            }
         });
         
         // Pied de page
@@ -1496,6 +1543,52 @@ function exportPDF() {
 
 // Initialisation au chargement de la page
 document.addEventListener('DOMContentLoaded', function() {
+    // Attacher l'événement au bouton d'exportation PDF
+    const exportPdfBtn = document.getElementById('export-pdf-btn');
+    if (exportPdfBtn) {
+        exportPdfBtn.addEventListener('click', function() {
+            console.log("Bouton d'exportation PDF cliqué");
+            exportPDF();
+        });
+        console.log("Événement click attaché au bouton d'exportation PDF");
+    } else {
+        console.warn("Bouton d'exportation PDF non trouvé");
+    }
+    
+    // Initialiser toutes les modales avec les options par défaut
+    const modals = document.querySelectorAll('.modal');
+    modals.forEach(modal => {
+        try {
+            const modalInstance = new bootstrap.Modal(modal, {
+                backdrop: true,
+                keyboard: true,
+                focus: true
+            });
+            
+            // Stocker l'instance dans l'élément pour référence future
+            modal._modalInstance = modalInstance;
+            
+            // Ajouter les gestionnaires d'événements
+            modal.addEventListener('show.bs.modal', function(event) {
+                console.log(`Modale ${modal.id} en cours d'ouverture`);
+            });
+            
+            modal.addEventListener('shown.bs.modal', function(event) {
+                console.log(`Modale ${modal.id} ouverte`);
+            });
+            
+            modal.addEventListener('hide.bs.modal', function(event) {
+                console.log(`Modale ${modal.id} en cours de fermeture`);
+            });
+            
+            modal.addEventListener('hidden.bs.modal', function(event) {
+                console.log(`Modale ${modal.id} fermée`);
+            });
+        } catch (error) {
+            console.error(`Erreur lors de l'initialisation de la modale ${modal.id}:`, error);
+        }
+    });
+    
     // Filtrer automatiquement par "en_attente" au chargement
     filterCommandes('en_attente');
     

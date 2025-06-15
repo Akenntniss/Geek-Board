@@ -3,6 +3,9 @@
 require_once '../includes/config.php';
 require_once '../includes/db.php';
 
+// Initialiser la connexion à la base de données boutique
+$shop_pdo = getShopDBConnection();
+
 // Vérifier la méthode HTTP
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     echo json_encode([
@@ -50,15 +53,15 @@ if (!in_array($action, ['add', 'remove'])) {
 
 try {
     // Commencer une transaction
-    $pdo->beginTransaction();
+    $shop_pdo->beginTransaction();
     
     // Récupérer le produit actuel
-    $stmt = $pdo->prepare("SELECT id, name, quantity FROM stock WHERE id = ?");
+    $stmt = $shop_pdo->prepare("SELECT id, name, quantity FROM stock WHERE id = ?");
     $stmt->execute([$productId]);
     $product = $stmt->fetch(PDO::FETCH_ASSOC);
     
     if (!$product) {
-        $pdo->rollBack();
+        $shop_pdo->rollBack();
         echo json_encode([
             'success' => false,
             'message' => 'Produit non trouvé'
@@ -73,7 +76,7 @@ try {
     
     // Vérifier que la nouvelle quantité n'est pas négative
     if ($newQuantity < 0) {
-        $pdo->rollBack();
+        $shop_pdo->rollBack();
         echo json_encode([
             'success' => false,
             'message' => 'Impossible de retirer plus que la quantité disponible'
@@ -82,11 +85,11 @@ try {
     }
     
     // Mettre à jour le stock
-    $stmt = $pdo->prepare("UPDATE stock SET quantity = ? WHERE id = ?");
+    $stmt = $shop_pdo->prepare("UPDATE stock SET quantity = ? WHERE id = ?");
     $stmt->execute([$newQuantity, $productId]);
     
     // Enregistrer le mouvement dans l'historique
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         INSERT INTO stock_history (product_id, action, quantity, note, user_id, date_created)
         VALUES (?, ?, ?, ?, ?, NOW())
     ");
@@ -94,7 +97,7 @@ try {
     $stmt->execute([$productId, $action, $quantity, $note, $userId]);
     
     // Valider la transaction
-    $pdo->commit();
+    $shop_pdo->commit();
     
     echo json_encode([
         'success' => true,
@@ -104,7 +107,7 @@ try {
     
 } catch (PDOException $e) {
     // Annuler la transaction en cas d'erreur
-    $pdo->rollBack();
+    $shop_pdo->rollBack();
     
     echo json_encode([
         'success' => false,

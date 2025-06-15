@@ -1,0 +1,160 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Règles GeekBoard Multi-Database
+
+## **🗄️ Gestion des Connexions Database**
+
+- **Toujours utiliser les fonctions de connexion appropriées**
+  - `getShopDBConnection()` pour accéder aux données du magasin actuel
+  - `getMainDBConnection()` pour la configuration globale et la table `shops`
+  - Ne jamais utiliser de connexions PDO directes ou `global $pdo`
+
+- **Vérification obligatoire du shop_id**
+  ```php
+  // ✅ CORRECT
+  $shop_pdo = getShopDBConnection();
+  if (!$shop_pdo) {
+      error_log("Erreur connexion magasin");
+      return false;
+  }
+  
+  // ❌ INCORRECT
+  global $pdo;
+  $stmt = $pdo->prepare("SELECT...");
+  ```
+
+- **Structure de session requise**
+  - Toujours vérifier `$_SESSION['shop_id']`
+  - Gérer le fallback si shop_id manquant
+  - Logger les opérations avec le shop_id pour debug
+
+## **📁 Structure des Fichiers**
+
+- **Documentation technique**
+  - Créer des guides détaillés avec exemples pratiques
+  - Utiliser des émojis pour la lisibilité (🔧, 📊, ✅, ❌)
+  - Inclure des sections dépannage et bonnes pratiques
+  - Fournir des scripts de diagnostic
+
+- **Format des guides**
+  ```markdown
+  # 🎯 TITRE PRINCIPAL
+  ## Sous-section avec Context
+  
+  ### ✅ BONNE PRATIQUE
+  ```php
+  // Code correct avec commentaires
+  ```
+  
+  ### ❌ MAUVAISE PRATIQUE
+  ```php
+  // Code à éviter avec explications
+  ```
+  ```
+
+## **🔐 Sécurité et Isolation**
+
+- **Isolation des données par magasin**
+  - Chaque magasin doit accéder uniquement à sa propre base
+  - Validation obligatoire du shop_id avant toute requête
+  - Logs détaillés pour tracer les accès aux données
+
+- **Gestion des erreurs**
+  ```php
+  // ✅ Gestion correcte
+  try {
+      $shop_pdo = getShopDBConnection();
+      // ... opérations ...
+  } catch (Exception $e) {
+      error_log("Erreur shop_id " . ($_SESSION['shop_id'] ?? 'unknown') . ": " . $e->getMessage());
+      // Fallback approprié
+  }
+  ```
+
+## **🌐 Gestion des Sous-domaines**
+
+- **Configuration URL et routing**
+  - Utiliser `subdomain_handler.php` pour router les sous-domaines
+  - Stocker shop_id en session après identification du sous-domaine
+  - Gérer les redirections avec paramètres préservés
+
+- **Exemple de configuration**
+  ```php
+  // URL: https://paris.mondomaine.com
+  // → $_SESSION['shop_id'] = 1 (Magasin Paris)
+  // → Connexion à u139954273_paris database
+  ```
+
+## **📋 Migration et Maintenance**
+
+- **Checklist de migration d'un fichier**
+  1. Identifier tous les `$pdo` et `global $pdo`
+  2. Remplacer par `$shop_pdo = getShopDBConnection()`
+  3. Tester avec différents shop_id
+  4. Vérifier l'isolation des données
+  5. Valider la gestion d'erreurs
+
+- **Scripts de diagnostic à créer**
+  ```php
+  // debug_shop_db.php - Vérifier config magasin
+  // session_debug.php - Analyser la session actuelle
+  // connection_test.php - Tester les connexions
+  ```
+
+## **📝 Documentation et Communication**
+
+- **Réponses en français**
+  - Toujours répondre en français comme spécifié dans les user_rules
+  - Utiliser un langage technique précis mais accessible
+  - Fournir des exemples concrets et pratiques
+
+- **Structure des explications**
+  - Introduction avec contexte
+  - Exemples pratiques avec code
+  - Section dépannage
+  - Conclusion avec points clés
+
+## **🚀 Bonnes Pratiques Générales**
+
+- **Logging et debug**
+  ```php
+  function dbDebugLog($message) {
+      $timestamp = date('Y-m-d H:i:s');
+      $shop_id = $_SESSION['shop_id'] ?? 'unknown';
+      error_log("[{$timestamp}] [Shop:{$shop_id}] {$message}");
+  }
+  ```
+
+- **Validation des données**
+  - Vérifier que la connexion retournée n'est pas null
+  - Tester la validité de la connexion avant utilisation
+  - Implémenter des fallbacks appropriés
+
+- **Performance**
+  - Utiliser le cache de connexion (`$shop_pdo` global)
+  - Éviter les reconnexions inutiles
+  - Logger les temps de réponse pour diagnostic
+
+## **🔍 Patterns à Surveiller**
+
+- **Anti-patterns courants**
+  ```php
+  // ❌ À éviter absolument
+  global $pdo;
+  require_once 'includes/db.php';
+  $db = new PDO(...); // Connexion directe
+  ```
+
+- **Patterns corrects**
+  ```php
+  // ✅ Pattern recommandé
+  require_once 'config/database.php';
+  $shop_pdo = getShopDBConnection();
+  if ($shop_pdo) {
+      $stmt = $shop_pdo->prepare("SELECT...");
+      // ...
+  }
+  ```

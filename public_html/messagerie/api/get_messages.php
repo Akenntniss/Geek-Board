@@ -8,6 +8,12 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
+// Inclure la configuration de base de données
+require_once '../../config/database.php';
+
+// Obtenir la connexion à la base de données de la boutique
+$shop_pdo = getShopDBConnection();
+
 // Initialiser la session
 session_start();
 
@@ -41,7 +47,7 @@ if (!user_has_conversation_access($_SESSION['user_id'], $conversation_id)) {
 
 // Version simplifiée pour le débogage - récupérer les messages sans les fonctionnalités complexes
 try {
-    global $pdo;
+    global $shop_pdo;
     
     // Mettre à jour la date de dernière lecture
     update_last_read($conversation_id, $_SESSION['user_id']);
@@ -57,7 +63,7 @@ try {
         LIMIT :limit OFFSET :offset
     ";
     
-    $stmt = $pdo->prepare($query);
+    $stmt = $shop_pdo->prepare($query);
     $stmt->bindValue(':conversation_id', $conversation_id, PDO::PARAM_INT);
     $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
     $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
@@ -85,7 +91,7 @@ try {
         WHERE c.id = :conversation_id
     ";
     
-    $stmt = $pdo->prepare($query);
+    $stmt = $shop_pdo->prepare($query);
     $stmt->execute([
         ':conversation_id' => $conversation_id,
         ':user_id' => $_SESSION['user_id']
@@ -102,7 +108,7 @@ try {
             WHERE cp.conversation_id = :conversation_id
         ";
         
-        $stmt = $pdo->prepare($query);
+        $stmt = $shop_pdo->prepare($query);
         $stmt->execute([':conversation_id' => $conversation_id]);
         $conversation_info['participants'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
     } else {

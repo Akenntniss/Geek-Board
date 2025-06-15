@@ -4,6 +4,8 @@ define('BASE_PATH', dirname(__DIR__));
 
 // Inclure les fichiers nécessaires
 require_once(BASE_PATH . '/database.php');
+
+$shop_pdo = getShopDBConnection();
 require_once(BASE_PATH . '/includes/functions.php');
 
 // Vérification des droits d'accès
@@ -24,7 +26,7 @@ $reparation_id = intval($_GET['id']);
 
 // Récupérer les informations de la réparation
 try {
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         SELECT r.*, 
                c.nom as client_nom, c.prenom as client_prenom, c.telephone as client_telephone, c.email as client_email,
                e.full_name as employe_nom
@@ -74,7 +76,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $ancien_statut = $reparation['statut'];
             
             // Mise à jour dans la base de données
-            $stmt = $pdo->prepare("
+            $stmt = $shop_pdo->prepare("
                 UPDATE reparations 
                 SET statut = ?, prix = ?, date_fin_prevue = ?, notes_techniques = ?, date_modification = NOW() 
                 WHERE id = ?
@@ -83,7 +85,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if ($stmt->execute([$statut, $prix, $date_fin_prevue, $notes_techniques, $reparation_id])) {
                 // Consigner le changement de statut dans les logs si le statut a changé
                 if ($ancien_statut != $statut) {
-                    $log_stmt = $pdo->prepare("
+                    $log_stmt = $shop_pdo->prepare("
                         INSERT INTO reparation_logs 
                         (reparation_id, employe_id, action_type, statut_avant, statut_apres, details) 
                         VALUES (?, ?, ?, ?, ?, ?)
@@ -101,13 +103,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     // NOUVEAU: Envoyer SMS si l'option est activée et le statut a changé
                     if ($envoyer_sms) {
                         // Récupérer l'ID du statut pour trouver le modèle SMS correspondant
-                        $stmt_status = $pdo->prepare("SELECT id FROM statuts WHERE code = ?");
+                        $stmt_status = $shop_pdo->prepare("SELECT id FROM statuts WHERE code = ?");
                         $stmt_status->execute([$statut]);
                         $statut_id = $stmt_status->fetchColumn();
                         
                         if ($statut_id) {
                             // Vérifier s'il existe un modèle SMS pour ce statut
-                            $stmt_template = $pdo->prepare("
+                            $stmt_template = $shop_pdo->prepare("
                                 SELECT id, nom, contenu 
                                 FROM sms_templates 
                                 WHERE statut_id = ? AND est_actif = 1
@@ -143,7 +145,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 
                                 if ($sms_result['success']) {
                                     // Enregistrer l'envoi du SMS
-                                    $stmt_sms = $pdo->prepare("
+                                    $stmt_sms = $shop_pdo->prepare("
                                         INSERT INTO reparation_sms 
                                         (reparation_id, template_id, telephone, message, date_envoi, statut_id) 
                                         VALUES (?, ?, ?, ?, NOW(), ?)
@@ -196,7 +198,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 // Récupérer les statuts disponibles
 try {
-    $stmt = $pdo->query("SELECT id, code, nom FROM statuts WHERE est_actif = 1 ORDER BY nom");
+    $stmt = $shop_pdo->query("SELECT id, code, nom FROM statuts WHERE est_actif = 1 ORDER BY nom");
     $statuts = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
     $statuts = [];

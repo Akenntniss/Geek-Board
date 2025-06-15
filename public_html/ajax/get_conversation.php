@@ -19,7 +19,7 @@ $user_id = $_SESSION['user_id'];
 
 try {
     // Vérifier si l'utilisateur a accès à cette conversation
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         SELECT role 
         FROM conversation_participants 
         WHERE conversation_id = ? AND user_id = ?
@@ -32,7 +32,7 @@ try {
     }
 
     // Récupérer les détails de la conversation
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         SELECT c.*, 
                cp.role as user_role,
                cp.date_derniere_lecture
@@ -49,7 +49,7 @@ try {
     }
 
     // Récupérer les messages
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         SELECT m.*, 
                u.nom as sender_nom,
                u.prenom as sender_prenom,
@@ -63,7 +63,7 @@ try {
     $messages = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     // Marquer les messages comme lus
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         UPDATE notifications_messages 
         SET est_lu = 1 
         WHERE conversation_id = ? AND user_id = ? AND est_lu = 0
@@ -71,7 +71,7 @@ try {
     $stmt->execute([$conversation_id, $user_id]);
 
     // Mettre à jour la date de dernière lecture
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         UPDATE conversation_participants 
         SET date_derniere_lecture = NOW() 
         WHERE conversation_id = ? AND user_id = ?

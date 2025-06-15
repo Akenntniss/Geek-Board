@@ -7,8 +7,9 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
 }
 
 // Récupérer la configuration actuelle du programme
+$shop_pdo = getShopDBConnection();
 try {
-    $stmt = $pdo->query("SELECT * FROM parrainage_config ORDER BY id DESC LIMIT 1");
+    $stmt = $shop_pdo->query("SELECT * FROM parrainage_config ORDER BY id DESC LIMIT 1");
     $config = $stmt->fetch(PDO::FETCH_ASSOC);
     
     if (!$config) {
@@ -49,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['a
         }
         
         // Mettre à jour la configuration
-        $stmt = $pdo->prepare("
+        $stmt = $shop_pdo->prepare("
             UPDATE parrainage_config SET 
             nombre_filleuls_requis = ?,
             seuil_reduction_pourcentage = ?,
@@ -79,32 +80,32 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['a
 // Récupérer les statistiques du programme
 try {
     // Nombre de clients inscrits au programme
-    $stmt_inscrits = $pdo->query("SELECT COUNT(*) as total FROM clients WHERE inscrit_parrainage = 1");
+    $stmt_inscrits = $shop_pdo->query("SELECT COUNT(*) as total FROM clients WHERE inscrit_parrainage = 1");
     $inscrits = $stmt_inscrits->fetch(PDO::FETCH_ASSOC);
     $total_inscrits = $inscrits['total'] ?? 0;
     
     // Nombre de relations de parrainage
-    $stmt_relations = $pdo->query("SELECT COUNT(*) as total FROM parrainage_relations");
+    $stmt_relations = $shop_pdo->query("SELECT COUNT(*) as total FROM parrainage_relations");
     $relations = $stmt_relations->fetch(PDO::FETCH_ASSOC);
     $total_relations = $relations['total'] ?? 0;
     
     // Nombre de réductions générées
-    $stmt_reductions = $pdo->query("SELECT COUNT(*) as total FROM parrainage_reductions");
+    $stmt_reductions = $shop_pdo->query("SELECT COUNT(*) as total FROM parrainage_reductions");
     $reductions = $stmt_reductions->fetch(PDO::FETCH_ASSOC);
     $total_reductions = $reductions['total'] ?? 0;
     
     // Nombre de réductions utilisées
-    $stmt_utilisees = $pdo->query("SELECT COUNT(*) as total FROM parrainage_reductions WHERE utilise = 1");
+    $stmt_utilisees = $shop_pdo->query("SELECT COUNT(*) as total FROM parrainage_reductions WHERE utilise = 1");
     $utilisees = $stmt_utilisees->fetch(PDO::FETCH_ASSOC);
     $total_utilisees = $utilisees['total'] ?? 0;
     
     // Montant total des réductions générées
-    $stmt_montant = $pdo->query("SELECT SUM(montant_reduction_max) as total FROM parrainage_reductions WHERE utilise = 1");
+    $stmt_montant = $shop_pdo->query("SELECT SUM(montant_reduction_max) as total FROM parrainage_reductions WHERE utilise = 1");
     $montant = $stmt_montant->fetch(PDO::FETCH_ASSOC);
     $total_montant = $montant['total'] ?? 0;
     
     // Top 5 des parrains avec le plus de filleuls
-    $stmt_top_parrains = $pdo->query("
+    $stmt_top_parrains = $shop_pdo->query("
         SELECT c.id, c.nom, c.prenom, COUNT(pr.id) as nb_filleuls
         FROM clients c
         JOIN parrainage_relations pr ON c.id = pr.parrain_id
@@ -315,7 +316,7 @@ try {
                     <?php
                     // Récupérer les dernières réductions utilisées
                     try {
-                        $stmt_dernières_reductions = $pdo->query("
+                        $stmt_dernières_reductions = $shop_pdo->query("
                             SELECT pr.*, c.nom, c.prenom, r.id as reparation_id
                             FROM parrainage_reductions pr
                             JOIN clients c ON pr.parrain_id = c.id

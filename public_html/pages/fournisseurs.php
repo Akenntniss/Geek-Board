@@ -6,7 +6,8 @@ if (!isset($_SESSION['user_id'])) {
 
 // Récupérer la liste des fournisseurs
 try {
-    $stmt = $pdo->query("SELECT * FROM fournisseurs ORDER BY nom");
+    $shop_pdo = getShopDBConnection();
+$stmt = $shop_pdo->query("SELECT * FROM fournisseurs ORDER BY nom");
     $fournisseurs = $stmt->fetchAll();
 } catch (PDOException $e) {
     echo "<div class='alert alert-danger'>Erreur lors de la récupération des fournisseurs: " . $e->getMessage() . "</div>";

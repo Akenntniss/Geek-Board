@@ -18,7 +18,8 @@ $query_parrainages = "
 ";
 
 try {
-    $stmt = $pdo->query($query_parrainages);
+    $shop_pdo = getShopDBConnection();
+$stmt = $shop_pdo->query($query_parrainages);
     $parrainages = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
     echo '<div class="alert alert-danger">Erreur lors de la récupération des parrainages: ' . $e->getMessage() . '</div>';
@@ -28,7 +29,7 @@ try {
 // Récupérer les paliers de réduction
 $query_paliers = "SELECT * FROM parrainage_paliers WHERE actif = 'OUI' ORDER BY montant_min ASC";
 try {
-    $stmt = $pdo->query($query_paliers);
+    $stmt = $shop_pdo->query($query_paliers);
     $paliers = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
     echo '<div class="alert alert-danger">Erreur lors de la récupération des paliers: ' . $e->getMessage() . '</div>';
@@ -43,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     if ($parrainage_id > 0) {
         try {
             // Mettre à jour le montant
-            $stmt = $pdo->prepare("UPDATE parrainages SET montant_depense_filleul = ? WHERE id = ?");
+            $stmt = $shop_pdo->prepare("UPDATE parrainages SET montant_depense_filleul = ? WHERE id = ?");
             $stmt->execute([$montant, $parrainage_id]);
             
             // Calculer la réduction en fonction des paliers
@@ -56,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             }
             
             // Mettre à jour la réduction
-            $stmt = $pdo->prepare("UPDATE parrainages SET reduction_appliquee = ? WHERE id = ?");
+            $stmt = $shop_pdo->prepare("UPDATE parrainages SET reduction_appliquee = ? WHERE id = ?");
             $stmt->execute([$reduction, $parrainage_id]);
             
             set_message("Montant et réduction mis à jour avec succès.", "success");
@@ -75,12 +76,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     if ($parrainage_id > 0 && $reparation_id > 0) {
         try {
             // Récupérer le montant de la réduction
-            $stmt = $pdo->prepare("SELECT reduction_appliquee FROM parrainages WHERE id = ?");
+            $stmt = $shop_pdo->prepare("SELECT reduction_appliquee FROM parrainages WHERE id = ?");
             $stmt->execute([$parrainage_id]);
             $reduction = $stmt->fetchColumn();
             
             // Marquer la réduction comme utilisée
-            $stmt = $pdo->prepare("
+            $stmt = $shop_pdo->prepare("
                 UPDATE parrainages 
                 SET reduction_utilisee = 'OUI', 
                     date_utilisation = CURDATE(), 
@@ -90,7 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             $stmt->execute([$reparation_id, $parrainage_id]);
             
             // Ajouter dans l'historique
-            $stmt = $pdo->prepare("
+            $stmt = $shop_pdo->prepare("
                 INSERT INTO parrainage_historique (
                     parrainage_id, reparation_id, montant_reduction, date_application
                 ) VALUES (?, ?, ?, NOW())
@@ -114,7 +115,7 @@ $query_clients = "
 ";
 
 try {
-    $stmt = $pdo->query($query_clients);
+    $stmt = $shop_pdo->query($query_clients);
     $clients_fidelite = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
     echo '<div class="alert alert-danger">Erreur lors de la récupération des clients: ' . $e->getMessage() . '</div>';
@@ -132,7 +133,7 @@ $query_reparations = "
 ";
 
 try {
-    $stmt = $pdo->query($query_reparations);
+    $stmt = $shop_pdo->query($query_reparations);
     $reparations = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
     echo '<div class="alert alert-danger">Erreur lors de la récupération des réparations: ' . $e->getMessage() . '</div>';

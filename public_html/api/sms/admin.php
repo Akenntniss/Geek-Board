@@ -84,28 +84,28 @@ $config = [
 ];
 
 // Récupérer les statistiques
-global $pdo;
+$shop_pdo = getShopDBConnection();
 $stats = [];
 
 try {
     // Nombre total de SMS envoyés
-    $stmt = $pdo->query("SELECT COUNT(*) as total FROM sms_outgoing");
+    $stmt = $shop_pdo->query("SELECT COUNT(*) as total FROM sms_outgoing");
     $stats['total_sent'] = $stmt->fetch(PDO::FETCH_ASSOC)['total'];
     
     // Nombre de SMS en attente
-    $stmt = $pdo->query("SELECT COUNT(*) as total FROM sms_outgoing WHERE status = 'pending'");
+    $stmt = $shop_pdo->query("SELECT COUNT(*) as total FROM sms_outgoing WHERE status = 'pending'");
     $stats['pending'] = $stmt->fetch(PDO::FETCH_ASSOC)['total'];
     
     // Nombre de SMS envoyés avec succès
-    $stmt = $pdo->query("SELECT COUNT(*) as total FROM sms_outgoing WHERE status = 'sent'");
+    $stmt = $shop_pdo->query("SELECT COUNT(*) as total FROM sms_outgoing WHERE status = 'sent'");
     $stats['sent_success'] = $stmt->fetch(PDO::FETCH_ASSOC)['total'];
     
     // Nombre de SMS reçus
-    $stmt = $pdo->query("SELECT COUNT(*) as total FROM sms_incoming");
+    $stmt = $shop_pdo->query("SELECT COUNT(*) as total FROM sms_incoming");
     $stats['total_received'] = $stmt->fetch(PDO::FETCH_ASSOC)['total'];
     
     // Derniers SMS envoyés
-    $stmt = $pdo->query("
+    $stmt = $shop_pdo->query("
         SELECT s.*, u.nom, u.prenom 
         FROM sms_outgoing s 
         LEFT JOIN utilisateurs u ON s.created_by = u.id 
@@ -115,7 +115,7 @@ try {
     $recent_sent = $stmt->fetchAll(PDO::FETCH_ASSOC);
     
     // Derniers SMS reçus
-    $stmt = $pdo->query("
+    $stmt = $shop_pdo->query("
         SELECT s.*, c.nom, c.prenom 
         FROM sms_incoming s 
         LEFT JOIN clients c ON s.reference_type = 'client' AND s.reference_id = c.id 

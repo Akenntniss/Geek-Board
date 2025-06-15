@@ -27,8 +27,11 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 require_once '../config/database.php';
 require_once '../includes/functions.php';
 
-// S'assurer que $pdo est disponible
-if (!isset($pdo) || $pdo === null) {
+// Obtenir la connexion à la base de données de la boutique
+$shop_pdo = getShopDBConnection();
+
+// S'assurer que $shop_pdo est disponible
+if (!isset($shop_pdo) || $shop_pdo === null) {
     $response['error'] = 'Erreur de connexion à la base de données';
     echo json_encode($response);
     exit;
@@ -56,10 +59,10 @@ if ($repair_id <= 0 || $sms_template_id <= 0 || empty($new_status)) {
 
 try {
     // Début de la transaction
-    $pdo->beginTransaction();
+    $shop_pdo->beginTransaction();
     
     // 1. Récupérer les informations de la réparation et du client
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         SELECT r.*, c.telephone, c.nom, c.prenom, c.email 
         FROM reparations r
         JOIN clients c ON r.client_id = c.id
@@ -73,7 +76,7 @@ try {
     }
     
     // 2. Récupérer le template SMS
-    $stmt = $pdo->prepare("SELECT * FROM sms_templates WHERE id = ?");
+    $stmt = $shop_pdo->prepare("SELECT * FROM sms_templates WHERE id = ?");
     $stmt->execute([$sms_template_id]);
     $template = $stmt->fetch(PDO::FETCH_ASSOC);
     
@@ -82,7 +85,7 @@ try {
     }
     
     // 3. Récupérer le code du statut
-    $stmt = $pdo->prepare("SELECT code FROM statuts WHERE code = ? OR id = ?");
+    $stmt = $shop_pdo->prepare("SELECT code FROM statuts WHERE code = ? OR id = ?");
     $stmt->execute([$new_status, $new_status]);
     $statut = $stmt->fetch(PDO::FETCH_ASSOC);
     
@@ -93,7 +96,7 @@ try {
     $statut_code = $statut['code'];
     
     // 4. Mettre à jour le statut de la réparation
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         UPDATE reparations 
         SET statut = ?, date_modification = NOW() 
         WHERE id = ?
@@ -143,7 +146,7 @@ try {
     }
     
     // 7. Enregistrer l'historique du SMS
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         INSERT INTO sms_history (client_id, reparation_id, telephone, message, template_id, date_envoi, statut)
         VALUES (?, ?, ?, ?, ?, NOW(), 'envoyé')
     ");
@@ -156,7 +159,7 @@ try {
     ]);
     
     // 8. Enregistrer le changement de statut dans l'historique
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         INSERT INTO historique_reparations (reparation_id, utilisateur_id, action, ancien_statut, nouveau_statut, date_action)
         VALUES (?, ?, ?, ?, ?, NOW())
     ");
@@ -169,7 +172,7 @@ try {
     ]);
     
     // Commit de la transaction
-    $pdo->commit();
+    $shop_pdo->commit();
     
     // Réponse de succès
     $response['success'] = true;
@@ -182,8 +185,8 @@ try {
     
 } catch (Exception $e) {
     // Annuler la transaction en cas d'erreur
-    if (isset($pdo) && $pdo instanceof PDO && $pdo->inTransaction()) {
-        $pdo->rollBack();
+    if (isset($pdo) && $pdo instanceof PDO && $shop_pdo->inTransaction()) {
+        $shop_pdo->rollBack();
     }
     
     // Enregistrer l'erreur et la renvoyer

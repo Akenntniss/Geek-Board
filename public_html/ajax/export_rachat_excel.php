@@ -8,7 +8,7 @@ if (!isset($_SESSION['user_id'])) {
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/../config/database.php';
 
-$stmt = $pdo->query("SELECT * FROM rachats");
+$stmt = $shop_pdo->query("SELECT * FROM rachats");
 $rachats = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();

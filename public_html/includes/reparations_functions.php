@@ -34,7 +34,7 @@ function build_reparations_query($filters = []) {
 }
 
 function get_reparations_stats() {
-    global $pdo;
+    $shop_pdo = getShopDBConnection();
     
     try {
         // Utilisation d'une seule requête pour toutes les statistiques
@@ -51,7 +51,7 @@ function get_reparations_stats() {
             WHERE s.est_actif = TRUE
         ";
         
-        $stmt = $pdo->query($sql);
+$stmt = $shop_pdo->query($sql);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     } catch (PDOException $e) {
         error_log("Erreur lors de la récupération des statistiques: " . $e->getMessage());
@@ -66,11 +66,11 @@ function get_reparations_stats() {
 }
 
 function get_reparations($filters = []) {
-    global $pdo;
+    $shop_pdo = getShopDBConnection();
     
     try {
         $query = build_reparations_query($filters);
-        $stmt = $pdo->prepare($query['sql']);
+        $stmt = $shop_pdo->prepare($query['sql']);
         $stmt->execute($query['params']);
         return $stmt->fetchAll();
     } catch (PDOException $e) {

@@ -6,6 +6,9 @@
 // Inclure les fonctions principales
 require_once __DIR__ . '/../../includes/functions.php';
 
+// Obtenir la connexion à la base de données de la boutique
+$shop_pdo = getShopDBConnection();
+
 /**
  * Récupère une configuration SMS
  * 
@@ -14,10 +17,10 @@ require_once __DIR__ . '/../../includes/functions.php';
  * @return mixed Valeur du paramètre
  */
 function get_sms_config($param_name, $default = null) {
-    global $pdo;
+    global $shop_pdo;
     
     try {
-        $stmt = $pdo->prepare("SELECT param_value FROM sms_config WHERE param_name = :param_name");
+        $stmt = $shop_pdo->prepare("SELECT param_value FROM sms_config WHERE param_name = :param_name");
         $stmt->execute([':param_name' => $param_name]);
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         
@@ -36,10 +39,10 @@ function get_sms_config($param_name, $default = null) {
  * @return bool Succès ou échec
  */
 function update_sms_config($param_name, $param_value) {
-    global $pdo;
+    global $shop_pdo;
     
     try {
-        $stmt = $pdo->prepare("
+        $stmt = $shop_pdo->prepare("
             INSERT INTO sms_config (param_name, param_value) 
             VALUES (:param_name, :param_value)
             ON DUPLICATE KEY UPDATE param_value = :param_value
@@ -77,7 +80,7 @@ function verify_sms_api_key($api_key) {
  * @return int|bool ID du SMS ou false en cas d'échec
  */
 function queue_sms($recipient, $message, $reference_type = null, $reference_id = null, $created_by = null) {
-    global $pdo;
+    global $shop_pdo;
     
     // Vérifier si le service SMS est activé
     if (get_sms_config('sms_enabled', '1') !== '1') {
@@ -89,7 +92,7 @@ function queue_sms($recipient, $message, $reference_type = null, $reference_id =
     $recipient = preg_replace('/[^0-9+]/', '', $recipient);
     
     try {
-        $stmt = $pdo->prepare("
+        $stmt = $shop_pdo->prepare("
             INSERT INTO sms_outgoing (
                 recipient, message, status, reference_type, reference_id, created_by
             ) VALUES (
@@ -105,7 +108,7 @@ function queue_sms($recipient, $message, $reference_type = null, $reference_id =
             ':created_by' => $created_by
         ]);
         
-        return $pdo->lastInsertId();
+        return $shop_pdo->lastInsertId();
     } catch (Exception $e) {
         error_log("Erreur lors de l'enregistrement du SMS: " . $e->getMessage());
         return false;
@@ -119,10 +122,10 @@ function queue_sms($recipient, $message, $reference_type = null, $reference_id =
  * @return array Liste des SMS
  */
 function get_pending_sms($limit = 10) {
-    global $pdo;
+    global $shop_pdo;
     
     try {
-        $stmt = $pdo->prepare("
+        $stmt = $shop_pdo->prepare("
             SELECT * FROM sms_outgoing 
             WHERE status = 'pending' AND retry_count < :max_retries
             ORDER BY created_at ASC
@@ -150,7 +153,7 @@ function get_pending_sms($limit = 10) {
  * @return bool Succès ou échec
  */
 function update_sms_status($sms_id, $status, $timestamp_field = null) {
-    global $pdo;
+    global $shop_pdo;
     
     try {
         $sql = "UPDATE sms_outgoing SET status = :status";
@@ -165,7 +168,7 @@ function update_sms_status($sms_id, $status, $timestamp_field = null) {
         
         $sql .= " WHERE id = :sms_id";
         
-        $stmt = $pdo->prepare($sql);
+        $stmt = $shop_pdo->prepare($sql);
         
         return $stmt->execute([
             ':status' => $status,
@@ -186,7 +189,7 @@ function update_sms_status($sms_id, $status, $timestamp_field = null) {
  * @return int|bool ID du SMS ou false en cas d'échec
  */
 function record_incoming_sms($sender, $message, $received_timestamp = null) {
-    global $pdo;
+    global $shop_pdo;
     
     // Nettoyer le numéro de téléphone
     $sender = preg_replace('/[^0-9+]/', '', $sender);
@@ -197,7 +200,7 @@ function record_incoming_sms($sender, $message, $received_timestamp = null) {
     }
     
     try {
-        $stmt = $pdo->prepare("
+        $stmt = $shop_pdo->prepare("
             INSERT INTO sms_incoming (
                 sender, message, received_timestamp, status
             ) VALUES (
@@ -211,11 +214,11 @@ function record_incoming_sms($sender, $message, $received_timestamp = null) {
             ':received_timestamp' => $received_timestamp
         ]);
         
-        $sms_id = $pdo->lastInsertId();
+        $sms_id = $shop_pdo->lastInsertId();
         
         // Vérifier si ce numéro correspond à un client
         try {
-            $stmt = $pdo->prepare("
+            $stmt = $shop_pdo->prepare("
                 SELECT id FROM clients 
                 WHERE telephone = :telephone
                 LIMIT 1
@@ -226,7 +229,7 @@ function record_incoming_sms($sender, $message, $received_timestamp = null) {
             
             if ($client) {
                 // Mettre à jour la référence
-                $stmt = $pdo->prepare("
+                $stmt = $shop_pdo->prepare("
                     UPDATE sms_incoming 
                     SET reference_type = 'client', reference_id = :client_id
                     WHERE id = :sms_id
@@ -255,11 +258,11 @@ function record_incoming_sms($sender, $message, $received_timestamp = null) {
  * @return bool Succès ou échec
  */
 function notify_new_sms($sms_id) {
-    global $pdo;
+    global $shop_pdo;
     
     try {
         // Récupérer les informations du SMS
-        $stmt = $pdo->prepare("
+        $stmt = $shop_pdo->prepare("
             SELECT s.*, c.id AS client_id, c.nom, c.prenom  
             FROM sms_incoming s
             LEFT JOIN clients c ON s.reference_type = 'client' AND s.reference_id = c.id
@@ -282,7 +285,7 @@ function notify_new_sms($sms_id) {
         }
         
         // Récupérer les administrateurs
-        $stmt = $pdo->prepare("
+        $stmt = $shop_pdo->prepare("
             SELECT id FROM utilisateurs 
             WHERE role = 'admin'
         ");
@@ -292,7 +295,7 @@ function notify_new_sms($sms_id) {
         
         // Insérer une notification pour chaque admin
         foreach ($admins as $admin) {
-            $stmt = $pdo->prepare("
+            $stmt = $shop_pdo->prepare("
                 INSERT INTO notifications (
                     user_id, notification_type, message, related_id, related_type, 
                     is_important, status, created_at

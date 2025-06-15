@@ -47,7 +47,7 @@ try {
     $query .= " ORDER BY c.date_creation DESC";
     
     // Exécuter la requête
-    $stmt = $pdo->prepare($query);
+    $stmt = $shop_pdo->prepare($query);
     $stmt->execute($params);
     $colis = $stmt->fetchAll(PDO::FETCH_ASSOC);
     

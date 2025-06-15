@@ -20,7 +20,8 @@ $campaign_id = (int)$_GET['id'];
 
 // Récupérer les détails de la campagne
 try {
-    $stmt = $pdo->prepare("
+    $shop_pdo = getShopDBConnection();
+    $stmt = $shop_pdo->prepare("
         SELECT c.*, u.nom as user_nom, u.prenom as user_prenom
         FROM sms_campaigns c
         LEFT JOIN users u ON c.user_id = u.id
@@ -79,11 +80,11 @@ try {
     $params_pagination = array_merge($params, [$items_per_page, $offset]);
     
     // Exécution des requêtes
-    $stmt_count = $pdo->prepare($sql_count);
+    $stmt_count = $shop_pdo->prepare($sql_count);
     $stmt_count->execute($params);
     $total_items = $stmt_count->fetch(PDO::FETCH_ASSOC)['total'];
     
-    $stmt = $pdo->prepare($sql);
+    $stmt = $shop_pdo->prepare($sql);
     $stmt->execute($params_pagination);
     $details = $stmt->fetchAll(PDO::FETCH_ASSOC);
     

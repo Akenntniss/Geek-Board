@@ -28,7 +28,7 @@ try {
     }
 
     // Insérer la note
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         INSERT INTO notes_reparation (reparation_id, contenu, date_creation) 
         VALUES (?, ?, NOW())
     ");
@@ -38,13 +38,13 @@ try {
     }
 
     // Récupérer la note qui vient d'être insérée
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         SELECT id, contenu, DATE_FORMAT(date_creation, '%d/%m/%Y %H:%i') as date_creation 
         FROM notes_reparation 
         WHERE id = ?
     ");
     
-    if (!$stmt->execute([$pdo->lastInsertId()])) {
+    if (!$stmt->execute([$shop_pdo->lastInsertId()])) {
         throw new Exception('Erreur lors de la récupération de la note');
     }
 

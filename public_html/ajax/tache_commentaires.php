@@ -40,7 +40,7 @@ if ($action === 'ajouter_commentaire') {
     
     try {
         // Vérifier que la tâche existe
-        $stmt = $pdo->prepare("SELECT id FROM taches WHERE id = ?");
+        $stmt = $shop_pdo->prepare("SELECT id FROM taches WHERE id = ?");
         $stmt->execute([$tache_id]);
         if (!$stmt->fetch()) {
             header('Content-Type: application/json');
@@ -49,7 +49,7 @@ if ($action === 'ajouter_commentaire') {
         }
         
         // Insertion du commentaire
-        $stmt = $pdo->prepare("
+        $stmt = $shop_pdo->prepare("
             INSERT INTO commentaires_tache (tache_id, user_id, commentaire, date_creation) 
             VALUES (?, ?, ?, NOW())
         ");
@@ -57,8 +57,8 @@ if ($action === 'ajouter_commentaire') {
         
         if ($result) {
             // Récupérer le commentaire ajouté avec les informations de l'utilisateur
-            $commentaire_id = $pdo->lastInsertId();
-            $stmt = $pdo->prepare("
+            $commentaire_id = $shop_pdo->lastInsertId();
+            $stmt = $shop_pdo->prepare("
                 SELECT c.*, u.full_name as user_nom
                 FROM commentaires_tache c
                 JOIN users u ON c.user_id = u.id

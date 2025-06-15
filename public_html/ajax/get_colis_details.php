@@ -23,7 +23,7 @@ try {
               JOIN utilisateurs u ON c.cree_par = u.id 
               WHERE c.id = :colis_id";
     
-    $stmt = $pdo->prepare($query);
+    $stmt = $shop_pdo->prepare($query);
     $stmt->execute(['colis_id' => $colis_id]);
     $colis = $stmt->fetch(PDO::FETCH_ASSOC);
     
@@ -39,7 +39,7 @@ try {
               WHERE cs.colis_id = :colis_id 
               ORDER BY cs.date_modification DESC";
     
-    $stmt = $pdo->prepare($query);
+    $stmt = $shop_pdo->prepare($query);
     $stmt->execute(['colis_id' => $colis_id]);
     $statuts = $stmt->fetchAll(PDO::FETCH_ASSOC);
     
@@ -49,7 +49,7 @@ try {
               JOIN produits p ON pt.produit_id = p.id 
               WHERE pt.colis_id = :colis_id";
     
-    $stmt = $pdo->prepare($query);
+    $stmt = $shop_pdo->prepare($query);
     $stmt->execute(['colis_id' => $colis_id]);
     $produits = $stmt->fetchAll(PDO::FETCH_ASSOC);
     

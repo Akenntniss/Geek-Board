@@ -16,6 +16,8 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
 require_once __DIR__ . '/../includes/header.php';
 require_once __DIR__ . '/../config/database.php';
 
+$shop_pdo = getShopDBConnection();
+
 // Afficher les données de session pour le débogage
 if (isset($_GET['debug']) && $_GET['debug'] == 1) {
     echo '<pre>Session: ' . print_r($_SESSION, true) . '</pre>';
@@ -26,7 +28,7 @@ $clients = [];
 try {
     // Vérifier que la connexion à la base de données est établie
     if (isset($pdo) && $pdo !== null) {
-        $stmt = $pdo->prepare("SELECT id, nom, prenom FROM clients ORDER BY nom, prenom");
+        $stmt = $shop_pdo->prepare("SELECT id, nom, prenom FROM clients ORDER BY nom, prenom");
         $stmt->execute();
         $clients = $stmt->fetchAll();
     } else {
@@ -59,7 +61,7 @@ try {
             <div class="d-flex flex-wrap mt-2 mt-md-0">
                 <div class="search-box me-3 position-relative">
                     <i class="fas fa-search position-absolute top-50 start-0 translate-middle-y ms-3 text-muted"></i>
-                    <input type="text" class="form-control ps-5" id="searchRachat" placeholder="Rechercher...">
+                    <input type="text" class="form-control ps-5" id="searchRachat" placeholder="Rechercher par client (nom, prénom, tél, email) ou modèle...">
                 </div>
                 <div class="filter-box me-3">
                     <select class="form-select" id="filterRachat">
@@ -890,11 +892,14 @@ let capturedPhotoData = null;
 
     // Chargement initial au démarrage
     window.addEventListener('DOMContentLoaded', () => {
-        // Vérifier si l'utilisateur est connecté
+        // Aucune restriction d'accès - tous les utilisateurs peuvent accéder à cette page
+        // Si vous souhaitez rétablir la restriction plus tard, décommentez le code ci-dessous
+        /*
         if (!<?php echo isset($_SESSION['user_id']) && $_SESSION['role'] === 'admin' ? 'true' : 'false'; ?>) {
             window.location.href = '/pages/login.php';
             return;
         }
+        */
         loadRachats();
         initSignaturePad();
     

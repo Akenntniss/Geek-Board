@@ -1,6 +1,9 @@
 <?php
 session_start();
-require_once '../includes/config.php';
+require_once '../config/database.php';
+
+// Obtenir la connexion à la base de données de la boutique
+$shop_pdo = getShopDBConnection();
 
 // Vérification de la connexion
 if (!isset($_SESSION['user_id'])) {
@@ -61,10 +64,10 @@ if (!in_array($file['type'], $allowed_types)) {
 
 try {
     // Démarrer la transaction
-    $pdo->beginTransaction();
+    $shop_pdo->beginTransaction();
 
     // Vérifier si l'utilisateur a accès à cette conversation
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         SELECT role 
         FROM conversation_participants 
         WHERE conversation_id = ? AND user_id = ?
@@ -93,7 +96,7 @@ try {
     }
 
     // Insérer le message avec le fichier
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         INSERT INTO messages (
             conversation_id, 
             sender_id, 
@@ -113,10 +116,10 @@ try {
         $file['type'],
         $file['size']
     ]);
-    $message_id = $pdo->lastInsertId();
+    $message_id = $shop_pdo->lastInsertId();
 
     // Créer des notifications pour tous les participants
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         INSERT INTO notifications_messages (user_id, conversation_id, message_id, est_lu, date_creation)
         SELECT user_id, ?, ?, 0, NOW()
         FROM conversation_participants
@@ -125,7 +128,7 @@ try {
     $stmt->execute([$conversation_id, $message_id, $conversation_id, $user_id]);
 
     // Récupérer les détails du message
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         SELECT m.*, 
                u.nom as sender_nom,
                u.prenom as sender_prenom
@@ -137,7 +140,7 @@ try {
     $message_details = $stmt->fetch(PDO::FETCH_ASSOC);
 
     // Valider la transaction
-    $pdo->commit();
+    $shop_pdo->commit();
 
     echo json_encode([
         'success' => true,
@@ -146,7 +149,7 @@ try {
 
 } catch (Exception $e) {
     // Annuler la transaction en cas d'erreur
-    $pdo->rollBack();
+    $shop_pdo->rollBack();
     
     // Supprimer le fichier s'il a été uploadé
     if (isset($filepath) && file_exists($filepath)) {

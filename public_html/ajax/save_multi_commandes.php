@@ -43,10 +43,10 @@ try {
     }
 
     // Commencer une transaction
-    $pdo->beginTransaction();
+    $shop_pdo->beginTransaction();
 
     // Préparer la requête d'insertion
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         INSERT INTO commandes_pieces (
             client_id, reparation_id, fournisseur_id, 
             nom_piece, code_barre, quantite, 
@@ -82,7 +82,7 @@ try {
     }
 
     // Valider la transaction
-    $pdo->commit();
+    $shop_pdo->commit();
 
     // Envoyer la réponse
     echo json_encode([
@@ -92,8 +92,8 @@ try {
 
 } catch (Exception $e) {
     // En cas d'erreur, annuler la transaction
-    if ($pdo->inTransaction()) {
-        $pdo->rollBack();
+    if ($shop_pdo->inTransaction()) {
+        $shop_pdo->rollBack();
     }
 
     // Logger l'erreur

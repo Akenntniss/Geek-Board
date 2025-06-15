@@ -58,10 +58,10 @@ $reference = 'REP-' . date('Ymd') . '-' . strtoupper(substr(uniqid(), -5));
 
 try {
     // Démarrer une transaction
-    $pdo->beginTransaction();
+    $shop_pdo->beginTransaction();
     
     // Insérer la réparation
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         INSERT INTO reparations (
             reference, client_id, type_appareil, modele, 
             a_mot_de_passe, mot_de_passe, description_probleme, 
@@ -85,7 +85,7 @@ try {
         'prix_reparation' => $prix_reparation
     ]);
     
-    $reparation_id = $pdo->lastInsertId();
+    $reparation_id = $shop_pdo->lastInsertId();
     
     // Si une photo a été fournie, l'enregistrer
     if ($photo_appareil) {
@@ -105,7 +105,7 @@ try {
             // Enregistrer l'image
             if (file_put_contents($photo_path, $photo_data)) {
                 // Mettre à jour la réparation avec le chemin de la photo
-                $stmt = $pdo->prepare("UPDATE reparations SET photo_path = :photo_path WHERE id = :id");
+                $stmt = $shop_pdo->prepare("UPDATE reparations SET photo_path = :photo_path WHERE id = :id");
                 $stmt->execute([
                     'photo_path' => 'uploads/photos/' . $photo_filename,
                     'id' => $reparation_id
@@ -126,7 +126,7 @@ try {
         $commande_reference = 'CMD-' . date('Ymd') . '-' . strtoupper(substr(uniqid(), -5));
         
         // Insérer la commande
-        $stmt = $pdo->prepare("
+        $stmt = $shop_pdo->prepare("
             INSERT INTO commandes_pieces (
                 reference, client_id, fournisseur_id, reparation_id, 
                 nom_piece, reference_piece, quantite, prix_estime, 
@@ -151,7 +151,7 @@ try {
     }
     
     // Récupérer les informations du client pour le SMS
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         SELECT c.telephone, c.prenom 
         FROM clients c 
         WHERE c.id = :client_id
@@ -162,7 +162,7 @@ try {
     $client_prenom = $client['prenom'] ?? '';
     
     // Valider la transaction
-    $pdo->commit();
+    $shop_pdo->commit();
     
     // Renvoyer une réponse de succès
     echo json_encode([
@@ -175,7 +175,7 @@ try {
     
 } catch (PDOException $e) {
     // En cas d'erreur, annuler la transaction
-    $pdo->rollBack();
+    $shop_pdo->rollBack();
     
     // Logger l'erreur
     error_log("Erreur lors de l'enregistrement de la réparation: " . $e->getMessage());

@@ -27,7 +27,7 @@ if (!isset($data['action']) || !isset($data['id'])) {
 
 try {
     // Récupérer les informations de la demande
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         SELECT cd.*, cs.solde_actuel
         FROM conges_demandes cd
         LEFT JOIN conges_solde cs ON cd.user_id = cs.user_id
@@ -47,7 +47,7 @@ try {
         }
 
         // Mettre à jour le statut de la demande
-        $stmt = $pdo->prepare("
+        $stmt = $shop_pdo->prepare("
             UPDATE conges_demandes 
             SET statut = 'approuve', 
                 updated_at = NOW(),
@@ -57,7 +57,7 @@ try {
         $stmt->execute([$_SESSION['user_id'], $data['id']]);
 
         // Mettre à jour le solde de congés
-        $stmt = $pdo->prepare("
+        $stmt = $shop_pdo->prepare("
             UPDATE conges_solde 
             SET solde_actuel = solde_actuel - ?,
                 date_derniere_maj = NOW()
@@ -67,7 +67,7 @@ try {
 
     } elseif ($data['action'] === 'refuser') {
         // Mettre à jour le statut de la demande
-        $stmt = $pdo->prepare("
+        $stmt = $shop_pdo->prepare("
             UPDATE conges_demandes 
             SET statut = 'refuse', 
                 updated_at = NOW(),

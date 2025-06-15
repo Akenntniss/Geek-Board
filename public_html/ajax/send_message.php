@@ -26,7 +26,7 @@ if (empty($message)) {
 
 try {
     // Vérifier si l'utilisateur a accès à cette conversation
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         SELECT role 
         FROM conversation_participants 
         WHERE conversation_id = ? AND user_id = ?
@@ -39,15 +39,15 @@ try {
     }
 
     // Insérer le message
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         INSERT INTO messages (conversation_id, sender_id, contenu, type, date_envoi)
         VALUES (?, ?, ?, 'text', NOW())
     ");
     $stmt->execute([$conversation_id, $user_id, $message]);
-    $message_id = $pdo->lastInsertId();
+    $message_id = $shop_pdo->lastInsertId();
 
     // Créer des notifications pour tous les participants
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         INSERT INTO notifications_messages (user_id, conversation_id, message_id, est_lu, date_creation)
         SELECT user_id, ?, ?, 0, NOW()
         FROM conversation_participants
@@ -56,7 +56,7 @@ try {
     $stmt->execute([$conversation_id, $message_id, $conversation_id, $user_id]);
 
     // Récupérer les détails du message envoyé
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         SELECT m.*, 
                u.nom as sender_nom,
                u.prenom as sender_prenom

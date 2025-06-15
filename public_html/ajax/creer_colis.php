@@ -18,32 +18,32 @@ foreach ($required_fields as $field) {
 }
 
 try {
-    $pdo->beginTransaction();
+    $shop_pdo->beginTransaction();
     
     // Créer le nouveau colis
     $query = "INSERT INTO colis (numero_suivi, transporteur, statut, cree_par, date_creation) 
               VALUES (:numero_suivi, :transporteur, 'EN_ATTENTE', :cree_par, NOW())";
     
-    $stmt = $pdo->prepare($query);
+    $stmt = $shop_pdo->prepare($query);
     $stmt->execute([
         'numero_suivi' => $_POST['numero_suivi'],
         'transporteur' => $_POST['transporteur'],
         'cree_par' => $_SESSION['user_id']
     ]);
     
-    $colis_id = $pdo->lastInsertId();
+    $colis_id = $shop_pdo->lastInsertId();
     
     // Ajouter le premier statut dans l'historique
     $query = "INSERT INTO colis_statuts (colis_id, statut, modifie_par, date_modification) 
               VALUES (:colis_id, 'EN_ATTENTE', :modifie_par, NOW())";
     
-    $stmt = $pdo->prepare($query);
+    $stmt = $shop_pdo->prepare($query);
     $stmt->execute([
         'colis_id' => $colis_id,
         'modifie_par' => $_SESSION['user_id']
     ]);
     
-    $pdo->commit();
+    $shop_pdo->commit();
     
     echo json_encode([
         'success' => true,
@@ -52,7 +52,7 @@ try {
     ]);
     
 } catch (PDOException $e) {
-    $pdo->rollBack();
+    $shop_pdo->rollBack();
     error_log($e->getMessage());
     echo json_encode(['success' => false, 'message' => 'Erreur lors de la création du colis']);
 } 

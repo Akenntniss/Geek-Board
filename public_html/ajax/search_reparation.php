@@ -38,7 +38,7 @@ try {
     // Ajouter l'ordre et la limite
     $sql .= " ORDER BY r.date_depot DESC LIMIT 10";
     
-    $stmt = $pdo->prepare($sql);
+    $stmt = $shop_pdo->prepare($sql);
     
     // Préparer les paramètres
     $params = ['query' => "%$query%"];

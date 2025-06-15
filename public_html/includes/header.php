@@ -1,5 +1,7 @@
 <?php
 require_once __DIR__ . '/../config/database.php';
+require_once __DIR__ . '/functions.php';
+require_once __DIR__ . '/session_cleanup.php';
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -95,9 +97,16 @@ require_once __DIR__ . '/../config/database.php';
     <link href="assets/css/futuristic-search-modal.css" rel="stylesheet">
     <link href="assets/css/nouvelles-actions-modal.css" rel="stylesheet">
     <link href="assets/css/menu-principal-futuriste.css" rel="stylesheet">
+    <!-- Nouveaux styles pour les modals -->
+    <link href="assets/css/modals.css" rel="stylesheet">
+    
     <script src="assets/js/futuristic-modal.js" defer></script>
     <script src="assets/js/nouvelles-actions-modal.js" defer></script>
     <script src="assets/js/menu-principal-futuriste.js" defer></script>
+    <!-- Nouveaux scripts pour les modals -->
+    <script src="assets/js/modals.js" defer></script>
+    <script src="assets/js/recherche-universelle.js" defer></script>
+    
     <!-- Correctif pour iPad - chargé à la fin pour remplacer les autres styles -->
     <link href="assets/css/ipad-header-fix.css" rel="stylesheet">
     <!-- Ajustement du contenu pour iPad PWA -->

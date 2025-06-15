@@ -1,7 +1,10 @@
 <?php
 // Inclure la configuration de la base de données
 require_once('config/database.php');
+
+$shop_pdo = getShopDBConnection();
 require_once('includes/functions.php');
+require_once('includes/task_logger.php');
 
 // Vérifier que l'utilisateur est connecté
 if (!isset($_SESSION['user_id'])) {
@@ -20,6 +23,11 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
 // Activer le débogage
 $DEBUG = true; // Mettre à true pour voir les logs de débogage
 
+// Paramètres de pagination
+$page = isset($_GET['p']) ? max(1, intval($_GET['p'])) : 1;
+$limit = isset($_GET['limit']) ? intval($_GET['limit']) : 20;
+$offset = ($page - 1) * $limit;
+
 // Filtres
 $employe_id = isset($_GET['employe_id']) ? intval($_GET['employe_id']) : 0;
 $reparation_id = isset($_GET['reparation_id']) ? intval($_GET['reparation_id']) : 0;
@@ -29,79 +37,217 @@ $date_fin = isset($_GET['date_fin']) ? $_GET['date_fin'] : '';
 $heure_debut = isset($_GET['heure_debut']) ? $_GET['heure_debut'] : '';
 $heure_fin = isset($_GET['heure_fin']) ? $_GET['heure_fin'] : '';
 $search_term = isset($_GET['search_term']) ? trim($_GET['search_term']) : '';
+$sort_by = isset($_GET['sort_by']) ? $_GET['sort_by'] : 'date_action';
+$sort_order = isset($_GET['sort_order']) ? $_GET['sort_order'] : 'DESC';
+$view_mode = isset($_GET['view_mode']) ? $_GET['view_mode'] : 'timeline';
+$group_by = isset($_GET['group_by']) ? $_GET['group_by'] : 'none';
+$log_type = isset($_GET['log_type']) ? $_GET['log_type'] : 'all';
+
+// Valeurs par défaut pour les filtres rapides
+if (empty($date_debut) && empty($date_fin)) {
+    $quick_filter = isset($_GET['quick_filter']) ? $_GET['quick_filter'] : '';
+    switch ($quick_filter) {
+        case 'today':
+            $date_debut = $date_fin = date('Y-m-d');
+            break;
+        case 'yesterday':
+            $date_debut = $date_fin = date('Y-m-d', strtotime('-1 day'));
+            break;
+        case 'week':
+            $date_debut = date('Y-m-d', strtotime('monday this week'));
+            $date_fin = date('Y-m-d');
+            break;
+        case 'month':
+            $date_debut = date('Y-m-01');
+            $date_fin = date('Y-m-d');
+            break;
+    }
+}
 
 // Construction de la requête SQL avec filtres
-$sql = "
-    SELECT rl.*, 
-           r.type_appareil, r.modele, r.client_id, r.description_probleme as reparation_description,
-           u.full_name as employe_nom,
-           u.role as employe_role,
-           CONCAT(c.nom, ' ', c.prenom) as client_nom
-    FROM reparation_logs rl
-    JOIN reparations r ON rl.reparation_id = r.id
-    JOIN users u ON rl.employe_id = u.id
-    JOIN clients c ON r.client_id = c.id
-    WHERE 1=1
-";
+if ($log_type === 'tasks' || $log_type === 'all') {
+    // Requête pour les logs de tâches
+    $task_sql = "
+        SELECT 
+            tl.id,
+            tl.task_id as entity_id,
+            tl.user_id as employe_id,
+            tl.action_type,
+            tl.old_status as statut_avant,
+            tl.new_status as statut_apres,
+            tl.action_timestamp as date_action,
+            tl.user_name as employe_nom,
+            tl.task_title,
+            tl.details,
+            'task' as log_source,
+            '' as type_appareil,
+            '' as modele,
+            '' as client_nom,
+            '' as reparation_description,
+            u.role as employe_role
+        FROM Log_tasks tl
+        LEFT JOIN users u ON tl.user_id = u.id
+        WHERE 1=1
+    ";
+}
+
+if ($log_type === 'repairs' || $log_type === 'all') {
+    // Requête pour les logs de réparations
+    $repair_sql = "
+        SELECT 
+            rl.id,
+            rl.reparation_id as entity_id,
+            rl.employe_id,
+            rl.action_type,
+            rl.statut_avant,
+            rl.statut_apres,
+            rl.date_action,
+            u.full_name as employe_nom,
+            '' as task_title,
+            rl.details,
+            'repair' as log_source,
+            r.type_appareil,
+            r.modele,
+            CONCAT(c.nom, ' ', c.prenom) as client_nom,
+            r.description_probleme as reparation_description,
+            u.role as employe_role
+        FROM reparation_logs rl
+        JOIN reparations r ON rl.reparation_id = r.id
+        JOIN users u ON rl.employe_id = u.id
+        JOIN clients c ON r.client_id = c.id
+        WHERE 1=1
+    ";
+}
+
+// Union des deux requêtes selon le filtre choisi
+if ($log_type === 'all') {
+    $sql = "(" . $repair_sql . ") UNION (" . $task_sql . ")";
+} elseif ($log_type === 'tasks') {
+    $sql = $task_sql;
+} else {
+    $sql = $repair_sql;
+}
+
 $params = [];
 
-// Appliquer les filtres
+// Construire les conditions de filtre pour chaque type de log
+$filter_conditions = [];
+
 if ($employe_id > 0) {
-    $sql .= " AND rl.employe_id = ?";
+    $filter_conditions[] = "employe_id = ?";
     $params[] = $employe_id;
 }
-if ($reparation_id > 0) {
-    $sql .= " AND rl.reparation_id = ?";
-    $params[] = $reparation_id;
-}
+
 if (!empty($action_type)) {
-    $sql .= " AND rl.action_type = ?";
+    $filter_conditions[] = "action_type = ?";
     $params[] = $action_type;
 }
+
 if (!empty($date_debut)) {
     if (!empty($heure_debut)) {
-        $sql .= " AND rl.date_action >= ?";
+        $filter_conditions[] = "date_action >= ?";
         $params[] = $date_debut . ' ' . $heure_debut . ':00';
     } else {
-        $sql .= " AND DATE(rl.date_action) >= ?";
+        $filter_conditions[] = "DATE(date_action) >= ?";
         $params[] = $date_debut;
     }
 }
+
 if (!empty($date_fin)) {
     if (!empty($heure_fin)) {
-        $sql .= " AND rl.date_action <= ?";
+        $filter_conditions[] = "date_action <= ?";
         $params[] = $date_fin . ' ' . $heure_fin . ':59';
     } else {
-        $sql .= " AND DATE(rl.date_action) <= ?";
+        $filter_conditions[] = "DATE(date_action) <= ?";
         $params[] = $date_fin;
     }
 }
-if (!empty($search_term)) {
-    $sql .= " AND (
-        r.description_probleme LIKE ? 
-        OR r.type_appareil LIKE ? 
-        OR r.modele LIKE ? 
-        OR c.nom LIKE ? 
-        OR c.prenom LIKE ? 
-        OR u.full_name LIKE ?
-        OR rl.details LIKE ?
-        OR rl.statut_avant LIKE ?
-        OR rl.statut_apres LIKE ?
-    )";
-    $search_param = "%" . $search_term . "%";
-    $params[] = $search_param;
-    $params[] = $search_param;
-    $params[] = $search_param;
-    $params[] = $search_param;
-    $params[] = $search_param;
-    $params[] = $search_param;
-    $params[] = $search_param;
-    $params[] = $search_param;
-    $params[] = $search_param;
+
+// Filtre spécifique pour les réparations
+if ($reparation_id > 0 && ($log_type === 'repairs' || $log_type === 'all')) {
+    if ($log_type === 'repairs') {
+        $filter_conditions[] = "reparation_id = ?";
+        $params[] = $reparation_id;
+    } else {
+        // Pour 'all', on filtre directement dans chaque sous-requête
+        $repair_sql .= " AND rl.reparation_id = ?";
+    }
 }
 
-// Tri par date (plus récent en premier)
-$sql .= " ORDER BY rl.date_action DESC";
+// Recherche textuelle adaptée selon le type de log
+if (!empty($search_term)) {
+    $search_param = "%" . $search_term . "%";
+    
+    if ($log_type === 'tasks') {
+        $filter_conditions[] = "(task_title LIKE ? OR details LIKE ? OR employe_nom LIKE ?)";
+        $params[] = $search_param;
+        $params[] = $search_param;
+        $params[] = $search_param;
+    } elseif ($log_type === 'repairs') {
+        $filter_conditions[] = "(reparation_description LIKE ? OR type_appareil LIKE ? OR modele LIKE ? OR client_nom LIKE ? OR employe_nom LIKE ? OR details LIKE ? OR statut_avant LIKE ? OR statut_apres LIKE ?)";
+        for ($i = 0; $i < 8; $i++) {
+            $params[] = $search_param;
+        }
+    } else {
+        // Pour 'all', on applique la recherche dans chaque sous-requête
+        $repair_search = "(r.description_probleme LIKE ? OR r.type_appareil LIKE ? OR r.modele LIKE ? OR c.nom LIKE ? OR c.prenom LIKE ? OR u.full_name LIKE ? OR rl.details LIKE ? OR rl.statut_avant LIKE ? OR rl.statut_apres LIKE ?)";
+        $task_search = "(tl.task_title LIKE ? OR tl.details LIKE ? OR tl.user_name LIKE ?)";
+        
+        $repair_sql .= " AND " . $repair_search;
+        $task_sql .= " AND " . $task_search;
+        
+        // Ajouter les paramètres pour la recherche
+        for ($i = 0; $i < 9; $i++) {
+            $params[] = $search_param;
+        }
+        for ($i = 0; $i < 3; $i++) {
+            $params[] = $search_param;
+        }
+    }
+}
+
+// Appliquer les conditions aux requêtes
+if (!empty($filter_conditions) && $log_type !== 'all') {
+    $sql .= " AND " . implode(" AND ", $filter_conditions);
+} elseif (!empty($filter_conditions) && $log_type === 'all') {
+    $conditions_str = " AND " . implode(" AND ", $filter_conditions);
+    $repair_sql .= $conditions_str;
+    $task_sql .= $conditions_str;
+    
+    // Reconstruire la requête union avec les conditions
+    $sql = "(" . $repair_sql . ") UNION (" . $task_sql . ")";
+}
+
+// Compter le total pour la pagination
+$count_sql = "SELECT COUNT(*) as total FROM (" . $sql . ") as count_query";
+try {
+    $count_stmt = $shop_pdo->prepare($count_sql);
+    $count_stmt->execute($params);
+    $total_logs = $count_stmt->fetchColumn();
+} catch (PDOException $e) {
+    $total_logs = 0;
+}
+
+// Tri
+$valid_sort_columns = ['date_action', 'employe_nom', 'action_type', 'entity_id'];
+if (!in_array($sort_by, $valid_sort_columns)) {
+    $sort_by = 'date_action';
+}
+$sort_order = strtoupper($sort_order) === 'ASC' ? 'ASC' : 'DESC';
+
+// Pour la requête UNION, on doit envelopper dans une sous-requête pour trier
+if ($log_type === 'all') {
+    $sql = "SELECT * FROM (" . $sql . ") as combined_logs ORDER BY {$sort_by} {$sort_order}";
+} else {
+    $sql .= " ORDER BY {$sort_by} {$sort_order}";
+}
+
+// Pagination pour la timeline
+if ($view_mode === 'timeline') {
+    $sql .= " LIMIT ? OFFSET ?";
+    $params[] = $limit;
+    $params[] = $offset;
+}
 
 // Debug SQL query
 if ($DEBUG) {
@@ -109,14 +255,22 @@ if ($DEBUG) {
     error_log("Paramètres: " . print_r($params, true));
 }
 
-// Obtenir les résultats
+// Obtenir les résultats selon le type de log sélectionné
 try {
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute($params);
-    $logs = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    if ($log_type === 'all') {
+        // Exécuter la requête UNION pour tous les logs
+        $stmt = $shop_pdo->prepare($sql);
+        $stmt->execute($params);
+        $logs = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } else {
+        // Exécuter la requête pour un type spécifique
+        $stmt = $shop_pdo->prepare($sql);
+        $stmt->execute($params);
+        $logs = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
     
     if ($DEBUG) {
-        error_log("Nombre de logs trouvés: " . count($logs));
+        error_log("Nombre de logs trouvés ($log_type): " . count($logs));
     }
 } catch (PDOException $e) {
     $logs = [];
@@ -128,10 +282,34 @@ try {
 
 // Récupérer la liste des employés pour le filtre
 try {
-    $stmt = $pdo->query("SELECT id, full_name as nom FROM users WHERE role = 'technicien' OR role = 'admin' ORDER BY full_name");
+    $stmt = $shop_pdo->query("SELECT id, full_name as nom FROM users WHERE role = 'technicien' OR role = 'admin' ORDER BY full_name");
     $employes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
     $employes = [];
+}
+
+// Récupérer les types d'actions uniques selon le type de log
+try {
+    if ($log_type === 'tasks') {
+        // Actions des tâches uniquement
+        $stmt = $shop_pdo->query("SELECT DISTINCT action_type FROM Log_tasks ORDER BY action_type");
+        $action_types = $stmt->fetchAll(PDO::FETCH_COLUMN);
+    } elseif ($log_type === 'repairs') {
+        // Actions des réparations uniquement
+        $stmt = $shop_pdo->query("SELECT DISTINCT action_type FROM reparation_logs ORDER BY action_type");
+        $action_types = $stmt->fetchAll(PDO::FETCH_COLUMN);
+    } else {
+        // Tous les types d'actions combinés
+        $stmt = $shop_pdo->query("
+            SELECT DISTINCT action_type FROM reparation_logs 
+            UNION 
+            SELECT DISTINCT action_type FROM Log_tasks 
+            ORDER BY action_type
+        ");
+        $action_types = $stmt->fetchAll(PDO::FETCH_COLUMN);
+    }
+} catch (PDOException $e) {
+    $action_types = [];
 }
 
 // Regrouper les logs par réparation et par employé
@@ -140,11 +318,20 @@ $employees = [];
 
 // Collecter les données des logs pour la timeline et par employé
 foreach ($logs as $log) {
-    // Nous gardons seulement les informations nécessaires pour la timeline
-    $grouped_logs[] = $log;
+    // Groupement selon le paramètre choisi
+    if ($group_by === 'repair') {
+        $group_key = $log['log_source'] === 'task' ? 'task_' . $log['entity_id'] : 'repair_' . $log['entity_id'];
+        $grouped_logs[$group_key][] = $log;
+    } elseif ($group_by === 'employee') {
+        $grouped_logs[$log['employe_id']][] = $log;
+    } elseif ($group_by === 'date') {
+        $date_key = date('Y-m-d', strtotime($log['date_action']));
+        $grouped_logs[$date_key][] = $log;
+    } else {
+        $grouped_logs[] = $log;
+    }
     
-    // Grouper également par employé pour l'onglet "Réparations par employé"
-    $repair_id = $log['reparation_id'];
+    // Grouper également par employé pour l'onglet "Activités par employé"
     $employee_id = $log['employe_id'];
     $employee_name = $log['employe_nom'];
     
@@ -153,26 +340,41 @@ foreach ($logs as $log) {
         $employees[$employee_id] = [
             'id' => $employee_id,
             'name' => $employee_name,
-            'role' => $log['employe_role'],
-            'repairs' => []
+            'role' => $log['employe_role'] ?? 'Utilisateur',
+            'repairs' => [],
+            'tasks' => []
         ];
     }
     
-    // Grouper les logs par réparation pour chaque employé
-    if (!isset($employees[$employee_id]['repairs'][$repair_id])) {
-        $employees[$employee_id]['repairs'][$repair_id] = [
-            'id' => $repair_id,
-            'type_appareil' => $log['type_appareil'],
-            'modele' => $log['modele'],
-            'client_nom' => $log['client_nom'],
-            'client_id' => $log['client_id'],
-            'description' => $log['reparation_description'],
-            'logs' => []
-        ];
+    // Grouper selon le type de log
+    if ($log['log_source'] === 'task') {
+        // Logs de tâches
+        $task_id = $log['entity_id'];
+        if (!isset($employees[$employee_id]['tasks'][$task_id])) {
+            $employees[$employee_id]['tasks'][$task_id] = [
+                'id' => $task_id,
+                'title' => $log['task_title'] ?? 'Tâche #' . $task_id,
+                'description' => $log['task_description'] ?? '',
+                'logs' => []
+            ];
+        }
+        $employees[$employee_id]['tasks'][$task_id]['logs'][] = $log;
+    } else {
+        // Logs de réparations
+        $repair_id = $log['entity_id'];
+        if (!isset($employees[$employee_id]['repairs'][$repair_id])) {
+            $employees[$employee_id]['repairs'][$repair_id] = [
+                'id' => $repair_id,
+                'type_appareil' => $log['type_appareil'] ?? '',
+                'modele' => $log['modele'] ?? '',
+                'client_nom' => $log['client_nom'] ?? '',
+                'client_id' => $log['client_id'] ?? '',
+                'description' => $log['reparation_description'] ?? '',
+                'logs' => []
+            ];
+        }
+        $employees[$employee_id]['repairs'][$repair_id]['logs'][] = $log;
     }
-    
-    // Ajouter le log à la réparation correspondante
-    $employees[$employee_id]['repairs'][$repair_id]['logs'][] = $log;
 }
 
 // Fonction pour calculer la durée entre deux dates
@@ -252,6 +454,58 @@ function get_all_repair_sequences($logs) {
     return $sequences;
 }
 
+// Fonction pour obtenir tous les démarrages et fins d'une tâche
+function get_all_task_sequences($logs) {
+    $sequences = [];
+    $start_logs = [];
+    $end_action_types = ['terminer', 'pause', 'modifier', 'supprimer'];
+    
+    // Extraire tous les logs de démarrage
+    foreach ($logs as $log) {
+        if ($log['action_type'] === 'demarrer') {
+            $start_logs[] = $log;
+        }
+    }
+    
+    // Trier les logs de démarrage par date (du plus ancien au plus récent)
+    usort($start_logs, function($a, $b) {
+        return strtotime($a['date_action']) - strtotime($b['date_action']);
+    });
+    
+    // Pour chaque log de démarrage, trouver le log de fin correspondant
+    foreach ($start_logs as $start) {
+        $start_time = strtotime($start['date_action']);
+        $best_end = null;
+        $min_time_diff = PHP_INT_MAX;
+        
+        // Chercher le log de fin le plus proche après ce démarrage
+        foreach ($logs as $log) {
+            if (in_array($log['action_type'], $end_action_types)) {
+                $log_time = strtotime($log['date_action']);
+                
+                // Le log de fin doit être après le démarrage
+                if ($log_time > $start_time) {
+                    $time_diff = $log_time - $start_time;
+                    
+                    // Si c'est le log de fin le plus proche trouvé jusqu'à présent
+                    if ($time_diff < $min_time_diff) {
+                        $min_time_diff = $time_diff;
+                        $best_end = $log;
+                    }
+                }
+            }
+        }
+        
+        // Ajouter cette séquence de démarrage-fin
+        $sequences[] = [
+            'start' => $start,
+            'end' => $best_end
+        ];
+    }
+    
+    return $sequences;
+}
+
 // Fonction pour obtenir les données de démarrage et terminaison d'une réparation
 function get_repair_start_end($logs, $attribution = null) {
     $start = null;
@@ -284,56 +538,119 @@ function format_datetime($datetime) {
 }
 
 // Fonction pour obtenir une couleur en fonction du type d'action
-function get_action_color($action_type) {
-    switch ($action_type) {
-        case 'demarrage':
-            return 'primary';
-        case 'terminer':
-            return 'success';
-        case 'changement_statut':
-            return 'warning';
-        case 'ajout_note':
-            return 'info';
-        case 'modification':
-            return 'secondary';
-        default:
-            return 'dark';
+function get_action_color($action_type, $log_source = 'repair') {
+    if ($log_source === 'task') {
+        switch ($action_type) {
+            case 'demarrer':
+                return 'primary';
+            case 'terminer':
+                return 'success';
+            case 'pause':
+                return 'warning';
+            case 'reprendre':
+                return 'info';
+            case 'modifier':
+                return 'secondary';
+            case 'creer':
+                return 'success';
+            case 'supprimer':
+                return 'danger';
+            default:
+                return 'dark';
+        }
+    } else {
+        switch ($action_type) {
+            case 'demarrage':
+                return 'primary';
+            case 'terminer':
+                return 'success';
+            case 'changement_statut':
+                return 'warning';
+            case 'ajout_note':
+                return 'info';
+            case 'modification':
+                return 'secondary';
+            default:
+                return 'dark';
+        }
     }
 }
 
 // Fonction pour obtenir une icône en fonction du type d'action
-function get_action_icon($action_type) {
-    switch ($action_type) {
-        case 'demarrage':
-            return 'play-circle';
-        case 'terminer':
-            return 'stop-circle';
-        case 'changement_statut':
-            return 'exchange-alt';
-        case 'ajout_note':
-            return 'sticky-note';
-        case 'modification':
-            return 'edit';
-        default:
-            return 'cog';
+function get_action_icon($action_type, $log_source = 'repair') {
+    if ($log_source === 'task') {
+        switch ($action_type) {
+            case 'demarrer':
+                return 'play-circle';
+            case 'terminer':
+                return 'check-circle';
+            case 'pause':
+                return 'pause-circle';
+            case 'reprendre':
+                return 'play-circle';
+            case 'modifier':
+                return 'edit';
+            case 'creer':
+                return 'plus-circle';
+            case 'supprimer':
+                return 'trash';
+            default:
+                return 'tasks';
+        }
+    } else {
+        switch ($action_type) {
+            case 'demarrage':
+                return 'play-circle';
+            case 'terminer':
+                return 'stop-circle';
+            case 'changement_statut':
+                return 'exchange-alt';
+            case 'ajout_note':
+                return 'sticky-note';
+            case 'modification':
+                return 'edit';
+            default:
+                return 'cog';
+        }
     }
 }
 
 // Fonction pour obtenir un libellé en fonction du type d'action
-function get_action_label($action_type) {
-    switch ($action_type) {
-        case 'demarrage':
-            return 'Démarrage';
-        case 'terminer':
-            return 'Terminé';
-        case 'changement_statut':
-            return 'Changement de statut';
-        case 'ajout_note':
-            return 'Ajout de note';
-        case 'modification':
-            return 'Modification';
-        default:
-            return 'Autre';
+function get_action_label($action_type, $log_source = 'repair') {
+    if ($log_source === 'task') {
+        switch ($action_type) {
+            case 'demarrer':
+                return 'Tâche démarrée';
+            case 'terminer':
+                return 'Tâche terminée';
+            case 'pause':
+                return 'Tâche en pause';
+            case 'reprendre':
+                return 'Tâche reprise';
+            case 'modifier':
+                return 'Tâche modifiée';
+            case 'creer':
+                return 'Tâche créée';
+            case 'supprimer':
+                return 'Tâche supprimée';
+            default:
+                return 'Action tâche';
+        }
+    } else {
+        switch ($action_type) {
+            case 'demarrage':
+                return 'Démarrage';
+            case 'terminer':
+                return 'Terminé';
+            case 'changement_statut':
+                return 'Changement de statut';
+            case 'ajout_note':
+                return 'Ajout de note';
+            case 'modification':
+                return 'Modification';
+            default:
+                return 'Autre';
+        }
     }
 }
 
@@ -944,11 +1261,175 @@ function calculate_total_work_time_from_interventions($repairs) {
         background-color: rgba(67, 97, 238, 0.1);
     }
 
+    /* Styles pour les groupes de logs */
+    .group-card {
+        border-left: 4px solid #007bff;
+        transition: all 0.3s ease;
+    }
+    
+    .group-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    }
+
+    .dark-mode .group-card:hover {
+        box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+    }
+    
+    .group-card .card-header {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        border-bottom: 1px solid rgba(0,0,0,0.1);
+    }
+
+    .dark-mode .group-card .card-header {
+        background: linear-gradient(135deg, var(--dark-card-bg) 0%, rgba(0,0,0,0.3) 100%);
+        border-bottom: 1px solid var(--dark-border);
+    }
+    
+    /* Timeline compacte pour les groupes */
+    .timeline-item-sm {
+        margin-bottom: 1rem;
+        margin-left: 30px;
+    }
+    
+    .timeline-item-sm .timeline-icon {
+        left: -30px;
+        width: 28px;
+        height: 28px;
+        font-size: 0.8rem;
+    }
+    
+    .timeline-item-sm .timeline-content {
+        padding: 1rem;
+        font-size: 0.9rem;
+    }
+    
+    /* Badges plus petits */
+    .badge-sm {
+        font-size: 0.65em;
+        padding: 0.25em 0.5em;
+    }
+    
+    /* Styles pour les filtres améliorés */
+    .filter-card {
+        background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+        border: none;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    }
+
+    .dark-mode .filter-card {
+        background: linear-gradient(135deg, var(--dark-card-bg) 0%, rgba(0,0,0,0.2) 100%);
+        box-shadow: var(--dark-box-shadow);
+    }
+    
+    .filter-card .card-header {
+        background: transparent;
+        border-bottom: 1px solid rgba(0,0,0,0.1);
+    }
+
+    .dark-mode .filter-card .card-header {
+        border-bottom: 1px solid var(--dark-border);
+    }
+    
+    /* Boutons radio améliorés */
+    .btn-check:checked + .btn-outline-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+        color: white;
+        box-shadow: 0 2px 8px rgba(0,123,255,0.3);
+    }
+
+    .dark-mode .btn-check:checked + .btn-outline-primary {
+        background-color: #4361ee;
+        border-color: #4361ee;
+        box-shadow: 0 2px 8px rgba(67,97,238,0.3);
+    }
+    
+    /* Animation pour les formulaires */
+    .form-control:focus, .form-select:focus {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(0,123,255,0.15);
+    }
+
+    .dark-mode .form-control:focus, 
+    .dark-mode .form-select:focus {
+        box-shadow: 0 4px 12px rgba(67,97,238,0.25);
+    }
+    
+    /* Pagination moderne */
+    .pagination {
+        gap: 0.25rem;
+    }
+    
+    .page-link {
+        border-radius: 0.5rem;
+        border: none;
+        padding: 0.5rem 0.75rem;
+        margin: 0 0.125rem;
+        background-color: #f8f9fa;
+        color: #6c757d;
+        transition: all 0.3s ease;
+    }
+    
+    .page-link:hover {
+        background-color: #007bff;
+        color: white;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba(0,123,255,0.3);
+    }
+    
+    .page-item.active .page-link {
+        background-color: #007bff;
+        color: white;
+        box-shadow: 0 4px 12px rgba(0,123,255,0.4);
+    }
+
+    .dark-mode .page-link {
+        background-color: var(--dark-card-bg);
+        color: var(--dark-text-secondary);
+        border-color: var(--dark-border);
+    }
+
+    .dark-mode .page-link:hover,
+    .dark-mode .page-item.active .page-link {
+        background-color: #4361ee;
+        color: white;
+    }
+    
+    /* Responsive amélioré */
+    @media (max-width: 768px) {
+        .filter-card .row .col-md-3,
+        .filter-card .row .col-md-4,
+        .filter-card .row .col-md-6 {
+            margin-bottom: 1rem;
+        }
+        
+        .btn-group {
+            flex-wrap: wrap;
+        }
+        
+        .btn-group .btn {
+            margin-bottom: 0.25rem;
+        }
+        
+        .timeline-item-sm {
+            margin-left: 20px;
+        }
+        
+        .timeline-item-sm .timeline-icon {
+            left: -20px;
+            width: 24px;
+            height: 24px;
+            font-size: 0.7rem;
+        }
+    }
+
     /* Effet de transition lors du changement de mode */
     body, .card, .timeline-content, .form-control, .form-select,
     .table, .nav-tabs, .timeline:before, .badge, .btn, .timeline-icon,
     .card-header, .employee-stats, .inactive-time-row, .inactive-time-badge,
-    .repair-timeline-start i, .repair-timeline-end i, .repair-timeline-duration {
+    .repair-timeline-start i, .repair-timeline-end i, .repair-timeline-duration,
+    .group-card, .filter-card, .page-link {
         transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
     }
 </style>
@@ -971,119 +1452,582 @@ function calculate_total_work_time_from_interventions($repairs) {
             <!-- Afficher les messages -->
             <?php echo display_message(); ?>
 
-            <!-- Navigation par onglets -->
+            <!-- Barre de filtres améliorée -->
+            <div class="card filter-card mb-4">
+                <div class="card-header">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">
+                            <i class="fas fa-filter me-2"></i>
+                            Filtres et Options d'affichage
+                        </h5>
+                        <div class="d-flex gap-2">
+                            <button type="button" class="btn btn-outline-secondary btn-sm" id="resetFilters">
+                                <i class="fas fa-undo me-1"></i>
+                                Réinitialiser
+                            </button>
+                            <button type="button" class="btn btn-outline-info btn-sm" data-bs-toggle="collapse" data-bs-target="#advancedFilters">
+                                <i class="fas fa-cog me-1"></i>
+                                Avancé
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <form method="GET" action="index.php" id="filterForm">
+                        <input type="hidden" name="page" value="reparation_logs">
+                        
+                        <!-- Filtres par type de log -->
+                        <div class="row mb-3">
+                            <div class="col-md-12">
+                                <label class="form-label fw-bold">
+                                    <i class="fas fa-layer-group me-1"></i>
+                                    Type de logs
+                                </label>
+                                <div class="btn-group me-3" role="group">
+                                    <input type="radio" class="btn-check" name="log_type" id="log_all" value="all" <?php echo ($log_type === 'all') ? 'checked' : ''; ?>>
+                                    <label class="btn btn-outline-success" for="log_all">
+                                        <i class="fas fa-list me-1"></i>Tout
+                                    </label>
+                                    
+                                    <input type="radio" class="btn-check" name="log_type" id="log_repairs" value="repairs" <?php echo ($log_type === 'repairs') ? 'checked' : ''; ?>>
+                                    <label class="btn btn-outline-primary" for="log_repairs">
+                                        <i class="fas fa-tools me-1"></i>Réparations
+                                    </label>
+                                    
+                                    <input type="radio" class="btn-check" name="log_type" id="log_tasks" value="tasks" <?php echo ($log_type === 'tasks') ? 'checked' : ''; ?>>
+                                    <label class="btn btn-outline-warning" for="log_tasks">
+                                        <i class="fas fa-tasks me-1"></i>Tâches
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Filtres rapides par période -->
+                        <div class="row mb-3">
+                            <div class="col-md-12">
+                                <label class="form-label fw-bold">
+                                    <i class="fas fa-bolt me-1"></i>
+                                    Filtres rapides
+                                </label>
+                                <div class="btn-group" role="group">
+                                    <input type="radio" class="btn-check" name="quick_filter" id="filter_all" value="" <?php echo empty($_GET['quick_filter']) ? 'checked' : ''; ?>>
+                                    <label class="btn btn-outline-primary" for="filter_all">Tout</label>
+                                    
+                                    <input type="radio" class="btn-check" name="quick_filter" id="filter_today" value="today" <?php echo (isset($_GET['quick_filter']) && $_GET['quick_filter'] === 'today') ? 'checked' : ''; ?>>
+                                    <label class="btn btn-outline-primary" for="filter_today">Aujourd'hui</label>
+                                    
+                                    <input type="radio" class="btn-check" name="quick_filter" id="filter_yesterday" value="yesterday" <?php echo (isset($_GET['quick_filter']) && $_GET['quick_filter'] === 'yesterday') ? 'checked' : ''; ?>>
+                                    <label class="btn btn-outline-primary" for="filter_yesterday">Hier</label>
+                                    
+                                    <input type="radio" class="btn-check" name="quick_filter" id="filter_week" value="week" <?php echo (isset($_GET['quick_filter']) && $_GET['quick_filter'] === 'week') ? 'checked' : ''; ?>>
+                                    <label class="btn btn-outline-primary" for="filter_week">Cette semaine</label>
+                                    
+                                    <input type="radio" class="btn-check" name="quick_filter" id="filter_month" value="month" <?php echo (isset($_GET['quick_filter']) && $_GET['quick_filter'] === 'month') ? 'checked' : ''; ?>>
+                                    <label class="btn btn-outline-primary" for="filter_month">Ce mois</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Filtres principaux -->
+                        <div class="row mb-3">
+                            <div class="col-md-3">
+                                <label for="employe_id" class="form-label">
+                                    <i class="fas fa-user me-1"></i>
+                                    Employé
+                                </label>
+                                <select name="employe_id" id="employe_id" class="form-select">
+                                    <option value="">Tous les employés</option>
+                                    <?php foreach ($employes as $employe): ?>
+                                        <option value="<?php echo $employe['id']; ?>" <?php echo ($employe_id == $employe['id']) ? 'selected' : ''; ?>>
+                                            <?php echo htmlspecialchars($employe['nom']); ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                            
+                            <div class="col-md-3">
+                                <label for="action_type" class="form-label">
+                                    <i class="fas fa-cogs me-1"></i>
+                                    Type d'action
+                                </label>
+                                <select name="action_type" id="action_type" class="form-select">
+                                    <option value="">Tous les types</option>
+                                    <?php foreach ($action_types as $type): ?>
+                                        <option value="<?php echo $type; ?>" <?php echo ($action_type === $type) ? 'selected' : ''; ?>>
+                                            <?php echo get_action_label($type); ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                            
+                            <div class="col-md-2">
+                                <label for="reparation_id" class="form-label">
+                                    <i class="fas fa-tools me-1"></i>
+                                    Réparation #
+                                </label>
+                                <input type="number" name="reparation_id" id="reparation_id" class="form-control" 
+                                       value="<?php echo $reparation_id > 0 ? $reparation_id : ''; ?>" 
+                                       placeholder="ID...">
+                            </div>
+                            
+                            <div class="col-md-4">
+                                <label for="search_term" class="form-label">
+                                    <i class="fas fa-search me-1"></i>
+                                    Recherche
+                                </label>
+                                <input type="text" name="search_term" id="search_term" class="form-control" 
+                                       value="<?php echo htmlspecialchars($search_term); ?>" 
+                                       placeholder="Client, appareil, détails...">
+                            </div>
+                        </div>
+                        
+                        <!-- Options d'affichage -->
+                        <div class="row mb-3">
+                            <div class="col-md-3">
+                                <label for="view_mode" class="form-label">
+                                    <i class="fas fa-eye me-1"></i>
+                                    Mode d'affichage
+                                </label>
+                                <select name="view_mode" id="view_mode" class="form-select">
+                                    <option value="timeline" <?php echo ($view_mode === 'timeline') ? 'selected' : ''; ?>>Timeline</option>
+                                    <option value="employees" <?php echo ($view_mode === 'employees') ? 'selected' : ''; ?>>Par employé</option>
+                                </select>
+                            </div>
+                            
+                            <div class="col-md-3">
+                                <label for="group_by" class="form-label">
+                                    <i class="fas fa-layer-group me-1"></i>
+                                    Grouper par
+                                </label>
+                                <select name="group_by" id="group_by" class="form-select">
+                                    <option value="none" <?php echo ($group_by === 'none') ? 'selected' : ''; ?>>Aucun</option>
+                                    <option value="date" <?php echo ($group_by === 'date') ? 'selected' : ''; ?>>Date</option>
+                                    <option value="repair" <?php echo ($group_by === 'repair') ? 'selected' : ''; ?>>Réparation</option>
+                                    <option value="employee" <?php echo ($group_by === 'employee') ? 'selected' : ''; ?>>Employé</option>
+                                </select>
+                            </div>
+                            
+                            <div class="col-md-3">
+                                <label for="sort_by" class="form-label">
+                                    <i class="fas fa-sort me-1"></i>
+                                    Trier par
+                                </label>
+                                <select name="sort_by" id="sort_by" class="form-select">
+                                    <option value="date_action" <?php echo ($sort_by === 'date_action') ? 'selected' : ''; ?>>Date</option>
+                                    <option value="employe_nom" <?php echo ($sort_by === 'employe_nom') ? 'selected' : ''; ?>>Employé</option>
+                                    <option value="action_type" <?php echo ($sort_by === 'action_type') ? 'selected' : ''; ?>>Type d'action</option>
+                                    <option value="reparation_id" <?php echo ($sort_by === 'reparation_id') ? 'selected' : ''; ?>>Réparation</option>
+                                </select>
+                            </div>
+                            
+                            <div class="col-md-3">
+                                <label for="sort_order" class="form-label">
+                                    <i class="fas fa-sort-amount-down me-1"></i>
+                                    Ordre
+                                </label>
+                                <select name="sort_order" id="sort_order" class="form-select">
+                                    <option value="DESC" <?php echo ($sort_order === 'DESC') ? 'selected' : ''; ?>>Décroissant</option>
+                                    <option value="ASC" <?php echo ($sort_order === 'ASC') ? 'selected' : ''; ?>>Croissant</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <!-- Filtres avancés (collapsible) -->
+                        <div class="collapse" id="advancedFilters">
+                            <hr>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold">
+                                        <i class="fas fa-calendar-alt me-1"></i>
+                                        Période personnalisée
+                                    </label>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <label for="date_debut" class="form-label small">Du</label>
+                                            <input type="date" name="date_debut" id="date_debut" class="form-control form-control-sm" 
+                                                   value="<?php echo $date_debut; ?>">
+                                        </div>
+                                        <div class="col-6">
+                                            <label for="date_fin" class="form-label small">Au</label>
+                                            <input type="date" name="date_fin" id="date_fin" class="form-control form-control-sm" 
+                                                   value="<?php echo $date_fin; ?>">
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold">
+                                        <i class="fas fa-clock me-1"></i>
+                                        Heures (optionnel)
+                                    </label>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <label for="heure_debut" class="form-label small">De</label>
+                                            <input type="time" name="heure_debut" id="heure_debut" class="form-control form-control-sm" 
+                                                   value="<?php echo $heure_debut; ?>">
+                                        </div>
+                                        <div class="col-6">
+                                            <label for="heure_fin" class="form-label small">À</label>
+                                            <input type="time" name="heure_fin" id="heure_fin" class="form-control form-control-sm" 
+                                                   value="<?php echo $heure_fin; ?>">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Boutons d'action -->
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="d-flex gap-2">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-search me-1"></i>
+                                    Appliquer les filtres
+                                </button>
+                                <a href="index.php?page=reparation_logs" class="btn btn-outline-secondary">
+                                    <i class="fas fa-eraser me-1"></i>
+                                    Effacer
+                                </a>
+                            </div>
+                            
+                            <!-- Options de pagination -->
+                            <?php if ($view_mode === 'timeline'): ?>
+                            <div class="d-flex align-items-center gap-2">
+                                <label for="limit" class="form-label mb-0 small">Éléments par page:</label>
+                                <select name="limit" id="limit" class="form-select form-select-sm" style="width: auto;" onchange="this.form.submit()">
+                                    <option value="10" <?php echo ($limit == 10) ? 'selected' : ''; ?>>10</option>
+                                    <option value="20" <?php echo ($limit == 20) ? 'selected' : ''; ?>>20</option>
+                                    <option value="50" <?php echo ($limit == 50) ? 'selected' : ''; ?>>50</option>
+                                    <option value="100" <?php echo ($limit == 100) ? 'selected' : ''; ?>>100</option>
+                                </select>
+                            </div>
+                            <?php endif; ?>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Navigation par onglets simplifiée -->
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <ul class="nav nav-tabs" id="logsTab" role="tablist">
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link active" id="timeline-tab" data-bs-toggle="tab" data-bs-target="#timeline-tab-pane" type="button" role="tab" aria-controls="timeline-tab-pane" aria-selected="true">
+                        <button class="nav-link <?php echo ($view_mode === 'timeline') ? 'active' : ''; ?>" 
+                                id="timeline-tab" data-bs-toggle="tab" data-bs-target="#timeline-tab-pane" 
+                                type="button" role="tab" aria-controls="timeline-tab-pane" 
+                                aria-selected="<?php echo ($view_mode === 'timeline') ? 'true' : 'false'; ?>">
                             <i class="fas fa-stream me-2"></i>
                             Timeline des logs
+                            <?php if ($view_mode === 'timeline'): ?>
+                                <span class="badge bg-primary ms-2"><?php echo number_format($total_logs); ?></span>
+                            <?php endif; ?>
                         </button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="employees-tab" data-bs-toggle="tab" data-bs-target="#employees-tab-pane" type="button" role="tab" aria-controls="employees-tab-pane" aria-selected="false">
+                        <button class="nav-link <?php echo ($view_mode === 'employees') ? 'active' : ''; ?>" 
+                                id="employees-tab" data-bs-toggle="tab" data-bs-target="#employees-tab-pane" 
+                                type="button" role="tab" aria-controls="employees-tab-pane" 
+                                aria-selected="<?php echo ($view_mode === 'employees') ? 'true' : 'false'; ?>">
                             <i class="fas fa-users me-2"></i>
                             Réparations par employé
+                            <span class="badge bg-info ms-2"><?php echo count($employees); ?></span>
                         </button>
                     </li>
                 </ul>
-                <div class="d-flex gap-2">
-                    <div class="dropdown">
-                        <button class="btn btn-outline-secondary btn-sm dropdown-toggle" type="button" id="dateFilterDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="fas fa-calendar-alt me-1"></i>
-                            Filtrer par date
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="dateFilterDropdown">
-                            <li><a class="dropdown-item" href="#" onclick="applyQuickDateFilter('aujourd\'hui'); return false;">Aujourd'hui</a></li>
-                            <li><a class="dropdown-item" href="#" onclick="applyQuickDateFilter('hier'); return false;">Hier</a></li>
-                            <li><a class="dropdown-item" href="#" onclick="applyQuickDateFilter('semaine'); return false;">Cette semaine</a></li>
-                            <li><a class="dropdown-item" href="#" onclick="applyQuickDateFilter('mois'); return false;">Ce mois</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#" data-bs-toggle="collapse" data-bs-target="#collapseFilters">Filtrage avancé...</a></li>
-                        </ul>
-                    </div>
-                    <div class="search-box">
-                        <input type="text" id="search-input" class="form-control form-control-sm" placeholder="Recherche rapide..." style="width: 200px;">
+                
+                <!-- Info résultats et pagination pour timeline -->
+                <?php if ($view_mode === 'timeline' && $total_logs > 0): ?>
+                <div class="d-flex align-items-center gap-3">
+                    <div class="text-muted small">
+                        Affichage <?php echo ($offset + 1); ?>-<?php echo min($offset + $limit, $total_logs); ?> 
+                        sur <?php echo number_format($total_logs); ?> résultats
                     </div>
                 </div>
+                <?php endif; ?>
             </div>
             
             <div class="tab-content mt-3" id="logsTabContent">
                 <!-- Onglet Timeline -->
-                <div class="tab-pane fade show active" id="timeline-tab-pane" role="tabpanel" aria-labelledby="timeline-tab" tabindex="0">
+                <div class="tab-pane fade <?php echo ($view_mode === 'timeline') ? 'show active' : ''; ?>" id="timeline-tab-pane" role="tabpanel" aria-labelledby="timeline-tab" tabindex="0">
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title mb-4">
-                                <i class="fas fa-list me-2"></i>
-                                <?php echo count($logs); ?> logs trouvés
-                            </h5>
-                            
                             <?php if (empty($logs)): ?>
                                 <div class="alert alert-info">
                                     <i class="fas fa-info-circle me-2"></i>
                                     Aucun log trouvé pour les critères sélectionnés.
                                 </div>
                             <?php else: ?>
-                                <div class="timeline">
-                                    <?php foreach ($logs as $log): ?>
-                                        <div class="timeline-item">
-                                            <div class="timeline-icon bg-<?php echo get_action_color($log['action_type']); ?>">
-                                                <i class="fas fa-<?php echo get_action_icon($log['action_type']); ?>"></i>
-                                            </div>
-                                            <div class="timeline-content log-card">
-                                                <span class="timeline-date">
-                                                    <i class="far fa-clock me-1"></i>
-                                                    <?php echo format_datetime($log['date_action']); ?>
-                                                </span>
-                                                <h4 class="timeline-title">
-                                                    <span class="log-badge bg-<?php echo get_action_color($log['action_type']); ?>">
-                                                        <?php echo get_action_label($log['action_type']); ?>
+                                <!-- Affichage groupé ou normal -->
+                                <?php if ($group_by === 'none'): ?>
+                                    <!-- Affichage timeline normale -->
+                                    <div class="timeline">
+                                        <?php foreach ($grouped_logs as $log): ?>
+                                            <div class="timeline-item">
+                                                <div class="timeline-icon bg-<?php echo get_action_color($log['action_type'], $log['log_source']); ?>">
+                                                    <i class="fas fa-<?php echo get_action_icon($log['action_type'], $log['log_source']); ?>"></i>
+                                                </div>
+                                                <div class="timeline-content log-card">
+                                                    <span class="timeline-date">
+                                                        <i class="far fa-clock me-1"></i>
+                                                        <?php echo format_datetime($log['date_action']); ?>
                                                     </span>
-                                                    <a href="index.php?page=details_reparation&id=<?php echo $log['reparation_id']; ?>" class="text-decoration-none ms-2">
-                                                        Réparation #<?php echo $log['reparation_id']; ?>
-                                                    </a>
-                                                </h4>
-                                                <div class="timeline-details">
-                                                    <div class="row">
-                                                        <div class="col-md-6">
-                                                            <p>
-                                                                <strong><i class="fas fa-user me-1"></i> Employé:</strong>
-                                                                <span class="badge <?php echo get_employe_background_color($log['employe_nom']); ?> px-2 py-1">
-                                                                    <?php echo htmlspecialchars($log['employe_nom']); ?>
-                                                                </span>
-                                                            </p>
-                                                            <p>
-                                                                <strong><i class="fas fa-user-tie me-1"></i> Client:</strong>
-                                                                <a href="#" class="text-decoration-none client-info-link" data-bs-toggle="modal" data-bs-target="#clientModal" data-client-id="<?php echo $log['client_id']; ?>">
-                                                                    <?php echo htmlspecialchars($log['client_nom']); ?>
-                                                                </a>
-                                                            </p>
-                                                            <p>
-                                                                <strong><i class="fas fa-mobile-alt me-1"></i> Appareil:</strong>
-                                                                <?php echo htmlspecialchars($log['type_appareil'] . ' ' . $log['modele']); ?>
-                                                            </p>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <?php if ($log['statut_avant'] || $log['statut_apres']): ?>
-                                                                <p>
-                                                                    <strong><i class="fas fa-exchange-alt me-1"></i> Statut:</strong>
-                                                                    <?php if ($log['statut_avant']): ?>
-                                                                        <span class="log-badge bg-secondary"><?php echo htmlspecialchars($log['statut_avant']); ?></span>
+                                                    <h4 class="timeline-title">
+                                                        <span class="log-badge bg-<?php echo get_action_color($log['action_type'], $log['log_source']); ?>">
+                                                            <?php echo get_action_label($log['action_type'], $log['log_source']); ?>
+                                                        </span>
+                                                        
+                                                        <?php if ($log['log_source'] === 'task'): ?>
+                                                            <span class="text-decoration-none ms-2">
+                                                                <i class="fas fa-tasks me-1"></i>
+                                                                <?php echo htmlspecialchars($log['task_title']); ?>
+                                                            </span>
+                                                        <?php else: ?>
+                                                            <a href="index.php?page=details_reparation&id=<?php echo $log['entity_id']; ?>" class="text-decoration-none ms-2">
+                                                                <i class="fas fa-tools me-1"></i>
+                                                                Réparation #<?php echo $log['entity_id']; ?>
+                                                            </a>
+                                                        <?php endif; ?>
+                                                    </h4>
+                                                    <div class="timeline-details">
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <p class="mb-1">
+                                                                    <strong><i class="fas fa-user me-1"></i> Employé:</strong>
+                                                                    <span class="text-<?php echo get_employe_color($log['employe_nom']); ?>">
+                                                                        <?php echo htmlspecialchars($log['employe_nom']); ?>
+                                                                    </span>
+                                                                </p>
+                                                                
+                                                                <?php if ($log['log_source'] === 'task'): ?>
+                                                                    <p class="mb-1">
+                                                                        <strong><i class="fas fa-tasks me-1"></i> Type:</strong>
+                                                                        <span class="badge bg-warning">Tâche</span>
+                                                                    </p>
+                                                                    <?php if ($log['task_title']): ?>
+                                                                        <p class="mb-1">
+                                                                            <strong><i class="fas fa-tag me-1"></i> Titre:</strong>
+                                                                            <?php echo htmlspecialchars($log['task_title']); ?>
+                                                                        </p>
                                                                     <?php endif; ?>
-                                                                    <?php if ($log['statut_avant'] && $log['statut_apres']): ?>
+                                                                <?php else: ?>
+                                                                    <p class="mb-1">
+                                                                        <strong><i class="fas fa-user-tie me-1"></i> Client:</strong>
+                                                                        <?php echo htmlspecialchars($log['client_nom']); ?>
+                                                                    </p>
+                                                                    <p class="mb-1">
+                                                                        <strong><i class="fas fa-mobile-alt me-1"></i> Appareil:</strong>
+                                                                        <?php echo htmlspecialchars($log['type_appareil'] . ' ' . $log['modele']); ?>
+                                                                    </p>
+                                                                <?php endif; ?>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <?php if ($log['statut_avant'] && $log['statut_apres']): ?>
+                                                                    <p class="mb-1">
+                                                                        <strong><i class="fas fa-exchange-alt me-1"></i> Changement de statut:</strong>
+                                                                        <span class="badge bg-secondary me-1"><?php echo htmlspecialchars($log['statut_avant']); ?></span>
                                                                         <i class="fas fa-arrow-right mx-1"></i>
+                                                                        <span class="badge bg-success"><?php echo htmlspecialchars($log['statut_apres']); ?></span>
+                                                                    </p>
+                                                                <?php endif; ?>
+                                                                <?php if ($log['details']): ?>
+                                                                    <p>
+                                                                        <strong><i class="fas fa-info-circle me-1"></i> Détails:</strong>
+                                                                        <?php echo htmlspecialchars($log['details']); ?>
+                                                                    </p>
+                                                                <?php endif; ?>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        <?php endforeach; ?>
+                                    </div>
+                                    
+                                    <!-- Pagination -->
+                                    <?php if ($total_logs > $limit): ?>
+                                        <?php
+                                        $total_pages = ceil($total_logs / $limit);
+                                        $current_params = $_GET;
+                                        unset($current_params['p']);
+                                        $base_url = 'index.php?' . http_build_query($current_params);
+                                        ?>
+                                        <nav aria-label="Navigation des logs" class="mt-4">
+                                            <ul class="pagination justify-content-center">
+                                                <!-- Première page -->
+                                                <?php if ($page > 1): ?>
+                                                    <li class="page-item">
+                                                        <a class="page-link" href="<?php echo $base_url; ?>&p=1">
+                                                            <i class="fas fa-angle-double-left"></i>
+                                                        </a>
+                                                    </li>
+                                                    <li class="page-item">
+                                                        <a class="page-link" href="<?php echo $base_url; ?>&p=<?php echo ($page - 1); ?>">
+                                                            <i class="fas fa-angle-left"></i>
+                                                        </a>
+                                                    </li>
+                                                <?php endif; ?>
+                                                
+                                                <!-- Pages autour de la page actuelle -->
+                                                <?php
+                                                $start_page = max(1, $page - 2);
+                                                $end_page = min($total_pages, $page + 2);
+                                                
+                                                for ($i = $start_page; $i <= $end_page; $i++):
+                                                ?>
+                                                    <li class="page-item <?php echo ($i == $page) ? 'active' : ''; ?>">
+                                                        <a class="page-link" href="<?php echo $base_url; ?>&p=<?php echo $i; ?>">
+                                                            <?php echo $i; ?>
+                                                        </a>
+                                                    </li>
+                                                <?php endfor; ?>
+                                                
+                                                <!-- Dernière page -->
+                                                <?php if ($page < $total_pages): ?>
+                                                    <li class="page-item">
+                                                        <a class="page-link" href="<?php echo $base_url; ?>&p=<?php echo ($page + 1); ?>">
+                                                            <i class="fas fa-angle-right"></i>
+                                                        </a>
+                                                    </li>
+                                                    <li class="page-item">
+                                                        <a class="page-link" href="<?php echo $base_url; ?>&p=<?php echo $total_pages; ?>">
+                                                            <i class="fas fa-angle-double-right"></i>
+                                                        </a>
+                                                    </li>
+                                                <?php endif; ?>
+                                            </ul>
+                                        </nav>
+                                    <?php endif; ?>
+                                    
+                                <?php else: ?>
+                                    <!-- Affichage groupé -->
+                                    <?php foreach ($grouped_logs as $group_key => $group_logs): ?>
+                                        <div class="card mb-4 group-card">
+                                            <div class="card-header">
+                                                <h5 class="mb-0">
+                                                    <?php
+                                                    switch ($group_by) {
+                                                        case 'date':
+                                                            echo '<i class="fas fa-calendar me-2"></i>' . date('d/m/Y', strtotime($group_key));
+                                                            break;
+                                                        case 'repair':
+                                                            echo '<i class="fas fa-tools me-2"></i>Réparation #' . $group_key;
+                                                            if (isset($group_logs[0])) {
+                                                                echo ' - ' . htmlspecialchars($group_logs[0]['type_appareil'] . ' ' . $group_logs[0]['modele']);
+                                                            }
+                                                            break;
+                                                        case 'employee':
+                                                            if (isset($group_logs[0])) {
+                                                                echo '<i class="fas fa-user me-2"></i>' . htmlspecialchars($group_logs[0]['employe_nom']);
+                                                            }
+                                                            break;
+                                                    }
+                                                    ?>
+                                                    <span class="badge bg-primary ms-2"><?php echo count($group_logs); ?> logs</span>
+                                                </h5>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="timeline">
+                                                    <?php foreach ($group_logs as $log): ?>
+                                                        <div class="timeline-item timeline-item-sm">
+                                                            <div class="timeline-icon bg-<?php echo get_action_color($log['action_type'], $log['log_source']); ?>">
+                                                                <i class="fas fa-<?php echo get_action_icon($log['action_type'], $log['log_source']); ?>"></i>
+                                                            </div>
+                                                            <div class="timeline-content log-card">
+                                                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                                                    <span class="timeline-date">
+                                                                        <i class="far fa-clock me-1"></i>
+                                                                        <?php echo format_datetime($log['date_action']); ?>
+                                                                    </span>
+                                                                    <span class="log-badge bg-<?php echo get_action_color($log['action_type'], $log['log_source']); ?>">
+                                                                        <?php echo get_action_label($log['action_type'], $log['log_source']); ?>
+                                                                    </span>
+                                                                </div>
+                                                                
+                                                                <div class="row">
+                                                                    <?php if ($group_by !== 'employee'): ?>
+                                                                    <div class="col-md-4">
+                                                                        <small class="text-muted">Employé:</small><br>
+                                                                        <span class="text-<?php echo get_employe_color($log['employe_nom']); ?>">
+                                                                            <?php echo htmlspecialchars($log['employe_nom']); ?>
+                                                                        </span>
+                                                                    </div>
                                                                     <?php endif; ?>
-                                                                    <?php if ($log['statut_apres']): ?>
-                                                                        <span class="log-badge bg-<?php echo get_action_color($log['action_type']); ?>"><?php echo htmlspecialchars($log['statut_apres']); ?></span>
+                                                                    
+                                                                    <?php if ($group_by !== 'repair'): ?>
+                                                                    <div class="col-md-4">
+                                                                        <?php if ($log['log_source'] === 'task'): ?>
+                                                                            <small class="text-muted">Tâche:</small><br>
+                                                                            <span class="text-decoration-none">
+                                                                                <i class="fas fa-tasks me-1"></i>
+                                                                                <?php echo htmlspecialchars($log['task_title'] ?: 'Tâche #' . $log['entity_id']); ?>
+                                                                            </span>
+                                                                        <?php else: ?>
+                                                                            <small class="text-muted">Réparation:</small><br>
+                                                                            <a href="index.php?page=details_reparation&id=<?php echo $log['entity_id']; ?>" class="text-decoration-none">
+                                                                                <i class="fas fa-tools me-1"></i>
+                                                                                #<?php echo $log['entity_id']; ?>
+                                                                            </a>
+                                                                        <?php endif; ?>
+                                                                    </div>
                                                                     <?php endif; ?>
-                                                                </p>
-                                                            <?php endif; ?>
-                                                            <?php if ($log['details']): ?>
-                                                                <p>
-                                                                    <strong><i class="fas fa-info-circle me-1"></i> Détails:</strong>
-                                                                    <?php echo htmlspecialchars($log['details']); ?>
-                                                                </p>
-                                                            <?php endif; ?>
+                                                                    
+                                                                    <div class="col-md-4">
+                                                                        <?php if ($log['statut_avant'] && $log['statut_apres']): ?>
+                                                                            <small class="text-muted">Statut:</small><br>
+                                                                            <span class="badge bg-secondary badge-sm me-1"><?php echo htmlspecialchars($log['statut_avant']); ?></span>
+                                                                            <i class="fas fa-arrow-right mx-1 small"></i>
+                                                                            <span class="badge bg-success badge-sm"><?php echo htmlspecialchars($log['statut_apres']); ?></span>
+                                                                        <?php endif; ?>
+                                                                    </div>
+                                                                </div>
+                                                                
+                                                                <?php if ($log['details']): ?>
+                                                                    <div class="mt-2">
+                                                                        <small class="text-muted">Détails:</small><br>
+                                                                        <small><?php echo htmlspecialchars($log['details']); ?></small>
+                                                                    </div>
+                                                                <?php endif; ?>
+                                                            </div>
+                                                        </div>
+                                                    <?php endforeach; ?>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                </div>
+                
+                                <!-- Onglet Réparations par employé -->
+                <div class="tab-pane fade <?php echo ($view_mode === 'employees') ? 'show active' : ''; ?>" id="employees-tab-pane" role="tabpanel" aria-labelledby="employees-tab" tabindex="0">
+                    <div class="card">
+                        <div class="card-body">
+                            <?php if (empty($employees)): ?>
+                                <div class="alert alert-info">
+                                    <i class="fas fa-info-circle me-2"></i>
+                                    Aucun employé trouvé avec des logs pour les critères sélectionnés.
+                                </div>
+                            <?php else: ?>
+                                <!-- Simple vue par employé - résumé -->
+                                <div class="row">
+                                    <?php foreach ($employees as $emp_id => $employee): ?>
+                                        <div class="col-lg-6 mb-3">
+                                            <div class="card employee-summary-card">
+                                                <div class="card-header <?php echo get_employe_background_color($employee['name']); ?>">
+                                                    <h6 class="mb-0">
+                                                        <i class="fas fa-user me-2"></i>
+                                                        <?php echo htmlspecialchars($employee['name']); ?>
+                                                    </h6>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-6">
+                                                            <small class="text-muted">Réparations</small>
+                                                            <div class="h5 mb-0"><?php echo count($employee['repairs']); ?></div>
+                                                        </div>
+                                                        <div class="col-6">
+                                                            <small class="text-muted">Tâches</small>
+                                                            <div class="h5 mb-0"><?php echo count($employee['tasks']); ?></div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1102,7 +2046,14 @@ function calculate_total_work_time_from_interventions($repairs) {
                         <div class="card-header bg-primary text-white">
                             <h5 class="mb-0">
                                 <i class="fas fa-user-clock me-2"></i>
-                                Réparations par employé
+                                Activités par employé
+                                <?php if ($log_type === 'tasks'): ?>
+                                    (Tâches uniquement)
+                                <?php elseif ($log_type === 'repairs'): ?>
+                                    (Réparations uniquement)
+                                <?php else: ?>
+                                    (Réparations et Tâches)
+                                <?php endif; ?>
                             </h5>
                         </div>
                         <div class="card-body">
@@ -1151,10 +2102,11 @@ function calculate_total_work_time_from_interventions($repairs) {
                                                             <thead class="table-light">
                                                                 <tr>
                                                                     <th width="5%">#</th>
-                                                                    <th width="15%">Client / Appareil</th>
-                                                                    <th width="25%">Description</th>
-                                                                    <th width="20%">Démarrage</th>
-                                                                    <th width="20%">Fin</th>
+                                                                    <th width="10%">Type</th>
+                                                                    <th width="20%">Réparation/Tâche</th>
+                                                                    <th width="20%">Description</th>
+                                                                    <th width="15%">Démarrage</th>
+                                                                    <th width="15%">Fin</th>
                                                                     <th width="15%">Durée</th>
                                                                 </tr>
                                                             </thead>
@@ -1179,18 +2131,40 @@ function calculate_total_work_time_from_interventions($repairs) {
                                                                 $previous_repair_end = null;
                                                                 $sorted_repairs = [];
                                                                 
-                                                                // Inverser l'ordre pour afficher du plus ancien au plus récent
+                                                                // Combiner réparations et tâches selon le type de log
                                                                 $temp_interventions = [];
-                                                                foreach ($employee['repairs'] as $repair) {
-                                                                    $sequences = get_all_repair_sequences($repair['logs']);
-                                                                    
-                                                                    // Pour chaque séquence (démarrage-fin), créer une intervention
-                                                                    foreach ($sequences as $sequence) {
-                                                                        $temp_interventions[] = [
-                                                                            'repair' => $repair,
-                                                                            'start' => $sequence['start'],
-                                                                            'end' => $sequence['end']
-                                                                        ];
+                                                                
+                                                                // Ajouter les réparations si on les affiche
+                                                                if ($log_type !== 'tasks') {
+                                                                    foreach ($employee['repairs'] as $repair) {
+                                                                        $sequences = get_all_repair_sequences($repair['logs']);
+                                                                        
+                                                                        // Pour chaque séquence (démarrage-fin), créer une intervention
+                                                                        foreach ($sequences as $sequence) {
+                                                                            $temp_interventions[] = [
+                                                                                'type' => 'repair',
+                                                                                'repair' => $repair,
+                                                                                'start' => $sequence['start'],
+                                                                                'end' => $sequence['end']
+                                                                            ];
+                                                                        }
+                                                                    }
+                                                                }
+                                                                
+                                                                // Ajouter les tâches si on les affiche
+                                                                if ($log_type !== 'repairs') {
+                                                                    foreach ($employee['tasks'] as $task) {
+                                                                        $task_sequences = get_all_task_sequences($task['logs']);
+                                                                        
+                                                                        // Pour chaque séquence (démarrage-fin), créer une intervention
+                                                                        foreach ($task_sequences as $sequence) {
+                                                                            $temp_interventions[] = [
+                                                                                'type' => 'task',
+                                                                                'task' => $task,
+                                                                                'start' => $sequence['start'],
+                                                                                'end' => $sequence['end']
+                                                                            ];
+                                                                        }
                                                                     }
                                                                 }
                                                                 
@@ -1210,7 +2184,8 @@ function calculate_total_work_time_from_interventions($repairs) {
                                                                 $row_class = '';
                                                                 
                                                                 foreach ($temp_interventions as $index => $intervention): 
-                                                                    $repair = $intervention['repair'];
+                                                                    $is_repair = ($intervention['type'] === 'repair');
+                                                                    $item = $is_repair ? $intervention['repair'] : $intervention['task'];
                                                                     $start = $intervention['start'];
                                                                     $end = $intervention['end'];
                                                                     $repair_count++;
@@ -1272,25 +2247,50 @@ function calculate_total_work_time_from_interventions($repairs) {
                                                                 ?>
                                                                 <tr class="<?php echo $row_class; ?>">
                                                                     <td>
-                                                                        <a href="index.php?page=details_reparation&id=<?php echo $repair['id']; ?>" class="btn btn-sm btn-outline-<?php echo get_employe_color($employee['name']); ?>">
-                                                                            #<?php echo $repair['id']; ?>
-                                                                        </a>
+                                                                        <?php if ($is_repair): ?>
+                                                                            <a href="index.php?page=details_reparation&id=<?php echo $item['id']; ?>" class="btn btn-sm btn-outline-<?php echo get_employe_color($employee['name']); ?>">
+                                                                                #<?php echo $item['id']; ?>
+                                                                            </a>
+                                                                        <?php else: ?>
+                                                                            <a href="index.php?page=taches&task_id=<?php echo $item['id']; ?>&open_modal=1" class="btn btn-sm btn-outline-<?php echo get_employe_color($employee['name']); ?>">
+                                                                                T#<?php echo $item['id']; ?>
+                                                                            </a>
+                                                                        <?php endif; ?>
                                                                     </td>
                                                                     <td>
-                                                                        <div>
-                                                                            <a href="#" class="text-decoration-none client-info-link" data-bs-toggle="modal" data-bs-target="#clientModal" data-client-id="<?php echo $repair['client_id']; ?>">
-                                                                                <i class="fas fa-user-tie me-1 text-muted"></i>
-                                                                                <?php echo htmlspecialchars($repair['client_nom']); ?>
-                                                                            </a>
-                                                                        </div>
-                                                                        <div class="text-muted small">
-                                                                            <i class="fas fa-<?php echo $repair['type_appareil'] === 'Smartphone' ? 'mobile-alt' : 'laptop'; ?> me-1"></i>
-                                                                            <?php echo htmlspecialchars($repair['type_appareil'] . ' ' . $repair['modele']); ?>
-                                                                        </div>
+                                                                        <?php if ($is_repair): ?>
+                                                                            <span class="badge bg-primary">
+                                                                                <i class="fas fa-tools me-1"></i>
+                                                                                Réparation
+                                                                            </span>
+                                                                        <?php else: ?>
+                                                                            <span class="badge bg-success">
+                                                                                <i class="fas fa-tasks me-1"></i>
+                                                                                Tâche
+                                                                            </span>
+                                                                        <?php endif; ?>
+                                                                    </td>
+                                                                    <td>
+                                                                        <?php if ($is_repair): ?>
+                                                                            <div>
+                                                                                <a href="#" class="text-decoration-none client-info-link" data-bs-toggle="modal" data-bs-target="#clientModal" data-client-id="<?php echo $item['client_id']; ?>">
+                                                                                    <i class="fas fa-user-tie me-1 text-muted"></i>
+                                                                                    <?php echo htmlspecialchars($item['client_nom']); ?>
+                                                                                </a>
+                                                                            </div>
+                                                                            <div class="text-muted small">
+                                                                                <i class="fas fa-<?php echo $item['type_appareil'] === 'Smartphone' ? 'mobile-alt' : 'laptop'; ?> me-1"></i>
+                                                                                <?php echo htmlspecialchars($item['type_appareil'] . ' ' . $item['modele']); ?>
+                                                                            </div>
+                                                                        <?php else: ?>
+                                                                            <div class="fw-bold">
+                                                                                <?php echo htmlspecialchars($item['title']); ?>
+                                                                            </div>
+                                                                        <?php endif; ?>
                                                                     </td>
                                                                     <td>
                                                                         <div class="text-wrap small">
-                                                                            <?php echo !empty($repair['description']) ? htmlspecialchars($repair['description']) : '<span class="text-muted">Aucune description</span>'; ?>
+                                                                            <?php echo !empty($item['description']) ? htmlspecialchars($item['description']) : '<span class="text-muted">Aucune description</span>'; ?>
                                                                         </div>
                                                                     </td>
                                                                     <td>
@@ -1518,6 +2518,37 @@ function calculate_total_work_time_from_interventions($repairs) {
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('Page reparation_logs chargée');
+    
+    // Fonction pour afficher un indicateur de chargement
+    function showLoadingIndicator() {
+        // Créer ou afficher un indicateur de chargement
+        let loadingIndicator = document.getElementById('loadingIndicator');
+        if (!loadingIndicator) {
+            loadingIndicator = document.createElement('div');
+            loadingIndicator.id = 'loadingIndicator';
+            loadingIndicator.innerHTML = `
+                <div class="d-flex justify-content-center align-items-center" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 9999;">
+                    <div class="bg-white p-4 rounded shadow">
+                        <div class="d-flex align-items-center">
+                            <div class="spinner-border text-primary me-3" role="status">
+                                <span class="visually-hidden">Chargement...</span>
+                            </div>
+                            <span>Application des filtres...</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(loadingIndicator);
+        } else {
+            loadingIndicator.style.display = 'block';
+        }
+    }
+    
+    // Vérifier que le formulaire existe
+    const filterForm = document.getElementById('filterForm');
+    console.log('Formulaire filterForm trouvé:', !!filterForm);
+    
     // Animation pour les éléments de la timeline
     const timelineItems = document.querySelectorAll('.timeline-item');
     
@@ -1779,14 +2810,197 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // Gestion des filtres de type de log (Tout / Réparations / Tâches)
+    const logTypeButtons = document.querySelectorAll('input[name="log_type"]');
+    console.log('Filtres de type de log trouvés:', logTypeButtons.length);
+    
+    logTypeButtons.forEach(button => {
+        // Utiliser 'click' au lieu de 'change' pour une meilleure compatibilité
+        button.addEventListener('click', function() {
+            console.log('Clic sur filtre de type de log:', this.value);
+            // Ajouter un indicateur de chargement
+            const form = document.getElementById('filterForm');
+            if (form) {
+                // Afficher un indicateur de chargement
+                showLoadingIndicator();
+                
+                // Soumettre automatiquement le formulaire
+                setTimeout(() => {
+                    console.log('Soumission du formulaire pour type de log:', this.value);
+                    form.submit();
+                }, 200);
+            } else {
+                console.error('Formulaire filterForm non trouvé !');
+            }
+        });
+    });
+    
+    // Gestion des filtres rapides
+    const quickFilterButtons = document.querySelectorAll('input[name="quick_filter"]');
+    console.log('Filtres rapides trouvés:', quickFilterButtons.length);
+    
+    quickFilterButtons.forEach(button => {
+        button.addEventListener('change', function() {
+            console.log('Changement de filtre rapide:', this.value);
+            if (this.checked) {
+                // Vider les champs de dates personnalisées
+                const dateDebut = document.getElementById('date_debut');
+                const dateFin = document.getElementById('date_fin');
+                if (dateDebut) dateDebut.value = '';
+                if (dateFin) dateFin.value = '';
+                
+                // Ajouter un indicateur de chargement
+                const form = document.getElementById('filterForm');
+                if (form) {
+                    // Afficher un indicateur de chargement
+                    showLoadingIndicator();
+                    
+                    // Soumettre automatiquement le formulaire
+                    setTimeout(() => {
+                        console.log('Soumission du formulaire pour filtre rapide:', this.value);
+                        form.submit();
+                    }, 100);
+                } else {
+                    console.error('Formulaire filterForm non trouvé !');
+                }
+            }
+        });
+    });
+
+    // Fonction de réinitialisation des filtres
+    document.getElementById('resetFilters').addEventListener('click', function() {
+        window.location.href = 'index.php?page=reparation_logs';
+    });
+
+    // Auto-soumission pour certains champs
+    const autoSubmitFields = ['view_mode', 'group_by', 'sort_by', 'sort_order', 'log_type', 'quick_filter'];
+    autoSubmitFields.forEach(fieldName => {
+        const field = document.getElementById(fieldName);
+        if (field) {
+            field.addEventListener('change', function() {
+                console.log('Auto-soumission pour le champ:', fieldName, 'valeur:', this.value);
+                showLoadingIndicator();
+                setTimeout(() => {
+                    document.getElementById('filterForm').submit();
+                }, 100);
+            });
+        }
+    });
+
+    // Recherche en temps réel améliorée
+    let searchTimeout;
+    const searchInput = document.getElementById('search_term');
+    if (searchInput) {
+        searchInput.addEventListener('input', function() {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(() => {
+                // Recherche côté client pour l'affichage actuel
+                const searchTerm = this.value.toLowerCase();
+                
+                if (document.getElementById('timeline-tab-pane').classList.contains('active')) {
+                    // Recherche dans la timeline
+                    const timelineItems = document.querySelectorAll('.timeline-item');
+                    let visibleCount = 0;
+                    
+                    timelineItems.forEach(item => {
+                        const text = item.textContent.toLowerCase();
+                        const isVisible = text.includes(searchTerm);
+                        item.style.display = isVisible ? '' : 'none';
+                        if (isVisible) visibleCount++;
+                    });
+                    
+                    // Mettre à jour le compteur si présent
+                    updateResultsCount(visibleCount);
+                } else if (document.getElementById('employees-tab-pane').classList.contains('active')) {
+                    // Recherche dans les réparations par employé
+                    const repairRows = document.querySelectorAll('.employee-card tbody tr:not(.inactive-time-row)');
+                    repairRows.forEach(row => {
+                        const text = row.textContent.toLowerCase();
+                        row.style.display = text.includes(searchTerm) ? '' : 'none';
+                    });
+                    
+                    // Masquer les cartes d'employés qui n'ont aucune réparation visible
+                    const employeeCards = document.querySelectorAll('.employee-card');
+                    employeeCards.forEach(card => {
+                        const visibleRows = card.querySelectorAll('tbody tr:not(.inactive-time-row):not([style*="display: none"])');
+                        card.style.display = visibleRows.length > 0 ? '' : 'none';
+                    });
+                }
+            }, 300); // Délai de 300ms
+        });
+        
+        // Soumission du formulaire sur Enter pour recherche côté serveur
+        searchInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                document.getElementById('filterForm').submit();
+            }
+        });
+    }
+
+    // Fonction pour mettre à jour le compteur de résultats
+    function updateResultsCount(count) {
+        const badge = document.querySelector('#timeline-tab .badge');
+        if (badge) {
+            badge.textContent = count.toLocaleString();
+        }
+    }
+
+    // Synchronisation des onglets avec le mode d'affichage
+    const tabButtons = document.querySelectorAll('[data-bs-toggle="tab"]');
+    tabButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const targetTab = this.getAttribute('data-bs-target');
+            const viewMode = targetTab === '#timeline-tab-pane' ? 'timeline' : 'employees';
+            
+            // Mettre à jour le champ caché
+            const viewModeField = document.getElementById('view_mode');
+            if (viewModeField && viewModeField.value !== viewMode) {
+                viewModeField.value = viewMode;
+                // Soumettre automatiquement pour actualiser les données
+                document.getElementById('filterForm').submit();
+            }
+        });
+    });
+
+    // Animation d'apparition pour les nouveaux éléments
+    function animateNewElements() {
+        const newElements = document.querySelectorAll('.timeline-item, .group-card, .employee-card');
+        newElements.forEach((element, index) => {
+            element.style.opacity = '0';
+            element.style.transform = 'translateY(20px)';
+            
+            setTimeout(() => {
+                element.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                element.style.opacity = '1';
+                element.style.transform = 'translateY(0)';
+            }, index * 50); // Décalage de 50ms entre chaque élément
+        });
+    }
+
+    // Appliquer l'animation au chargement
+    animateNewElements();
+
+    // Gestion des filtres avancés
+    const advancedFiltersToggle = document.querySelector('[data-bs-target="#advancedFilters"]');
+    if (advancedFiltersToggle) {
+        advancedFiltersToggle.addEventListener('click', function() {
+            const icon = this.querySelector('i');
+            setTimeout(() => {
+                if (document.getElementById('advancedFilters').classList.contains('show')) {
+                    icon.className = 'fas fa-cog me-1';
+                } else {
+                    icon.className = 'fas fa-cog me-1';
+                }
+            }, 350);
+        });
+    }
+
     // Fonction pour appliquer rapidement un filtre de date et soumettre le formulaire
     function applyQuickDateFilter(periode) {
-        // Remplir les valeurs du formulaire de filtrage avancé
-        document.getElementById('periode').value = periode;
-        setPeriode(periode);
-        
-        // Soumettre le formulaire
-        document.querySelector('form[action="index.php"]').submit();
+        // Cette fonction est conservée pour la compatibilité mais n'est plus utilisée
+        // Les filtres rapides sont maintenant gérés par les boutons radio
+        console.warn('applyQuickDateFilter est dépréciée, utilisez les boutons radio');
     }
 
     // Créer le bouton de toggle

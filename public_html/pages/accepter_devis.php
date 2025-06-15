@@ -19,8 +19,10 @@ $client = null;
 // Vérifier si l'ID de réparation et le token sont fournis
 if ($reparation_id && $token) {
     try {
+        $shop_pdo = getShopDBConnection();
+        
         // Vérifier si la réparation existe et si elle est en attente d'accord client
-        $stmt = $pdo->prepare("
+        $stmt = $shop_pdo->prepare("
             SELECT r.*, c.nom as client_nom, c.prenom as client_prenom, c.email as client_email, c.telephone as client_telephone
             FROM reparations r
             JOIN clients c ON r.client_id = c.id
@@ -38,7 +40,7 @@ if ($reparation_id && $token) {
                 // Si le formulaire a été soumis pour accepter le devis
                 if (isset($_POST['accepter_devis'])) {
                     // Récupérer le statut en cours de réparation
-                    $stmt = $pdo->prepare("SELECT id FROM statuts_reparation WHERE code = 'en_cours_intervention'");
+                    $stmt = $shop_pdo->prepare("SELECT id FROM statuts_reparation WHERE code = 'en_cours_intervention'");
                     $stmt->execute();
                     $nouveau_statut = $stmt->fetch(PDO::FETCH_ASSOC);
                     
@@ -47,7 +49,7 @@ if ($reparation_id && $token) {
                         $old_status = $reparation['statut'];
                         
                         // Mettre à jour le statut de la réparation
-                        $stmt = $pdo->prepare("
+                        $stmt = $shop_pdo->prepare("
                             UPDATE reparations 
                             SET statut = 'en_cours_intervention', 
                                 statut_id = ?, 
@@ -58,7 +60,7 @@ if ($reparation_id && $token) {
                         
                         if ($result) {
                             // Ajouter une entrée dans le journal des modifications
-                            $stmt = $pdo->prepare("
+                            $stmt = $shop_pdo->prepare("
                                 INSERT INTO reparation_logs 
                                 (reparation_id, action_type, statut_avant, statut_apres, date_action, details) 
                                 VALUES (?, 'changement_statut', ?, 'en_cours_intervention', NOW(), ?)

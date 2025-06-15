@@ -1,5 +1,7 @@
 <?php
+require_once __DIR__ . '/../config/database.php';
 // Vérifier si l'utilisateur est connecté et est administrateur
+$shop_pdo = getShopDBConnection();
 if (!isset($_SESSION['user_id']) || !$_SESSION['is_admin']) {
     header("Location: index.php?page=knowledge_base");
     exit;
@@ -9,12 +11,12 @@ if (!isset($_SESSION['user_id']) || !$_SESSION['is_admin']) {
 require_once 'includes/db.php';
 
 // Récupérer les catégories
-$stmt = $db->prepare("SELECT * FROM kb_categories ORDER BY name");
+$stmt = $shop_pdo->prepare("SELECT * FROM kb_categories ORDER BY name");
 $stmt->execute();
 $categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // Récupérer les tags
-$stmt = $db->prepare("SELECT * FROM kb_tags ORDER BY name");
+$stmt = $shop_pdo->prepare("SELECT * FROM kb_tags ORDER BY name");
 $stmt->execute();
 $tags = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -38,25 +40,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         try {
             // Début de la transaction
-            $db->beginTransaction();
+            $shop_pdo->beginTransaction();
             
             // Insérer l'article
-            $stmt = $db->prepare("INSERT INTO kb_articles (title, content, category_id, created_at, updated_at, views) 
+            $stmt = $shop_pdo->prepare("INSERT INTO kb_articles (title, content, category_id, created_at, updated_at, views) 
                                  VALUES (?, ?, ?, NOW(), NOW(), 0)");
             $stmt->execute([$title, $content, $category_id]);
             
-            $article_id = $db->lastInsertId();
+            $article_id = $shop_pdo->lastInsertId();
             
             // Ajouter les tags
             if (!empty($selected_tags)) {
-                $stmt = $db->prepare("INSERT INTO kb_article_tags (article_id, tag_id) VALUES (?, ?)");
+                $stmt = $shop_pdo->prepare("INSERT INTO kb_article_tags (article_id, tag_id) VALUES (?, ?)");
                 foreach ($selected_tags as $tag_id) {
                     $stmt->execute([$article_id, $tag_id]);
                 }
             }
             
             // Valider la transaction
-            $db->commit();
+            $shop_pdo->commit();
             
             $success = "L'article a été ajouté avec succès";
             // Redirection vers l'article nouvellement créé
@@ -65,7 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             
         } catch (PDOException $e) {
             // Annuler la transaction en cas d'erreur
-            $db->rollBack();
+            $shop_pdo->rollBack();
             $error = "Une erreur est survenue lors de l'ajout de l'article: " . $e->getMessage();
         }
     }

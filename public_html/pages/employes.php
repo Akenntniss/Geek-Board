@@ -4,7 +4,7 @@ $pdo = getShopDBConnection();
 
 // Vérification de la base de données actuelle
 try {
-    $db_check = $pdo->query("SELECT DATABASE() as current_db");
+    $db_check = $shop_pdo->query("SELECT DATABASE() as current_db");
     $current_db = $db_check->fetch(PDO::FETCH_ASSOC);
     error_log("Page employes.php - Base de données utilisée: " . $current_db['current_db']);
 } catch (PDOException $e) {
@@ -13,7 +13,7 @@ try {
 
 // Récupération de la liste des utilisateurs
 try {
-    $stmt = $pdo->query("
+    $stmt = $shop_pdo->query("
         SELECT u.*, 
                COUNT(t.id) as nombre_taches,
                COUNT(CASE WHEN t.statut = 'a_faire' THEN 1 END) as taches_en_attente
@@ -34,14 +34,14 @@ if (isset($_GET['delete'])) {
     
     try {
         // Vérifier si l'utilisateur a des tâches associées
-        $stmt = $pdo->prepare("SELECT COUNT(*) FROM taches WHERE employe_id = ?");
+        $stmt = $shop_pdo->prepare("SELECT COUNT(*) FROM taches WHERE employe_id = ?");
         $stmt->execute([$id]);
         $has_tasks = $stmt->fetchColumn() > 0;
         
         if ($has_tasks) {
             set_message("Impossible de supprimer l'utilisateur car il a des tâches associées.", "error");
         } else {
-            $stmt = $pdo->prepare("DELETE FROM users WHERE id = ?");
+            $stmt = $shop_pdo->prepare("DELETE FROM users WHERE id = ?");
             $stmt->execute([$id]);
             set_message("Utilisateur supprimé avec succès!", "success");
             redirect("employes");

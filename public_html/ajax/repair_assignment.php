@@ -48,8 +48,8 @@ if ($shop_id === null) {
 file_put_contents($logFile, "Shop ID utilisé: " . ($shop_id ?: 'non défini') . "\n", FILE_APPEND);
 
 // Utiliser la connexion à la base de données du magasin
-$pdo = getShopDBConnection();
-if (!$pdo) {
+$shop_pdo = getShopDBConnection();
+if (!$shop_pdo) {
     file_put_contents($logFile, "ERREUR: Impossible d'obtenir une connexion à la base de données du magasin\n", FILE_APPEND);
     echo json_encode([
         'success' => false,
@@ -60,7 +60,7 @@ if (!$pdo) {
 
 // Vérifier que nous sommes connectés à la bonne base de données
 try {
-    $check_db_stmt = $pdo->query("SELECT DATABASE() as current_db");
+    $check_db_stmt = $shop_pdo->query("SELECT DATABASE() as current_db");
     $current_db_info = $check_db_stmt->fetch(PDO::FETCH_ASSOC);
     file_put_contents($logFile, "Base de données connectée: " . ($current_db_info['current_db'] ?? 'inconnue') . "\n", FILE_APPEND);
 } catch (Exception $e) {
@@ -99,15 +99,15 @@ if ($reparation_id <= 0) {
 }
 
 // Fonction pour vérifier si l'utilisateur a déjà une réparation active
-function getUserActiveRepair($pdo, $user_id) {
+function getUserActiveRepair($shop_pdo, $user_id) {
     // Vérifier si l'utilisateur a une réparation active dans la table users
-    $stmt = $pdo->prepare("SELECT active_repair_id FROM users WHERE id = ? AND active_repair_id IS NOT NULL");
+    $stmt = $shop_pdo->prepare("SELECT active_repair_id FROM users WHERE id = ? AND active_repair_id IS NOT NULL");
     $stmt->execute([$user_id]);
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     
     if ($result && $result['active_repair_id']) {
         // Récupérer les détails de la réparation active
-        $stmt = $pdo->prepare("
+        $stmt = $shop_pdo->prepare("
             SELECT r.*, s.nom as statut_nom
             FROM reparations r
             LEFT JOIN statuts s ON r.statut = s.code
@@ -121,13 +121,13 @@ function getUserActiveRepair($pdo, $user_id) {
 }
 
 // Fonction pour attribuer une réparation à un utilisateur
-function assignRepairToUser($pdo, $user_id, $reparation_id, $statut_code = null) {
+function assignRepairToUser($shop_pdo, $user_id, $reparation_id, $statut_code = null) {
     try {
         // Démarrer une transaction
-        $pdo->beginTransaction();
+        $shop_pdo->beginTransaction();
         
         // Mettre à jour l'employe_id dans la table réparations
-        $stmt = $pdo->prepare("
+        $stmt = $shop_pdo->prepare("
             UPDATE reparations 
             SET employe_id = ?, 
                 date_modification = NOW()
@@ -142,7 +142,7 @@ function assignRepairToUser($pdo, $user_id, $reparation_id, $statut_code = null)
         }
         
         // Mettre à jour le champ active_repair_id dans la table users
-        $stmt = $pdo->prepare("
+        $stmt = $shop_pdo->prepare("
             UPDATE users 
             SET active_repair_id = ?, 
                 techbusy = 1
@@ -152,7 +152,7 @@ function assignRepairToUser($pdo, $user_id, $reparation_id, $statut_code = null)
         
         // Enregistrer dans les logs
         $action_message = "Réparation assignée à l'employé";
-        $stmt = $pdo->prepare("
+        $stmt = $shop_pdo->prepare("
             INSERT INTO reparation_logs 
             (reparation_id, employe_id, action_type, details, date_action)
             VALUES (?, ?, 'demarrage', ?, NOW())
@@ -160,32 +160,32 @@ function assignRepairToUser($pdo, $user_id, $reparation_id, $statut_code = null)
         $stmt->execute([$reparation_id, $user_id, $action_message]);
         
         // Valider la transaction
-        $pdo->commit();
+        $shop_pdo->commit();
         
         return true;
     } catch (PDOException $e) {
         // Annuler la transaction en cas d'erreur
-        $pdo->rollBack();
+        $shop_pdo->rollBack();
         error_log("Erreur lors de l'attribution de la réparation: " . $e->getMessage());
         return false;
     }
 }
 
 // Fonction pour compléter la réparation active et libérer l'utilisateur
-function completeActiveRepair($pdo, $user_id, $repair_id, $new_status = 'reparation_effectue') {
+function completeActiveRepair($shop_pdo, $user_id, $repair_id, $new_status = 'reparation_effectue') {
     try {
         // Démarrer une transaction
-        $pdo->beginTransaction();
+        $shop_pdo->beginTransaction();
         
         // Récupérer l'ancien statut pour les logs
-        $stmt = $pdo->prepare("SELECT statut, client_id FROM reparations WHERE id = ?");
+        $stmt = $shop_pdo->prepare("SELECT statut, client_id FROM reparations WHERE id = ?");
         $stmt->execute([$repair_id]);
         $repair_info = $stmt->fetch(PDO::FETCH_ASSOC);
         $old_status = $repair_info['statut'];
         $client_id = $repair_info['client_id'];
         
         // Mettre à jour le statut de la réparation
-        $stmt = $pdo->prepare("
+        $stmt = $shop_pdo->prepare("
             UPDATE reparations 
             SET statut = ?, 
                 date_modification = NOW()
@@ -194,7 +194,7 @@ function completeActiveRepair($pdo, $user_id, $repair_id, $new_status = 'reparat
         $stmt->execute([$new_status, $repair_id]);
         
         // Libérer l'utilisateur
-        $stmt = $pdo->prepare("
+        $stmt = $shop_pdo->prepare("
             UPDATE users 
             SET active_repair_id = NULL, 
                 techbusy = 0
@@ -204,7 +204,7 @@ function completeActiveRepair($pdo, $user_id, $repair_id, $new_status = 'reparat
         
         // Enregistrer dans les logs
         $action_message = "Réparation marquée comme " . $new_status;
-        $stmt = $pdo->prepare("
+        $stmt = $shop_pdo->prepare("
             INSERT INTO reparation_logs 
             (reparation_id, employe_id, action_type, statut_avant, statut_apres, details, date_action)
             VALUES (?, ?, 'changement_statut', ?, ?, ?, NOW())
@@ -216,7 +216,7 @@ function completeActiveRepair($pdo, $user_id, $repair_id, $new_status = 'reparat
         $sms_message = '';
         
         // Récupérer directement le statut_id depuis la table statuts pour le nouveau statut
-        $stmt = $pdo->prepare("SELECT id FROM statuts WHERE code = ?");
+        $stmt = $shop_pdo->prepare("SELECT id FROM statuts WHERE code = ?");
         $stmt->execute([$new_status]);
         $status_result = $stmt->fetch(PDO::FETCH_ASSOC);
         $statut_id = $status_result ? $status_result['id'] : 0;
@@ -226,7 +226,7 @@ function completeActiveRepair($pdo, $user_id, $repair_id, $new_status = 'reparat
         
         if ($statut_id > 0) {
             // Vérifier s'il existe un modèle SMS pour ce statut
-            $stmt = $pdo->prepare("
+            $stmt = $shop_pdo->prepare("
                 SELECT id, nom, contenu 
                 FROM sms_templates 
                 WHERE statut_id = ? AND est_actif = 1
@@ -239,7 +239,7 @@ function completeActiveRepair($pdo, $user_id, $repair_id, $new_status = 'reparat
                 error_log("SMS: Modèle trouvé - " . $template['nom']);
                 
                 // Récupérer les infos du client
-                $stmt = $pdo->prepare("
+                $stmt = $shop_pdo->prepare("
                     SELECT c.nom as client_nom, c.prenom as client_prenom, c.telephone as client_telephone,
                            r.type_appareil, r.marque, r.modele, r.date_reception, r.date_fin_prevue, r.prix as prix_reparation
                     FROM clients c
@@ -364,7 +364,7 @@ function completeActiveRepair($pdo, $user_id, $repair_id, $new_status = 'reparat
                     
                     // Enregistrer l'envoi du SMS dans la base de données
                     if ($sms_sent) {
-                        $stmt = $pdo->prepare("
+                        $stmt = $shop_pdo->prepare("
                             INSERT INTO reparation_sms (reparation_id, template_id, telephone, message, date_envoi, statut_id)
                             VALUES (?, ?, ?, ?, NOW(), ?)
                         ");
@@ -391,7 +391,7 @@ function completeActiveRepair($pdo, $user_id, $repair_id, $new_status = 'reparat
         }
         
         // Valider la transaction
-        $pdo->commit();
+        $shop_pdo->commit();
         
         return [
             'success' => true,
@@ -400,7 +400,7 @@ function completeActiveRepair($pdo, $user_id, $repair_id, $new_status = 'reparat
         ];
     } catch (PDOException $e) {
         // Annuler la transaction en cas d'erreur
-        $pdo->rollBack();
+        $shop_pdo->rollBack();
         error_log("Erreur lors de la complétion de la réparation: " . $e->getMessage());
         return [
             'success' => false,
@@ -412,7 +412,7 @@ function completeActiveRepair($pdo, $user_id, $repair_id, $new_status = 'reparat
 // Traitement des actions
 if ($action === 'check_active_repair') {
     // Vérifier si l'utilisateur a déjà une réparation active
-    $active_repair = getUserActiveRepair($pdo, $user_id);
+    $active_repair = getUserActiveRepair($shop_pdo, $user_id);
     
     if ($active_repair) {
         echo json_encode([
@@ -430,7 +430,7 @@ if ($action === 'check_active_repair') {
 }
 else if ($action === 'assign_repair') {
     // Vérifier si l'utilisateur a déjà une réparation active
-    $active_repair = getUserActiveRepair($pdo, $user_id);
+    $active_repair = getUserActiveRepair($shop_pdo, $user_id);
     
     if ($active_repair) {
         echo json_encode([
@@ -442,7 +442,7 @@ else if ($action === 'assign_repair') {
     }
     
     // Récupérer les informations sur la réparation
-    $stmt = $pdo->prepare("SELECT * FROM reparations WHERE id = ?");
+    $stmt = $shop_pdo->prepare("SELECT * FROM reparations WHERE id = ?");
     $stmt->execute([$reparation_id]);
     $repair = $stmt->fetch(PDO::FETCH_ASSOC);
     
@@ -458,7 +458,7 @@ else if ($action === 'assign_repair') {
     $new_status = 'en_cours_intervention';
     
     // Attribuer la réparation à l'utilisateur
-    if (assignRepairToUser($pdo, $user_id, $reparation_id, $new_status)) {
+    if (assignRepairToUser($shop_pdo, $user_id, $reparation_id, $new_status)) {
         echo json_encode([
             'success' => true,
             'message' => 'Réparation #' . $reparation_id . ' attribuée avec succès',
@@ -474,7 +474,7 @@ else if ($action === 'assign_repair') {
 }
 else if ($action === 'complete_active_repair') {
     // Vérifier que l'ID de réparation correspond à la réparation active de l'utilisateur
-    $active_repair = getUserActiveRepair($pdo, $user_id);
+    $active_repair = getUserActiveRepair($shop_pdo, $user_id);
     
     if (!$active_repair || $active_repair['id'] != $reparation_id) {
         echo json_encode([
@@ -488,7 +488,7 @@ else if ($action === 'complete_active_repair') {
     $final_status = isset($data['final_status']) ? $data['final_status'] : 'reparation_effectue';
     
     // Compléter la réparation active
-    $result = completeActiveRepair($pdo, $user_id, $reparation_id, $final_status);
+    $result = completeActiveRepair($shop_pdo, $user_id, $reparation_id, $final_status);
 
     if (is_array($result) && isset($result['success']) && $result['success']) {
         $response = [

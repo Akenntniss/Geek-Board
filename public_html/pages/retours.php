@@ -52,17 +52,10 @@ if (!isset($_SESSION['user_id'])) {
     redirect('index');
 }
 
-// Accéder à la variable globale $pdo
-global $pdo;
-
-// Vérifier si $pdo est défini et est un objet
-if (!isset($pdo) || !($pdo instanceof PDO)) {
-    require_once __DIR__ . '/../config/database.php';
-}
-
 // Récupérer les retours en cours
 try {
-    $stmt = $pdo->prepare("
+    $shop_pdo = getShopDBConnection();
+    $stmt = $shop_pdo->prepare("
         SELECT r.*, s.name as produit_nom, s.barcode, s.price as prix_achat
         FROM retours r
         JOIN stock s ON r.produit_id = s.id
@@ -78,7 +71,7 @@ try {
 
 // Récupérer les colis en cours
 try {
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         SELECT c.*, COUNT(r.id) as nombre_produits
         FROM colis_retour c
         LEFT JOIN retours r ON c.id = r.colis_id

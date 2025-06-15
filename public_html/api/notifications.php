@@ -7,6 +7,9 @@
 require_once __DIR__ . '/../config/database.php';
 require_once __DIR__ . '/../includes/functions.php';
 
+// Initialiser la connexion à la base de données boutique
+$shop_pdo = getShopDBConnection();
+
 // Vérifier si l'utilisateur est connecté
 session_start();
 if (!isset($_SESSION['user_id'])) {
@@ -39,23 +42,23 @@ $action = isset($_GET['action']) ? $_GET['action'] : 'get';
 switch ($action) {
     case 'get':
         // Récupérer les nouvelles notifications
-        getNewNotifications($pdo, $last_check);
+        getNewNotifications($shop_pdo, $last_check);
         break;
         
     case 'mark_read':
         // Marquer une notification comme lue
         $notification_id = isset($_POST['notification_id']) ? intval($_POST['notification_id']) : 0;
-        markNotificationAsRead($pdo, $notification_id);
+        markNotificationAsRead($shop_pdo, $notification_id);
         break;
         
     case 'mark_all_read':
         // Marquer toutes les notifications comme lues
-        markAllNotificationsAsRead($pdo);
+        markAllNotificationsAsRead($shop_pdo);
         break;
         
     case 'count':
         // Obtenir le nombre de notifications non lues
-        getUnreadCount($pdo);
+        getUnreadCount($shop_pdo);
         break;
         
     default:
@@ -70,16 +73,16 @@ switch ($action) {
 
 /**
  * Récupère les nouvelles notifications depuis la dernière vérification
- * @param PDO $pdo Instance PDO de connexion à la base de données
+ * @param PDO $shop_pdo Instance PDO de connexion à la base de données
  * @param string $last_check Date de dernière vérification
  */
-function getNewNotifications($pdo, $last_check) {
+function getNewNotifications($shop_pdo, $last_check) {
     $user_id = $_SESSION['user_id'];
     $notifications = [];
     
     try {
         // Récupérer les notifications de l'utilisateur qui n'ont pas été vues
-        $stmt = $pdo->prepare("
+        $stmt = $shop_pdo->prepare("
             SELECT n.*, nt.icon, nt.type
             FROM notifications n
             JOIN notification_types nt ON n.type_id = nt.id
@@ -107,7 +110,7 @@ function getNewNotifications($pdo, $last_check) {
         }
         
         // Récupérer les notifications système pour tous les utilisateurs
-        $stmt = $pdo->prepare("
+        $stmt = $shop_pdo->prepare("
             SELECT n.*, nt.icon, nt.type
             FROM notifications n
             JOIN notification_types nt ON n.type_id = nt.id
@@ -144,13 +147,13 @@ function getNewNotifications($pdo, $last_check) {
         }
         
         // Vérifier les notifications de réparation
-        $notifications = array_merge($notifications, getRepairNotifications($pdo, $last_check));
+        $notifications = array_merge($notifications, getRepairNotifications($shop_pdo, $last_check));
         
         // Vérifier les notifications de tâches
-        $notifications = array_merge($notifications, getTaskNotifications($pdo, $last_check));
+        $notifications = array_merge($notifications, getTaskNotifications($shop_pdo, $last_check));
         
         // Vérifier les notifications de messages
-        $notifications = array_merge($notifications, getMessageNotifications($pdo, $last_check));
+        $notifications = array_merge($notifications, getMessageNotifications($shop_pdo, $last_check));
         
         // Trier les notifications par date (plus récentes en premier)
         usort($notifications, function($a, $b) {
@@ -175,11 +178,11 @@ function getNewNotifications($pdo, $last_check) {
 
 /**
  * Récupère les notifications liées aux réparations
- * @param PDO $pdo Instance PDO de connexion à la base de données
+ * @param PDO $shop_pdo Instance PDO de connexion à la base de données
  * @param string $last_check Date de dernière vérification
  * @return array Liste des notifications de réparation
  */
-function getRepairNotifications($pdo, $last_check) {
+function getRepairNotifications($shop_pdo, $last_check) {
     $notifications = [];
     $user_id = $_SESSION['user_id'];
     
@@ -188,7 +191,7 @@ function getRepairNotifications($pdo, $last_check) {
         // Pour les techniciens, seulement leurs réparations assignées
         // Pour les admins, toutes les réparations
         if ($_SESSION['role'] === 'admin') {
-            $stmt = $pdo->prepare("
+            $stmt = $shop_pdo->prepare("
                 SELECT r.id, r.statut, r.marque, r.modele, r.type_appareil, 
                        c.nom AS client_nom, c.prenom AS client_prenom,
                        r.date_modification
@@ -200,7 +203,7 @@ function getRepairNotifications($pdo, $last_check) {
             ");
             $stmt->execute([$last_check]);
         } else {
-            $stmt = $pdo->prepare("
+            $stmt = $shop_pdo->prepare("
                 SELECT r.id, r.statut, r.marque, r.modele, r.type_appareil, 
                        c.nom AS client_nom, c.prenom AS client_prenom,
                        r.date_modification
@@ -242,17 +245,17 @@ function getRepairNotifications($pdo, $last_check) {
 
 /**
  * Récupère les notifications liées aux tâches
- * @param PDO $pdo Instance PDO de connexion à la base de données
+ * @param PDO $shop_pdo Instance PDO de connexion à la base de données
  * @param string $last_check Date de dernière vérification
  * @return array Liste des notifications de tâches
  */
-function getTaskNotifications($pdo, $last_check) {
+function getTaskNotifications($shop_pdo, $last_check) {
     $notifications = [];
     $user_id = $_SESSION['user_id'];
     
     try {
         // Tâches assignées à l'utilisateur ou créées depuis la dernière vérification
-        $stmt = $pdo->prepare("
+        $stmt = $shop_pdo->prepare("
             SELECT t.id, t.titre, t.description, t.priorite, t.statut, t.date_creation, t.date_echeance,
                    u.full_name AS assigne_nom
             FROM taches t
@@ -292,7 +295,7 @@ function getTaskNotifications($pdo, $last_check) {
         $today = date('Y-m-d');
         $tomorrow = date('Y-m-d', strtotime('+1 day'));
         
-        $stmt = $pdo->prepare("
+        $stmt = $shop_pdo->prepare("
             SELECT t.id, t.titre, t.priorite, t.date_echeance
             FROM taches t
             WHERE t.assigne_a = ?
@@ -328,17 +331,17 @@ function getTaskNotifications($pdo, $last_check) {
 
 /**
  * Récupère les notifications liées aux messages
- * @param PDO $pdo Instance PDO de connexion à la base de données
+ * @param PDO $shop_pdo Instance PDO de connexion à la base de données
  * @param string $last_check Date de dernière vérification
  * @return array Liste des notifications de messages
  */
-function getMessageNotifications($pdo, $last_check) {
+function getMessageNotifications($shop_pdo, $last_check) {
     $notifications = [];
     $user_id = $_SESSION['user_id'];
     
     try {
         // Nouveaux messages non lus
-        $stmt = $pdo->prepare("
+        $stmt = $shop_pdo->prepare("
             SELECT m.id, m.contenu, m.date_creation,
                    c.id as conversation_id,
                    u.full_name as expediteur_nom
@@ -384,14 +387,14 @@ function getMessageNotifications($pdo, $last_check) {
 
 /**
  * Marque une notification comme lue
- * @param PDO $pdo Instance PDO de connexion à la base de données
+ * @param PDO $shop_pdo Instance PDO de connexion à la base de données
  * @param int $notification_id ID de la notification
  */
-function markNotificationAsRead($pdo, $notification_id) {
+function markNotificationAsRead($shop_pdo, $notification_id) {
     $user_id = $_SESSION['user_id'];
     
     try {
-        $stmt = $pdo->prepare("
+        $stmt = $shop_pdo->prepare("
             UPDATE notifications 
             SET seen = 1
             WHERE id = ? AND (user_id = ? OR user_id IS NULL)
@@ -413,13 +416,13 @@ function markNotificationAsRead($pdo, $notification_id) {
 
 /**
  * Marque toutes les notifications de l'utilisateur comme lues
- * @param PDO $pdo Instance PDO de connexion à la base de données
+ * @param PDO $shop_pdo Instance PDO de connexion à la base de données
  */
-function markAllNotificationsAsRead($pdo) {
+function markAllNotificationsAsRead($shop_pdo) {
     $user_id = $_SESSION['user_id'];
     
     try {
-        $stmt = $pdo->prepare("
+        $stmt = $shop_pdo->prepare("
             UPDATE notifications 
             SET seen = 1
             WHERE user_id = ? OR user_id IS NULL
@@ -441,13 +444,13 @@ function markAllNotificationsAsRead($pdo) {
 
 /**
  * Récupère le nombre de notifications non lues
- * @param PDO $pdo Instance PDO de connexion à la base de données
+ * @param PDO $shop_pdo Instance PDO de connexion à la base de données
  */
-function getUnreadCount($pdo) {
+function getUnreadCount($shop_pdo) {
     $user_id = $_SESSION['user_id'];
     
     try {
-        $stmt = $pdo->prepare("
+        $stmt = $shop_pdo->prepare("
             SELECT COUNT(*) as count
             FROM notifications
             WHERE (user_id = ? OR user_id IS NULL)

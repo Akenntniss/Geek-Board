@@ -1,11 +1,11 @@
 <?php
 require_once __DIR__ . '/../config/database.php';
 
-// S'assurer que la variable $pdo est disponible
-global $pdo;
+// S'assurer que la variable $shop_pdo est disponible
+global $shop_pdo;
 
 // Vérifier si la connexion à la base de données est établie
-if (!isset($pdo) || !($pdo instanceof PDO)) {
+if (!isset($shop_pdo) || !($shop_pdo instanceof PDO)) {
     header('Content-Type: application/json');
     echo json_encode([
         'results' => [],
@@ -38,7 +38,7 @@ try {
     
     // Version simplifiée - Récupérer tous les produits si $search est vide
     if (empty($search)) {
-        $stmt = $pdo->prepare("
+        $stmt = $shop_pdo->prepare("
             SELECT 
                 id,
                 nom as text,
@@ -54,11 +54,11 @@ try {
         $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
         $stmt->execute();
         
-        $count_stmt = $pdo->prepare("SELECT COUNT(*) as total FROM produits WHERE quantite > 0");
+        $count_stmt = $shop_pdo->prepare("SELECT COUNT(*) as total FROM produits WHERE quantite > 0");
         $count_stmt->execute();
     } else {
         // Requête pour compter le nombre total de résultats
-        $count_stmt = $pdo->prepare("
+        $count_stmt = $shop_pdo->prepare("
             SELECT COUNT(*) as total
             FROM produits
             WHERE (nom LIKE :search OR reference LIKE :search)
@@ -68,7 +68,7 @@ try {
         $count_stmt->execute(['search' => $search_param]);
         
         // Requête pour récupérer les produits
-        $stmt = $pdo->prepare("
+        $stmt = $shop_pdo->prepare("
             SELECT 
                 id,
                 nom as text,

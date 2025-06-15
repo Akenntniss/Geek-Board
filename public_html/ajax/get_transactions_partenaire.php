@@ -29,7 +29,7 @@ if (!$partenaire_id) {
 
 try {
     // Récupérer toutes les transactions du partenaire
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         SELECT 
             t.*,
             p.nom as partenaire_nom
@@ -42,7 +42,7 @@ try {
     $transactions = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     // Récupérer le solde actuel
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         SELECT solde_actuel, derniere_mise_a_jour
         FROM soldes_partenaires
         WHERE partenaire_id = ?

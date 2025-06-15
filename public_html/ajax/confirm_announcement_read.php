@@ -20,7 +20,7 @@ $user_id = $_SESSION['user_id'];
 
 try {
     // Vérifier si le message est une annonce
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         SELECT m.*, c.type as conversation_type
         FROM messages m
         JOIN conversations c ON m.conversation_id = c.id
@@ -35,7 +35,7 @@ try {
     }
 
     // Vérifier si l'utilisateur a déjà lu l'annonce
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         SELECT 1 FROM lecture_annonces 
         WHERE message_id = ? AND user_id = ?
     ");
@@ -47,7 +47,7 @@ try {
     }
 
     // Vérifier si l'utilisateur a accès à la conversation
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         SELECT 1 FROM conversation_participants 
         WHERE conversation_id = ? AND user_id = ?
     ");
@@ -59,14 +59,14 @@ try {
     }
 
     // Enregistrer la confirmation de lecture
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         INSERT INTO lecture_annonces (message_id, user_id, date_lecture)
         VALUES (?, ?, NOW())
     ");
     $stmt->execute([$message_id, $user_id]);
 
     // Récupérer le nombre total de lectures
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         SELECT COUNT(*) as total_lectures
         FROM lecture_annonces
         WHERE message_id = ?

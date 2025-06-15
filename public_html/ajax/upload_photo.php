@@ -22,7 +22,7 @@ require_once $config_path;
 require_once dirname(__DIR__) . '/includes/functions.php';
 
 // Vérifier si la connexion à la base de données est établie
-if (!isset($pdo)) {
+if (!isset($shop_pdo)) {
     echo json_encode([
         'success' => false,
         'error' => 'Erreur de connexion à la base de données'
@@ -98,14 +98,14 @@ try {
     }
 
     // Insérer les informations dans la base de données
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         INSERT INTO photos_reparation (reparation_id, url, description, date_upload)
         VALUES (?, ?, ?, NOW())
     ");
 
     $photo_url = 'uploads/photos/' . $file_name;
     $stmt->execute([$reparation_id, $photo_url, $description]);
-    $photo_id = $pdo->lastInsertId();
+    $photo_id = $shop_pdo->lastInsertId();
 
     // Renvoyer la réponse
     echo json_encode([

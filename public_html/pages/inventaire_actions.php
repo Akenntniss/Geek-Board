@@ -22,7 +22,8 @@ if (isset($_POST['action'])) {
             }
             
             // Vérifier si la référence existe déjà
-            $stmt = $pdo->prepare("SELECT id FROM produits WHERE reference = ?");
+            $shop_pdo = getShopDBConnection();
+$stmt = $shop_pdo->prepare("SELECT id FROM produits WHERE reference = ?");
             $stmt->execute([$_POST['reference']]);
             if ($stmt->rowCount() > 0) {
                 set_message("Un produit avec cette référence existe déjà.", 'warning');
@@ -47,19 +48,19 @@ if (isset($_POST['action'])) {
             // Insertion dans la base de données
             $sql = "INSERT INTO produits (reference, nom, description, prix_achat, prix_vente, quantite, seuil_alerte, status, created_at, updated_at) 
                     VALUES (:reference, :nom, :description, :prix_achat, :prix_vente, :quantite, :seuil_alerte, :status, :created_at, :updated_at)";
-            $stmt = $pdo->prepare($sql);
+            $stmt = $shop_pdo->prepare($sql);
             $stmt->execute($data);
             
             // Enregistrer le mouvement de stock initial si quantité > 0
             if ($data['quantite'] > 0) {
-                $produit_id = $pdo->lastInsertId();
+                $produit_id = $shop_pdo->lastInsertId();
                 $motif = 'Stock initial';
                 if ($data['status'] === 'temporaire') {
                     $motif .= ' (Produit temporaire)';
                 }
                 $sql = "INSERT INTO mouvements_stock (produit_id, type_mouvement, quantite, motif, user_id, date_mouvement) 
                         VALUES (?, 'entree', ?, ?, ?, NOW())";
-                $stmt = $pdo->prepare($sql);
+                $stmt = $shop_pdo->prepare($sql);
                 $stmt->execute([$produit_id, $data['quantite'], $motif, $_SESSION['user_id']]);
             }
             
@@ -91,7 +92,7 @@ if (isset($_POST['action'])) {
             }
             
             // Vérifier que la référence n'est pas déjà utilisée par un autre produit
-            $stmt = $pdo->prepare("SELECT id FROM produits WHERE reference = ? AND id != ?");
+            $stmt = $shop_pdo->prepare("SELECT id FROM produits WHERE reference = ? AND id != ?");
             $stmt->execute([$_POST['reference'], $_POST['produit_id']]);
             if ($stmt->rowCount() > 0) {
                 set_message("Un autre produit utilise déjà cette référence.", 'warning');
@@ -123,7 +124,7 @@ if (isset($_POST['action'])) {
                     status = :status,
                     updated_at = :updated_at
                     WHERE id = :id";
-            $stmt = $pdo->prepare($sql);
+            $stmt = $shop_pdo->prepare($sql);
             $stmt->execute($data);
             
             set_message("Le produit a été modifié avec succès.", 'success');
@@ -146,11 +147,11 @@ if (isset($_POST['action'])) {
             $produit_id = (int)$_POST['produit_id'];
             
             // Supprimer les mouvements de stock associés
-            $stmt = $pdo->prepare("DELETE FROM mouvements_stock WHERE produit_id = ?");
+            $stmt = $shop_pdo->prepare("DELETE FROM mouvements_stock WHERE produit_id = ?");
             $stmt->execute([$produit_id]);
             
             // Supprimer le produit
-            $stmt = $pdo->prepare("DELETE FROM produits WHERE id = ?");
+            $stmt = $shop_pdo->prepare("DELETE FROM produits WHERE id = ?");
             $stmt->execute([$produit_id]);
             
             set_message("Le produit a été supprimé avec succès.", 'success');
@@ -196,7 +197,7 @@ if (isset($_POST['action'])) {
             
             // Vérifier le stock disponible si c'est une sortie
             if ($type === 'sortie') {
-                $stmt = $pdo->prepare("SELECT quantite FROM produits WHERE id = ?");
+                $stmt = $shop_pdo->prepare("SELECT quantite FROM produits WHERE id = ?");
                 $stmt->execute([$produit_id]);
                 $produit = $stmt->fetch();
                 
@@ -208,12 +209,12 @@ if (isset($_POST['action'])) {
             }
             
             // Commencer une transaction
-            $pdo->beginTransaction();
+            $shop_pdo->beginTransaction();
             
             // Enregistrer le mouvement de stock
             $sql = "INSERT INTO mouvements_stock (produit_id, type_mouvement, quantite, motif, user_id, date_mouvement) 
                     VALUES (?, ?, ?, ?, ?, NOW())";
-            $stmt = $pdo->prepare($sql);
+            $stmt = $shop_pdo->prepare($sql);
             $stmt->execute([$produit_id, $type, $quantite, $motif, $_SESSION['user_id']]);
             
             // Mettre à jour le stock du produit
@@ -222,16 +223,16 @@ if (isset($_POST['action'])) {
             } else {
                 $sql = "UPDATE produits SET quantite = quantite - ? WHERE id = ?";
             }
-            $stmt = $pdo->prepare($sql);
+            $stmt = $shop_pdo->prepare($sql);
             $stmt->execute([$quantite, $produit_id]);
             
             // Valider la transaction
-            $pdo->commit();
+            $shop_pdo->commit();
             
             set_message("Le mouvement de stock a été enregistré avec succès.", 'success');
         } catch (PDOException $e) {
             // Annuler la transaction en cas d'erreur
-            $pdo->rollBack();
+            $shop_pdo->rollBack();
             set_message("Erreur lors de l'enregistrement du mouvement: " . $e->getMessage(), 'danger');
         }
         

@@ -38,7 +38,7 @@ try {
     writeLog("Démarrage du traitement des notifications programmées");
     
     // Initialiser la connexion à la base de données
-    $pdo = new PDO(
+    $shop_pdo = new PDO(
         "mysql:host=" . DB_HOST . ";port=" . DB_PORT . ";dbname=" . DB_NAME . ";charset=utf8mb4",
         DB_USER,
         DB_PASS,
@@ -46,7 +46,7 @@ try {
     );
     
     // Initialiser la classe de notifications push
-    $pushNotifications = new PushNotifications($pdo);
+    $pushNotifications = new PushNotifications($shop_pdo);
     
     // Envoyer toutes les notifications programmées qui sont dues
     $result = $pushNotifications->sendAllScheduledNotifications();

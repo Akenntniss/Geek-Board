@@ -21,7 +21,7 @@ $telephone = clean_input($_GET['telephone']);
 
 try {
     // Recherche par numéro de téléphone (recherche partielle)
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         SELECT id, nom, prenom, telephone, email, adresse 
         FROM clients 
         WHERE telephone LIKE ? 

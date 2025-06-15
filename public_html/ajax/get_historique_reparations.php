@@ -37,7 +37,7 @@ try {
     
     error_log("Requête SQL réparations: " . $sql);
     
-    $stmt = $pdo->prepare($sql);
+    $stmt = $shop_pdo->prepare($sql);
     $stmt->bindParam(':client_id', $clientId, PDO::PARAM_INT);
     
     error_log("Exécution de la requête avec client_id: " . $clientId);

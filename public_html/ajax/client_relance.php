@@ -23,6 +23,9 @@ debug_log("POST: " . json_encode($_POST));
 require_once('../config/database.php');
 require_once('../includes/functions.php');
 
+// Initialiser la connexion à la base de données boutique
+$shop_pdo = getShopDBConnection();
+
 // S'assurer que la session est démarrée
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
@@ -97,33 +100,14 @@ if (!in_array($action, ['preview', 'send'])) {
 $selectedClientIds = isset($data['clientIds']) ? $data['clientIds'] : [];
 debug_log("Client IDs sélectionnés: " . json_encode($selectedClientIds));
 
-// Obtenir la connexion à la base de données du magasin
-$pdo = null;
+// Vérifier que la connexion à la base de données du magasin est disponible
 try {
-    debug_log("Tentative de connexion à la base de données");
+    debug_log("Vérification de la connexion à la base de données");
     
-    // Récupérer la connexion à la base du magasin
-    if (function_exists('getShopDBConnection')) {
-        $pdo = getShopDBConnection();
-        debug_log("Connexion via getShopDBConnection");
-    }
-    
-    // Si pas de connexion via magasin, essayer la connexion principale
-    if ($pdo === null && function_exists('getMainDBConnection')) {
-        $pdo = getMainDBConnection();
-        debug_log("Connexion via getMainDBConnection");
-    }
-    
-    // Si toujours pas de connexion, utiliser $main_pdo global
-    if ($pdo === null) {
-        global $main_pdo;
-        $pdo = $main_pdo;
-        debug_log("Connexion via variable globale main_pdo");
-    }
-    
-    if ($pdo === null) {
+    if ($shop_pdo === null) {
         throw new Exception("Impossible d'établir une connexion à la base de données");
     }
+    debug_log("Connexion shop_pdo disponible");
 } catch (Exception $e) {
     debug_log("Erreur de connexion à la base de données: " . $e->getMessage());
     echo json_encode(['success' => false, 'message' => 'Erreur de connexion à la base de données: ' . $e->getMessage()]);
@@ -133,7 +117,7 @@ try {
 // Récupérer l'ID du modèle de SMS pour la relance client
 try {
     debug_log("Recherche du modèle SMS de relance client");
-    $template_stmt = $pdo->prepare("SELECT id, contenu FROM sms_templates WHERE nom = 'Relance client' AND est_actif = 1 LIMIT 1");
+    $template_stmt = $shop_pdo->prepare("SELECT id, contenu FROM sms_templates WHERE nom = 'Relance client' AND est_actif = 1 LIMIT 1");
     $template_stmt->execute();
     $sms_template = $template_stmt->fetch(PDO::FETCH_ASSOC);
     
@@ -223,7 +207,7 @@ try {
     
     debug_log("Requête SQL: $sql");
     
-    $stmt = $pdo->prepare($sql);
+    $stmt = $shop_pdo->prepare($sql);
     
     // Exécuter avec les paramètres appropriés
     if ($action === 'send' && !empty($selectedClientIds)) {
@@ -270,12 +254,12 @@ if ($action === 'preview') {
 $sms_sent = 0;
 $errors = [];
 
-// Configuration de l'API SMS
-$API_URL = 'https://api.sms-gate.app/3rdparty/v1/message';
-$API_USERNAME = '-GCB75';
-$API_PASSWORD = 'Mamanmaman06400';
+// Inclure la fonction SMS unifiée
+if (!function_exists('send_sms')) {
+    require_once __DIR__ . '/../includes/sms_functions.php';
+}
 
-debug_log("Début de l'envoi des SMS pour " . count($clients) . " clients");
+debug_log("Début de l'envoi des SMS pour " . count($clients) . " clients via API Gateway");
 
 foreach ($clients as $client) {
     debug_log("Traitement du client ID: {$client['client_id']}, Nom: {$client['client_nom']} {$client['client_prenom']}");
@@ -309,84 +293,26 @@ foreach ($clients as $client) {
     
     debug_log("Message préparé: $message");
     
-    // Formater le numéro de téléphone
     $telephone = $client['telephone'];
-    $telephone = preg_replace('/[^0-9+]/', '', $telephone);
+    debug_log("Numéro de téléphone: $telephone");
     
-    if (substr($telephone, 0, 1) !== '+') {
-        if (substr($telephone, 0, 1) === '0') {
-            $telephone = '+33' . substr($telephone, 1);
-        } else if (substr($telephone, 0, 2) === '33') {
-            $telephone = '+' . $telephone;
-        } else {
-            $telephone = '+' . $telephone;
-        }
-    }
-    
-    debug_log("Numéro formaté: $telephone");
-    
-    // Envoyer le SMS via l'API
+    // Envoyer le SMS via la nouvelle API Gateway
     try {
-        // Préparation des données JSON pour l'API
-        $sms_data = json_encode([
-            'message' => $message,
-            'phoneNumbers' => [$telephone]
-        ]);
+        $reference_type = ($filterType === 'commande') ? 'relance_commande' : 'relance_reparation';
+        $reference_id = $client['id'];
         
-        debug_log("Données SMS: $sms_data");
+        $sms_result = send_sms($telephone, $message, $reference_type, $reference_id, $_SESSION['user_id'] ?? 1);
         
-        // Initialiser CURL
-        $curl = curl_init($API_URL);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($curl, CURLOPT_POST, true);
-        curl_setopt($curl, CURLOPT_POSTFIELDS, $sms_data);
-        curl_setopt($curl, CURLOPT_HTTPHEADER, [
-            'Content-Type: application/json',
-            'Content-Length: ' . strlen($sms_data)
-        ]);
+        debug_log("Résultat envoi SMS: " . json_encode($sms_result));
         
-        // Configuration de l'authentification
-        curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-        curl_setopt($curl, CURLOPT_USERPWD, "$API_USERNAME:$API_PASSWORD");
-        
-        // Options supplémentaires
-        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
-        curl_setopt($curl, CURLOPT_TIMEOUT, 30);
-        
-        // Exécution de la requête
-        $response = curl_exec($curl);
-        $http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-        
-        debug_log("Réponse API HTTP: $http_code, Réponse: " . ($response ?: "vide"));
-        
-        if ($response === false) {
-            $error_msg = "Erreur CURL: " . curl_error($curl);
+        if (isset($sms_result['success']) && $sms_result['success']) {
+            debug_log("SMS envoyé avec succès via API Gateway pour le client ID {$client['client_id']}");
+            $sms_sent++;
+        } else {
+            $error_msg = "Erreur lors de l'envoi du SMS: " . ($sms_result['message'] ?? 'Erreur inconnue');
             debug_log($error_msg);
             $errors[] = "Erreur lors de l'envoi du SMS à {$client['client_nom']} {$client['client_prenom']}: " . $error_msg;
-        } else {
-            // Enregistrer l'envoi dans la table des logs SMS
-            try {
-                $log_stmt = null;
-                
-                if ($filterType === 'commande') {
-                    $reparation_id = 'CMD-' . $client['id']; // Préfixe pour les commandes
-                } else {
-                    $reparation_id = $client['id'];
-                }
-                
-                $log_stmt = $pdo->prepare("INSERT INTO sms_logs (recipient, message, reparation_id, response, date_envoi, created_at) VALUES (?, ?, ?, ?, NOW(), NOW())");
-                $log_stmt->execute([$telephone, $message, $reparation_id, $response]);
-                
-                debug_log("SMS log enregistré pour le client ID {$client['client_id']}");
-                $sms_sent++;
-            } catch (PDOException $e) {
-                debug_log("Erreur lors de l'enregistrement du log SMS: " . $e->getMessage());
-                // On continue malgré l'erreur de log
-            }
         }
-        
-        curl_close($curl);
     } catch (Exception $e) {
         $error_msg = "Exception lors de l'envoi du SMS: " . $e->getMessage();
         debug_log($error_msg);

@@ -39,7 +39,7 @@ if (!in_array($newStatus, $validStatuses)) {
 
 try {
     // Mettre à jour le statut de la tâche
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         UPDATE taches 
         SET statut = ?, 
             date_modification = NOW(),
@@ -51,7 +51,7 @@ try {
 
     if ($result) {
         // Ajouter une entrée dans les logs
-        $stmt = $pdo->prepare("
+        $stmt = $shop_pdo->prepare("
             INSERT INTO taches_logs (
                 tache_id, 
                 utilisateur_id, 

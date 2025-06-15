@@ -87,7 +87,7 @@ if ($groupBySupplier) {
 
 // Exécuter la requête
 try {
-    $stmt = $pdo->prepare($sql);
+    $stmt = $shop_pdo->prepare($sql);
     $stmt->bindParam(':date_start', $dateStart);
     $stmt->bindParam(':date_end', $dateEnd);
     $stmt->execute();

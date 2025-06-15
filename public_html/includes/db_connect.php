@@ -3,16 +3,13 @@
 require_once $_SERVER['DOCUMENT_ROOT'] . '/config/database.php';
 
 try {
-    // Création de la connexion MySQLi avec les constantes du fichier de configuration
-    $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+    // Création de la connexion PDO avec getShopDBConnection()
+    $shop_pdo = getShopDBConnection();
     
-    // Vérification de la connexion
-    if ($conn->connect_error) {
-        throw new Exception("Erreur de connexion à la base de données : " . $conn->connect_error);
-    }
+    // Vérification de la connexion (PDO lance automatiquement une exception en cas d'erreur)
+    // Pas besoin de vérification supplémentaire
     
-    // Définir le jeu de caractères en UTF-8
-    $conn->set_charset("utf8mb4");
+    // PDO utilise automatiquement UTF-8 avec notre configuration
     
 } catch (Exception $e) {
     // En cas d'erreur, afficher un message d'erreur générique
@@ -20,3 +17,4 @@ try {
     error_log($e->getMessage());
     die("Une erreur est survenue lors de la connexion à la base de données. Veuillez réessayer plus tard.");
 } 
+?> 

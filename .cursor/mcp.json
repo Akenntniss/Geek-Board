@@ -1,0 +1,16 @@
+{
+    "_comment": "Taskmaster désactivé - trop orienté nouveaux projets",
+    "_mcpServers_disabled": {
+        "task-master-ai": {
+            "command": "npx",
+            "args": [
+                "-y",
+                "--package=task-master-ai",
+                "task-master-ai"
+            ],
+            "env": {
+                "OLLAMA_BASE_URL": "http://localhost:11434/api"
+            }
+        }
+    }
+}

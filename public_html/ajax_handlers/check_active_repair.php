@@ -14,9 +14,12 @@ if (!isset($_SESSION['user_id'])) {
 // Récupérer l'ID de l'utilisateur connecté
 $user_id = $_SESSION['user_id'];
 
+// Obtenir la connexion à la base de données du magasin
+$shop_pdo = getShopDBConnection();
+
 try {
     // Vérifier si l'utilisateur a déjà une réparation active
-    $stmt = $pdo->prepare("SELECT techbusy, active_repair_id FROM users WHERE id = ?");
+    $stmt = $shop_pdo->prepare("SELECT techbusy, active_repair_id FROM users WHERE id = ?");
     $stmt->execute([$user_id]);
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
     

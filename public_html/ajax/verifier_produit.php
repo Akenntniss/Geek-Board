@@ -23,8 +23,8 @@ if (!isset($_GET['code']) || empty($_GET['code'])) {
 }
 
 try {
-    // Vérifier que $pdo existe
-    if (!isset($pdo) || !($pdo instanceof PDO)) {
+    // Vérifier que $shop_pdo existe
+    if (!isset($shop_pdo) || !($shop_pdo instanceof PDO)) {
         throw new Exception('Erreur de connexion à la base de données');
     }
 
@@ -32,7 +32,7 @@ try {
     $code = trim($_GET['code']);
     
     // Préparer et exécuter la requête
-    $stmt = $pdo->prepare("SELECT * FROM produits WHERE reference = ?");
+    $stmt = $shop_pdo->prepare("SELECT * FROM produits WHERE reference = ?");
     $stmt->execute([$code]);
     $produit = $stmt->fetch();
 

@@ -7,6 +7,9 @@ require_once BASE_PATH . '/config/database.php';
 require_once BASE_PATH . '/includes/functions.php';
 require_once BASE_PATH . '/config/session_config.php'; // Utiliser la config de session du projet
 
+// Obtenir la connexion à la base de données de la boutique
+$shop_pdo = getShopDBConnection();
+
 // Vérifier si l'utilisateur est connecté
 // Méthode alternative d'authentification via l'ID utilisateur fourni par AJAX
 $user_id = null;
@@ -123,7 +126,7 @@ if ($montant <= 0) {
 
 try {
     // Récupérer les informations de la réparation
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         SELECT r.*, c.nom as client_nom, c.prenom as client_prenom, c.telephone as client_telephone, c.id as client_id
         FROM reparations r
         JOIN clients c ON r.client_id = c.id
@@ -142,7 +145,7 @@ try {
     
     // Mettre à jour le prix si demandé
     if ($update_prix) {
-        $stmt = $pdo->prepare("UPDATE reparations SET prix_reparation = ? WHERE id = ?");
+        $stmt = $shop_pdo->prepare("UPDATE reparations SET prix_reparation = ? WHERE id = ?");
         $stmt->execute([$montant, $reparation_id]);
     }
     
@@ -151,11 +154,11 @@ try {
     $categorie_id = 3; // Catégorie "En attente"
     $statut_id = 6;    // ID du statut "En attente de l'accord client"
     
-    $stmt = $pdo->prepare("UPDATE reparations SET statut = ?, statut_categorie = ?, date_modification = NOW() WHERE id = ?");
+    $stmt = $shop_pdo->prepare("UPDATE reparations SET statut = ?, statut_categorie = ?, date_modification = NOW() WHERE id = ?");
     $stmt->execute([$nouveau_statut, $categorie_id, $reparation_id]);
     
     // Enregistrer le changement dans les logs
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         INSERT INTO reparation_logs 
         (reparation_id, employe_id, action_type, statut_avant, statut_apres, details) 
         VALUES (?, ?, ?, ?, ?, ?)
@@ -170,7 +173,7 @@ try {
     ]);
     
     // Récupérer le template SMS
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         SELECT id, nom, contenu 
         FROM sms_templates 
         WHERE statut_id = ? AND est_actif = 1
@@ -256,7 +259,7 @@ try {
                 $sms_sent = true;
                 
                 // Enregistrer l'envoi du SMS dans la base de données
-                $stmt = $pdo->prepare("
+                $stmt = $shop_pdo->prepare("
                     INSERT INTO reparation_sms (reparation_id, template_id, telephone, message, date_envoi, statut_id)
                     VALUES (?, ?, ?, ?, NOW(), ?)
                 ");

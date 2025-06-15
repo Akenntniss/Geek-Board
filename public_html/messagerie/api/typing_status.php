@@ -62,7 +62,7 @@ if (!$user_info) {
 }
 
 try {
-    global $pdo;
+    global $shop_pdo;
     
     // Si l'utilisateur est en train d'écrire, stocker l'état
     if ($is_typing) {
@@ -73,7 +73,7 @@ try {
             ON DUPLICATE KEY UPDATE timestamp = NOW()
         ";
         
-        $stmt = $pdo->prepare($query);
+        $stmt = $shop_pdo->prepare($query);
         $stmt->execute([
             ':user_id' => $_SESSION['user_id'],
             ':conversation_id' => $conversation_id
@@ -85,7 +85,7 @@ try {
             WHERE user_id = :user_id AND conversation_id = :conversation_id
         ";
         
-        $stmt = $pdo->prepare($query);
+        $stmt = $shop_pdo->prepare($query);
         $stmt->execute([
             ':user_id' => $_SESSION['user_id'],
             ':conversation_id' => $conversation_id

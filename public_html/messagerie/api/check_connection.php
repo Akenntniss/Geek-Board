@@ -29,12 +29,12 @@ try {
     $result['database']['config_included'] = true;
     
     // Vérifier si la variable de connexion PDO existe
-    $result['database']['pdo_exists'] = isset($pdo) && $pdo instanceof PDO;
+    $result['database']['pdo_exists'] = isset($shop_pdo) && $shop_pdo instanceof PDO;
     
-    if (isset($pdo) && $pdo instanceof PDO) {
+    if (isset($shop_pdo) && $shop_pdo instanceof PDO) {
         // Tester la connexion avec une requête simple
         try {
-            $stmt = $pdo->query("SELECT 1");
+            $stmt = $shop_pdo->query("SELECT 1");
             $result['database']['connection_test'] = $stmt->fetchColumn() == 1;
             
             // Vérifier les tables de messagerie
@@ -46,7 +46,7 @@ try {
             
             foreach (array_keys($tables) as $table) {
                 try {
-                    $check = $pdo->query("SELECT 1 FROM $table LIMIT 1");
+                    $check = $shop_pdo->query("SELECT 1 FROM $table LIMIT 1");
                     $tables[$table] = true;
                 } catch (PDOException $e) {
                     $tables[$table] = false;
@@ -57,7 +57,7 @@ try {
             
             // Vérifier les utilisateurs disponibles
             try {
-                $users = $pdo->query("SELECT id, full_name FROM users LIMIT 5")->fetchAll(PDO::FETCH_ASSOC);
+                $users = $shop_pdo->query("SELECT id, full_name FROM users LIMIT 5")->fetchAll(PDO::FETCH_ASSOC);
                 $result['database']['users_sample'] = $users;
             } catch (PDOException $e) {
                 $result['database']['users_error'] = $e->getMessage();

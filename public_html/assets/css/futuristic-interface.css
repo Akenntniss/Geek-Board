@@ -10,49 +10,127 @@
  */
 
 :root {
-  /* Palette principale */
-  --primary-gradient: linear-gradient(135deg, #4361ee, #3a86ff);
-  --success-gradient: linear-gradient(135deg, #2ecc71, #27ae60);
-  --danger-gradient: linear-gradient(135deg, #e74c3c, #c0392b);
-  --warning-gradient: linear-gradient(135deg, #f39c12, #e67e22);
-  --info-gradient: linear-gradient(135deg, #3498db, #2980b9);
+  /* Palette principale améliorée */
+  --primary-gradient: linear-gradient(135deg, #667eea, #764ba2);
+  --success-gradient: linear-gradient(135deg, #11998e, #38ef7d);
+  --danger-gradient: linear-gradient(135deg, #ff6b6b, #ee5a52);
+  --warning-gradient: linear-gradient(135deg, #ffeaa7, #fdcb6e);
+  --info-gradient: linear-gradient(135deg, #74b9ff, #0984e3);
   
-  /* Couleurs vives */
-  --neon-blue: #4361ee;
-  --neon-purple: #7209b7;
-  --neon-pink: #f72585;
-  --neon-green: #4ade80;
-  --neon-yellow: #fde047;
+  /* Couleurs vives modernes */
+  --neon-blue: #667eea;
+  --neon-purple: #764ba2;
+  --neon-pink: #fd79a8;
+  --neon-green: #00b894;
+  --neon-yellow: #fdcb6e;
+  --neon-orange: #e17055;
   
-  /* Variables pour l'interface */
-  --glass-background: rgba(255, 255, 255, 0.15);
-  --glass-backdrop-filter: blur(12px);
+  /* Variables pour l'interface mode clair */
+  --glass-background: rgba(255, 255, 255, 0.25);
+  --glass-backdrop-filter: blur(15px);
   --card-border-radius: 16px;
   --button-border-radius: 12px;
   --transition-speed: 0.3s;
-  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
-  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.12);
-  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.15);
-  --shadow-hover: 0 10px 30px rgba(67, 97, 238, 0.2);
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+  --shadow-hover: 0 10px 30px rgba(102, 126, 234, 0.25);
+  
+  /* Couleurs spécifiques mode clair */
+  --light-primary: #f8fafc;
+  --light-secondary: #e2e8f0;
+  --light-accent: #cbd5e1;
+  --light-surface: rgba(255, 255, 255, 0.8);
+  --light-text: #334155;
+  --light-text-secondary: #64748b;
 }
 
 /* Dark mode variables */
 .dark-mode {
-  --glass-background: rgba(18, 24, 38, 0.75);
-  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2);
-  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.25);
-  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.3);
-  --shadow-hover: 0 10px 30px rgba(59, 130, 246, 0.3);
+  --glass-background: rgba(10, 15, 25, 0.85);
+  --glass-backdrop-filter: blur(15px);
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.6);
+  --shadow-hover: 0 10px 30px rgba(59, 130, 246, 0.4);
+  
+  /* Couleurs spécifiques mode nuit */
+  --dark-primary: #0a0f19;
+  --dark-secondary: #111827;
+  --dark-accent: #1e293b;
+  --dark-surface: rgba(15, 23, 42, 0.95);
 }
 
 /* Améliorations générales pour les conteneurs de page */
 .page-container {
-  padding-top: 85px;
+  padding-top: 0px;
   max-width: 95%;
   width: 95%;
   margin: 0 auto;
   transition: all var(--transition-speed) ease;
   animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Adaptations PWA pour Dynamic Island et Notch */
+@supports (padding: max(0px)) {
+  .page-container {
+    /* Utiliser max() pour s'assurer d'un espacement minimum même sans safe-area */
+    padding-top: max(env(safe-area-inset-top), 10px);
+    padding-left: max(env(safe-area-inset-left), 0px);
+    padding-right: max(env(safe-area-inset-right), 0px);
+  }
+}
+
+/* Styles spécifiques pour le mode PWA standalone */
+@media (display-mode: standalone) {
+  .page-container {
+    padding-top: max(env(safe-area-inset-top), 15px);
+  }
+  
+  /* Adaptation spéciale pour les conteneurs de filtres en mode PWA */
+  .modern-filters-container {
+    margin-top: 5px;
+    padding-top: 0;
+  }
+  
+  .modern-search {
+    margin-top: 5px;
+  }
+  
+  /* Espacement supplémentaire pour l'action container en PWA */
+  .action-buttons-container {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+}
+
+/* PWA adaptations pour tablettes et mobiles */
+@media (display-mode: standalone) and (max-width: 991px) {
+  .page-container {
+    padding-top: max(env(safe-area-inset-top), 12px);
+  }
+}
+
+@media (display-mode: standalone) and (max-width: 767px) {
+  .page-container {
+    padding-top: max(env(safe-area-inset-top), 10px);
+  }
+  
+  .modern-filters-container {
+    margin-top: 3px;
+  }
+  
+  .action-buttons-container {
+    margin-top: 8px;
+    margin-bottom: 8px;
+  }
+}
+
+/* Support pour les appareils iOS avec Dynamic Island et Notch */
+@media (display-mode: standalone) and (-webkit-device-pixel-ratio: 3) {
+  .page-container {
+    padding-top: max(env(safe-area-inset-top), 20px);
+  }
 }
 
 @keyframes fadeIn {
@@ -453,10 +531,11 @@
 /* Adaptations pour tablettes */
 @media (max-width: 991px) {
   .page-container {
-    padding-top: 70px;
+    padding-top: max(env(safe-area-inset-top), 5px);
     max-width: 95%;
     width: 95%;
   }
+}
   
   .filter-buttons {
     gap: 0.75rem;
@@ -518,9 +597,9 @@
 /* Adaptations pour mobiles */
 @media (max-width: 767px) {
   .page-container {
-    padding-top: 60px;
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
+    padding-top: max(env(safe-area-inset-top), 8px);
+    padding-left: max(env(safe-area-inset-left), 0.5rem);
+    padding-right: max(env(safe-area-inset-right), 0.5rem);
     max-width: 95%;
     width: 95%;
   }
@@ -657,12 +736,201 @@
 
 /* Fond d'écran gradient global */
 body {
-  background: linear-gradient(135deg, #f6f9ff, #f0f4fc);
+  background: linear-gradient(135deg, #f8fafc, #e2e8f0, #f1f5f9);
+  background-attachment: fixed;
+  background-size: 100% 100%;
   min-height: 100vh;
 }
 
+/* Améliorations spécifiques mode clair */
+.search-card,
+.dashboard-card,
+.card {
+  background: var(--light-surface);
+  border: 1px solid rgba(203, 213, 225, 0.6);
+  color: var(--light-text);
+  box-shadow: var(--shadow-md);
+}
+
+.search-card:hover,
+.dashboard-card:hover,
+.card:hover {
+  background: rgba(255, 255, 255, 0.9);
+  border-color: rgba(102, 126, 234, 0.3);
+  box-shadow: var(--shadow-hover);
+}
+
+.filter-btn {
+  background: var(--light-surface);
+  border: 1px solid rgba(203, 213, 225, 0.5);
+  color: var(--light-text);
+}
+
+.filter-btn:hover {
+  background: rgba(255, 255, 255, 0.95);
+  border-color: rgba(102, 126, 234, 0.4);
+  color: var(--neon-blue);
+}
+
+.filter-btn.active {
+  background: rgba(102, 126, 234, 0.1);
+  border-color: rgba(102, 126, 234, 0.6);
+  color: var(--neon-blue);
+}
+
+/* Mode clair pour les boutons d'action */
+.action-buttons-container {
+  background: rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(203, 213, 225, 0.4);
+}
+
+.action-button {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(203, 213, 225, 0.5);
+  color: var(--light-text);
+}
+
+.action-button:hover {
+  background: rgba(255, 255, 255, 1);
+  border-color: rgba(102, 126, 234, 0.5);
+  color: var(--neon-blue);
+  box-shadow: var(--shadow-hover);
+}
+
+/* Mode clair pour les formulaires et inputs */
+.search-form .form-control {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(203, 213, 225, 0.5);
+  color: var(--light-text);
+}
+
+.search-form .form-control:focus {
+  background: rgba(255, 255, 255, 1);
+  border-color: rgba(102, 126, 234, 0.6);
+  box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.15);
+}
+
+.search-form .input-group-text {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(203, 213, 225, 0.5);
+  color: var(--light-text);
+}
+
+/* Mode clair pour les badges et labels */
+.badge {
+  background: rgba(102, 126, 234, 0.15);
+  color: var(--neon-blue);
+  border: 1px solid rgba(102, 126, 234, 0.3);
+}
+
+/* Mode clair pour les éléments de contact */
+.contact-icon {
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--neon-blue);
+  border: 1px solid rgba(203, 213, 225, 0.5);
+}
+
+.contact-row:hover .contact-icon {
+  background: rgba(102, 126, 234, 0.1);
+  border-color: rgba(102, 126, 234, 0.5);
+  color: var(--neon-purple);
+}
+
 .dark-mode body {
-  background: linear-gradient(135deg, #0f172a, #1e293b);
+  background: #0a0f19 !important;
+  background-image: linear-gradient(135deg, #0a0f19, #111827, #0f172a) !important;
+  background-attachment: fixed !important;
+  background-size: 100% 100% !important;
+}
+
+/* Force le fond noir pour tous les éléments body en mode nuit */
+body.dark-mode {
+  background: #0a0f19 !important;
+  background-image: linear-gradient(135deg, #0a0f19, #111827, #0f172a) !important;
+  background-attachment: fixed !important;
+  background-size: 100% 100% !important;
+}
+
+/* Améliorations spécifiques mode nuit pour les cartes */
+.dark-mode .search-card,
+.dark-mode .dashboard-card,
+.dark-mode .card {
+  background: var(--dark-surface);
+  border: 1px solid rgba(55, 65, 81, 0.3);
+  color: #e5e7eb;
+}
+
+.dark-mode .filter-btn {
+  background: var(--dark-surface);
+  border: 1px solid rgba(55, 65, 81, 0.4);
+  color: #e5e7eb;
+}
+
+.dark-mode .filter-btn:hover {
+  background: rgba(20, 30, 50, 0.9);
+  border-color: rgba(59, 130, 246, 0.5);
+}
+
+.dark-mode .filter-btn.active {
+  background: rgba(37, 99, 235, 0.2);
+  border-color: rgba(59, 130, 246, 0.7);
+  color: #60a5fa;
+}
+
+/* Mode nuit pour les boutons d'action */
+.dark-mode .action-buttons-container {
+  background: rgba(10, 15, 25, 0.8);
+  border: 1px solid rgba(55, 65, 81, 0.3);
+}
+
+.dark-mode .action-button {
+  background: rgba(15, 23, 42, 0.9);
+  border: 1px solid rgba(55, 65, 81, 0.4);
+  color: #e5e7eb;
+}
+
+.dark-mode .action-button:hover {
+  background: rgba(30, 41, 59, 0.95);
+  border-color: rgba(59, 130, 246, 0.6);
+  color: #60a5fa;
+}
+
+/* Mode nuit pour les formulaires et inputs */
+.dark-mode .search-form .form-control {
+  background: rgba(15, 23, 42, 0.9);
+  border: 1px solid rgba(55, 65, 81, 0.4);
+  color: #e5e7eb;
+}
+
+.dark-mode .search-form .form-control:focus {
+  background: rgba(20, 30, 50, 0.95);
+  border-color: rgba(59, 130, 246, 0.6);
+  box-shadow: 0 0 0 0.2rem rgba(59, 130, 246, 0.25);
+}
+
+.dark-mode .search-form .input-group-text {
+  background: rgba(15, 23, 42, 0.9);
+  border: 1px solid rgba(55, 65, 81, 0.4);
+  color: #e5e7eb;
+}
+
+/* Mode nuit pour les badges et labels */
+.dark-mode .badge {
+  background: rgba(37, 99, 235, 0.3);
+  color: #93c5fd;
+  border: 1px solid rgba(59, 130, 246, 0.4);
+}
+
+/* Mode nuit pour les éléments de contact */
+.dark-mode .contact-icon {
+  background: rgba(15, 23, 42, 0.9);
+  color: #60a5fa;
+  border: 1px solid rgba(55, 65, 81, 0.4);
+}
+
+.dark-mode .contact-row:hover .contact-icon {
+  background: rgba(37, 99, 235, 0.3);
+  border-color: rgba(59, 130, 246, 0.6);
 }
 
 /* Toast notifications améliorées */

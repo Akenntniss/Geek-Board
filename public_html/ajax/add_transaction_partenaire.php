@@ -6,6 +6,9 @@ require_once dirname(__DIR__) . '/config/session_config.php';
 require_once dirname(__DIR__) . '/config/database.php';
 require_once dirname(__DIR__) . '/includes/functions.php';
 
+// Initialiser la connexion à la base de données boutique
+$shop_pdo = getShopDBConnection();
+
 // Ajouter un logging de la session pour débogage
 error_log("Session data: " . json_encode($_SESSION));
 error_log("Session ID: " . session_id());
@@ -59,16 +62,16 @@ if (!in_array($type, $types_valides)) {
 try {
     error_log("Début de la transaction SQL");
     // Démarrer une transaction
-    $pdo->beginTransaction();
+    $shop_pdo->beginTransaction();
 
     // Vérifier la structure de la table
-    $stmt = $pdo->prepare("DESCRIBE transactions_partenaires");
+    $stmt = $shop_pdo->prepare("DESCRIBE transactions_partenaires");
     $stmt->execute();
     $columns = $stmt->fetchAll(PDO::FETCH_ASSOC);
     error_log("Structure de la table transactions_partenaires: " . json_encode($columns));
 
     // Insérer la transaction
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         INSERT INTO transactions_partenaires 
         (partenaire_id, type, montant, description, date_transaction, reference_document) 
         VALUES (?, ?, ?, ?, COALESCE(?, CURRENT_TIMESTAMP), NULL)
@@ -77,21 +80,21 @@ try {
         $partenaire_id, $type, $montant, $description, $date_transaction
     ]));
     $stmt->execute([$partenaire_id, $type, $montant, $description, $date_transaction]);
-    error_log("ID de la transaction insérée: " . $pdo->lastInsertId());
+    error_log("ID de la transaction insérée: " . $shop_pdo->lastInsertId());
 
     // Mettre à jour le solde du partenaire
     $montant_final = $type === 'REMBOURSEMENT' ? -$montant : $montant;
     error_log("Calcul du montant final: " . $montant_final);
     
     // Vérifier si un solde existe déjà pour ce partenaire
-    $stmt = $pdo->prepare("SELECT solde_actuel FROM soldes_partenaires WHERE partenaire_id = ?");
+    $stmt = $shop_pdo->prepare("SELECT solde_actuel FROM soldes_partenaires WHERE partenaire_id = ?");
     $stmt->execute([$partenaire_id]);
     $solde = $stmt->fetch();
     error_log("Solde existant trouvé: " . var_export($solde, true));
 
     if ($solde) {
         // Mettre à jour le solde existant
-        $stmt = $pdo->prepare("
+        $stmt = $shop_pdo->prepare("
             UPDATE soldes_partenaires 
             SET solde_actuel = solde_actuel + ?, 
                 derniere_mise_a_jour = CURRENT_TIMESTAMP 
@@ -104,7 +107,7 @@ try {
         error_log("Nombre de lignes affectées par la mise à jour: " . $stmt->rowCount());
     } else {
         // Créer un nouveau solde
-        $stmt = $pdo->prepare("
+        $stmt = $shop_pdo->prepare("
             INSERT INTO soldes_partenaires 
             (partenaire_id, solde_actuel) 
             VALUES (?, ?)
@@ -113,11 +116,11 @@ try {
             $partenaire_id, $montant_final
         ]));
         $stmt->execute([$partenaire_id, $montant_final]);
-        error_log("ID du nouveau solde créé: " . $pdo->lastInsertId());
+        error_log("ID du nouveau solde créé: " . $shop_pdo->lastInsertId());
     }
 
     // Valider la transaction
-    $pdo->commit();
+    $shop_pdo->commit();
     error_log("Transaction SQL validée avec succès");
 
     header('Content-Type: application/json');
@@ -125,8 +128,8 @@ try {
 
 } catch (PDOException $e) {
     // Annuler la transaction en cas d'erreur
-    if ($pdo->inTransaction()) {
-        $pdo->rollBack();
+    if ($shop_pdo->inTransaction()) {
+        $shop_pdo->rollBack();
         error_log("Transaction SQL annulée");
     }
     

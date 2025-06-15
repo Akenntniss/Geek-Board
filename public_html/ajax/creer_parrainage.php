@@ -54,7 +54,7 @@ if (!isset($input_data['parrain_id']) || !isset($input_data['filleul_id'])) {
 
 try {
     // Vérifier si la connexion PDO est disponible
-    if (!isset($pdo) || !($pdo instanceof PDO)) {
+    if (!isset($shop_pdo) || !($shop_pdo instanceof PDO)) {
         throw new Exception("Connexion à la base de données non disponible");
     }
     
@@ -63,7 +63,7 @@ try {
     $filleul_id = (int)$input_data['filleul_id'];
     
     // Vérifier que le parrain et le filleul existent
-    $stmt = $pdo->prepare("SELECT id FROM clients WHERE id IN (?, ?)");
+    $stmt = $shop_pdo->prepare("SELECT id FROM clients WHERE id IN (?, ?)");
     $stmt->execute([$parrain_id, $filleul_id]);
     $found_clients = $stmt->fetchAll(PDO::FETCH_COLUMN);
     
@@ -76,7 +76,7 @@ try {
     }
     
     // Vérifier que le parrain est inscrit au programme
-    $stmt = $pdo->prepare("SELECT inscrit_parrainage FROM clients WHERE id = ?");
+    $stmt = $shop_pdo->prepare("SELECT inscrit_parrainage FROM clients WHERE id = ?");
     $stmt->execute([$parrain_id]);
     $parrain = $stmt->fetch(PDO::FETCH_ASSOC);
     
@@ -89,7 +89,7 @@ try {
     }
     
     // Vérifier que le filleul n'a pas déjà un parrain
-    $stmt = $pdo->prepare("SELECT id FROM parrainage_relations WHERE filleul_id = ?");
+    $stmt = $shop_pdo->prepare("SELECT id FROM parrainage_relations WHERE filleul_id = ?");
     $stmt->execute([$filleul_id]);
     
     if ($stmt->rowCount() > 0) {

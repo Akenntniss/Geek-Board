@@ -41,7 +41,7 @@ if (!user_has_conversation_access($_SESSION['user_id'], $conversation_id)) {
 
 // Récupérer les nouveaux messages
 try {
-    global $pdo;
+    global $shop_pdo;
     
     $query = "
         SELECT m.*,
@@ -69,7 +69,7 @@ try {
         ORDER BY m.date_envoi ASC
     ";
     
-    $stmt = $pdo->prepare($query);
+    $stmt = $shop_pdo->prepare($query);
     $stmt->execute([
         ':conversation_id' => $conversation_id,
         ':last_id' => $last_id

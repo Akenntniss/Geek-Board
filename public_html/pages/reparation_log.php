@@ -1,5 +1,7 @@
 <?php
+require_once __DIR__ . '/../config/database.php';
 // Configuration de l'affichage des erreurs (à désactiver en production)
+$shop_pdo = getShopDBConnection();
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
@@ -12,7 +14,7 @@ if (!isset($_SESSION['user_id'])) {
 
 // Récupérer les ID des utilisateurs pour le filtre
 $query_users = "SELECT id, nom, prenom FROM users ORDER BY nom, prenom";
-$stmt_users = $conn->prepare($query_users);
+$stmt_users = $shop_pdo->prepare($query_users);
 $stmt_users->execute();
 $users = $stmt_users->fetchAll(PDO::FETCH_ASSOC);
 
@@ -57,7 +59,7 @@ if (!empty($filter_type)) {
 $sql .= " ORDER BY l.date_action DESC";
 
 // Exécuter la requête
-$stmt = $conn->prepare($sql);
+$stmt = $shop_pdo->prepare($sql);
 foreach ($params as $key => $value) {
     $stmt->bindValue($key, $value);
 }
@@ -66,7 +68,7 @@ $logs = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // Récupérer les types d'actions uniques pour le filtre
 $query_types = "SELECT DISTINCT type_action FROM reparation_logs ORDER BY type_action";
-$stmt_types = $conn->prepare($query_types);
+$stmt_types = $shop_pdo->prepare($query_types);
 $stmt_types->execute();
 $types = $stmt_types->fetchAll(PDO::FETCH_COLUMN);
 ?>

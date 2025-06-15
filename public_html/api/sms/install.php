@@ -31,7 +31,7 @@ $error_count = 0;
 $total_queries = count($queries) - 1; // La dernière requête après le dernier ';' est vide
 
 // Exécuter chaque requête
-global $pdo;
+$shop_pdo = getShopDBConnection();
 
 try {
     foreach ($queries as $query) {
@@ -39,7 +39,7 @@ try {
         if (empty($query)) continue;
         
         try {
-            $pdo->exec($query);
+            $shop_pdo->exec($query);
             $success_count++;
         } catch (PDOException $e) {
             $error_count++;

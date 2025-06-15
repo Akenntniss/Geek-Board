@@ -3,6 +3,9 @@
 session_start();
 require_once __DIR__ . '/../config/database.php';
 
+// Obtenir la connexion à la base de données de la boutique
+$shop_pdo = getShopDBConnection();
+
 // Vérification de la connexion et des droits
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
     header('Location: /pages/login.php');
@@ -42,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         
         // Insertion dans la base de données
-        $stmt = $pdo->prepare("INSERT INTO rachat_appareils 
+        $stmt = $shop_pdo->prepare("INSERT INTO rachat_appareils 
                               (client_id, modele, numero_serie, fonctionnel, photo_identite, photo_appareil, signature, prix, date_rachat) 
                               VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW())");
         

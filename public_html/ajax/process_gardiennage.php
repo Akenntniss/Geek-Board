@@ -83,7 +83,7 @@ if (!isset($_SESSION['user_id'])) {
     // Si on a un token API, essayer de l'utiliser pour authentifier l'utilisateur
     if ($api_token) {
         try {
-            $stmt = $pdo->prepare("SELECT user_id FROM user_sessions WHERE token = ? AND expires > NOW()");
+            $stmt = $shop_pdo->prepare("SELECT user_id FROM user_sessions WHERE token = ? AND expires > NOW()");
             $stmt->execute([$api_token]);
             if ($user_id = $stmt->fetchColumn()) {
                 $_SESSION['user_id'] = $user_id;
@@ -102,7 +102,7 @@ if (!isset($_SESSION['user_id'])) {
         
         // Vérifier si cet utilisateur existe
         try {
-            $stmt = $pdo->prepare("SELECT id FROM users WHERE id = ?");
+            $stmt = $shop_pdo->prepare("SELECT id FROM users WHERE id = ?");
             $stmt->execute([$direct_user_id]);
             if ($stmt->rowCount() > 0) {
                 $_SESSION['user_id'] = $direct_user_id;
@@ -145,7 +145,7 @@ if ($reparation_id <= 0) {
 
 try {
     // Récupérer les informations de la réparation
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         SELECT r.*, c.nom as client_nom, c.prenom as client_prenom, c.telephone as client_telephone, c.id as client_id
         FROM reparations r
         JOIN clients c ON r.client_id = c.id
@@ -167,11 +167,11 @@ try {
     $categorie_id = 5; // Catégorie gardiennage
     $statut_id = 12;   // ID du statut "Gardiennage"
     
-    $stmt = $pdo->prepare("UPDATE reparations SET statut = ?, statut_categorie = ?, date_modification = NOW() WHERE id = ?");
+    $stmt = $shop_pdo->prepare("UPDATE reparations SET statut = ?, statut_categorie = ?, date_modification = NOW() WHERE id = ?");
     $stmt->execute([$nouveau_statut, $categorie_id, $reparation_id]);
     
     // Enregistrer le changement dans les logs
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         INSERT INTO reparation_logs 
         (reparation_id, employe_id, action_type, statut_avant, statut_apres, details) 
         VALUES (?, ?, ?, ?, ?, ?)
@@ -186,7 +186,7 @@ try {
     ]);
     
     // Ajouter une entrée dans la table gardiennage
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         INSERT INTO gardiennage 
         (reparation_id, date_debut, date_derniere_facturation, notes) 
         VALUES (?, CURDATE(), CURDATE(), ?)
@@ -197,7 +197,7 @@ try {
     ]);
     
     // Récupérer le template SMS
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         SELECT id, nom, contenu 
         FROM sms_templates 
         WHERE statut_id = ? AND est_actif = 1
@@ -283,7 +283,7 @@ try {
                 $sms_sent = true;
                 
                 // Enregistrer l'envoi du SMS dans la base de données
-                $stmt = $pdo->prepare("
+                $stmt = $shop_pdo->prepare("
                     INSERT INTO reparation_sms (reparation_id, template_id, telephone, message, date_envoi, statut_id)
                     VALUES (?, ?, ?, ?, NOW(), ?)
                 ");

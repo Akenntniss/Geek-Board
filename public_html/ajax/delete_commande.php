@@ -101,7 +101,7 @@ if (!$data || !isset($data['id']) || !is_numeric($data['id'])) {
 
 try {
     // Vérifier d'abord que la commande existe
-    $check_stmt = $pdo->prepare("SELECT id FROM commandes_pieces WHERE id = ?");
+    $check_stmt = $shop_pdo->prepare("SELECT id FROM commandes_pieces WHERE id = ?");
     $check_stmt->execute([$data['id']]);
     
     if ($check_stmt->rowCount() === 0) {
@@ -113,7 +113,7 @@ try {
     }
     
     // Procéder à la suppression
-    $stmt = $pdo->prepare("DELETE FROM commandes_pieces WHERE id = ?");
+    $stmt = $shop_pdo->prepare("DELETE FROM commandes_pieces WHERE id = ?");
     $result = $stmt->execute([$data['id']]);
 
     if ($result && $stmt->rowCount() > 0) {

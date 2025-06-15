@@ -14,7 +14,7 @@ if (!isset($_GET['id'])) {
 }
 
 try {
-    $stmt = $pdo->prepare("SELECT * FROM marges_estimees WHERE id = ?");
+    $stmt = $shop_pdo->prepare("SELECT * FROM marges_estimees WHERE id = ?");
     $stmt->execute([$_GET['id']]);
     $marge = $stmt->fetch(PDO::FETCH_ASSOC);
     

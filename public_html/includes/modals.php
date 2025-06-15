@@ -308,25 +308,28 @@ if (isset($_SESSION['user_id'])) {
 <!-- Modal Ajouter Commande -->
 <div class="modal fade" id="ajouterCommandeModal" tabindex="-1" aria-labelledby="ajouterCommandeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
-        <div class="modal-content border-0 shadow-lg rounded-4">
-            <div class="modal-header bg-primary text-white border-bottom-0 rounded-top-4">
-                <h5 class="modal-title" id="ajouterCommandeModalLabel">
-                    <i class="fas fa-plus-circle me-2"></i>Nouvelle commande de pièces
+        <div class="modal-content border-0 shadow-lg rounded-4 <?php echo $dark_mode ? 'bg-dark text-white' : 'bg-white'; ?>" style="<?php echo $dark_mode ? 'background-color: #1a1a1a !important;' : ''; ?>">
+            <div class="modal-header <?php echo $dark_mode ? 'bg-primary border-dark' : 'bg-primary'; ?> text-white border-bottom-0 rounded-top-4" style="<?php echo $dark_mode ? 'background-color: #0d6efd !important;' : ''; ?>">
+                <h5 class="modal-title d-flex align-items-center text-white" id="ajouterCommandeModalLabel">
+                    <i class="fas fa-plus-circle me-2 text-white"></i>
+                    <span class="fw-bold text-white">Nouvelle commande de pièces</span>
                 </h5>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body p-4">
+            <div class="modal-body p-4 <?php echo $dark_mode ? 'text-white' : 'bg-light'; ?>" style="<?php echo $dark_mode ? 'background-color: #1a1a1a !important; color: #ffffff !important;' : ''; ?>">
                 <form id="ajouterCommandeForm" method="post" action="ajax/add_commande.php">
                     <div class="row g-4">
                         <!-- Sélection du client -->
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="form-label fw-medium">Client</label>
-                                <div class="input-group">
-                                    <button class="btn btn-outline-primary" type="button" id="searchClientBtn" data-bs-toggle="modal" data-bs-target="#rechercheClientModal">
+                                <label class="form-label fw-medium <?php echo $dark_mode ? 'text-white' : 'text-dark'; ?>" style="<?php echo $dark_mode ? 'color: #ffffff !important;' : ''; ?>">
+                                    <i class="fas fa-user me-2 text-primary"></i>Client
+                                </label>
+                                <div class="input-group shadow-sm">
+                                    <button class="btn btn-outline-primary rounded-start-3" type="button" id="searchClientBtn" data-bs-toggle="modal" data-bs-target="#rechercheClientModal">
                                         <i class="fas fa-search"></i>
                                     </button>
-                                    <input type="text" id="nom_client_selectionne" class="form-control border-0 shadow-sm" value="" placeholder="Saisir ou rechercher un client...">
+                                    <input type="text" id="nom_client_selectionne" class="form-control <?php echo $dark_mode ? 'bg-dark text-white border-secondary' : 'bg-white'; ?> border-0 rounded-end-3" value="" placeholder="Saisir ou rechercher un client..." style="<?php echo $dark_mode ? 'background-color: #2d2d2d !important; color: #ffffff !important; border-color: #495057 !important;' : ''; ?>" <?php if ($dark_mode): ?>data-dark-mode="true"<?php endif; ?>>
                                     <input type="hidden" name="client_id" id="client_id" value="">
                                 </div>
                                 <div id="client_selectionne" class="selected-item-info d-none mt-2">
@@ -351,25 +354,38 @@ if (isset($_SESSION['user_id'])) {
                             </div>
                         </div>
                         
-                        <!-- Sélection de la réparation liée -->
+                        <!-- Informations de la première pièce - FOURNISSEUR (déplacé ici) -->
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="form-label fw-medium">Réparation liée (optionnel)</label>
-                                <select class="form-select form-select-lg border-0 shadow-sm rounded-3" name="reparation_id" id="reparation_id" onchange="getClientFromReparation(this.value)">
-                                    <option value="">Sélectionner une réparation...</option>
-                                </select>
+                                <label class="form-label fw-medium <?php echo $dark_mode ? 'text-white' : 'text-dark'; ?>" style="<?php echo $dark_mode ? 'color: #ffffff !important;' : ''; ?>">
+                                    <i class="fas fa-truck me-2 text-primary"></i>Fournisseur
+                                </label>
+                                
+                                <!-- Affichage du fournisseur sélectionné -->
+                                <div id="selected-fournisseur-display" class="d-none mb-2">
+                                    <div class="alert alert-success d-flex justify-content-between align-items-center rounded-3 shadow-sm">
+                                        <div>
+                                            <i class="fas fa-truck me-2"></i>
+                                            <strong id="selected-fournisseur-name"></strong>
+                                        </div>
+                                        <button type="button" class="btn btn-sm btn-outline-danger rounded-circle" id="reset-fournisseur-btn">
+                                            <i class="fas fa-times"></i>
+                                        </button>
                             </div>
                         </div>
                         
-                        <!-- Informations de la première pièce -->
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="form-label fw-medium">Fournisseur</label>
-                                <select class="form-select form-select-lg border-0 shadow-sm rounded-3" name="fournisseur_id" id="fournisseur_id_ajout" required>
+                                <!-- Bouton de sélection de fournisseur -->
+                                <button type="button" class="btn btn-outline-primary btn-lg w-100 rounded-3 shadow-sm" id="select-fournisseur-btn">
+                                    <i class="fas fa-truck me-2"></i>Choisir un fournisseur
+                                </button>
+                                
+                                <!-- Select caché pour la compatibilité -->
+                                <select class="form-select d-none" name="fournisseur_id" id="fournisseur_id_ajout" required>
                                     <option value="">Sélectionner un fournisseur</option>
                                     <?php
                                     try {
-                                        $stmt = $pdo->query("SELECT id, nom FROM fournisseurs ORDER BY nom");
+                                        $shop_pdo = getShopDBConnection();
+$stmt = $shop_pdo->query("SELECT id, nom FROM fournisseurs ORDER BY nom");
                                         while ($fournisseur = $stmt->fetch()) {
                                             echo "<option value='{$fournisseur['id']}'>" . 
                                                  htmlspecialchars($fournisseur['nom']) . "</option>";
@@ -382,18 +398,24 @@ if (isset($_SESSION['user_id'])) {
                             </div>
                         </div>
                         
+                        <!-- Pièce commandée (déplacée en première position) -->
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="form-label fw-medium">Pièce commandée</label>
-                                <input type="text" class="form-control form-control-lg border-0 shadow-sm rounded-3" name="nom_piece" id="nom_piece" required>
+                                <label class="form-label fw-medium <?php echo $dark_mode ? 'text-white' : 'text-dark'; ?>" style="<?php echo $dark_mode ? 'color: #ffffff !important;' : ''; ?>">
+                                    <i class="fas fa-cog me-2 text-primary"></i>Pièce commandée
+                                </label>
+                                <input type="text" class="form-control form-control-lg <?php echo $dark_mode ? 'bg-dark text-white border-secondary' : 'bg-white'; ?> border-0 shadow-sm rounded-3" name="nom_piece" id="nom_piece" placeholder="Nom de la pièce..." style="<?php echo $dark_mode ? 'background-color: #2d2d2d !important; color: #ffffff !important; border-color: #495057 !important;' : ''; ?>" <?php if ($dark_mode): ?>data-dark-mode="true"<?php endif; ?> required>
                             </div>
                         </div>
                         
+                        <!-- Code barre (déplacé en deuxième position) -->
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="form-label fw-medium">Code barre</label>
-                                <div class="input-group">
-                                    <input type="text" class="form-control form-control-lg border-0 shadow-sm rounded-start-3" name="code_barre" id="code_barre" placeholder="Saisir le code barre">
+                                <label class="form-label fw-medium <?php echo $dark_mode ? 'text-white' : 'text-dark'; ?>" style="<?php echo $dark_mode ? 'color: #ffffff !important;' : ''; ?>">
+                                    <i class="fas fa-barcode me-2 text-primary"></i>Code barre
+                                </label>
+                                <div class="input-group shadow-sm">
+                                    <input type="text" class="form-control form-control-lg <?php echo $dark_mode ? 'bg-dark text-white border-secondary' : 'bg-white'; ?> border-0 rounded-start-3" name="code_barre" id="code_barre" placeholder="Saisir le code barre" style="<?php echo $dark_mode ? 'background-color: #2d2d2d !important; color: #ffffff !important; border-color: #495057 !important;' : ''; ?>" <?php if ($dark_mode): ?>data-dark-mode="true"<?php endif; ?>>
                                     <button type="button" class="btn btn-outline-primary btn-lg rounded-end-3 scan-code-btn">
                                         <i class="fas fa-barcode"></i>
                                     </button>
@@ -401,69 +423,182 @@ if (isset($_SESSION['user_id'])) {
                             </div>
                         </div>
                         
-                        <div class="col-md-6">
+                        <!-- Prix de vente sur la même ligne (déplacé en première position) -->
+                        <div class="col-md-4">
                             <div class="form-group">
-                                <label class="form-label fw-medium">Quantité</label>
-                                <div class="input-group">
+                                <label class="form-label fw-medium <?php echo $dark_mode ? 'text-white' : 'text-dark'; ?>" style="<?php echo $dark_mode ? 'color: #ffffff !important;' : ''; ?>">
+                                    <i class="fas fa-euro-sign me-2 text-success"></i>Prix de vente (facultatif)
+                                </label>
+                                <div class="input-group shadow-sm">
+                                    <input type="number" class="form-control form-control-lg <?php echo $dark_mode ? 'bg-dark text-white border-secondary' : 'bg-white'; ?> border-0 rounded-start-3" name="prix_estime" id="prix_estime" step="0.01" placeholder="0.00" style="<?php echo $dark_mode ? 'background-color: #2d2d2d !important; color: #ffffff !important; border-color: #495057 !important;' : ''; ?>" <?php if ($dark_mode): ?>data-dark-mode="true"<?php endif; ?>>
+                                    <span class="input-group-text <?php echo $dark_mode ? 'bg-secondary text-white border-secondary' : 'bg-light'; ?> rounded-end-3 border-0 shadow-sm" style="<?php echo $dark_mode ? 'background-color: #495057 !important; color: #ffffff !important; border-color: #495057 !important;' : ''; ?>">€</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Quantité avec largeur réduite (déplacée en deuxième position) -->
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="form-label fw-medium <?php echo $dark_mode ? 'text-white' : 'text-dark'; ?>" style="<?php echo $dark_mode ? 'color: #ffffff !important;' : ''; ?>">
+                                    <i class="fas fa-hashtag me-2 text-info"></i>Quantité
+                                </label>
+                                <div class="input-group shadow-sm">
                                     <button type="button" class="btn btn-outline-primary btn-lg rounded-start-3 decrement-btn">-</button>
-                                    <input type="number" class="form-control form-control-lg text-center border-0 shadow-sm quantite-input" name="quantite" id="quantite" min="1" value="1" required>
+                                    <input type="number" class="form-control form-control-lg text-center <?php echo $dark_mode ? 'bg-dark text-white border-secondary' : 'bg-white'; ?> border-0 quantite-input" name="quantite" id="quantite" min="1" value="1" style="<?php echo $dark_mode ? 'background-color: #2d2d2d !important; color: #ffffff !important; border-color: #495057 !important;' : ''; ?>" <?php if ($dark_mode): ?>data-dark-mode="true"<?php endif; ?> required>
                                     <button type="button" class="btn btn-outline-primary btn-lg rounded-end-3 increment-btn">+</button>
                                 </div>
                             </div>
                         </div>
                         
-                        <div class="col-md-6">
+                        <!-- Réparation liée sur la même ligne (déplacée en troisième position) -->
+                        <div class="col-md-4">
                             <div class="form-group">
-                                <label class="form-label fw-medium">Prix estimé (€)</label>
-                                <div class="input-group">
-                                    <input type="number" class="form-control form-control-lg border-0 shadow-sm rounded-start-3" name="prix_estime" id="prix_estime" step="0.01" required>
-                                    <span class="input-group-text bg-light rounded-end-3 border-0 shadow-sm">€</span>
-                                </div>
+                                <label class="form-label fw-medium <?php echo $dark_mode ? 'text-white' : 'text-dark'; ?>" style="<?php echo $dark_mode ? 'color: #ffffff !important;' : ''; ?>">
+                                    <i class="fas fa-tools me-2 text-warning"></i>Réparation liée (optionnel)
+                                </label>
+                                <select class="form-select form-select-lg <?php echo $dark_mode ? 'bg-dark text-white border-secondary' : 'bg-white'; ?> border-0 shadow-sm rounded-3" name="reparation_id" id="reparation_id" onchange="getClientFromReparation(this.value)" style="<?php echo $dark_mode ? 'background-color: #2d2d2d !important; color: #ffffff !important; border-color: #495057 !important;' : ''; ?>" <?php if ($dark_mode): ?>data-dark-mode="true"<?php endif; ?>>
+                                    <option value="">Sélectionner une réparation...</option>
+                                </select>
                             </div>
                         </div>
-                        
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="form-label fw-medium">Statut</label>
-                                <div class="d-flex gap-2">
-                                    <button type="button" class="btn btn-outline-warning flex-grow-1 status-btn active rounded-3" data-status="en_attente">
-                                        <i class="fas fa-clock me-1"></i> En attente
-                                    </button>
-                                    <button type="button" class="btn btn-outline-primary flex-grow-1 status-btn rounded-3" data-status="commande">
-                                        <i class="fas fa-shopping-cart fa-lg"></i> Commandé
-                                    </button>
-                                    <button type="button" class="btn btn-outline-success flex-grow-1 status-btn rounded-3" data-status="recue">
-                                        <i class="fas fa-box fa-lg"></i> Reçu
-                                    </button>
                                 </div>
+                    
+                    <!-- Champ caché pour le statut par défaut -->
                                 <input type="hidden" name="statut" id="statut_input" value="en_attente">
-                            </div>
-                        </div>
-                    </div>
                     
                     <!-- Container pour les pièces additionnelles -->
                     <div id="pieces-additionnelles"></div>
                     
                     <!-- Bouton pour ajouter une pièce supplémentaire -->
                     <div class="text-center mt-4">
-                        <button type="button" class="btn btn-outline-primary btn-lg rounded-pill" id="ajouter-piece-btn">
+                        <button type="button" class="btn btn-outline-primary btn-lg rounded-pill shadow-sm px-4 py-2" id="ajouter-piece-btn">
                             <i class="fas fa-plus-circle me-2"></i>Ajouter une autre pièce
                         </button>
                     </div>
                 </form>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Annuler</button>
-                <button type="button" class="btn btn-outline-info" id="debugSessionBtn">
-                    <i class="fas fa-bug me-2"></i>Debug Session
+            <div class="modal-footer <?php echo $dark_mode ? 'border-dark' : 'bg-light border-light'; ?> rounded-bottom-4 p-3" style="<?php echo $dark_mode ? 'background-color: #1a1a1a !important; border-color: #495057 !important;' : ''; ?>">
+                <button type="button" class="btn <?php echo $dark_mode ? 'btn-outline-light' : 'btn-outline-secondary'; ?> px-4 py-2 rounded-3" data-bs-dismiss="modal" style="<?php echo $dark_mode ? 'color: #ffffff !important; border-color: #ffffff !important;' : ''; ?>">
+                    <i class="fas fa-times me-2"></i>Annuler
                 </button>
-                <button type="submit" form="ajouterCommandeForm" class="btn btn-primary" id="saveCommandeBtn">
-                    <i class="fas fa-save me-2"></i>Enregistrer la commande
+                <button type="submit" form="ajouterCommandeForm" class="btn btn-primary px-4 py-2 rounded-3 shadow-sm" id="saveCommandeBtn">
+                    <i class="fas fa-save me-2"></i>Enregistrer les commandes
                 </button>
             </div>
         </div>
     </div>
 </div>
+
+<!-- Styles CSS pour améliorer la visibilité en mode sombre -->
+<?php if ($dark_mode): ?>
+<style>
+/* Amélioration des placeholders en mode sombre */
+input[data-dark-mode="true"]::placeholder {
+    color: #ffffff !important;
+    opacity: 0.8 !important;
+}
+
+input[data-dark-mode="true"]:focus::placeholder {
+    color: #ffffff !important;
+    opacity: 0.6 !important;
+}
+
+/* Amélioration du texte saisi en mode sombre */
+input[data-dark-mode="true"] {
+    color: #ffffff !important;
+    background-color: #2d2d2d !important;
+}
+
+input[data-dark-mode="true"]:focus {
+    color: #ffffff !important;
+    background-color: #2d2d2d !important;
+    border-color: #0d6efd !important;
+    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25) !important;
+}
+
+/* Amélioration des options de select en mode sombre */
+select[data-dark-mode="true"] option {
+    background-color: #2d2d2d !important;
+    color: #ffffff !important;
+}
+
+/* Amélioration du texte dans les input number */
+input[type="number"][data-dark-mode="true"] {
+    color: #ffffff !important;
+    background-color: #2d2d2d !important;
+}
+
+/* Amélioration de l'autofill en mode sombre */
+input[data-dark-mode="true"]:-webkit-autofill,
+input[data-dark-mode="true"]:-webkit-autofill:hover,
+input[data-dark-mode="true"]:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 1000px #2d2d2d inset !important;
+    -webkit-text-fill-color: #ffffff !important;
+    background-color: #2d2d2d !important;
+}
+</style>
+<?php endif; ?>
+
+<!-- Styles pour les sections de pièces multiples -->
+<style>
+.piece-section {
+    position: relative;
+    transition: all 0.3s ease;
+    border-left: 4px solid #0d6efd;
+}
+
+.piece-section:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1) !important;
+}
+
+.piece-section .remove-piece-btn {
+    transition: all 0.2s ease;
+}
+
+.piece-section .remove-piece-btn:hover {
+    transform: scale(1.05);
+}
+
+/* Animation pour le bouton d'ajout de pièce */
+#ajouter-piece-btn {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+#ajouter-piece-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(13, 110, 253, 0.3);
+}
+
+#ajouter-piece-btn:active {
+    transform: translateY(0);
+}
+
+/* Effet de pulsation pour attirer l'attention */
+@keyframes pulse-border {
+    0% { border-color: #0d6efd; }
+    50% { border-color: #6610f2; }
+    100% { border-color: #0d6efd; }
+}
+
+.piece-section.just-added {
+    animation: pulse-border 2s ease-in-out;
+}
+
+/* Responsive pour mobile */
+@media (max-width: 768px) {
+    .piece-section {
+        margin-bottom: 1.5rem !important;
+        padding: 1rem !important;
+    }
+    
+    .piece-section .row > div {
+        margin-bottom: 1rem;
+    }
+}
+</style>
 
 <!-- Modal Signaler un Bug -->
 <div class="modal fade" id="ajouterBugModal" tabindex="-1" aria-labelledby="ajouterBugModalLabel" aria-hidden="true">
@@ -542,6 +677,9 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
+    // Variable pour compter les pièces ajoutées
+    let piecesCounter = 1;
+    
     // Gestion des boutons +/- pour la quantité
     const setupQuantityButtons = function() {
         // Boutons de diminution
@@ -564,6 +702,186 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
     };
+
+    // Fonction pour créer une nouvelle section de pièce
+    function createNewPieceSection(index) {
+        const darkMode = <?php echo $dark_mode ? 'true' : 'false'; ?>;
+        const darkModeClasses = darkMode ? 'bg-dark text-white border-secondary' : 'bg-white';
+        const darkModeStyles = darkMode ? 'background-color: #2d2d2d !important; color: #ffffff !important; border-color: #495057 !important;' : '';
+        const darkModeLabelStyle = darkMode ? 'color: #ffffff !important;' : '';
+        const darkModeSectionStyle = darkMode ? 'background-color: #1a1a1a !important; border-color: #495057 !important; color: #ffffff !important;' : 'background-color: #f8f9fa; border-color: #e9ecef;';
+        const darkModeInputGroupText = darkMode ? 'bg-secondary text-white border-secondary' : 'bg-light';
+        const darkModeInputGroupStyle = darkMode ? 'background-color: #495057 !important; color: #ffffff !important; border-color: #495057 !important;' : '';
+        
+        return `
+            <div class="piece-section mb-4 p-4 border rounded-3 shadow-sm ${darkMode ? 'text-white' : ''}" data-piece-index="${index}" style="${darkModeSectionStyle}">
+                <!-- En-tête de la section avec bouton de suppression -->
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h6 class="mb-0 text-primary" style="${darkModeLabelStyle}">
+                        <i class="fas fa-cog me-2"></i>Pièce ${index}
+                    </h6>
+                    <button type="button" class="btn btn-outline-danger btn-sm remove-piece-btn" data-piece-index="${index}">
+                        <i class="fas fa-trash me-1"></i>Supprimer
+                    </button>
+                </div>
+                
+                <div class="row g-4">
+                    <!-- Pièce commandée -->
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label fw-medium" style="${darkModeLabelStyle}">
+                                <i class="fas fa-cog me-2 text-primary"></i>Pièce commandée
+                            </label>
+                            <input type="text" 
+                                class="form-control form-control-lg ${darkModeClasses} border-0 shadow-sm rounded-3" 
+                                name="pieces[${index}][nom_piece]" 
+                                placeholder="Nom de la pièce..." 
+                                style="${darkModeStyles}" 
+                                ${darkMode ? 'data-dark-mode="true"' : ''} 
+                                required>
+                        </div>
+                    </div>
+                    
+                    <!-- Code barre -->
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label fw-medium" style="${darkModeLabelStyle}">
+                                <i class="fas fa-barcode me-2 text-primary"></i>Code barre
+                            </label>
+                            <div class="input-group shadow-sm">
+                                <input type="text" 
+                                    class="form-control form-control-lg ${darkModeClasses} border-0 rounded-start-3" 
+                                    name="pieces[${index}][code_barre]" 
+                                    placeholder="Saisir le code barre" 
+                                    style="${darkModeStyles}" 
+                                    ${darkMode ? 'data-dark-mode="true"' : ''}>
+                                <button type="button" class="btn btn-outline-primary btn-lg rounded-end-3 scan-code-btn" data-target-input="pieces[${index}][code_barre]">
+                                    <i class="fas fa-barcode"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Prix de vente -->
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="form-label fw-medium" style="${darkModeLabelStyle}">
+                                <i class="fas fa-euro-sign me-2 text-success"></i>Prix de vente (facultatif)
+                            </label>
+                            <div class="input-group shadow-sm">
+                                <input type="number" 
+                                    class="form-control form-control-lg ${darkModeClasses} border-0 rounded-start-3" 
+                                    name="pieces[${index}][prix_estime]" 
+                                    step="0.01" 
+                                    placeholder="0.00" 
+                                    style="${darkModeStyles}" 
+                                    ${darkMode ? 'data-dark-mode="true"' : ''}>
+                                <span class="input-group-text ${darkModeInputGroupText} rounded-end-3 border-0 shadow-sm" style="${darkModeInputGroupStyle}">€</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Quantité -->
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="form-label fw-medium" style="${darkModeLabelStyle}">
+                                <i class="fas fa-hashtag me-2 text-info"></i>Quantité
+                            </label>
+                            <div class="input-group shadow-sm">
+                                <button type="button" class="btn btn-outline-primary btn-lg rounded-start-3 decrement-btn">-</button>
+                                <input type="number" 
+                                    class="form-control form-control-lg text-center ${darkModeClasses} border-0 quantite-input" 
+                                    name="pieces[${index}][quantite]" 
+                                    min="1" 
+                                    value="1" 
+                                    style="${darkModeStyles}" 
+                                    ${darkMode ? 'data-dark-mode="true"' : ''} 
+                                    required>
+                                <button type="button" class="btn btn-outline-primary btn-lg rounded-end-3 increment-btn">+</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Réparation liée -->
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="form-label fw-medium" style="${darkModeLabelStyle}">
+                                <i class="fas fa-tools me-2 text-warning"></i>Réparation liée (optionnel)
+                            </label>
+                            <select class="form-select form-select-lg ${darkModeClasses} border-0 shadow-sm rounded-3" 
+                                name="pieces[${index}][reparation_id]" 
+                                style="${darkModeStyles}" 
+                                ${darkMode ? 'data-dark-mode="true"' : ''}>
+                                <option value="">Sélectionner une réparation...</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    // Gestion du bouton "Ajouter une autre pièce"
+    document.getElementById('ajouter-piece-btn').addEventListener('click', function() {
+        piecesCounter++;
+        const piecesContainer = document.getElementById('pieces-additionnelles');
+        
+        // Créer la nouvelle section
+        const newPieceHTML = createNewPieceSection(piecesCounter);
+        piecesContainer.insertAdjacentHTML('beforeend', newPieceHTML);
+        
+        // Réinitialiser les événements pour les nouveaux boutons
+        setupQuantityButtons();
+        setupRemovePieceButtons();
+        
+        // Copier les options de réparations de la première liste
+        const originalReparationSelect = document.getElementById('reparation_id');
+        const newReparationSelect = document.querySelector(`select[name="pieces[${piecesCounter}][reparation_id]"]`);
+        
+        if (originalReparationSelect && newReparationSelect) {
+            newReparationSelect.innerHTML = originalReparationSelect.innerHTML;
+        }
+        
+                 // Animation d'apparition
+         const newSection = piecesContainer.lastElementChild;
+         newSection.style.opacity = '0';
+         newSection.style.transform = 'translateY(20px)';
+         setTimeout(() => {
+             newSection.style.transition = 'all 0.3s ease';
+             newSection.style.opacity = '1';
+             newSection.style.transform = 'translateY(0)';
+             
+             // Ajouter un effet de pulsation temporaire
+             newSection.classList.add('just-added');
+             setTimeout(() => {
+                 newSection.classList.remove('just-added');
+             }, 2000);
+         }, 50);
+        
+        console.log(`Nouvelle pièce ajoutée: ${piecesCounter}`);
+    });
+
+    // Fonction pour gérer les boutons de suppression
+    function setupRemovePieceButtons() {
+        document.querySelectorAll('.remove-piece-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const pieceIndex = this.getAttribute('data-piece-index');
+                const pieceSection = document.querySelector(`[data-piece-index="${pieceIndex}"]`);
+                
+                if (pieceSection) {
+                    // Animation de suppression
+                    pieceSection.style.transition = 'all 0.3s ease';
+                    pieceSection.style.opacity = '0';
+                    pieceSection.style.transform = 'translateY(-20px)';
+                    
+                    setTimeout(() => {
+                        pieceSection.remove();
+                        console.log(`Pièce ${pieceIndex} supprimée`);
+                    }, 300);
+                }
+            });
+        });
+    }
     
     // Initialiser les boutons de quantité
     setupQuantityButtons();
@@ -574,49 +892,74 @@ document.addEventListener('DOMContentLoaded', function() {
         console.error("Erreur: Le modal 'ajouterCommandeModal' n'a pas été trouvé");
     }
 
-    // Modifier le comportement du formulaire pour inclure le nom du client saisi manuellement
+    // Modifier le comportement du formulaire pour gérer les multiples pièces
     const ajouterCommandeForm = document.getElementById('ajouterCommandeForm');
     if (ajouterCommandeForm) {
-        let isSubmitting = false; // Variable pour suivre l'état de soumission
+        let isSubmitting = false;
 
         ajouterCommandeForm.addEventListener('submit', function(e) {
             e.preventDefault();
             
-            // Vérifier si une soumission est déjà en cours
             if (isSubmitting) {
                 console.log("Soumission déjà en cours, ignorée");
                 return false;
             }
             
-            console.log("Début de la soumission du formulaire");
+            console.log("Début de la soumission du formulaire avec multiples pièces");
             isSubmitting = true;
             
-            // Obtenir les données du formulaire
-            const formData = new FormData(this);
-            const jsonData = {};
+            // Collecter toutes les données des pièces
+            const pieces = [];
             
-            // Convertir FormData en objet JSON
-            formData.forEach((value, key) => {
-                jsonData[key] = value;
+            // Ajouter la première pièce (celle du formulaire principal)
+            const firstPiece = {
+                nom_piece: document.getElementById('nom_piece').value,
+                code_barre: document.getElementById('code_barre').value,
+                prix_estime: document.getElementById('prix_estime').value,
+                quantite: document.getElementById('quantite').value,
+                reparation_id: document.getElementById('reparation_id').value
+            };
+            pieces.push(firstPiece);
+            
+            // Ajouter les pièces additionnelles
+            const pieceSections = document.querySelectorAll('.piece-section');
+            pieceSections.forEach(section => {
+                const index = section.getAttribute('data-piece-index');
+                const piece = {
+                    nom_piece: section.querySelector(`[name="pieces[${index}][nom_piece]"]`).value,
+                    code_barre: section.querySelector(`[name="pieces[${index}][code_barre]"]`).value,
+                    prix_estime: section.querySelector(`[name="pieces[${index}][prix_estime]"]`).value,
+                    quantite: section.querySelector(`[name="pieces[${index}][quantite]"]`).value,
+                    reparation_id: section.querySelector(`[name="pieces[${index}][reparation_id]"]`).value
+                };
+                pieces.push(piece);
             });
             
-            // Vérifier si c'est un client saisi manuellement
-            const clientId = document.getElementById('client_id').value;
-            const nomClientSelectionne = document.getElementById('nom_client_selectionne').value;
+            // Préparer les données à envoyer
+            const jsonData = {
+                client_id: document.getElementById('client_id').value,
+                fournisseur_id: document.getElementById('fournisseur_id_ajout').value,
+                statut: document.getElementById('statut_input').value,
+                pieces: pieces
+            };
             
-            if (clientId === '-1' && nomClientSelectionne.trim() !== '') {
+            // Vérifier si c'est un client saisi manuellement
+            const nomClientSelectionne = document.getElementById('nom_client_selectionne').value;
+            if (jsonData.client_id === '-1' && nomClientSelectionne.trim() !== '') {
                 jsonData.nom_client_manuel = nomClientSelectionne;
             }
             
-            // Désactiver le bouton de soumission pour éviter les doubles clics
+            console.log('Données à envoyer:', jsonData);
+            
+            // Désactiver le bouton de soumission
             const submitButton = document.getElementById('saveCommandeBtn');
             if (submitButton) {
                 submitButton.disabled = true;
                 submitButton.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Enregistrement...';
             }
             
-            // Envoyer les données via fetch API
-            fetch('ajax/add_commande.php', {
+            // Envoyer les données
+            fetch('ajax/add_multiple_commandes.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -637,20 +980,25 @@ document.addEventListener('DOMContentLoaded', function() {
                     if (modalInstance) modalInstance.hide();
                     
                     // Afficher une notification de succès
-                    createToast('Succès', 'Commande ajoutée avec succès', 'success').show();
+                    createToast('Succès', `${data.commandesCreees} commande(s) ajoutée(s) avec succès`, 'success').show();
                     
                     // Recharger la page après un court délai
                     setTimeout(() => {
                         window.location.reload();
                     }, 1500);
                 } else {
+                    // Vérifier si une redirection est demandée
+                    if (data.redirect) {
+                        window.location.href = data.redirect;
+                        return;
+                    }
+                    
                     // Réactiver le bouton de soumission
                     if (submitButton) {
                         submitButton.disabled = false;
-                        submitButton.innerHTML = '<i class="fas fa-save me-2"></i>Enregistrer la commande';
+                        submitButton.innerHTML = '<i class="fas fa-save me-2"></i>Enregistrer les commandes';
                     }
                     
-                    // Afficher une notification d'erreur
                     createToast('Erreur', data.message || 'Une erreur est survenue', 'danger').show();
                 }
             })
@@ -660,13 +1008,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Réactiver le bouton de soumission
                 if (submitButton) {
                     submitButton.disabled = false;
-                    submitButton.innerHTML = '<i class="fas fa-save me-2"></i>Enregistrer la commande';
+                    submitButton.innerHTML = '<i class="fas fa-save me-2"></i>Enregistrer les commandes';
                 }
                 
                 createToast('Erreur', 'Une erreur est survenue lors de la communication avec le serveur', 'danger').show();
             })
             .finally(() => {
-                // Réinitialiser l'état de soumission
                 isSubmitting = false;
             });
             
@@ -712,6 +1059,21 @@ document.addEventListener('DOMContentLoaded', function() {
                 document.body.style.paddingRight = '';
             }
         });
+    });
+
+    // Réinitialiser le formulaire quand le modal se ferme
+    modal.addEventListener('hidden.bs.modal', function() {
+        // Réinitialiser le compteur
+        piecesCounter = 1;
+        
+        // Supprimer toutes les sections de pièces additionnelles
+        const piecesContainer = document.getElementById('pieces-additionnelles');
+        piecesContainer.innerHTML = '';
+        
+        // Réinitialiser le formulaire principal
+        ajouterCommandeForm.reset();
+        
+        console.log('Modal fermé et formulaire réinitialisé');
     });
 
     // Script pour la gestion du modal de bug
@@ -1673,4 +2035,77 @@ document.addEventListener('DOMContentLoaded', function() {
         </div>
     </div>
 </div>
+
+<!-- Modal de sélection de fournisseur -->
+<div class="modal fade" id="fournisseurSelectionModal" tabindex="-1" aria-labelledby="fournisseurSelectionModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content border-0 shadow-lg rounded-4">
+            <div class="modal-header bg-primary text-white border-bottom-0 rounded-top-4">
+                <h5 class="modal-title" id="fournisseurSelectionModalLabel">
+                    <i class="fas fa-truck me-2"></i>Sélectionner un fournisseur
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-4">
+                <!-- Barre de recherche -->
+                <div class="mb-4">
+                    <div class="input-group">
+                        <span class="input-group-text bg-light border-0 shadow-sm">
+                            <i class="fas fa-search text-primary"></i>
+                        </span>
+                        <input type="text" id="searchFournisseurSelection" class="form-control bg-light border-0 shadow-sm" placeholder="Rechercher un fournisseur...">
+                    </div>
+                </div>
+                
+                <!-- Liste des fournisseurs sous forme de cartes -->
+                <div class="row g-3" style="max-height: 400px; overflow-y: auto;">
+                    <?php
+                    try {
+                        $shop_pdo = getShopDBConnection();
+                        $stmt = $shop_pdo->query("SELECT id, nom, url FROM fournisseurs ORDER BY nom");
+                        while ($fournisseur = $stmt->fetch()) {
+                            $couleur = getSupplierColor($fournisseur['id']);
+                            echo '<div class="col-md-6 col-lg-4">';
+                            echo '<div class="card fournisseur-card h-100 border-0 shadow-sm" style="cursor: pointer; transition: all 0.3s ease;" data-fournisseur-id="' . $fournisseur['id'] . '" data-fournisseur-name="' . htmlspecialchars($fournisseur['nom']) . '">';
+                            echo '<div class="card-body text-center p-3">';
+                            echo '<div class="mb-3">';
+                            echo '<div class="rounded-circle mx-auto d-flex align-items-center justify-content-center" style="width: 60px; height: 60px; background-color: ' . $couleur . ';">';
+                            echo '<i class="fas fa-truck text-white fa-lg"></i>';
+                            echo '</div>';
+                            echo '</div>';
+                            echo '<h6 class="card-title fournisseur-name mb-2">' . htmlspecialchars($fournisseur['nom']) . '</h6>';
+                            if ($fournisseur['url']) {
+                                echo '<small class="text-muted"><i class="fas fa-globe me-1"></i>Site web</small>';
+                            }
+                            echo '</div>';
+                            echo '</div>';
+                            echo '</div>';
+                        }
+                    } catch (PDOException $e) {
+                        echo '<div class="col-12"><div class="alert alert-danger">Erreur lors de la récupération des fournisseurs: ' . $e->getMessage() . '</div></div>';
+                    }
+                    ?>
+                </div>
+            </div>
+            <div class="modal-footer border-top-0">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    <i class="fas fa-times me-2"></i>Annuler
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.fournisseur-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15) !important;
+}
+
+.fournisseur-card:hover .card-body {
+    background-color: #f8f9fa;
+}
+</style>
+
+</body>
 </body>

@@ -2,6 +2,9 @@
 session_start();
 require_once '../includes/config.php';
 
+// Initialiser la connexion à la base de données boutique
+$shop_pdo = getShopDBConnection();
+
 // Vérification de la connexion
 if (!isset($_SESSION['user_id'])) {
     echo json_encode(['success' => false, 'message' => 'Non autorisé']);
@@ -40,25 +43,25 @@ if (empty($participants)) {
 
 try {
     // Démarrer la transaction
-    $pdo->beginTransaction();
+    $shop_pdo->beginTransaction();
 
     // Créer la conversation
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         INSERT INTO conversations (titre, type, createur_id, date_creation)
         VALUES (?, ?, ?, NOW())
     ");
     $stmt->execute([$titre, $type, $user_id]);
-    $conversation_id = $pdo->lastInsertId();
+    $conversation_id = $shop_pdo->lastInsertId();
 
     // Ajouter le créateur comme participant avec le rôle admin
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         INSERT INTO conversation_participants (conversation_id, user_id, role, date_derniere_lecture)
         VALUES (?, ?, 'admin', NOW())
     ");
     $stmt->execute([$conversation_id, $user_id]);
 
     // Ajouter les autres participants
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         INSERT INTO conversation_participants (conversation_id, user_id, role, date_derniere_lecture)
         VALUES (?, ?, ?, NOW())
     ");
@@ -74,15 +77,15 @@ try {
     if ($type === 'annonce') {
         $message = isset($data['message']) ? trim($data['message']) : '';
         if (!empty($message)) {
-            $stmt = $pdo->prepare("
+            $stmt = $shop_pdo->prepare("
                 INSERT INTO messages (conversation_id, sender_id, contenu, type, est_annonce, date_envoi)
                 VALUES (?, ?, ?, 'text', 1, NOW())
             ");
             $stmt->execute([$conversation_id, $user_id, $message]);
-            $message_id = $pdo->lastInsertId();
+            $message_id = $shop_pdo->lastInsertId();
 
             // Créer des notifications pour tous les participants
-            $stmt = $pdo->prepare("
+            $stmt = $shop_pdo->prepare("
                 INSERT INTO notifications_messages (user_id, conversation_id, message_id, est_lu, date_creation)
                 SELECT user_id, ?, ?, 0, NOW()
                 FROM conversation_participants
@@ -93,10 +96,10 @@ try {
     }
 
     // Valider la transaction
-    $pdo->commit();
+    $shop_pdo->commit();
 
     // Récupérer les détails de la conversation créée
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         SELECT c.*, 
                cp.role as user_role,
                cp.date_derniere_lecture
@@ -114,7 +117,7 @@ try {
 
 } catch (PDOException $e) {
     // Annuler la transaction en cas d'erreur
-    $pdo->rollBack();
+    $shop_pdo->rollBack();
     error_log("Erreur SQL (create_conversation.php): " . $e->getMessage());
     echo json_encode(['success' => false, 'message' => 'Erreur serveur']);
 } 

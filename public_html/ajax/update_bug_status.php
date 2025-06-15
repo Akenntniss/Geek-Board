@@ -33,7 +33,7 @@ if (!in_array($status, $valid_statuses)) {
 
 try {
     // Connexion à la base de données
-    $pdo = new PDO(
+    $shop_pdo = new PDO(
         "mysql:host=" . DB_HOST . ";port=" . DB_PORT . ";dbname=" . DB_NAME . ";charset=utf8mb4",
         DB_USER,
         DB_PASS,
@@ -53,7 +53,7 @@ try {
     
     $query .= " WHERE id = :id";
     
-    $stmt = $pdo->prepare($query);
+    $stmt = $shop_pdo->prepare($query);
     $stmt->execute([
         ':status' => $status,
         ':id' => $id

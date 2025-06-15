@@ -10,7 +10,8 @@ $parrain_id = (int)$_GET['id'];
 
 // Récupérer les informations du client
 try {
-    $stmt = $pdo->prepare("SELECT * FROM clients WHERE id = ?");
+    $shop_pdo = getShopDBConnection();
+$stmt = $shop_pdo->prepare("SELECT * FROM clients WHERE id = ?");
     $stmt->execute([$parrain_id]);
     $client = $stmt->fetch(PDO::FETCH_ASSOC);
     
@@ -32,7 +33,7 @@ try {
     $filleuls = get_filleuls_info($parrain_id);
     
     // Récupérer l'historique des réductions
-    $stmt_reductions = $pdo->prepare("
+    $stmt_reductions = $shop_pdo->prepare("
         SELECT pr.*, r.prix_reparation, r.id as reparation_id, r.date_reception
         FROM parrainage_reductions pr
         LEFT JOIN reparations r ON pr.reparation_utilisee_id = r.id
@@ -122,7 +123,7 @@ try {
                         
                         <?php
                         // Récupérer la configuration
-                        $stmt_config = $pdo->query("SELECT nombre_filleuls_requis FROM parrainage_config ORDER BY id DESC LIMIT 1");
+                        $stmt_config = $shop_pdo->query("SELECT nombre_filleuls_requis FROM parrainage_config ORDER BY id DESC LIMIT 1");
                         $config = $stmt_config->fetch(PDO::FETCH_ASSOC);
                         $filleuls_requis = $config['nombre_filleuls_requis'] ?? 1;
                         
@@ -266,7 +267,7 @@ try {
                                             </td>
                                             <td>
                                                 <?php if ($reduction['utilise'] && $reduction['reparation_id']): ?>
-                                                    <a href="index.php?page=details_reparation&id=<?php echo $reduction['reparation_id']; ?>" class="btn btn-sm btn-info">
+                                                    <a href="index.php?page=reparations&open_modal=<?php echo $reduction['reparation_id']; ?>" class="btn btn-sm btn-info">
                                                         <i class="fas fa-eye me-1"></i> #<?php echo $reduction['reparation_id']; ?>
                                                     </a>
                                                 <?php else: ?>

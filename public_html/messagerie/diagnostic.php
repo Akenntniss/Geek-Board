@@ -19,6 +19,9 @@ $username = $_SESSION['username'] ?? 'Non connecté';
 require_once __DIR__ . '/../config/database.php';
 require_once __DIR__ . '/includes/functions.php';
 
+// Obtenir la connexion à la base de données de la boutique
+$shop_pdo = getShopDBConnection();
+
 // Style CSS pour une meilleure présentation
 echo '
 <!DOCTYPE html>
@@ -65,11 +68,11 @@ echo '</div>';
 echo '<div class="section">';
 echo '<h2>2. Connexion à la base de données</h2>';
 try {
-    $pdo->query("SELECT 1");
+    $shop_pdo->query("SELECT 1");
     echo '<p class="success">✅ Connexion à la base de données réussie</p>';
     
     // Informations sur la version de MariaDB/MySQL
-    $version = $pdo->query("SELECT VERSION() as version")->fetch(PDO::FETCH_ASSOC);
+    $version = $shop_pdo->query("SELECT VERSION() as version")->fetch(PDO::FETCH_ASSOC);
     echo '<p>Version de la base de données: ' . $version['version'] . '</p>';
 } catch (PDOException $e) {
     echo '<p class="error">❌ Erreur de connexion à la base de données: ' . $e->getMessage() . '</p>';
@@ -99,7 +102,7 @@ foreach ($tables as $table => $name) {
     echo '<td>' . $name . '</td>';
     
     try {
-        $count = $pdo->query("SELECT COUNT(*) as count FROM $table")->fetch(PDO::FETCH_ASSOC)['count'];
+        $count = $shop_pdo->query("SELECT COUNT(*) as count FROM $table")->fetch(PDO::FETCH_ASSOC)['count'];
         echo '<td>' . $count . '</td>';
         echo '<td class="success">✅ OK</td>';
     } catch (PDOException $e) {
@@ -138,7 +141,7 @@ if ($user_id) {
             
             foreach ($conversations as $conv) {
                 // Compter les messages
-                $message_count = $pdo->query("SELECT COUNT(*) as count FROM messages WHERE conversation_id = " . $conv['id'])->fetch(PDO::FETCH_ASSOC)['count'];
+                $message_count = $shop_pdo->query("SELECT COUNT(*) as count FROM messages WHERE conversation_id = " . $conv['id'])->fetch(PDO::FETCH_ASSOC)['count'];
                 
                 echo '<tr>';
                 echo '<td>' . $conv['id'] . '</td>';
@@ -194,11 +197,11 @@ if (isset($_GET['action'])) {
         
         try {
             // 1. Mettre à jour les dates
-            $pdo->exec("UPDATE conversations SET date_creation = NOW(), derniere_activite = NOW() WHERE id = $conv_id");
-            $pdo->exec("UPDATE conversation_participants SET date_ajout = NOW() WHERE conversation_id = $conv_id");
+            $shop_pdo->exec("UPDATE conversations SET date_creation = NOW(), derniere_activite = NOW() WHERE id = $conv_id");
+            $shop_pdo->exec("UPDATE conversation_participants SET date_ajout = NOW() WHERE conversation_id = $conv_id");
             
             // 2. Vérifier les participants
-            $participants = $pdo->query("SELECT user_id FROM conversation_participants WHERE conversation_id = $conv_id")->fetchAll(PDO::FETCH_COLUMN);
+            $participants = $shop_pdo->query("SELECT user_id FROM conversation_participants WHERE conversation_id = $conv_id")->fetchAll(PDO::FETCH_COLUMN);
             
             echo '<p class="success">✅ Conversation #' . $conv_id . ' réparée avec succès!</p>';
             echo '<p>Dates mises à jour et ' . count($participants) . ' participants vérifiés.</p>';
@@ -260,9 +263,9 @@ if (isset($_GET['action'])) {
     // Réparer toutes les dates
     if ($action === 'fix_all_dates') {
         try {
-            $pdo->exec("UPDATE conversations SET date_creation = NOW(), derniere_activite = NOW()");
-            $pdo->exec("UPDATE conversation_participants SET date_ajout = NOW()");
-            $pdo->exec("UPDATE messages SET date_envoi = NOW()");
+            $shop_pdo->exec("UPDATE conversations SET date_creation = NOW(), derniere_activite = NOW()");
+            $shop_pdo->exec("UPDATE conversation_participants SET date_ajout = NOW()");
+            $shop_pdo->exec("UPDATE messages SET date_envoi = NOW()");
             
             echo '<p class="success mt-3">✅ Toutes les dates ont été mises à jour avec succès!</p>';
         } catch (Exception $e) {

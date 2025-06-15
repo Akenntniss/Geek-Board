@@ -12,14 +12,14 @@ if (!isset($_SESSION['user_id']) || !isset($_SESSION['role']) ||
 
 // Récupération des catégories
 function get_kb_categories() {
-    global $pdo;
+    $shop_pdo = getShopDBConnection();
     try {
         $query = "SELECT c.*, COUNT(a.id) as article_count 
                   FROM kb_categories c
                   LEFT JOIN kb_articles a ON c.id = a.category_id
                   GROUP BY c.id
                   ORDER BY c.name ASC";
-        $stmt = $pdo->query($query);
+        $stmt = $shop_pdo->query($query);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     } catch (PDOException $e) {
         error_log("Erreur lors de la récupération des catégories KB: " . $e->getMessage());
@@ -29,14 +29,14 @@ function get_kb_categories() {
 
 // Récupération des tags
 function get_kb_tags() {
-    global $pdo;
+    $shop_pdo = getShopDBConnection();
     try {
         $query = "SELECT t.*, COUNT(at.article_id) as article_count 
                   FROM kb_tags t
                   LEFT JOIN kb_article_tags at ON t.id = at.tag_id
                   GROUP BY t.id
                   ORDER BY t.name ASC";
-        $stmt = $pdo->query($query);
+        $stmt = $shop_pdo->query($query);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     } catch (PDOException $e) {
         error_log("Erreur lors de la récupération des tags KB: " . $e->getMessage());
@@ -46,6 +46,7 @@ function get_kb_tags() {
 
 // Gestion des actions
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $shop_pdo = getShopDBConnection();
     $action = isset($_POST['action']) ? $_POST['action'] : '';
     
     // Ajouter une catégorie
@@ -58,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             try {
                 $query = "INSERT INTO kb_categories (name, icon, created_at) VALUES (?, ?, NOW())";
-                $stmt = $pdo->prepare($query);
+                $stmt = $shop_pdo->prepare($query);
                 $stmt->execute([$name, $icon]);
                 
                 set_message("La catégorie a été ajoutée avec succès.", "success");
@@ -81,7 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             try {
                 $query = "UPDATE kb_categories SET name = ?, icon = ? WHERE id = ?";
-                $stmt = $pdo->prepare($query);
+                $stmt = $shop_pdo->prepare($query);
                 $stmt->execute([$name, $icon, $category_id]);
                 
                 set_message("La catégorie a été mise à jour avec succès.", "success");
@@ -100,7 +101,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         try {
             // Vérifier s'il y a des articles associés à cette catégorie
             $query = "SELECT COUNT(*) as count FROM kb_articles WHERE category_id = ?";
-            $stmt = $pdo->prepare($query);
+            $stmt = $shop_pdo->prepare($query);
             $stmt->execute([$category_id]);
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
             
@@ -108,7 +109,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 set_message("Impossible de supprimer cette catégorie car elle contient des articles. Veuillez d'abord déplacer ou supprimer ces articles.", "danger");
             } else {
                 $query = "DELETE FROM kb_categories WHERE id = ?";
-                $stmt = $pdo->prepare($query);
+                $stmt = $shop_pdo->prepare($query);
                 $stmt->execute([$category_id]);
                 
                 set_message("La catégorie a été supprimée avec succès.", "success");
@@ -130,7 +131,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             try {
                 $query = "INSERT INTO kb_tags (name, created_at) VALUES (?, NOW())";
-                $stmt = $pdo->prepare($query);
+                $stmt = $shop_pdo->prepare($query);
                 $stmt->execute([$name]);
                 
                 set_message("Le tag a été ajouté avec succès.", "success");
@@ -152,7 +153,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             try {
                 $query = "UPDATE kb_tags SET name = ? WHERE id = ?";
-                $stmt = $pdo->prepare($query);
+                $stmt = $shop_pdo->prepare($query);
                 $stmt->execute([$name, $tag_id]);
                 
                 set_message("Le tag a été mis à jour avec succès.", "success");
@@ -170,26 +171,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
         try {
             // Commencer une transaction
-            $pdo->beginTransaction();
+            $shop_pdo->beginTransaction();
             
             // Supprimer d'abord les associations avec les articles
             $query = "DELETE FROM kb_article_tags WHERE tag_id = ?";
-            $stmt = $pdo->prepare($query);
+            $stmt = $shop_pdo->prepare($query);
             $stmt->execute([$tag_id]);
             
             // Puis supprimer le tag
             $query = "DELETE FROM kb_tags WHERE id = ?";
-            $stmt = $pdo->prepare($query);
+            $stmt = $shop_pdo->prepare($query);
             $stmt->execute([$tag_id]);
             
             // Valider la transaction
-            $pdo->commit();
+            $shop_pdo->commit();
             
             set_message("Le tag a été supprimé avec succès.", "success");
             redirect('gestion_kb');
         } catch (PDOException $e) {
             // Annuler la transaction en cas d'erreur
-            $pdo->rollBack();
+            $shop_pdo->rollBack();
             error_log("Erreur lors de la suppression du tag: " . $e->getMessage());
             set_message("Une erreur est survenue lors de la suppression du tag.", "danger");
         }

@@ -75,7 +75,7 @@ header('Content-Type: application/json');
 
 try {
     // Vérifier si la connexion PDO est disponible
-    if (!isset($pdo) || !($pdo instanceof PDO)) {
+    if (!isset($shop_pdo) || !($shop_pdo instanceof PDO)) {
         throw new Exception("Connexion à la base de données non disponible");
     }
     
@@ -89,7 +89,7 @@ try {
     ]));
     
     // Vérifier si le client existe déjà
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         SELECT id FROM clients 
         WHERE telephone = ? 
         LIMIT 1
@@ -108,7 +108,7 @@ try {
     }
     
     // Vérifier la structure de la table clients
-    $table_check = $pdo->query("DESCRIBE clients");
+    $table_check = $shop_pdo->query("DESCRIBE clients");
     $columns = $table_check->fetchAll(PDO::FETCH_COLUMN);
     error_log("Structure de la table clients : " . json_encode($columns));
     
@@ -140,9 +140,9 @@ try {
     error_log("Requête SQL : " . $sql);
     
     // Insérer le nouveau client
-    $stmt = $pdo->prepare($sql);
+    $stmt = $shop_pdo->prepare($sql);
     $stmt->execute($values);
-    $client_id = $pdo->lastInsertId();
+    $client_id = $shop_pdo->lastInsertId();
     
     // Retourner une réponse de succès
     echo json_encode([

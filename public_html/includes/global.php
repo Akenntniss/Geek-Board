@@ -3,8 +3,8 @@ require_once 'functions.php';
 require_once($_SERVER['DOCUMENT_ROOT'] . '/config/database.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/includes/session_manager.php');
 
-// Inclure l'API SMS pour rendre la fonction send_sms disponible globalement
-require_once($_SERVER['DOCUMENT_ROOT'] . '/api/sms/send.php');
+// Inclure les nouvelles fonctions SMS (migration API)
+require_once(__DIR__ . '/sms_functions.php');
 
 // Vérifier et nettoyer les variables GET, POST, COOKIE
 $_GET = cleanInput($_GET);

@@ -26,7 +26,7 @@ try {
             ORDER BY nom, prenom 
             LIMIT 10";
     
-    $stmt = $pdo->prepare($sql);
+    $stmt = $shop_pdo->prepare($sql);
     $stmt->execute(['search' => "%$search%"]);
     $clients = $stmt->fetchAll(PDO::FETCH_ASSOC);
     

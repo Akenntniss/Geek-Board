@@ -33,7 +33,7 @@ $offset = ($page - 1) * $per_page;
 try {
     // Vérifier d'abord si des commandes avec les statuts "termine" ou "annulee" existent
     $check_sql = "SELECT COUNT(*) AS total FROM commandes_pieces WHERE statut IN ('termine', 'annulee')";
-    $check_stmt = $pdo->query($check_sql);
+    $check_stmt = $shop_pdo->query($check_sql);
     $check_result = $check_stmt->fetch(PDO::FETCH_ASSOC);
     
     error_log("Vérification des commandes archivées: " . $check_result['total'] . " trouvées");
@@ -97,7 +97,7 @@ try {
     error_log("Requête de comptage: $count_sql");
     error_log("Paramètres: " . json_encode($params));
     
-    $stmt = $pdo->prepare($count_sql);
+    $stmt = $shop_pdo->prepare($count_sql);
     if (!empty($params)) {
         $stmt->execute($params);
     } else {
@@ -129,7 +129,7 @@ try {
     
     error_log("Requête principale: $sql");
     
-    $stmt = $pdo->prepare($sql);
+    $stmt = $shop_pdo->prepare($sql);
     if (!empty($params)) {
         $stmt->execute($params);
     } else {

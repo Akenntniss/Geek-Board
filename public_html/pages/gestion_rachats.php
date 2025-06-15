@@ -2,6 +2,8 @@
 require_once __DIR__ . '/../includes/header.php';
 require_once __DIR__ . '/../config/database.php';
 
+$shop_pdo = getShopDBConnection();
+
 // Vérification des droits d'accès
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
     header('Location: /pages/login.php');
@@ -13,12 +15,12 @@ try {
     // Nombre de rachats du mois
     $month = date('m');
     $year = date('Y');
-    $stmt = $pdo->prepare("SELECT COUNT(*) as count FROM rachat_appareils WHERE MONTH(date_rachat) = ? AND YEAR(date_rachat) = ?");
+    $stmt = $shop_pdo->prepare("SELECT COUNT(*) as count FROM rachat_appareils WHERE MONTH(date_rachat) = ? AND YEAR(date_rachat) = ?");
     $stmt->execute([$month, $year]);
     $rachats_mois = $stmt->fetch(PDO::FETCH_ASSOC)['count'];
 
     // Nombre total de rachats
-    $stmt = $pdo->prepare("SELECT COUNT(*) as count FROM rachat_appareils");
+    $stmt = $shop_pdo->prepare("SELECT COUNT(*) as count FROM rachat_appareils");
     $stmt->execute();
     $total_rachats = $stmt->fetch(PDO::FETCH_ASSOC)['count'];
 } catch (PDOException $e) {

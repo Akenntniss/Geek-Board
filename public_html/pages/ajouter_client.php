@@ -30,7 +30,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Vérification si l'email existe déjà
     if (!empty($email)) {
         try {
-            $stmt = $pdo->prepare("SELECT id FROM clients WHERE email = ?");
+            $shop_pdo = getShopDBConnection();
+$stmt = $shop_pdo->prepare("SELECT id FROM clients WHERE email = ?");
             $stmt->execute([$email]);
             if ($stmt->fetch()) {
                 $errors[] = "Un client avec cet email existe déjà";
@@ -44,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Si aucune erreur, on ajoute le client
     if (empty($errors)) {
         try {
-            $stmt = $pdo->prepare("
+            $stmt = $shop_pdo->prepare("
                 INSERT INTO clients (nom, prenom, telephone, email, date_creation) 
                 VALUES (?, ?, ?, ?, NOW())
             ");

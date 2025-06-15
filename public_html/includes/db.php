@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/../config/database.php';
 /**
  * Connexion à la base de données
  */
@@ -23,7 +24,7 @@ $options = [
 
 try {
     // Connexion à la base de données
-    $pdo = new PDO($dsn, $db_user, $db_pass, $options);
+    $shop_pdo = getShopDBConnection();
 } catch (PDOException $e) {
     // En mode développement, on affiche l'erreur
     if (DEBUG_MODE) {

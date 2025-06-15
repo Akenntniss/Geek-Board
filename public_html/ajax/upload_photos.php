@@ -6,7 +6,7 @@ header('Content-Type: application/json');
 
 require_once('../config/database.php');
 
-if (!$pdo) {
+if (!$shop_pdo) {
     echo json_encode([
         'success' => false,
         'error' => 'Erreur de connexion à la base de données'
@@ -53,7 +53,7 @@ try {
         if (move_uploaded_file($file_tmp, $file_path)) {
             // Insérer la photo dans la base de données
             $sql = "INSERT INTO photos_reparation (reparation_id, url) VALUES (?, ?)";
-            $stmt = $pdo->prepare($sql);
+            $stmt = $shop_pdo->prepare($sql);
             $stmt->execute([$repair_id, 'uploads/photos_reparation/' . $new_file_name]);
             
             $uploaded_photos[] = 'uploads/photos_reparation/' . $new_file_name;

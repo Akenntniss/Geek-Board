@@ -19,7 +19,7 @@ $id = intval($_POST['id']);
 
 try {
     // Vérifier la connexion à la base de données
-    if (!isset($pdo) || !($pdo instanceof PDO)) {
+    if (!isset($shop_pdo) || !($shop_pdo instanceof PDO)) {
         throw new Exception('Connexion à la base de données non disponible');
     }
     
@@ -31,7 +31,7 @@ try {
         WHERE r.id = :id
     ";
     
-    $stmt = $pdo->prepare($sql);
+    $stmt = $shop_pdo->prepare($sql);
     $stmt->bindParam(':id', $id, PDO::PARAM_INT);
     $stmt->execute();
     

@@ -38,7 +38,7 @@ try {
 
     // Vérifier si la réparation existe
     $check_sql = "SELECT id FROM reparations WHERE id = ?";
-    $check_stmt = $pdo->prepare($check_sql);
+    $check_stmt = $shop_pdo->prepare($check_sql);
     $check_stmt->execute([$reparation_id]);
     
     if (!$check_stmt->fetch()) {
@@ -58,7 +58,7 @@ try {
         LIMIT 1
     ";
     
-    $stmt = $pdo->prepare($sql);
+    $stmt = $shop_pdo->prepare($sql);
     $stmt->execute([$reparation_id]);
     $order = $stmt->fetch(PDO::FETCH_ASSOC);
     

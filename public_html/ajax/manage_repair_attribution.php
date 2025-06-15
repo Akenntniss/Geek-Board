@@ -51,6 +51,9 @@ $GLOBALS['display_texts'] = [
 require_once('../config/database.php');
 require_once('../includes/functions.php');
 
+// Obtenir la connexion à la base de données de la boutique
+$shop_pdo = getShopDBConnection();
+
 // Démarrer la session seulement si elle n'est pas déjà active
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
@@ -69,13 +72,13 @@ $alt_user_token = isset($data['user_token']) ? $data['user_token'] : '';
 // Si l'utilisateur n'est pas authentifié via session mais a fourni un token, vérifier le token
 if (!isset($_SESSION['user_id']) && $alt_user_id > 0 && !empty($alt_user_token)) {
     // Récupérer les infos de l'utilisateur pour vérifier
-    $stmt = $pdo->prepare("SELECT * FROM users WHERE id = ?");
+    $stmt = $shop_pdo->prepare("SELECT * FROM users WHERE id = ?");
     $stmt->execute([$alt_user_id]);
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
     
     if ($user) {
         // Récupérer la session associée à cet utilisateur
-        $stmt = $pdo->prepare("SELECT token FROM user_sessions WHERE user_id = ? ORDER BY expiry DESC LIMIT 1");
+        $stmt = $shop_pdo->prepare("SELECT token FROM user_sessions WHERE user_id = ? ORDER BY expiry DESC LIMIT 1");
         $stmt->execute([$alt_user_id]);
         $session = $stmt->fetch(PDO::FETCH_ASSOC);
         
@@ -128,8 +131,8 @@ if (empty($action) || empty($reparation_id)) {
 }
 
 // Fonction pour logger l'action
-function logReparationAction($pdo, $reparation_id, $employe_id, $action_type, $statut_avant = null, $statut_apres = null, $details = null) {
-    $stmt = $pdo->prepare("INSERT INTO reparation_logs (reparation_id, employe_id, action_type, statut_avant, statut_apres, details) VALUES (?, ?, ?, ?, ?, ?)");
+function logReparationAction($shop_pdo, $reparation_id, $employe_id, $action_type, $statut_avant = null, $statut_apres = null, $details = null) {
+    $stmt = $shop_pdo->prepare("INSERT INTO reparation_logs (reparation_id, employe_id, action_type, statut_avant, statut_apres, details) VALUES (?, ?, ?, ?, ?, ?)");
     return $stmt->execute([$reparation_id, $employe_id, $action_type, $statut_avant, $statut_apres, $details]);
 }
 
@@ -166,8 +169,8 @@ function local_get_enum_status_badge($statut, $reparation_id = null) {
 }
 
 // Vérifier les réparations en cours pour cet employé
-function getActiveRepairsForEmployee($pdo, $employe_id) {
-    $stmt = $pdo->prepare("
+function getActiveRepairsForEmployee($shop_pdo, $employe_id) {
+    $stmt = $shop_pdo->prepare("
         SELECT r.id, r.client_id, CONCAT(c.nom, ' ', c.prenom) as client_nom, r.type_appareil, r.modele 
         FROM reparation_attributions ra 
         JOIN reparations r ON ra.reparation_id = r.id 
@@ -179,8 +182,8 @@ function getActiveRepairsForEmployee($pdo, $employe_id) {
 }
 
 // Vérifier si une réparation a déjà un employé principal
-function hasMainEmployee($pdo, $reparation_id, $current_employe_id) {
-    $stmt = $pdo->prepare("
+function hasMainEmployee($shop_pdo, $reparation_id, $current_employe_id) {
+    $stmt = $shop_pdo->prepare("
         SELECT ra.employe_id, u.full_name as employe_nom
         FROM reparation_attributions ra 
         JOIN users u ON ra.employe_id = u.id
@@ -195,7 +198,7 @@ switch ($action) {
     case 'demarrer':
         try {
             // Vérifier si la réparation existe et récupérer son statut actuel
-            $stmt = $pdo->prepare("SELECT statut FROM reparations WHERE id = ?");
+            $stmt = $shop_pdo->prepare("SELECT statut FROM reparations WHERE id = ?");
             $stmt->execute([$reparation_id]);
             $reparation = $stmt->fetch(PDO::FETCH_ASSOC);
             
@@ -210,7 +213,7 @@ switch ($action) {
             $statut_avant = $reparation['statut'];
             
             // Vérifier si d'autres personnes travaillent déjà sur cette réparation
-            $stmt = $pdo->prepare("
+            $stmt = $shop_pdo->prepare("
                 SELECT u.full_name as nom
                 FROM reparation_attributions ra 
                 JOIN users u ON ra.employe_id = u.id 
@@ -220,11 +223,11 @@ switch ($action) {
             $other_workers = $stmt->fetchAll(PDO::FETCH_ASSOC);
             
             // Vérifier si un employé principal est déjà assigné
-            $main_employee = hasMainEmployee($pdo, $reparation_id, $employe_id);
+            $main_employee = hasMainEmployee($shop_pdo, $reparation_id, $employe_id);
             $has_main_employee = !empty($main_employee);
             
             // Récupérer les réparations actives de l'employé
-            $active_repairs = getActiveRepairsForEmployee($pdo, $employe_id);
+            $active_repairs = getActiveRepairsForEmployee($shop_pdo, $employe_id);
             
             // Répondre avec les informations sur les autres travailleurs et les réparations actives
             echo json_encode([
@@ -250,7 +253,7 @@ switch ($action) {
     case 'confirmer_demarrage':
         try {
             // Vérifier si la réparation existe et récupérer son statut actuel
-            $stmt = $pdo->prepare("SELECT statut FROM reparations WHERE id = ?");
+            $stmt = $shop_pdo->prepare("SELECT statut FROM reparations WHERE id = ?");
             $stmt->execute([$reparation_id]);
             $reparation = $stmt->fetch(PDO::FETCH_ASSOC);
             
@@ -266,7 +269,7 @@ switch ($action) {
             $est_principal = isset($data['est_principal']) ? intval($data['est_principal']) : 1;
             
             // Vérifier si l'employé a déjà commencé cette réparation
-            $stmt = $pdo->prepare("SELECT id FROM reparation_attributions WHERE reparation_id = ? AND employe_id = ? AND date_fin IS NULL");
+            $stmt = $shop_pdo->prepare("SELECT id FROM reparation_attributions WHERE reparation_id = ? AND employe_id = ? AND date_fin IS NULL");
             $stmt->execute([$reparation_id, $employe_id]);
             if ($stmt->rowCount() > 0) {
                 echo json_encode([
@@ -282,7 +285,7 @@ switch ($action) {
                 $statut_apres = isset($data['nouveau_statut']) ? $data['nouveau_statut'] : 'en_cours_intervention';
                 
                 // Valider que le statut est valide
-                $stmt = $pdo->prepare("SELECT id, categorie_id FROM statuts WHERE code = ?");
+                $stmt = $shop_pdo->prepare("SELECT id, categorie_id FROM statuts WHERE code = ?");
                 $stmt->execute([$statut_apres]);
                 $statut_info = $stmt->fetch(PDO::FETCH_ASSOC);
                 
@@ -290,7 +293,7 @@ switch ($action) {
                 if (!$statut_info) {
                     $statut_apres = 'en_cours_intervention'; // Statut par défaut pour intervention
                     // Récupérer l'ID et la catégorie du statut par défaut
-                    $stmt = $pdo->prepare("SELECT id, categorie_id FROM statuts WHERE code = ?");
+                    $stmt = $shop_pdo->prepare("SELECT id, categorie_id FROM statuts WHERE code = ?");
                     $stmt->execute([$statut_apres]);
                     $statut_info = $stmt->fetch(PDO::FETCH_ASSOC);
                     error_log("Statut " . $statut_apres . " invalide. Utilisation du statut par défaut: en_cours_intervention");
@@ -300,23 +303,23 @@ switch ($action) {
                 $statut_categorie = $statut_info['categorie_id'];
                 
                 // Mise à jour complète avec statut, catégorie de statut et ID du statut
-                $stmt = $pdo->prepare("UPDATE reparations SET statut = ?, statut_id = ?, statut_categorie = ?, employe_id = ? WHERE id = ?");
+                $stmt = $shop_pdo->prepare("UPDATE reparations SET statut = ?, statut_id = ?, statut_categorie = ?, employe_id = ? WHERE id = ?");
                 $stmt->execute([$statut_apres, $statut_id, $statut_categorie, $employe_id, $reparation_id]);
                 
                 // Mise à jour de l'utilisateur pour indiquer qu'il est occupé avec cette réparation
-                $stmt = $pdo->prepare("UPDATE users SET techbusy = 1, active_repair_id = ? WHERE id = ?");
+                $stmt = $shop_pdo->prepare("UPDATE users SET techbusy = 1, active_repair_id = ? WHERE id = ?");
                 $stmt->execute([$reparation_id, $employe_id]);
             } else {
                 $statut_apres = $statut_avant; // Le statut ne change pas si c'est un assistant
             }
             
             // Créer l'attribution
-            $stmt = $pdo->prepare("INSERT INTO reparation_attributions (reparation_id, employe_id, statut_avant, est_principal) VALUES (?, ?, ?, ?)");
+            $stmt = $shop_pdo->prepare("INSERT INTO reparation_attributions (reparation_id, employe_id, statut_avant, est_principal) VALUES (?, ?, ?, ?)");
             $result = $stmt->execute([$reparation_id, $employe_id, $statut_avant, $est_principal]);
             
             if ($result) {
                 // Enregistrer l'action dans les logs
-                logReparationAction($pdo, $reparation_id, $employe_id, 'demarrage', $statut_avant, $statut_apres, 'Réparation démarrée' . ($est_principal ? ' en tant que principal' : ' en tant qu\'assistant'));
+                logReparationAction($shop_pdo, $reparation_id, $employe_id, 'demarrage', $statut_avant, $statut_apres, 'Réparation démarrée' . ($est_principal ? ' en tant que principal' : ' en tant qu\'assistant'));
                 
                 echo json_encode([
                     'success' => true,
@@ -341,7 +344,7 @@ switch ($action) {
     case 'terminer':
         try {
             // Vérifier si l'attribution existe
-            $stmt = $pdo->prepare("
+            $stmt = $shop_pdo->prepare("
                 SELECT ra.id, ra.statut_avant, ra.est_principal, r.statut 
                 FROM reparation_attributions ra 
                 JOIN reparations r ON ra.reparation_id = r.id 
@@ -362,7 +365,7 @@ switch ($action) {
             $statut_apres = isset($data['nouveau_statut']) ? $data['nouveau_statut'] : $statut_avant;
             
             // Valider que le statut est valide
-            $stmt = $pdo->prepare("SELECT COUNT(*) FROM statuts WHERE code = ?");
+            $stmt = $shop_pdo->prepare("SELECT COUNT(*) FROM statuts WHERE code = ?");
             $stmt->execute([$statut_apres]);
             $statut_valide = ($stmt->fetchColumn() > 0);
             
@@ -373,22 +376,22 @@ switch ($action) {
             }
             
             // Mettre fin à l'attribution
-            $stmt = $pdo->prepare("UPDATE reparation_attributions SET date_fin = NOW(), statut_apres = ? WHERE id = ?");
+            $stmt = $shop_pdo->prepare("UPDATE reparation_attributions SET date_fin = NOW(), statut_apres = ? WHERE id = ?");
             $result = $stmt->execute([$statut_apres, $attribution['id']]);
             
             if ($result) {
                 // Si c'était le principal, mettre à jour le statut de la réparation
                 if ($attribution['est_principal'] == 1) {
-                    $stmt = $pdo->prepare("UPDATE reparations SET statut = ? WHERE id = ?");
+                    $stmt = $shop_pdo->prepare("UPDATE reparations SET statut = ? WHERE id = ?");
                     $stmt->execute([$statut_apres, $reparation_id]);
                     
                     // Mise à jour de l'utilisateur pour indiquer qu'il n'est plus occupé
-                    $stmt = $pdo->prepare("UPDATE users SET techbusy = 0, active_repair_id = NULL WHERE id = ?");
+                    $stmt = $shop_pdo->prepare("UPDATE users SET techbusy = 0, active_repair_id = NULL WHERE id = ?");
                     $stmt->execute([$employe_id]);
                 }
                 
                 // Enregistrer l'action dans les logs
-                logReparationAction($pdo, $reparation_id, $employe_id, 'terminer', $statut_avant, $statut_apres, 'Réparation terminée' . ($attribution['est_principal'] ? ' en tant que principal' : ' en tant qu\'assistant'));
+                logReparationAction($shop_pdo, $reparation_id, $employe_id, 'terminer', $statut_avant, $statut_apres, 'Réparation terminée' . ($attribution['est_principal'] ? ' en tant que principal' : ' en tant qu\'assistant'));
                 
                 echo json_encode([
                     'success' => true,
@@ -413,7 +416,7 @@ switch ($action) {
     case 'get_statuts':
         try {
             // Récupérer les statuts possibles
-            $stmt = $pdo->query("SELECT s.code, s.nom, sc.couleur 
+            $stmt = $shop_pdo->query("SELECT s.code, s.nom, sc.couleur 
                                 FROM statuts s 
                                 JOIN statut_categories sc ON s.categorie_id = sc.id 
                                 WHERE sc.id IN (2, 4) AND s.est_actif = 1
@@ -463,7 +466,7 @@ switch ($action) {
     case 'actives':
         try {
             // Récupérer les réparations actives de l'employé
-            $active_repairs = getActiveRepairsForEmployee($pdo, $employe_id);
+            $active_repairs = getActiveRepairsForEmployee($shop_pdo, $employe_id);
             
             echo json_encode([
                 'success' => true,

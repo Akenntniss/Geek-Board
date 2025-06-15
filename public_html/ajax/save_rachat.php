@@ -1,7 +1,8 @@
 <?php
-// Activer l'affichage des erreurs pour le débogage
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
+// Désactiver l'affichage des erreurs pour éviter de corrompre le JSON
+ini_set('display_errors', 0);
+ini_set('display_startup_errors', 0);
+// Continuer à logger les erreurs dans le fichier de log
 error_reporting(E_ALL);
 
 // S'assurer que la session est démarrée
@@ -15,6 +16,19 @@ require_once __DIR__ . '/../includes/functions.php';
 
 // Définir le type de contenu
 header('Content-Type: application/json');
+
+// Gestionnaire d'erreur global pour éviter de corrompre le JSON
+set_error_handler(function($severity, $message, $file, $line) {
+    error_log("PHP Error [$severity]: $message in $file on line $line");
+    return true; // Empêche l'affichage de l'erreur
+});
+
+// Gestionnaire d'exception non capturée
+set_exception_handler(function($exception) {
+    error_log("Uncaught exception: " . $exception->getMessage() . " in " . $exception->getFile() . " on line " . $exception->getLine());
+    echo json_encode(['error' => 'Une erreur système s\'est produite']);
+    exit;
+});
 
 // Vérifier le mode debug
 $debug_mode = isset($_POST['debug_mode']) && $_POST['debug_mode'] == '1';
@@ -202,6 +216,12 @@ try {
         }
         
         $debug_info[] = "Photo du client enregistrée: " . $client_photo_name;
+    }
+    
+    // Obtenir la connexion à la base de données du magasin
+    $pdo = getShopDBConnection();
+    if ($pdo === null) {
+        throw new Exception("La connexion à la base de données n'est pas disponible");
     }
     
     // Insérer l'enregistrement dans la base de données avec colonne pour la photo client

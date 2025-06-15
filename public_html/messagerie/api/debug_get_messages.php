@@ -75,14 +75,14 @@ add_log("Paramètres extraits", [
 
 // Vérification de l'existence de la conversation
 try {
-    $pdo = $GLOBALS['pdo'] ?? null;
-    if (!$pdo) {
+    $shop_pdo = $GLOBALS['pdo'] ?? null;
+    if (!$shop_pdo) {
         add_log("Erreur : Objet PDO non disponible", null, 'error');
         echo json_encode(['success' => false, 'message' => 'Erreur de connexion à la base de données', 'debug' => $debug_log]);
         exit;
     }
     
-    $stmt = $pdo->prepare("SELECT * FROM conversations WHERE id = ?");
+    $stmt = $shop_pdo->prepare("SELECT * FROM conversations WHERE id = ?");
     $stmt->execute([$conversation_id]);
     $conversation_exists = $stmt->fetch(PDO::FETCH_ASSOC);
     
@@ -98,7 +98,7 @@ try {
     }
     
     // Vérification des participants
-    $stmt = $pdo->prepare("SELECT * FROM conversation_participants WHERE conversation_id = ? AND user_id = ?");
+    $stmt = $shop_pdo->prepare("SELECT * FROM conversation_participants WHERE conversation_id = ? AND user_id = ?");
     $stmt->execute([$conversation_id, $user_id]);
     $participant = $stmt->fetch(PDO::FETCH_ASSOC);
     
@@ -114,7 +114,7 @@ try {
     }
     
     // Vérification des messages
-    $stmt = $pdo->prepare("SELECT COUNT(*) as count FROM messages WHERE conversation_id = ?");
+    $stmt = $shop_pdo->prepare("SELECT COUNT(*) as count FROM messages WHERE conversation_id = ?");
     $stmt->execute([$conversation_id]);
     $messages_count = $stmt->fetch(PDO::FETCH_ASSOC)['count'];
     
@@ -133,7 +133,7 @@ try {
     
     add_log("Requête SQL à exécuter", $query);
     
-    $stmt = $pdo->prepare($query);
+    $stmt = $shop_pdo->prepare($query);
     $stmt->bindValue(':conversation_id', $conversation_id, PDO::PARAM_INT);
     $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
     $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);

@@ -85,7 +85,8 @@ $dark_mode = isset($dark_mode) ? $dark_mode : (isset($_SESSION['dark_mode']) && 
                                     <option value="">Sélectionner un fournisseur</option>
                                     <?php
                                     try {
-                                        $stmt = $pdo->query("SELECT id, nom FROM fournisseurs ORDER BY nom");
+                                        $shop_pdo = getShopDBConnection();
+$stmt = $shop_pdo->query("SELECT id, nom FROM fournisseurs ORDER BY nom");
                                         while ($fournisseur = $stmt->fetch()) {
                                             echo "<option value='{$fournisseur['id']}'>" . 
                                                 htmlspecialchars($fournisseur['nom']) . "</option>";

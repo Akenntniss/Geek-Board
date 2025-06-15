@@ -1,28 +1,29 @@
 <?php
 // Récupérer les statistiques
+$shop_pdo = getShopDBConnection();
 try {
     // Nombre total de réparations
-    $stmt = $pdo->query("SELECT COUNT(*) FROM reparations");
+    $stmt = $shop_pdo->query("SELECT COUNT(*) FROM reparations");
     $total_reparations = $stmt->fetchColumn();
 
     // Réparations en cours
-    $stmt = $pdo->query("SELECT COUNT(*) FROM reparations WHERE statut IN ('en_cours_diagnostique', 'en_cours_intervention')");
+    $stmt = $shop_pdo->query("SELECT COUNT(*) FROM reparations WHERE statut IN ('en_cours_diagnostique', 'en_cours_intervention')");
     $reparations_en_cours = $stmt->fetchColumn();
 
     // Réparations en attente
-    $stmt = $pdo->query("SELECT COUNT(*) FROM reparations WHERE statut IN ('en_attente_accord_client', 'en_attente_livraison', 'en_attente_responsable')");
+    $stmt = $shop_pdo->query("SELECT COUNT(*) FROM reparations WHERE statut IN ('en_attente_accord_client', 'en_attente_livraison', 'en_attente_responsable')");
     $reparations_en_attente = $stmt->fetchColumn();
 
     // Réparations terminées ce mois
-    $stmt = $pdo->query("SELECT COUNT(*) FROM reparations WHERE statut IN ('termine', 'livre') AND MONTH(date_reception) = MONTH(CURRENT_DATE())");
+    $stmt = $shop_pdo->query("SELECT COUNT(*) FROM reparations WHERE statut IN ('termine', 'livre') AND MONTH(date_reception) = MONTH(CURRENT_DATE())");
     $reparations_terminees_mois = $stmt->fetchColumn();
 
     // Chiffre d'affaires du mois
-    $stmt = $pdo->query("SELECT COALESCE(SUM(prix_reparation), 0) FROM reparations WHERE statut IN ('termine', 'livre') AND MONTH(date_reception) = MONTH(CURRENT_DATE())");
+    $stmt = $shop_pdo->query("SELECT COALESCE(SUM(prix_reparation), 0) FROM reparations WHERE statut IN ('termine', 'livre') AND MONTH(date_reception) = MONTH(CURRENT_DATE())");
     $chiffre_affaires_mois = $stmt->fetchColumn();
 
     // Réparations par type d'appareil
-    $stmt = $pdo->query("
+    $stmt = $shop_pdo->query("
         SELECT type_appareil, COUNT(*) as count 
         FROM reparations 
         GROUP BY type_appareil 
@@ -32,7 +33,7 @@ try {
     $reparations_par_type = $stmt->fetchAll();
 
     // Réparations par statut
-    $stmt = $pdo->query("
+    $stmt = $shop_pdo->query("
         SELECT 
             CASE 
                 WHEN statut IN ('termine', 'livre') THEN 'Terminé'
@@ -197,7 +198,7 @@ try {
                         <tbody>
                             <?php
                             try {
-                                $stmt = $pdo->query("
+                                $stmt = $shop_pdo->query("
                                     SELECT r.*, c.nom as client_nom, c.prenom as client_prenom
                                     FROM reparations r
                                     JOIN clients c ON r.client_id = c.id

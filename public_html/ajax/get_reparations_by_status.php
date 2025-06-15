@@ -23,7 +23,7 @@ if (!in_array($status_type, ['nouvelles', 'enattente', 'encours'])) {
 try {
     // Vérifier les statuts existants dans la base de données
     $checkSql = "SELECT DISTINCT statut FROM reparations WHERE archive = 'NON' ORDER BY statut";
-    $checkStmt = $pdo->prepare($checkSql);
+    $checkStmt = $shop_pdo->prepare($checkSql);
     $checkStmt->execute();
     $existingStatuses = $checkStmt->fetchAll(PDO::FETCH_COLUMN);
     error_log("Statuts existants dans la base de données: " . implode(", ", $existingStatuses));
@@ -73,7 +73,7 @@ try {
     // Log de la requête SQL
     error_log("Requête SQL pour $status_type: " . $sql);
     
-    $stmt = $pdo->prepare($sql);
+    $stmt = $shop_pdo->prepare($sql);
     $stmt->execute();
     $reparations = $stmt->fetchAll(PDO::FETCH_ASSOC);
     
@@ -87,7 +87,7 @@ try {
                     (SELECT COUNT(*) FROM reparations WHERE statut = 'en_attente_responsable' AND archive = 'NON') as enattente,
                     (SELECT COUNT(*) FROM reparations WHERE statut IN ('nouvelle_intervention', 'nouveau_diagnostique') AND archive = 'NON') as encours";
     
-    $countStmt = $pdo->prepare($countSql);
+    $countStmt = $shop_pdo->prepare($countSql);
     $countStmt->execute();
     $counts = $countStmt->fetch(PDO::FETCH_ASSOC);
     

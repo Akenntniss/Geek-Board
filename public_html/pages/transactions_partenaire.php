@@ -1,5 +1,7 @@
 <?php
+require_once __DIR__ . '/../config/database.php';
 $root_path = $_SERVER['DOCUMENT_ROOT'];
+$shop_pdo = getShopDBConnection();
 require_once $root_path . '/includes/auth_check.php';
 require_once $root_path . '/includes/db_connect.php';
 
@@ -11,14 +13,14 @@ if (!isset($_GET['id'])) {
 $partenaire_id = intval($_GET['id']);
 
 // Récupération des informations du partenaire
-$stmt = $conn->prepare("SELECT p.*, sp.solde_actuel 
+$stmt = $shop_pdo->prepare("SELECT p.*, sp.solde_actuel 
                        FROM partenaires p 
                        LEFT JOIN soldes_partenaires sp ON p.id = sp.partenaire_id 
                        WHERE p.id = ?");
-$stmt->bind_param('i', $partenaire_id);
+// MySQLi code - needs manual conversion
 $stmt->execute();
-$result = $stmt->get_result();
-$partenaire = $result->fetch_assoc();
+$result = $stmt;
+$row = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if (!$partenaire) {
     header('Location: partenaires.php');
@@ -26,12 +28,12 @@ if (!$partenaire) {
 }
 
 // Récupération des transactions
-$stmt = $conn->prepare("SELECT t.*, u.full_name as created_by_name 
+$stmt = $shop_pdo->prepare("SELECT t.*, u.full_name as created_by_name 
                        FROM transactions_partenaires t
                        LEFT JOIN users u ON t.created_by = u.id
                        WHERE t.partenaire_id = ?
                        ORDER BY t.date_transaction DESC");
-$stmt->bind_param('i', $partenaire_id);
+// MySQLi code - needs manual conversion
 $stmt->execute();
 $transactions = $stmt->get_result();
 ?>

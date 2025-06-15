@@ -54,7 +54,7 @@ try {
         ];
         
         error_log("Tentative de connexion avec DSN: " . $dsn);
-        $pdo = new PDO($dsn, $user, $pass, $options);
+        $shop_pdo = new PDO($dsn, $user, $pass, $options);
         error_log("Connexion à la base de données réussie");
     } catch (PDOException $e) {
         error_log("Erreur de connexion à la base de données: " . $e->getMessage());
@@ -101,7 +101,7 @@ try {
         
         error_log("Requête SQL: " . $sql);
         
-        $stmt = $pdo->prepare($sql);
+        $stmt = $shop_pdo->prepare($sql);
         
         // Binding avec positions
         $stmt->bindParam(1, $searchTerm);

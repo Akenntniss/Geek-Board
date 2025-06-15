@@ -30,14 +30,14 @@ if (strlen($query) < 2) {
 
 try {
     // Connexion à la base de données
-    $pdo = new PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_NAME, DB_USER, DB_PASS);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $shop_pdo = new PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_NAME, DB_USER, DB_PASS);
+    $shop_pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     
     $results = [];
     
     // Recherche de clients
     if ($type == 'all' || $type == 'clients') {
-        $stmt = $pdo->prepare("
+        $stmt = $shop_pdo->prepare("
             SELECT id, nom, prenom, telephone, email
             FROM clients
             WHERE 
@@ -62,7 +62,7 @@ try {
     
     // Recherche de réparations
     if ($type == 'all' || $type == 'repairs') {
-        $stmt = $pdo->prepare("
+        $stmt = $shop_pdo->prepare("
             SELECT r.id, r.appareil, r.marque, r.modele, r.description_probleme, r.statut, c.nom as client_nom, c.prenom as client_prenom
             FROM reparations r
             LEFT JOIN clients c ON r.client_id = c.id
@@ -90,7 +90,7 @@ try {
     
     // Recherche par numéro de téléphone
     if ($type == 'all' || $type == 'phones') {
-        $stmt = $pdo->prepare("
+        $stmt = $shop_pdo->prepare("
             SELECT id, nom, prenom, telephone
             FROM clients
             WHERE telephone LIKE :query

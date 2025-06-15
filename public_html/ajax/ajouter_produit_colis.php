@@ -20,7 +20,7 @@ $colis_id = intval($_POST['colis_id']);
 
 try {
     // Vérifier si le produit existe et est disponible
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         SELECT id, statut 
         FROM produits_temporaires 
         WHERE id = ? AND statut IN ('en_attente', 'a_retourner')
@@ -33,7 +33,7 @@ try {
     }
 
     // Vérifier si le colis existe et est en préparation
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         SELECT id, statut 
         FROM colis_retour 
         WHERE id = ? AND statut = 'en_preparation'
@@ -46,7 +46,7 @@ try {
     }
 
     // Vérifier si le produit n'est pas déjà dans un colis
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         SELECT id 
         FROM colis_produits_temporaires 
         WHERE produit_temporaire_id = ?
@@ -57,17 +57,17 @@ try {
     }
 
     // Démarrer la transaction
-    $pdo->beginTransaction();
+    $shop_pdo->beginTransaction();
 
     // Ajouter le produit au colis
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         INSERT INTO colis_produits_temporaires (colis_id, produit_temporaire_id)
         VALUES (?, ?)
     ");
     $stmt->execute([$colis_id, $produit_id]);
 
     // Mettre à jour le statut du produit
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         UPDATE produits_temporaires 
         SET statut = 'en_transit'
         WHERE id = ?
@@ -75,14 +75,14 @@ try {
     $stmt->execute([$produit_id]);
 
     // Valider la transaction
-    $pdo->commit();
+    $shop_pdo->commit();
 
     echo json_encode(['success' => true]);
 
 } catch (Exception $e) {
     // Annuler la transaction en cas d'erreur
-    if ($pdo->inTransaction()) {
-        $pdo->rollBack();
+    if ($shop_pdo->inTransaction()) {
+        $shop_pdo->rollBack();
     }
     echo json_encode(['success' => false, 'message' => $e->getMessage()]);
 } 

@@ -242,10 +242,14 @@ include_once '../includes/header.php';
                                 <hr class="my-4">
                                 <h5 class="mb-3">Configuration de la passerelle SMS Gate</h5>
                                 
-                                <div class="mb-3">
+                                <div class="form-group mb-3">
                                     <label for="sms_gateway_url" class="form-label">URL de l'API</label>
                                     <input type="text" class="form-control" id="sms_gateway_url" name="sms_gateway_url" value="<?php echo htmlspecialchars($sms_gateway_url); ?>" required>
-                                    <div class="form-text">URL de l'API (ex: https://private.example.com/api/mobile/v1)</div>
+                                    <div class="form-text">
+                                        <span class="text-warning">⚠️ L'API distante n'est plus disponible!</span><br>
+                                        Pour utiliser SMS Gateway, veuillez configurer une URL locale comme: <code>http://192.168.1.100:8080/api</code><br>
+                                        <a href="../guides/configuration_sms_gateway.md" target="_blank" class="text-primary">Voir le guide de configuration</a>
+                                    </div>
                                 </div>
                                 
                                 <div class="mb-3">

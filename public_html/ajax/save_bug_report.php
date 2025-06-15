@@ -17,10 +17,10 @@ if (empty($_POST['description'])) {
 }
 
 try {
-    $pdo = getConnection();
+    $shop_pdo = getConnection();
     
     // Préparer la requête d'insertion
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         INSERT INTO bug_reports (
             user_id,
             description,

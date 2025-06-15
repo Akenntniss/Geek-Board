@@ -11,7 +11,8 @@ if (!isset($_SESSION['user_id'])) {
 // Récupérer les clients pour le formulaire
 $clients = [];
 try {
-    $stmt = $pdo->query("SELECT id, nom, prenom, telephone FROM clients ORDER BY nom, prenom");
+    $shop_pdo = getShopDBConnection();
+$stmt = $shop_pdo->query("SELECT id, nom, prenom, telephone FROM clients ORDER BY nom, prenom");
     $clients = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
     set_message("Erreur lors de la récupération des clients: " . $e->getMessage(), "danger");
@@ -139,7 +140,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($errors)) {
         try {
             // Insérer le rachat dans la base de données
-            $stmt = $pdo->prepare("
+            $stmt = $shop_pdo->prepare("
                 INSERT INTO rachat_appareils (
                     client_id, type_appareil, modele, numero_serie, sin,
                     fonctionnel, prix, photo_identite, photo_appareil,
@@ -152,7 +153,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $client_photo, $signature_file, $user_id
             ]);
             
-            $rachat_id = $pdo->lastInsertId();
+            $rachat_id = $shop_pdo->lastInsertId();
             
             set_message("Le rachat a été enregistré avec succès.", "success");
             header('Location: index.php?page=rachat_appareils');

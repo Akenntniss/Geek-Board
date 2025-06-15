@@ -36,7 +36,7 @@ try {
             ORDER BY r.id DESC
             LIMIT 10";
     
-    $stmt = $pdo->prepare($sql);
+    $stmt = $shop_pdo->prepare($sql);
     
     // Le terme de recherche peut être un ID exact ou un terme partiel
     $stmt->bindValue(':query', $query);

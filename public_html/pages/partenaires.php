@@ -1,5 +1,7 @@
 <?php
+require_once __DIR__ . '/../config/database.php';
 $root_path = $_SERVER['DOCUMENT_ROOT'];
+$shop_pdo = getShopDBConnection();
 require_once $root_path . '/includes/auth_check.php';
 require_once $root_path . '/includes/db_connect.php';
 
@@ -9,7 +11,7 @@ $query = "SELECT p.*, sp.solde_actuel
           LEFT JOIN soldes_partenaires sp ON p.id = sp.partenaire_id 
           WHERE p.statut = 'actif'
           ORDER BY p.nom, p.prenom";
-$result = $conn->query($query);
+$result = $shop_pdo->query($query);
 ?>
 
 <!DOCTYPE html>

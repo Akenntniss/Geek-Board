@@ -381,3 +381,252 @@ h1, h2, h3, h4, h5, h6 {
         box-shadow: 0 0 0 0 rgba(0, 212, 255, 0);
     }
 }
+
+/* Variables pour les couleurs */
+:root {
+    --primary-color: #0078e8;
+    --secondary-color: #37a1ff;
+    --accent-color: #00f7ff;
+    --bg-color: #0a1929;
+    --text-color: #f0f9ff;
+    --error-color: #ff4444;
+    --success-color: #00C851;
+    --border-color: rgba(255, 255, 255, 0.1);
+    --input-bg: rgba(255, 255, 255, 0.1);
+    --card-bg: rgba(255, 255, 255, 0.05);
+}
+
+/* Styles de base */
+body {
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: linear-gradient(135deg, var(--bg-color) 0%, #1a3654 100%);
+    color: var(--text-color);
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Container de connexion */
+.login-container {
+    background: var(--card-bg);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 2rem;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    border: 1px solid var(--border-color);
+    animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Titre */
+.login-container h1 {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: var(--accent-color);
+    font-size: 2rem;
+    font-weight: 600;
+}
+
+/* Groupes de formulaire */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+    font-weight: 500;
+}
+
+.form-group input[type="text"],
+.form-group input[type="password"],
+.form-group select {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background: var(--input-bg);
+    color: var(--text-color);
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.form-group input[type="text"]:focus,
+.form-group input[type="password"]:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 2px rgba(0, 247, 255, 0.2);
+}
+
+/* Checkbox "Se souvenir de moi" */
+.form-group input[type="checkbox"] {
+    margin-right: 0.5rem;
+}
+
+/* Bouton de connexion */
+button[type="submit"] {
+    width: 100%;
+    padding: 1rem;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+button[type="submit"]:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 247, 255, 0.3);
+}
+
+button[type="submit"]:active {
+    transform: translateY(0);
+}
+
+/* Message d'erreur */
+.error-message {
+    background: rgba(255, 68, 68, 0.1);
+    border: 1px solid var(--error-color);
+    color: var(--error-color);
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+/* Liens */
+.superadmin-link,
+.back-link {
+    text-align: center;
+    margin-top: 1.5rem;
+}
+
+.superadmin-link a,
+.back-link a {
+    color: var(--accent-color);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.superadmin-link a:hover,
+.back-link a:hover {
+    color: var(--secondary-color);
+    text-decoration: underline;
+}
+
+/* Panel de débogage */
+.debug-panel {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    padding: 1rem;
+    font-family: monospace;
+    font-size: 0.8rem;
+    max-height: 200px;
+    overflow-y: auto;
+    border-top: 1px solid var(--border-color);
+}
+
+.debug-panel h3 {
+    margin: 0 0 0.5rem 0;
+    color: var(--accent-color);
+}
+
+.debug-panel pre {
+    margin: 0;
+    white-space: pre-wrap;
+}
+
+/* Animations pour les champs de formulaire */
+.form-group input,
+.form-group select {
+    animation: slideIn 0.5s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Effet de focus amélioré */
+.form-group input:focus,
+.form-group select:focus {
+    transform: scale(1.02);
+}
+
+/* Animation du bouton */
+button[type="submit"] {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(0, 247, 255, 0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(0, 247, 255, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(0, 247, 255, 0);
+    }
+}
+
+/* Responsive design */
+@media (max-width: 480px) {
+    .login-container {
+        margin: 1rem;
+        padding: 1.5rem;
+    }
+    
+    .login-container h1 {
+        font-size: 1.75rem;
+    }
+    
+    .form-group input[type="text"],
+    .form-group input[type="password"],
+    .form-group select {
+        padding: 0.7rem;
+    }
+    
+    button[type="submit"] {
+        padding: 0.8rem;
+    }
+}

@@ -34,13 +34,20 @@ if (isset($_GET['test_dynamic_island']) && $_GET['test_dynamic_island'] === 'tru
     $_SESSION['test_dynamic_island'] = true;
 }
 
+// Définir la page demandée (nécessaire pour la vérification d'authentification)
+$page = isset($_GET['page']) ? $_GET['page'] : 'accueil';
+
 // Vérifier si l'utilisateur est connecté
 if (!isset($_SESSION['user_id'])) {
-    // Cas spécial pour l'impression d'étiquette qui peut ne pas nécessiter d'authentification
-    // ou gérer l'authentification différemment
-    if (isset($_GET['page']) && $_GET['page'] == 'imprimer_etiquette' && isset($_GET['id'])) {
+    // Cas spéciaux qui ne nécessitent pas d'authentification
+    $no_auth_pages = ['imprimer_etiquette', 'diagnostic_session', 'debug_fournisseurs'];
+    
+    if (in_array($page, $no_auth_pages)) {
+        // Permettre l'accès à ces pages sans authentification
+        if ($page == 'imprimer_etiquette' && isset($_GET['id'])) {
         error_log("Accès à imprimer_etiquette avec id=" . $_GET['id'] . " sans session utilisateur active.");
-        // Continuer sans redirection, la page imprimer_etiquette gèrera l'authentification si nécessaire
+        }
+        // Continuer sans redirection
     } else {
     // Transmettre les paramètres de test s'ils existent
     $redirect_url = '/pages/login.php';
@@ -197,11 +204,11 @@ require_once BASE_PATH . '/config/database.php';
 require_once BASE_PATH . '/includes/functions.php';
 require_once BASE_PATH . '/actions/inventaire_actions.php';
 
-// Définir la page par défaut et nettoyer l'entrée
-$page = isset($_GET['page']) ? cleanInput($_GET['page']) : 'accueil';
+// Nettoyer la page maintenant que functions.php est inclus
+$page = cleanInput($page);
 
 // Liste des pages autorisées
-$allowed_pages = ['accueil', 'clients', 'ajouter_client', 'modifier_client', 'reparations', 'ajouter_reparation', 'modifier_reparation', 'taches', 'ajouter_tache', 'modifier_tache', 'supprimer_tache', 'commentaires_tache', 'employes', 'ajouter_employe', 'modifier_employe', 'conges', 'conges_employe', 'conges_calendrier', 'conges_imposer', 'conges_disponibles', 'inventaire', 'categories', 'fournisseurs', 'commandes', 'commandes_pieces', 'nouvelle_commande', 'ajax/recherche_clients', 'ajax/ajouter_client', 'inventaire_actions', 'historique_client', 'deconnexion', 'rachat_appareils', 'parametre', 'scanner', 'ajouter_scan', 'nouveau_rachat', 'imprimer_etiquette', 'details_reparation', 'statut_rapide', 'comptes_partenaires', 'reparation_logs', 'reparation_log', 'messagerie', 'base_connaissances', 'article_kb', 'ajouter_article_kb', 'modifier_article_kb', 'gestion_kb', 'sms_templates', 'sms_historique', 'gardiennage', 'campagne_sms', 'campagne_details', 'bug-reports', 'suivi_reparation', 'admin_notifications', 'retours', 'retours_actions', 'switch_shop'];
+$allowed_pages = ['accueil', 'clients', 'ajouter_client', 'modifier_client', 'reparations', 'ajouter_reparation', 'modifier_reparation', 'taches', 'ajouter_tache', 'modifier_tache', 'supprimer_tache', 'commentaires_tache', 'employes', 'ajouter_employe', 'modifier_employe', 'conges', 'conges_employe', 'conges_calendrier', 'conges_imposer', 'conges_disponibles', 'inventaire', 'categories', 'fournisseurs', 'commandes', 'commandes_pieces', 'nouvelle_commande', 'ajax/recherche_clients', 'ajax/ajouter_client', 'inventaire_actions', 'historique_client', 'deconnexion', 'rachat_appareils', 'parametre', 'scanner', 'ajouter_scan', 'nouveau_rachat', 'imprimer_etiquette', 'details_reparation', 'statut_rapide', 'comptes_partenaires', 'reparation_logs', 'reparation_log', 'messagerie', 'base_connaissances', 'article_kb', 'ajouter_article_kb', 'modifier_article_kb', 'gestion_kb', 'sms_templates', 'sms_historique', 'gardiennage', 'campagne_sms', 'campagne_details', 'bug-reports', 'suivi_reparation', 'admin_notifications', 'retours', 'retours_actions', 'switch_shop', 'diagnostic_session', 'debug_fournisseurs'];
 
 // Vérifier si la page demandée est autorisée
 if (!in_array($page, $allowed_pages)) {
@@ -219,8 +226,8 @@ if ($page === 'switch_shop') {
             $_SESSION['shop_id'] = $shop_id;
             
             // Récupérer le nom du magasin
-            $pdo = getMainDBConnection();
-            $stmt = $pdo->prepare("SELECT name FROM shops WHERE id = ?");
+            $shop_pdo = getMainDBConnection();
+            $stmt = $shop_pdo->prepare("SELECT name FROM shops WHERE id = ?");
             $stmt->execute([$shop_id]);
             $shop = $stmt->fetch();
             
@@ -419,6 +426,12 @@ try {
             break;
         case 'retours_actions':
             include BASE_PATH . '/pages/retours_actions.php';
+            break;
+        case 'diagnostic_session':
+            include BASE_PATH . '/pages/diagnostic_session.php';
+            break;
+        case 'debug_fournisseurs':
+            include BASE_PATH . '/ajax/debug_fournisseurs.php';
             break;
         case '404':
             include BASE_PATH . '/pages/404.php';

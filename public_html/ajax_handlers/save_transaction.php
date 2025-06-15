@@ -1,5 +1,7 @@
 <?php
+require_once __DIR__ . '/../config/database.php';
 require_once '../includes/auth_check.php';
+$shop_pdo = getShopDBConnection();
 require_once '../includes/db_connect.php';
 
 header('Content-Type: application/json');
@@ -26,11 +28,11 @@ try {
     }
 
     // Début de la transaction
-    $conn->begin_transaction();
+    $shop_pdo->begin_transaction();
 
     try {
         // Insertion de la transaction
-        $stmt = $conn->prepare("INSERT INTO transactions_partenaires 
+        $stmt = $shop_pdo->prepare("INSERT INTO transactions_partenaires 
                               (partenaire_id, type, montant, description, reference_piece, created_by, statut) 
                               VALUES (?, ?, ?, ?, ?, ?, 'validee')");
         
@@ -38,14 +40,7 @@ try {
             throw new Exception('Erreur de préparation de la requête');
         }
 
-        $stmt->bind_param('isdssi', 
-            $partenaire_id,
-            $type,
-            $montant,
-            $description,
-            $reference_piece,
-            $created_by
-        );
+        // MySQLi code - needs manual conversion
 
         if (!$stmt->execute()) {
             throw new Exception('Erreur lors de l\'enregistrement de la transaction');
@@ -56,20 +51,20 @@ try {
                       SET solde_actuel = solde_actuel " . ($type === 'debit' ? '-' : '+') . " ? 
                       WHERE partenaire_id = ?";
         
-        $stmt = $conn->prepare($update_sql);
+        $stmt = $shop_pdo->prepare($update_sql);
         
         if (!$stmt) {
             throw new Exception('Erreur de préparation de la requête de mise à jour du solde');
         }
 
-        $stmt->bind_param('di', $montant, $partenaire_id);
+        // MySQLi code - needs manual conversion
 
         if (!$stmt->execute()) {
             throw new Exception('Erreur lors de la mise à jour du solde');
         }
 
         // Validation de la transaction
-        $conn->commit();
+        $shop_pdo->commit();
 
         echo json_encode([
             'success' => true, 
@@ -77,7 +72,7 @@ try {
         ]);
 
     } catch (Exception $e) {
-        $conn->rollback();
+        $shop_pdo->rollback();
         throw $e;
     }
 

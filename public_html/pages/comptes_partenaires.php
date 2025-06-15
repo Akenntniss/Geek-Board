@@ -11,7 +11,8 @@ if (!isset($_SESSION['user_id'])) {
 // Récupérer les partenaires
 $partenaires = [];
 try {
-    $stmt = $pdo->query("SELECT p.*, 
+    $shop_pdo = getShopDBConnection();
+$stmt = $shop_pdo->query("SELECT p.*, 
         COALESCE(s.solde_actuel, 0) as solde
         FROM partenaires p 
         LEFT JOIN soldes_partenaires s ON p.id = s.partenaire_id
@@ -155,7 +156,7 @@ foreach ($partenaires as $partenaire) {
                                     <td>
                                         <?php
                                         try {
-                                            $stmt = $pdo->prepare("
+                                            $stmt = $shop_pdo->prepare("
                                                 SELECT date_transaction, montant, type 
                                                 FROM transactions_partenaires 
                                                 WHERE partenaire_id = ? 

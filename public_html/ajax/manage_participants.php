@@ -1,6 +1,9 @@
 <?php
 session_start();
-require_once '../includes/config.php';
+require_once '../config/database.php';
+
+// Obtenir la connexion à la base de données de la boutique
+$shop_pdo = getShopDBConnection();
 
 // Vérification de la connexion
 if (!isset($_SESSION['user_id'])) {
@@ -28,10 +31,10 @@ if (!in_array($action, ['add', 'remove', 'promote', 'demote'])) {
 
 try {
     // Démarrer la transaction
-    $pdo->beginTransaction();
+    $shop_pdo->beginTransaction();
 
     // Vérifier si l'utilisateur a les droits d'administration
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         SELECT role 
         FROM conversation_participants 
         WHERE conversation_id = ? AND user_id = ?
@@ -45,7 +48,7 @@ try {
     }
 
     // Vérifier si l'utilisateur cible existe
-    $stmt = $pdo->prepare("SELECT 1 FROM users WHERE id = ?");
+    $stmt = $shop_pdo->prepare("SELECT 1 FROM users WHERE id = ?");
     $stmt->execute([$target_user_id]);
     if (!$stmt->fetch()) {
         echo json_encode(['success' => false, 'message' => 'Utilisateur non trouvé']);
@@ -55,7 +58,7 @@ try {
     switch ($action) {
         case 'add':
             // Vérifier si l'utilisateur n'est pas déjà participant
-            $stmt = $pdo->prepare("
+            $stmt = $shop_pdo->prepare("
                 SELECT 1 FROM conversation_participants 
                 WHERE conversation_id = ? AND user_id = ?
             ");
@@ -67,7 +70,7 @@ try {
             }
 
             // Ajouter le participant
-            $stmt = $pdo->prepare("
+            $stmt = $shop_pdo->prepare("
                 INSERT INTO conversation_participants (conversation_id, user_id, role, date_derniere_lecture)
                 VALUES (?, ?, 'member', NOW())
             ");
@@ -76,7 +79,7 @@ try {
 
         case 'remove':
             // Vérifier si l'utilisateur est participant
-            $stmt = $pdo->prepare("
+            $stmt = $shop_pdo->prepare("
                 SELECT role FROM conversation_participants 
                 WHERE conversation_id = ? AND user_id = ?
             ");
@@ -90,7 +93,7 @@ try {
 
             // Ne pas permettre de retirer le dernier administrateur
             if ($participant['role'] === 'admin') {
-                $stmt = $pdo->prepare("
+                $stmt = $shop_pdo->prepare("
                     SELECT COUNT(*) as admin_count 
                     FROM conversation_participants 
                     WHERE conversation_id = ? AND role = 'admin'
@@ -105,7 +108,7 @@ try {
             }
 
             // Supprimer le participant
-            $stmt = $pdo->prepare("
+            $stmt = $shop_pdo->prepare("
                 DELETE FROM conversation_participants 
                 WHERE conversation_id = ? AND user_id = ?
             ");
@@ -114,7 +117,7 @@ try {
 
         case 'promote':
             // Vérifier si l'utilisateur est participant
-            $stmt = $pdo->prepare("
+            $stmt = $shop_pdo->prepare("
                 SELECT role FROM conversation_participants 
                 WHERE conversation_id = ? AND user_id = ?
             ");
@@ -127,7 +130,7 @@ try {
             }
 
             // Promouvoir en administrateur
-            $stmt = $pdo->prepare("
+            $stmt = $shop_pdo->prepare("
                 UPDATE conversation_participants 
                 SET role = 'admin' 
                 WHERE conversation_id = ? AND user_id = ?
@@ -137,7 +140,7 @@ try {
 
         case 'demote':
             // Vérifier si l'utilisateur est participant
-            $stmt = $pdo->prepare("
+            $stmt = $shop_pdo->prepare("
                 SELECT role FROM conversation_participants 
                 WHERE conversation_id = ? AND user_id = ?
             ");
@@ -150,7 +153,7 @@ try {
             }
 
             // Vérifier qu'il reste au moins un administrateur
-            $stmt = $pdo->prepare("
+            $stmt = $shop_pdo->prepare("
                 SELECT COUNT(*) as admin_count 
                 FROM conversation_participants 
                 WHERE conversation_id = ? AND role = 'admin'
@@ -164,7 +167,7 @@ try {
             }
 
             // Rétrograder en membre
-            $stmt = $pdo->prepare("
+            $stmt = $shop_pdo->prepare("
                 UPDATE conversation_participants 
                 SET role = 'member' 
                 WHERE conversation_id = ? AND user_id = ?
@@ -174,10 +177,10 @@ try {
     }
 
     // Valider la transaction
-    $pdo->commit();
+    $shop_pdo->commit();
 
     // Récupérer la liste mise à jour des participants
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         SELECT cp.*, 
                u.nom, 
                u.prenom,
@@ -197,7 +200,7 @@ try {
 
 } catch (PDOException $e) {
     // Annuler la transaction en cas d'erreur
-    $pdo->rollBack();
+    $shop_pdo->rollBack();
     error_log("Erreur SQL (manage_participants.php): " . $e->getMessage());
     echo json_encode(['success' => false, 'message' => 'Erreur serveur']);
 } 

@@ -1,7 +1,8 @@
 <?php
-// Activer l'affichage des erreurs pour le débogage
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
+// Désactiver l'affichage des erreurs pour éviter de corrompre le JSON
+ini_set('display_errors', 0);
+ini_set('display_startup_errors', 0);
+// Continuer à logger les erreurs dans le fichier de log
 error_reporting(E_ALL);
 
 // Liste des domaines autorisés

@@ -1,6 +1,10 @@
 <?php
 session_start();
 
+// Inclure la configuration et obtenir la connexion boutique
+require_once __DIR__ . '/../config/database.php';
+$shop_pdo = getShopDBConnection();
+
 // Vérifier si l'utilisateur est connecté et est un administrateur
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
     header('Location: /pages/login.php');
@@ -18,7 +22,7 @@ $client_id = (int)$_GET['id'];
 
 try {
     // Vérifier si le client existe
-    $stmt = $pdo->prepare("SELECT id FROM clients WHERE id = ?");
+    $stmt = $shop_pdo->prepare("SELECT id FROM clients WHERE id = ?");
     $stmt->execute([$client_id]);
     if (!$stmt->fetch()) {
         $_SESSION['error'] = "Client non trouvé.";
@@ -27,7 +31,7 @@ try {
     }
 
     // Vérifier si le client a des réparations en cours
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         SELECT COUNT(*) 
         FROM reparations 
         WHERE client_id = ? 
@@ -43,7 +47,7 @@ try {
     }
 
     // Supprimer le client
-    $stmt = $pdo->prepare("DELETE FROM clients WHERE id = ?");
+    $stmt = $shop_pdo->prepare("DELETE FROM clients WHERE id = ?");
     $stmt->execute([$client_id]);
 
     $_SESSION['success'] = "Client supprimé avec succès.";

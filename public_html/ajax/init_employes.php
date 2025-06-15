@@ -4,12 +4,12 @@ require_once('../config/database.php');
 
 try {
     // Vérifier si la table est vide
-    $stmt = $pdo->query("SELECT COUNT(*) FROM employes");
+    $stmt = $shop_pdo->query("SELECT COUNT(*) FROM employes");
     $count = $stmt->fetchColumn();
     
     if ($count == 0) {
         // La table est vide, créer un employé par défaut
-        $stmt = $pdo->prepare("
+        $stmt = $shop_pdo->prepare("
             INSERT INTO employes 
             (nom, prenom, email, telephone, date_embauche, statut, created_at, updated_at) 
             VALUES 

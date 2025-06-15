@@ -42,6 +42,10 @@ if (!isset($_SESSION['user_id']) || empty($_SESSION['role']) || $_SESSION['role'
 // Connexion à la base de données
 try {
     require_once __DIR__ . '/../config/database.php';
+    
+    // Obtenir la connexion à la base de données de la boutique
+    $shop_pdo = getShopDBConnection();
+    
     echo '<div class="alert alert-success">Connexion à la base de données réussie</div>';
 } catch (Exception $e) {
     die('<div class="alert alert-danger">Erreur de connexion à la base de données: ' . $e->getMessage() . '</div>');
@@ -55,9 +59,9 @@ if (isset($_POST['fix']) && $_POST['fix'] == 1) {
     
     // 1. Corriger les dates dans le futur
     try {
-        $pdo->exec("UPDATE conversations SET date_creation = NOW(), derniere_activite = NOW() WHERE YEAR(date_creation) > 2024 OR YEAR(derniere_activite) > 2024");
-        $pdo->exec("UPDATE conversation_participants SET date_ajout = NOW() WHERE YEAR(date_ajout) > 2024");
-        $pdo->exec("UPDATE messages SET date_envoi = NOW() WHERE YEAR(date_envoi) > 2024");
+        $shop_pdo->exec("UPDATE conversations SET date_creation = NOW(), derniere_activite = NOW() WHERE YEAR(date_creation) > 2024 OR YEAR(derniere_activite) > 2024");
+        $shop_pdo->exec("UPDATE conversation_participants SET date_ajout = NOW() WHERE YEAR(date_ajout) > 2024");
+        $shop_pdo->exec("UPDATE messages SET date_envoi = NOW() WHERE YEAR(date_envoi) > 2024");
         
         echo '<p class="success">✅ Dates corrigées avec succès</p>';
     } catch (Exception $e) {
@@ -67,7 +71,7 @@ if (isset($_POST['fix']) && $_POST['fix'] == 1) {
     // 2. Vérifier toutes les conversations et leurs participants
     try {
         // Récupérer toutes les conversations
-        $stmt = $pdo->query("SELECT id, titre FROM conversations");
+        $stmt = $shop_pdo->query("SELECT id, titre FROM conversations");
         $conversations = $stmt->fetchAll(PDO::FETCH_ASSOC);
         
         echo '<p>Vérification de ' . count($conversations) . ' conversations...</p>';
@@ -76,13 +80,13 @@ if (isset($_POST['fix']) && $_POST['fix'] == 1) {
             echo '<p>Conversation #' . $conv['id'] . ' (' . htmlspecialchars($conv['titre']) . '): ';
             
             // Vérifier les participants
-            $stmt_participants = $pdo->prepare("SELECT COUNT(*) as count FROM conversation_participants WHERE conversation_id = ?");
+            $stmt_participants = $shop_pdo->prepare("SELECT COUNT(*) as count FROM conversation_participants WHERE conversation_id = ?");
             $stmt_participants->execute([$conv['id']]);
             $participants_count = $stmt_participants->fetch(PDO::FETCH_ASSOC)['count'];
             
             if ($participants_count == 0) {
                 // Aucun participant - ajouter au moins l'administrateur
-                $pdo->prepare("INSERT INTO conversation_participants (conversation_id, user_id, role, date_ajout) VALUES (?, 1, 'admin', NOW())")
+                $shop_pdo->prepare("INSERT INTO conversation_participants (conversation_id, user_id, role, date_ajout) VALUES (?, 1, 'admin', NOW())")
                      ->execute([$conv['id']]);
                 echo ' <span class="warning">⚠️ Aucun participant trouvé, ajout de l\'administrateur</span>';
             } else {
@@ -90,7 +94,7 @@ if (isset($_POST['fix']) && $_POST['fix'] == 1) {
             }
             
             // Vérifier les messages
-            $stmt_messages = $pdo->prepare("SELECT COUNT(*) as count FROM messages WHERE conversation_id = ?");
+            $stmt_messages = $shop_pdo->prepare("SELECT COUNT(*) as count FROM messages WHERE conversation_id = ?");
             $stmt_messages->execute([$conv['id']]);
             $messages_count = $stmt_messages->fetch(PDO::FETCH_ASSOC)['count'];
             
@@ -103,7 +107,7 @@ if (isset($_POST['fix']) && $_POST['fix'] == 1) {
     
     // 3. Vérifier les utilisateurs référencés dans les conversations
     try {
-        $stmt = $pdo->query("
+        $stmt = $shop_pdo->query("
             SELECT DISTINCT cp.user_id 
             FROM conversation_participants cp 
             LEFT JOIN users u ON cp.user_id = u.id 
@@ -116,7 +120,7 @@ if (isset($_POST['fix']) && $_POST['fix'] == 1) {
             
             // Créer des utilisateurs factices pour éviter les erreurs
             foreach ($missing_users as $user_id) {
-                $pdo->prepare("
+                $shop_pdo->prepare("
                     INSERT IGNORE INTO users (id, username, password, full_name, role) 
                     VALUES (?, CONCAT('user', ?), 'password', CONCAT('Utilisateur ', ?), 'technicien')
                 ")->execute([$user_id, $user_id, $user_id]);

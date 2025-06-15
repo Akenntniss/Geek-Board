@@ -70,7 +70,7 @@ try {
     error_log("ID de réparation reçu: " . (isset($_POST['reparation_id']) ? $_POST['reparation_id'] : 'non défini'));
     
     // Préparer la requête SQL
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         INSERT INTO commandes_pieces (
             reference, client_id, fournisseur_id, reparation_id, 
             nom_piece, code_barre, quantite, prix_estime, 
@@ -102,7 +102,7 @@ try {
     $stmt->execute($data);
 
     // Log du succès
-    error_log("Commande ajoutée avec succès. ID: " . $pdo->lastInsertId());
+    error_log("Commande ajoutée avec succès. ID: " . $shop_pdo->lastInsertId());
 
     echo json_encode(['success' => true, 'message' => 'Commande ajoutée avec succès']);
 } catch (PDOException $e) {

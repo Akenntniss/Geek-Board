@@ -110,17 +110,7 @@ try {
            ($shop['db_port'] ?? '3306') . ";dbname=" . 
            $shop['db_name'] . ";charset=utf8mb4";
     
-    $shop_pdo = new PDO(
-        $dsn,
-        $shop['db_user'],
-        $shop['db_pass'],
-        [
-            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-            PDO::ATTR_EMULATE_PREPARES => false,
-            PDO::ATTR_PERSISTENT => false
-        ]
-    );
+    $shop_pdo = getShopDBConnection();
     
     // Vérifier que la connexion utilise bien la bonne base de données
     $stmt = $shop_pdo->query("SELECT DATABASE() as current_db");

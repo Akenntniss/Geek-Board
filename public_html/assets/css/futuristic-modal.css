@@ -15,6 +15,13 @@
     background-color: rgba(255, 255, 255, 0.95);
 }
 
+/* Mode nuit amélioré */
+.dark-mode .futuristic-modal .modal-content {
+    background-color: #111827 !important;
+    border: 1px solid #374151 !important;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6) !important;
+}
+
 @keyframes modal-entry {
     from {
         opacity: 0;
@@ -37,6 +44,11 @@
 
 .light-mode .futuristic-modal .modal-header {
     background: linear-gradient(90deg, rgba(30, 144, 255, 0.15) 0%, rgba(0, 77, 155, 0.15) 100%);
+}
+
+.dark-mode .futuristic-modal .modal-header {
+    background: linear-gradient(135deg, #1f2937, #111827) !important;
+    border-bottom: 1px solid #374151 !important;
 }
 
 .futuristic-modal .modal-header::after {
@@ -68,11 +80,21 @@
     text-shadow: 0 0 8px rgba(30, 144, 255, 0.4);
 }
 
+.dark-mode .futuristic-modal .modal-title {
+    color: #f8fafc !important;
+    text-shadow: 0 0 10px rgba(96, 165, 250, 0.5) !important;
+}
+
 /* Corps */
 .futuristic-modal .modal-body {
     position: relative;
     padding: 1.5rem;
     overflow: hidden;
+}
+
+.dark-mode .futuristic-modal .modal-body {
+    background-color: #111827 !important;
+    color: #f8fafc !important;
 }
 
 /* Styles des champs de formulaire */
@@ -160,6 +182,20 @@
 .light-mode .futuristic-modal .btn-close {
     color: #0a1629;
     text-shadow: none;
+}
+
+.dark-mode .futuristic-modal .btn-close,
+.dark-mode .futuristic-modal .btn-close-white {
+    filter: brightness(0) invert(1) !important;
+    opacity: 0.8 !important;
+    background-size: 1.2em !important;
+}
+
+.dark-mode .futuristic-modal .btn-close:hover,
+.dark-mode .futuristic-modal .btn-close-white:hover {
+    opacity: 1 !important;
+    transform: scale(1.1) rotate(90deg) !important;
+    transition: all 0.3s ease !important;
 }
 
 /* Particules flottantes */
@@ -344,4 +380,42 @@
     --modal-bg: rgba(255, 255, 255, 0.95);
     --text-color: #0a1629;
     --title-color: #0a1629;
+}
+
+/* Styles spécifiques pour les modaux en mode nuit */
+.dark-mode .modal-footer {
+    background-color: #0f172a !important;
+    border-top: 1px solid #374151 !important;
+}
+
+/* Amélioration des formulaires en mode nuit */
+.dark-mode .futuristic-modal .form-control,
+.dark-mode .futuristic-modal .form-select {
+    background-color: #1f2937 !important;
+    border-color: #374151 !important;
+    color: #f8fafc !important;
+}
+
+.dark-mode .futuristic-modal .form-control:focus,
+.dark-mode .futuristic-modal .form-select:focus {
+    background-color: #1f2937 !important;
+    border-color: #60a5fa !important;
+    color: #f8fafc !important;
+    box-shadow: 0 0 0 0.2rem rgba(96, 165, 250, 0.25) !important;
+}
+
+/* Amélioration des boutons secondaires en mode nuit */
+.dark-mode .futuristic-modal .btn-secondary,
+.dark-mode .futuristic-modal .btn-outline-secondary {
+    background-color: #374151 !important;
+    border-color: #4b5563 !important;
+    color: #f8fafc !important;
+}
+
+.dark-mode .futuristic-modal .btn-secondary:hover,
+.dark-mode .futuristic-modal .btn-outline-secondary:hover {
+    background-color: #4b5563 !important;
+    border-color: #6b7280 !important;
+    color: #ffffff !important;
+    transform: translateY(-2px) !important;
 } 

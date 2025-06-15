@@ -11,10 +11,10 @@ $recherche = isset($_GET['recherche']) ? cleanInput($_GET['recherche']) : '';
 
 // Récupération des catégories
 function get_kb_categories() {
-    global $pdo;
+    $shop_pdo = getShopDBConnection();
     try {
         $query = "SELECT * FROM kb_categories ORDER BY name ASC";
-        $stmt = $pdo->query($query);
+        $stmt = $shop_pdo->query($query);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     } catch (PDOException $e) {
         error_log("Erreur lors de la récupération des catégories KB: " . $e->getMessage());
@@ -24,7 +24,7 @@ function get_kb_categories() {
 
 // Récupération des articles
 function get_kb_articles($categorie_id = 0, $recherche = '', $limit = 50) {
-    global $pdo;
+    $shop_pdo = getShopDBConnection();
     try {
         $params = [];
         $where_clauses = [];
@@ -59,7 +59,7 @@ function get_kb_articles($categorie_id = 0, $recherche = '', $limit = 50) {
         ";
         
         $params[] = $limit;
-        $stmt = $pdo->prepare($query);
+        $stmt = $shop_pdo->prepare($query);
         $stmt->execute($params);
         
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -71,7 +71,7 @@ function get_kb_articles($categorie_id = 0, $recherche = '', $limit = 50) {
 
 // Récupération des tags d'un article
 function get_article_tags($article_id) {
-    global $pdo;
+    $shop_pdo = getShopDBConnection();
     try {
         $query = "
             SELECT t.* 
@@ -80,7 +80,7 @@ function get_article_tags($article_id) {
             WHERE at.article_id = ?
             ORDER BY t.name ASC
         ";
-        $stmt = $pdo->prepare($query);
+        $stmt = $shop_pdo->prepare($query);
         $stmt->execute([$article_id]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     } catch (PDOException $e) {

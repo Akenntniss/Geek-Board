@@ -56,7 +56,7 @@ if (!isset($input_data['client_id'])) {
 
 try {
     // Vérifier si la connexion PDO est disponible
-    if (!isset($pdo) || !($pdo instanceof PDO)) {
+    if (!isset($shop_pdo) || !($shop_pdo instanceof PDO)) {
         throw new Exception("Connexion à la base de données non disponible");
     }
     
@@ -64,7 +64,7 @@ try {
     $client_id = (int)$input_data['client_id'];
     
     // Vérifier que le client existe
-    $stmt = $pdo->prepare("SELECT id, inscrit_parrainage FROM clients WHERE id = ?");
+    $stmt = $shop_pdo->prepare("SELECT id, inscrit_parrainage FROM clients WHERE id = ?");
     $stmt->execute([$client_id]);
     $client = $stmt->fetch(PDO::FETCH_ASSOC);
     
@@ -94,7 +94,7 @@ try {
     $attempts = 0;
     
     while (!$is_unique && $attempts < $max_attempts) {
-        $stmt = $pdo->prepare("SELECT id FROM clients WHERE code_parrainage = ?");
+        $stmt = $shop_pdo->prepare("SELECT id FROM clients WHERE code_parrainage = ?");
         $stmt->execute([$code_parrainage]);
         
         if ($stmt->rowCount() === 0) {
@@ -110,7 +110,7 @@ try {
     }
     
     // Inscrire le client au programme
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         UPDATE clients 
         SET inscrit_parrainage = TRUE, 
             code_parrainage = ?, 

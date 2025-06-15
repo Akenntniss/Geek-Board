@@ -6,7 +6,8 @@ if (!isset($_SESSION['user_id'])) {
 
 // Récupérer les produits
 try {
-    $stmt = $pdo->prepare("
+    $shop_pdo = getShopDBConnection();
+    $stmt = $shop_pdo->prepare("
         SELECT p.* 
         FROM produits p 
         ORDER BY p.nom ASC
@@ -20,7 +21,7 @@ try {
 
 // Récupérer les produits en alerte de stock
 try {
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         SELECT p.* 
         FROM produits p 
         WHERE p.quantite <= p.seuil_alerte 

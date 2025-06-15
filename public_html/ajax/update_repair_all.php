@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 }
 
 // Vérifier si la connexion à la base de données est établie
-if (!$pdo) {
+if (!$shop_pdo) {
     echo json_encode([
         'success' => false,
         'error' => 'Erreur de connexion à la base de données'
@@ -79,7 +79,7 @@ try {
     $sql = "UPDATE reparations SET " . implode(", ", $updateFields) . " WHERE id = ?";
     $params[] = $repair_id;
     
-    $stmt = $pdo->prepare($sql);
+    $stmt = $shop_pdo->prepare($sql);
     $result = $stmt->execute($params);
     
     if ($result) {

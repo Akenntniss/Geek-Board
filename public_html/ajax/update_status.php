@@ -48,7 +48,7 @@ try {
     $sql = "UPDATE commandes_pieces SET statut = :statut WHERE id = :id";
     error_log("Requête SQL: $sql avec statut=$statut et id=$id");
     
-    $stmt = $pdo->prepare($sql);
+    $stmt = $shop_pdo->prepare($sql);
     $stmt->bindParam(':statut', $statut, PDO::PARAM_STR);
     $stmt->bindParam(':id', $id, PDO::PARAM_INT);
     $success = $stmt->execute();
@@ -65,7 +65,7 @@ try {
                       LEFT JOIN clients c ON cp.client_id = c.id 
                       WHERE cp.id = :id";
         
-        $stmt_fetch = $pdo->prepare($sql_fetch);
+        $stmt_fetch = $shop_pdo->prepare($sql_fetch);
         $stmt_fetch->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt_fetch->execute();
         $commande = $stmt_fetch->fetch(PDO::FETCH_ASSOC);

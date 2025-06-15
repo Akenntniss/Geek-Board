@@ -18,7 +18,7 @@ try {
     }
 
     // Récupérer les notes
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         SELECT id, contenu, DATE_FORMAT(date_creation, '%d/%m/%Y %H:%i') as date_creation 
         FROM notes_reparation 
         WHERE reparation_id = ? 

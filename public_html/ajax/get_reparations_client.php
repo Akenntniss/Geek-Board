@@ -22,7 +22,7 @@ $client_id = intval($_POST['client_id']);
 
 try {
     // Préparer la requête pour récupérer les réparations du client
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         SELECT r.id, r.date_arrivee, r.type_appareil, r.marque, r.modele, r.numero_serie, r.description_probleme, r.statut
         FROM reparations r
         WHERE r.client_id = :client_id

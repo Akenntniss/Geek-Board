@@ -31,12 +31,12 @@ try {
     }
     
     // Vérifier la connexion à la base de données
-    if (!isset($pdo) || !($pdo instanceof PDO)) {
+    if (!isset($shop_pdo) || !($shop_pdo instanceof PDO)) {
         throw new Exception('Connexion à la base de données non disponible');
     }
     
     // Récupérer un modèle de SMS actif
-    $stmt = $pdo->query("SELECT id, nom, contenu, statut_id FROM sms_templates WHERE est_actif = 1 LIMIT 1");
+    $stmt = $shop_pdo->query("SELECT id, nom, contenu, statut_id FROM sms_templates WHERE est_actif = 1 LIMIT 1");
     $template = $stmt->fetch(PDO::FETCH_ASSOC);
     
     if (!$template) {
@@ -44,7 +44,7 @@ try {
     }
     
     // Récupérer un client avec un numéro de téléphone
-    $stmt = $pdo->query("
+    $stmt = $shop_pdo->query("
         SELECT c.id, c.nom, c.prenom, c.telephone, r.id as reparation_id 
         FROM clients c 
         JOIN reparations r ON c.id = r.client_id 

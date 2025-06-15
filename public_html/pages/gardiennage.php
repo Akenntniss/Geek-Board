@@ -13,7 +13,7 @@ require_once BASE_PATH . '/includes/functions.php';
 // }
 
 // Connexion à la base de données
-global $pdo;
+$shop_pdo = getShopDBConnection();
 
 // Traitement des actions
 if (isset($_POST['action'])) {
@@ -44,7 +44,8 @@ if (isset($_POST['action'])) {
             try {
                 if ($template_id > 0) {
                     // Mise à jour d'un template existant
-                    $stmt = $pdo->prepare("
+                    $shop_pdo = getShopDBConnection();
+$stmt = $shop_pdo->prepare("
                         UPDATE sms_templates 
                         SET nom = ?, contenu = ?, updated_at = NOW()
                         WHERE id = ?
@@ -54,7 +55,7 @@ if (isset($_POST['action'])) {
                     set_message("Le template a été mis à jour avec succès", "success");
                 } else {
                     // Création d'un nouveau template
-                    $stmt = $pdo->prepare("
+                    $stmt = $shop_pdo->prepare("
                         INSERT INTO sms_templates (nom, contenu, est_actif, created_at)
                         VALUES (?, ?, 1, NOW())
                     ");
@@ -77,7 +78,7 @@ if (isset($_POST['action'])) {
             }
             
             // Récupérer tous les gardiennages actifs
-            $stmt = $pdo->prepare("
+            $stmt = $shop_pdo->prepare("
                 SELECT g.id, c.nom as client_nom, c.prenom as client_prenom, c.telephone as client_telephone,
                        r.marque, r.modele, r.type_appareil,
                        DATEDIFF(CURRENT_DATE, g.date_debut) as jours_gardiennage
@@ -134,7 +135,7 @@ if (isset($_POST['action'])) {
                     
                     if ($sms_result['success']) {
                         // Enregistrer l'envoi du SMS dans la base de données
-                        $stmt = $pdo->prepare("
+                        $stmt = $shop_pdo->prepare("
                             INSERT INTO gardiennage_notifications (
                                 gardiennage_id, type_notification, statut, message
                             ) VALUES (?, 'sms_groupe', 'envoyé', ?)
@@ -142,13 +143,13 @@ if (isset($_POST['action'])) {
                         $stmt->execute([$gardiennage['id'], $message_personnalise]);
                         
                         // Mettre à jour la date de dernière notification
-                        $stmt = $pdo->prepare("UPDATE gardiennage SET derniere_notification = CURRENT_DATE WHERE id = ?");
+                        $stmt = $shop_pdo->prepare("UPDATE gardiennage SET derniere_notification = CURRENT_DATE WHERE id = ?");
                         $stmt->execute([$gardiennage['id']]);
                         
                         $succes++;
                     } else {
                         // Enregistrer l'échec dans la base de données
-                        $stmt = $pdo->prepare("
+                        $stmt = $shop_pdo->prepare("
                             INSERT INTO gardiennage_notifications (
                                 gardiennage_id, type_notification, statut, message
                             ) VALUES (?, 'sms_groupe', 'échec', ?)
@@ -195,20 +196,20 @@ if (isset($_POST['action'])) {
             // Mettre à jour les paramètres dans la base de données
             try {
                 // Vérifier si les paramètres existent déjà
-                $stmt = $pdo->prepare("SELECT COUNT(*) FROM parametres_gardiennage WHERE id = 1");
+                $stmt = $shop_pdo->prepare("SELECT COUNT(*) FROM parametres_gardiennage WHERE id = 1");
                 $stmt->execute();
                 $paramExistent = ($stmt->fetchColumn() > 0);
                 
                 if ($paramExistent) {
                     // Mise à jour
-                    $stmt = $pdo->prepare("
+                    $stmt = $shop_pdo->prepare("
                         UPDATE parametres_gardiennage 
                         SET tarif_premiere_semaine = ?, tarif_intermediaire = ?, tarif_longue_duree = ?, date_modification = NOW()
                         WHERE id = 1
                     ");
                 } else {
                     // Création
-                    $stmt = $pdo->prepare("
+                    $stmt = $shop_pdo->prepare("
                         INSERT INTO parametres_gardiennage (tarif_premiere_semaine, tarif_intermediaire, tarif_longue_duree, date_modification)
                         VALUES (?, ?, ?, NOW())
                     ");
@@ -223,7 +224,7 @@ if (isset($_POST['action'])) {
                     
                     if ($template_id > 0) {
                         // Mise à jour d'un template existant
-                        $stmt = $pdo->prepare("
+                        $stmt = $shop_pdo->prepare("
                             UPDATE sms_templates 
                             SET contenu = ?, updated_at = NOW()
                             WHERE id = ?
@@ -231,7 +232,7 @@ if (isset($_POST['action'])) {
                         $stmt->execute([$sms_contenu, $template_id]);
                     } else {
                         // Création d'un nouveau template
-                        $stmt = $pdo->prepare("
+                        $stmt = $shop_pdo->prepare("
                             INSERT INTO sms_templates (nom, contenu, est_actif, created_at)
                             VALUES ('Rappel gardiennage', ?, 1, NOW())
                         ");
@@ -249,7 +250,7 @@ if (isset($_POST['action'])) {
 
 // Récupération des paramètres de gardiennage
 try {
-    $stmt = $pdo->prepare("SELECT * FROM parametres_gardiennage WHERE id = 1");
+    $stmt = $shop_pdo->prepare("SELECT * FROM parametres_gardiennage WHERE id = 1");
     $stmt->execute();
     $parametres_gardiennage = $stmt->fetch(PDO::FETCH_ASSOC);
     
@@ -271,7 +272,7 @@ try {
 }
 
 // Récupération des gardiennages en cours
-$stmt = $pdo->prepare("
+$stmt = $shop_pdo->prepare("
     SELECT g.*, r.statut as reparation_statut, r.type_appareil, r.marque, r.modele, 
            r.prix_reparation, r.prix as prix_appareil,
            c.nom as client_nom, c.prenom as client_prenom, c.telephone as client_telephone,
@@ -287,7 +288,7 @@ $stmt->execute();
 $gardiennages_actifs = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // Récupération des gardiennages terminés
-$stmt = $pdo->prepare("
+$stmt = $shop_pdo->prepare("
     SELECT g.*, r.statut as reparation_statut, r.type_appareil, r.marque, r.modele, 
            r.prix_reparation, r.prix as prix_appareil,
            c.nom as client_nom, c.prenom as client_prenom, c.telephone as client_telephone,
@@ -488,7 +489,7 @@ foreach ($gardiennages_actifs as $gardiennage) {
                                             </td>
                                             <td class="text-center">
                                                 <div class="btn-group" role="group">
-                                                    <a href="index.php?page=details_reparation&id=<?= $gardiennage['reparation_id'] ?>" class="btn btn-sm btn-outline-primary" title="Voir la réparation">
+                                                    <a href="index.php?page=reparations&open_modal=<?= $gardiennage['reparation_id'] ?>" class="btn btn-sm btn-outline-primary" title="Voir la réparation">
                                                         <i class="fas fa-eye"></i>
                                                     </a>
                                                     <button type="button" class="btn btn-sm btn-outline-warning" title="Envoyer un rappel" 
@@ -815,7 +816,7 @@ foreach ($gardiennages_actifs as $gardiennage) {
                             <?php
                             // Récupérer le template SMS actuel pour le gardiennage
                             try {
-                                $stmt = $pdo->prepare("
+                                $stmt = $shop_pdo->prepare("
                                     SELECT id, contenu 
                                     FROM sms_templates 
                                     WHERE nom = 'Rappel gardiennage' AND est_actif = 1
@@ -974,7 +975,7 @@ foreach ($gardiennages_actifs as $gardiennage) {
                                             <?php
                                             // Récupérer les templates SMS
                                             try {
-                                                $stmt = $pdo->prepare("
+                                                $stmt = $shop_pdo->prepare("
                                                     SELECT id, nom, contenu
                                                     FROM sms_templates
                                                     WHERE (nom LIKE '%gardiennage%' OR nom LIKE '%rappel%') AND est_actif = 1

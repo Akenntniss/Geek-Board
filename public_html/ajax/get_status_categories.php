@@ -14,7 +14,7 @@ try {
     require_once $config_path;
 
     // Récupérer toutes les catégories de statut
-    $stmt = $pdo->query("
+    $stmt = $shop_pdo->query("
         SELECT id, nom, code, couleur, ordre
         FROM statut_categories
         ORDER BY ordre ASC

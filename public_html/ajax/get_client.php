@@ -14,7 +14,7 @@ $client_id = intval($_GET['id']);
 
 try {
     // Récupérer les informations du client
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         SELECT id, nom, prenom, telephone, email
         FROM clients
         WHERE id = ?

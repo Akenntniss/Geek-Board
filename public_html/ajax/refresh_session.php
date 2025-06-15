@@ -38,7 +38,7 @@ if (isset($_SESSION['user_id']) && !empty($_SESSION['user_id'])) {
     
     // Vérifier que l'utilisateur existe toujours en base de données
     try {
-        $stmt = $pdo->prepare("SELECT id, nom, prenom FROM users WHERE id = ?");
+        $stmt = $shop_pdo->prepare("SELECT id, nom, prenom FROM users WHERE id = ?");
         $stmt->execute([$_SESSION['user_id']]);
         $user = $stmt->fetch();
         

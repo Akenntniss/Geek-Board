@@ -66,7 +66,7 @@ if (!user_has_conversation_access($_SESSION['user_id'], $message_info['conversat
 }
 
 try {
-    global $pdo;
+    global $shop_pdo;
     
     // Vérifier si l'utilisateur a déjà réagi avec cet emoji
     $query = "
@@ -77,7 +77,7 @@ try {
         AND reaction = :reaction
     ";
     
-    $stmt = $pdo->prepare($query);
+    $stmt = $shop_pdo->prepare($query);
     $stmt->execute([
         ':message_id' => $message_id,
         ':user_id' => $_SESSION['user_id'],
@@ -93,7 +93,7 @@ try {
             WHERE id = :id
         ";
         
-        $stmt = $pdo->prepare($query);
+        $stmt = $shop_pdo->prepare($query);
         $stmt->execute([':id' => $existing_reaction['id']]);
         
         $action = 'removed';
@@ -104,7 +104,7 @@ try {
             VALUES (:message_id, :user_id, :reaction, NOW())
         ";
         
-        $stmt = $pdo->prepare($query);
+        $stmt = $shop_pdo->prepare($query);
         $stmt->execute([
             ':message_id' => $message_id,
             ':user_id' => $_SESSION['user_id'],

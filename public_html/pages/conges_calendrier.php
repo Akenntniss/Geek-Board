@@ -44,15 +44,16 @@ switch ($vue) {
 // Traitement du formulaire
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
-        $pdo->beginTransaction();
+        $shop_pdo->beginTransaction();
 
         // Supprimer les anciennes entrées
-        $stmt = $pdo->prepare("DELETE FROM conges_jours_disponibles WHERE date BETWEEN ? AND ?");
+        $shop_pdo = getShopDBConnection();
+$stmt = $shop_pdo->prepare("DELETE FROM conges_jours_disponibles WHERE date BETWEEN ? AND ?");
         $stmt->execute([$debut_periode, $fin_periode]);
 
         // Insérer les nouveaux jours
         if (isset($_POST['disponible']) && is_array($_POST['disponible'])) {
-            $stmt = $pdo->prepare("INSERT INTO conges_jours_disponibles (date, disponible, created_by) VALUES (?, 1, ?)");
+            $stmt = $shop_pdo->prepare("INSERT INTO conges_jours_disponibles (date, disponible, created_by) VALUES (?, 1, ?)");
             foreach ($_POST['disponible'] as $date => $value) {
                 if (strtotime($date) >= strtotime($debut_periode) && strtotime($date) <= strtotime($fin_periode)) {
                     $stmt->execute([$date, $_SESSION['user_id']]);
@@ -60,17 +61,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
 
-        $pdo->commit();
+        $shop_pdo->commit();
         set_message("Les jours disponibles ont été mis à jour avec succès.");
     } catch (PDOException $e) {
-        $pdo->rollBack();
+        $shop_pdo->rollBack();
         set_message("Erreur lors de la mise à jour : " . $e->getMessage(), 'danger');
     }
 }
 
 // Récupérer les jours disponibles
 try {
-    $stmt = $pdo->prepare("SELECT date FROM conges_jours_disponibles WHERE date BETWEEN ? AND ? AND disponible = 1");
+    $stmt = $shop_pdo->prepare("SELECT date FROM conges_jours_disponibles WHERE date BETWEEN ? AND ? AND disponible = 1");
     $stmt->execute([$debut_periode, $fin_periode]);
     $jours_disponibles = $stmt->fetchAll(PDO::FETCH_COLUMN);
 } catch (PDOException $e) {
@@ -80,7 +81,7 @@ try {
 
 // Récupérer les jours pris en congés
 try {
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         SELECT DISTINCT date 
         FROM conges 
         WHERE date BETWEEN ? AND ? 

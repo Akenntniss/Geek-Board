@@ -17,8 +17,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         $error_message = "Veuillez remplir tous les champs";
     } else {
         try {
+            $shop_pdo = getShopDBConnection();
             // Vérifier les informations du client
-            $stmt = $pdo->prepare("SELECT * FROM clients WHERE email = ? AND telephone = ?");
+            $stmt = $shop_pdo->prepare("SELECT * FROM clients WHERE email = ? AND telephone = ?");
             $stmt->execute([$email, $telephone]);
             $client = $stmt->fetch();
             
@@ -46,7 +47,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 $reparations = [];
 if ($client_logged_in) {
     try {
-        $stmt = $pdo->prepare("
+        $shop_pdo = getShopDBConnection();
+        $stmt = $shop_pdo->prepare("
             SELECT r.*, s.nom as statut_nom, sc.couleur as statut_couleur 
             FROM reparations r
             LEFT JOIN statuts s ON r.statut_id = s.id

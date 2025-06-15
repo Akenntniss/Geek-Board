@@ -119,10 +119,10 @@ function send_reparation_notification($reparation_id, $statut, $user_id = null) 
     require_once __DIR__ . '/../../includes/functions.php';
     
     // Récupérer les informations de la réparation et du client
-    global $pdo;
+    global $shop_pdo;
     
     try {
-        $stmt = $pdo->prepare("
+        $stmt = $shop_pdo->prepare("
             SELECT r.*, c.nom, c.prenom, c.telephone 
             FROM reparations r 
             JOIN clients c ON r.client_id = c.id 
@@ -137,7 +137,7 @@ function send_reparation_notification($reparation_id, $statut, $user_id = null) 
         }
         
         // Récupérer la description du statut
-        $stmt = $pdo->prepare("
+        $stmt = $shop_pdo->prepare("
             SELECT nom FROM statuts
             WHERE code = :code
         ");

@@ -1,4 +1,21 @@
 <?php
+// Inclure la configuration de session avant de démarrer la session
+require_once __DIR__ . '/../config/session_config.php';
+// La session est déjà démarrée dans session_config.php, pas besoin de session_start() ici
+
+// Inclure la configuration pour la gestion des sous-domaines
+require_once __DIR__ . '/../config/subdomain_config.php';
+// Le sous-domaine est détecté et la session est configurée avec le magasin correspondant
+
+// Définir le chemin de base seulement s'il n'est pas déjà défini (éviter les conflits avec index.php)
+if (!defined('BASE_PATH')) {
+    define('BASE_PATH', __DIR__ . '/..');
+}
+
+// Inclure les fichiers de configuration et de connexion à la base de données
+require_once BASE_PATH . '/config/database.php';
+require_once BASE_PATH . '/includes/functions.php';
+
 // Code de débogage - Journaliser les variables POST et SESSION
 error_log("============= DÉBUT AJOUTER_REPARATION =============");
 error_log("SESSION: " . print_r($_SESSION, true));
@@ -12,52 +29,7 @@ if (isset($_SESSION['shop_id'])) {
     error_log("ALERTE: Aucun magasin sélectionné en session!");
 }
 
-// Fonction pour vérifier et forcer la connexion à la bonne BD
-function verifierEtForcerBonneBD() {
-    global $shop_pdo;
-    try {
-        // Vérifier la connexion actuelle
-        $db_name_stmt = $shop_pdo->query("SELECT DATABASE() as current_db");
-        $db_result = $db_name_stmt->fetch(PDO::FETCH_ASSOC);
-        error_log("VÉRIFICATION: Base actuellement utilisée = " . ($db_result['current_db'] ?? 'Inconnue'));
-        
-        // Si on a un shop_id en session, récupérer les infos du magasin
-        if (isset($_SESSION['shop_id'])) {
-            // Récupérer la connexion principale
-            $main_pdo = getMainDBConnection();
-            
-            // Vérifier que $main_pdo n'est pas null avant de l'utiliser
-            if ($main_pdo === null) {
-                error_log("ERREUR CRITIQUE: $main_pdo est null lors de la récupération des infos du magasin");
-                return false; // Sortir de la fonction sans essayer d'utiliser $main_pdo
-            }
-            
-            // Récupérer les infos du magasin
-            $stmt = $main_pdo->prepare("SELECT * FROM shops WHERE id = ?");
-            $stmt->execute([$_SESSION['shop_id']]);
-            $shop_info = $stmt->fetch(PDO::FETCH_ASSOC);
-            
-            // Si on a trouvé le magasin et que la base utilisée n'est pas la bonne
-            if ($shop_info && isset($db_result['current_db']) && $shop_info['db_name'] != $db_result['current_db']) {
-                error_log("CORRECTION NÉCESSAIRE: BD attendue '" . $shop_info['db_name'] . "', actuellement sur '" . $db_result['current_db'] . "'");
-                // Forcer la connexion à la bonne base
-                $shop_pdo = null; // Réinitialiser la connexion
-                $shop_pdo = getShopDBConnection();
-                
-                // Vérifier que ça a fonctionné
-                $db_check = $shop_pdo->query("SELECT DATABASE() as current_db");
-                $db_after = $db_check->fetch(PDO::FETCH_ASSOC);
-                error_log("APRÈS CORRECTION: Base utilisée = " . ($db_after['current_db'] ?? 'Inconnue'));
-                
-                return true; // Correction effectuée
-            }
-        }
-    } catch (Exception $e) {
-        error_log("ERREUR lors de la vérification/correction de la BD: " . $e->getMessage());
-    }
-    
-    return false; // Aucune correction nécessaire
-}
+// Configuration terminée - la connexion DB correcte devrait maintenant être disponible automatiquement
 
 // Initialiser la connexion à la base de données du magasin
 $shop_pdo = getShopDBConnection();
@@ -86,8 +58,6 @@ if ($shop_pdo === null) {
     }
 }
 
-verifierEtForcerBonneBD();
-
 // Vérifier si la fonction getShopDBConnection est disponible
 if (!function_exists('getShopDBConnection')) {
     error_log("ERREUR CRITIQUE: La fonction getShopDBConnection() n'est pas disponible");
@@ -114,7 +84,6 @@ define('PAGE_AJOUTER_REPARATION_LOADED', true);
 
 // Récupérer la liste des clients pour le formulaire
 $shop_pdo = getShopDBConnection();
-verifierEtForcerBonneBD();
 
 $stmt = $shop_pdo->query("SELECT id, nom, prenom, telephone FROM clients ORDER BY nom, prenom");
 $clients = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -444,7 +413,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if ($shop_pdo === null) {
                 error_log("ALERTE: $shop_pdo est null avant l'insertion de la réparation. Tentative de reconnexion.");
                 $shop_pdo = getShopDBConnection();
-                verifierEtForcerBonneBD();
                 
                 // Vérifier à nouveau après la tentative de reconnexion
                 if ($shop_pdo === null) {
@@ -454,8 +422,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     redirect('reparations');
                     exit;
                 }
-            } else {
-                verifierEtForcerBonneBD();
             }
 
             $stmt = $shop_pdo->prepare("
@@ -846,6 +812,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 ?>
+
+<!-- Inclusion du CSS spécialisé pour cette page en mode nuit -->
+<link rel="stylesheet" href="assets/css/ajouter-reparation-dark.css">
 
 <div class="container-fluid p-0" style="max-width: 100vw; overflow-x: hidden;">
     <div class="row justify-content-center g-0" style="width: 100%; margin: 0 auto;">

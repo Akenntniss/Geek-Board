@@ -22,22 +22,24 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
 $searchTerm = isset($_POST['search']) ? '%' . cleanInput($_POST['search']) . '%' : '%%';
 
 try {
-    // Vérifier que la connexion à la base de données est établie
-    if (!isset($pdo) || $pdo === null) {
+    // Obtenir la connexion à la base de données du magasin
+    $pdo = getShopDBConnection();
+    if ($pdo === null) {
         throw new Exception("La connexion à la base de données n'est pas disponible");
     }
     
     $stmt = $pdo->prepare("SELECT 
             r.id, r.type_appareil, r.date_rachat, r.photo_appareil, r.photo_identite,
             r.modele, r.sin, r.fonctionnel, r.prix,
-            c.nom, c.prenom
+            c.nom, c.prenom, c.telephone, c.email
         FROM rachat_appareils r
         JOIN clients c ON r.client_id = c.id
-        WHERE (c.nom LIKE ? OR c.prenom LIKE ?) AND (r.type_appareil LIKE ? OR r.modele LIKE ? OR r.sin LIKE ?)
+        WHERE (c.nom LIKE ? OR c.prenom LIKE ? OR c.telephone LIKE ? OR c.email LIKE ?) 
+           OR (r.type_appareil LIKE ? OR r.modele LIKE ? OR r.sin LIKE ?)
         ORDER BY r.date_rachat DESC
         LIMIT 50");
         
-    $stmt->execute([$searchTerm, $searchTerm, $searchTerm, $searchTerm, $searchTerm]);
+    $stmt->execute([$searchTerm, $searchTerm, $searchTerm, $searchTerm, $searchTerm, $searchTerm, $searchTerm]);
     $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     header('Content-Type: application/json');

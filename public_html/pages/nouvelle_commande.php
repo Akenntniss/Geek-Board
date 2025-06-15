@@ -11,7 +11,8 @@ if (!isset($_SESSION['user_id'])) {
 // Récupérer les fournisseurs pour le formulaire
 $fournisseurs = [];
 try {
-    $stmt = $pdo->query("SELECT id, nom, email, telephone FROM fournisseurs ORDER BY nom");
+    $shop_pdo = getShopDBConnection();
+$stmt = $shop_pdo->query("SELECT id, nom, email, telephone FROM fournisseurs ORDER BY nom");
     $fournisseurs = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
     set_message("Erreur lors de la récupération des fournisseurs: " . $e->getMessage(), "danger");
@@ -20,7 +21,7 @@ try {
 // Récupérer les clients pour le formulaire
 $clients = [];
 try {
-    $stmt = $pdo->query("SELECT id, nom, prenom FROM clients ORDER BY nom, prenom");
+    $stmt = $shop_pdo->query("SELECT id, nom, prenom FROM clients ORDER BY nom, prenom");
     $clients = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
     set_message("Erreur lors de la récupération des clients: " . $e->getMessage(), "danger");
@@ -29,7 +30,7 @@ try {
 // Récupérer les réparations en cours pour le formulaire
 $reparations = [];
 try {
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         SELECT r.id, r.modele, c.nom AS client_nom, c.prenom AS client_prenom
         FROM reparations r
         JOIN clients c ON r.client_id = c.id
@@ -92,10 +93,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $reference = 'CMD-' . date('Ymd') . '-' . uniqid();
             
             // Démarrer une transaction
-            $pdo->beginTransaction();
+            $shop_pdo->beginTransaction();
             
             // Insérer la commande
-            $stmt = $pdo->prepare("
+            $stmt = $shop_pdo->prepare("
                 INSERT INTO commandes_pieces (
                     reference, fournisseur_id, client_id, reparation_id, 
                     date_creation, date_commande, urgence, statut, 
@@ -112,11 +113,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $user_id
             ]);
             
-            $commande_id = $pdo->lastInsertId();
+            $commande_id = $shop_pdo->lastInsertId();
             
             // Insérer les produits de la commande
             foreach ($produits as $produit) {
-                $stmt = $pdo->prepare("
+                $stmt = $shop_pdo->prepare("
                     INSERT INTO commandes_pieces_items (
                         commande_id, nom_piece, reference_piece, description, 
                         quantite, prix_estime
@@ -134,7 +135,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             
             // Si la commande est liée à une réparation, mettre à jour le statut de la réparation
             if ($reparation_id) {
-                $stmt = $pdo->prepare("
+                $stmt = $shop_pdo->prepare("
                     UPDATE reparations 
                     SET commande_requise = 1, statut = 'en_attente_pieces'
                     WHERE id = ?
@@ -143,14 +144,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
             
             // Valider la transaction
-            $pdo->commit();
+            $shop_pdo->commit();
             
             set_message("La commande {$reference} a été créée avec succès.", "success");
             header('Location: index.php?page=commandes_pieces');
             exit();
         } catch (PDOException $e) {
             // En cas d'erreur, annuler la transaction
-            $pdo->rollBack();
+            $shop_pdo->rollBack();
             set_message("Erreur lors de la création de la commande: " . $e->getMessage(), "danger");
         }
     } else {

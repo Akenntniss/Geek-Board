@@ -34,7 +34,7 @@ $client_id = (int)$_POST['id'];
 
 try {
     // Vérifier si le client a des réparations
-    $stmt = $pdo->prepare("SELECT COUNT(*) FROM reparations WHERE client_id = ?");
+    $stmt = $shop_pdo->prepare("SELECT COUNT(*) FROM reparations WHERE client_id = ?");
     $stmt->execute([$client_id]);
     $count = $stmt->fetchColumn();
 
@@ -47,7 +47,7 @@ try {
     }
 
     // Supprimer le client
-    $stmt = $pdo->prepare("DELETE FROM clients WHERE id = ?");
+    $stmt = $shop_pdo->prepare("DELETE FROM clients WHERE id = ?");
     $stmt->execute([$client_id]);
 
     echo json_encode([

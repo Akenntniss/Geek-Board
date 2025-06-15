@@ -13,7 +13,7 @@ $article_id = intval($_GET['id']);
 
 // Récupérer l'article spécifié
 function get_kb_article($id) {
-    global $pdo;
+    $shop_pdo = getShopDBConnection();
     try {
         $query = "
             SELECT a.*, c.name as category_name, c.icon as category_icon 
@@ -21,14 +21,15 @@ function get_kb_article($id) {
             LEFT JOIN kb_categories c ON a.category_id = c.id
             WHERE a.id = ?
         ";
-        $stmt = $pdo->prepare($query);
+        $shop_pdo = getShopDBConnection();
+$stmt = $shop_pdo->prepare($query);
         $stmt->execute([$id]);
         $article = $stmt->fetch(PDO::FETCH_ASSOC);
         
         // Incrémenter le compteur de vues si l'article existe
         if ($article) {
             $update = "UPDATE kb_articles SET views = views + 1 WHERE id = ?";
-            $stmt = $pdo->prepare($update);
+            $stmt = $shop_pdo->prepare($update);
             $stmt->execute([$id]);
         }
         
@@ -41,7 +42,7 @@ function get_kb_article($id) {
 
 // Récupération des tags d'un article
 function get_article_tags($article_id) {
-    global $pdo;
+    $shop_pdo = getShopDBConnection();
     try {
         $query = "
             SELECT t.* 
@@ -50,7 +51,7 @@ function get_article_tags($article_id) {
             WHERE at.article_id = ?
             ORDER BY t.name ASC
         ";
-        $stmt = $pdo->prepare($query);
+        $stmt = $shop_pdo->prepare($query);
         $stmt->execute([$article_id]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     } catch (PDOException $e) {
@@ -61,10 +62,10 @@ function get_article_tags($article_id) {
 
 // Vérifier si l'utilisateur a déjà évalué cet article
 function has_user_rated_article($article_id, $user_id) {
-    global $pdo;
+    $shop_pdo = getShopDBConnection();
     try {
         $query = "SELECT id FROM kb_article_ratings WHERE article_id = ? AND user_id = ?";
-        $stmt = $pdo->prepare($query);
+        $stmt = $shop_pdo->prepare($query);
         $stmt->execute([$article_id, $user_id]);
         return $stmt->fetch(PDO::FETCH_ASSOC) ? true : false;
     } catch (PDOException $e) {
@@ -75,7 +76,7 @@ function has_user_rated_article($article_id, $user_id) {
 
 // Récupération des statistiques d'évaluation
 function get_rating_stats($article_id) {
-    global $pdo;
+    $shop_pdo = getShopDBConnection();
     try {
         $query = "
             SELECT COUNT(*) as total_ratings,
@@ -83,7 +84,7 @@ function get_rating_stats($article_id) {
             FROM kb_article_ratings
             WHERE article_id = ?
         ";
-        $stmt = $pdo->prepare($query);
+        $stmt = $shop_pdo->prepare($query);
         $stmt->execute([$article_id]);
         $stats = $stmt->fetch(PDO::FETCH_ASSOC);
         
@@ -103,7 +104,7 @@ function get_rating_stats($article_id) {
 
 // Récupération des articles associés (même catégorie)
 function get_related_articles($article_id, $category_id, $limit = 5) {
-    global $pdo;
+    $shop_pdo = getShopDBConnection();
     try {
         $query = "
             SELECT id, title, views
@@ -112,7 +113,7 @@ function get_related_articles($article_id, $category_id, $limit = 5) {
             ORDER BY views DESC
             LIMIT ?
         ";
-        $stmt = $pdo->prepare($query);
+        $stmt = $shop_pdo->prepare($query);
         $stmt->execute([$article_id, $category_id, $limit]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     } catch (PDOException $e) {
@@ -130,7 +131,7 @@ if (isset($_POST['action']) && $_POST['action'] === 'rate_article' && isset($_SE
         // Vérifier si l'utilisateur a déjà évalué cet article
         if (!has_user_rated_article($article_id, $user_id)) {
             $query = "INSERT INTO kb_article_ratings (article_id, user_id, is_helpful, rated_at) VALUES (?, ?, ?, NOW())";
-            $stmt = $pdo->prepare($query);
+            $stmt = $shop_pdo->prepare($query);
             $stmt->execute([$article_id, $user_id, $is_helpful]);
             
             set_message("Merci pour votre évaluation !", "success");

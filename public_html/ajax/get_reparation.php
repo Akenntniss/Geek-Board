@@ -84,7 +84,7 @@ $reparation_id = intval($_GET['id']);
 
 try {
     // Récupérer les détails de la réparation
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         SELECT r.*, 
                CONCAT(c.nom, ' ', c.prenom) as client_nom, 
                c.prenom as client_prenom,
@@ -109,7 +109,7 @@ try {
     $reparation['statut_badge'] = local_get_enum_status_badge($reparation['statut'], $reparation_id);
     
     // Récupérer les photos de la réparation
-    $stmt = $pdo->prepare("SELECT id, url, description FROM photos_reparation WHERE reparation_id = ? ORDER BY date_upload DESC");
+    $stmt = $shop_pdo->prepare("SELECT id, url, description FROM photos_reparation WHERE reparation_id = ? ORDER BY date_upload DESC");
     $stmt->execute([$reparation_id]);
     $photos = $stmt->fetchAll(PDO::FETCH_ASSOC);
     
@@ -127,7 +127,7 @@ try {
     $reparation['photos'] = $photos;
     
     // Récupérer les employés qui travaillent actuellement sur cette réparation
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         SELECT u.id, u.full_name as nom, ra.date_debut, ra.est_principal
         FROM reparation_attributions ra
         JOIN users u ON ra.employe_id = u.id
@@ -139,7 +139,7 @@ try {
     $reparation['employes_actifs'] = $employes_actifs;
     
     // Récupérer l'historique des attributions
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         SELECT ra.*, u.full_name as nom
         FROM reparation_attributions ra
         JOIN users u ON ra.employe_id = u.id

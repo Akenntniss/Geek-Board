@@ -31,15 +31,27 @@ try {
 
     // Inclure le fichier de configuration
     require_once $config_path;
-    file_put_contents($logFile, "Paramètres de connexion: host=" . DB_HOST . ", user=" . DB_USER . "\n", FILE_APPEND);
+    file_put_contents($logFile, "Paramètres de connexion: host=" . MAIN_DB_HOST . ", user=" . MAIN_DB_USER . "\n", FILE_APPEND);
     
     // Inclure les fonctions
     require_once $functions_path;
 
+    // Initialiser la connexion à la base de données boutique
+    $shop_pdo = getShopDBConnection();
+
     // Vérifier que la connexion PDO existe
-    if (!isset($pdo) || $pdo === null) {
+    if (!isset($shop_pdo) || $shop_pdo === null) {
         file_put_contents($logFile, "ERREUR: Connexion PDO non disponible après inclusion de database.php\n", FILE_APPEND);
         throw new Exception('Erreur de connexion à la base de données: connexion PDO non disponible');
+    }
+
+    // Inclure la fonction d'envoi de SMS unifiée
+    $sms_functions_path = realpath(__DIR__ . '/../includes/sms_functions.php');
+    if ($sms_functions_path) {
+        require_once $sms_functions_path;
+        file_put_contents($logFile, "Fonction d'envoi de SMS unifiée incluse depuis: " . $sms_functions_path . "\n", FILE_APPEND);
+    } else {
+        file_put_contents($logFile, "AVERTISSEMENT: Impossible de localiser le fichier des fonctions SMS\n", FILE_APPEND);
     }
 
     file_put_contents($logFile, "Connexion PDO établie avec succès\n", FILE_APPEND);
@@ -102,7 +114,7 @@ try {
     file_put_contents($logFile, "Tentative de mise à jour...\n", FILE_APPEND);
     
     // Récupérer le code du statut
-    $stmt = $pdo->prepare("SELECT code FROM statuts WHERE id = ?");
+    $stmt = $shop_pdo->prepare("SELECT code FROM statuts WHERE id = ?");
     $stmt->execute([$status_id]);
     $status_code = $stmt->fetchColumn();
     
@@ -112,7 +124,7 @@ try {
     }
     
     // Mise à jour des deux colonnes: statut_id et statut
-    $stmt = $pdo->prepare("UPDATE reparations SET statut_id = ?, statut = ?, date_modification = NOW() WHERE id = ?");
+    $stmt = $shop_pdo->prepare("UPDATE reparations SET statut_id = ?, statut = ?, date_modification = NOW() WHERE id = ?");
     $result = $stmt->execute([$status_id, $status_code, $repair_id]);
     
     if (!$result) {
@@ -128,7 +140,7 @@ try {
         file_put_contents($logFile, "Mise à jour réussie: " . $stmt->rowCount() . " ligne(s) affectée(s)\n", FILE_APPEND);
         
         // Récupérer le statut précédent pour le journal
-        $stmt_prev = $pdo->prepare("SELECT statut_apres FROM reparation_logs WHERE reparation_id = ? AND action_type = 'changement_statut' ORDER BY date_action DESC LIMIT 1");
+        $stmt_prev = $shop_pdo->prepare("SELECT statut_apres FROM reparation_logs WHERE reparation_id = ? AND action_type = 'changement_statut' ORDER BY date_action DESC LIMIT 1");
         $stmt_prev->execute([$repair_id]);
         $previous_status = $stmt_prev->fetchColumn();
         
@@ -139,7 +151,7 @@ try {
         
         // Insérer un enregistrement dans reparation_logs
         try {
-            $stmt_log = $pdo->prepare("
+            $stmt_log = $shop_pdo->prepare("
                 INSERT INTO reparation_logs (
                     reparation_id, employe_id, action_type, statut_avant, statut_apres, details
                 ) VALUES (?, ?, 'changement_statut', ?, ?, ?)
@@ -162,7 +174,7 @@ try {
     }
     
     // Récupérer les informations sur le statut pour l'affichage du badge
-    $stmt = $pdo->prepare("SELECT nom, code FROM statuts WHERE id = ?");
+    $stmt = $shop_pdo->prepare("SELECT nom, code FROM statuts WHERE id = ?");
     $stmt->execute([$status_id]);
     $status = $stmt->fetch();
     
@@ -186,7 +198,7 @@ try {
             file_put_contents($logFile, "Tentative d'envoi de SMS\n", FILE_APPEND);
             
             // Récupérer les informations du client et de la réparation
-            $stmt = $pdo->prepare("
+            $stmt = $shop_pdo->prepare("
                 SELECT r.*, c.telephone, c.nom as client_nom, c.prenom as client_prenom
                 FROM reparations r
                 JOIN clients c ON r.client_id = c.id
@@ -201,7 +213,7 @@ try {
                 $client_prenom = $repair_data['client_prenom'];
                 
                 // Récupérer le template correspondant au statut_id
-                $stmt = $pdo->prepare("
+                $stmt = $shop_pdo->prepare("
                     SELECT id, contenu 
                     FROM sms_templates 
                     WHERE statut_id = ? AND est_actif = 1
@@ -252,8 +264,8 @@ try {
                     if (!empty($telephone)) {
                         file_put_contents($logFile, "Tentative d'envoi de SMS à $telephone\n", FILE_APPEND);
                         
-                        // Appeler la fonction send_sms et récupérer le résultat complet
-                        $sms_result = send_sms($telephone, $message);
+                        // Appeler la fonction send_sms unifiée avec tous les paramètres
+                        $sms_result = send_sms($telephone, $message, 'repair_status', $repair_id, $user_id);
                     
                         // Journaliser le résultat complet
                         file_put_contents($logFile, "Résultat de l'envoi du SMS: " . print_r($sms_result, true) . "\n", FILE_APPEND);
@@ -263,7 +275,7 @@ try {
                         
                         // Enregistrer dans la table reparation_sms
                         try {
-                        $stmt = $pdo->prepare("
+                        $stmt = $shop_pdo->prepare("
                                 INSERT INTO reparation_sms (
                                     reparation_id, template_id, statut_id, telephone, message
                                 ) VALUES (?, ?, ?, ?, ?)
@@ -275,7 +287,7 @@ try {
                                 $template_id = $template['id'];
                             } else {
                                 // Si on n'a pas l'ID du template, essayer de le récupérer
-                                $stmt_template = $pdo->prepare("
+                                $stmt_template = $shop_pdo->prepare("
                                     SELECT id FROM sms_templates WHERE statut_id = ? AND est_actif = 1 LIMIT 1
                         ");
                                 $stmt_template->execute([$status_id]);
@@ -287,7 +299,7 @@ try {
                             
                             $stmt->execute([$repair_id, $template_id, $status_id, $telephone, $message]);
                             
-                            file_put_contents($logFile, "SMS enregistré dans reparation_sms: ID=" . $pdo->lastInsertId() . "\n", FILE_APPEND);
+                            file_put_contents($logFile, "SMS enregistré dans reparation_sms: ID=" . $shop_pdo->lastInsertId() . "\n", FILE_APPEND);
                         } catch (Exception $e) {
                             file_put_contents($logFile, "Erreur lors de l'enregistrement dans reparation_sms: " . $e->getMessage() . "\n", FILE_APPEND);
                         }
@@ -316,7 +328,7 @@ try {
     
     // Logger l'action
     try {
-        $stmt = $pdo->prepare("
+        $stmt = $shop_pdo->prepare("
             INSERT INTO logs (user_id, action, details) 
             VALUES (?, 'update_repair_status', ?)
         ");

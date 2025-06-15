@@ -32,7 +32,7 @@ try {
     FROM reparations
     WHERE archive = 'NON'";
     
-    $countStmt = $pdo->query($countSql);
+    $countStmt = $shop_pdo->query($countSql);
     $counts = $countStmt->fetch(PDO::FETCH_ASSOC);
     
     // Convertir les valeurs en entiers

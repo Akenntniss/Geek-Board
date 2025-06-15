@@ -6,13 +6,12 @@ error_reporting(E_ALL);
 
 // Ajouter une fonction de journalisation pour tracer les étapes d'authentification
 function debugLog($message) {
-    error_log("[DEBUG LOGIN] " . $message);
+    // ⚡ OPTIMISATION: Debug minimal pour de meilleures performances
+    // Commenter la ligne suivante pour désactiver complètement le debug
+    // error_log("[DEBUG LOGIN] " . $message);
     
-    // Stocker les messages de débogage dans un tableau en session pour affichage
-    if (!isset($_SESSION['debug_messages'])) {
-        $_SESSION['debug_messages'] = [];
-    }
-    $_SESSION['debug_messages'][] = $message;
+    // ⚡ Messages de debug désactivés pour améliorer les performances
+    // Les messages ne s'accumulent plus dans la session
 }
 
 debugLog("Début du processus de connexion");
@@ -20,7 +19,10 @@ debugLog("Début du processus de connexion");
 // Inclure la configuration de session avant de démarrer la session
 require_once '../config/session_config.php';
 // La session est déjà démarrée dans session_config.php
+
+// Inclure la configuration de la base de données
 require_once '../config/database.php';
+
 // Inclure la configuration pour la gestion des sous-domaines
 require_once '../config/subdomain_config.php';
 
@@ -48,11 +50,31 @@ if ($superadmin_mode && isset($_SESSION['shop_id'])) {
     debugLog("Shop ID forcé à null en mode superadmin");
 }
 
-// Récupérer l'ID du magasin s'il est spécifié dans l'URL et qu'on n'est pas en mode superadmin
-$shop_id = !$superadmin_mode && isset($_GET['shop_id']) ? (int)$_GET['shop_id'] : null;
-debugLog("Shop ID depuis URL: " . ($shop_id ? $shop_id : "non défini"));
+// Récupérer l'ID du magasin dans l'ordre de priorité :
+// 1. URL (GET)
+// 2. Formulaire (POST)
+// 3. Session existante
+$shop_id = null;
 
-// Si l'ID du magasin est spécifié, stocker dans la session
+// 1. Vérifier l'URL
+if (!$superadmin_mode && isset($_GET['shop_id'])) {
+    $shop_id = (int)$_GET['shop_id'];
+    debugLog("Shop ID depuis URL: " . $shop_id);
+}
+
+// 2. Vérifier le formulaire
+if (!$shop_id && !$superadmin_mode && isset($_POST['shop_id'])) {
+    $shop_id = (int)$_POST['shop_id'];
+    debugLog("Shop ID depuis formulaire: " . $shop_id);
+}
+
+// 3. Vérifier la session
+if (!$shop_id && !$superadmin_mode && isset($_SESSION['shop_id'])) {
+    $shop_id = (int)$_SESSION['shop_id'];
+    debugLog("Shop ID depuis session: " . $shop_id);
+}
+
+// Si un shop_id a été trouvé, vérifier qu'il est valide
 if ($shop_id && !$superadmin_mode) {
     // Vérifier que le magasin existe et est actif
     $pdo_main = getMainDBConnection();
@@ -66,6 +88,10 @@ if ($shop_id && !$superadmin_mode) {
         debugLog("Magasin défini en session: ID=" . $shop['id'] . ", Name=" . $shop['name']);
     } else {
         debugLog("Magasin non trouvé ou inactif pour l'ID: " . $shop_id);
+        // Si le magasin n'est pas valide, le retirer de la session
+        unset($_SESSION['shop_id']);
+        unset($_SESSION['shop_name']);
+        $shop_id = null;
     }
 }
 
@@ -212,10 +238,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         ];
                         
                         debugLog("Tentative de connexion à la DB du magasin: " . $shop_config['dbname'] . " sur " . $shop_config['host'] . ":" . $shop_config['port']);
-                        $pdo = connectToShopDB($shop_config);
+                        $shop_pdo = connectToShopDB($shop_config);
                         
                         // Ajouter cette section de débogage temporaire
-                        if ($pdo === null) {
+                        if ($shop_pdo === null) {
                             debugLog("ÉCHEC de connexion à la DB du magasin");
                             error_log("Échec de la connexion à la base de données du magasin: " . $shop['name']);
                             error_log("Paramètres: " . json_encode($shop_config));
@@ -250,9 +276,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             ];
                             
                             debugLog("Tentative de connexion à la DB du magasin en session");
-                            $pdo = connectToShopDB($shop_config);
+                            $shop_pdo = connectToShopDB($shop_config);
                             
-                            if ($pdo === null) {
+                            if ($shop_pdo === null) {
                                 debugLog("ÉCHEC de connexion à la DB du magasin en session");
                                 error_log("Échec de la connexion à la base de données du magasin en session: " . $shop['name']);
                                 throw new PDOException("La connexion à la base de données du magasin a échoué");
@@ -265,12 +291,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         }
                     } else {
                         debugLog("Pas de magasin sélectionné ni en session, utilisation de la base principale");
-                        $pdo = $pdo_main;
+                        $shop_pdo = $pdo_main;
                     }
                 }
                 
             // Vérifier que la connexion à la base de données est disponible
-            if ($pdo === null) {
+            if ($shop_pdo === null) {
                     debugLog("Connexion à la base de données non disponible");
                 throw new PDOException("La connexion à la base de données n'est pas disponible");
             }
@@ -280,10 +306,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 // Vérifier si le username est un email
                 if (filter_var($username, FILTER_VALIDATE_EMAIL)) {
                     debugLog("Tentative de connexion par email");
-                    $stmt = $pdo->prepare('SELECT * FROM users WHERE email = ?');
+                    $stmt = $shop_pdo->prepare('SELECT * FROM users WHERE email = ?');
                 } else {
                     debugLog("Tentative de connexion par nom d'utilisateur");
-            $stmt = $pdo->prepare('SELECT * FROM users WHERE username = ?');
+            $stmt = $shop_pdo->prepare('SELECT * FROM users WHERE username = ?');
                 }
             $stmt->execute([$username]);
             $user = $stmt->fetch();
@@ -309,7 +335,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $expiry = time() + $session_lifetime;
                     
                     // Stocker le token dans la base de données
-                    $stmt = $pdo->prepare('INSERT INTO user_sessions (user_id, token, expiry) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE token = ?, expiry = ?');
+                    $stmt = $shop_pdo->prepare('INSERT INTO user_sessions (user_id, token, expiry) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE token = ?, expiry = ?');
                     $stmt->execute([$user['id'], $token, date('Y-m-d H:i:s', $expiry), $token, date('Y-m-d H:i:s', $expiry)]);
                     
                     // Définir le cookie de session persistante

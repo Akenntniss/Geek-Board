@@ -3,6 +3,12 @@
  * Fonctions pour le système de messagerie - Version optimisée
  */
 
+// Inclure la connexion à la base de données
+require_once __DIR__ . '/../../config/database.php';
+
+// Obtenir la connexion à la base de données de la boutique
+$shop_pdo = getShopDBConnection();
+
 /**
  * Récupère les conversations d'un utilisateur
  *
@@ -11,7 +17,7 @@
  * @return array Liste des conversations
  */
 function get_user_conversations($user_id, $search = '') {
-    global $pdo;
+    global $shop_pdo;
     
     try {
         $query = "
@@ -51,7 +57,7 @@ function get_user_conversations($user_id, $search = '') {
         
         $query .= " ORDER BY date_dernier_message DESC";
         
-        $stmt = $pdo->prepare($query);
+        $stmt = $shop_pdo->prepare($query);
         $stmt->execute($params);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     } catch (PDOException $e) {
@@ -70,7 +76,7 @@ function get_user_conversations($user_id, $search = '') {
  * @return array Messages de la conversation
  */
 function get_conversation_messages($conversation_id, $user_id, $limit = 50, $offset = 0) {
-    global $pdo;
+    global $shop_pdo;
     
     try {
         // Vérifier d'abord que l'utilisateur est bien participant de cette conversation
@@ -78,7 +84,7 @@ function get_conversation_messages($conversation_id, $user_id, $limit = 50, $off
                        WHERE conversation_id = :conversation_id 
                        AND user_id = :user_id";
                        
-        $check_stmt = $pdo->prepare($check_query);
+        $check_stmt = $shop_pdo->prepare($check_query);
         $check_stmt->execute([
             ':conversation_id' => $conversation_id,
             ':user_id' => $user_id
@@ -101,7 +107,7 @@ function get_conversation_messages($conversation_id, $user_id, $limit = 50, $off
             LIMIT :limit OFFSET :offset
         ";
         
-        $stmt = $pdo->prepare($query);
+        $stmt = $shop_pdo->prepare($query);
         $stmt->bindValue(':conversation_id', $conversation_id, PDO::PARAM_INT);
         $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
         $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
@@ -131,7 +137,7 @@ function get_conversation_messages($conversation_id, $user_id, $limit = 50, $off
  * @return array Nouveaux messages
  */
 function get_new_messages($conversation_id, $user_id, $last_id) {
-    global $pdo;
+    global $shop_pdo;
     
     try {
         // Vérifier que l'utilisateur est bien participant
@@ -139,7 +145,7 @@ function get_new_messages($conversation_id, $user_id, $last_id) {
                        WHERE conversation_id = :conversation_id 
                        AND user_id = :user_id";
                        
-        $check_stmt = $pdo->prepare($check_query);
+        $check_stmt = $shop_pdo->prepare($check_query);
         $check_stmt->execute([
             ':conversation_id' => $conversation_id,
             ':user_id' => $user_id
@@ -162,7 +168,7 @@ function get_new_messages($conversation_id, $user_id, $last_id) {
             ORDER BY m.date_envoi ASC
         ";
         
-        $stmt = $pdo->prepare($query);
+        $stmt = $shop_pdo->prepare($query);
         $stmt->execute([
             ':conversation_id' => $conversation_id,
             ':last_id' => $last_id
@@ -190,10 +196,10 @@ function get_new_messages($conversation_id, $user_id, $last_id) {
  * @return bool Succès ou échec
  */
 function update_last_read($conversation_id, $user_id) {
-    global $pdo;
+    global $shop_pdo;
     
     try {
-        $stmt = $pdo->prepare("
+        $stmt = $shop_pdo->prepare("
             UPDATE conversation_participants 
             SET date_derniere_lecture = NOW() 
             WHERE conversation_id = :conversation_id 
@@ -221,7 +227,7 @@ function update_last_read($conversation_id, $user_id) {
  * @return array Résultat de l'opération avec l'ID de la conversation créée
  */
 function create_conversation($titre, $type, $created_by, $participants, $first_message = '') {
-    global $pdo;
+    global $shop_pdo;
     
     // S'assurer que le créateur est dans la liste des participants
     if (!in_array($created_by, $participants)) {
@@ -229,10 +235,10 @@ function create_conversation($titre, $type, $created_by, $participants, $first_m
     }
     
     try {
-        $pdo->beginTransaction();
+        $shop_pdo->beginTransaction();
         
         // Créer la conversation
-        $stmt = $pdo->prepare("
+        $stmt = $shop_pdo->prepare("
             INSERT INTO conversations (titre, type, created_by, date_creation) 
             VALUES (:titre, :type, :created_by, NOW())
         ");
@@ -243,13 +249,13 @@ function create_conversation($titre, $type, $created_by, $participants, $first_m
             ':created_by' => $created_by
         ]);
         
-        $conversation_id = $pdo->lastInsertId();
+        $conversation_id = $shop_pdo->lastInsertId();
         
         // Ajouter les participants
         foreach ($participants as $participant_id) {
             $role = ($participant_id == $created_by) ? 'admin' : 'membre';
             
-            $stmt = $pdo->prepare("
+            $stmt = $shop_pdo->prepare("
                 INSERT INTO conversation_participants (conversation_id, user_id, role, date_derniere_lecture) 
                 VALUES (:conversation_id, :user_id, :role, NOW())
             ");
@@ -263,7 +269,7 @@ function create_conversation($titre, $type, $created_by, $participants, $first_m
         
         // Ajouter le premier message si fourni
         if (!empty($first_message)) {
-            $stmt = $pdo->prepare("
+            $stmt = $shop_pdo->prepare("
                 INSERT INTO messages (conversation_id, sender_id, contenu, type, date_envoi) 
                 VALUES (:conversation_id, :sender_id, :contenu, 'texte', NOW())
             ");
@@ -275,14 +281,14 @@ function create_conversation($titre, $type, $created_by, $participants, $first_m
             ]);
         }
         
-        $pdo->commit();
+        $shop_pdo->commit();
         
         return [
             'success' => true,
             'conversation_id' => $conversation_id
         ];
     } catch (PDOException $e) {
-        $pdo->rollBack();
+        $shop_pdo->rollBack();
         error_log("Erreur lors de la création de la conversation : " . $e->getMessage());
         return [
             'success' => false,
@@ -302,14 +308,14 @@ function create_conversation($titre, $type, $created_by, $participants, $first_m
  * @return array Résultat de l'opération avec le message créé
  */
 function send_message($conversation_id, $sender_id, $contenu, $type = 'texte', $fichier = null) {
-    global $pdo;
+    global $shop_pdo;
     
     // Vérifier que l'expéditeur est bien participant de cette conversation
     $check_query = "SELECT 1 FROM conversation_participants 
                    WHERE conversation_id = :conversation_id 
                    AND user_id = :user_id";
                    
-    $check_stmt = $pdo->prepare($check_query);
+    $check_stmt = $shop_pdo->prepare($check_query);
     $check_stmt->execute([
         ':conversation_id' => $conversation_id,
         ':user_id' => $sender_id
@@ -323,7 +329,7 @@ function send_message($conversation_id, $sender_id, $contenu, $type = 'texte', $
     }
     
     try {
-        $pdo->beginTransaction();
+        $shop_pdo->beginTransaction();
         
         // Insérer le message
         $query = "
@@ -338,10 +344,10 @@ function send_message($conversation_id, $sender_id, $contenu, $type = 'texte', $
             ':type' => $type
         ];
         
-        $stmt = $pdo->prepare($query);
+        $stmt = $shop_pdo->prepare($query);
         $stmt->execute($params);
         
-        $message_id = $pdo->lastInsertId();
+        $message_id = $shop_pdo->lastInsertId();
         
         // Si c'est un fichier, ajouter les informations du fichier
         if ($type == 'fichier' && $fichier) {
@@ -354,7 +360,7 @@ function send_message($conversation_id, $sender_id, $contenu, $type = 'texte', $
                 WHERE id = :message_id
             ";
             
-            $stmt = $pdo->prepare($file_query);
+            $stmt = $shop_pdo->prepare($file_query);
             $stmt->execute([
                 ':url' => $fichier['url'],
                 ':nom' => $fichier['nom'],
@@ -375,7 +381,7 @@ function send_message($conversation_id, $sender_id, $contenu, $type = 'texte', $
             WHERE m.id = :message_id
         ";
         
-        $stmt = $pdo->prepare($message_query);
+        $stmt = $shop_pdo->prepare($message_query);
         $stmt->execute([':message_id' => $message_id]);
         $message = $stmt->fetch(PDO::FETCH_ASSOC);
         
@@ -386,7 +392,7 @@ function send_message($conversation_id, $sender_id, $contenu, $type = 'texte', $
             $message['date'] = date('d/m/Y', strtotime($message['date_envoi']));
         }
         
-        $pdo->commit();
+        $shop_pdo->commit();
         
         return [
             'success' => true,
@@ -394,7 +400,7 @@ function send_message($conversation_id, $sender_id, $contenu, $type = 'texte', $
             'message' => $message
         ];
     } catch (PDOException $e) {
-        $pdo->rollBack();
+        $shop_pdo->rollBack();
         error_log("Erreur lors de l'envoi du message : " . $e->getMessage());
         return [
             'success' => false,
@@ -411,7 +417,7 @@ function send_message($conversation_id, $sender_id, $contenu, $type = 'texte', $
  * @return array Détails de la conversation
  */
 function get_conversation_details($conversation_id, $user_id) {
-    global $pdo;
+    global $shop_pdo;
     
     try {
         // Vérifier que l'utilisateur est bien participant
@@ -419,7 +425,7 @@ function get_conversation_details($conversation_id, $user_id) {
                        WHERE conversation_id = :conversation_id 
                        AND user_id = :user_id";
                        
-        $check_stmt = $pdo->prepare($check_query);
+        $check_stmt = $shop_pdo->prepare($check_query);
         $check_stmt->execute([
             ':conversation_id' => $conversation_id,
             ':user_id' => $user_id
@@ -439,7 +445,7 @@ function get_conversation_details($conversation_id, $user_id) {
             WHERE c.id = :conversation_id
         ";
         
-        $stmt = $pdo->prepare($query);
+        $stmt = $shop_pdo->prepare($query);
         $stmt->execute([':conversation_id' => $conversation_id]);
         $conversation = $stmt->fetch(PDO::FETCH_ASSOC);
         
@@ -456,7 +462,7 @@ function get_conversation_details($conversation_id, $user_id) {
             ORDER BY cp.role = 'admin' DESC, u.full_name
         ";
         
-        $stmt = $pdo->prepare($participants_query);
+        $stmt = $shop_pdo->prepare($participants_query);
         $stmt->execute([':conversation_id' => $conversation_id]);
         $participants = $stmt->fetchAll(PDO::FETCH_ASSOC);
         
@@ -476,17 +482,17 @@ function get_conversation_details($conversation_id, $user_id) {
  * @return array Liste des utilisateurs
  */
 function get_users_for_participants($current_user_id = null) {
-    global $pdo;
+    global $shop_pdo;
     
     try {
         $query = "SELECT id, full_name, username, role FROM users";
         
         if ($current_user_id) {
             $query .= " WHERE id != :current_user_id";
-            $stmt = $pdo->prepare($query);
+            $stmt = $shop_pdo->prepare($query);
             $stmt->execute([':current_user_id' => $current_user_id]);
         } else {
-            $stmt = $pdo->query($query);
+            $stmt = $shop_pdo->query($query);
         }
         
         $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -559,7 +565,7 @@ function upload_message_file($file) {
  * @return array Résultats de la recherche
  */
 function search_messages($user_id, $search_term) {
-    global $pdo;
+    global $shop_pdo;
     
     if (empty($search_term)) {
         return [];
@@ -580,7 +586,7 @@ function search_messages($user_id, $search_term) {
             LIMIT 50
         ";
         
-        $stmt = $pdo->prepare($query);
+        $stmt = $shop_pdo->prepare($query);
         $stmt->execute([
             ':user_id' => $user_id,
             ':search_term' => "%$search_term%"

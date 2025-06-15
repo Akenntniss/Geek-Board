@@ -786,24 +786,42 @@
 }
 
 .dark-mode .modal-content {
-    background-color: #1f2937;
-    border-color: #374151;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+    background-color: #111827 !important;
+    border: 1px solid #374151 !important;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6) !important;
+    color: #f8fafc !important;
 }
 
 .dark-mode .modal-header {
-    background-color: #1a1e2c;
-    border-color: #374151;
-    color: #f8fafc;
+    background: linear-gradient(135deg, #1f2937, #111827) !important;
+    border-bottom: 1px solid #374151 !important;
+    color: #f8fafc !important;
+}
+
+.dark-mode .modal-body {
+    background-color: #111827 !important;
+    color: #f8fafc !important;
 }
 
 .dark-mode .modal-footer {
-    border-color: #374151;
-    background-color: #1a1e2c;
+    background-color: #0f172a !important;
+    border-top: 1px solid #374151 !important;
 }
 
-.dark-mode .modal-header .btn-close {
-    filter: invert(1) grayscale(100%) brightness(200%);
+.dark-mode .modal-header .btn-close,
+.dark-mode .btn-close,
+.dark-mode .btn-close-white {
+    filter: brightness(0) invert(1) !important;
+    opacity: 0.8 !important;
+    background-size: 1.2em !important;
+}
+
+.dark-mode .modal-header .btn-close:hover,
+.dark-mode .btn-close:hover,
+.dark-mode .btn-close-white:hover {
+    opacity: 1 !important;
+    transform: scale(1.1) !important;
+    transition: all 0.2s ease !important;
 }
 
 .dark-mode .modal .alert-light {
@@ -846,9 +864,84 @@
 .dark-mode .modal input.form-control,
 .dark-mode .modal select.form-select,
 .dark-mode .modal textarea.form-control {
-    background-color: #111827;
-    border-color: #374151;
-    color: #f8fafc;
+    background-color: #1f2937 !important;
+    border-color: #374151 !important;
+    color: #f8fafc !important;
+}
+
+.dark-mode .modal input.form-control:focus,
+.dark-mode .modal select.form-select:focus,
+.dark-mode .modal textarea.form-control:focus {
+    background-color: #1f2937 !important;
+    border-color: #60a5fa !important;
+    color: #f8fafc !important;
+    box-shadow: 0 0 0 0.2rem rgba(96, 165, 250, 0.25) !important;
+}
+
+/* Modaux spécifiques améliorés */
+.dark-mode #fournisseursModal .modal-content,
+.dark-mode #periodesModal .modal-content,
+.dark-mode #changeStatusModal .modal-content,
+.dark-mode #editCommandeModal .modal-content,
+.dark-mode #fournisseurSelectionModal .modal-content {
+    background-color: #111827 !important;
+    border: 1px solid #374151 !important;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6) !important;
+}
+
+.dark-mode #fournisseursModal .modal-header,
+.dark-mode #periodesModal .modal-header,
+.dark-mode #changeStatusModal .modal-header,
+.dark-mode #editCommandeModal .modal-header,
+.dark-mode #fournisseurSelectionModal .modal-header {
+    background: linear-gradient(135deg, #1f2937, #111827) !important;
+    color: #f8fafc !important;
+    border-bottom: 1px solid #374151 !important;
+}
+
+.dark-mode #fournisseursModal .modal-body,
+.dark-mode #periodesModal .modal-body,
+.dark-mode #changeStatusModal .modal-body,
+.dark-mode #editCommandeModal .modal-body,
+.dark-mode #fournisseurSelectionModal .modal-body {
+    background-color: #111827 !important;
+    color: #f8fafc !important;
+}
+
+.dark-mode #fournisseursModal .modal-footer,
+.dark-mode #periodesModal .modal-footer,
+.dark-mode #changeStatusModal .modal-footer,
+.dark-mode #editCommandeModal .modal-footer,
+.dark-mode #fournisseurSelectionModal .modal-footer {
+    background-color: #0f172a !important;
+    border-top: 1px solid #374151 !important;
+}
+
+/* Amélioration des boutons secondaires dans les modaux */
+.dark-mode .modal .btn-secondary,
+.dark-mode .modal .btn-outline-secondary {
+    background-color: #374151 !important;
+    border-color: #4b5563 !important;
+    color: #f8fafc !important;
+}
+
+.dark-mode .modal .btn-secondary:hover,
+.dark-mode .modal .btn-outline-secondary:hover {
+    background-color: #4b5563 !important;
+    border-color: #6b7280 !important;
+    color: #ffffff !important;
+    transform: translateY(-2px) !important;
+}
+
+/* Amélioration des éléments de liste dans les modaux */
+.dark-mode .modal .list-group-item {
+    background-color: #1f2937 !important;
+    border-color: #374151 !important;
+    color: #f8fafc !important;
+}
+
+.dark-mode .modal .list-group-item:hover {
+    background-color: #374151 !important;
 }
 
 .dark-mode .modal .alert-icon {

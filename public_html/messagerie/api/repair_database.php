@@ -30,9 +30,9 @@ add_log("Démarrage du script de réparation de la base de données");
 
 // Connexion à la base de données
 try {
-    require_once('../../database.php');
+    require_once('../../config/database.php');
     add_log("Connexion à la base de données établie");
-    $pdo = $GLOBALS['pdo'];
+    $shop_pdo = getShopDBConnection();
 } catch (Exception $e) {
     add_log("Erreur de connexion à la base de données", $e->getMessage(), 'error');
     echo json_encode(['success' => false, 'message' => 'Erreur de connexion à la base de données: ' . $e->getMessage(), 'debug' => $debug_log]);
@@ -45,7 +45,7 @@ $missing_tables = [];
 
 foreach ($required_tables as $table) {
     try {
-        $stmt = $pdo->query("SHOW TABLES LIKE '$table'");
+        $stmt = $shop_pdo->query("SHOW TABLES LIKE '$table'");
         if ($stmt->rowCount() == 0) {
             $missing_tables[] = $table;
         }
@@ -106,17 +106,17 @@ $tables_verified = [];
 foreach ($required_tables as $table) {
     try {
         // Vérifier d'abord si la table existe
-        $stmt = $pdo->query("SHOW TABLES LIKE '$table'");
+        $stmt = $shop_pdo->query("SHOW TABLES LIKE '$table'");
         if ($stmt->rowCount() == 0) {
             // Créer la table si elle n'existe pas
             add_log("Création de la table $table", null, 'warning');
-            $pdo->exec($table_creation_scripts[$table]);
+            $shop_pdo->exec($table_creation_scripts[$table]);
             $tables_created[] = $table;
         } else {
             add_log("Table $table existe déjà");
             
             // Vérifier la structure de la table
-            $stmt = $pdo->query("DESCRIBE $table");
+            $stmt = $shop_pdo->query("DESCRIBE $table");
             $columns = $stmt->fetchAll(PDO::FETCH_ASSOC);
             $tables_verified[] = [
                 'table' => $table,
@@ -135,13 +135,13 @@ $data_status = [];
 try {
     // Compter les enregistrements dans chaque table
     foreach ($required_tables as $table) {
-        $stmt = $pdo->query("SELECT COUNT(*) as count FROM $table");
+        $stmt = $shop_pdo->query("SELECT COUNT(*) as count FROM $table");
         $count = $stmt->fetch(PDO::FETCH_ASSOC)['count'];
         $data_status[$table] = ['count' => $count];
         
         // Échantillon de données pour vérification
         if ($count > 0) {
-            $stmt = $pdo->query("SELECT * FROM $table LIMIT 1");
+            $stmt = $shop_pdo->query("SELECT * FROM $table LIMIT 1");
             $sample = $stmt->fetch(PDO::FETCH_ASSOC);
             $data_status[$table]['sample'] = $sample;
         }
@@ -155,25 +155,25 @@ try {
 // Test de création d'une conversation de test si aucune n'existe
 $test_created = false;
 try {
-    $stmt = $pdo->query("SELECT COUNT(*) as count FROM conversations");
+    $stmt = $shop_pdo->query("SELECT COUNT(*) as count FROM conversations");
     $count = $stmt->fetch(PDO::FETCH_ASSOC)['count'];
     
     if ($count == 0) {
         add_log("Aucune conversation trouvée, création d'une conversation de test", null, 'warning');
         
         // Créer une transaction pour assurer la cohérence
-        $pdo->beginTransaction();
+        $shop_pdo->beginTransaction();
         
         // Créer la conversation
-        $stmt = $pdo->prepare("
+        $stmt = $shop_pdo->prepare("
             INSERT INTO conversations (titre, type, created_by, date_creation) 
             VALUES ('Conversation de test', 'direct', :user_id, NOW())
         ");
         $stmt->execute([':user_id' => $_SESSION['user_id']]);
-        $conversation_id = $pdo->lastInsertId();
+        $conversation_id = $shop_pdo->lastInsertId();
         
         // Ajouter l'utilisateur actuel comme participant
-        $stmt = $pdo->prepare("
+        $stmt = $shop_pdo->prepare("
             INSERT INTO conversation_participants (conversation_id, user_id, role) 
             VALUES (:conversation_id, :user_id, 'admin')
         ");
@@ -183,7 +183,7 @@ try {
         ]);
         
         // Ajouter un message de test
-        $stmt = $pdo->prepare("
+        $stmt = $shop_pdo->prepare("
             INSERT INTO messages (conversation_id, sender_id, contenu, date_envoi) 
             VALUES (:conversation_id, :user_id, 'Message de test automatique', NOW())
         ");
@@ -192,14 +192,14 @@ try {
             ':user_id' => $_SESSION['user_id']
         ]);
         
-        $pdo->commit();
+        $shop_pdo->commit();
         
         add_log("Conversation de test créée avec succès", ['conversation_id' => $conversation_id]);
         $test_created = true;
     }
 } catch (PDOException $e) {
-    if (isset($pdo) && $pdo->inTransaction()) {
-        $pdo->rollBack();
+    if (isset($shop_pdo) && $shop_pdo->inTransaction()) {
+        $shop_pdo->rollBack();
     }
     add_log("Erreur lors de la création de la conversation de test", $e->getMessage(), 'error');
 }

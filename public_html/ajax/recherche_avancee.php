@@ -25,9 +25,21 @@ $terme = trim($_POST['terme']);
 error_log("Terme de recherche avancée: " . $terme);
 
 try {
+    // Utiliser la connexion à la base de données du magasin actuel
+    $shop_pdo = getShopDBConnection();
+    
     // Vérifier la connexion à la base de données
-    if (!isset($pdo) || !($pdo instanceof PDO)) {
-        throw new Exception('Connexion à la base de données non disponible');
+    if (!isset($shop_pdo) || !($shop_pdo instanceof PDO)) {
+        throw new Exception('Connexion à la base de données du magasin non disponible');
+    }
+    
+    // Journaliser l'information sur la base de données utilisée
+    try {
+        $stmt_db = $shop_pdo->query("SELECT DATABASE() as db_name");
+        $db_info = $stmt_db->fetch(PDO::FETCH_ASSOC);
+        error_log("Recherche avancée - BASE DE DONNÉES UTILISÉE: " . ($db_info['db_name'] ?? 'Inconnue'));
+    } catch (Exception $e) {
+        error_log("Erreur lors de la vérification de la base de données: " . $e->getMessage());
     }
     
     // Résultats à retourner
@@ -48,7 +60,7 @@ try {
         LIMIT 10
     ";
     
-    $stmt = $pdo->prepare($sql_clients);
+    $stmt = $shop_pdo->prepare($sql_clients);
     $terme_wildcard = "%$terme%";
     $stmt->execute([$terme_wildcard, $terme_wildcard, $terme_wildcard]);
     $resultats['clients'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -81,7 +93,7 @@ try {
     error_log("Requête SQL réparations: " . $sql_reparations);
     error_log("Paramètres: " . str_repeat("'%$terme%', ", 6));
     
-    $stmt = $pdo->prepare($sql_reparations);
+    $stmt = $shop_pdo->prepare($sql_reparations);
     $stmt->execute([
         $terme_wildcard,  // r.id
         $terme_wildcard,  // r.type_appareil
@@ -122,7 +134,7 @@ try {
     error_log("Requête SQL commandes: " . $sql_commandes);
     error_log("Paramètres: " . str_repeat("'%$terme%', ", 5));
     
-    $stmt = $pdo->prepare($sql_commandes);
+    $stmt = $shop_pdo->prepare($sql_commandes);
     $stmt->execute([
         $terme_wildcard,  // cp.id
         $terme_wildcard,  // cp.nom_piece

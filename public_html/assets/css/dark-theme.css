@@ -2,9 +2,9 @@
 
 /* Variables de couleurs pour le thème sombre */
 :root {
-    --dark-bg-primary: #121212;
-    --dark-bg-secondary: #1e1e1e;
-    --dark-bg-tertiary: #252525;
+    --dark-bg-primary: #0a0f19;
+    --dark-bg-secondary: #111827;
+    --dark-bg-tertiary: #1e293b;
     --dark-text-primary: #e0e0e0;
     --dark-text-secondary: #a0a0a0;
     --dark-border-color: #333333;
@@ -26,7 +26,10 @@
 
 /* Classe activée pour le mode sombre */
 body.dark-mode {
-    background-color: var(--dark-bg-primary);
+    background: var(--dark-bg-primary) !important;
+    background-image: linear-gradient(135deg, #0a0f19, #111827, #0f172a) !important;
+    background-attachment: fixed !important;
+    background-size: 100% 100% !important;
     color: var(--dark-text-primary);
     transition: background-color 0.3s ease, color 0.3s ease;
 }

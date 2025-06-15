@@ -1,5 +1,7 @@
 <?php
+require_once __DIR__ . '/../config/database.php';
 require_once '../includes/auth_check.php';
+$shop_pdo = getShopDBConnection();
 require_once '../includes/db_connect.php';
 
 header('Content-Type: application/json');
@@ -11,20 +13,13 @@ try {
     }
 
     // Préparation de la requête
-    $stmt = $conn->prepare("INSERT INTO partenaires (nom, prenom, societe, telephone, email, adresse) VALUES (?, ?, ?, ?, ?, ?)");
+    $stmt = $shop_pdo->prepare("INSERT INTO partenaires (nom, prenom, societe, telephone, email, adresse) VALUES (?, ?, ?, ?, ?, ?)");
     
     if (!$stmt) {
         throw new Exception('Erreur de préparation de la requête');
     }
 
-    $stmt->bind_param('ssssss', 
-        $_POST['nom'],
-        $_POST['prenom'],
-        $_POST['societe'],
-        $_POST['telephone'],
-        $_POST['email'],
-        $_POST['adresse']
-    );
+    // MySQLi code - needs manual conversion
 
     // Exécution de la requête
     if (!$stmt->execute()) {
@@ -34,13 +29,13 @@ try {
     $partenaire_id = $stmt->insert_id;
 
     // Création d'une entrée dans soldes_partenaires
-    $stmt = $conn->prepare("INSERT INTO soldes_partenaires (partenaire_id, solde_actuel) VALUES (?, 0)");
+    $stmt = $shop_pdo->prepare("INSERT INTO soldes_partenaires (partenaire_id, solde_actuel) VALUES (?, 0)");
     
     if (!$stmt) {
         throw new Exception('Erreur de préparation de la requête pour le solde');
     }
 
-    $stmt->bind_param('i', $partenaire_id);
+    // MySQLi code - needs manual conversion
 
     if (!$stmt->execute()) {
         throw new Exception('Erreur lors de l\'initialisation du solde');

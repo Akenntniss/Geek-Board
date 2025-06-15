@@ -9,7 +9,7 @@ header('Content-Type: application/json');
 require_once('../config/database.php');
 
 // Vérifier si la connexion à la base de données est établie
-if (!$pdo) {
+if (!$shop_pdo) {
     echo json_encode([
         'success' => false,
         'error' => 'Erreur de connexion à la base de données'
@@ -20,7 +20,7 @@ if (!$pdo) {
 try {
     // Récupérer tous les statuts de réparation
     $sql = "SELECT id, code, nom, categorie FROM statuts_reparation ORDER BY categorie, nom";
-    $stmt = $pdo->prepare($sql);
+    $stmt = $shop_pdo->prepare($sql);
     
     if (!$stmt) {
         throw new PDOException("Erreur lors de la préparation de la requête");

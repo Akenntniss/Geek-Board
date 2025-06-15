@@ -38,12 +38,12 @@ $archive = (bool) $data['archive'];
 
 // Mettre à jour le statut d'archive
 try {
-    $stmt = $pdo->prepare("UPDATE reparations SET archive = ?, date_modification = NOW() WHERE id = ?");
+    $stmt = $shop_pdo->prepare("UPDATE reparations SET archive = ?, date_modification = NOW() WHERE id = ?");
     $result = $stmt->execute([$archive ? 1 : 0, $id]);
     
     if ($result) {
         // Récupérer le statut de la réparation pour retourner le badge HTML
-        $stmt = $pdo->prepare("
+        $stmt = $shop_pdo->prepare("
             SELECT r.statut, s.nom as statut_nom, s.couleur as statut_couleur
             FROM reparations r 
             JOIN statuts s ON r.statut = s.code 

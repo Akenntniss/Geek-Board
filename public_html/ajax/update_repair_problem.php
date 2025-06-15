@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 }
 
 // Vérifier si la connexion à la base de données est établie
-if (!$pdo) {
+if (!$shop_pdo) {
     echo json_encode([
         'success' => false,
         'error' => 'Erreur de connexion à la base de données'
@@ -40,7 +40,7 @@ $problem_description = trim($_POST['problem_description']);
 
 try {
     // Mettre à jour la description du problème dans la base de données
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         UPDATE reparations
         SET description_probleme = ?,
             date_modification = NOW()

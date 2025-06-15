@@ -29,7 +29,7 @@ if (!isset($_GET['id']) || empty($_GET['id'])) {
 }
 
 // Vérifier que la connexion à la base de données est établie
-if (!isset($pdo) || $pdo === null) {
+if (!isset($shop_pdo) || $shop_pdo === null) {
     http_response_code(500);
     echo json_encode(['error' => 'Erreur de connexion à la base de données']);
     exit;
@@ -38,7 +38,7 @@ if (!isset($pdo) || $pdo === null) {
 try {
     $id = (int)$_GET['id'];
     
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         SELECT *
         FROM produits
         WHERE id = ?

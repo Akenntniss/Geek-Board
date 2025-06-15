@@ -1,0 +1,305 @@
+/* === STYLES DE BASE POUR LES MODALS === */
+
+/* Animation d'entrée et de sortie */
+.modal.fade .modal-dialog {
+    transform: scale(0.95);
+    transition: transform 0.3s ease-out;
+}
+
+.modal.show .modal-dialog {
+    transform: scale(1);
+}
+
+/* Style du conteneur modal */
+.modal-content {
+    border: none;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+    background: var(--modal-bg, #ffffff);
+    transition: all 0.3s ease;
+}
+
+/* En-tête du modal */
+.modal-header {
+    border-bottom: 1px solid var(--border-color, rgba(0, 0, 0, 0.1));
+    padding: 1.25rem 1.5rem;
+    background: var(--modal-header-bg, linear-gradient(135deg, #1e90ff, #0066cc));
+    color: var(--modal-header-color, #ffffff);
+}
+
+.modal-title {
+    font-weight: 600;
+    font-size: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Corps du modal */
+.modal-body {
+    padding: 1.5rem;
+    background: var(--modal-body-bg, #ffffff);
+    color: var(--modal-body-color, #333333);
+}
+
+/* Pied du modal */
+.modal-footer {
+    border-top: 1px solid var(--border-color, rgba(0, 0, 0, 0.1));
+    padding: 1.25rem 1.5rem;
+    background: var(--modal-footer-bg, #f8f9fa);
+}
+
+/* Boutons du modal */
+.modal .btn {
+    padding: 0.5rem 1.25rem;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.modal .btn-primary {
+    background: linear-gradient(135deg, #1e90ff, #0066cc);
+    border: none;
+    box-shadow: 0 4px 10px rgba(30, 144, 255, 0.3);
+}
+
+.modal .btn-secondary {
+    background: var(--btn-secondary-bg, #f8f9fa);
+    border: 1px solid var(--btn-secondary-border, #dee2e6);
+    color: var(--btn-secondary-color, #495057);
+}
+
+.modal .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Mode sombre */
+[data-theme="dark"] .modal-content,
+.dark-mode .modal-content {
+    --modal-bg: #111827;
+    --modal-header-bg: linear-gradient(135deg, #1f2937, #111827);
+    --modal-body-bg: #111827;
+    --modal-body-color: #f8fafc;
+    --modal-footer-bg: #0f172a;
+    --border-color: rgba(255, 255, 255, 0.1);
+    --btn-secondary-bg: #374151;
+    --btn-secondary-border: #4b5563;
+    --btn-secondary-color: #f8fafc;
+    background-color: #111827 !important;
+    color: #f8fafc !important;
+}
+
+/* Amélioration spécifique pour les modaux en mode nuit */
+.dark-mode .modal-content {
+    background-color: #111827 !important;
+    border: 1px solid #374151 !important;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5) !important;
+}
+
+.dark-mode .modal-header {
+    background: linear-gradient(135deg, #1f2937, #111827) !important;
+    border-bottom: 1px solid #374151 !important;
+    color: #f8fafc !important;
+}
+
+.dark-mode .modal-body {
+    background-color: #111827 !important;
+    color: #f8fafc !important;
+}
+
+.dark-mode .modal-footer {
+    background-color: #0f172a !important;
+    border-top: 1px solid #374151 !important;
+}
+
+/* Amélioration du bouton Fermer en mode nuit */
+.dark-mode .btn-close,
+.dark-mode .btn-close-white {
+    filter: brightness(0) invert(1) !important;
+    opacity: 0.8 !important;
+    background-size: 1.2em !important;
+}
+
+.dark-mode .btn-close:hover,
+.dark-mode .btn-close-white:hover {
+    opacity: 1 !important;
+    transform: scale(1.1) !important;
+    transition: all 0.2s ease !important;
+}
+
+/* Boutons secondaires améliorés en mode nuit */
+.dark-mode .modal .btn-secondary,
+.dark-mode .modal .btn-outline-secondary {
+    background-color: #374151 !important;
+    border-color: #4b5563 !important;
+    color: #f8fafc !important;
+}
+
+.dark-mode .modal .btn-secondary:hover,
+.dark-mode .modal .btn-outline-secondary:hover {
+    background-color: #4b5563 !important;
+    border-color: #6b7280 !important;
+    color: #ffffff !important;
+    transform: translateY(-2px) !important;
+}
+
+/* Modaux spécifiques */
+.dark-mode #fournisseursModal .modal-content,
+.dark-mode #periodesModal .modal-content,
+.dark-mode #changeStatusModal .modal-content,
+.dark-mode #editCommandeModal .modal-content,
+.dark-mode #fournisseurSelectionModal .modal-content {
+    background-color: #111827 !important;
+    border: 1px solid #374151 !important;
+}
+
+.dark-mode #fournisseursModal .modal-header,
+.dark-mode #periodesModal .modal-header,
+.dark-mode #changeStatusModal .modal-header,
+.dark-mode #editCommandeModal .modal-header,
+.dark-mode #fournisseurSelectionModal .modal-header {
+    background: linear-gradient(135deg, #1f2937, #111827) !important;
+    color: #f8fafc !important;
+    border-bottom: 1px solid #374151 !important;
+}
+
+.dark-mode #fournisseursModal .modal-body,
+.dark-mode #periodesModal .modal-body,
+.dark-mode #changeStatusModal .modal-body,
+.dark-mode #editCommandeModal .modal-body,
+.dark-mode #fournisseurSelectionModal .modal-body {
+    background-color: #111827 !important;
+    color: #f8fafc !important;
+}
+
+/* Amélioration des éléments de liste dans les modaux */
+.dark-mode .modal .list-group-item {
+    background-color: #1f2937 !important;
+    border-color: #374151 !important;
+    color: #f8fafc !important;
+}
+
+.dark-mode .modal .list-group-item:hover {
+    background-color: #374151 !important;
+}
+
+/* Amélioration des formulaires dans les modaux */
+.dark-mode .modal .form-control,
+.dark-mode .modal .form-select {
+    background-color: #1f2937 !important;
+    border-color: #374151 !important;
+    color: #f8fafc !important;
+}
+
+.dark-mode .modal .form-control:focus,
+.dark-mode .modal .form-select:focus {
+    background-color: #1f2937 !important;
+    border-color: #60a5fa !important;
+    color: #f8fafc !important;
+    box-shadow: 0 0 0 0.2rem rgba(96, 165, 250, 0.25) !important;
+}
+
+/* Animations pour les éléments internes */
+.modal .fade-in {
+    animation: fadeIn 0.3s ease-out;
+}
+
+.modal .slide-up {
+    animation: slideUp 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideUp {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+/* Styles pour les champs de formulaire dans les modals */
+.modal .form-control {
+    border-radius: 8px;
+    border: 1px solid var(--input-border, #dee2e6);
+    padding: 0.75rem 1rem;
+    transition: all 0.3s ease;
+}
+
+.modal .form-control:focus {
+    border-color: var(--input-focus-border, #1e90ff);
+    box-shadow: 0 0 0 0.2rem rgba(30, 144, 255, 0.25);
+}
+
+/* Styles pour les tableaux dans les modals */
+.modal .table {
+    background: var(--table-bg, #ffffff);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.modal .table thead th {
+    background: var(--table-header-bg, #f8f9fa);
+    border-bottom: 2px solid var(--border-color, #dee2e6);
+    font-weight: 600;
+}
+
+/* Styles pour les badges et étiquettes */
+.modal .badge {
+    padding: 0.5em 0.75em;
+    border-radius: 6px;
+    font-weight: 500;
+}
+
+/* Styles pour les messages d'erreur et de succès */
+.modal .alert {
+    border-radius: 8px;
+    border: none;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+.modal .alert-success {
+    background: var(--alert-success-bg, #d4edda);
+    color: var(--alert-success-color, #155724);
+}
+
+.modal .alert-danger {
+    background: var(--alert-danger-bg, #f8d7da);
+    color: var(--alert-danger-color, #721c24);
+}
+
+/* Styles pour les tooltips et popovers */
+.modal .tooltip {
+    font-size: 0.875rem;
+}
+
+.modal .popover {
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .modal-dialog {
+        margin: 0.5rem;
+    }
+    
+    .modal-content {
+        border-radius: 12px;
+    }
+    
+    .modal-header {
+        padding: 1rem;
+    }
+    
+    .modal-body {
+        padding: 1rem;
+    }
+    
+    .modal-footer {
+        padding: 1rem;
+    }
+} 

@@ -3,12 +3,15 @@
 require_once __DIR__ . '/../config/database.php';
 require_once __DIR__ . '/../includes/functions.php';
 
+// Obtenir la connexion à la base de données de la boutique
+$shop_pdo = getShopDBConnection();
+
 try {
     // Commencer une transaction
-    $pdo->beginTransaction();
+    $shop_pdo->beginTransaction();
     
-    // Récupérer les produits temporaires qui ont plus de 12 jours
-    $stmt = $pdo->prepare("
+        // Récupérer les produits temporaires qui ont plus de 12 jours
+    $stmt = $shop_pdo->prepare("
         SELECT id, nom, reference, created_at
         FROM produits
         WHERE status = 'temporaire'
@@ -19,7 +22,7 @@ try {
     
     foreach ($produits as $produit) {
         // Mettre à jour le statut du produit
-        $stmt = $pdo->prepare("
+        $stmt = $shop_pdo->prepare("
             UPDATE produits 
             SET status = 'a_retourner',
                 date_limite_retour = DATE_ADD(NOW(), INTERVAL 7 DAY),
@@ -29,7 +32,7 @@ try {
         $stmt->execute([$produit['id']]);
         
         // Créer un retour automatique si la table retours existe
-        $stmt = $pdo->prepare("
+        $stmt = $shop_pdo->prepare("
             SELECT COUNT(*) as existe
             FROM information_schema.tables
             WHERE table_schema = DATABASE()
@@ -39,7 +42,7 @@ try {
         $table_exists = $stmt->fetch()['existe'] > 0;
         
         if ($table_exists) {
-            $stmt = $pdo->prepare("
+            $stmt = $shop_pdo->prepare("
                 INSERT INTO retours (
                     produit_id,
                     date_creation,
@@ -58,7 +61,7 @@ try {
         }
         
         // Enregistrer dans les logs
-        $stmt = $pdo->prepare("
+        $stmt = $shop_pdo->prepare("
             INSERT INTO journal_actions (
                 type_action,
                 description,
@@ -78,15 +81,15 @@ try {
         );
         $stmt->execute([$description]);
     }
-    
-    $pdo->commit();
+
+    $shop_pdo->commit();
     
     // Afficher le résultat
     echo "Vérification terminée. " . count($produits) . " produit(s) marqué(s) pour retour.\n";
     
 } catch (Exception $e) {
-    if (isset($pdo) && $pdo->inTransaction()) {
-        $pdo->rollBack();
+    if (isset($shop_pdo) && $shop_pdo->inTransaction()) {
+        $shop_pdo->rollBack();
     }
     echo "Erreur lors de la vérification des produits temporaires: " . $e->getMessage() . "\n";
 } 

@@ -1,7 +1,10 @@
 <?php
 // Inclure les fichiers nécessaires
 require_once '../includes/header.php';
-require_once '../database.php';
+require_once '../config/database.php';
+
+// Obtenir la connexion à la base de données de la boutique
+$shop_pdo = getShopDBConnection();
 
 // Traitement du formulaire d'envoi
 $message = '';
@@ -52,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $sms_list = [];
 try {
     $query = "SELECT * FROM sms_messages ORDER BY created_at DESC LIMIT 20";
-    $stmt = $pdo->prepare($query);
+    $stmt = $shop_pdo->prepare($query);
     $stmt->execute();
     $sms_list = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {

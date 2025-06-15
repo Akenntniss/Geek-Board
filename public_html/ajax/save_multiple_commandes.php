@@ -37,7 +37,7 @@ if (empty($pieces)) {
 
 try {
     // Démarrer une transaction
-    $pdo->beginTransaction();
+    $shop_pdo->beginTransaction();
     
     // Insérer chaque pièce comme une commande séparée
     $commandes_ids = [];
@@ -48,7 +48,7 @@ try {
         }
         
         // Préparer la requête d'insertion
-        $stmt = $pdo->prepare("
+        $stmt = $shop_pdo->prepare("
             INSERT INTO commandes_pieces (
                 client_id, reparation_id, fournisseur_id, nom_piece, 
                 code_barre, quantite, prix_estime, statut, date_creation
@@ -71,11 +71,11 @@ try {
         ]);
         
         // Récupérer l'ID de la commande insérée
-        $commandes_ids[] = $pdo->lastInsertId();
+        $commandes_ids[] = $shop_pdo->lastInsertId();
     }
     
     // Valider la transaction
-    $pdo->commit();
+    $shop_pdo->commit();
     
     // Retourner une réponse de succès
     header('Content-Type: application/json');
@@ -87,7 +87,7 @@ try {
     
 } catch (PDOException $e) {
     // Annuler la transaction en cas d'erreur
-    $pdo->rollBack();
+    $shop_pdo->rollBack();
     
     // Retourner une réponse d'erreur
     header('Content-Type: application/json');

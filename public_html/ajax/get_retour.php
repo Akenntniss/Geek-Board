@@ -24,7 +24,7 @@ $retour_id = (int)$_GET['id'];
 
 try {
     // Récupérer les informations du retour
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         SELECT r.*, s.name as produit_nom, s.barcode
         FROM retours r
         JOIN stock s ON r.produit_id = s.id

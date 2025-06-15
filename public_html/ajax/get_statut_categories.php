@@ -11,7 +11,7 @@ header('Content-Type: application/json');
 require_once('../config/database.php');
 
 // Vérifier si la connexion à la base de données est établie
-if (!isset($pdo) || $pdo === null) {
+if (!isset($shop_pdo) || $shop_pdo === null) {
     echo json_encode([
         'success' => false,
         'message' => 'Erreur de connexion à la base de données'
@@ -22,7 +22,7 @@ if (!isset($pdo) || $pdo === null) {
 try {
     // Récupérer toutes les catégories de statut
     $sql = "SELECT * FROM statut_categories WHERE est_actif = 1 ORDER BY ordre ASC";
-    $stmt = $pdo->prepare($sql);
+    $stmt = $shop_pdo->prepare($sql);
     $stmt->execute();
     
     $categories = $stmt->fetchAll(PDO::FETCH_ASSOC);

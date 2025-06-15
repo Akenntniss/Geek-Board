@@ -14,7 +14,7 @@ $task_id = intval($_GET['id']);
 
 try {
     // Préparer et exécuter la requête
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         SELECT description, statut as status
         FROM taches 
         WHERE id = ?

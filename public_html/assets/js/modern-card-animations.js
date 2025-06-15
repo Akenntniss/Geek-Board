@@ -169,6 +169,18 @@ function initializeEnhancedDragDrop() {
         console.log("Début du drag", this);
         draggedCard = this;
         
+        // Récupérer les données de la carte
+        const repairId = this.getAttribute('data-repair-id') || this.getAttribute('data-id');
+        const status = this.getAttribute('data-status');
+        
+        // Vérifier que les données nécessaires sont disponibles
+        if (!repairId) {
+            console.error("ID de réparation manquant sur la carte:", this);
+            alert("Erreur: ID de réparation manquant. Veuillez rafraîchir la page.");
+            e.preventDefault();
+            return false;
+        }
+        
         // Créer une carte fantôme
         ghostCard = this.cloneNode(true);
         ghostCard.classList.add('ghost-card');
@@ -184,11 +196,29 @@ function initializeEnhancedDragDrop() {
         ghostCard.dataset.offsetX = offsetX;
         ghostCard.dataset.offsetY = offsetY;
         
-        // Stocker les données nécessaires
-        e.dataTransfer.setData('text/plain', JSON.stringify({
-            repairId: this.getAttribute('data-repair-id') || this.getAttribute('data-id'),
-            status: this.getAttribute('data-status')
-        }));
+        // Préparer les données à transférer
+        const dragData = {
+            repairId: repairId,
+            status: status || 'undefined'
+        };
+        
+        // Vérifier que les données peuvent être sérialisées
+        try {
+            const jsonData = JSON.stringify(dragData);
+            console.log("Données de drag préparées:", jsonData);
+            
+            // Stocker les données nécessaires
+            e.dataTransfer.setData('text/plain', jsonData);
+            
+            // Définir l'effet de déplacement
+            e.dataTransfer.effectAllowed = 'move';
+            
+        } catch (serializeError) {
+            console.error("Erreur lors de la sérialisation des données de drag:", serializeError);
+            alert("Erreur: Impossible de préparer les données de glisser-déposer.");
+            e.preventDefault();
+            return false;
+        }
         
         // Appliquer un délai pour l'effet visuel
         setTimeout(() => {
@@ -265,7 +295,23 @@ function initializeEnhancedDragDrop() {
             const dataText = e.dataTransfer.getData('text/plain');
             console.log("Données reçues:", dataText);
             
-            const data = JSON.parse(dataText);
+            // Vérifier que les données ne sont pas vides
+            if (!dataText || dataText.trim() === '') {
+                console.error("Aucune donnée reçue lors du drop");
+                alert("Erreur: Aucune donnée de glisser-déposer trouvée. Veuillez réessayer.");
+                return;
+            }
+            
+            let data;
+            try {
+                data = JSON.parse(dataText);
+            } catch (jsonError) {
+                console.error("Erreur lors du parsing JSON:", jsonError);
+                console.error("Données brutes:", dataText);
+                alert("Erreur: Données de glisser-déposer invalides. Veuillez rafraîchir la page et réessayer.");
+                return;
+            }
+            
             const repairId = data.repairId;
             const categoryId = this.getAttribute('data-category-id');
             
@@ -274,6 +320,21 @@ function initializeEnhancedDragDrop() {
             // Vérifier que les données sont valides
             if (!repairId || !categoryId) {
                 console.error("Données invalides pour le drop:", { repairId, categoryId });
+                alert("Erreur: Données invalides pour le glisser-déposer.");
+                return;
+            }
+            
+            // Vérifier que repairId est un nombre valide
+            if (isNaN(parseInt(repairId))) {
+                console.error("ID de réparation invalide:", repairId);
+                alert("Erreur: ID de réparation invalide.");
+                return;
+            }
+            
+            // Vérifier que categoryId est un nombre valide
+            if (isNaN(parseInt(categoryId))) {
+                console.error("ID de catégorie invalide:", categoryId);
+                alert("Erreur: ID de catégorie invalide.");
                 return;
             }
             
@@ -281,15 +342,18 @@ function initializeEnhancedDragDrop() {
             if (typeof window.fetchStatusOptions === 'function') {
                 console.log("Appel de fetchStatusOptions");
                 
-                const statusIndicator = draggedCard.querySelector('.status-indicator');
+                const statusIndicator = draggedCard ? draggedCard.querySelector('.status-indicator') : null;
                 if (statusIndicator) {
                     window.fetchStatusOptions(repairId, categoryId, statusIndicator);
                 } else {
                     console.error("Indicateur de statut non trouvé dans la carte");
+                    alert("Erreur: Impossible de trouver l'indicateur de statut de la carte.");
+                    return;
                 }
             } else {
                 console.error("Fonction fetchStatusOptions non disponible dans le contexte global");
                 alert("Erreur: La fonction fetchStatusOptions n'est pas disponible. Veuillez rafraîchir la page.");
+                return;
             }
             
             // Effet visuel pour le succès
@@ -310,6 +374,7 @@ function initializeEnhancedDragDrop() {
             
         } catch (error) {
             console.error('Erreur lors du traitement des données de glisser-déposer:', error);
+            alert("Erreur lors du glisser-déposer. Veuillez rafraîchir la page et réessayer.");
         }
         
         this.classList.remove('drag-over');

@@ -22,7 +22,7 @@ try {
     $reference = 'CMD-' . date('Ymd') . '-' . uniqid();
     
     // Récupérer l'ID du client à partir de la réparation
-    $stmt = $pdo->prepare("SELECT client_id FROM reparations WHERE id = ?");
+    $stmt = $shop_pdo->prepare("SELECT client_id FROM reparations WHERE id = ?");
     $stmt->execute([$_POST['reparation_id']]);
     $client_id = $stmt->fetchColumn();
     
@@ -31,7 +31,7 @@ try {
     }
     
     // Insérer la commande
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         INSERT INTO commandes_pieces (
             reference,
             client_id,
@@ -59,7 +59,7 @@ try {
     ]);
 
     // Mettre à jour le champ commande_requise de la réparation
-    $stmt = $pdo->prepare("UPDATE reparations SET commande_requise = TRUE WHERE id = ?");
+    $stmt = $shop_pdo->prepare("UPDATE reparations SET commande_requise = TRUE WHERE id = ?");
     $stmt->execute([$_POST['reparation_id']]);
     
     header('Content-Type: application/json');

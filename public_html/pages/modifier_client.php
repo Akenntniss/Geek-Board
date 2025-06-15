@@ -10,7 +10,8 @@ $client_id = (int)$_GET['id'];
 
 // Récupérer les informations du client
 try {
-    $stmt = $pdo->prepare("SELECT * FROM clients WHERE id = ?");
+    $shop_pdo = getShopDBConnection();
+$stmt = $shop_pdo->prepare("SELECT * FROM clients WHERE id = ?");
     $stmt->execute([$client_id]);
     $client = $stmt->fetch();
     
@@ -57,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Vérification si l'email existe déjà (sauf pour le client actuel)
     if (!empty($email)) {
         try {
-            $stmt = $pdo->prepare("SELECT id FROM clients WHERE email = ? AND id != ?");
+            $stmt = $shop_pdo->prepare("SELECT id FROM clients WHERE email = ? AND id != ?");
             $stmt->execute([$email, $client_id]);
             if ($stmt->fetch()) {
                 $errors[] = "Un autre client utilise déjà cet email";
@@ -71,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Si aucune erreur, on modifie le client
     if (empty($errors)) {
         try {
-            $stmt = $pdo->prepare("
+            $stmt = $shop_pdo->prepare("
                 UPDATE clients 
                 SET nom = ?, prenom = ?, telephone = ?, email = ?, date_modification = NOW()
                 WHERE id = ?

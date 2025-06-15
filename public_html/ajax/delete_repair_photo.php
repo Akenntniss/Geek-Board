@@ -31,7 +31,7 @@ $photo_id = (int)$_POST['photo_id'];
 
 try {
     // Récupérer les informations de la photo pour pouvoir supprimer le fichier
-    $stmt = $pdo->prepare("SELECT url FROM photos_reparation WHERE id = ? AND reparation_id = ?");
+    $stmt = $shop_pdo->prepare("SELECT url FROM photos_reparation WHERE id = ? AND reparation_id = ?");
     $stmt->execute([$photo_id, $repair_id]);
     $photo = $stmt->fetch(PDO::FETCH_ASSOC);
     
@@ -50,7 +50,7 @@ try {
     }
     
     // Supprimer l'entrée de la base de données
-    $stmt = $pdo->prepare("DELETE FROM photos_reparation WHERE id = ? AND reparation_id = ?");
+    $stmt = $shop_pdo->prepare("DELETE FROM photos_reparation WHERE id = ? AND reparation_id = ?");
     $stmt->execute([$photo_id, $repair_id]);
     
     echo json_encode([

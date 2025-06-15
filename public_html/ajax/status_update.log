@@ -924,3 +924,368 @@ RAW INPUT: {"repair_id":"743","status_id":1,"send_sms":true,"user_id":1}
 [2025-05-05 22:01:54] Réponse envoyée: {"success":true,"message":"Statut mis \u00e0 jour avec succ\u00e8s","data":{"badge":{"text":"Nouveau Diagnostique","color":"nouveau_diagnostique"},"sms_sent":false,"sms_message":"Erreur: L'API SMS n'est pas accessible: "}}
 [2025-05-05 22:01:54] --- Fin de la requête ---
 
+--- Nouvelle tentative de mise à jour du statut ---
+Date: 2025-06-15 17:50:10
+BASE_PATH: /Users/admin/Documents/GeekBoard/public_html
+Config path: /Users/admin/Documents/GeekBoard/public_html/config/database.php
+Functions path: /Users/admin/Documents/GeekBoard/public_html/includes/functions.php
+--- Nouvelle tentative de mise à jour du statut ---
+Date: 2025-06-15 17:50:10
+BASE_PATH: /Users/admin/Documents/GeekBoard/public_html
+Config path: /Users/admin/Documents/GeekBoard/public_html/config/database.php
+Functions path: /Users/admin/Documents/GeekBoard/public_html/includes/functions.php
+--- Nouvelle tentative de mise à jour du statut ---
+Date: 2025-06-15 17:51:36
+BASE_PATH: /Users/admin/Documents/GeekBoard/public_html
+Config path: /Users/admin/Documents/GeekBoard/public_html/config/database.php
+Functions path: /Users/admin/Documents/GeekBoard/public_html/includes/functions.php
+--- Nouvelle tentative de mise à jour du statut ---
+Date: 2025-06-15 17:51:36
+BASE_PATH: /Users/admin/Documents/GeekBoard/public_html
+Config path: /Users/admin/Documents/GeekBoard/public_html/config/database.php
+Functions path: /Users/admin/Documents/GeekBoard/public_html/includes/functions.php
+--- Nouvelle tentative de mise à jour du statut ---
+Date: 2025-06-15 18:55:58
+BASE_PATH: /Users/admin/Documents/GeekBoard/public_html
+Config path: /Users/admin/Documents/GeekBoard/public_html/config/database.php
+Functions path: /Users/admin/Documents/GeekBoard/public_html/includes/functions.php
+--- Nouvelle tentative de mise à jour du statut ---
+Date: 2025-06-15 18:55:58
+BASE_PATH: /Users/admin/Documents/GeekBoard/public_html
+Config path: /Users/admin/Documents/GeekBoard/public_html/config/database.php
+Functions path: /Users/admin/Documents/GeekBoard/public_html/includes/functions.php
+--- Nouvelle tentative de mise à jour du statut ---
+Date: 2025-06-15 18:58:11
+BASE_PATH: /Users/admin/Documents/GeekBoard/public_html
+Config path: /Users/admin/Documents/GeekBoard/public_html/config/database.php
+Functions path: /Users/admin/Documents/GeekBoard/public_html/includes/functions.php
+--- Nouvelle tentative de mise à jour du statut ---
+Date: 2025-06-15 18:58:11
+BASE_PATH: /Users/admin/Documents/GeekBoard/public_html
+Config path: /Users/admin/Documents/GeekBoard/public_html/config/database.php
+Functions path: /Users/admin/Documents/GeekBoard/public_html/includes/functions.php
+--- Nouvelle tentative de mise à jour du statut ---
+Date: 2025-06-15 19:07:44
+BASE_PATH: /Users/admin/Documents/GeekBoard/public_html
+Config path: /Users/admin/Documents/GeekBoard/public_html/config/database.php
+Functions path: /Users/admin/Documents/GeekBoard/public_html/includes/functions.php
+--- Nouvelle tentative de mise à jour du statut ---
+Date: 2025-06-15 19:07:44
+BASE_PATH: /Users/admin/Documents/GeekBoard/public_html
+Config path: /Users/admin/Documents/GeekBoard/public_html/config/database.php
+Functions path: /Users/admin/Documents/GeekBoard/public_html/includes/functions.php
+--- Nouvelle tentative de mise à jour du statut ---
+Date: 2025-06-15 19:10:39
+BASE_PATH: /Users/admin/Documents/GeekBoard/public_html
+Config path: /Users/admin/Documents/GeekBoard/public_html/config/database.php
+Functions path: /Users/admin/Documents/GeekBoard/public_html/includes/functions.php
+--- Nouvelle tentative de mise à jour du statut ---
+Date: 2025-06-15 19:10:40
+BASE_PATH: /Users/admin/Documents/GeekBoard/public_html
+Config path: /Users/admin/Documents/GeekBoard/public_html/config/database.php
+Functions path: /Users/admin/Documents/GeekBoard/public_html/includes/functions.php
+--- Nouvelle tentative de mise à jour du statut ---
+Date: 2025-06-15 19:10:54
+BASE_PATH: /Users/admin/Documents/GeekBoard/public_html
+Config path: /Users/admin/Documents/GeekBoard/public_html/config/database.php
+Functions path: /Users/admin/Documents/GeekBoard/public_html/includes/functions.php
+--- Nouvelle tentative de mise à jour du statut ---
+Date: 2025-06-15 19:10:54
+BASE_PATH: /Users/admin/Documents/GeekBoard/public_html
+Config path: /Users/admin/Documents/GeekBoard/public_html/config/database.php
+Functions path: /Users/admin/Documents/GeekBoard/public_html/includes/functions.php
+--- Nouvelle tentative de mise à jour du statut ---
+Date: 2025-06-15 19:12:07
+BASE_PATH: /Users/admin/Documents/GeekBoard/public_html
+Config path: /Users/admin/Documents/GeekBoard/public_html/config/database.php
+Functions path: /Users/admin/Documents/GeekBoard/public_html/includes/functions.php
+--- Nouvelle tentative de mise à jour du statut ---
+Date: 2025-06-15 19:12:07
+BASE_PATH: /Users/admin/Documents/GeekBoard/public_html
+Config path: /Users/admin/Documents/GeekBoard/public_html/config/database.php
+Functions path: /Users/admin/Documents/GeekBoard/public_html/includes/functions.php
+--- Nouvelle tentative de mise à jour du statut ---
+Date: 2025-06-15 19:14:35
+BASE_PATH: /Users/admin/Documents/GeekBoard/public_html
+Config path: /Users/admin/Documents/GeekBoard/public_html/config/database.php
+Functions path: /Users/admin/Documents/GeekBoard/public_html/includes/functions.php
+Paramètres de connexion: host=191.96.63.103, user=u139954273_Vscodetest
+Fonction d'envoi de SMS incluse depuis: /Users/admin/Documents/GeekBoard/public_html/api/sms/send.php
+Connexion PDO établie avec succès
+PHP INPUT: {"repair_id":"755","status_id":9,"send_sms":false,"user_id":1,"shop_id":"4"}
+Données JSON reçues directement
+Données décodées: Array
+(
+    [repair_id] => 755
+    [status_id] => 9
+    [send_sms] => 
+    [user_id] => 1
+    [shop_id] => 4
+)
+
+Paramètres pour la mise à jour: 
+        repair_id: 755
+        status_id: 9
+        send_sms: false
+        user_id: 1
+    
+Tentative de mise à jour...
+Mise à jour réussie: 1 ligne(s) affectée(s)
+Log enregistré dans la table reparation_logs
+Erreur lors du logging (ignorée): SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u139954273_cannesphones.logs' doesn't exist
+Réponse finale: {"success":true,"message":"Statut mis \u00e0 jour avec succ\u00e8s","data":{"badge":{"text":"R\u00e9paration Effectu\u00e9e","color":"reparation_effectue"},"sms_sent":false,"sms_message":"SMS non trait\u00e9"}}
+--- Fin de la requête ---
+
+--- Nouvelle tentative de mise à jour du statut ---
+Date: 2025-06-15 19:23:37
+BASE_PATH: /Users/admin/Documents/GeekBoard/public_html
+Config path: /Users/admin/Documents/GeekBoard/public_html/config/database.php
+Functions path: /Users/admin/Documents/GeekBoard/public_html/includes/functions.php
+Paramètres de connexion: host=191.96.63.103, user=u139954273_Vscodetest
+Fonction d'envoi de SMS incluse depuis: /Users/admin/Documents/GeekBoard/public_html/api/sms/send.php
+Connexion PDO établie avec succès
+PHP INPUT: {"repair_id":"754","status_id":9,"send_sms":false,"user_id":1,"shop_id":"4"}
+Données JSON reçues directement
+Données décodées: Array
+(
+    [repair_id] => 754
+    [status_id] => 9
+    [send_sms] => 
+    [user_id] => 1
+    [shop_id] => 4
+)
+
+Paramètres pour la mise à jour: 
+        repair_id: 754
+        status_id: 9
+        send_sms: false
+        user_id: 1
+    
+Tentative de mise à jour...
+Mise à jour réussie: 1 ligne(s) affectée(s)
+Log enregistré dans la table reparation_logs
+Erreur lors du logging (ignorée): SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u139954273_cannesphones.logs' doesn't exist
+Réponse finale: {"success":true,"message":"Statut mis \u00e0 jour avec succ\u00e8s","data":{"badge":{"text":"R\u00e9paration Effectu\u00e9e","color":"reparation_effectue"},"sms_sent":false,"sms_message":"SMS non trait\u00e9"}}
+--- Fin de la requête ---
+
+--- Nouvelle tentative de mise à jour du statut ---
+Date: 2025-06-15 19:27:02
+BASE_PATH: /Users/admin/Documents/GeekBoard/public_html
+Config path: /Users/admin/Documents/GeekBoard/public_html/config/database.php
+Functions path: /Users/admin/Documents/GeekBoard/public_html/includes/functions.php
+Paramètres de connexion: host=191.96.63.103, user=u139954273_Vscodetest
+Fonction d'envoi de SMS incluse depuis: /Users/admin/Documents/GeekBoard/public_html/api/sms/send.php
+Connexion PDO établie avec succès
+PHP INPUT: {"repair_id":"760","status_id":9,"send_sms":false,"user_id":1,"shop_id":"4"}
+Données JSON reçues directement
+Données décodées: Array
+(
+    [repair_id] => 760
+    [status_id] => 9
+    [send_sms] => 
+    [user_id] => 1
+    [shop_id] => 4
+)
+
+Paramètres pour la mise à jour: 
+        repair_id: 760
+        status_id: 9
+        send_sms: false
+        user_id: 1
+    
+Tentative de mise à jour...
+Mise à jour réussie: 1 ligne(s) affectée(s)
+Log enregistré dans la table reparation_logs
+Erreur lors du logging (ignorée): SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u139954273_cannesphones.logs' doesn't exist
+Réponse finale: {"success":true,"message":"Statut mis \u00e0 jour avec succ\u00e8s","data":{"badge":{"text":"R\u00e9paration Effectu\u00e9e","color":"reparation_effectue"},"sms_sent":false,"sms_message":"SMS non trait\u00e9"}}
+--- Fin de la requête ---
+
+--- Nouvelle tentative de mise à jour du statut ---
+Date: 2025-06-15 19:29:34
+BASE_PATH: /Users/admin/Documents/GeekBoard/public_html
+Config path: /Users/admin/Documents/GeekBoard/public_html/config/database.php
+Functions path: /Users/admin/Documents/GeekBoard/public_html/includes/functions.php
+Paramètres de connexion: host=191.96.63.103, user=u139954273_Vscodetest
+Fonction d'envoi de SMS incluse depuis: /Users/admin/Documents/GeekBoard/public_html/api/sms/send.php
+Connexion PDO établie avec succès
+PHP INPUT: {"repair_id":"761","status_id":11,"send_sms":true,"user_id":1,"shop_id":"4"}
+Données JSON reçues directement
+Données décodées: Array
+(
+    [repair_id] => 761
+    [status_id] => 11
+    [send_sms] => 1
+    [user_id] => 1
+    [shop_id] => 4
+)
+
+Paramètres pour la mise à jour: 
+        repair_id: 761
+        status_id: 11
+        send_sms: true
+        user_id: 1
+    
+Tentative de mise à jour...
+Mise à jour réussie: 1 ligne(s) affectée(s)
+Log enregistré dans la table reparation_logs
+Tentative d'envoi de SMS
+Template de SMS trouvé pour le statut_id 11
+Message après remplacement des variables : 🎉 saber,
+Ton 213 est de retour à la maison ! On espère qu’il est content 🤓
+💬 Laisse-n...
+Tentative d'envoi de SMS à 33782962906
+Résultat de l'envoi du SMS: 
+SMS enregistré dans reparation_sms: ID=466
+Erreur lors du logging (ignorée): SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u139954273_cannesphones.logs' doesn't exist
+Réponse finale: {"success":true,"message":"Statut mis \u00e0 jour avec succ\u00e8s","data":{"badge":{"text":"Restitu\u00e9","color":"restitue"},"sms_sent":false,"sms_message":"\u00c9chec de l'envoi du SMS \u00e0 cannesphones_sample (33782962906): Erreur inconnue","sms_details":false}}
+--- Fin de la requête ---
+
+--- Nouvelle tentative de mise à jour du statut ---
+Date: 2025-06-15 19:29:57
+BASE_PATH: /Users/admin/Documents/GeekBoard/public_html
+Config path: /Users/admin/Documents/GeekBoard/public_html/config/database.php
+Functions path: /Users/admin/Documents/GeekBoard/public_html/includes/functions.php
+Paramètres de connexion: host=191.96.63.103, user=u139954273_Vscodetest
+Fonction d'envoi de SMS incluse depuis: /Users/admin/Documents/GeekBoard/public_html/api/sms/send.php
+Connexion PDO établie avec succès
+PHP INPUT: {"repair_id":"760","status_id":9,"send_sms":true,"user_id":1,"shop_id":"4"}
+Données JSON reçues directement
+Données décodées: Array
+(
+    [repair_id] => 760
+    [status_id] => 9
+    [send_sms] => 1
+    [user_id] => 1
+    [shop_id] => 4
+)
+
+Paramètres pour la mise à jour: 
+        repair_id: 760
+        status_id: 9
+        send_sms: true
+        user_id: 1
+    
+Tentative de mise à jour...
+Mise à jour réussie: 1 ligne(s) affectée(s)
+Log enregistré dans la table reparation_logs
+Tentative d'envoi de SMS
+Template de SMS trouvé pour le statut_id 9
+Message après remplacement des variables : 55, votre saaa est prêt ! Il vous attend pour retrouver une vie normale. 🥳
+🧾 Suivi : http://...
+Tentative d'envoi de SMS à 55
+Résultat de l'envoi du SMS: 
+SMS enregistré dans reparation_sms: ID=467
+Erreur lors du logging (ignorée): SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u139954273_cannesphones.logs' doesn't exist
+Réponse finale: {"success":true,"message":"Statut mis \u00e0 jour avec succ\u00e8s","data":{"badge":{"text":"R\u00e9paration Effectu\u00e9e","color":"reparation_effectue"},"sms_sent":false,"sms_message":"\u00c9chec de l'envoi du SMS \u00e0 cannesphones_sample (55): Erreur inconnue","sms_details":false}}
+--- Fin de la requête ---
+
+--- Nouvelle tentative de mise à jour du statut ---
+Date: 2025-06-15 19:37:49
+BASE_PATH: /Users/admin/Documents/GeekBoard/public_html
+Config path: /Users/admin/Documents/GeekBoard/public_html/config/database.php
+Functions path: /Users/admin/Documents/GeekBoard/public_html/includes/functions.php
+Paramètres de connexion: host=191.96.63.103, user=u139954273_Vscodetest
+Fonction d'envoi de SMS incluse depuis: /Users/admin/Documents/GeekBoard/public_html/api/sms/send.php
+Connexion PDO établie avec succès
+PHP INPUT: {"repair_id":"758","status_id":9,"send_sms":false,"user_id":1,"shop_id":"4"}
+Données JSON reçues directement
+Données décodées: Array
+(
+    [repair_id] => 758
+    [status_id] => 9
+    [send_sms] => 
+    [user_id] => 1
+    [shop_id] => 4
+)
+
+Paramètres pour la mise à jour: 
+        repair_id: 758
+        status_id: 9
+        send_sms: false
+        user_id: 1
+    
+Tentative de mise à jour...
+Mise à jour réussie: 1 ligne(s) affectée(s)
+Log enregistré dans la table reparation_logs
+Erreur lors du logging (ignorée): SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u139954273_cannesphones.logs' doesn't exist
+Réponse finale: {"success":true,"message":"Statut mis \u00e0 jour avec succ\u00e8s","data":{"badge":{"text":"R\u00e9paration Effectu\u00e9e","color":"reparation_effectue"},"sms_sent":false,"sms_message":"SMS non trait\u00e9"}}
+--- Fin de la requête ---
+
+--- Nouvelle tentative de mise à jour du statut ---
+Date: 2025-06-15 19:38:17
+BASE_PATH: /Users/admin/Documents/GeekBoard/public_html
+Config path: /Users/admin/Documents/GeekBoard/public_html/config/database.php
+Functions path: /Users/admin/Documents/GeekBoard/public_html/includes/functions.php
+Paramètres de connexion: host=191.96.63.103, user=u139954273_Vscodetest
+Fonction d'envoi de SMS incluse depuis: /Users/admin/Documents/GeekBoard/public_html/api/sms/send.php
+Connexion PDO établie avec succès
+PHP INPUT: {"repair_id":"758","status_id":9,"send_sms":true,"user_id":1,"shop_id":"4"}
+Données JSON reçues directement
+Données décodées: Array
+(
+    [repair_id] => 758
+    [status_id] => 9
+    [send_sms] => 1
+    [user_id] => 1
+    [shop_id] => 4
+)
+
+Paramètres pour la mise à jour: 
+        repair_id: 758
+        status_id: 9
+        send_sms: true
+        user_id: 1
+    
+Tentative de mise à jour...
+Mise à jour réussie: 1 ligne(s) affectée(s)
+Log enregistré dans la table reparation_logs
+Tentative d'envoi de SMS
+Template de SMS trouvé pour le statut_id 9
+Message après remplacement des variables : albert, votre asd est prêt ! Il vous attend pour retrouver une vie normale. 🥳
+🧾 Suivi : http...
+Tentative d'envoi de SMS à 33234567891
+Résultat de l'envoi du SMS: 
+SMS enregistré dans reparation_sms: ID=469
+Erreur lors du logging (ignorée): SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u139954273_cannesphones.logs' doesn't exist
+Réponse finale: {"success":true,"message":"Statut mis \u00e0 jour avec succ\u00e8s","data":{"badge":{"text":"R\u00e9paration Effectu\u00e9e","color":"reparation_effectue"},"sms_sent":false,"sms_message":"\u00c9chec de l'envoi du SMS \u00e0 cannesphones_sample (33234567891): Erreur inconnue","sms_details":false}}
+--- Fin de la requête ---
+
+--- Nouvelle tentative de mise à jour du statut ---
+Date: 2025-06-15 19:38:44
+BASE_PATH: /Users/admin/Documents/GeekBoard/public_html
+Config path: /Users/admin/Documents/GeekBoard/public_html/config/database.php
+Functions path: /Users/admin/Documents/GeekBoard/public_html/includes/functions.php
+Paramètres de connexion: host=191.96.63.103, user=u139954273_Vscodetest
+Fonction d'envoi de SMS incluse depuis: /Users/admin/Documents/GeekBoard/public_html/api/sms/send.php
+Connexion PDO établie avec succès
+PHP INPUT: {"repair_id":"754","status_id":9,"send_sms":true,"user_id":1,"shop_id":"4"}
+Données JSON reçues directement
+Données décodées: Array
+(
+    [repair_id] => 754
+    [status_id] => 9
+    [send_sms] => 1
+    [user_id] => 1
+    [shop_id] => 4
+)
+
+Paramètres pour la mise à jour: 
+        repair_id: 754
+        status_id: 9
+        send_sms: true
+        user_id: 1
+    
+Tentative de mise à jour...
+Mise à jour réussie: 1 ligne(s) affectée(s)
+Log enregistré dans la table reparation_logs
+Tentative d'envoi de SMS
+Template de SMS trouvé pour le statut_id 9
+Message après remplacement des variables : tet, votre test est prêt ! Il vous attend pour retrouver une vie normale. 🥳
+🧾 Suivi : http:/...
+Tentative d'envoi de SMS à 33782962906
+Résultat de l'envoi du SMS: 
+SMS enregistré dans reparation_sms: ID=470
+Erreur lors du logging (ignorée): SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u139954273_cannesphones.logs' doesn't exist
+Réponse finale: {"success":true,"message":"Statut mis \u00e0 jour avec succ\u00e8s","data":{"badge":{"text":"R\u00e9paration Effectu\u00e9e","color":"reparation_effectue"},"sms_sent":false,"sms_message":"\u00c9chec de l'envoi du SMS \u00e0 cannesphones_sample (33782962906): Erreur inconnue","sms_details":false}}
+--- Fin de la requête ---
+

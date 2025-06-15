@@ -19,7 +19,8 @@ $reparation_id = (int)$_GET['id'];
 if (isset($_POST['statut'])) {
     try {
         // Récupérer le statut actuel
-        $stmt = $pdo->prepare("SELECT statut FROM reparations WHERE id = ?");
+        $shop_pdo = getShopDBConnection();
+$stmt = $shop_pdo->prepare("SELECT statut FROM reparations WHERE id = ?");
         $stmt->execute([$reparation_id]);
         $reparation = $stmt->fetch(PDO::FETCH_ASSOC);
         
@@ -32,7 +33,7 @@ if (isset($_POST['statut'])) {
         $nouveau_statut = $_POST['statut'];
         
         // Obtenir l'ID du statut et la catégorie
-        $stmt = $pdo->prepare("SELECT id, categorie_id FROM statuts WHERE code = ?");
+        $stmt = $shop_pdo->prepare("SELECT id, categorie_id FROM statuts WHERE code = ?");
         $stmt->execute([$nouveau_statut]);
         $statut_info = $stmt->fetch(PDO::FETCH_ASSOC);
         
@@ -45,7 +46,7 @@ if (isset($_POST['statut'])) {
         $statut_categorie = $statut_info['categorie_id'];
         
         // Mettre à jour le statut
-        $stmt = $pdo->prepare("
+        $stmt = $shop_pdo->prepare("
             UPDATE reparations 
             SET statut = ?, 
                 statut_id = ?, 
@@ -65,7 +66,7 @@ if (isset($_POST['statut'])) {
         
         if ($result) {
             // Enregistrer le log
-            $stmt = $pdo->prepare("
+            $stmt = $shop_pdo->prepare("
                 INSERT INTO reparation_logs 
                 (reparation_id, employe_id, action_type, statut_avant, statut_apres, details) 
                 VALUES (?, ?, 'changement_statut', ?, ?, 'Changement de statut')
@@ -91,7 +92,7 @@ if (isset($_POST['statut'])) {
 
 // Récupérer les informations de la réparation
 try {
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         SELECT r.*, 
                c.nom as client_nom, 
                c.prenom as client_prenom,
@@ -112,7 +113,7 @@ try {
     }
     
     // Récupérer tous les statuts
-    $stmt = $pdo->query("
+    $stmt = $shop_pdo->query("
         SELECT s.*, sc.nom as categorie_nom, sc.couleur
         FROM statuts s
         JOIN statut_categories sc ON s.categorie_id = sc.id

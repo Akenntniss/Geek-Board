@@ -15,7 +15,7 @@ $commande_id = intval($_GET['id']);
 
 try {
     // Récupérer les informations de la commande
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         SELECT cf.*, f.nom as fournisseur_nom, f.email as fournisseur_email, 
                f.telephone as fournisseur_telephone, f.adresse as fournisseur_adresse,
                u.nom as createur_nom
@@ -33,7 +33,7 @@ try {
     }
     
     // Récupérer les lignes de la commande
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         SELECT lcf.*, p.nom as produit_nom, p.reference as produit_reference
         FROM lignes_commande_fournisseur lcf 
         JOIN produits p ON lcf.produit_id = p.id 

@@ -24,7 +24,7 @@ $colis_id = (int)$_GET['id'];
 
 try {
     // Récupérer les informations du colis
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         SELECT c.*, COUNT(r.id) as nombre_produits
         FROM colis_retour c
         LEFT JOIN retours r ON c.id = r.colis_id
@@ -43,7 +43,7 @@ try {
     }
     
     // Récupérer les produits associés au colis
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         SELECT r.*, s.name as produit_nom, s.barcode
         FROM retours r
         JOIN stock s ON r.produit_id = s.id

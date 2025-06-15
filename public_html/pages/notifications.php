@@ -1,5 +1,7 @@
 <?php
+require_once __DIR__ . '/../config/database.php';
 // Inclure les fonctions de notification
+$shop_pdo = getShopDBConnection();
 require_once 'includes/notification_functions.php';
 
 // Vérifier si l'utilisateur est connecté
@@ -62,12 +64,12 @@ switch ($filter) {
         $total_notifications = count_unread_notifications($user_id);
         break;
     case 'read':
-        $stmt = $db->prepare("SELECT COUNT(*) FROM notifications WHERE user_id = ? AND status = 'read'");
+        $stmt = $shop_pdo->prepare("SELECT COUNT(*) FROM notifications WHERE user_id = ? AND status = 'read'");
         $stmt->execute([$user_id]);
         $total_notifications = $stmt->fetchColumn();
         break;
     default:
-        $stmt = $db->prepare("SELECT COUNT(*) FROM notifications WHERE user_id = ?");
+        $stmt = $shop_pdo->prepare("SELECT COUNT(*) FROM notifications WHERE user_id = ?");
         $stmt->execute([$user_id]);
         $total_notifications = $stmt->fetchColumn();
 }
@@ -521,7 +523,7 @@ if (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin') {
     echo '<h6>Statistiques globales</h6>';
     
     // Récupérer les statistiques globales
-    $stmt = $db->prepare("
+    $stmt = $shop_pdo->prepare("
         SELECT 
             COUNT(*) as total,
             SUM(CASE WHEN status = 'new' THEN 1 ELSE 0 END) as unread,
@@ -532,7 +534,7 @@ if (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin') {
     $global_stats = $stmt->fetch(PDO::FETCH_ASSOC);
     
     // Récupérer le nombre d'utilisateurs avec des notifications
-    $stmt = $db->prepare("
+    $stmt = $shop_pdo->prepare("
         SELECT COUNT(DISTINCT user_id) 
         FROM notifications
     ");

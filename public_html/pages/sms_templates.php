@@ -35,7 +35,8 @@ if (isset($_POST['action'])) {
             try {
                 // Vérifier si un autre template est associé au même statut (sauf celui en cours d'édition)
                 if ($statut_id) {
-                    $check_stmt = $pdo->prepare("SELECT id FROM sms_templates WHERE statut_id = ? AND id != ?");
+                    $shop_pdo = getShopDBConnection();
+$check_stmt = $shop_pdo->prepare("SELECT id FROM sms_templates WHERE statut_id = ? AND id != ?");
                     $check_stmt->execute([$statut_id, $template_id]);
                     if ($check_stmt->rowCount() > 0) {
                         set_message("Un autre modèle est déjà associé à ce statut. Veuillez choisir un statut différent.", "danger");
@@ -47,12 +48,12 @@ if (isset($_POST['action'])) {
                 // Ajout ou modification
                 if ($template_id > 0) {
                     // Modification
-                    $stmt = $pdo->prepare("UPDATE sms_templates SET nom = ?, contenu = ?, statut_id = ?, est_actif = ? WHERE id = ?");
+                    $stmt = $shop_pdo->prepare("UPDATE sms_templates SET nom = ?, contenu = ?, statut_id = ?, est_actif = ? WHERE id = ?");
                     $stmt->execute([$nom, $contenu, $statut_id, $est_actif, $template_id]);
                     set_message("Modèle de SMS mis à jour avec succès.", "success");
                 } else {
                     // Ajout
-                    $stmt = $pdo->prepare("INSERT INTO sms_templates (nom, contenu, statut_id, est_actif) VALUES (?, ?, ?, ?)");
+                    $stmt = $shop_pdo->prepare("INSERT INTO sms_templates (nom, contenu, statut_id, est_actif) VALUES (?, ?, ?, ?)");
                     $stmt->execute([$nom, $contenu, $statut_id, $est_actif]);
                     set_message("Modèle de SMS ajouté avec succès.", "success");
                 }
@@ -68,7 +69,7 @@ if (isset($_POST['action'])) {
     if ($action === 'delete_template' && isset($_POST['template_id'])) {
         $template_id = (int)$_POST['template_id'];
         try {
-            $stmt = $pdo->prepare("DELETE FROM sms_templates WHERE id = ?");
+            $stmt = $shop_pdo->prepare("DELETE FROM sms_templates WHERE id = ?");
             $stmt->execute([$template_id]);
             set_message("Modèle de SMS supprimé avec succès.", "success");
         } catch (PDOException $e) {
@@ -85,17 +86,17 @@ if (isset($_POST['action'])) {
         
         // Ajout de logs détaillés pour débogage
         error_log("Toggle SMS template - Request data: " . print_r($_POST, true));
-        error_log("Template ID: " . $template_id . ", État actuel dans la BDD avant mise à jour: " . getTemplateCurrentState($pdo, $template_id));
+        error_log("Template ID: " . $template_id . ", État actuel dans la BDD avant mise à jour: " . getTemplateCurrentState($shop_pdo, $template_id));
         error_log("Nouvel état demandé: " . $est_actif);
         
         try {
-            $stmt = $pdo->prepare("UPDATE sms_templates SET est_actif = ? WHERE id = ?");
+            $stmt = $shop_pdo->prepare("UPDATE sms_templates SET est_actif = ? WHERE id = ?");
             $stmt->execute([$est_actif, $template_id]);
             $rowCount = $stmt->rowCount();
             error_log("Nombre de lignes affectées par la mise à jour: " . $rowCount);
             
             // Vérifier l'état après la mise à jour
-            error_log("État après mise à jour: " . getTemplateCurrentState($pdo, $template_id));
+            error_log("État après mise à jour: " . getTemplateCurrentState($shop_pdo, $template_id));
             
             set_message("Statut du modèle mis à jour avec succès.", "success");
         } catch (PDOException $e) {
@@ -109,7 +110,7 @@ if (isset($_POST['action'])) {
 
 // Récupération des modèles de SMS
 try {
-    $stmt = $pdo->query("
+    $stmt = $shop_pdo->query("
         SELECT t.*, s.nom as statut_nom 
         FROM sms_templates t
         LEFT JOIN statuts s ON t.statut_id = s.id
@@ -123,7 +124,7 @@ try {
 
 // Récupération des statuts disponibles
 try {
-    $stmt = $pdo->query("
+    $stmt = $shop_pdo->query("
         SELECT s.id, s.nom, s.code, c.nom as categorie_nom
         FROM statuts s
         JOIN statut_categories c ON s.categorie_id = c.id
@@ -138,7 +139,7 @@ try {
 
 // Récupération des variables disponibles
 try {
-    $stmt = $pdo->query("SELECT * FROM sms_template_variables ORDER BY nom");
+    $stmt = $shop_pdo->query("SELECT * FROM sms_template_variables ORDER BY nom");
     $variables = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
     $variables = [];
@@ -150,7 +151,7 @@ $template_to_edit = null;
 if (isset($_GET['edit']) && (int)$_GET['edit'] > 0) {
     $template_id = (int)$_GET['edit'];
     try {
-        $stmt = $pdo->prepare("SELECT * FROM sms_templates WHERE id = ?");
+        $stmt = $shop_pdo->prepare("SELECT * FROM sms_templates WHERE id = ?");
         $stmt->execute([$template_id]);
         $template_to_edit = $stmt->fetch(PDO::FETCH_ASSOC);
     } catch (PDOException $e) {
@@ -159,9 +160,9 @@ if (isset($_GET['edit']) && (int)$_GET['edit'] > 0) {
 }
 
 // Fonction d'aide pour obtenir l'état actuel d'un template
-function getTemplateCurrentState($pdo, $template_id) {
+function getTemplateCurrentState($shop_pdo, $template_id) {
     try {
-        $stmt = $pdo->prepare("SELECT est_actif FROM sms_templates WHERE id = ?");
+        $stmt = $shop_pdo->prepare("SELECT est_actif FROM sms_templates WHERE id = ?");
         $stmt->execute([$template_id]);
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         return $result ? $result['est_actif'] : 'non trouvé';

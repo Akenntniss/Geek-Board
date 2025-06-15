@@ -13,11 +13,14 @@ if (!isset($_POST['partenaire_id']) || !isset($_POST['type']) || !isset($_POST['
     die(json_encode(['success' => false, 'message' => 'Données manquantes']));
 }
 
+// Obtenir la connexion à la base de données du magasin
+$shop_pdo = getShopDBConnection();
+
 try {
-    $pdo->beginTransaction();
+    $shop_pdo->beginTransaction();
 
     // Insérer la transaction
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         INSERT INTO transactions_partenaires 
         (partenaire_id, type, montant, description, reference_document) 
         VALUES (?, ?, ?, ?, ?)
@@ -31,7 +34,7 @@ try {
         $_POST['reference_document'] ?? null
     ]);
 
-    $transaction_id = $pdo->lastInsertId();
+    $transaction_id = $shop_pdo->lastInsertId();
 
     // Mettre à jour le solde du partenaire
     $montant = floatval($_POST['montant']);
@@ -40,7 +43,7 @@ try {
     }
 
     // Récupérer l'ancien solde ou créer une nouvelle entrée
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         SELECT solde_actuel 
         FROM soldes_partenaires 
         WHERE partenaire_id = ?
@@ -50,7 +53,7 @@ try {
 
     if ($ancien_solde === false) {
         // Créer une nouvelle entrée
-        $stmt = $pdo->prepare("
+        $stmt = $shop_pdo->prepare("
             INSERT INTO soldes_partenaires (partenaire_id, solde_actuel)
             VALUES (?, ?)
         ");
@@ -58,7 +61,7 @@ try {
         $ancien_solde = 0;
     } else {
         // Mettre à jour le solde existant
-        $stmt = $pdo->prepare("
+        $stmt = $shop_pdo->prepare("
             UPDATE soldes_partenaires 
             SET solde_actuel = solde_actuel + ?,
                 derniere_mise_a_jour = CURRENT_TIMESTAMP
@@ -69,7 +72,7 @@ try {
 
     // Enregistrer l'historique
     $nouveau_solde = $ancien_solde + $montant;
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         INSERT INTO historique_soldes 
         (partenaire_id, ancien_solde, nouveau_solde, transaction_id)
         VALUES (?, ?, ?, ?)
@@ -81,11 +84,11 @@ try {
         $transaction_id
     ]);
 
-    $pdo->commit();
+    $shop_pdo->commit();
     echo json_encode(['success' => true]);
 
 } catch (Exception $e) {
-    $pdo->rollBack();
+    $shop_pdo->rollBack();
     echo json_encode([
         'success' => false, 
         'message' => 'Erreur lors de l\'enregistrement: ' . $e->getMessage()

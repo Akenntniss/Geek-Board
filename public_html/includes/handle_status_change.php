@@ -17,7 +17,7 @@ if (!defined('BASE_PATH')) {
  * @return array Résultat du traitement
  */
 function handle_status_change($reparation_id, $nouveau_statut, $ancien_statut = '') {
-    global $pdo;
+    $shop_pdo = getShopDBConnection();
     
     // Initialiser le résultat
     $result = [
@@ -31,7 +31,7 @@ function handle_status_change($reparation_id, $nouveau_statut, $ancien_statut = 
     
     try {
         // 1. Récupérer les informations sur le statut
-        $stmt = $pdo->prepare("
+$stmt = $shop_pdo->prepare("
             SELECT id 
             FROM statuts 
             WHERE code = ?
@@ -49,7 +49,7 @@ function handle_status_change($reparation_id, $nouveau_statut, $ancien_statut = 
         error_log("Statut ID trouvé: $statut_id");
         
         // 2. Vérifier s'il existe un modèle de SMS pour ce statut
-        $stmt = $pdo->prepare("
+        $stmt = $shop_pdo->prepare("
             SELECT id, nom, contenu 
             FROM sms_templates 
             WHERE statut_id = ? AND est_actif = 1
@@ -68,7 +68,7 @@ function handle_status_change($reparation_id, $nouveau_statut, $ancien_statut = 
         error_log("Modèle de SMS trouvé: ID=" . $template['id'] . ", Nom=" . $template['nom']);
         
         // 3. Récupérer les informations de la réparation et du client
-        $stmt = $pdo->prepare("
+        $stmt = $shop_pdo->prepare("
             SELECT r.*, c.nom as client_nom, c.prenom as client_prenom, c.telephone as client_telephone, c.email as client_email 
             FROM reparations r
             JOIN clients c ON r.client_id = c.id
@@ -138,7 +138,7 @@ function handle_status_change($reparation_id, $nouveau_statut, $ancien_statut = 
                 error_log("SMS envoyé avec succès, enregistrement dans reparation_sms");
                 
                 // Enregistrer l'envoi du SMS dans la base de données
-                $stmt = $pdo->prepare("
+                $stmt = $shop_pdo->prepare("
                     INSERT INTO reparation_sms (reparation_id, template_id, telephone, message, date_envoi, statut_id)
                     VALUES (?, ?, ?, ?, NOW(), ?)
                 ");
@@ -175,11 +175,11 @@ function handle_status_change($reparation_id, $nouveau_statut, $ancien_statut = 
  * Crée une table pour stocker l'historique des SMS envoyés liés aux réparations si elle n'existe pas
  */
 function create_reparation_sms_table() {
-    global $pdo;
+    $shop_pdo = getShopDBConnection();
     
     try {
         // Table reparation_sms
-        $pdo->exec("
+        $shop_pdo->exec("
             CREATE TABLE IF NOT EXISTS `reparation_sms` (
               `id` INT AUTO_INCREMENT PRIMARY KEY,
               `reparation_id` INT NOT NULL,
@@ -202,7 +202,7 @@ function create_reparation_sms_table() {
         ");
         
         // Table sms_logs pour le débogage
-        $pdo->exec("
+        $shop_pdo->exec("
             CREATE TABLE IF NOT EXISTS `sms_logs` (
               `id` INT AUTO_INCREMENT PRIMARY KEY,
               `recipient` VARCHAR(20) NOT NULL,

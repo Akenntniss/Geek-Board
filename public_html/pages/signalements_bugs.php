@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/../config/database.php';
 // Vérification de l'authentification
 if (!isset($_SESSION['user_id'])) {
     header('Location: /pages/login.php');
@@ -13,11 +14,9 @@ if (!isset($conn) || $conn === null) {
     $username = 'u139954273_Vscodetest';
     $password = 'Maman01#';
     
-    $conn = new mysqli($host, $username, $password, $db_name);
+    $shop_pdo = getShopDBConnection();
     
-    if ($conn->connect_error) {
-        die("Erreur de connexion à la base de données: " . $conn->connect_error);
-    }
+    
 }
 
 // Récupération des signalements de bugs depuis la base de données
@@ -25,7 +24,7 @@ $query = "SELECT br.*, u.nom, u.prenom
           FROM bug_reports br
           LEFT JOIN users u ON br.user_id = u.id 
           ORDER BY br.date_creation DESC";
-$result = $conn->query($query);
+$result = $shop_pdo->query($query);
 ?>
 
 <div class="container-fluid">
@@ -66,8 +65,8 @@ $result = $conn->query($query);
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php if ($result && $result->num_rows > 0): ?>
-                                    <?php while($row = $result->fetch_assoc()): ?>
+                                <?php if ($result && $stmt->rowCount() > 0): ?>
+                                    <?php while($row = $stmt->fetch(PDO::FETCH_ASSOC)): ?>
                                         <tr class="bug-row" data-status="<?php echo $row['status']; ?>">
                                             <td>#<?php echo $row['id']; ?></td>
                                             <td>

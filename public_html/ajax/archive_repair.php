@@ -43,7 +43,7 @@ try {
     }
 
     // Mettre à jour le statut d'archive de la réparation
-    $stmt = $pdo->prepare("UPDATE reparations SET archive = 'OUI' WHERE id = ?");
+    $stmt = $shop_pdo->prepare("UPDATE reparations SET archive = 'OUI' WHERE id = ?");
     
     if (!$stmt->execute([$reparation_id])) {
         $error = $stmt->errorInfo();

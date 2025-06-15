@@ -14,7 +14,7 @@ header('Content-Type: application/json');
 
 try {
     // Test de base de la connexion - requête simple
-    $stmt = $pdo->prepare("SELECT 1");
+    $stmt = $shop_pdo->prepare("SELECT 1");
     $stmt->execute();
     
     // Si nous arrivons ici, la connexion fonctionne

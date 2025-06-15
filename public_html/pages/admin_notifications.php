@@ -16,17 +16,14 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
 
 // Inclure les fichiers nécessaires
 require_once __DIR__ . '/../config/database.php';
+
+$shop_pdo = getShopDBConnection();
 require_once __DIR__ . '/../includes/functions.php';
 require_once __DIR__ . '/../includes/PushNotifications.php';
 
 // Initialiser la connexion à la base de données
 try {
-    $pdo = new PDO(
-        "mysql:host=" . DB_HOST . ";port=" . DB_PORT . ";dbname=" . DB_NAME . ";charset=utf8mb4",
-        DB_USER,
-        DB_PASS,
-        [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
-    );
+    $shop_pdo = getShopDBConnection();
 } catch (PDOException $e) {
     die("Erreur de connexion à la base de données: " . $e->getMessage());
 }
@@ -154,15 +151,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $scheduledNotifications = $pushNotifications->getScheduledNotifications();
 
 // Récupérer les types de notifications
-$stmt = $pdo->query("SELECT * FROM notification_types ORDER BY description");
+$stmt = $shop_pdo->query("SELECT * FROM notification_types ORDER BY description");
 $notificationTypes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // Récupérer la liste des utilisateurs
-$stmt = $pdo->query("SELECT id, full_name, email, role FROM users ORDER BY full_name");
+$stmt = $shop_pdo->query("SELECT id, full_name, email, role FROM users ORDER BY full_name");
 $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // Récupérer les rôles disponibles
-$stmt = $pdo->query("SELECT DISTINCT role FROM users WHERE role IS NOT NULL ORDER BY role");
+$stmt = $shop_pdo->query("SELECT DISTINCT role FROM users WHERE role IS NOT NULL ORDER BY role");
 $roles = $stmt->fetchAll(PDO::FETCH_COLUMN);
 ?>
 

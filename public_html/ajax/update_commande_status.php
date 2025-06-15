@@ -1,6 +1,8 @@
 <?php
 // Démarrage de la session
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 // Activer la journalisation des erreurs
 ini_set('display_errors', 0);
@@ -23,11 +25,36 @@ error_log('Requête reçue dans update_commande_status.php');
 // Log des informations de session pour debuggage
 error_log("SESSION: " . print_r($_SESSION, true));
 
-// Vérifier si la connexion à la base de données est établie
-if (!isset($pdo) || $pdo === null) {
+// Vérifier et définir shop_id si nécessaire
+if (!isset($_SESSION['shop_id'])) {
+    // Essayer de récupérer shop_id depuis l'URL
+    if (isset($_GET['shop_id'])) {
+        $_SESSION['shop_id'] = $_GET['shop_id'];
+        error_log("shop_id récupéré depuis URL: " . $_SESSION['shop_id']);
+    } 
+    // Essayer de récupérer shop_id depuis les données POST
+    else if (isset($_POST['shop_id'])) {
+        $_SESSION['shop_id'] = $_POST['shop_id'];
+        error_log("shop_id récupéré depuis POST: " . $_SESSION['shop_id']);
+    }
+    // Utiliser une valeur par défaut (magasin principal)
+    else {
+        $_SESSION['shop_id'] = 1; // ID du magasin principal
+        error_log("shop_id défini par défaut: " . $_SESSION['shop_id']);
+    }
+}
+
+// Obtenir la connexion à la base de données du magasin
+try {
+    $shop_pdo = getShopDBConnection();
+    if (!$shop_pdo) {
+        throw new Exception('Connexion à la base de données échouée');
+    }
+    error_log('Connexion à la base de données établie avec succès pour shop_id: ' . $_SESSION['shop_id']);
+} catch (Exception $e) {
     header('Content-Type: application/json');
-    echo json_encode(['success' => false, 'message' => 'Erreur de connexion à la base de données']);
-    error_log('Erreur: connexion à la base de données non établie dans update_commande_status.php');
+    echo json_encode(['success' => false, 'message' => 'Erreur de connexion à la base de données: ' . $e->getMessage()]);
+    error_log('Erreur: connexion à la base de données non établie dans update_commande_status.php - ' . $e->getMessage());
     exit;
 }
 
@@ -51,6 +78,15 @@ if (json_last_error() !== JSON_ERROR_NONE) {
     exit;
 }
 
+// FORCER l'utilisation du shop_id depuis les données JSON
+if (isset($data['shop_id'])) {
+    $_SESSION['shop_id'] = intval($data['shop_id']);
+    error_log("shop_id FORCÉ depuis les données JSON: " . $_SESSION['shop_id']);
+} elseif (!isset($_SESSION['shop_id'])) {
+    $_SESSION['shop_id'] = 1; // Fallback
+    error_log("shop_id défini par défaut: " . $_SESSION['shop_id']);
+}
+
 // Vérifier les données
 if (!isset($data['commande_id']) || !isset($data['new_status'])) {
     header('Content-Type: application/json');
@@ -62,6 +98,12 @@ if (!isset($data['commande_id']) || !isset($data['new_status'])) {
 $commande_id = intval($data['commande_id']);
 $new_status = $data['new_status'];
 error_log("Mise à jour du statut: commande_id=$commande_id, new_status=$new_status");
+
+// DEBUG: Vérifier si la commande existe avant la mise à jour
+$check_stmt = $shop_pdo->prepare("SELECT id, statut FROM commandes_pieces WHERE id = :id");
+$check_stmt->execute([':id' => $commande_id]);
+$existing_commande = $check_stmt->fetch(PDO::FETCH_ASSOC);
+error_log("Commande existante: " . print_r($existing_commande, true));
 
 // Vérifier que le statut est valide
 $valid_statuses = ['en_attente', 'commande', 'recue', 'annulee', 'urgent', 'utilise', 'a_retourner'];
@@ -76,7 +118,7 @@ if (!in_array($new_status, $valid_statuses)) {
 try {
     // Mettre à jour le statut de la commande
     error_log("Préparation de la requête UPDATE pour commande_id=$commande_id et statut=$new_status");
-    $stmt = $pdo->prepare("UPDATE commandes_pieces SET statut = :statut, date_modification = NOW() WHERE id = :id");
+    $stmt = $shop_pdo->prepare("UPDATE commandes_pieces SET statut = :statut, date_modification = NOW() WHERE id = :id");
     $result = $stmt->execute([
         ':statut' => $new_status,
         ':id' => $commande_id
@@ -87,13 +129,13 @@ try {
     if ($result && $stmt->rowCount() > 0) {
         // Vérifier si la table historique_statuts existe
         try {
-            $stmt_check = $pdo->prepare("SHOW TABLES LIKE 'historique_statuts'");
+            $stmt_check = $shop_pdo->prepare("SHOW TABLES LIKE 'historique_statuts'");
             $stmt_check->execute();
             $table_exists = $stmt_check->rowCount() > 0;
             
             // Si la table existe, enregistrer l'historique
             if ($table_exists) {
-                $stmt_historique = $pdo->prepare("
+                $stmt_historique = $shop_pdo->prepare("
                     INSERT INTO historique_statuts 
                     (commande_id, statut_ancien, statut_nouveau, user_id, date_creation) 
                     VALUES 

@@ -14,19 +14,19 @@ header('Content-Type: application/json');
 
 try {
     // Vérifier la connexion à la base de données
-    $stmt = $pdo->prepare("SELECT VERSION() AS version");
+    $stmt = $shop_pdo->prepare("SELECT VERSION() AS version");
     $stmt->execute();
     $version = $stmt->fetch(PDO::FETCH_ASSOC);
     
     // Récupérer la liste des tables
-    $stmt = $pdo->prepare("SHOW TABLES");
+    $stmt = $shop_pdo->prepare("SHOW TABLES");
     $stmt->execute();
     $tables = $stmt->fetchAll(PDO::FETCH_COLUMN);
     
     // Récupérer la structure de la table 'clients' si elle existe
     $clientsStructure = [];
     if (in_array('clients', $tables)) {
-        $stmt = $pdo->prepare("DESCRIBE clients");
+        $stmt = $shop_pdo->prepare("DESCRIBE clients");
         $stmt->execute();
         $clientsStructure = $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -34,7 +34,7 @@ try {
     // Récupérer la structure de la table 'reparations' si elle existe
     $reparationsStructure = [];
     if (in_array('reparations', $tables)) {
-        $stmt = $pdo->prepare("DESCRIBE reparations");
+        $stmt = $shop_pdo->prepare("DESCRIBE reparations");
         $stmt->execute();
         $reparationsStructure = $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -42,7 +42,7 @@ try {
     // Vérifier si un client avec ID 23
     $clientExists = false;
     if (in_array('clients', $tables)) {
-        $stmt = $pdo->prepare("SELECT COUNT(*) AS count FROM clients WHERE id = 23");
+        $stmt = $shop_pdo->prepare("SELECT COUNT(*) AS count FROM clients WHERE id = 23");
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         $clientExists = $result['count'] > 0;

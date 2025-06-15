@@ -46,22 +46,12 @@ if (!isset($_GET['id']) || empty($_GET['id'])) {
     exit;
 }
 
-// Paramètres de connexion à la base de données
-$db_host = 'srv931.hstgr.io';
-$db_name = 'u139954273_Vscodetest';
-$db_user = 'u139954273_Vscodetest';
-$db_pass = 'Maman01#';
-$db_port = 3306;
+// Inclure les fichiers nécessaires
+require_once '../includes/db.php';
+require_once '../includes/functions.php';
 
-// Connexion à la base de données
-try {
-    $pdo = new PDO("mysql:host=$db_host;port=$db_port;dbname=$db_name;charset=utf8mb4", $db_user, $db_pass);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    header('Content-Type: application/json');
-    echo json_encode(['success' => false, 'message' => 'Erreur de connexion à la base de données: ' . $e->getMessage()]);
-    exit;
-}
+// Obtenir la connexion à la base de données du magasin
+$shop_pdo = getShopDBConnection();
 
 // Création d'un fichier de log dans un dossier accessible
 $log_file = '../logs/sms_debug.log';
@@ -86,7 +76,7 @@ try {
     
     // Ajoutons une requête pour vérifier la valeur de description directement
     $check_query = "SELECT id, description FROM taches WHERE id = ?";
-    $check_stmt = $pdo->prepare($check_query);
+    $check_stmt = $shop_pdo->prepare($check_query);
     $check_stmt->execute([$tache_id]);
     $check_result = $check_stmt->fetch(PDO::FETCH_ASSOC);
     
@@ -96,7 +86,7 @@ try {
         error_log("GET_TACHE_DETAILS - Vérification directe - Tâche non trouvée");
     }
     
-    $stmt = $pdo->prepare($query);
+    $stmt = $shop_pdo->prepare($query);
     $stmt->execute([$tache_id]);
     $tache = $stmt->fetch(PDO::FETCH_ASSOC);
     
@@ -120,7 +110,7 @@ try {
     }
     
     // Récupération des commentaires
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         SELECT c.*, u.full_name as user_nom
         FROM commentaires_tache c
         JOIN users u ON c.user_id = u.id

@@ -35,7 +35,7 @@ if (empty($reparation_id) || empty($user_id)) {
 
 try {
     // Vérifier si la réparation existe
-    $stmt = $pdo->prepare("SELECT statut FROM reparations WHERE id = ?");
+    $stmt = $shop_pdo->prepare("SELECT statut FROM reparations WHERE id = ?");
     $stmt->execute([$reparation_id]);
     $reparation = $stmt->fetch(PDO::FETCH_ASSOC);
     
@@ -57,7 +57,7 @@ try {
     }
     
     // Vérifier si l'employé a déjà commencé cette réparation
-    $stmt = $pdo->prepare("SELECT id FROM reparation_attributions WHERE reparation_id = ? AND employe_id = ? AND date_fin IS NULL");
+    $stmt = $shop_pdo->prepare("SELECT id FROM reparation_attributions WHERE reparation_id = ? AND employe_id = ? AND date_fin IS NULL");
     $stmt->execute([$reparation_id, $user_id]);
     if ($stmt->rowCount() > 0) {
         echo json_encode([
@@ -68,20 +68,20 @@ try {
     }
     
     // Mise à jour du statut de la réparation
-    $stmt = $pdo->prepare("UPDATE reparations SET statut = ?, employe_id = ? WHERE id = ?");
+    $stmt = $shop_pdo->prepare("UPDATE reparations SET statut = ?, employe_id = ? WHERE id = ?");
     $stmt->execute([$statut_apres, $user_id, $reparation_id]);
     
     // Mise à jour de l'utilisateur
-    $stmt = $pdo->prepare("UPDATE users SET techbusy = 1, active_repair_id = ? WHERE id = ?");
+    $stmt = $shop_pdo->prepare("UPDATE users SET techbusy = 1, active_repair_id = ? WHERE id = ?");
     $stmt->execute([$reparation_id, $user_id]);
     
     // Créer l'attribution
-    $stmt = $pdo->prepare("INSERT INTO reparation_attributions (reparation_id, employe_id, statut_avant, est_principal) VALUES (?, ?, ?, ?)");
+    $stmt = $shop_pdo->prepare("INSERT INTO reparation_attributions (reparation_id, employe_id, statut_avant, est_principal) VALUES (?, ?, ?, ?)");
     $result = $stmt->execute([$reparation_id, $user_id, $statut_avant, 1]);
     
     if ($result) {
         // Enregistrer l'action dans les logs
-        $stmt = $pdo->prepare("INSERT INTO reparation_logs (reparation_id, employe_id, action_type, statut_avant, statut_apres, details) VALUES (?, ?, ?, ?, ?, ?)");
+        $stmt = $shop_pdo->prepare("INSERT INTO reparation_logs (reparation_id, employe_id, action_type, statut_avant, statut_apres, details) VALUES (?, ?, ?, ?, ?, ?)");
         $stmt->execute([
             $reparation_id, 
             $user_id, 

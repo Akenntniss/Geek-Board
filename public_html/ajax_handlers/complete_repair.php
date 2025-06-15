@@ -23,12 +23,15 @@ $user_id = $_SESSION['user_id'];
 $repair_id = intval($_POST['repair_id']);
 $timestamp = date('Y-m-d H:i:s');
 
+// Obtenir la connexion à la base de données du magasin
+$shop_pdo = getShopDBConnection();
+
 try {
     // Commencer une transaction
-    $pdo->beginTransaction();
+    $shop_pdo->beginTransaction();
 
     // Vérifier si la réparation appartient bien à l'utilisateur
-    $stmt = $pdo->prepare("SELECT employe_id FROM reparations WHERE id = ?");
+    $stmt = $shop_pdo->prepare("SELECT employe_id FROM reparations WHERE id = ?");
     $stmt->execute([$repair_id]);
     $repair = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -37,19 +40,19 @@ try {
     }
 
     // Mettre à jour le statut de la réparation à "reparation_effectue"
-    $stmt = $pdo->prepare("UPDATE reparations SET statut = 'reparation_effectue', date_derniere_modification = ? WHERE id = ?");
+    $stmt = $shop_pdo->prepare("UPDATE reparations SET statut = 'reparation_effectue', date_derniere_modification = ? WHERE id = ?");
     $stmt->execute([$timestamp, $repair_id]);
 
     // Mettre à jour le statut de l'utilisateur
-    $stmt = $pdo->prepare("UPDATE users SET techbusy = 0, active_repair_id = NULL WHERE id = ? AND active_repair_id = ?");
+    $stmt = $shop_pdo->prepare("UPDATE users SET techbusy = 0, active_repair_id = NULL WHERE id = ? AND active_repair_id = ?");
     $stmt->execute([$user_id, $repair_id]);
 
     // Journaliser l'action
-    $stmt = $pdo->prepare("INSERT INTO journal_actions (user_id, action_type, target_id, details, date_action) VALUES (?, 'complete_repair', ?, 'Réparation terminée', ?)");
+    $stmt = $shop_pdo->prepare("INSERT INTO journal_actions (user_id, action_type, target_id, details, date_action) VALUES (?, 'complete_repair', ?, 'Réparation terminée', ?)");
     $stmt->execute([$user_id, $repair_id, $timestamp]);
 
     // Valider la transaction
-    $pdo->commit();
+    $shop_pdo->commit();
 
     // Réponse réussie
     $response = [
@@ -59,8 +62,8 @@ try {
 
 } catch (Exception $e) {
     // Annuler la transaction en cas d'erreur
-    if ($pdo->inTransaction()) {
-        $pdo->rollBack();
+    if ($shop_pdo->inTransaction()) {
+        $shop_pdo->rollBack();
     }
     
     // Réponse d'erreur

@@ -1,0 +1,219 @@
+[2025-06-15 19:15:14] Début de traitement update_batch_status.php
+[2025-06-15 19:15:14] SESSION: {"pwa_mode":false,"shop_id":"4"}
+[2025-06-15 19:15:14] POST: {"repair_ids":["755"],"new_status":"restitue","send_sms":"1","shop_id":"4"}
+[2025-06-15 19:15:14] Paramètres reçus: repair_ids=["755"], new_status=restitue, send_sms=true
+[2025-06-15 19:15:14] Tentative de connexion à la base de données
+[2025-06-15 19:15:14] Connexion via getShopDBConnection
+[2025-06-15 19:15:14] Tentative de récupération du modèle SMS pour le statut: restitue
+[2025-06-15 19:15:15] ID du statut trouvé: 11
+[2025-06-15 19:15:15] Modèle SMS: trouvé (ID: 11)
+[2025-06-15 19:15:15] Contenu du modèle: 🎉 [CLIENT_PRENOM],
+Ton [APPAREIL_MODELE] est de retour à la maison ! On espère qu’il est content 🤓
+💬 Laisse-nous un petit avis !
+⭐ https://g.page/r/Ce-HHwKZjezIEB0/review
+🏠 Maison du Geek
+📞 08 95 79 59 33
+
+[2025-06-15 19:15:15] Traitement de la réparation ID: 755
+[2025-06-15 19:15:15] Statut actuel: reparation_effectue, nouveau statut: restitue
+[2025-06-15 19:15:15] Réparation ID 755 mise à jour avec succès
+[2025-06-15 19:15:15] Option SMS activée pour réparation ID 755
+[2025-06-15 19:15:15] Message préparé: 🎉 saber,
+Ton test est de retour à la maison ! On espère qu’il est content 🤓
+💬 Laisse-nous un petit avis !
+⭐ https://g.page/r/Ce-HHwKZjezIEB0/review
+🏠 Maison du Geek
+📞 08 95 79 59 33
+
+[2025-06-15 19:15:15] Tentative d'envoi SMS à: 33782962906
+[2025-06-15 19:15:16] Résultat envoi SMS: {"success":true,"message":"SMS ajout\u00e9 \u00e0 la queue d'envoi","data":{"message_id":186,"phone_id":"8ea244a4-0a0f-4b2c-9a51-e5dc251ca8af","sim_id":44,"status":"pending","sim_info":{"carrier_name":"Free","phone_number":"+33745520054","is_default":true,"messages_sent":120,"monthly_limit":30000}},"http_code":201}
+[2025-06-15 19:15:16] SMS envoyé avec succès via API Gateway
+[2025-06-15 19:19:36] Début de traitement update_batch_status.php
+[2025-06-15 19:19:36] SESSION: {"pwa_mode":false,"shop_id":"4"}
+[2025-06-15 19:19:36] POST: {"repair_ids":["755"],"new_status":"restitue","send_sms":"1","shop_id":"4"}
+[2025-06-15 19:19:36] Paramètres reçus: repair_ids=["755"], new_status=restitue, send_sms=true
+[2025-06-15 19:19:36] Tentative de connexion à la base de données
+[2025-06-15 19:19:36] Connexion via getShopDBConnection
+[2025-06-15 19:19:36] Tentative de récupération du modèle SMS pour le statut: restitue
+[2025-06-15 19:19:36] ID du statut trouvé: 11
+[2025-06-15 19:19:37] Modèle SMS: trouvé (ID: 11)
+[2025-06-15 19:19:37] Contenu du modèle: 🎉 [CLIENT_PRENOM],
+Ton [APPAREIL_MODELE] est de retour à la maison ! On espère qu’il est content 🤓
+💬 Laisse-nous un petit avis !
+⭐ https://g.page/r/Ce-HHwKZjezIEB0/review
+🏠 Maison du Geek
+📞 08 95 79 59 33
+
+[2025-06-15 19:19:37] Traitement de la réparation ID: 755
+[2025-06-15 19:19:37] Statut actuel: restitue, nouveau statut: restitue
+[2025-06-15 19:19:37] Réparation ID 755 mise à jour avec succès
+[2025-06-15 19:19:37] Option SMS activée pour réparation ID 755
+[2025-06-15 19:19:37] Message préparé: 🎉 saber,
+Ton test est de retour à la maison ! On espère qu’il est content 🤓
+💬 Laisse-nous un petit avis !
+⭐ https://g.page/r/Ce-HHwKZjezIEB0/review
+🏠 Maison du Geek
+📞 08 95 79 59 33
+
+[2025-06-15 19:19:37] Tentative d'envoi SMS à: 33782962906
+[2025-06-15 19:19:38] Résultat envoi SMS: {"success":true,"message":"SMS ajout\u00e9 \u00e0 la queue d'envoi","data":{"message_id":187,"phone_id":"8ea244a4-0a0f-4b2c-9a51-e5dc251ca8af","sim_id":44,"status":"pending","sim_info":{"carrier_name":"Free","phone_number":"+33745520054","is_default":true,"messages_sent":121,"monthly_limit":30000}},"http_code":201}
+[2025-06-15 19:19:38] SMS envoyé avec succès via API Gateway
+[2025-06-15 19:23:10] Début de traitement update_batch_status.php
+[2025-06-15 19:23:10] SESSION: {"pwa_mode":false,"shop_id":"4"}
+[2025-06-15 19:23:10] POST: {"repair_ids":["755"],"new_status":"restitue","send_sms":"1","shop_id":"4"}
+[2025-06-15 19:23:10] Paramètres reçus: repair_ids=["755"], new_status=restitue, send_sms=true
+[2025-06-15 19:23:10] Tentative de connexion à la base de données
+[2025-06-15 19:23:10] Connexion via getShopDBConnection
+[2025-06-15 19:23:10] Tentative de récupération du modèle SMS pour le statut: restitue
+[2025-06-15 19:23:10] ID du statut trouvé: 11
+[2025-06-15 19:23:11] Modèle SMS: trouvé (ID: 11)
+[2025-06-15 19:23:11] Contenu du modèle: 🎉 [CLIENT_PRENOM],
+Ton [APPAREIL_MODELE] est de retour à la maison ! On espère qu’il est content 🤓
+💬 Laisse-nous un petit avis !
+⭐ https://g.page/r/Ce-HHwKZjezIEB0/review
+🏠 Maison du Geek
+📞 08 95 79 59 33
+
+[2025-06-15 19:23:11] Traitement de la réparation ID: 755
+[2025-06-15 19:23:11] Statut actuel: restitue, nouveau statut: restitue
+[2025-06-15 19:23:11] Réparation ID 755 mise à jour avec succès
+[2025-06-15 19:23:11] Option SMS activée pour réparation ID 755
+[2025-06-15 19:23:11] Message préparé: 🎉 saber,
+Ton test est de retour à la maison ! On espère qu’il est content 🤓
+💬 Laisse-nous un petit avis !
+⭐ https://g.page/r/Ce-HHwKZjezIEB0/review
+🏠 Maison du Geek
+📞 08 95 79 59 33
+
+[2025-06-15 19:23:11] Tentative d'envoi SMS à: 33782962906
+[2025-06-15 19:23:12] Résultat envoi SMS: {"success":true,"message":"SMS ajout\u00e9 \u00e0 la queue d'envoi","data":{"message_id":188,"phone_id":"8ea244a4-0a0f-4b2c-9a51-e5dc251ca8af","sim_id":44,"status":"pending","sim_info":{"carrier_name":"Free","phone_number":"+33745520054","is_default":true,"messages_sent":122,"monthly_limit":30000}},"http_code":201}
+[2025-06-15 19:23:12] SMS envoyé avec succès via API Gateway
+[2025-06-15 19:24:10] Début de traitement update_batch_status.php
+[2025-06-15 19:24:10] SESSION: {"pwa_mode":false,"shop_id":"4"}
+[2025-06-15 19:24:10] POST: {"repair_ids":["754"],"new_status":"restitue","send_sms":"1","shop_id":"4"}
+[2025-06-15 19:24:10] Paramètres reçus: repair_ids=["754"], new_status=restitue, send_sms=true
+[2025-06-15 19:24:10] Tentative de connexion à la base de données
+[2025-06-15 19:24:10] Connexion via getShopDBConnection
+[2025-06-15 19:24:10] Tentative de récupération du modèle SMS pour le statut: restitue
+[2025-06-15 19:24:11] ID du statut trouvé: 11
+[2025-06-15 19:24:11] Modèle SMS: trouvé (ID: 11)
+[2025-06-15 19:24:11] Contenu du modèle: 🎉 [CLIENT_PRENOM],
+Ton [APPAREIL_MODELE] est de retour à la maison ! On espère qu’il est content 🤓
+💬 Laisse-nous un petit avis !
+⭐ https://g.page/r/Ce-HHwKZjezIEB0/review
+🏠 Maison du Geek
+📞 08 95 79 59 33
+
+[2025-06-15 19:24:11] Traitement de la réparation ID: 754
+[2025-06-15 19:24:11] Statut actuel: reparation_effectue, nouveau statut: restitue
+[2025-06-15 19:24:11] Réparation ID 754 mise à jour avec succès
+[2025-06-15 19:24:11] Option SMS activée pour réparation ID 754
+[2025-06-15 19:24:11] Message préparé: 🎉 tet,
+Ton test est de retour à la maison ! On espère qu’il est content 🤓
+💬 Laisse-nous un petit avis !
+⭐ https://g.page/r/Ce-HHwKZjezIEB0/review
+🏠 Maison du Geek
+📞 08 95 79 59 33
+
+[2025-06-15 19:24:11] Tentative d'envoi SMS à: 33782962906
+[2025-06-15 19:24:12] Résultat envoi SMS: {"success":true,"message":"SMS ajout\u00e9 \u00e0 la queue d'envoi","data":{"message_id":189,"phone_id":"8ea244a4-0a0f-4b2c-9a51-e5dc251ca8af","sim_id":44,"status":"pending","sim_info":{"carrier_name":"Free","phone_number":"+33745520054","is_default":true,"messages_sent":123,"monthly_limit":30000}},"http_code":201}
+[2025-06-15 19:24:12] SMS envoyé avec succès via API Gateway
+[2025-06-15 19:27:17] Début de traitement update_batch_status.php
+[2025-06-15 19:27:17] SESSION: {"pwa_mode":false,"shop_id":"4"}
+[2025-06-15 19:27:17] POST: {"repair_ids":["760"],"new_status":"restitue","send_sms":"1","shop_id":"4"}
+[2025-06-15 19:27:17] Paramètres reçus: repair_ids=["760"], new_status=restitue, send_sms=true
+[2025-06-15 19:27:17] Tentative de connexion à la base de données
+[2025-06-15 19:27:17] Connexion via getShopDBConnection
+[2025-06-15 19:27:17] Tentative de récupération du modèle SMS pour le statut: restitue
+[2025-06-15 19:27:17] ID du statut trouvé: 11
+[2025-06-15 19:27:17] Modèle SMS: trouvé (ID: 11)
+[2025-06-15 19:27:17] Contenu du modèle: 🎉 [CLIENT_PRENOM],
+Ton [APPAREIL_MODELE] est de retour à la maison ! On espère qu’il est content 🤓
+💬 Laisse-nous un petit avis !
+⭐ https://g.page/r/Ce-HHwKZjezIEB0/review
+🏠 Maison du Geek
+📞 08 95 79 59 33
+
+[2025-06-15 19:27:17] Traitement de la réparation ID: 760
+[2025-06-15 19:27:18] Statut actuel: reparation_effectue, nouveau statut: restitue
+[2025-06-15 19:27:18] Réparation ID 760 mise à jour avec succès
+[2025-06-15 19:27:18] Option SMS activée pour réparation ID 760
+[2025-06-15 19:27:18] Message préparé: 🎉 55,
+Ton saaa est de retour à la maison ! On espère qu’il est content 🤓
+💬 Laisse-nous un petit avis !
+⭐ https://g.page/r/Ce-HHwKZjezIEB0/review
+🏠 Maison du Geek
+📞 08 95 79 59 33
+
+[2025-06-15 19:27:18] Tentative d'envoi SMS à: 55
+[2025-06-15 19:27:19] Résultat envoi SMS: {"success":true,"message":"SMS ajout\u00e9 \u00e0 la queue d'envoi","data":{"message_id":190,"phone_id":"8ea244a4-0a0f-4b2c-9a51-e5dc251ca8af","sim_id":44,"status":"pending","sim_info":{"carrier_name":"Free","phone_number":"+33745520054","is_default":true,"messages_sent":124,"monthly_limit":30000}},"http_code":201}
+[2025-06-15 19:27:19] SMS envoyé avec succès via API Gateway
+[2025-06-15 19:27:19] Aucune transaction active à annuler
+[2025-06-15 19:27:19] Erreur lors de la mise à jour des statuts par lots: There is no active transaction
+[2025-06-15 19:30:23] Début de traitement update_batch_status.php
+[2025-06-15 19:30:23] SESSION: {"pwa_mode":false,"shop_id":"4"}
+[2025-06-15 19:30:23] POST: {"repair_ids":["760"],"new_status":"annule","send_sms":"1","shop_id":"4"}
+[2025-06-15 19:30:23] Paramètres reçus: repair_ids=["760"], new_status=annule, send_sms=true
+[2025-06-15 19:30:23] Tentative de connexion à la base de données
+[2025-06-15 19:30:24] Connexion via getShopDBConnection
+[2025-06-15 19:30:24] Tentative de récupération du modèle SMS pour le statut: annule
+[2025-06-15 19:30:24] ID du statut trouvé: 13
+[2025-06-15 19:30:24] Modèle SMS: trouvé (ID: 13)
+[2025-06-15 19:30:24] Contenu du modèle: 😔 [CLIENT_PRENOM],
+On a tout tenté pour réparer ton [APPAREIL_MODELE], mais pour raisons techniques, on a dû annuler la réparation.
+🔍 Détails : http://Mdgeek.top/suivi.php?id=[REPARATION_ID]
+📞 Une Question ?  08 95 79 59 33
+🏠 Maison du Geek
+[2025-06-15 19:30:24] Traitement de la réparation ID: 760
+[2025-06-15 19:30:24] Statut actuel: reparation_effectue, nouveau statut: annule
+[2025-06-15 19:30:24] Réparation ID 760 mise à jour avec succès
+[2025-06-15 19:30:24] Option SMS activée pour réparation ID 760
+[2025-06-15 19:30:24] Message préparé: 😔 55,
+On a tout tenté pour réparer ton saaa, mais pour raisons techniques, on a dû annuler la réparation.
+🔍 Détails : http://Mdgeek.top/suivi.php?id=760
+📞 Une Question ?  08 95 79 59 33
+🏠 Maison du Geek
+[2025-06-15 19:30:24] Tentative d'envoi SMS à: 55
+[2025-06-15 19:30:25] Résultat envoi SMS: {"success":true,"message":"SMS ajout\u00e9 \u00e0 la queue d'envoi","data":{"message_id":191,"phone_id":"8ea244a4-0a0f-4b2c-9a51-e5dc251ca8af","sim_id":44,"status":"pending","sim_info":{"carrier_name":"Free","phone_number":"+33745520054","is_default":true,"messages_sent":125,"monthly_limit":30000}},"http_code":201}
+[2025-06-15 19:30:25] SMS envoyé avec succès via API Gateway
+[2025-06-15 19:30:25] Aucune transaction active à annuler
+[2025-06-15 19:30:25] Erreur lors de la mise à jour des statuts par lots: There is no active transaction
+[2025-06-15 19:37:32] Début de traitement update_batch_status.php
+[2025-06-15 19:37:32] SESSION: {"pwa_mode":false,"shop_id":"4"}
+[2025-06-15 19:37:32] POST: {"repair_ids":["758"],"new_status":"restitue","shop_id":"4"}
+[2025-06-15 19:37:32] Paramètres reçus: repair_ids=["758"], new_status=restitue, send_sms=false
+[2025-06-15 19:37:32] Tentative de connexion à la base de données
+[2025-06-15 19:37:33] Connexion via getShopDBConnection
+[2025-06-15 19:37:33] Traitement de la réparation ID: 758
+[2025-06-15 19:37:33] Statut actuel: reparation_effectue, nouveau statut: restitue
+[2025-06-15 19:37:33] Réparation ID 758 mise à jour avec succès
+[2025-06-15 19:37:33] Transaction validée: 1 réparations mises à jour
+[2025-06-15 19:37:33] Aucun SMS à envoyer
+[2025-06-15 19:37:33] Envoi de la réponse de succès: 1 réparation(s) mise(s) à jour avec succès.
+[2025-06-15 19:38:00] Début de traitement update_batch_status.php
+[2025-06-15 19:38:00] SESSION: {"pwa_mode":false,"shop_id":"4"}
+[2025-06-15 19:38:00] POST: {"repair_ids":["758"],"new_status":"restitue","send_sms":"1","shop_id":"4"}
+[2025-06-15 19:38:00] Paramètres reçus: repair_ids=["758"], new_status=restitue, send_sms=true
+[2025-06-15 19:38:00] Tentative de connexion à la base de données
+[2025-06-15 19:38:01] Connexion via getShopDBConnection
+[2025-06-15 19:38:01] Tentative de récupération du modèle SMS pour le statut: restitue
+[2025-06-15 19:38:01] ID du statut trouvé: 11
+[2025-06-15 19:38:01] Modèle SMS: trouvé (ID: 11)
+[2025-06-15 19:38:01] Contenu du modèle: 🎉 [CLIENT_PRENOM],
+Ton [APPAREIL_MODELE] est de retour à la maison ! On espère qu’il est content 🤓
+💬 Laisse-nous un petit avis !
+⭐ https://g.page/r/Ce-HHwKZjezIEB0/review
+🏠 Maison du Geek
+📞 08 95 79 59 33
+
+[2025-06-15 19:38:01] Traitement de la réparation ID: 758
+[2025-06-15 19:38:01] Statut actuel: reparation_effectue, nouveau statut: restitue
+[2025-06-15 19:38:01] Réparation ID 758 mise à jour avec succès
+[2025-06-15 19:38:01] Réparation ID 758 ajoutée à la queue SMS
+[2025-06-15 19:38:01] Transaction validée: 1 réparations mises à jour
+[2025-06-15 19:38:01] Traitement de la queue SMS: 1 SMS à envoyer
+[2025-06-15 19:38:01] Envoi SMS pour réparation 758 à 33234567891
+[2025-06-15 19:38:02] Résultat envoi SMS pour réparation 758: {"success":true,"message":"SMS ajout\u00e9 \u00e0 la queue d'envoi","data":{"message_id":196,"phone_id":"8ea244a4-0a0f-4b2c-9a51-e5dc251ca8af","sim_id":44,"status":"pending","sim_info":{"carrier_name":"Free","phone_number":"+33745520054","is_default":true,"messages_sent":130,"monthly_limit":30000}},"http_code":201}
+[2025-06-15 19:38:02] SMS envoyé avec succès pour réparation 758
+[2025-06-15 19:38:02] Traitement de la queue SMS terminé: 1 SMS envoyés avec succès
+[2025-06-15 19:38:02] Envoi de la réponse de succès: 1 réparation(s) mise(s) à jour avec succès. 1 SMS envoyé(s).

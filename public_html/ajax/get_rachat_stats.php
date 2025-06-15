@@ -19,19 +19,19 @@ $response = [
 
 try {
     // Nombre total de rachats
-    $stmt = $pdo->query("SELECT COUNT(*) as total FROM rachat_appareils");
+    $stmt = $shop_pdo->query("SELECT COUNT(*) as total FROM rachat_appareils");
     $response['total'] = $stmt->fetch(PDO::FETCH_ASSOC)['total'];
 
     // Nombre d'appareils fonctionnels
-    $stmt = $pdo->query("SELECT COUNT(*) as fonctionnels FROM rachat_appareils WHERE fonctionnel = 1");
+    $stmt = $shop_pdo->query("SELECT COUNT(*) as fonctionnels FROM rachat_appareils WHERE fonctionnel = 1");
     $response['fonctionnels'] = $stmt->fetch(PDO::FETCH_ASSOC)['fonctionnels'];
 
     // Nombre d'appareils non fonctionnels
-    $stmt = $pdo->query("SELECT COUNT(*) as non_fonctionnels FROM rachat_appareils WHERE fonctionnel = 0");
+    $stmt = $shop_pdo->query("SELECT COUNT(*) as non_fonctionnels FROM rachat_appareils WHERE fonctionnel = 0");
     $response['non_fonctionnels'] = $stmt->fetch(PDO::FETCH_ASSOC)['non_fonctionnels'];
 
     // Montant total des rachats
-    $stmt = $pdo->query("SELECT SUM(prix) as montant_total FROM rachat_appareils");
+    $stmt = $shop_pdo->query("SELECT SUM(prix) as montant_total FROM rachat_appareils");
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     $response['montant_total'] = round($result['montant_total'] ?? 0, 2);
 

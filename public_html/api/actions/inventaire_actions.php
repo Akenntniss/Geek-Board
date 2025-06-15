@@ -1,4 +1,7 @@
 <?php
+// Obtenir la connexion à la base de données de la boutique
+$shop_pdo = getShopDBConnection();
+
 // Vérifier si l'utilisateur est connecté
 if (!isset($_SESSION['user_id'])) {
     redirect('index');
@@ -65,10 +68,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 // Fonctions de gestion des produits
 function ajouterProduit() {
-    global $pdo;
+    global $shop_pdo;
     
     try {
-        $stmt = $pdo->prepare("
+        $stmt = $shop_pdo->prepare("
             INSERT INTO produits (reference, nom, description, prix_achat, prix_vente, quantite, seuil_alerte)
             VALUES (?, ?, ?, ?, ?, ?, ?)
         ");
@@ -92,10 +95,10 @@ function ajouterProduit() {
 }
 
 function modifierProduit() {
-    global $pdo;
+    global $shop_pdo;
     
     try {
-        $stmt = $pdo->prepare("
+        $stmt = $shop_pdo->prepare("
             UPDATE produits 
             SET reference = ?, nom = ?, description = ?, prix_achat = ?, 
                 prix_vente = ?, seuil_alerte = ?, categorie_id = ?
@@ -122,10 +125,10 @@ function modifierProduit() {
 }
 
 function supprimerProduit() {
-    global $pdo;
+    global $shop_pdo;
     
     try {
-        $stmt = $pdo->prepare("DELETE FROM produits WHERE id = ?");
+        $stmt = $shop_pdo->prepare("DELETE FROM produits WHERE id = ?");
         $stmt->execute([$_POST['produit_id']]);
         
         set_message("Produit supprimé avec succès.", 'success');
@@ -137,13 +140,13 @@ function supprimerProduit() {
 }
 
 function mouvementStock() {
-    global $pdo;
+    global $shop_pdo;
     
     try {
-        $pdo->beginTransaction();
+        $shop_pdo->beginTransaction();
         
         // Récupérer le produit
-        $stmt = $pdo->prepare("SELECT quantite FROM produits WHERE id = ?");
+        $stmt = $shop_pdo->prepare("SELECT quantite FROM produits WHERE id = ?");
         $stmt->execute([$_POST['produit_id']]);
         $produit = $stmt->fetch();
         
@@ -165,11 +168,11 @@ function mouvementStock() {
         }
         
         // Mettre à jour le stock
-        $stmt = $pdo->prepare("UPDATE produits SET quantite = ? WHERE id = ?");
+        $stmt = $shop_pdo->prepare("UPDATE produits SET quantite = ? WHERE id = ?");
         $stmt->execute([$nouvelle_quantite, $_POST['produit_id']]);
         
         // Enregistrer le mouvement
-        $stmt = $pdo->prepare("
+        $stmt = $shop_pdo->prepare("
             INSERT INTO mouvements_stock (produit_id, type_mouvement, quantite, motif, created_by)
             VALUES (?, ?, ?, ?, ?)
         ");
@@ -182,10 +185,10 @@ function mouvementStock() {
             $_SESSION['user_id']
         ]);
         
-        $pdo->commit();
+        $shop_pdo->commit();
         set_message("Mouvement de stock enregistré avec succès.", 'success');
     } catch (Exception $e) {
-        $pdo->rollBack();
+        $shop_pdo->rollBack();
         set_message("Erreur lors du mouvement de stock: " . $e->getMessage(), 'danger');
     }
     
@@ -194,10 +197,10 @@ function mouvementStock() {
 
 // Fonctions de gestion des catégories
 function ajouterCategorie() {
-    global $pdo;
+    global $shop_pdo;
     
     try {
-        $stmt = $pdo->prepare("INSERT INTO categories (nom, description) VALUES (?, ?)");
+        $stmt = $shop_pdo->prepare("INSERT INTO categories (nom, description) VALUES (?, ?)");
         $stmt->execute([$_POST['nom'], $_POST['description']]);
         
         set_message("Catégorie ajoutée avec succès.", 'success');
@@ -209,10 +212,10 @@ function ajouterCategorie() {
 }
 
 function modifierCategorie() {
-    global $pdo;
+    global $shop_pdo;
     
     try {
-        $stmt = $pdo->prepare("UPDATE categories SET nom = ?, description = ? WHERE id = ?");
+        $stmt = $shop_pdo->prepare("UPDATE categories SET nom = ?, description = ? WHERE id = ?");
         $stmt->execute([$_POST['nom'], $_POST['description'], $_POST['categorie_id']]);
         
         set_message("Catégorie modifiée avec succès.", 'success');
@@ -224,11 +227,11 @@ function modifierCategorie() {
 }
 
 function supprimerCategorie() {
-    global $pdo;
+    global $shop_pdo;
     
     try {
         // Vérifier si la catégorie a des produits
-        $stmt = $pdo->prepare("SELECT COUNT(*) FROM produits WHERE categorie_id = ?");
+        $stmt = $shop_pdo->prepare("SELECT COUNT(*) FROM produits WHERE categorie_id = ?");
         $stmt->execute([$_POST['categorie_id']]);
         $count = $stmt->fetchColumn();
         
@@ -236,7 +239,7 @@ function supprimerCategorie() {
             throw new Exception("Impossible de supprimer une catégorie contenant des produits.");
         }
         
-        $stmt = $pdo->prepare("DELETE FROM categories WHERE id = ?");
+        $stmt = $shop_pdo->prepare("DELETE FROM categories WHERE id = ?");
         $stmt->execute([$_POST['categorie_id']]);
         
         set_message("Catégorie supprimée avec succès.", 'success');
@@ -249,10 +252,10 @@ function supprimerCategorie() {
 
 // Fonctions de gestion des fournisseurs
 function ajouterFournisseur() {
-    global $pdo;
+    global $shop_pdo;
     
     try {
-        $stmt = $pdo->prepare("
+        $stmt = $shop_pdo->prepare("
             INSERT INTO fournisseurs (nom, email, telephone, adresse, delai_livraison, notes)
             VALUES (?, ?, ?, ?, ?, ?)
         ");
@@ -275,10 +278,10 @@ function ajouterFournisseur() {
 }
 
 function modifierFournisseur() {
-    global $pdo;
+    global $shop_pdo;
     
     try {
-        $stmt = $pdo->prepare("
+        $stmt = $shop_pdo->prepare("
             UPDATE fournisseurs 
             SET nom = ?, email = ?, telephone = ?, adresse = ?, delai_livraison = ?, notes = ?
             WHERE id = ?
@@ -303,11 +306,11 @@ function modifierFournisseur() {
 }
 
 function supprimerFournisseur() {
-    global $pdo;
+    global $shop_pdo;
     
     try {
         // Vérifier si le fournisseur a des commandes
-        $stmt = $pdo->prepare("SELECT COUNT(*) FROM commandes_fournisseurs WHERE fournisseur_id = ?");
+        $stmt = $shop_pdo->prepare("SELECT COUNT(*) FROM commandes_fournisseurs WHERE fournisseur_id = ?");
         $stmt->execute([$_POST['fournisseur_id']]);
         $count = $stmt->fetchColumn();
         
@@ -315,7 +318,7 @@ function supprimerFournisseur() {
             throw new Exception("Impossible de supprimer un fournisseur ayant des commandes.");
         }
         
-        $stmt = $pdo->prepare("DELETE FROM fournisseurs WHERE id = ?");
+        $stmt = $shop_pdo->prepare("DELETE FROM fournisseurs WHERE id = ?");
         $stmt->execute([$_POST['fournisseur_id']]);
         
         set_message("Fournisseur supprimé avec succès.", 'success');
@@ -328,13 +331,13 @@ function supprimerFournisseur() {
 
 // Fonction de création de commande
 function creerCommande() {
-    global $pdo;
+    global $shop_pdo;
     
     try {
-        $pdo->beginTransaction();
+        $shop_pdo->beginTransaction();
         
         // Créer la commande
-        $stmt = $pdo->prepare("
+        $stmt = $shop_pdo->prepare("
             INSERT INTO commandes_fournisseurs (fournisseur_id, date_commande, date_livraison_prevue, notes, statut, created_by)
             VALUES (?, NOW(), ?, ?, 'en_cours', ?)
         ");
@@ -346,10 +349,10 @@ function creerCommande() {
             $_SESSION['user_id']
         ]);
         
-        $commande_id = $pdo->lastInsertId();
+        $commande_id = $shop_pdo->lastInsertId();
         
         // Ajouter les lignes de commande
-        $stmt = $pdo->prepare("
+        $stmt = $shop_pdo->prepare("
             INSERT INTO lignes_commande_fournisseur (commande_id, produit_id, quantite, prix_unitaire)
             VALUES (?, ?, ?, ?)
         ");
@@ -357,7 +360,7 @@ function creerCommande() {
         foreach ($_POST['produits'] as $produit_id => $quantite) {
             if ($quantite > 0) {
                 // Récupérer le prix d'achat actuel du produit
-                $stmt_prix = $pdo->prepare("SELECT prix_achat FROM produits WHERE id = ?");
+                $stmt_prix = $shop_pdo->prepare("SELECT prix_achat FROM produits WHERE id = ?");
                 $stmt_prix->execute([$produit_id]);
                 $prix_achat = $stmt_prix->fetchColumn();
                 
@@ -370,10 +373,10 @@ function creerCommande() {
             }
         }
         
-        $pdo->commit();
+        $shop_pdo->commit();
         set_message("Commande créée avec succès.", 'success');
     } catch (Exception $e) {
-        $pdo->rollBack();
+        $shop_pdo->rollBack();
         set_message("Erreur lors de la création de la commande: " . $e->getMessage(), 'danger');
     }
     
@@ -382,13 +385,13 @@ function creerCommande() {
 
 // Fonctions de gestion des commandes
 function marquerCommandeLivree() {
-    global $pdo;
+    global $shop_pdo;
     
     try {
-        $pdo->beginTransaction();
+        $shop_pdo->beginTransaction();
         
         // Récupérer la commande
-        $stmt = $pdo->prepare("
+        $stmt = $shop_pdo->prepare("
             SELECT cf.*, lcf.produit_id, lcf.quantite
             FROM commandes_fournisseurs cf 
             JOIN lignes_commande_fournisseur lcf ON cf.id = lcf.commande_id
@@ -406,13 +409,13 @@ function marquerCommandeLivree() {
         }
         
         // Mettre à jour le stock pour chaque produit
-        $stmt = $pdo->prepare("UPDATE produits SET quantite = quantite + ? WHERE id = ?");
+        $stmt = $shop_pdo->prepare("UPDATE produits SET quantite = quantite + ? WHERE id = ?");
         
         foreach ($lignes as $ligne) {
             $stmt->execute([$ligne['quantite'], $ligne['produit_id']]);
             
             // Enregistrer le mouvement de stock
-            $stmt_mouvement = $pdo->prepare("
+            $stmt_mouvement = $shop_pdo->prepare("
                 INSERT INTO mouvements_stock (produit_id, type_mouvement, quantite, motif, created_by)
                 VALUES (?, 'entree', ?, ?, ?)
             ");
@@ -426,17 +429,17 @@ function marquerCommandeLivree() {
         }
         
         // Marquer la commande comme livrée
-        $stmt = $pdo->prepare("
+        $stmt = $shop_pdo->prepare("
             UPDATE commandes_fournisseurs 
             SET statut = 'livree', date_livraison = NOW() 
             WHERE id = ?
         ");
         $stmt->execute([$_POST['commande_id']]);
         
-        $pdo->commit();
+        $shop_pdo->commit();
         set_message("Commande marquée comme livrée avec succès.", 'success');
     } catch (Exception $e) {
-        $pdo->rollBack();
+        $shop_pdo->rollBack();
         set_message("Erreur lors de la livraison de la commande: " . $e->getMessage(), 'danger');
     }
     
@@ -444,11 +447,11 @@ function marquerCommandeLivree() {
 }
 
 function annulerCommande() {
-    global $pdo;
+    global $shop_pdo;
     
     try {
         // Vérifier si la commande peut être annulée
-        $stmt = $pdo->prepare("
+        $stmt = $shop_pdo->prepare("
             SELECT statut 
             FROM commandes_fournisseurs 
             WHERE id = ?
@@ -465,7 +468,7 @@ function annulerCommande() {
         }
         
         // Marquer la commande comme annulée
-        $stmt = $pdo->prepare("
+        $stmt = $shop_pdo->prepare("
             UPDATE commandes_fournisseurs 
             SET statut = 'annulee' 
             WHERE id = ?

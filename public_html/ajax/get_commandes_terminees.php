@@ -12,7 +12,7 @@ try {
             WHERE cp.statut IN ('termine', 'annule') 
             ORDER BY cp.date_creation DESC";
     
-    $stmt = $pdo->query($sql);
+    $stmt = $shop_pdo->query($sql);
     $commandes = $stmt->fetchAll(PDO::FETCH_ASSOC);
     
     echo json_encode($commandes);

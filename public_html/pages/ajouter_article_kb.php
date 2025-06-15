@@ -12,10 +12,11 @@ if (!isset($_SESSION['user_id']) || !isset($_SESSION['role']) ||
 
 // Récupération des catégories
 function get_kb_categories() {
-    global $pdo;
+    $shop_pdo = getShopDBConnection();
     try {
         $query = "SELECT * FROM kb_categories ORDER BY name ASC";
-        $stmt = $pdo->query($query);
+        $shop_pdo = getShopDBConnection();
+$stmt = $shop_pdo->query($query);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     } catch (PDOException $e) {
         error_log("Erreur lors de la récupération des catégories KB: " . $e->getMessage());
@@ -25,10 +26,10 @@ function get_kb_categories() {
 
 // Récupération des tags
 function get_kb_tags() {
-    global $pdo;
+    $shop_pdo = getShopDBConnection();
     try {
         $query = "SELECT * FROM kb_tags ORDER BY name ASC";
-        $stmt = $pdo->query($query);
+        $stmt = $shop_pdo->query($query);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     } catch (PDOException $e) {
         error_log("Erreur lors de la récupération des tags KB: " . $e->getMessage());
@@ -38,12 +39,12 @@ function get_kb_tags() {
 
 // Fonction pour créer un nouveau tag
 function create_kb_tag($name) {
-    global $pdo;
+    $shop_pdo = getShopDBConnection();
     try {
         $query = "INSERT INTO kb_tags (name, created_at) VALUES (?, NOW())";
-        $stmt = $pdo->prepare($query);
+        $stmt = $shop_pdo->prepare($query);
         $stmt->execute([$name]);
-        return $pdo->lastInsertId();
+        return $shop_pdo->lastInsertId();
     } catch (PDOException $e) {
         error_log("Erreur lors de la création du tag: " . $e->getMessage());
         return false;
@@ -52,11 +53,11 @@ function create_kb_tag($name) {
 
 // Fonction pour vérifier si un tag existe et le créer s'il n'existe pas
 function get_or_create_tag($tag_name) {
-    global $pdo;
+    $shop_pdo = getShopDBConnection();
     try {
         // Vérifier si le tag existe déjà
         $query = "SELECT id FROM kb_tags WHERE name = ?";
-        $stmt = $pdo->prepare($query);
+        $stmt = $shop_pdo->prepare($query);
         $stmt->execute([trim($tag_name)]);
         $tag = $stmt->fetch(PDO::FETCH_ASSOC);
         
@@ -103,14 +104,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     if (empty($errors)) {
         try {
             // Début de la transaction
-            $pdo->beginTransaction();
+            $shop_pdo->beginTransaction();
             
             // Insérer l'article
             $query = "INSERT INTO kb_articles (title, content, category_id, created_at, updated_at, views) 
                       VALUES (?, ?, ?, NOW(), NOW(), 0)";
-            $stmt = $pdo->prepare($query);
+            $stmt = $shop_pdo->prepare($query);
             $stmt->execute([$title, $content, $category_id]);
-            $article_id = $pdo->lastInsertId();
+            $article_id = $shop_pdo->lastInsertId();
             
             // Ajouter les tags existants sélectionnés
             if (!empty($tag_ids)) {
@@ -124,7 +125,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                 }
                 
                 $query = "INSERT INTO kb_article_tags (article_id, tag_id) VALUES " . implode(', ', $placeholders);
-                $stmt = $pdo->prepare($query);
+                $stmt = $shop_pdo->prepare($query);
                 $stmt->execute($values);
             }
             
@@ -140,7 +141,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                         if ($tag_id) {
                             // Ajouter l'association entre l'article et le tag
                             $query = "INSERT INTO kb_article_tags (article_id, tag_id) VALUES (?, ?)";
-                            $stmt = $pdo->prepare($query);
+                            $stmt = $shop_pdo->prepare($query);
                             $stmt->execute([$article_id, $tag_id]);
                         }
                     }
@@ -148,14 +149,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             }
             
             // Valider la transaction
-            $pdo->commit();
+            $shop_pdo->commit();
             
             set_message("L'article a été ajouté avec succès à la base de connaissances.", "success");
             redirect('article_kb', ['id' => $article_id]);
             
         } catch (PDOException $e) {
             // Annuler la transaction en cas d'erreur
-            $pdo->rollBack();
+            $shop_pdo->rollBack();
             error_log("Erreur lors de l'ajout de l'article: " . $e->getMessage());
             set_message("Une erreur est survenue lors de l'ajout de l'article. Veuillez réessayer.", "danger");
         }

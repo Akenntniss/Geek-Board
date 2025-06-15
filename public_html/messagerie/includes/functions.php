@@ -10,9 +10,10 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 // Inclure la connexion à la base de données s'il n'est pas déjà inclus
-if (!isset($pdo)) {
-    require_once __DIR__ . '/../../config/database.php';
-}
+require_once __DIR__ . '/../../config/database.php';
+
+// Obtenir la connexion à la base de données de la boutique
+$shop_pdo = getShopDBConnection();
 
 /**
  * Récupère les conversations d'un utilisateur
@@ -22,7 +23,7 @@ if (!isset($pdo)) {
  * @return array Liste des conversations
  */
 function get_user_conversations($user_id, $filters = []) {
-    global $pdo;
+    global $shop_pdo;
     
     try {
         // Ajouter un log détaillé pour le débogage
@@ -80,7 +81,7 @@ function get_user_conversations($user_id, $filters = []) {
         // Tri des conversations par ID (pour éviter les problèmes de date)
         $query .= " ORDER BY cp.est_favoris DESC, c.id DESC";
         
-        $stmt = $pdo->prepare($query);
+        $stmt = $shop_pdo->prepare($query);
         $stmt->execute($params);
         $conversations = $stmt->fetchAll(PDO::FETCH_ASSOC);
         
@@ -105,7 +106,7 @@ function get_user_conversations($user_id, $filters = []) {
                         AND m.est_supprime = 0
                     ";
                     
-                    $stmt_unread = $pdo->prepare($query_unread);
+                    $stmt_unread = $shop_pdo->prepare($query_unread);
                     $stmt_unread->execute([
                         ':conversation_id' => $conversation['id'],
                         ':user_id' => $user_id
@@ -158,7 +159,7 @@ function get_user_conversations($user_id, $filters = []) {
  * @return array|null Informations sur le dernier message ou null si aucun message
  */
 function get_last_message($conversation_id) {
-    global $pdo;
+    global $shop_pdo;
     
     try {
         // Log pour le débogage
@@ -174,7 +175,7 @@ function get_last_message($conversation_id) {
             LIMIT 1
         ";
         
-        $stmt = $pdo->prepare($query);
+        $stmt = $shop_pdo->prepare($query);
         $stmt->execute([':conversation_id' => $conversation_id]);
         
         if ($stmt->rowCount() > 0) {
@@ -211,7 +212,7 @@ function get_last_message($conversation_id) {
  * @return array Messages
  */
 function get_conversation_messages($conversation_id, $user_id, $limit = 50, $offset = 0) {
-    global $pdo;
+    global $shop_pdo;
     
     // Vérifier l'accès à la conversation
     if (!user_has_conversation_access($user_id, $conversation_id)) {
@@ -233,7 +234,7 @@ function get_conversation_messages($conversation_id, $user_id, $limit = 50, $off
             LIMIT :limit OFFSET :offset
         ";
         
-        $stmt = $pdo->prepare($query);
+        $stmt = $shop_pdo->prepare($query);
         $stmt->bindValue(':conversation_id', $conversation_id, PDO::PARAM_INT);
         $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
         $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
@@ -251,7 +252,7 @@ function get_conversation_messages($conversation_id, $user_id, $limit = 50, $off
                 FROM message_attachments
                 WHERE message_id = :message_id
             ";
-            $stmt_attachments = $pdo->prepare($attachments_query);
+            $stmt_attachments = $shop_pdo->prepare($attachments_query);
             $stmt_attachments->execute([':message_id' => $message['id']]);
             $message['attachments'] = $stmt_attachments->fetchAll(PDO::FETCH_ASSOC);
             
@@ -261,7 +262,7 @@ function get_conversation_messages($conversation_id, $user_id, $limit = 50, $off
                 FROM message_reads
                 WHERE message_id = :message_id
             ";
-            $stmt_reads = $pdo->prepare($reads_query);
+            $stmt_reads = $shop_pdo->prepare($reads_query);
             $stmt_reads->execute([':message_id' => $message['id']]);
             $message['read_count'] = $stmt_reads->fetch(PDO::FETCH_ASSOC)['count'];
             
@@ -272,7 +273,7 @@ function get_conversation_messages($conversation_id, $user_id, $limit = 50, $off
                 WHERE message_id = :message_id
                 GROUP BY reaction
             ";
-            $stmt_reactions = $pdo->prepare($reactions_query);
+            $stmt_reactions = $shop_pdo->prepare($reactions_query);
             $stmt_reactions->execute([':message_id' => $message['id']]);
             $reactions_data = $stmt_reactions->fetchAll(PDO::FETCH_ASSOC);
             
@@ -305,7 +306,7 @@ function get_conversation_messages($conversation_id, $user_id, $limit = 50, $off
  * @return int|array ID de la conversation créée ou tableau d'erreur
  */
 function create_conversation($titre, $type, $created_by, $participants) {
-    global $pdo;
+    global $shop_pdo;
     
     // Valider les paramètres
     if (empty($titre) || empty($type) || empty($created_by) || empty($participants)) {
@@ -342,7 +343,7 @@ function create_conversation($titre, $type, $created_by, $participants) {
             ) = 2
         ";
         
-        $stmt = $pdo->prepare($query);
+        $stmt = $shop_pdo->prepare($query);
         $stmt->execute();
         
         if ($stmt->rowCount() > 0) {
@@ -352,10 +353,10 @@ function create_conversation($titre, $type, $created_by, $participants) {
     }
     
     try {
-        $pdo->beginTransaction();
+        $shop_pdo->beginTransaction();
         
         // Créer la conversation
-        $stmt = $pdo->prepare("
+        $stmt = $shop_pdo->prepare("
             INSERT INTO conversations (titre, type, created_by, date_creation, derniere_activite)
             VALUES (:titre, :type, :created_by, NOW(), NOW())
         ");
@@ -366,13 +367,13 @@ function create_conversation($titre, $type, $created_by, $participants) {
             ':created_by' => $created_by
         ]);
         
-        $conversation_id = $pdo->lastInsertId();
+        $conversation_id = $shop_pdo->lastInsertId();
         
         // Ajouter les participants
         foreach ($participants as $user_id) {
             $role = ($user_id == $created_by && $type != 'direct') ? 'admin' : 'membre';
             
-            $stmt = $pdo->prepare("
+            $stmt = $shop_pdo->prepare("
                 INSERT INTO conversation_participants (conversation_id, user_id, role, date_ajout)
                 VALUES (:conversation_id, :user_id, :role, NOW())
             ");
@@ -384,10 +385,10 @@ function create_conversation($titre, $type, $created_by, $participants) {
             ]);
         }
         
-        $pdo->commit();
+        $shop_pdo->commit();
         return $conversation_id;
     } catch (PDOException $e) {
-        $pdo->rollBack();
+        $shop_pdo->rollBack();
         log_error('Erreur lors de la création de la conversation', $e->getMessage());
         return ['error' => 'Erreur lors de la création de la conversation'];
     }
@@ -404,7 +405,7 @@ function create_conversation($titre, $type, $created_by, $participants) {
  * @return int|array ID du message créé ou tableau d'erreur
  */
 function send_message($conversation_id, $sender_id, $contenu, $type = 'text', $attachments = []) {
-    global $pdo;
+    global $shop_pdo;
     
     // Vérifier l'accès à la conversation
     if (!user_has_conversation_access($sender_id, $conversation_id)) {
@@ -412,10 +413,10 @@ function send_message($conversation_id, $sender_id, $contenu, $type = 'text', $a
     }
     
     try {
-        $pdo->beginTransaction();
+        $shop_pdo->beginTransaction();
         
         // Insérer le message
-        $stmt = $pdo->prepare("
+        $stmt = $shop_pdo->prepare("
             INSERT INTO messages (conversation_id, sender_id, contenu, type, date_envoi)
             VALUES (:conversation_id, :sender_id, :contenu, :type, NOW())
         ");
@@ -427,7 +428,7 @@ function send_message($conversation_id, $sender_id, $contenu, $type = 'text', $a
             ':type' => $type
         ]);
         
-        $message_id = $pdo->lastInsertId();
+        $message_id = $shop_pdo->lastInsertId();
         
         // Ajouter les pièces jointes si présentes
         if (!empty($attachments) && is_array($attachments)) {
@@ -444,7 +445,7 @@ function send_message($conversation_id, $sender_id, $contenu, $type = 'text', $a
                         $est_image = 1;
                     }
                     
-                    $stmt = $pdo->prepare("
+                    $stmt = $shop_pdo->prepare("
                         INSERT INTO message_attachments (
                             message_id, file_path, file_name, file_type, 
                             file_size, thumbnail_path, est_image, date_upload
@@ -469,7 +470,7 @@ function send_message($conversation_id, $sender_id, $contenu, $type = 'text', $a
         }
         
         // Mettre à jour la date de dernière activité de la conversation
-        $stmt = $pdo->prepare("
+        $stmt = $shop_pdo->prepare("
             UPDATE conversations 
             SET derniere_activite = NOW() 
             WHERE id = :conversation_id
@@ -482,7 +483,7 @@ function send_message($conversation_id, $sender_id, $contenu, $type = 'text', $a
         // Marquer comme lu pour l'expéditeur
         mark_message_as_read($message_id, $sender_id);
         
-        $pdo->commit();
+        $shop_pdo->commit();
         
         // Retourner le message avec ses infos complètes
         $messages = get_conversation_messages($conversation_id, $sender_id, 1, 0);
@@ -492,7 +493,7 @@ function send_message($conversation_id, $sender_id, $contenu, $type = 'text', $a
         
         return $message_id;
     } catch (PDOException $e) {
-        $pdo->rollBack();
+        $shop_pdo->rollBack();
         log_error('Erreur lors de l\'envoi du message', $e->getMessage());
         return ['error' => 'Erreur lors de l\'envoi du message'];
     }
@@ -506,10 +507,10 @@ function send_message($conversation_id, $sender_id, $contenu, $type = 'text', $a
  * @return bool True si l'utilisateur a accès, false sinon
  */
 function user_has_conversation_access($user_id, $conversation_id) {
-    global $pdo;
+    global $shop_pdo;
     
     try {
-        $stmt = $pdo->prepare("
+        $stmt = $shop_pdo->prepare("
             SELECT 1 FROM conversation_participants
             WHERE conversation_id = :conversation_id
             AND user_id = :user_id
@@ -534,14 +535,14 @@ function user_has_conversation_access($user_id, $conversation_id) {
  * @return array Liste des participants
  */
 function get_conversation_participants($conversation_id) {
-    global $pdo;
+    global $shop_pdo;
     
     try {
         // Log pour le débogage
         error_log("Récupération des participants pour la conversation $conversation_id");
         
         // Version plus robuste qui fonctionne même si certains utilisateurs n'existent plus
-        $stmt = $pdo->prepare("
+        $stmt = $shop_pdo->prepare("
             SELECT cp.conversation_id, cp.user_id, cp.role, cp.date_ajout, 
                    cp.date_derniere_lecture, cp.est_favoris, cp.est_archive, 
                    cp.notification_mute, 
@@ -594,10 +595,10 @@ function get_conversation_participants($conversation_id) {
  * @return bool Succès ou échec
  */
 function mark_message_as_read($message_id, $user_id) {
-    global $pdo;
+    global $shop_pdo;
     
     try {
-        $stmt = $pdo->prepare("
+        $stmt = $shop_pdo->prepare("
             INSERT IGNORE INTO message_reads (message_id, user_id, date_lecture)
             VALUES (:message_id, :user_id, NOW())
         ");
@@ -622,10 +623,10 @@ function mark_message_as_read($message_id, $user_id) {
  * @return bool Succès ou échec
  */
 function update_last_read($conversation_id, $user_id) {
-    global $pdo;
+    global $shop_pdo;
     
     try {
-        $stmt = $pdo->prepare("
+        $stmt = $shop_pdo->prepare("
             UPDATE conversation_participants
             SET date_derniere_lecture = NOW()
             WHERE conversation_id = :conversation_id
@@ -688,10 +689,10 @@ function format_message_date($date) {
  * @return int Nombre de messages non lus
  */
 function count_unread_messages($user_id) {
-    global $pdo;
+    global $shop_pdo;
     
     try {
-        $stmt = $pdo->prepare("
+        $stmt = $shop_pdo->prepare("
             SELECT SUM(unread_count) as total
             FROM (
                 SELECT 
@@ -753,7 +754,7 @@ function log_error($message, $details) {
  * @return array|false Informations de l'utilisateur ou false si non trouvé
  */
 function get_user_info($user_id) {
-    global $pdo;
+    global $shop_pdo;
     
     $query = "
         SELECT id, username, full_name, role
@@ -761,7 +762,7 @@ function get_user_info($user_id) {
         WHERE id = :user_id
     ";
     
-    $stmt = $pdo->prepare($query);
+    $stmt = $shop_pdo->prepare($query);
     $stmt->execute([':user_id' => $user_id]);
     
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -781,7 +782,7 @@ function get_user_info($user_id) {
  * @return array|false Informations du message ou false si non trouvé
  */
 function get_message_info($message_id) {
-    global $pdo;
+    global $shop_pdo;
     
     $query = "
         SELECT m.*, 
@@ -793,7 +794,7 @@ function get_message_info($message_id) {
         WHERE m.id = :message_id
     ";
     
-    $stmt = $pdo->prepare($query);
+    $stmt = $shop_pdo->prepare($query);
     $stmt->execute([':message_id' => $message_id]);
     
     return $stmt->fetch(PDO::FETCH_ASSOC);
@@ -807,14 +808,14 @@ function get_message_info($message_id) {
  * @return array Liste des utilisateurs en train de taper
  */
 function get_typing_users($conversation_id, $current_user_id) {
-    global $pdo;
+    global $shop_pdo;
     
     // Supprimer les statuts de frappe obsolètes (plus de 6 secondes)
     $cleanupQuery = "
         DELETE FROM typing_status
         WHERE timestamp < DATE_SUB(NOW(), INTERVAL 6 SECOND)
     ";
-    $pdo->query($cleanupQuery);
+    $shop_pdo->query($cleanupQuery);
     
     // Récupérer les utilisateurs actuellement en train de taper
     $query = "
@@ -826,7 +827,7 @@ function get_typing_users($conversation_id, $current_user_id) {
         ORDER BY ts.timestamp DESC
     ";
     
-    $stmt = $pdo->prepare($query);
+    $stmt = $shop_pdo->prepare($query);
     $stmt->execute([
         ':conversation_id' => $conversation_id,
         ':current_user_id' => $current_user_id
@@ -842,7 +843,7 @@ function get_typing_users($conversation_id, $current_user_id) {
  * @return array Liste des réactions
  */
 function get_message_reactions($message_id) {
-    global $pdo;
+    global $shop_pdo;
     
     $query = "
         SELECT mr.*, u.full_name AS user_name
@@ -852,7 +853,7 @@ function get_message_reactions($message_id) {
         ORDER BY mr.date_reaction ASC
     ";
     
-    $stmt = $pdo->prepare($query);
+    $stmt = $shop_pdo->prepare($query);
     $stmt->execute([':message_id' => $message_id]);
     
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -867,7 +868,7 @@ function get_message_reactions($message_id) {
  * @return bool True si la modification a réussi, false sinon
  */
 function edit_message($message_id, $content, $user_id) {
-    global $pdo;
+    global $shop_pdo;
     
     // Vérifier que l'utilisateur est bien l'expéditeur du message
     $query = "
@@ -876,7 +877,7 @@ function edit_message($message_id, $content, $user_id) {
         WHERE id = :message_id
     ";
     
-    $stmt = $pdo->prepare($query);
+    $stmt = $shop_pdo->prepare($query);
     $stmt->execute([':message_id' => $message_id]);
     $message = $stmt->fetch(PDO::FETCH_ASSOC);
     
@@ -893,7 +894,7 @@ function edit_message($message_id, $content, $user_id) {
         WHERE id = :message_id
     ";
     
-    $stmt = $pdo->prepare($query);
+    $stmt = $shop_pdo->prepare($query);
     return $stmt->execute([
         ':message_id' => $message_id,
         ':content' => $content

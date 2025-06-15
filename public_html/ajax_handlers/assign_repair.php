@@ -23,24 +23,27 @@ $user_id = $_SESSION['user_id'];
 $repair_id = intval($_POST['repair_id']);
 $timestamp = date('Y-m-d H:i:s');
 
+// Obtenir la connexion à la base de données du magasin
+$shop_pdo = getShopDBConnection();
+
 try {
     // Commencer une transaction
-    $pdo->beginTransaction();
+    $shop_pdo->beginTransaction();
 
     // Mettre à jour la réparation pour assigner le technicien
-    $stmt = $pdo->prepare("UPDATE reparations SET employe_id = ?, date_derniere_modification = ? WHERE id = ?");
+    $stmt = $shop_pdo->prepare("UPDATE reparations SET employe_id = ?, date_derniere_modification = ? WHERE id = ?");
     $stmt->execute([$user_id, $timestamp, $repair_id]);
 
     // Mettre à jour le statut de l'utilisateur pour indiquer qu'il a une réparation active
-    $stmt = $pdo->prepare("UPDATE users SET techbusy = 1, active_repair_id = ? WHERE id = ?");
+    $stmt = $shop_pdo->prepare("UPDATE users SET techbusy = 1, active_repair_id = ? WHERE id = ?");
     $stmt->execute([$repair_id, $user_id]);
 
     // Journaliser l'action
-    $stmt = $pdo->prepare("INSERT INTO journal_actions (user_id, action_type, target_id, details, date_action) VALUES (?, 'assign_repair', ?, 'Réparation assignée', ?)");
+    $stmt = $shop_pdo->prepare("INSERT INTO journal_actions (user_id, action_type, target_id, details, date_action) VALUES (?, 'assign_repair', ?, 'Réparation assignée', ?)");
     $stmt->execute([$user_id, $repair_id, $timestamp]);
 
     // Valider la transaction
-    $pdo->commit();
+    $shop_pdo->commit();
 
     // Réponse réussie
     $response = [
@@ -50,7 +53,7 @@ try {
 
 } catch (PDOException $e) {
     // Annuler la transaction en cas d'erreur
-    $pdo->rollBack();
+    $shop_pdo->rollBack();
     
     // Réponse d'erreur
     $response = [

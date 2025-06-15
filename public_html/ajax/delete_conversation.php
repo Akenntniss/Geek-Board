@@ -20,7 +20,7 @@ $user_id = $_SESSION['user_id'];
 
 try {
     // Vérifier si l'utilisateur a accès à cette conversation
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         SELECT role 
         FROM conversation_participants 
         WHERE conversation_id = ? AND user_id = ?
@@ -40,14 +40,14 @@ try {
     }
 
     // Supprimer les notifications associées
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         DELETE FROM notifications_messages 
         WHERE conversation_id = ?
     ");
     $stmt->execute([$conversation_id]);
 
     // Supprimer les confirmations de lecture des annonces
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         DELETE la 
         FROM lecture_annonces la
         JOIN messages m ON la.message_id = m.id
@@ -56,21 +56,21 @@ try {
     $stmt->execute([$conversation_id]);
 
     // Supprimer les messages
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         DELETE FROM messages 
         WHERE conversation_id = ?
     ");
     $stmt->execute([$conversation_id]);
 
     // Supprimer les participants
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         DELETE FROM conversation_participants 
         WHERE conversation_id = ?
     ");
     $stmt->execute([$conversation_id]);
 
     // Supprimer la conversation
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         DELETE FROM conversations 
         WHERE id = ?
     ");

@@ -58,7 +58,7 @@ if ($status_id <= 0) {
 
 try {
     // Récupérer le modèle de SMS associé au statut
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         SELECT id, nom, contenu 
         FROM sms_templates 
         WHERE statut_id = ? AND est_actif = 1

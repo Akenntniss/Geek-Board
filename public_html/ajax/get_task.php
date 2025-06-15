@@ -50,7 +50,7 @@ error_log("ID de tâche: " . $tache_id);
 
 try {
     // Vérifier que la connexion à la base de données est établie
-    if (!isset($pdo) || !$pdo) {
+    if (!isset($shop_pdo) || !$shop_pdo) {
         error_log("Connexion PDO non disponible globalement, création d'une nouvelle connexion");
         
         // Recréer une connexion directement
@@ -68,7 +68,7 @@ try {
         // Log la nouvelle connexion
         error_log("Nouvelle connexion PDO créée avec succès");
     } else {
-        $db_pdo = $pdo;
+        $db_pdo = $shop_pdo;
         error_log("Utilisation de la connexion PDO existante");
     }
     

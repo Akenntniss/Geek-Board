@@ -221,16 +221,169 @@ if (isset($_GET['action']) && $_GET['action'] === 'supprimer' && isset($_GET['id
 
 <!-- Styles personnalisés pour les cartes de réparations -->
 <style>
+    /* FORCE LE FOND NOIR EN MODE NUIT - PRIORITÉ ABSOLUE */
+    body.dark-mode {
+        background: #0a0f19 !important;
+        background-image: linear-gradient(135deg, #0a0f19, #111827, #0f172a) !important;
+        background-attachment: fixed !important;
+        background-size: 100% 100% !important;
+    }
+    
+    .dark-mode body {
+        background: #0a0f19 !important;
+        background-image: linear-gradient(135deg, #0a0f19, #111827, #0f172a) !important;
+        background-attachment: fixed !important;
+        background-size: 100% 100% !important;
+    }
+    
+    /* FORCE LE FOND MODERNE EN MODE CLAIR - PRIORITÉ ABSOLUE */
+    body:not(.dark-mode) {
+        background: #f1f5f9 !important;
+        background-image: linear-gradient(135deg, #e2e8f0, #cbd5e1, #e2e8f0) !important;
+        background-attachment: fixed !important;
+        background-size: 100% 100% !important;
+    }
+    
+    /* Améliorations mode clair - cartes */
+    body:not(.dark-mode) .search-card,
+    body:not(.dark-mode) .dashboard-card,
+    body:not(.dark-mode) .card {
+        background: rgba(255, 255, 255, 0.8) !important;
+        border: 1px solid rgba(203, 213, 225, 0.6) !important;
+        color: #334155 !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
+    }
+    
+    body:not(.dark-mode) .search-card:hover,
+    body:not(.dark-mode) .dashboard-card:hover,
+    body:not(.dark-mode) .card:hover {
+        background: rgba(255, 255, 255, 0.95) !important;
+        border-color: rgba(102, 126, 234, 0.4) !important;
+        box-shadow: 0 10px 30px rgba(102, 126, 234, 0.25) !important;
+        transform: translateY(-5px) !important;
+    }
+    
+    /* Améliorations mode clair - boutons de filtre */
+    body:not(.dark-mode) .filter-btn {
+        background: rgba(255, 255, 255, 0.9) !important;
+        border: 1px solid rgba(203, 213, 225, 0.5) !important;
+        color: #334155 !important;
+    }
+    
+    body:not(.dark-mode) .filter-btn:hover {
+        background: rgba(255, 255, 255, 1) !important;
+        border-color: rgba(102, 126, 234, 0.5) !important;
+        color: #667eea !important;
+    }
+    
+    body:not(.dark-mode) .filter-btn.active {
+        background: rgba(102, 126, 234, 0.15) !important;
+        border-color: rgba(102, 126, 234, 0.6) !important;
+        color: #667eea !important;
+    }
+    
+    /* Améliorations mode clair - boutons d'action */
+    body:not(.dark-mode) .action-buttons-container {
+        background: rgba(255, 255, 255, 0.4) !important;
+        border: 1px solid rgba(203, 213, 225, 0.4) !important;
+    }
+    
+    body:not(.dark-mode) .action-button {
+        background: rgba(255, 255, 255, 0.9) !important;
+        border: 1px solid rgba(203, 213, 225, 0.5) !important;
+        color: #334155 !important;
+    }
+    
+    body:not(.dark-mode) .action-button:hover {
+        background: rgba(255, 255, 255, 1) !important;
+        border-color: rgba(102, 126, 234, 0.5) !important;
+        color: #667eea !important;
+        box-shadow: 0 10px 30px rgba(102, 126, 234, 0.25) !important;
+    }
+    
+    /* Améliorations mode clair - formulaires */
+    body:not(.dark-mode) .search-form .form-control {
+        background: rgba(255, 255, 255, 0.9) !important;
+        border: 1px solid rgba(203, 213, 225, 0.5) !important;
+        color: #334155 !important;
+    }
+    
+    body:not(.dark-mode) .search-form .form-control:focus {
+        background: rgba(255, 255, 255, 1) !important;
+        border-color: rgba(102, 126, 234, 0.6) !important;
+        box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.15) !important;
+    }
+    
+    body:not(.dark-mode) .search-form .input-group-text {
+        background: rgba(255, 255, 255, 0.9) !important;
+        border: 1px solid rgba(203, 213, 225, 0.5) !important;
+        color: #334155 !important;
+    }
+    
+    /* Améliorations mode clair - badges */
+    body:not(.dark-mode) .badge {
+        background: rgba(102, 126, 234, 0.15) !important;
+        color: #667eea !important;
+        border: 1px solid rgba(102, 126, 234, 0.3) !important;
+    }
+    
+    /* Améliorations mode clair - icônes de contact */
+    body:not(.dark-mode) .contact-icon {
+        background: rgba(255, 255, 255, 0.9) !important;
+        color: #667eea !important;
+        border: 1px solid rgba(203, 213, 225, 0.5) !important;
+    }
+    
+    body:not(.dark-mode) .contact-row:hover .contact-icon {
+        background: rgba(102, 126, 234, 0.1) !important;
+        border-color: rgba(102, 126, 234, 0.5) !important;
+        color: #764ba2 !important;
+    }
+    
     /* Style pour le conteneur principal de la page */
     .page-container {
         display: flex;
         flex-direction: column;
         min-height: 100%;
-        padding-top: 65px;
+        padding-top: 0px;
         max-width: 1400px;
         margin: 0 auto;
         padding-left: 00px;
         padding-right: 00px;
+    }
+    
+    /* Styles pour les conteneurs d'action */
+    .action-buttons-container {
+        margin-top: 0;
+        margin-bottom: 0.5rem;
+        padding: 0;
+    }
+    
+    .modern-action-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        justify-content: center;
+        align-items: center;
+        margin: 0;
+        padding: 0;
+    }
+    
+    .action-button {
+        padding: 0.5rem 1rem;
+        margin: 0;
+        border-radius: 0.5rem;
+        text-decoration: none;
+        border: none;
+        background: #007bff;
+        color: white;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    
+    .action-button:hover {
+        background: #0056b3;
+        transform: translateY(-2px);
     }
     
     /* Styles pour les boutons de filtres */
@@ -567,7 +720,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'supprimer' && isset($_GET['id
             display: flex;
             flex-direction: column;
             padding-top: 10px;
-            margin-top: 40px; /* Réduit le décalage de 30px supplémentaires (de 70px à 40px) */
+            margin-top: 0px; /* Suppression du décalage supplémentaire */
         }
         
         .filter-buttons {
@@ -1458,14 +1611,14 @@ document.addEventListener('DOMContentLoaded', function() {
                         <table class="table table-striped table-hover">
                             <thead>
                                 <tr>
-                                    <th class="d-none d-md-table-cell">New</th>
-                                    <th>Client</th>
-                                    <th class="d-none d-md-table-cell">Appareil</th>
-                                    <th class="d-none d-lg-table-cell">Problème</th>
-                                    <th class="d-none d-md-table-cell">Date</th>
-                                    <th>Statut</th>
-                                    <th class="d-none d-lg-table-cell">Prix</th>
-                                    <th>Actions</th>
+                                    <th class="d-none d-md-table-cell" style="width: 60px;">New</th>
+                                    <th style="width: 150px;">Client</th>
+                                    <th class="d-none d-md-table-cell" style="width: 120px;">Appareil</th>
+                                    <th class="d-none d-lg-table-cell" style="width: 250px;">Problème</th>
+                                    <th class="d-none d-md-table-cell" style="width: 90px;">Date</th>
+                                    <th style="width: 110px;">Statut</th>
+                                    <th class="d-none d-lg-table-cell" style="width: 80px;">Prix</th>
+                                    <th style="width: 120px;">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -1769,11 +1922,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 <input type="hidden" id="chooseStatusCategoryId" value="">
                 
                 <!-- Bouton pour activer/désactiver l'envoi de SMS -->
-                <div class="mb-4">
-                    <button id="smsToggleButton" type="button" class="btn btn-danger btn-lg w-100 mb-3" style="font-weight: bold; font-size: 1.1rem; padding: 15px; transition: all 0.3s ease; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                <div class="mb-4 border border-2 border-secondary rounded p-3">
+                    <h6 class="text-center mb-3 fw-bold text-secondary"><i class="fas fa-sms me-2"></i>NOTIFICATION CLIENT</h6>
+
+                    <button id="smsToggleButton" type="button" class="btn btn-danger btn-lg w-100 mb-1" style="font-weight: bold; font-size: 1.1rem; padding: 15px; transition: all 0.3s ease; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
                         <i class="fas fa-ban me-2"></i>
                         NE PAS ENVOYER DE SMS AU CLIENT
                     </button>
+                    <div class="text-center text-muted small mt-1">Cliquez pour activer/désactiver l'envoi d'un SMS</div>
                     <input type="hidden" id="sendSmsSwitch" value="0">
                 </div>
             </div>
@@ -1794,14 +1950,47 @@ function initSmsToggleButton() {
     const toggleButton = document.getElementById('smsToggleButton');
     const smsSwitch = document.getElementById('sendSmsSwitch');
     
-    // Ne rien faire d'autre ici - cette fonction sera appelée mais ne fera rien
-    // pour éviter les conflits avec le script en bas de page
+    if (!toggleButton || !smsSwitch) {
+        console.error('Éléments du toggle SMS non trouvés');
+        return;
+    }
+    
+    // Par défaut, le SMS n'est pas envoyé (value="0")
+    toggleButton.addEventListener('click', function() {
+        // Inverser l'état actuel
+        const currentValue = smsSwitch.value;
+        const newValue = currentValue === '1' ? '0' : '1';
+        smsSwitch.value = newValue;
+        
+        // Mettre à jour l'apparence du bouton
+        if (newValue === '1') {
+            // SMS activé
+            toggleButton.classList.remove('btn-danger');
+            toggleButton.classList.add('btn-success');
+            toggleButton.innerHTML = '<i class="fas fa-paper-plane me-2"></i>ENVOYER UN SMS AU CLIENT';
+            // Jouer un son si disponible
+            if (typeof playNotificationSound === 'function') {
+                playNotificationSound();
+            }
+        } else {
+            // SMS désactivé
+            toggleButton.classList.remove('btn-success');
+            toggleButton.classList.add('btn-danger');
+            toggleButton.innerHTML = '<i class="fas fa-ban me-2"></i>NE PAS ENVOYER DE SMS AU CLIENT';
+        }
+        
+        console.log('État d\'envoi de SMS mis à jour:', newValue === '1' ? 'Activé' : 'Désactivé');
+    });
+    
+    console.log('Bouton toggle SMS initialisé avec succès');
 }
 
-// Fonction pour jouer un son de notification
+// Function pour jouer un son de notification
 function playNotificationSound() {
-    // Ne rien faire ici - cette fonction sera remplacée par celle du script en bas de page
-    // Cette version sera appelée par initSmsToggleButton mais ne fera rien
+    // Créer un élément audio
+    const audio = new Audio('../assets/sounds/notification.mp3');
+    audio.volume = 0.5;
+    audio.play().catch(e => console.log('Erreur lors de la lecture du son:', e));
 }
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -2576,6 +2765,8 @@ function showNotification(message, type = 'info') {
 #repairDetailsModal .modal-body {
     padding: 1.5rem;
     background-color: #ffffff;
+    max-height: calc(100vh - 200px);
+    overflow-y: auto;
 }
 
 #repairDetailsModal .modal-footer {
@@ -3070,6 +3261,33 @@ function showNotification(message, type = 'info') {
 /* Animation de transition */
 .fade-in {
     animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Fix pour le scroll du modal - AJOUT POUR RÉSOUDRE LE PROBLÈME DE SCROLL */
+#repairDetailsModal .modal-dialog {
+    height: calc(100vh - 40px);
+    display: flex;
+    flex-direction: column;
+}
+
+#repairDetailsModal .modal-content {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+#repairDetailsModal .modal-body {
+    flex: 1;
+    overflow-y: auto !important;
+    max-height: none !important;
+}
+
+/* Correction pour mobile */
+@media (max-width: 768px) {
+    #repairDetailsModal .modal-dialog {
+        height: calc(100vh - 20px);
+        margin: 10px;
+    }
 }
 
 @keyframes fadeIn {
@@ -4295,8 +4513,16 @@ document.addEventListener('DOMContentLoaded', function() {
 document.addEventListener('DOMContentLoaded', function() {
     // Vérifier si RepairModal est déjà initialisé
     if (window.RepairModal && !window.RepairModal._isInitialized) {
+        console.log('🔄 Initialisation du module RepairModal...');
         window.RepairModal._isInitialized = true;
         window.RepairModal.init();
+        console.log('✅ Module RepairModal initialisé');
+        
+        // Si un modal est en attente d'ouverture, l'ouvrir maintenant
+        if (window.pendingModalId && typeof window.openPendingModal === 'function') {
+            console.log('🔄 Ouverture du modal en attente:', window.pendingModalId);
+            setTimeout(window.openPendingModal, 100);
+        }
     }
 
     // Vérifier si PriceNumpad est déjà initialisé
@@ -4396,7 +4622,30 @@ document.addEventListener('DOMContentLoaded', function() {
             })
             .then(response => {
                 console.log("Réponse brute:", response);
-                return response.json();
+                
+                // Vérifier si la réponse est OK
+                if (!response.ok) {
+                    throw new Error(`Erreur HTTP: ${response.status} ${response.statusText}`);
+                }
+                
+                // Récupérer le texte brut d'abord pour diagnostiquer
+                return response.text().then(text => {
+                    console.log("Contenu de la réponse:", text);
+                    
+                    // Vérifier si la réponse ressemble à du JSON
+                    if (text.trim().startsWith('{') || text.trim().startsWith('[')) {
+                        try {
+                            return JSON.parse(text);
+                        } catch (e) {
+                            console.error("Erreur de parsing JSON:", e);
+                            throw new Error("Réponse invalide du serveur (JSON malformé)");
+                        }
+                    } else {
+                        // La réponse n'est pas du JSON, probablement une erreur PHP
+                        console.error("Réponse non-JSON reçue:", text);
+                        throw new Error("Le serveur a retourné une erreur: " + text.substring(0, 200) + "...");
+                    }
+                });
             })
             .then(data => {
                 console.log("Données de réponse:", data);
@@ -4417,8 +4666,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             })
             .catch(error => {
-                console.error('Erreur:', error);
-                alert('Une erreur est survenue lors de la mise à jour des statuts.');
+                console.error('Erreur complète:', error);
+                alert('Une erreur est survenue lors de la mise à jour des statuts: ' + error.message);
                 updateButton.disabled = false;
                 updateButton.innerHTML = '<i class="fas fa-save me-1"></i>Mettre à jour les statuts';
             });
@@ -4993,6 +5242,70 @@ document.addEventListener('DOMContentLoaded', function() {
         audio.play().catch(e => console.log('Impossible de jouer le son de notification:', e));
     }
 });
+
+// Script pour gérer le bouton d'envoi de SMS
+document.addEventListener('DOMContentLoaded', function() {
+    console.log("Initialisation du bouton SMS...");
+    const smsToggleButton = document.getElementById('smsToggleButton');
+    const sendSmsSwitch = document.getElementById('sendSmsSwitch');
+    
+    if (smsToggleButton && sendSmsSwitch) {
+        // S'assurer que la valeur initiale est correcte
+        if (!sendSmsSwitch.value) {
+            sendSmsSwitch.value = '0';
+        }
+        
+        // Initialiser le bouton avec l'état par défaut
+        const initialState = sendSmsSwitch.value === '1';
+        updateSmsButtonState(initialState);
+        console.log("État initial du SMS:", initialState ? "Activé" : "Désactivé");
+        
+        // Ajouter un écouteur d'événement pour le clic
+        smsToggleButton.addEventListener('click', function() {
+            // Inverser l'état actuel
+            const currentState = sendSmsSwitch.value === '1';
+            const newState = !currentState;
+            
+            // Mettre à jour la valeur de l'input hidden
+            sendSmsSwitch.value = newState ? '1' : '0';
+            console.log("Nouvel état du SMS:", newState ? "Activé" : "Désactivé", "Valeur:", sendSmsSwitch.value);
+            
+            // Mettre à jour l'état du bouton
+            updateSmsButtonState(newState);
+            
+            // Jouer un son de notification pour donner un feedback à l'utilisateur
+            playNotificationSound(newState);
+        });
+    } else {
+        console.error("Éléments du bouton SMS non trouvés:", smsToggleButton, sendSmsSwitch);
+    }
+    
+    // Fonction pour mettre à jour l'apparence du bouton selon l'état
+    function updateSmsButtonState(sendSmsEnabled) {
+        if (sendSmsEnabled) {
+            // SMS activé: bouton vert avec icône d'envoi
+            smsToggleButton.className = 'btn btn-success btn-lg w-100 mb-3';
+            smsToggleButton.style = 'font-weight: bold; font-size: 1.1rem; padding: 15px; transition: all 0.3s ease; box-shadow: 0 4px 8px rgba(0,0,0,0.1); transform: translateY(-2px);';
+            smsToggleButton.innerHTML = '<i class="fas fa-paper-plane me-2"></i> ENVOYER UN SMS AU CLIENT';
+        } else {
+            // SMS désactivé: bouton rouge avec icône d'interdiction
+            smsToggleButton.className = 'btn btn-danger btn-lg w-100 mb-3';
+            smsToggleButton.style = 'font-weight: bold; font-size: 1.1rem; padding: 15px; transition: all 0.3s ease; box-shadow: 0 4px 8px rgba(0,0,0,0.1);';
+            smsToggleButton.innerHTML = '<i class="fas fa-ban me-2"></i> NE PAS ENVOYER DE SMS AU CLIENT';
+        }
+    }
+    
+    // Fonction pour jouer un son de notification
+    function playNotificationSound(success) {
+        try {
+            const audio = new Audio(success ? '../assets/sounds/success.mp3' : '../assets/sounds/beep.mp3');
+            audio.volume = 0.5;
+            audio.play().catch(e => console.log('Impossible de jouer le son de notification:', e));
+        } catch (e) {
+            console.error("Erreur lors de la lecture du son:", e);
+        }
+    }
+});
 </script>
 
 <!-- Scripts pour gérer l'ID du magasin dans les requêtes AJAX -->
@@ -5058,7 +5371,30 @@ window.fetchStatusOptions = function(repairId, categoryId, statusIndicator) {
     
     // Récupérer les statuts disponibles pour cette catégorie
     fetch(`../ajax/get_statuts_by_category.php?category_id=${categoryId}`)
-        .then(response => response.json())
+        .then(response => {
+            console.log('Statut de la réponse HTTP:', response.status);
+            
+            if (!response.ok) {
+                throw new Error(`Erreur HTTP ${response.status}: ${response.statusText}`);
+            }
+            
+            // Vérifier le type de contenu
+            const contentType = response.headers.get('content-type');
+            if (!contentType || !contentType.includes('application/json')) {
+                console.error('Type de contenu invalide:', contentType);
+                throw new Error('Le serveur n\'a pas retourné du JSON valide');
+            }
+            
+            return response.text().then(text => {
+                console.log('Réponse brute du serveur:', text);
+                try {
+                    return JSON.parse(text);
+                } catch (parseError) {
+                    console.error('Erreur de parsing JSON:', parseError);
+                    throw new Error('Réponse JSON invalide du serveur');
+                }
+            });
+        })
         .then(data => {
             console.log('Réponse de get_statuts_by_category:', data);
             
@@ -5143,12 +5479,28 @@ window.fetchStatusOptions = function(repairId, categoryId, statusIndicator) {
         })
         .catch(error => {
             console.error('Erreur lors de la récupération des statuts:', error);
-            if (typeof showNotification === 'function') {
-                showNotification('Erreur de communication avec le serveur', 'danger');
-            } else {
-                alert('Erreur de communication avec le serveur');
+            
+            // Afficher un message d'erreur spécifique selon le type d'erreur
+            let errorMessage = 'Erreur de communication avec le serveur';
+            if (error.message) {
+                errorMessage = error.message;
             }
-            location.reload(); // Recharger la page en cas d'erreur
+            
+            if (typeof showNotification === 'function') {
+                showNotification(`Erreur: ${errorMessage}`, 'danger');
+            } else {
+                alert(`Erreur: ${errorMessage}`);
+            }
+            
+            // Restaurer l'indicateur de statut original
+            if (statusIndicator) {
+                statusIndicator.innerHTML = '<span class="badge bg-warning">Erreur</span>';
+            }
+            
+            // Proposer de recharger la page
+            if (confirm('Une erreur s\'est produite. Voulez-vous recharger la page ?')) {
+                location.reload();
+            }
         });
 };
 
@@ -5356,6 +5708,153 @@ document.addEventListener("DOMContentLoaded", function() {
 
 <!-- Inclusion du script pour l'ajustement du tableau -->
 <script src="../assets/js/reparations-table.js"></script>
+<!-- Inclusion du script pour les fonctions clients -->
+<script src="assets/js/client-functions.js"></script>
+<!-- Inclusion du script pour la sélection de fournisseurs -->
+<script src="assets/js/fournisseur-selector.js"></script>
+
+<!-- Script pour ouverture automatique du modal de détails -->
+<script>
+// Variable globale pour stocker l'ID du modal à ouvrir
+window.pendingModalId = null;
+
+document.addEventListener("DOMContentLoaded", function() {
+    // Vérifier s'il y a un paramètre open_modal dans l'URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const openModalId = urlParams.get('open_modal');
+    
+    if (openModalId) {
+        console.log('🔄 Détection paramètre open_modal pour la réparation ID:', openModalId);
+        window.pendingModalId = openModalId;
+        
+        // Nettoyer l'URL immédiatement pour éviter les problèmes de rechargement
+        const cleanUrl = new URL(window.location);
+        cleanUrl.searchParams.delete('open_modal');
+        window.history.replaceState({}, document.title, cleanUrl);
+        
+        // Fonction pour tenter d'ouvrir le modal
+        function attemptOpenModal(retries = 0) {
+            console.log(`🔄 Tentative d'ouverture modal (essai ${retries + 1}/10)...`);
+            
+            // Vérifier si RepairModal est disponible
+            if (typeof RepairModal !== 'undefined' && RepairModal.loadRepairDetails) {
+                console.log('✅ Module RepairModal trouvé, ouverture du modal...');
+                try {
+                    RepairModal.loadRepairDetails(window.pendingModalId);
+                    window.pendingModalId = null; // Marquer comme traité
+                    return true;
+                } catch (error) {
+                    console.error('❌ Erreur lors de l\'appel RepairModal.loadRepairDetails:', error);
+                }
+            }
+            
+            // Si RepairModal n'est pas disponible, essayer l'initialisation
+            if (typeof RepairModal !== 'undefined' && RepairModal.init && !RepairModal._isInitialized) {
+                console.log('🔄 Initialisation du module RepairModal...');
+                try {
+                    RepairModal.init();
+                    // Réessayer après initialisation
+                    setTimeout(() => attemptOpenModal(retries), 200);
+                    return false;
+                } catch (error) {
+                    console.error('❌ Erreur lors de l\'initialisation RepairModal:', error);
+                }
+            }
+            
+            // Chercher un bouton existant à cliquer
+            const detailsButton = document.querySelector(`[onclick*="RepairModal.loadRepairDetails(${window.pendingModalId})"]`) || 
+                                document.querySelector(`[data-repair-id="${window.pendingModalId}"]`);
+            
+            if (detailsButton) {
+                console.log('✅ Bouton de détails trouvé, clic simulé...');
+                try {
+                    detailsButton.click();
+                    window.pendingModalId = null; // Marquer comme traité
+                    return true;
+                } catch (error) {
+                    console.error('❌ Erreur lors du clic sur le bouton:', error);
+                }
+            }
+            
+            // Fallback : ouvrir le modal directement et charger les données
+            const modal = document.getElementById('repairDetailsModal');
+            if (modal && typeof bootstrap !== 'undefined') {
+                console.log('🔄 Fallback: ouverture directe du modal...');
+                try {
+                    const modalInstance = new bootstrap.Modal(modal);
+                    modalInstance.show();
+                    
+                    // Charger les détails via AJAX
+                    const shopId = document.body.getAttribute('data-shop-id') || '<?php echo $current_shop_id ?? ""; ?>';
+                    const apiUrl = `ajax/get_repair_details.php?id=${window.pendingModalId}${shopId ? '&shop_id=' + shopId : ''}`;
+                    
+                    console.log('🔄 Chargement des détails via:', apiUrl);
+                    
+                    fetch(apiUrl)
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                console.log('✅ Détails chargés avec succès');
+                                // Mettre à jour le titre du modal
+                                const modalTitle = document.getElementById('repairDetailsModalLabel');
+                                if (modalTitle) {
+                                    modalTitle.innerHTML = `<i class="fas fa-tools me-2 text-primary"></i>Réparation #${window.pendingModalId}`;
+                                }
+                                window.pendingModalId = null; // Marquer comme traité
+                            } else {
+                                console.error('❌ Erreur lors du chargement des détails:', data.message);
+                                throw new Error(data.message || 'Erreur lors du chargement');
+                            }
+                        })
+                        .catch(error => {
+                            console.error('❌ Erreur AJAX:', error);
+                            // Afficher un message d'erreur dans le modal
+                            const modalBody = modal.querySelector('.modal-body');
+                            if (modalBody) {
+                                modalBody.innerHTML = `
+                                    <div class="alert alert-danger">
+                                        <h5>Erreur</h5>
+                                        <p>Impossible de charger les détails de la réparation #${window.pendingModalId}</p>
+                                        <p class="small">Erreur: ${error.message}</p>
+                                    </div>
+                                `;
+                            }
+                        });
+                    
+                    return true;
+                } catch (error) {
+                    console.error('❌ Erreur lors de l\'ouverture directe du modal:', error);
+                }
+            }
+            
+            // Si on arrive ici, réessayer si on n'a pas atteint le maximum
+            if (retries < 10) {
+                setTimeout(() => attemptOpenModal(retries + 1), 300 + (retries * 100));
+                return false;
+            } else {
+                console.error('❌ Impossible d\'ouvrir le modal après 10 tentatives');
+                alert(`Impossible d'ouvrir automatiquement les détails de la réparation #${window.pendingModalId}. Vous pouvez cliquer manuellement sur la réparation pour voir ses détails.`);
+                window.pendingModalId = null;
+                return false;
+            }
+        }
+        
+        // Démarrer les tentatives d'ouverture avec un délai initial
+        setTimeout(() => attemptOpenModal(), 800);
+    }
+});
+
+// Fonction de secours pour ouvrir le modal en cas d'échec
+window.openPendingModal = function() {
+    if (window.pendingModalId) {
+        console.log('🔄 Fonction de secours appelée pour la réparation:', window.pendingModalId);
+        if (typeof RepairModal !== 'undefined' && RepairModal.loadRepairDetails) {
+            RepairModal.loadRepairDetails(window.pendingModalId);
+            window.pendingModalId = null;
+        }
+    }
+};
+</script>
 
 </body>
 </html>

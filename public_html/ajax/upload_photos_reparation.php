@@ -28,7 +28,7 @@ $description = isset($_POST['description']) ? trim($_POST['description']) : '';
 
 try {
     // Vérifier si la réparation existe
-    $check_stmt = $pdo->prepare("SELECT id FROM reparations WHERE id = ?");
+    $check_stmt = $shop_pdo->prepare("SELECT id FROM reparations WHERE id = ?");
     $check_stmt->execute([$reparation_id]);
     if (!$check_stmt->fetch()) {
         throw new Exception('Réparation non trouvée');
@@ -68,7 +68,7 @@ try {
                 $uploaded_files[] = $file_url;
                 
                 // Ajouter l'entrée à la table photos_reparation
-                $insert_stmt = $pdo->prepare("INSERT INTO photos_reparation (reparation_id, url, description) VALUES (?, ?, ?)");
+                $insert_stmt = $shop_pdo->prepare("INSERT INTO photos_reparation (reparation_id, url, description) VALUES (?, ?, ?)");
                 $insert_stmt->execute([$reparation_id, $file_url, $description]);
             } else {
                 $errors[] = "Erreur lors de l'enregistrement de l'image";
@@ -102,7 +102,7 @@ try {
                     $uploaded_files[] = $file_url;
                     
                     // Ajouter l'entrée à la table photos_reparation
-                    $insert_stmt = $pdo->prepare("INSERT INTO photos_reparation (reparation_id, url, description) VALUES (?, ?, ?)");
+                    $insert_stmt = $shop_pdo->prepare("INSERT INTO photos_reparation (reparation_id, url, description) VALUES (?, ?, ?)");
                     $insert_stmt->execute([$reparation_id, $file_url, $description]);
                 } else {
                     $errors[] = "Erreur lors du téléchargement de $file_name";

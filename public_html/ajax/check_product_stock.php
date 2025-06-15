@@ -16,7 +16,7 @@ $barcode = cleanInput($_GET['barcode']);
 
 try {
     // Vérifier si le produit existe dans la table stock
-    $stmt = $pdo->prepare("SELECT id, name, quantity, price, category, description FROM stock WHERE barcode = ?");
+    $stmt = $shop_pdo->prepare("SELECT id, name, quantity, price, category, description FROM stock WHERE barcode = ?");
     $stmt->execute([$barcode]);
     
     if ($product = $stmt->fetch(PDO::FETCH_ASSOC)) {

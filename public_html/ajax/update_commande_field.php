@@ -23,7 +23,7 @@ require_once '../includes/functions.php';
 error_log('Requête reçue dans update_commande_field.php');
 
 // Vérification de la connexion à la base de données
-if (!isset($pdo) || $pdo === null) {
+if (!isset($shop_pdo) || $shop_pdo === null) {
     header('Content-Type: application/json');
     echo json_encode(['success' => false, 'message' => 'Erreur de connexion à la base de données']);
     error_log('Erreur: connexion à la base de données non établie dans update_commande_field.php');
@@ -73,7 +73,7 @@ if ($field_name === 'prix_estime') {
 } elseif ($field_name === 'fournisseur_id') {
     // Vérifier que le fournisseur existe
     try {
-        $stmt = $pdo->prepare("SELECT id FROM fournisseurs WHERE id = ?");
+        $stmt = $shop_pdo->prepare("SELECT id FROM fournisseurs WHERE id = ?");
         $stmt->execute([$field_value]);
         if ($stmt->rowCount() === 0) {
             header('Content-Type: application/json');
@@ -102,7 +102,7 @@ try {
     
     // Construction de la requête SQL
     $sql = "UPDATE commandes_pieces SET $field_name = :value, date_modification = NOW() WHERE id = :id";
-    $stmt = $pdo->prepare($sql);
+    $stmt = $shop_pdo->prepare($sql);
     
     // Exécution de la requête
     $result = $stmt->execute([
@@ -121,16 +121,16 @@ try {
             ][$field_name] ?? $field_name;
             
             // Vérifier si la table historique_modifications existe
-            $check_table = $pdo->query("SHOW TABLES LIKE 'historique_modifications'");
+            $check_table = $shop_pdo->query("SHOW TABLES LIKE 'historique_modifications'");
             if ($check_table->rowCount() > 0) {
-                $stmt_history = $pdo->prepare("
+                $stmt_history = $shop_pdo->prepare("
                     INSERT INTO historique_modifications 
                     (commande_id, user_id, field_name, old_value, new_value, date_creation) 
                     VALUES (?, ?, ?, ?, ?, NOW())
                 ");
                 
                 // Récupérer l'ancienne valeur pour l'historique
-                $stmt_old = $pdo->prepare("SELECT $field_name FROM commandes_pieces WHERE id = ?");
+                $stmt_old = $shop_pdo->prepare("SELECT $field_name FROM commandes_pieces WHERE id = ?");
                 $stmt_old->execute([$commande_id]);
                 $old_value = $stmt_old->fetchColumn();
                 

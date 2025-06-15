@@ -63,14 +63,16 @@ if (($data['motif'] === 'Prêté à un partenaire' || $data['motif'] === 'Retour
     exit;
 }
 
-// Vérifier que la connexion à la base de données est établie
-if (!isset($pdo) || $pdo === null) {
-    http_response_code(500);
-    echo json_encode(['error' => 'Erreur de connexion à la base de données']);
-    exit;
-}
-
 try {
+    // Utiliser la connexion à la base de données du magasin actuel
+    $shop_pdo = getShopDBConnection();
+    
+    // Vérifier que la connexion à la base de données est établie
+    if (!isset($shop_pdo) || !($shop_pdo instanceof PDO)) {
+        http_response_code(500);
+        echo json_encode(['error' => 'Erreur de connexion à la base de données du magasin']);
+        exit;
+    }
     $produit_id = (int)$data['produit_id'];
     $type = $data['type_mouvement'];
     $quantite = (int)$data['quantite'];
@@ -80,7 +82,7 @@ try {
     
     // Vérifier le stock disponible si c'est une sortie
     if ($type === 'sortie') {
-        $stmt = $pdo->prepare("SELECT quantite, nom, prix_achat FROM produits WHERE id = ?");
+        $stmt = $shop_pdo->prepare("SELECT quantite, nom, prix_achat FROM produits WHERE id = ?");
         $stmt->execute([$produit_id]);
         $produit = $stmt->fetch();
         
@@ -105,7 +107,7 @@ try {
         }
     } else {
         // Pour les entrées, récupérer quand même le nom du produit et son prix d'achat
-        $stmt = $pdo->prepare("SELECT nom, prix_achat FROM produits WHERE id = ?");
+        $stmt = $shop_pdo->prepare("SELECT nom, prix_achat FROM produits WHERE id = ?");
         $stmt->execute([$produit_id]);
         $produit = $stmt->fetch();
         
@@ -122,12 +124,12 @@ try {
     }
     
     // Commencer une transaction
-    $pdo->beginTransaction();
+    $shop_pdo->beginTransaction();
     
     // Enregistrer le mouvement de stock
     $sql = "INSERT INTO mouvements_stock (produit_id, type_mouvement, quantite, motif, user_id, date_mouvement) 
             VALUES (?, ?, ?, ?, ?, NOW())";
-    $stmt = $pdo->prepare($sql);
+    $stmt = $shop_pdo->prepare($sql);
     
     // Si l'utilisateur n'est pas connecté, utiliser un ID par défaut
     $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 1;
@@ -151,20 +153,20 @@ try {
         $sql = "INSERT INTO transactions_partenaires 
                 (partenaire_id, type, montant, description, date_transaction) 
                 VALUES (?, ?, ?, ?, NOW())";
-        $stmt = $pdo->prepare($sql);
+        $stmt = $shop_pdo->prepare($sql);
         $stmt->execute([$partenaire_id, $type_transaction, $montant_total, $description]);
         
         // Mettre à jour le solde du partenaire
         $montant_final = $type_transaction === 'REMBOURSEMENT' ? -$montant_total : $montant_total;
         
         // Vérifier si un solde existe déjà pour ce partenaire
-        $stmt = $pdo->prepare("SELECT solde_actuel FROM soldes_partenaires WHERE partenaire_id = ?");
+        $stmt = $shop_pdo->prepare("SELECT solde_actuel FROM soldes_partenaires WHERE partenaire_id = ?");
         $stmt->execute([$partenaire_id]);
         $solde = $stmt->fetch();
         
         if ($solde) {
             // Mettre à jour le solde existant
-            $stmt = $pdo->prepare("
+            $stmt = $shop_pdo->prepare("
                 UPDATE soldes_partenaires 
                 SET solde_actuel = solde_actuel + ?, derniere_mise_a_jour = NOW() 
                 WHERE partenaire_id = ?
@@ -172,7 +174,7 @@ try {
             $stmt->execute([$montant_final, $partenaire_id]);
         } else {
             // Créer un nouveau solde
-            $stmt = $pdo->prepare("
+            $stmt = $shop_pdo->prepare("
                 INSERT INTO soldes_partenaires 
                 (partenaire_id, solde_actuel, derniere_mise_a_jour) 
                 VALUES (?, ?, NOW())
@@ -187,16 +189,16 @@ try {
     } else {
         $sql = "UPDATE produits SET quantite = quantite - ?, updated_at = NOW() WHERE id = ?";
     }
-    $stmt = $pdo->prepare($sql);
+    $stmt = $shop_pdo->prepare($sql);
     $stmt->execute([$quantite, $produit_id]);
     
     // Récupérer le stock mis à jour
-    $stmt = $pdo->prepare("SELECT id, nom, reference, quantite FROM produits WHERE id = ?");
+    $stmt = $shop_pdo->prepare("SELECT id, nom, reference, quantite FROM produits WHERE id = ?");
     $stmt->execute([$produit_id]);
     $produit_updated = $stmt->fetch();
     
     // Valider la transaction
-    $pdo->commit();
+    $shop_pdo->commit();
     
     // Retourner une réponse de succès
     echo json_encode([
@@ -207,8 +209,8 @@ try {
     
 } catch (PDOException $e) {
     // Annuler la transaction en cas d'erreur
-    if ($pdo->inTransaction()) {
-        $pdo->rollBack();
+    if ($shop_pdo->inTransaction()) {
+        $shop_pdo->rollBack();
     }
     
     // Enregistrer l'erreur dans les logs

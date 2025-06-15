@@ -6,7 +6,8 @@ if (!isset($_SESSION['user_id'])) {
 
 // Récupérer les catégories
 try {
-    $stmt = $pdo->prepare("
+    $shop_pdo = getShopDBConnection();
+$stmt = $shop_pdo->prepare("
         SELECT c.*, COUNT(p.id) as nb_produits 
         FROM categories c 
         LEFT JOIN produits p ON c.id = p.categorie_id 

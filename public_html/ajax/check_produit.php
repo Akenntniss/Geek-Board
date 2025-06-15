@@ -26,7 +26,7 @@ if (!isset($_POST['code_barre']) || empty($_POST['code_barre'])) {
 }
 
 // Vérifier que la connexion à la base de données est établie
-if (!isset($pdo) || $pdo === null) {
+if (!isset($shop_pdo) || $shop_pdo === null) {
     http_response_code(500);
     echo json_encode(['error' => 'Erreur de connexion à la base de données', 'exists' => false]);
     exit;
@@ -35,7 +35,7 @@ if (!isset($pdo) || $pdo === null) {
 try {
     $code_barre = trim($_POST['code_barre']);
     
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         SELECT *
         FROM produits
         WHERE reference = ?

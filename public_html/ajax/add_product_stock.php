@@ -43,7 +43,7 @@ if (empty($barcode) || empty($name) || $quantity < 0) {
 
 try {
     // Vérifier si le produit existe déjà
-    $stmt = $pdo->prepare("SELECT id FROM stock WHERE barcode = ?");
+    $stmt = $shop_pdo->prepare("SELECT id FROM stock WHERE barcode = ?");
     $stmt->execute([$barcode]);
     
     if ($stmt->fetch()) {
@@ -55,19 +55,19 @@ try {
     }
     
     // Commencer une transaction
-    $pdo->beginTransaction();
+    $shop_pdo->beginTransaction();
     
     // Ajouter le nouveau produit
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         INSERT INTO stock (barcode, name, category, quantity, price, description, date_created)
         VALUES (?, ?, ?, ?, ?, ?, NOW())
     ");
     $stmt->execute([$barcode, $name, $category, $quantity, $price, $description]);
     
-    $productId = $pdo->lastInsertId();
+    $productId = $shop_pdo->lastInsertId();
     
     // Enregistrer le mouvement initial dans l'historique
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         INSERT INTO stock_history (product_id, action, quantity, note, user_id, date_created)
         VALUES (?, 'initial', ?, 'Création initiale du produit', ?, NOW())
     ");
@@ -75,7 +75,7 @@ try {
     $stmt->execute([$productId, $quantity, $userId]);
     
     // Valider la transaction
-    $pdo->commit();
+    $shop_pdo->commit();
     
     echo json_encode([
         'success' => true,
@@ -85,8 +85,8 @@ try {
     
 } catch (PDOException $e) {
     // Annuler la transaction en cas d'erreur
-    if ($pdo->inTransaction()) {
-        $pdo->rollBack();
+    if ($shop_pdo->inTransaction()) {
+        $shop_pdo->rollBack();
     }
     
     echo json_encode([

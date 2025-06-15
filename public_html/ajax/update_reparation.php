@@ -49,7 +49,7 @@ try {
     
     // Avant de traiter les données, vérifier la structure de la table
     try {
-        $schema_stmt = $pdo->prepare("DESCRIBE reparations");
+        $schema_stmt = $shop_pdo->prepare("DESCRIBE reparations");
         $schema_stmt->execute();
         $columns = $schema_stmt->fetchAll(PDO::FETCH_COLUMN);
         file_put_contents($logFile, "Colonnes de la table reparations: " . print_r($columns, true) . "\n", FILE_APPEND);
@@ -140,7 +140,7 @@ try {
     file_put_contents($logFile, "Params: " . print_r($params, true) . "\n", FILE_APPEND);
     
     // Exécuter la requête
-    $stmt = $pdo->prepare($sql);
+    $stmt = $shop_pdo->prepare($sql);
     $success = $stmt->execute($params);
     
     if ($success) {

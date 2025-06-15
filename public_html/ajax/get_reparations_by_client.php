@@ -26,7 +26,7 @@ error_log("Requête pour récupérer les réparations du client ID: " . $client_
 
 try {
     // Vérifier la connexion à la base de données
-    if (!isset($pdo) || !($pdo instanceof PDO)) {
+    if (!isset($shop_pdo) || !($shop_pdo instanceof PDO)) {
         throw new Exception('Connexion à la base de données non disponible');
     }
     
@@ -46,10 +46,10 @@ try {
         LIMIT 50
     ";
     
-    $stmt = $pdo->prepare($sql);
+    $stmt = $shop_pdo->prepare($sql);
     
     if (!$stmt) {
-        throw new Exception('Erreur de préparation de la requête: ' . implode(' ', $pdo->errorInfo()));
+        throw new Exception('Erreur de préparation de la requête: ' . implode(' ', $shop_pdo->errorInfo()));
     }
     
     // Lier le paramètre

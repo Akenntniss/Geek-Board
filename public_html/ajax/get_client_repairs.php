@@ -24,7 +24,7 @@ $client_id = intval($_GET['client_id']);
 
 try {
     // Requête pour récupérer les réparations du client
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         SELECT id, type_appareil, marque, modele, statut, date_creation
         FROM reparations
         WHERE client_id = :client_id

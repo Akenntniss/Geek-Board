@@ -30,7 +30,7 @@ try {
     require_once '../config/database.php';
     
     // Connexion à la base de données
-    $pdo = new PDO(
+    $shop_pdo = new PDO(
         "mysql:host=" . DB_HOST . ";port=" . DB_PORT . ";dbname=" . DB_NAME . ";charset=utf8mb4",
         DB_USER,
         DB_PASS,
@@ -41,7 +41,7 @@ try {
     $sql = "INSERT INTO bug_reports (user_id, description, page_url, user_agent, priorite, status, date_creation) 
             VALUES (?, ?, ?, ?, 'basse', 'nouveau', NOW())";
             
-    $stmt = $pdo->prepare($sql);
+    $stmt = $shop_pdo->prepare($sql);
     $success = $stmt->execute([$user_id, $description, $page_url, $user_agent]);
     
     if ($success) {

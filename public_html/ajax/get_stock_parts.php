@@ -7,7 +7,7 @@ header('Content-Type: application/json');
 try {
     // Récupérer les pièces disponibles dans le stock (quantité > 0)
     $sql = "SELECT id, nom, quantite, reference FROM pieces_detachees WHERE quantite > 0 ORDER BY nom";
-    $stmt = $pdo->prepare($sql);
+    $stmt = $shop_pdo->prepare($sql);
     $stmt->execute();
     $pieces = $stmt->fetchAll(PDO::FETCH_ASSOC);
 

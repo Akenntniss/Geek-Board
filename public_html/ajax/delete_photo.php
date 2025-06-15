@@ -13,7 +13,7 @@ try {
     $photo_id = (int)$_POST['photo_id'];
 
     // Récupérer les informations de la photo
-    $stmt = $pdo->prepare("SELECT url FROM photos_reparation WHERE id = ?");
+    $stmt = $shop_pdo->prepare("SELECT url FROM photos_reparation WHERE id = ?");
     $stmt->execute([$photo_id]);
     $photo = $stmt->fetch();
 
@@ -28,7 +28,7 @@ try {
     }
 
     // Supprimer l'entrée dans la base de données
-    $stmt = $pdo->prepare("DELETE FROM photos_reparation WHERE id = ?");
+    $stmt = $shop_pdo->prepare("DELETE FROM photos_reparation WHERE id = ?");
     $stmt->execute([$photo_id]);
 
     echo json_encode([

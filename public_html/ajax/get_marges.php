@@ -9,7 +9,7 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 try {
-    $stmt = $pdo->query("SELECT * FROM marges_estimees ORDER BY categorie, description");
+    $stmt = $shop_pdo->query("SELECT * FROM marges_estimees ORDER BY categorie, description");
     $marges = $stmt->fetchAll(PDO::FETCH_ASSOC);
     
     header('Content-Type: application/json');

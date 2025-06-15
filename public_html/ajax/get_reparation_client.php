@@ -29,7 +29,7 @@ $reparation_id = (int)$_GET['reparation_id'];
 
 try {
     // Récupérer les informations du client associé à la réparation
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         SELECT c.id, c.nom, c.prenom, c.telephone, c.email
         FROM clients c
         JOIN reparations r ON c.id = r.client_id

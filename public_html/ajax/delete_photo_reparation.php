@@ -31,7 +31,7 @@ require_once __DIR__ . '/../includes/functions.php';
 
 try {
     // Vérifier si la réparation existe
-    $check_stmt = $pdo->prepare("SELECT photos FROM reparations WHERE id = ?");
+    $check_stmt = $shop_pdo->prepare("SELECT photos FROM reparations WHERE id = ?");
     $check_stmt->execute([$reparation_id]);
     $reparation = $check_stmt->fetch();
     
@@ -54,7 +54,7 @@ try {
     }
 
     // Mettre à jour la base de données
-    $update_stmt = $pdo->prepare("UPDATE reparations SET photos = ? WHERE id = ?");
+    $update_stmt = $shop_pdo->prepare("UPDATE reparations SET photos = ? WHERE id = ?");
     $update_stmt->execute([json_encode(array_values($photos)), $reparation_id]);
 
     echo json_encode([

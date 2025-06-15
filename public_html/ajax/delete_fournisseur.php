@@ -22,7 +22,7 @@ if (!$data || !isset($data['id'])) {
 
 try {
     // Préparer et exécuter la requête de suppression
-    $stmt = $pdo->prepare("DELETE FROM fournisseurs WHERE id = ?");
+    $stmt = $shop_pdo->prepare("DELETE FROM fournisseurs WHERE id = ?");
     $result = $stmt->execute([$data['id']]);
 
     if ($result && $stmt->rowCount() > 0) {

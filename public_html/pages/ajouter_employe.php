@@ -30,7 +30,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (empty($errors)) {
         try {
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-            $stmt = $pdo->prepare("
+            $shop_pdo = getShopDBConnection();
+$stmt = $shop_pdo->prepare("
                 INSERT INTO users (username, password, full_name, role) 
                 VALUES (?, ?, ?, ?)
             ");

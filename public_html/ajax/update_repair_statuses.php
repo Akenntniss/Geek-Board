@@ -3,6 +3,9 @@
 require_once dirname(__DIR__) . '/config/database.php';
 require_once dirname(__DIR__) . '/includes/functions.php';
 
+// Obtenir la connexion à la base de données de la boutique
+$shop_pdo = getShopDBConnection();
+
 // Démarrer la session si elle n'est pas déjà démarrée
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
@@ -38,7 +41,7 @@ if (!isset($data['status']) || !in_array($data['status'], ['restitue', 'annule',
 }
 
 // Vérifier que la connexion à la base de données est établie
-if (!isset($pdo) || $pdo === null) {
+if (!isset($shop_pdo) || $shop_pdo === null) {
     http_response_code(500);
     echo json_encode(['success' => false, 'error' => 'Erreur de connexion à la base de données']);
     exit;
@@ -52,7 +55,7 @@ try {
     switch ($data['status']) {
         case 'restitue':
             // Récupérer le code du statut "Restitué"
-            $stmt = $pdo->prepare("SELECT code FROM statuts WHERE id = 11"); // ID 11 pour Restitué
+            $stmt = $shop_pdo->prepare("SELECT code FROM statuts WHERE id = 11"); // ID 11 pour Restitué
             $stmt->execute();
             $result = $stmt->fetch();
             $statut_code = $result ? $result['code'] : 'RESTITUE';
@@ -60,7 +63,7 @@ try {
             break;
         case 'annule':
             // Récupérer le code du statut "Annulé"
-            $stmt = $pdo->prepare("SELECT code FROM statuts WHERE id = 12"); // ID 12 pour Annulé
+            $stmt = $shop_pdo->prepare("SELECT code FROM statuts WHERE id = 12"); // ID 12 pour Annulé
             $stmt->execute();
             $result = $stmt->fetch();
             $statut_code = $result ? $result['code'] : 'ANNULE';
@@ -68,7 +71,7 @@ try {
             break;
         case 'gardiennage':
             // Récupérer le code du statut "Gardiennage"
-            $stmt = $pdo->prepare("SELECT code FROM statuts WHERE id = 13"); // ID 13 pour Gardiennage
+            $stmt = $shop_pdo->prepare("SELECT code FROM statuts WHERE id = 13"); // ID 13 pour Gardiennage
             $stmt->execute();
             $result = $stmt->fetch();
             $statut_code = $result ? $result['code'] : 'GARDIENNAGE';
@@ -81,7 +84,7 @@ try {
     }
     
     // Commencer une transaction
-    $pdo->beginTransaction();
+    $shop_pdo->beginTransaction();
     
     // Mettre à jour le statut de chaque réparation
     $repair_ids = array_map('intval', $data['repair_ids']); // Convertir en entiers pour sécurité
@@ -89,7 +92,7 @@ try {
     
     foreach ($repair_ids as $repair_id) {
         // Mettre à jour le statut
-        $stmt = $pdo->prepare("UPDATE reparations SET statut = ?, updated_at = NOW() WHERE id = ?");
+        $stmt = $shop_pdo->prepare("UPDATE reparations SET statut = ?, updated_at = NOW() WHERE id = ?");
         $result = $stmt->execute([$statut_code, $repair_id]);
         
         if ($result) {
@@ -97,7 +100,7 @@ try {
             
             // Enregistrer l'historique du changement de statut
             $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 1;
-            $stmt = $pdo->prepare("INSERT INTO historique_statuts (reparation_id, statut_id, user_id, date_changement, commentaire) 
+            $stmt = $shop_pdo->prepare("INSERT INTO historique_statuts (reparation_id, statut_id, user_id, date_changement, commentaire) 
                                 VALUES (?, ?, ?, NOW(), ?)");
             $commentaire = "Mise à jour en lot via l'interface de gestion";
             $stmt->execute([$repair_id, $statut_id, $user_id, $commentaire]);
@@ -105,7 +108,7 @@ try {
     }
     
     // Valider la transaction
-    $pdo->commit();
+    $shop_pdo->commit();
     
     // Retourner une réponse de succès
     echo json_encode([
@@ -116,8 +119,8 @@ try {
     
 } catch (Exception $e) {
     // Annuler la transaction en cas d'erreur
-    if ($pdo->inTransaction()) {
-        $pdo->rollBack();
+    if ($shop_pdo->inTransaction()) {
+        $shop_pdo->rollBack();
     }
     
     // Enregistrer l'erreur dans les logs

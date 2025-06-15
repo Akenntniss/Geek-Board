@@ -10,7 +10,8 @@ $user_id = $_SESSION['user_id'];
 
 // Vérifier si l'utilisateur a déjà une réparation active
 try {
-    $stmt = $pdo->prepare("
+    $shop_pdo = getShopDBConnection();
+$stmt = $shop_pdo->prepare("
         SELECT active_repair_id FROM users WHERE id = ? AND active_repair_id IS NOT NULL
     ");
     $stmt->execute([$user_id]);
@@ -21,7 +22,7 @@ try {
         $active_repair_id = $active_repair_result['active_repair_id'];
         
         // Récupérer les détails de la réparation active
-        $stmt = $pdo->prepare("
+        $stmt = $shop_pdo->prepare("
             SELECT r.*, c.nom as client_nom, c.prenom as client_prenom, s.nom as statut_nom
             FROM reparations r
             JOIN clients c ON r.client_id = c.id
@@ -43,7 +44,7 @@ try {
 
 // Récupérer les informations de la réparation
 try {
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         SELECT r.*, c.nom as client_nom, c.prenom as client_prenom, c.telephone as client_telephone, c.id as client_id
         FROM reparations r
         JOIN clients c ON r.client_id = c.id
@@ -67,7 +68,7 @@ $client_id = $reparation['client_id'];
 
 try {
     // Récupérer les réparations en cours pour ce client (non terminées, non annulées)
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         SELECT r.id, r.type_appareil, r.modele, r.statut, r.date_reception
         FROM reparations r
         WHERE r.client_id = ? 
@@ -87,7 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['demarrer'])) {
         try {
             // Vérifier si l'utilisateur a déjà une réparation active
-            $stmt = $pdo->prepare("
+            $stmt = $shop_pdo->prepare("
                 SELECT active_repair_id FROM users WHERE id = ? AND active_repair_id IS NOT NULL AND active_repair_id != ?
             ");
             $stmt->execute([$user_id, $reparation_id]);
@@ -107,7 +108,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
             
             // Mettre à jour le statut de la réparation et assigner l'employé
-            $stmt = $pdo->prepare("
+            $stmt = $shop_pdo->prepare("
                 UPDATE reparations
                 SET statut = ?, 
                     employe_id = ?,
@@ -117,7 +118,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $stmt->execute([$new_status, $user_id, $reparation_id]);
             
             // Mettre à jour les informations de l'utilisateur
-            $stmt = $pdo->prepare("
+            $stmt = $shop_pdo->prepare("
                 UPDATE users
                 SET active_repair_id = ?, 
                     techbusy = 1
@@ -126,7 +127,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $stmt->execute([$reparation_id, $user_id]);
             
             // Enregistrer dans les logs
-            $stmt = $pdo->prepare("
+            $stmt = $shop_pdo->prepare("
                 INSERT INTO reparation_logs 
                 (reparation_id, employe_id, action_type, details, date_action)
                 VALUES (?, ?, 'attribution', ?, NOW())

@@ -5,11 +5,9 @@ if (!isset($_SESSION['user_id'])) {
     exit;
 }
 
-// Connexion à la base de données
-require_once 'includes/db.php';
-
 // Récupérer les catégories
-$stmt = $db->prepare("SELECT * FROM kb_categories ORDER BY name");
+$shop_pdo = getShopDBConnection();
+$stmt = $shop_pdo->prepare("SELECT * FROM kb_categories ORDER BY name");
 $stmt->execute();
 $categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -37,17 +35,17 @@ if ($category_id > 0) {
 
 $sql .= " ORDER BY a.updated_at DESC";
 
-$stmt = $db->prepare($sql);
+$stmt = $shop_pdo->prepare($sql);
 $stmt->execute($params);
 $articles = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // Récupérer les articles les plus consultés
-$stmt = $db->prepare("SELECT * FROM kb_articles ORDER BY views DESC LIMIT 5");
+$stmt = $shop_pdo->prepare("SELECT * FROM kb_articles ORDER BY views DESC LIMIT 5");
 $stmt->execute();
 $most_viewed = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // Récupérer les articles récemment mis à jour
-$stmt = $db->prepare("SELECT * FROM kb_articles ORDER BY updated_at DESC LIMIT 5");
+$stmt = $shop_pdo->prepare("SELECT * FROM kb_articles ORDER BY updated_at DESC LIMIT 5");
 $stmt->execute();
 $recent_articles = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
@@ -92,7 +90,7 @@ $recent_articles = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 <?php echo htmlspecialchars($category['name']); ?>
                             </div>
                             <span class="badge bg-primary rounded-pill"><?php 
-                                $stmt = $db->prepare("SELECT COUNT(*) FROM kb_articles WHERE category_id = ?");
+                                $stmt = $shop_pdo->prepare("SELECT COUNT(*) FROM kb_articles WHERE category_id = ?");
                                 $stmt->execute([$category['id']]);
                                 echo $stmt->fetchColumn();
                             ?></span>

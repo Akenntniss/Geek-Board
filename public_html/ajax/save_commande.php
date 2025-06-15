@@ -44,7 +44,7 @@ try {
     // Récupérer le client_id à partir de la réparation
     $client_id = 0;
     if ($repair_id > 0) {
-        $stmt = $pdo->prepare("SELECT client_id FROM reparations WHERE id = ?");
+        $stmt = $shop_pdo->prepare("SELECT client_id FROM reparations WHERE id = ?");
         $stmt->execute([$repair_id]);
         $reparation = $stmt->fetch(PDO::FETCH_ASSOC);
         if ($reparation) {
@@ -61,7 +61,7 @@ try {
     $numero_commande = 'CMD-' . date('Ymd') . '-' . uniqid();
 
     // Enregistrer la commande dans la base de données
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         INSERT INTO commandes_pieces (
             numero_commande, 
             client_id, 
@@ -92,11 +92,11 @@ try {
         throw new Exception('Erreur lors de l\'enregistrement de la commande: ' . $error[2]);
     }
 
-    $commande_id = $pdo->lastInsertId();
+    $commande_id = $shop_pdo->lastInsertId();
 
     // Si la commande est associée à une réparation, mettre à jour le statut de la réparation
     if ($repair_id > 0) {
-        $stmt = $pdo->prepare("UPDATE reparations SET statut = 'nouvelle_commande', statut_categorie = 1 WHERE id = ?");
+        $stmt = $shop_pdo->prepare("UPDATE reparations SET statut = 'nouvelle_commande', statut_categorie = 1 WHERE id = ?");
         
         if (!$stmt->execute([$repair_id])) {
             $error = $stmt->errorInfo();

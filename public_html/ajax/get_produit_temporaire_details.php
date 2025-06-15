@@ -23,7 +23,7 @@ try {
               JOIN produits p ON pt.produit_id = p.id 
               WHERE pt.id = :produit_id";
     
-    $stmt = $pdo->prepare($query);
+    $stmt = $shop_pdo->prepare($query);
     $stmt->execute(['produit_id' => $produit_id]);
     $produit = $stmt->fetch(PDO::FETCH_ASSOC);
     
@@ -39,7 +39,7 @@ try {
                   FROM colis 
                   WHERE id = :colis_id";
         
-        $stmt = $pdo->prepare($query);
+        $stmt = $shop_pdo->prepare($query);
         $stmt->execute(['colis_id' => $produit['colis_id']]);
         $colis = $stmt->fetch(PDO::FETCH_ASSOC);
     }
@@ -51,7 +51,7 @@ try {
               WHERE v.produit_temporaire_id = :produit_id 
               ORDER BY v.date_verification DESC";
     
-    $stmt = $pdo->prepare($query);
+    $stmt = $shop_pdo->prepare($query);
     $stmt->execute(['produit_id' => $produit_id]);
     $verifications = $stmt->fetchAll(PDO::FETCH_ASSOC);
     

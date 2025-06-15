@@ -29,7 +29,7 @@ if (!$data || !isset($data['endpoint']) || !isset($data['keys'])) {
 
 try {
     // Connexion à la base de données
-    $pdo = new PDO(
+    $shop_pdo = new PDO(
         "mysql:host=" . DB_HOST . ";port=" . DB_PORT . ";dbname=" . DB_NAME . ";charset=utf8mb4",
         DB_USER,
         DB_PASS,
@@ -37,7 +37,7 @@ try {
     );
 
     // Vérifier si un enregistrement existe déjà pour cet endpoint
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         SELECT id FROM push_subscriptions 
         WHERE endpoint = ? AND user_id = ?
     ");
@@ -46,7 +46,7 @@ try {
 
     if ($existingSubscription) {
         // Mettre à jour l'abonnement existant
-        $stmt = $pdo->prepare("
+        $stmt = $shop_pdo->prepare("
             UPDATE push_subscriptions 
             SET auth_key = ?, p256dh_key = ?, updated_at = NOW() 
             WHERE id = ?
@@ -65,7 +65,7 @@ try {
         ]);
     } else {
         // Créer un nouvel abonnement
-        $stmt = $pdo->prepare("
+        $stmt = $shop_pdo->prepare("
             INSERT INTO push_subscriptions 
             (user_id, endpoint, auth_key, p256dh_key, created_at, updated_at) 
             VALUES (?, ?, ?, ?, NOW(), NOW())
@@ -81,7 +81,7 @@ try {
         echo json_encode([
             'success' => true, 
             'message' => 'Nouvel abonnement créé avec succès',
-            'subscription_id' => $pdo->lastInsertId()
+            'subscription_id' => $shop_pdo->lastInsertId()
         ]);
     }
 } catch (PDOException $e) {

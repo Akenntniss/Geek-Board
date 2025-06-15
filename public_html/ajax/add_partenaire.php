@@ -38,10 +38,10 @@ if (!$nom) {
 }
 
 try {
-    $pdo->beginTransaction();
+    $shop_pdo->beginTransaction();
 
     // Insérer le nouveau partenaire
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         INSERT INTO partenaires 
         (nom, email, telephone, adresse) 
         VALUES (?, ?, ?, ?)
@@ -49,15 +49,15 @@ try {
     $stmt->execute([$nom, $email, $telephone, $adresse]);
 
     // Créer un solde initial à 0
-    $partenaire_id = $pdo->lastInsertId();
-    $stmt = $pdo->prepare("
+    $partenaire_id = $shop_pdo->lastInsertId();
+    $stmt = $shop_pdo->prepare("
         INSERT INTO soldes_partenaires 
         (partenaire_id, solde_actuel) 
         VALUES (?, 0)
     ");
     $stmt->execute([$partenaire_id]);
 
-    $pdo->commit();
+    $shop_pdo->commit();
 
     header('Content-Type: application/json');
     echo json_encode([
@@ -67,8 +67,8 @@ try {
     ]);
 
 } catch (PDOException $e) {
-    if ($pdo->inTransaction()) {
-        $pdo->rollBack();
+    if ($shop_pdo->inTransaction()) {
+        $shop_pdo->rollBack();
     }
     error_log("Erreur lors de l'ajout du partenaire : " . $e->getMessage());
     header('Content-Type: application/json');

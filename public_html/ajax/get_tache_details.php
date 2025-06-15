@@ -27,7 +27,7 @@ $tache_id = (int)$_GET['id'];
 
 try {
     // Récupération des détails de la tâche
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         SELECT t.*, 
                u.full_name as employe_nom,
                c.full_name as createur_nom
@@ -46,7 +46,7 @@ try {
     }
     
     // Récupération des commentaires
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         SELECT c.*, u.full_name as user_nom
         FROM commentaires_tache c
         JOIN users u ON c.user_id = u.id

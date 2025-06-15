@@ -1,7 +1,8 @@
 <?php
 // Récupération du solde de congés
 try {
-    $stmt = $pdo->prepare("
+    $shop_pdo = getShopDBConnection();
+$stmt = $shop_pdo->prepare("
         SELECT solde_actuel, date_derniere_maj
         FROM conges_solde
         WHERE user_id = ?
@@ -15,7 +16,7 @@ try {
 
 // Récupération des jours disponibles
 try {
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         SELECT date_jour, statut
         FROM conges_jours_disponibles
         WHERE date_jour >= CURRENT_DATE
@@ -30,7 +31,7 @@ try {
 
 // Récupération des demandes de congés
 try {
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         SELECT *
         FROM conges_demandes
         WHERE user_id = ?
@@ -81,7 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
             
             if (empty($errors)) {
-                $stmt = $pdo->prepare("
+                $stmt = $shop_pdo->prepare("
                     INSERT INTO conges_demandes (
                         user_id, date_debut, date_fin, nb_jours,
                         commentaire, created_by

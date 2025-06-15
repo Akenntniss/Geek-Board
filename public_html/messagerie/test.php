@@ -25,7 +25,7 @@ print_r($_SESSION);
 echo "</pre>";
 
 // Inclure la connexion à la base de données
-$pdo = null;
+$shop_pdo = null;
 try {
     require_once __DIR__ . '/../config/database.php';
     echo "<p style='color:green'>✅ Connexion à la base de données réussie</p>";

@@ -17,7 +17,7 @@ if (!isset($data['id'])) {
 }
 
 try {
-    $stmt = $pdo->prepare("DELETE FROM marges_estimees WHERE id = ?");
+    $stmt = $shop_pdo->prepare("DELETE FROM marges_estimees WHERE id = ?");
     $stmt->execute([$data['id']]);
     
     header('Content-Type: application/json');

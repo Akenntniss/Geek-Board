@@ -32,10 +32,10 @@ $errors = [];
 
 try {
     // Commencer une transaction
-    $pdo->beginTransaction();
+    $shop_pdo->beginTransaction();
     
     // Préparer la requête SQL
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         INSERT INTO commandes_pieces (
             reference, client_id, fournisseur_id, reparation_id, 
             nom_piece, code_barre, quantite, prix_estime, 
@@ -80,7 +80,7 @@ try {
         
         if ($result) {
             $success_count++;
-            error_log("Commande ajoutée avec succès. ID: " . $pdo->lastInsertId());
+            error_log("Commande ajoutée avec succès. ID: " . $shop_pdo->lastInsertId());
         } else {
             $errors[] = "Erreur lors de l'insertion d'une commande: " . json_encode($piece);
         }
@@ -88,7 +88,7 @@ try {
     
     // Si des erreurs ont été rencontrées, annuler la transaction
     if (!empty($errors)) {
-        $pdo->rollBack();
+        $shop_pdo->rollBack();
         error_log("Transaction annulée. Erreurs: " . print_r($errors, true));
         echo json_encode([
             'success' => false, 
@@ -99,7 +99,7 @@ try {
     }
     
     // Tout s'est bien passé, valider la transaction
-    $pdo->commit();
+    $shop_pdo->commit();
     
     echo json_encode([
         'success' => true, 
@@ -107,8 +107,8 @@ try {
     ]);
 } catch (PDOException $e) {
     // En cas d'erreur, annuler la transaction
-    if ($pdo->inTransaction()) {
-        $pdo->rollBack();
+    if ($shop_pdo->inTransaction()) {
+        $shop_pdo->rollBack();
     }
     
     error_log("Erreur PDO lors de l'ajout des commandes : " . $e->getMessage());
@@ -118,8 +118,8 @@ try {
     ]);
 } catch (Exception $e) {
     // En cas d'erreur, annuler la transaction
-    if ($pdo->inTransaction()) {
-        $pdo->rollBack();
+    if ($shop_pdo->inTransaction()) {
+        $shop_pdo->rollBack();
     }
     
     error_log("Erreur générale lors de l'ajout des commandes : " . $e->getMessage());

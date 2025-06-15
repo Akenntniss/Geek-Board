@@ -12,12 +12,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         try {
             // Récupérer l'ancien statut
-            $stmt = $pdo->prepare("SELECT statut FROM reparations WHERE id = ?");
+            $shop_pdo = getShopDBConnection();
+$stmt = $shop_pdo->prepare("SELECT statut FROM reparations WHERE id = ?");
             $stmt->execute([$reparation_id]);
             $ancien_statut = $stmt->fetchColumn();
             
             // Mettre à jour la réparation
-            $stmt = $pdo->prepare("
+            $stmt = $shop_pdo->prepare("
                 UPDATE reparations 
                 SET statut = ?, statut_categorie = 4, date_fin = NOW(), notes_finales = ?, date_modification = NOW()
                 WHERE id = ?
@@ -26,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt->execute([$statut_final, $commentaire, $reparation_id]);
             
             // Terminer toutes les attributions actives pour cette réparation
-            $stmt = $pdo->prepare("
+            $stmt = $shop_pdo->prepare("
                 UPDATE reparation_attributions 
                 SET date_fin = NOW() 
                 WHERE reparation_id = ? AND date_fin IS NULL
@@ -34,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt->execute([$reparation_id]);
             
             // Libérer les techniciens associés
-            $stmt = $pdo->prepare("
+            $stmt = $shop_pdo->prepare("
                 UPDATE users 
                 SET techbusy = 0, active_repair_id = NULL 
                 WHERE active_repair_id = ?
@@ -42,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt->execute([$reparation_id]);
             
             // Enregistrer dans les logs
-            $stmt = $pdo->prepare("
+            $stmt = $shop_pdo->prepare("
                 INSERT INTO reparation_logs 
                 (reparation_id, employe_id, action_type, statut_avant, statut_apres, details) 
                 VALUES (?, ?, ?, ?, ?, ?)
@@ -63,7 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             
             if ($envoi_sms && $statut_id > 0) {
                 // Vérifier s'il existe un modèle de SMS pour ce statut
-                $stmt = $pdo->prepare("
+                $stmt = $shop_pdo->prepare("
                     SELECT id, nom, contenu 
                     FROM sms_templates 
                     WHERE statut_id = ? AND est_actif = 1
@@ -102,7 +103,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             $sms_sent = true;
                             
                             // Enregistrer l'envoi du SMS dans la base de données
-                            $stmt = $pdo->prepare("
+                            $stmt = $shop_pdo->prepare("
                                 INSERT INTO reparation_sms (reparation_id, template_id, telephone, message, date_envoi, statut_id)
                                 VALUES (?, ?, ?, ?, NOW(), ?)
                             ");

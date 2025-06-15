@@ -20,7 +20,7 @@ $article_id = intval($_GET['id']);
 
 // Récupérer l'article spécifié
 function get_kb_article($id) {
-    global $pdo;
+    $shop_pdo = getShopDBConnection();
     try {
         $query = "
             SELECT a.*, c.name as category_name 
@@ -28,7 +28,8 @@ function get_kb_article($id) {
             LEFT JOIN kb_categories c ON a.category_id = c.id
             WHERE a.id = ?
         ";
-        $stmt = $pdo->prepare($query);
+        $shop_pdo = getShopDBConnection();
+$stmt = $shop_pdo->prepare($query);
         $stmt->execute([$id]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     } catch (PDOException $e) {
@@ -39,10 +40,10 @@ function get_kb_article($id) {
 
 // Récupération des catégories
 function get_kb_categories() {
-    global $pdo;
+    $shop_pdo = getShopDBConnection();
     try {
         $query = "SELECT * FROM kb_categories ORDER BY name ASC";
-        $stmt = $pdo->query($query);
+        $stmt = $shop_pdo->query($query);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     } catch (PDOException $e) {
         error_log("Erreur lors de la récupération des catégories KB: " . $e->getMessage());
@@ -52,10 +53,10 @@ function get_kb_categories() {
 
 // Récupération des tags
 function get_kb_tags() {
-    global $pdo;
+    $shop_pdo = getShopDBConnection();
     try {
         $query = "SELECT * FROM kb_tags ORDER BY name ASC";
-        $stmt = $pdo->query($query);
+        $stmt = $shop_pdo->query($query);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     } catch (PDOException $e) {
         error_log("Erreur lors de la récupération des tags KB: " . $e->getMessage());
@@ -65,14 +66,14 @@ function get_kb_tags() {
 
 // Récupération des tags d'un article
 function get_article_tags($article_id) {
-    global $pdo;
+    $shop_pdo = getShopDBConnection();
     try {
         $query = "
             SELECT tag_id 
             FROM kb_article_tags 
             WHERE article_id = ?
         ";
-        $stmt = $pdo->prepare($query);
+        $stmt = $shop_pdo->prepare($query);
         $stmt->execute([$article_id]);
         $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
         
@@ -91,12 +92,12 @@ function get_article_tags($article_id) {
 
 // Fonction pour créer un nouveau tag
 function create_kb_tag($name) {
-    global $pdo;
+    $shop_pdo = getShopDBConnection();
     try {
         $query = "INSERT INTO kb_tags (name, created_at) VALUES (?, NOW())";
-        $stmt = $pdo->prepare($query);
+        $stmt = $shop_pdo->prepare($query);
         $stmt->execute([$name]);
-        return $pdo->lastInsertId();
+        return $shop_pdo->lastInsertId();
     } catch (PDOException $e) {
         error_log("Erreur lors de la création du tag: " . $e->getMessage());
         return false;
@@ -105,11 +106,11 @@ function create_kb_tag($name) {
 
 // Fonction pour vérifier si un tag existe et le créer s'il n'existe pas
 function get_or_create_tag($tag_name) {
-    global $pdo;
+    $shop_pdo = getShopDBConnection();
     try {
         // Vérifier si le tag existe déjà
         $query = "SELECT id FROM kb_tags WHERE name = ?";
-        $stmt = $pdo->prepare($query);
+        $stmt = $shop_pdo->prepare($query);
         $stmt->execute([trim($tag_name)]);
         $tag = $stmt->fetch(PDO::FETCH_ASSOC);
         
@@ -166,16 +167,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     if (empty($errors)) {
         try {
             // Début de la transaction
-            $pdo->beginTransaction();
+            $shop_pdo->beginTransaction();
             
             // Mettre à jour l'article
             $query = "UPDATE kb_articles SET title = ?, content = ?, category_id = ?, updated_at = NOW() WHERE id = ?";
-            $stmt = $pdo->prepare($query);
+            $stmt = $shop_pdo->prepare($query);
             $stmt->execute([$title, $content, $category_id, $article_id]);
             
             // Supprimer tous les tags existants pour cet article
             $query = "DELETE FROM kb_article_tags WHERE article_id = ?";
-            $stmt = $pdo->prepare($query);
+            $stmt = $shop_pdo->prepare($query);
             $stmt->execute([$article_id]);
             
             // Ajouter les tags existants sélectionnés
@@ -190,7 +191,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                 }
                 
                 $query = "INSERT INTO kb_article_tags (article_id, tag_id) VALUES " . implode(', ', $placeholders);
-                $stmt = $pdo->prepare($query);
+                $stmt = $shop_pdo->prepare($query);
                 $stmt->execute($values);
             }
             
@@ -206,7 +207,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                         if ($tag_id) {
                             // Ajouter l'association entre l'article et le tag
                             $query = "INSERT INTO kb_article_tags (article_id, tag_id) VALUES (?, ?)";
-                            $stmt = $pdo->prepare($query);
+                            $stmt = $shop_pdo->prepare($query);
                             $stmt->execute([$article_id, $tag_id]);
                         }
                     }
@@ -214,14 +215,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             }
             
             // Valider la transaction
-            $pdo->commit();
+            $shop_pdo->commit();
             
             set_message("L'article a été mis à jour avec succès.", "success");
             redirect('article_kb', ['id' => $article_id]);
             
         } catch (PDOException $e) {
             // Annuler la transaction en cas d'erreur
-            $pdo->rollBack();
+            $shop_pdo->rollBack();
             error_log("Erreur lors de la modification de l'article: " . $e->getMessage());
             set_message("Une erreur est survenue lors de la modification de l'article. Veuillez réessayer.", "danger");
         }
@@ -232,32 +233,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'delete_article') {
     try {
         // Début de la transaction
-        $pdo->beginTransaction();
+        $shop_pdo->beginTransaction();
         
         // Supprimer d'abord les associations avec les tags
         $query = "DELETE FROM kb_article_tags WHERE article_id = ?";
-        $stmt = $pdo->prepare($query);
+        $stmt = $shop_pdo->prepare($query);
         $stmt->execute([$article_id]);
         
         // Supprimer les évaluations de l'article
         $query = "DELETE FROM kb_article_ratings WHERE article_id = ?";
-        $stmt = $pdo->prepare($query);
+        $stmt = $shop_pdo->prepare($query);
         $stmt->execute([$article_id]);
         
         // Enfin, supprimer l'article
         $query = "DELETE FROM kb_articles WHERE id = ?";
-        $stmt = $pdo->prepare($query);
+        $stmt = $shop_pdo->prepare($query);
         $stmt->execute([$article_id]);
         
         // Valider la transaction
-        $pdo->commit();
+        $shop_pdo->commit();
         
         set_message("L'article a été supprimé avec succès.", "success");
         redirect('base_connaissances');
         
     } catch (PDOException $e) {
         // Annuler la transaction en cas d'erreur
-        $pdo->rollBack();
+        $shop_pdo->rollBack();
         error_log("Erreur lors de la suppression de l'article: " . $e->getMessage());
         set_message("Une erreur est survenue lors de la suppression de l'article. Veuillez réessayer.", "danger");
     }

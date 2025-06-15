@@ -11,7 +11,8 @@ if (!isset($_SESSION['user_id'])) {
 // Récupérer les catégories pour le formulaire
 $categories = [];
 try {
-    $stmt = $pdo->query("SELECT id, nom FROM categories ORDER BY nom");
+    $shop_pdo = getShopDBConnection();
+$stmt = $shop_pdo->query("SELECT id, nom FROM categories ORDER BY nom");
     $categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
     set_message("Erreur lors de la récupération des catégories: " . $e->getMessage(), "danger");
@@ -43,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     // Vérifier si le code-barres existe déjà
     try {
-        $stmt = $pdo->prepare("SELECT COUNT(*) FROM stock WHERE barcode = ?");
+        $stmt = $shop_pdo->prepare("SELECT COUNT(*) FROM stock WHERE barcode = ?");
         $stmt->execute([$barcode]);
         if ($stmt->fetchColumn() > 0) {
             $errors[] = "Ce code-barres existe déjà dans l'inventaire.";
@@ -55,17 +56,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($errors)) {
         try {
             // Insérer le nouveau produit dans la table stock
-            $stmt = $pdo->prepare("
+            $stmt = $shop_pdo->prepare("
                 INSERT INTO stock (barcode, name, category, price, quantity, description, date_created, date_updated) 
                 VALUES (?, ?, ?, ?, ?, ?, NOW(), NOW())
             ");
             $stmt->execute([$barcode, $name, $category, $price, $quantity, $description]);
             
-            $product_id = $pdo->lastInsertId();
+            $product_id = $shop_pdo->lastInsertId();
             
             // Enregistrer le mouvement de stock si la quantité est > 0
             if ($quantity > 0) {
-                $stmt = $pdo->prepare("
+                $stmt = $shop_pdo->prepare("
                     INSERT INTO mouvements_stock (produit_id, type_mouvement, quantite, date_mouvement, motif, user_id) 
                     VALUES (?, 'entree', ?, NOW(), ?, ?)
                 ");

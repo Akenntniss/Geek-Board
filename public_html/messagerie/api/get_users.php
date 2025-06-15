@@ -20,7 +20,7 @@ require_once '../includes/functions.php';
 $search = isset($_GET['search']) ? trim($_GET['search']) : '';
 
 try {
-    global $pdo;
+    global $shop_pdo;
     
     // Modification de la requête pour s'adapter à la structure de la table users
     // Structure de la table: id, username, password, full_name, role, created_at, techbusy, active_repair_id
@@ -41,7 +41,7 @@ try {
     // Trier par nom
     $query .= " ORDER BY full_name ASC";
     
-    $stmt = $pdo->prepare($query);
+    $stmt = $shop_pdo->prepare($query);
     $stmt->execute($params);
     
     $users = $stmt->fetchAll(PDO::FETCH_ASSOC);

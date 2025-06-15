@@ -53,7 +53,7 @@ if ($repair_id <= 0 || empty($status)) {
 
 try {
     // Récupérer l'ancien statut
-    $stmt = $pdo->prepare("SELECT statut FROM reparations WHERE id = ?");
+    $stmt = $shop_pdo->prepare("SELECT statut FROM reparations WHERE id = ?");
     $stmt->execute([$repair_id]);
     $repair = $stmt->fetch(PDO::FETCH_ASSOC);
     
@@ -69,7 +69,7 @@ try {
     $old_status = $repair['statut'];
     
     // Identifier la catégorie du statut
-    $stmt = $pdo->prepare("SELECT id, categorie_id FROM statuts WHERE code = ?");
+    $stmt = $shop_pdo->prepare("SELECT id, categorie_id FROM statuts WHERE code = ?");
     $stmt->execute([$status]);
     $statusInfo = $stmt->fetch(PDO::FETCH_ASSOC);
     
@@ -79,11 +79,11 @@ try {
     file_put_contents($logFile, "Statut info: " . print_r($statusInfo, true) . "\n", FILE_APPEND);
     
     // Mettre à jour le statut
-    $stmt = $pdo->prepare("UPDATE reparations SET statut = ?, statut_categorie = ?, date_modification = NOW() WHERE id = ?");
+    $stmt = $shop_pdo->prepare("UPDATE reparations SET statut = ?, statut_categorie = ?, date_modification = NOW() WHERE id = ?");
     $stmt->execute([$status, $categorie_id, $repair_id]);
     
     // Enregistrer le changement dans les logs
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         INSERT INTO reparation_logs 
         (reparation_id, employe_id, action_type, statut_avant, statut_apres, details, date_action) 
         VALUES (?, ?, ?, ?, ?, ?, NOW())

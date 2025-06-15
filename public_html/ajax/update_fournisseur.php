@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 }
 
 // Vérifier que la connexion à la base de données est établie
-if (!isset($pdo) || $pdo === null) {
+if (!isset($shop_pdo) || $shop_pdo === null) {
     http_response_code(500);
     echo json_encode(['error' => 'Erreur de connexion à la base de données']);
     exit;
@@ -47,7 +47,7 @@ try {
     error_log("AJAX: Données complètes: " . print_r($data, true));
     
     // Mettre à jour le fournisseur_id
-    $stmt = $pdo->prepare("UPDATE produits SET fournisseur_id = ? WHERE id = ?");
+    $stmt = $shop_pdo->prepare("UPDATE produits SET fournisseur_id = ? WHERE id = ?");
     $stmt->execute([$fournisseur_id, $produit_id]);
     
     // Vérifier le nombre de lignes affectées
@@ -56,7 +56,7 @@ try {
     
     if ($rowCount > 0) {
         // Récupérer les nouvelles données du produit
-        $stmt = $pdo->prepare("SELECT p.*, f.nom as fournisseur_nom FROM produits p LEFT JOIN fournisseurs f ON p.fournisseur_id = f.id WHERE p.id = ?");
+        $stmt = $shop_pdo->prepare("SELECT p.*, f.nom as fournisseur_nom FROM produits p LEFT JOIN fournisseurs f ON p.fournisseur_id = f.id WHERE p.id = ?");
         $stmt->execute([$produit_id]);
         $produit = $stmt->fetch(PDO::FETCH_ASSOC);
         
@@ -67,7 +67,7 @@ try {
         ]);
     } else {
         // Si aucune ligne n'a été affectée, c'est peut-être parce que la valeur est déjà celle qu'on veut définir
-        $stmt = $pdo->prepare("SELECT fournisseur_id FROM produits WHERE id = ?");
+        $stmt = $shop_pdo->prepare("SELECT fournisseur_id FROM produits WHERE id = ?");
         $stmt->execute([$produit_id]);
         $currentValue = $stmt->fetchColumn();
         
@@ -84,7 +84,7 @@ try {
             ]);
         } else {
             // Forcer la mise à jour même si MySQL pense qu'il n'y a pas de changement
-            $stmt = $pdo->prepare("UPDATE produits SET fournisseur_id = ? WHERE id = ?");
+            $stmt = $shop_pdo->prepare("UPDATE produits SET fournisseur_id = ? WHERE id = ?");
             if ($fournisseur_id === null) {
                 $stmt->bindValue(1, null, PDO::PARAM_NULL);
             } else {

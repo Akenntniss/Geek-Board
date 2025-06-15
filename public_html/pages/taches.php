@@ -225,6 +225,18 @@ if (isset($_GET['action']) && $_GET['action'] == 'supprimer' && isset($_GET['id'
 
 <div class="card">
     <div class="card-body">
+        <!-- Boutons de sélection de vue -->
+        <div class="view-selector mb-3">
+            <div class="btn-group" role="group" aria-label="Sélection de vue">
+                <button type="button" class="btn btn-outline-primary active" id="table-view-btn" onclick="switchView('table')">
+                    <i class="fas fa-table me-2"></i>Tableau
+                </button>
+                <button type="button" class="btn btn-outline-primary" id="card-view-btn" onclick="switchView('cards')">
+                    <i class="fas fa-th-large me-2"></i>Cartes
+                </button>
+            </div>
+        </div>
+        
         <?php if (empty($taches)): ?>
             <div class="text-center py-5">
                 <i class="fas fa-tasks fa-3x text-muted mb-3"></i>
@@ -235,56 +247,39 @@ if (isset($_GET['action']) && $_GET['action'] == 'supprimer' && isset($_GET['id'
                 </a>
             </div>
         <?php else: ?>
-            <div class="table-responsive mobile-table-container">
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>Titre</th>
-                            <th class="col-description">Description</th>
-                            <th class="col-status-priority">État</th>
-                            <th style="display: none;">Date limite</th>
-                            <!-- Colonnes masquées -->
-                            <th style="display: none;">Assigné à</th>
-                            <th style="display: none;">Créé par</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php foreach ($taches as $tache): ?>
-                            <tr>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <span class="me-2">
+            <!-- Vue Tableau - Design moderne -->
+            <div id="table-view" class="modern-table-view">
+                <div class="modern-table-container">
+                    <?php foreach ($taches as $tache): ?>
+                        <div class="table-row" data-task-id="<?php echo $tache['id']; ?>" onclick="afficherDetailsTache(<?php echo $tache['id']; ?>)">
+                            <div class="row-content">
+                                <div class="task-info">
+                                    <div class="task-header">
+                                        <div class="priority-indicator priority-<?php echo $tache['priorite']; ?>">
                                             <?php if ($tache['priorite'] == 'haute'): ?>
-                                                <i class="fas fa-exclamation-circle text-danger"></i>
+                                                <i class="fas fa-exclamation-circle"></i>
                                             <?php elseif ($tache['priorite'] == 'moyenne'): ?>
-                                                <i class="fas fa-exclamation-circle text-warning"></i>
+                                                <i class="fas fa-exclamation-triangle"></i>
                                             <?php else: ?>
-                                                <i class="fas fa-exclamation-circle text-success"></i>
+                                                <i class="fas fa-circle"></i>
                                             <?php endif; ?>
-                                        </span>
-                                        <?php echo htmlspecialchars($tache['titre']); ?>
+                                        </div>
+                                        <h6 class="task-title-table"><?php echo htmlspecialchars($tache['titre']); ?></h6>
                                     </div>
-                                </td>
-                                <td class="col-description"><?php echo htmlspecialchars($tache['description']); ?></td>
-                                <td class="col-status-priority">
-                                    <div class="d-flex flex-column gap-1">
-                                        <!-- Badge Priorité -->
-                                        <span class="badge-status status-btn <?php 
-                                            echo $tache['priorite'] == 'haute' ? 'status-high' : 
-                                                ($tache['priorite'] == 'moyenne' ? 'status-medium' : 'status-low'); 
-                                        ?>" data-task-id="<?php echo $tache['id']; ?>" onclick="afficherModalPriorite(event, this)" style="cursor: pointer;">
-                                            <i class="fas <?php 
-                                                echo $tache['priorite'] == 'haute' ? 'fa-arrow-up' : 
-                                                    ($tache['priorite'] == 'moyenne' ? 'fa-minus' : 'fa-arrow-down'); 
-                                            ?>"></i>
+                                    <p class="task-description-table"><?php echo htmlspecialchars($tache['description']); ?></p>
+                                </div>
+                                
+                                <div class="task-status-section">
+                                    <div class="status-badges">
+                                        <span class="status-badge priority-badge priority-<?php echo $tache['priorite']; ?>" 
+                                              onclick="event.stopPropagation(); afficherModalPriorite(event, this)" 
+                                              data-task-id="<?php echo $tache['id']; ?>">
                                             <?php echo ucfirst($tache['priorite']); ?>
                                         </span>
-                                        <!-- Badge Statut -->
-                                        <span class="badge-status status-btn <?php 
-                                            echo $tache['statut'] == 'termine' ? 'status-completed' : 
-                                                ($tache['statut'] == 'en_cours' ? 'status-in-progress' : 'status-new'); 
-                                        ?>" data-task-id="<?php echo $tache['id']; ?>" onclick="afficherModalStatut(event, this)" style="cursor: pointer;">
+                                        
+                                        <span class="status-badge task-status-badge status-<?php echo $tache['statut']; ?>" 
+                                              onclick="event.stopPropagation(); afficherModalStatut(event, this)" 
+                                              data-task-id="<?php echo $tache['id']; ?>">
                                             <i class="fas <?php 
                                                 echo $tache['statut'] == 'termine' ? 'fa-check' : 
                                                     ($tache['statut'] == 'en_cours' ? 'fa-spinner' : 'fa-clock'); 
@@ -293,51 +288,97 @@ if (isset($_GET['action']) && $_GET['action'] == 'supprimer' && isset($_GET['id'
                                                 ($tache['statut'] == 'en_cours' ? 'En cours' : 'À faire'); ?>
                                         </span>
                                     </div>
-                                </td>
-                                <td style="display: none;">
-                                    <?php if ($tache['date_limite']): ?>
-                                        <span class="<?php echo strtotime($tache['date_limite']) < time() ? 'text-danger fw-bold' : ''; ?>">
-                                            <i class="far fa-calendar-alt me-1"></i>
-                                            <?php echo date('d/m/Y', strtotime($tache['date_limite'])); ?>
-                                        </span>
-                                    <?php else: ?>
-                                        <span class="text-muted"><i class="fas fa-infinity me-1"></i>Non définie</span>
-                                    <?php endif; ?>
-                                </td>
-                                <!-- Colonnes masquées -->
-                                <td style="display: none;">
-                                    <?php if ($tache['employe_nom']): ?>
-                                        <span class="employee-badge status-btn" data-task-id="<?php echo $tache['id']; ?>" onclick="afficherModalEmploye(event, this)">
-                                            <i class="fas fa-user me-1"></i>
-                                            <?php echo htmlspecialchars($tache['employe_nom']); ?>
-                                        </span>
-                                    <?php else: ?>
-                                        <span class="text-muted employee-badge status-btn" data-task-id="<?php echo $tache['id']; ?>" onclick="afficherModalEmploye(event, this)">
-                                            <i class="fas fa-user-slash me-1"></i>Non assigné
-                                        </span>
-                                    <?php endif; ?>
-                                </td>
-                                <td style="display: none;"><?php echo htmlspecialchars($tache['createur_nom']); ?></td>
-                                <td>
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-sm btn-outline-primary" 
-                                                onclick="afficherModalEdition(<?php echo $tache['id']; ?>)" title="Modifier">
+                                </div>
+                                
+                                <div class="task-actions-section" onclick="event.stopPropagation()">
+                                    <div class="action-buttons">
+                                        <button class="action-btn edit-btn" onclick="afficherModalEdition(<?php echo $tache['id']; ?>)" title="Modifier">
                                             <i class="fas fa-edit"></i>
                                         </button>
-                                        <button type="button" class="btn btn-sm btn-outline-info" 
-                                               onclick="afficherDetailsTache(<?php echo $tache['id']; ?>)" title="Détails">
-                                            <i class="fas fa-comments"></i>
+                                        <button class="action-btn details-btn" onclick="afficherDetailsTache(<?php echo $tache['id']; ?>)" title="Détails">
+                                            <i class="fas fa-eye"></i>
                                         </button>
-                                        <button type="button" class="btn btn-sm btn-outline-danger" 
-                                                onclick="confirmDelete(<?php echo $tache['id']; ?>)" title="Supprimer">
+                                        <button class="action-btn delete-btn" onclick="confirmDelete(<?php echo $tache['id']; ?>)" title="Supprimer">
                                             <i class="fas fa-trash"></i>
                                         </button>
                                     </div>
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+
+            <!-- Vue Cartes -->
+            <div id="card-view" class="tasks-grid" style="display: none;">
+                <?php foreach ($taches as $tache): ?>
+                    <div class="task-card" data-task-id="<?php echo $tache['id']; ?>" onclick="afficherDetailsTache(<?php echo $tache['id']; ?>)">
+                        <div class="task-card-header">
+                            <div class="task-title-section">
+                                <div class="task-priority-icon">
+                                    <?php if ($tache['priorite'] == 'haute'): ?>
+                                        <i class="fas fa-exclamation-circle text-danger"></i>
+                                    <?php elseif ($tache['priorite'] == 'moyenne'): ?>
+                                        <i class="fas fa-exclamation-circle text-warning"></i>
+                                    <?php else: ?>
+                                        <i class="fas fa-exclamation-circle text-success"></i>
+                                    <?php endif; ?>
+                                </div>
+                                <h6 class="task-title"><?php echo htmlspecialchars($tache['titre']); ?></h6>
+                            </div>
+                            <div class="task-actions" onclick="event.stopPropagation()">
+                                <div class="dropdown">
+                                    <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                        <i class="fas fa-ellipsis-v"></i>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="#" onclick="afficherModalEdition(<?php echo $tache['id']; ?>)">
+                                            <i class="fas fa-edit me-2"></i>Modifier
+                                        </a></li>
+                                        <li><a class="dropdown-item" href="#" onclick="afficherDetailsTache(<?php echo $tache['id']; ?>)">
+                                            <i class="fas fa-comments me-2"></i>Détails
+                                        </a></li>
+                                        <li><hr class="dropdown-divider"></li>
+                                        <li><a class="dropdown-item text-danger" href="#" onclick="confirmDelete(<?php echo $tache['id']; ?>)">
+                                            <i class="fas fa-trash me-2"></i>Supprimer
+                                        </a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="task-card-body">
+                            <p class="task-description"><?php echo htmlspecialchars($tache['description']); ?></p>
+                        </div>
+                        
+                        <div class="task-card-footer">
+                            <div class="task-badges">
+                                <span class="task-badge task-priority <?php 
+                                    echo $tache['priorite'] == 'haute' ? 'priority-high' : 
+                                        ($tache['priorite'] == 'moyenne' ? 'priority-medium' : 'priority-low'); 
+                                ?>" onclick="event.stopPropagation(); afficherModalPriorite(event, this)" data-task-id="<?php echo $tache['id']; ?>">
+                                    <i class="fas <?php 
+                                        echo $tache['priorite'] == 'haute' ? 'fa-arrow-up' : 
+                                            ($tache['priorite'] == 'moyenne' ? 'fa-minus' : 'fa-arrow-down'); 
+                                    ?>"></i>
+                                    <?php echo ucfirst($tache['priorite']); ?>
+                                </span>
+                                
+                                <span class="task-badge task-status <?php 
+                                    echo $tache['statut'] == 'termine' ? 'status-completed' : 
+                                        ($tache['statut'] == 'en_cours' ? 'status-in-progress' : 'status-new'); 
+                                ?>" onclick="event.stopPropagation(); afficherModalStatut(event, this)" data-task-id="<?php echo $tache['id']; ?>">
+                                    <i class="fas <?php 
+                                        echo $tache['statut'] == 'termine' ? 'fa-check' : 
+                                            ($tache['statut'] == 'en_cours' ? 'fa-spinner' : 'fa-clock'); 
+                                    ?>"></i>
+                                    <?php echo $tache['statut'] == 'termine' ? 'Terminé' : 
+                                        ($tache['statut'] == 'en_cours' ? 'En cours' : 'À faire'); ?>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
             </div>
         <?php endif; ?>
     </div>
@@ -655,64 +696,438 @@ if (isset($_GET['action']) && $_GET['action'] == 'supprimer' && isset($_GET['id'
     padding-right: 1.25rem;
 }
 
-/* Style pour le tableau principal */
-.table {
-    box-shadow: none;
-    border-radius: 0.5rem;
+/* Styles pour les boutons de sélection de vue */
+.view-selector {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+.view-selector .btn-group {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 0.75rem;
+    overflow: hidden;
+    background: white;
+}
+
+.view-selector .btn-group .btn {
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+    position: relative;
+    background: transparent;
+}
+
+.view-selector .btn-group .btn:not(.active) {
+    color: #6c757d;
+    background: white;
+}
+
+.view-selector .btn-group .btn:not(.active):hover {
+    color: #4361ee;
+    background: rgba(67, 97, 238, 0.05);
+    transform: translateY(-1px);
+}
+
+.view-selector .btn-group .btn.active {
+    background: linear-gradient(135deg, #4361ee 0%, #3b82f6 100%);
+    border-color: transparent;
+    color: white;
+    box-shadow: 0 4px 15px rgba(67, 97, 238, 0.4);
+    transform: translateY(-2px);
+}
+
+.view-selector .btn-group .btn.active::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 100%);
+    pointer-events: none;
+}
+
+/* Nouveau design moderne pour le tableau */
+.modern-table-view {
+    display: block;
+}
+
+.modern-table-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.table-row {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    border: 1px solid #e5e7eb;
+    transition: all 0.3s ease;
+    cursor: pointer;
     overflow: hidden;
 }
 
-.table thead th {
-    background-color: #f8f9fa;
-    border-bottom: 2px solid #e9ecef;
-    padding: 0.75rem 1rem;
+.table-row:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    border-color: #4361ee;
+}
+
+.row-content {
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    align-items: center;
+    padding: 1.25rem;
+    gap: 1.5rem;
+}
+
+.task-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.task-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.5rem;
+}
+
+.priority-indicator {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.875rem;
+    flex-shrink: 0;
+}
+
+.priority-indicator.priority-haute {
+    background: linear-gradient(135deg, #fee2e2, #fca5a5);
+    color: #dc2626;
+}
+
+.priority-indicator.priority-moyenne {
+    background: linear-gradient(135deg, #fef3c7, #fcd34d);
+    color: #d97706;
+}
+
+.priority-indicator.priority-basse {
+    background: linear-gradient(135deg, #d1fae5, #6ee7b7);
+    color: #059669;
+}
+
+.task-title-table {
+    margin: 0;
+    font-size: 1.1rem;
     font-weight: 600;
-    color: #495057;
+    color: #1f2937;
+    line-height: 1.3;
 }
 
-.table tbody tr {
-    transition: all 0.15s ease;
+.task-description-table {
+    margin: 0;
+    color: #6b7280;
+    line-height: 1.5;
+    font-size: 0.95rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 
-.table tbody tr:hover {
-    background-color: rgba(67, 97, 238, 0.05);
+.task-status-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
 }
 
-.table tbody td {
-    padding: 1rem;
-    vertical-align: middle;
+.status-badges {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: center;
 }
 
-/* Ajustement des largeurs de colonnes */
-.col-description {
-    width: 50%; /* Augmente la largeur de la colonne Description */
-    max-width: none;
-    white-space: normal; /* Permet le retour à la ligne */
-}
-
-.col-status-priority {
-    width: 110px; /* Largeur ajustée pour les deux badges */
+.status-badge {
+    padding: 0.4rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-transform: capitalize;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
     white-space: nowrap;
+}
+
+.status-badge:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.priority-badge.priority-haute {
+    background: #fee2e2;
+    color: #dc2626;
+    border: 1px solid #fca5a5;
+}
+
+.priority-badge.priority-moyenne {
+    background: #fef3c7;
+    color: #d97706;
+    border: 1px solid #fcd34d;
+}
+
+.priority-badge.priority-basse {
+    background: #d1fae5;
+    color: #059669;
+    border: 1px solid #6ee7b7;
+}
+
+.task-status-badge.status-a_faire {
+    background: #f3f4f6;
+    color: #374151;
+    border: 1px solid #d1d5db;
+}
+
+.task-status-badge.status-en_cours {
+    background: #dbeafe;
+    color: #1d4ed8;
+    border: 1px solid #93c5fd;
+}
+
+.task-status-badge.status-termine {
+    background: #d1fae5;
+    color: #059669;
+    border: 1px solid #6ee7b7;
+}
+
+.task-actions-section {
+    display: flex;
+    align-items: center;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.action-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 0.875rem;
+}
+
+.edit-btn {
+    background: #eff6ff;
+    color: #2563eb;
+}
+
+.edit-btn:hover {
+    background: #dbeafe;
+    transform: translateY(-1px);
+}
+
+.details-btn {
+    background: #f0f9ff;
+    color: #0284c7;
+}
+
+.details-btn:hover {
+    background: #e0f2fe;
+    transform: translateY(-1px);
+}
+
+.delete-btn {
+    background: #fef2f2;
+    color: #dc2626;
+}
+
+.delete-btn:hover {
+    background: #fee2e2;
+    transform: translateY(-1px);
+}
+
+/* Styles pour la grille de cartes */
+.tasks-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 1.5rem;
+    padding: 0;
+}
+
+.task-card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    overflow: hidden;
+    border: 1px solid #e9ecef;
+    animation: fadeInUp 0.5s ease forwards;
+    opacity: 0;
+}
+
+.task-card:nth-child(1) { animation-delay: 0.1s; }
+.task-card:nth-child(2) { animation-delay: 0.2s; }
+.task-card:nth-child(3) { animation-delay: 0.3s; }
+.task-card:nth-child(4) { animation-delay: 0.4s; }
+.task-card:nth-child(5) { animation-delay: 0.5s; }
+.task-card:nth-child(n+6) { animation-delay: 0.6s; }
+
+.task-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    border-color: #4361ee;
+}
+
+.task-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 1.25rem 1.25rem 0.75rem;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.task-title-section {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex: 1;
+}
+
+.task-priority-icon {
+    font-size: 1.25rem;
+    display: flex;
+    align-items: center;
+}
+
+.task-title {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #2d3748;
+    line-height: 1.3;
+}
+
+.task-actions {
+    position: relative;
+}
+
+.task-card-body {
+    padding: 1rem 1.25rem;
+}
+
+.task-description {
+    margin: 0;
+    color: #4a5568;
+    line-height: 1.5;
+    font-size: 0.95rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.task-card-footer {
+    padding: 0.75rem 1.25rem 1.25rem;
+}
+
+.task-badges {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.task-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.4rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-transform: capitalize;
+}
+
+.task-badge:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Styles des badges de priorité */
+.priority-high {
+    background-color: #fee2e2;
+    color: #dc2626;
+    border: 1px solid #fca5a5;
+}
+
+.priority-medium {
+    background-color: #fef3c7;
+    color: #d97706;
+    border: 1px solid #fcd34d;
+}
+
+.priority-low {
+    background-color: #d1fae5;
+    color: #059669;
+    border: 1px solid #6ee7b7;
+}
+
+/* Styles des badges de statut */
+.status-new {
+    background-color: #e5e7eb;
+    color: #374151;
+    border: 1px solid #d1d5db;
+}
+
+.status-in-progress {
+    background-color: #dbeafe;
+    color: #1d4ed8;
+    border: 1px solid #93c5fd;
+}
+
+.status-completed {
+    background-color: #d1fae5;
+    color: #059669;
+    border: 1px solid #6ee7b7;
 }
 
 /* Badge de statut amélioré */
 .badge-status {
-    padding: 0.25em 0.5em; /* Réduit le padding pour correspondre aux badges de commandes */
-    border-radius: 20px; /* Bordure plus arrondie pour correspondre aux badges de commandes */
+    padding: 0.2em 0.4em; /* Padding encore plus réduit */
+    border-radius: 15px; /* Bordure plus petite */
     font-weight: 600;
-    font-size: 0.7rem; /* Taille de police réduite */
+    font-size: 0.65rem; /* Taille de police encore plus réduite */
     display: inline-flex;
     align-items: center;
-    gap: 0.3rem;
+    gap: 0.2rem;
     text-transform: uppercase;
-    letter-spacing: 0.03em;
+    letter-spacing: 0.02em;
     white-space: nowrap;
     width: 100%; /* Pour que les deux badges aient la même largeur */
     justify-content: center; /* Centre le contenu du badge */
 }
 
 .badge-status i {
-    font-size: 0.7rem;
+    font-size: 0.6rem;
 }
 
 .badge-status.status-new {
@@ -756,6 +1171,17 @@ if (isset($_GET['action']) && $_GET['action'] == 'supprimer' && isset($_GET['id'
     to { opacity: 1; transform: translateY(0); }
 }
 
+@keyframes fadeInUp {
+    from { 
+        opacity: 0; 
+        transform: translateY(30px); 
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0); 
+    }
+}
+
 .card {
     animation: fadeIn 0.3s ease-out forwards;
     opacity: 0;
@@ -774,38 +1200,106 @@ if (isset($_GET['action']) && $_GET['action'] == 'supprimer' && isset($_GET['id'
         overflow-x: hidden;
     }
     
-    /* Styles pour le tableau en version mobile */
-    .mobile-table-container {
-        width: 100%;
-        max-width: 100%;
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
+    /* Boutons de vue plus petits sur mobile */
+    .view-selector .btn-group .btn {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.9rem;
     }
     
-    /* Adaptation de la table au format mobile */
-    .table {
-        min-width: 600px;
-        font-size: 0.875rem;
+    .view-selector .btn-group {
+        border-radius: 0.5rem;
     }
     
-    /* Adaptation des largeurs de colonnes pour mobile */
-    .col-description {
-        width: 45%;
+    /* Adaptation du nouveau tableau pour mobile */
+    .row-content {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        padding: 1rem;
     }
     
-    .col-status-priority {
-        width: 100px;
+    .task-header {
+        gap: 0.5rem;
     }
     
-    /* On ne masque plus ces colonnes car déjà masquées avec style="display: none" */
-    /* Cependant la description doit être visible sur mobile */
-    .col-description {
-        display: table-cell !important;
+    .priority-indicator {
+        width: 20px;
+        height: 20px;
+        font-size: 0.75rem;
     }
     
-    /* Réduire la largeur des cellules */
-    .table th, .table td {
-        padding: 0.75rem 0.5rem;
+    .task-title-table {
+        font-size: 1rem;
+    }
+    
+    .task-description-table {
+        font-size: 0.9rem;
+        -webkit-line-clamp: 3;
+    }
+    
+    .task-status-section {
+        flex-direction: row;
+        justify-content: center;
+    }
+    
+    .status-badges {
+        flex-direction: row;
+        gap: 0.5rem;
+    }
+    
+    .status-badge {
+        font-size: 0.75rem;
+        padding: 0.3rem 0.6rem;
+    }
+    
+    .action-buttons {
+        justify-content: center;
+    }
+    
+    .action-btn {
+        width: 32px;
+        height: 32px;
+        font-size: 0.8rem;
+    }
+    
+    /* Adaptation de la grille pour mobile */
+    .tasks-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        padding: 0 0.5rem;
+    }
+    
+    .task-card {
+        margin: 0;
+    }
+    
+    .task-card-header {
+        padding: 1rem 1rem 0.5rem;
+    }
+    
+    .task-title {
+        font-size: 1rem;
+    }
+    
+    .task-card-body {
+        padding: 0.75rem 1rem;
+    }
+    
+    .task-description {
+        font-size: 0.9rem;
+        -webkit-line-clamp: 2;
+    }
+    
+    .task-card-footer {
+        padding: 0.5rem 1rem 1rem;
+    }
+    
+    .task-badges {
+        gap: 0.25rem;
+    }
+    
+    .task-badge {
+        font-size: 0.75rem;
+        padding: 0.3rem 0.6rem;
     }
     
     .filter-buttons {
@@ -836,17 +1330,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'supprimer' && isset($_GET['id'
     }
 }
 
-/* Style pour l'indicateur de défilement */
-.scroll-indicator {
-    background-color: rgba(67, 97, 238, 0.1);
-    color: #4361ee;
-    text-align: center;
-    padding: 0.5rem;
-    border-radius: 0.5rem;
-    margin-bottom: 0.5rem;
-    font-size: 0.875rem;
-    transition: opacity 0.3s ease;
-}
+/* Removed old scroll indicator CSS - no longer needed with card layout */
 
 /* Styles pour le modal */
 .modal-dialog-centered {
@@ -1540,394 +2024,44 @@ body.pwa-mode .taches-content-container {
     padding: 1rem;
 }
 
-/* Styles futuristes pour le modal */
-.futuristic-modal {
-    background: rgba(17, 25, 40, 0.9);
-    backdrop-filter: blur(16px) saturate(180%);
-    -webkit-backdrop-filter: blur(16px) saturate(180%);
-    border-radius: 16px;
-    border: 1px solid rgba(255, 255, 255, 0.125);
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-    color: #fff;
-    overflow: hidden;
-    position: relative;
-    transition: all 0.5s ease;
-}
-
-/* Styles pour le mode jour */
-body:not(.dark-mode) .futuristic-modal {
-    background: rgba(255, 255, 255, 0.95);
-    border: 1px solid rgba(67, 97, 238, 0.2);
-    box-shadow: 0 8px 32px 0 rgba(67, 97, 238, 0.2);
-    color: #333;
-}
-
-.futuristic-modal::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle, rgba(67, 97, 238, 0.1) 0%, transparent 70%);
-    opacity: 0.5;
-    pointer-events: none;
-    animation: modal-bg-pulse 8s infinite alternate;
-    z-index: -1;
-}
-
-/* Animation de scintillement holographique pour le mode traitement */
-.futuristic-modal.is-processing::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(45deg, 
-        rgba(67, 97, 238, 0.05) 0%, 
-        rgba(138, 43, 226, 0.05) 25%, 
-        rgba(67, 97, 238, 0.05) 50%, 
-        rgba(138, 43, 226, 0.05) 75%, 
-        rgba(67, 97, 238, 0.05) 100%);
-    background-size: 400% 400%;
-    animation: processing-gradient 3s ease infinite;
-    pointer-events: none;
-    z-index: 10;
-}
-
-@keyframes processing-gradient {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-}
-
-@keyframes modal-bg-pulse {
-    0% { transform: scale(1); opacity: 0.3; }
-    100% { transform: scale(1.1); opacity: 0.5; }
-}
-
-.futuristic-modal .modal-header {
-    background: linear-gradient(90deg, rgba(67, 97, 238, 0.3), rgba(138, 43, 226, 0.3));
-    padding: 1.5rem;
-    position: relative;
-    overflow: hidden;
-}
-
-/* Adaptation du header pour le mode jour */
-body:not(.dark-mode) .futuristic-modal .modal-header {
-    background: linear-gradient(90deg, rgba(67, 97, 238, 0.1), rgba(138, 43, 226, 0.1));
-}
-
-.futuristic-modal .modal-header::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 1px;
-    background: linear-gradient(90deg, 
-        transparent 0%, 
-        rgba(67, 97, 238, 0.3) 20%, 
-        rgba(138, 43, 226, 0.8) 50%, 
-        rgba(67, 97, 238, 0.3) 80%, 
-        transparent 100%);
-}
-
-.futuristic-modal .modal-header .modal-title {
-    font-weight: 600;
-    letter-spacing: 0.5px;
-    color: #fff;
-    text-shadow: 0 0 10px rgba(67, 97, 238, 0.7);
-    display: flex;
-    align-items: center;
-}
-
-/* Adaptation du titre pour le mode jour */
-body:not(.dark-mode) .futuristic-modal .modal-header .modal-title {
-    color: #333;
-    text-shadow: 0 0 10px rgba(67, 97, 238, 0.3);
-}
-
-.futuristic-modal .modal-body {
-    padding: 2rem;
-    background: rgba(13, 17, 28, 0.5);
-    position: relative;
-}
-
-/* Adaptation du corps pour le mode jour */
-body:not(.dark-mode) .futuristic-modal .modal-body {
-    background: rgba(245, 247, 250, 0.7);
-}
-
-.futuristic-modal .modal-footer {
-    background: linear-gradient(90deg, rgba(138, 43, 226, 0.2), rgba(67, 97, 238, 0.2));
-    padding: 1.5rem;
-    position: relative;
-    overflow: hidden;
-}
-
-/* Adaptation du footer pour le mode jour */
-body:not(.dark-mode) .futuristic-modal .modal-footer {
-    background: linear-gradient(90deg, rgba(138, 43, 226, 0.05), rgba(67, 97, 238, 0.05));
-}
-
-.futuristic-modal .modal-footer::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 1px;
-    background: linear-gradient(90deg, 
-        transparent 0%, 
-        rgba(67, 97, 238, 0.3) 20%, 
-        rgba(138, 43, 226, 0.8) 50%, 
-        rgba(67, 97, 238, 0.3) 80%, 
-        transparent 100%);
-}
-
-/* Effet de scanner */
-.futuristic-modal .modal-body::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 4px;
-    background: linear-gradient(90deg, 
-        transparent, 
-        rgba(67, 97, 238, 0.8), 
-        transparent);
-    animation: scanner 4s ease-in-out infinite;
-    opacity: 0.3;
-    pointer-events: none;
-}
-
-@keyframes scanner {
-    0% { top: 0; }
-    50% { top: 100%; }
-    100% { top: 0; }
-}
-
-/* Inputs futuristes */
-.input-group-futuristic {
-    position: relative;
-    margin-bottom: 1rem;
-}
-
-.input-group-futuristic .form-label {
-    display: block;
-    margin-bottom: 0.5rem;
-    font-size: 0.9rem;
-    font-weight: 500;
-    color: rgba(255, 255, 255, 0.8);
-    letter-spacing: 0.5px;
-    transform: translateY(0);
-    transition: all 0.3s ease;
-}
-
-/* Adaptation des labels pour le mode jour */
-body:not(.dark-mode) .input-group-futuristic .form-label {
-    color: rgba(51, 51, 51, 0.8);
-}
-
-.futuristic-input, .futuristic-select, .futuristic-textarea {
-    background: rgba(255, 255, 255, 0.05) !important;
-    border: 1px solid rgba(255, 255, 255, 0.1) !important;
-    border-radius: 8px !important;
-    padding: 12px 16px !important;
-    color: #fff !important;
-    font-size: 1rem !important;
-    transition: all 0.3s ease !important;
-    box-shadow: none !important;
-}
-
-/* Adaptation des inputs pour le mode jour */
-body:not(.dark-mode) .futuristic-input, 
-body:not(.dark-mode) .futuristic-select, 
-body:not(.dark-mode) .futuristic-textarea {
-    background: rgba(255, 255, 255, 0.8) !important;
-    border: 1px solid rgba(67, 97, 238, 0.2) !important;
-    color: #333 !important;
-}
-
-.futuristic-input:focus, .futuristic-select:focus, .futuristic-textarea:focus {
-    background: rgba(255, 255, 255, 0.1) !important;
-    border-color: rgba(67, 97, 238, 0.5) !important;
-    box-shadow: 0 0 15px rgba(67, 97, 238, 0.3) !important;
-    outline: none !important;
-}
-
-/* Adaptation des états focus pour le mode jour */
-body:not(.dark-mode) .futuristic-input:focus, 
-body:not(.dark-mode) .futuristic-select:focus, 
-body:not(.dark-mode) .futuristic-textarea:focus {
-    background: rgba(255, 255, 255, 1) !important;
-}
-
-.futuristic-input.is-valid, .futuristic-select.is-valid, .futuristic-textarea.is-valid {
-    border-color: rgba(0, 200, 83, 0.5) !important;
-    background-color: rgba(0, 200, 83, 0.05) !important;
-}
-
-.futuristic-input.is-invalid, .futuristic-select.is-invalid, .futuristic-textarea.is-invalid {
-    border-color: rgba(244, 67, 54, 0.5) !important;
-    background-color: rgba(244, 67, 54, 0.05) !important;
-}
-
-.futuristic-textarea {
-    min-height: 120px;
-    resize: vertical;
-}
-
-.highlight-bar {
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    width: 0;
-    height: 2px;
-    background: linear-gradient(90deg, #3d5afe, #7e57c2);
-    transform: translateX(-50%);
-    transition: width 0.3s ease;
-    border-radius: 2px;
-    opacity: 0;
-}
-
-.futuristic-input:focus ~ .highlight-bar,
-.futuristic-select:focus ~ .highlight-bar,
-.futuristic-textarea:focus ~ .highlight-bar {
-    width: 100%;
-    opacity: 1;
-}
-
-/* Ajout de lumière au hover */
-.futuristic-input:hover, .futuristic-select:hover, .futuristic-textarea:hover {
-    box-shadow: 0 0 10px rgba(67, 97, 238, 0.2) !important;
-}
-
-/* Boutons futuristes */
-.btn-cancel {
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    color: rgba(255, 255, 255, 0.8);
-    padding: 10px 20px;
-    border-radius: 8px;
-    font-weight: 500;
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-}
-
-/* Adaptation des boutons annuler pour le mode jour */
-body:not(.dark-mode) .btn-cancel {
-    background: rgba(67, 97, 238, 0.05);
-    border: 1px solid rgba(67, 97, 238, 0.1);
-    color: #333;
-}
-
-.btn-cancel:hover {
-    background: rgba(255, 255, 255, 0.15);
-    color: #fff;
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
-}
-
-/* Adaptation des hover pour le mode jour */
-body:not(.dark-mode) .btn-cancel:hover {
-    background: rgba(67, 97, 238, 0.1);
-    color: #333;
-    box-shadow: 0 0 10px rgba(67, 97, 238, 0.1);
-}
-
-.btn-cancel:active {
-    transform: scale(0.98);
-}
-
-.btn-save {
-    position: relative;
-    background: linear-gradient(45deg, #3d5afe, #7e57c2);
-    border: none;
-    color: white;
-    padding: 10px 24px;
-    border-radius: 8px;
-    font-weight: 500;
-    overflow: hidden;
-    transition: all 0.3s ease;
-    z-index: 1;
-}
-
-.btn-save:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 7px 15px rgba(61, 90, 254, 0.3);
-}
-
-.btn-save:active {
-    transform: translateY(-1px);
-}
-
-.btn-save.success-animation {
-    background: linear-gradient(45deg, #00c853, #64dd17);
-    box-shadow: 0 0 20px rgba(0, 200, 83, 0.5);
-    transform: translateY(-2px);
-}
-
-.btn-save-overlay {
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-    transition: left 0.7s ease;
-    z-index: -1;
-}
-
-.btn-save:hover .btn-save-overlay {
-    left: 100%;
-}
-
-/* Animation de l'icône de robot */
-.pulse-icon {
-    animation: icon-pulse 2s infinite;
-    display: inline-block;
-    color: #8a2be2;
-    text-shadow: 0 0 10px rgba(138, 43, 226, 0.7);
-}
-
-/* Adaptation bouton close pour le mode jour */
-body:not(.dark-mode) .futuristic-modal .btn-close-white {
-    filter: invert(1) grayscale(100%) brightness(30%);
-}
-
-@keyframes icon-pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.15); text-shadow: 0 0 15px rgba(138, 43, 226, 0.9); }
-    100% { transform: scale(1); }
-}
-
-/* Support pour le mode sombre */
-@media (prefers-color-scheme: dark) {
-    .highlight-bar {
-        background: linear-gradient(90deg, #536dfe, #9575cd);
-    }
-    
-    .btn-save {
-        background: linear-gradient(45deg, #536dfe, #9575cd);
-    }
-    
-    .btn-save.success-animation {
-        background: linear-gradient(45deg, #00e676, #69f0ae);
-    }
-}
-
-/* Animation d'entrée pour le modal */
+/* Animation simple pour tous les modaux */
 .modal.fade .modal-dialog {
-    transform: scale(0.95) translateY(10px);
-    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transform: translateY(-50px);
+    opacity: 0;
+    transition: all 0.3s ease;
 }
 
 .modal.show .modal-dialog {
-    transform: scale(1) translateY(0);
+    transform: translateY(0);
+    opacity: 1;
+}
+
+/* Styles simples pour tous les modaux */
+.modal-content {
+    border-radius: 10px;
+    border: none;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.modal-header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
+    border-radius: 10px 10px 0 0;
+}
+
+.modal-title {
+    font-weight: 600;
+    color: #495057;
+}
+
+.modal-body {
+    padding: 1.5rem;
+}
+
+.modal-footer {
+    background-color: #f8f9fa;
+    border-top: 1px solid #dee2e6;
+    border-radius: 0 0 10px 10px;
 }
 
 /* Animation pour les messages d'erreur */
@@ -1959,548 +2093,149 @@ body:not(.dark-mode) .futuristic-modal .btn-close-white {
     20%, 80% { transform: translateX(2px); }
     30%, 50%, 70% { transform: translateX(-3px); }
     40%, 60% { transform: translateX(3px); }
-}
-
-/* Animation d'apparition du modal */
-.modal-appear {
-    animation: modal-appear 1s ease forwards;
-}
-
-@keyframes modal-appear {
-    0% { box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37); }
-    50% { box-shadow: 0 8px 32px 0 rgba(67, 97, 238, 0.5); }
-    100% { box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37); }
-}
-
-/* Effet cyberpunk pour les boutons de radio et les cases à cocher */
-.form-check-input[type="radio"].futuristic-radio {
-    width: 20px;
-    height: 20px;
-    margin-top: 2px;
-    background-color: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.form-check-input[type="radio"].futuristic-radio:checked {
-    background-color: transparent;
-    border-color: #3d5afe;
-    background-image: radial-gradient(#3d5afe 40%, transparent 50%);
-    box-shadow: 0 0 10px rgba(61, 90, 254, 0.5);
-}
-
-/* Petites particules animées */
-.particles-container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    pointer-events: none;
-    z-index: 0;
-}
-
-.particle {
-    position: absolute;
-    width: 5px;
-    height: 5px;
-    background: rgba(67, 97, 238, 0.5);
-    border-radius: 50%;
-    pointer-events: none;
-    opacity: 0;
-}
-
-@keyframes float-up {
-    0% { transform: translateY(0) rotate(0deg); opacity: 0; }
-    20% { opacity: 0.5; }
-    100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
-}
-
-/* Remplacer les dégradés violet-rose par des dégradés de bleu */
-.futuristic-modal .modal-header {
-    background: linear-gradient(90deg, rgba(30, 144, 255, 0.3), rgba(0, 77, 155, 0.3));
-    padding: 1.5rem;
-    position: relative;
-    overflow: hidden;
-}
-
-/* Adaptation du header pour le mode jour */
-body:not(.dark-mode) .futuristic-modal .modal-header {
-    background: linear-gradient(90deg, rgba(30, 144, 255, 0.1), rgba(0, 77, 155, 0.1));
-}
-
-.futuristic-modal .modal-header::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 1px;
-    background: linear-gradient(90deg, 
-        transparent 0%, 
-        rgba(30, 144, 255, 0.3) 20%, 
-        rgba(0, 110, 230, 0.8) 50%, 
-        rgba(30, 144, 255, 0.3) 80%, 
-        transparent 100%);
-}
-
-.futuristic-modal .modal-header .modal-title {
-    font-weight: 600;
-    letter-spacing: 0.5px;
-    color: #fff;
-    text-shadow: 0 0 10px rgba(30, 144, 255, 0.7);
-    display: flex;
-    align-items: center;
-}
-
-/* Adaptation du titre pour le mode jour */
-body:not(.dark-mode) .futuristic-modal .modal-header .modal-title {
-    color: #333;
-    text-shadow: 0 0 10px rgba(30, 144, 255, 0.3);
-}
-
-.futuristic-modal .modal-body {
-    padding: 2rem;
-    background: rgba(13, 17, 28, 0.5);
-    position: relative;
-}
-
-/* Adaptation du corps pour le mode jour */
-body:not(.dark-mode) .futuristic-modal .modal-body {
-    background: rgba(245, 247, 250, 0.7);
-}
-
-.futuristic-modal .modal-footer {
-    background: linear-gradient(90deg, rgba(0, 110, 230, 0.2), rgba(30, 144, 255, 0.2));
-    padding: 1.5rem;
-    position: relative;
-    overflow: hidden;
-}
-
-/* Adaptation du footer pour le mode jour */
-body:not(.dark-mode) .futuristic-modal .modal-footer {
-    background: linear-gradient(90deg, rgba(0, 110, 230, 0.05), rgba(30, 144, 255, 0.05));
-}
-
-.futuristic-modal .modal-footer::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 1px;
-    background: linear-gradient(90deg, 
-        transparent 0%, 
-        rgba(30, 144, 255, 0.3) 20%, 
-        rgba(0, 110, 230, 0.8) 50%, 
-        rgba(30, 144, 255, 0.3) 80%, 
-        transparent 100%);
-}
-
-/* Effet de scanner */
-.futuristic-modal .modal-body::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 4px;
-    background: linear-gradient(90deg, 
-        transparent, 
-        rgba(30, 144, 255, 0.8), 
-        transparent);
-    animation: scanner 4s ease-in-out infinite;
-    opacity: 0.3;
-    pointer-events: none;
-}
-
-@keyframes scanner {
-    0% { top: 0; }
-    50% { top: 100%; }
-    100% { top: 0; }
-}
-
-/* Inputs futuristes */
-.input-group-futuristic {
-    position: relative;
-    margin-bottom: 1rem;
-}
-
-.input-group-futuristic .form-label {
-    display: block;
-    margin-bottom: 0.5rem;
-    font-size: 0.9rem;
-    font-weight: 500;
-    color: rgba(255, 255, 255, 0.8);
-    letter-spacing: 0.5px;
-    transform: translateY(0);
-    transition: all 0.3s ease;
-}
-
-/* Adaptation des labels pour le mode jour */
-body:not(.dark-mode) .input-group-futuristic .form-label {
-    color: rgba(51, 51, 51, 0.8);
-}
-
-.futuristic-input, .futuristic-select, .futuristic-textarea {
-    background: rgba(255, 255, 255, 0.05) !important;
-    border: 1px solid rgba(255, 255, 255, 0.1) !important;
-    border-radius: 8px !important;
-    padding: 12px 16px !important;
-    color: #fff !important;
-    font-size: 1rem !important;
-    transition: all 0.3s ease !important;
-    box-shadow: none !important;
-}
-
-/* Adaptation des inputs pour le mode jour */
-body:not(.dark-mode) .futuristic-input, 
-body:not(.dark-mode) .futuristic-select, 
-body:not(.dark-mode) .futuristic-textarea {
-    background: rgba(255, 255, 255, 0.8) !important;
-    border: 1px solid rgba(67, 97, 238, 0.2) !important;
-    color: #333 !important;
-}
-
-.futuristic-input:focus, .futuristic-select:focus, .futuristic-textarea:focus {
-    background: rgba(255, 255, 255, 0.1) !important;
-    border-color: rgba(67, 97, 238, 0.5) !important;
-    box-shadow: 0 0 15px rgba(67, 97, 238, 0.3) !important;
-    outline: none !important;
-}
-
-/* Adaptation des états focus pour le mode jour */
-body:not(.dark-mode) .futuristic-input:focus, 
-body:not(.dark-mode) .futuristic-select:focus, 
-body:not(.dark-mode) .futuristic-textarea:focus {
-    background: rgba(255, 255, 255, 1) !important;
-}
-
-.futuristic-input.is-valid, .futuristic-select.is-valid, .futuristic-textarea.is-valid {
-    border-color: rgba(0, 200, 83, 0.5) !important;
-    background-color: rgba(0, 200, 83, 0.05) !important;
-}
-
-.futuristic-input.is-invalid, .futuristic-select.is-invalid, .futuristic-textarea.is-invalid {
-    border-color: rgba(244, 67, 54, 0.5) !important;
-    background-color: rgba(244, 67, 54, 0.05) !important;
-}
-
-.futuristic-textarea {
-    min-height: 120px;
-    resize: vertical;
-}
-
-.highlight-bar {
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    width: 0;
-    height: 2px;
-    background: linear-gradient(90deg, #1e90ff, #0066cc);
-    transform: translateX(-50%);
-    transition: width 0.3s ease;
-    border-radius: 2px;
-    opacity: 0;
-}
-
-.futuristic-input:focus ~ .highlight-bar,
-.futuristic-select:focus ~ .highlight-bar,
-.futuristic-textarea:focus ~ .highlight-bar {
-    width: 100%;
-    opacity: 1;
-}
-
-/* Ajout de lumière au hover */
-.futuristic-input:hover, .futuristic-select:hover, .futuristic-textarea:hover {
-    box-shadow: 0 0 10px rgba(67, 97, 238, 0.2) !important;
-}
-
-/* Boutons futuristes */
-.btn-cancel {
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    color: rgba(255, 255, 255, 0.8);
-    padding: 10px 20px;
-    border-radius: 8px;
-    font-weight: 500;
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-}
-
-/* Adaptation des boutons annuler pour le mode jour */
-body:not(.dark-mode) .btn-cancel {
-    background: rgba(67, 97, 238, 0.05);
-    border: 1px solid rgba(67, 97, 238, 0.1);
-    color: #333;
-}
-
-.btn-cancel:hover {
-    background: rgba(255, 255, 255, 0.15);
-    color: #fff;
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
-}
-
-/* Adaptation des hover pour le mode jour */
-body:not(.dark-mode) .btn-cancel:hover {
-    background: rgba(67, 97, 238, 0.1);
-    color: #333;
-    box-shadow: 0 0 10px rgba(67, 97, 238, 0.1);
-}
-
-.btn-cancel:active {
-    transform: scale(0.98);
-}
-
-.btn-save {
-    position: relative;
-    background: linear-gradient(45deg, #1e90ff, #0066cc);
-    border: none;
-    color: white;
-    padding: 10px 24px;
-    border-radius: 8px;
-    font-weight: 500;
-    overflow: hidden;
-    transition: all 0.3s ease;
-    z-index: 1;
-}
-
-.btn-save:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 7px 15px rgba(61, 90, 254, 0.3);
-}
-
-.btn-save:active {
-    transform: translateY(-1px);
-}
-
-.btn-save.success-animation {
-    background: linear-gradient(45deg, #00e676, #69f0ae);
-    box-shadow: 0 0 20px rgba(0, 200, 83, 0.5);
-    transform: translateY(-2px);
-}
-
-.btn-save-overlay {
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-    transition: left 0.7s ease;
-    z-index: -1;
-}
-
-.btn-save:hover .btn-save-overlay {
-    left: 100%;
-}
-
-/* Animation de l'icône de robot */
-.pulse-icon {
-    animation: icon-pulse 2s infinite;
-    display: inline-block;
-    color: #0066cc;
-    text-shadow: 0 0 10px rgba(30, 144, 255, 0.7);
-}
-
-/* Adaptation bouton close pour le mode jour */
-body:not(.dark-mode) .futuristic-modal .btn-close-white {
-    filter: invert(1) grayscale(100%) brightness(30%);
-}
-
-@keyframes icon-pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.15); text-shadow: 0 0 15px rgba(30, 144, 255, 0.9); }
-    100% { transform: scale(1); }
-}
-
-/* Support pour le mode sombre */
-@media (prefers-color-scheme: dark) {
-    .highlight-bar {
-        background: linear-gradient(90deg, #536dfe, #9575cd);
-    }
-    
-    .btn-save {
-        background: linear-gradient(45deg, #536dfe, #9575cd);
-    }
-    
-    .btn-save.success-animation {
-        background: linear-gradient(45deg, #00e676, #69f0ae);
-    }
-}
-
-/* Animation d'entrée pour le modal */
-.modal.fade .modal-dialog {
-    transform: scale(0.95) translateY(10px);
-    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.modal.show .modal-dialog {
-    transform: scale(1) translateY(0);
-}
-
-/* Animation pour les messages d'erreur */
-.error-animation {
-    animation: error-appear 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-@keyframes error-appear {
-    0% { transform: scale(0.8); opacity: 0; }
-    100% { transform: scale(1); opacity: 1; }
-}
-
-.fade-out {
-    animation: fade-out 0.5s ease forwards;
-}
-
-@keyframes fade-out {
-    0% { opacity: 1; transform: translateY(0); }
-    100% { opacity: 0; transform: translateY(-10px); }
-}
-
-/* Animation de secousse pour formulaire invalide */
-.shake-animation {
-    animation: shake 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
-}
-
-@keyframes shake {
-    10%, 90% { transform: translateX(-1px); }
-    20%, 80% { transform: translateX(2px); }
-    30%, 50%, 70% { transform: translateX(-3px); }
-    40%, 60% { transform: translateX(3px); }
-}
-
-/* Animation d'apparition du modal */
-.modal-appear {
-    animation: modal-appear 1s ease forwards;
-}
-
-@keyframes modal-appear {
-    0% { box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37); }
-    50% { box-shadow: 0 8px 32px 0 rgba(67, 97, 238, 0.5); }
-    100% { box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37); }
-}
-
-/* Effet cyberpunk pour les boutons de radio et les cases à cocher */
-.form-check-input[type="radio"].futuristic-radio {
-    width: 20px;
-    height: 20px;
-    margin-top: 2px;
-    background-color: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.form-check-input[type="radio"].futuristic-radio:checked {
-    background-color: transparent;
-    border-color: #3d5afe;
-    background-image: radial-gradient(#3d5afe 40%, transparent 50%);
-    box-shadow: 0 0 10px rgba(61, 90, 254, 0.5);
-}
-
-/* Petites particules animées */
-.particles-container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    pointer-events: none;
-    z-index: 0;
-}
-
-.particle {
-    position: absolute;
-    width: 5px;
-    height: 5px;
-    background: rgba(67, 97, 238, 0.5);
-    border-radius: 50%;
-    pointer-events: none;
-    opacity: 0;
-}
-
-@keyframes float-up {
-    0% { transform: translateY(0) rotate(0deg); opacity: 0; }
-    20% { opacity: 0.5; }
-    100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
 }
 </style>
 
 <script>
+// Fonction pour basculer entre les vues
+function switchView(view) {
+    const tableView = document.getElementById('table-view');
+    const cardView = document.getElementById('card-view');
+    const tableBtn = document.getElementById('table-view-btn');
+    const cardBtn = document.getElementById('card-view-btn');
+    
+    if (view === 'table') {
+        tableView.style.display = 'block';
+        cardView.style.display = 'none';
+        tableBtn.classList.add('active');
+        cardBtn.classList.remove('active');
+        
+        // Sauvegarder la préférence dans localStorage
+        localStorage.setItem('taskViewPreference', 'table');
+    } else if (view === 'cards') {
+        tableView.style.display = 'none';
+        cardView.style.display = 'grid';
+        tableBtn.classList.remove('active');
+        cardBtn.classList.add('active');
+        
+        // Sauvegarder la préférence dans localStorage
+        localStorage.setItem('taskViewPreference', 'cards');
+    }
+}
+
+// Fonction utilitaire pour extraire les données d'une tâche depuis une carte
+function extractTaskDataFromCard(card) {
+    if (!card) return null;
+    
+    const taskId = card.getAttribute('data-task-id');
+    const title = card.querySelector('.task-title')?.textContent?.trim() || 'Titre non trouvé';
+    const description = card.querySelector('.task-description')?.textContent?.trim() || 'Description non trouvée';
+    
+    // Récupérer la priorité depuis le badge de priorité
+    const priorityElement = card.querySelector('.task-priority');
+    const priority = priorityElement?.textContent?.trim() || 'Non définie';
+    
+    // Récupérer le statut depuis le badge de statut
+    const statusElement = card.querySelector('.task-status');
+    const status = statusElement?.textContent?.trim() || 'Non défini';
+    
+    // Déterminer le statut pour les boutons
+    let currentStatus = 'a_faire'; // Valeur par défaut
+    if (status.includes('En cours')) {
+        currentStatus = 'en_cours';
+    } else if (status.includes('Terminé')) {
+        currentStatus = 'termine';
+    }
+    
+    return {
+        id: taskId,
+        title,
+        description,
+        priority,
+        status,
+        currentStatus
+    };
+}
+
+// Fonction utilitaire pour extraire les données d'une tâche depuis une ligne de tableau moderne
+function extractTaskDataFromRow(row) {
+    if (!row) return null;
+    
+    const taskId = row.getAttribute('data-task-id');
+    const title = row.querySelector('.task-title-table')?.textContent?.trim() || 'Titre non trouvé';
+    const description = row.querySelector('.task-description-table')?.textContent?.trim() || 'Description non trouvée';
+    
+    // Récupérer la priorité depuis le badge de priorité
+    const priorityElement = row.querySelector('.priority-badge');
+    const priority = priorityElement?.textContent?.trim() || 'Non définie';
+    
+    // Récupérer le statut depuis le badge de statut
+    const statusElement = row.querySelector('.task-status-badge');
+    const status = statusElement?.textContent?.trim() || 'Non défini';
+    
+    // Déterminer le statut pour les boutons
+    let currentStatus = 'a_faire'; // Valeur par défaut
+    if (status.includes('En cours')) {
+        currentStatus = 'en_cours';
+    } else if (status.includes('Terminé')) {
+        currentStatus = 'termine';
+    }
+    
+    return {
+        id: taskId,
+        title,
+        description,
+        priority,
+        status,
+        currentStatus
+    };
+}
+
 document.addEventListener('DOMContentLoaded', function() {
-    // Animation de survol pour les lignes de tableau
-    const tableRows = document.querySelectorAll('tbody tr');
-    tableRows.forEach(row => {
-        row.style.cursor = 'pointer';
+    // Charger la préférence de vue depuis localStorage
+    const savedView = localStorage.getItem('taskViewPreference') || 'table';
+    switchView(savedView);
+    
+    // Ajouter des événements de clic pour les lignes du nouveau tableau
+    document.querySelectorAll('#table-view .table-row').forEach(row => {
         row.addEventListener('click', function(e) {
-            // Ne pas déclencher si on clique sur un bouton
-            if (e.target.closest('.btn-group')) return;
+            // Ne pas déclencher si on clique sur un bouton d'action
+            if (e.target.closest('.action-buttons')) return;
             
-            const id = this.querySelector('td:last-child .btn-group a').href.split('id=')[1];
-            const title = this.querySelector('td:nth-child(1)').textContent.trim();
-            const description = this.querySelector('td:nth-child(2)').textContent.trim();
-            const priority = this.querySelector('td:nth-child(3)').textContent.trim();
-            // Récupérer le statut actuel de la tâche
-            const status = this.querySelector('td:nth-child(4) .badge-status').textContent.trim();
-            let currentStatus = 'a_faire'; // Valeur par défaut
-            if (status.includes('En cours')) {
-                currentStatus = 'en_cours';
-            } else if (status.includes('Terminé')) {
-                currentStatus = 'termine';
+            const taskId = this.getAttribute('data-task-id');
+            if (taskId) {
+                afficherDetailsTache(taskId);
             }
-            
-            // Remplir le modal avec les informations de la tâche
-            document.getElementById('task-title').textContent = title;
-            document.getElementById('task-description').textContent = description;
-            document.getElementById('task-priority').textContent = priority;
-            
-            // Mettre à jour les attributs data-task-id des boutons
-            document.getElementById('start-task-btn').setAttribute('data-task-id', id);
-            document.getElementById('complete-task-btn').setAttribute('data-task-id', id);
-            document.getElementById('edit-task-btn').href = `index.php?page=modifier_tache&id=${id}`;
-            
-            // Gérer l'état actif/inactif des boutons en fonction du statut actuel
-            const startButton = document.getElementById('start-task-btn');
-            const completeButton = document.getElementById('complete-task-btn');
-            
-            // Bouton Démarrer actif uniquement si la tâche est "À faire"
-            if (currentStatus === 'a_faire') {
-                startButton.disabled = false;
-                startButton.classList.remove('btn-secondary');
-                startButton.classList.add('btn-primary');
-            } else {
-                startButton.disabled = true;
-                startButton.classList.remove('btn-primary');
-                startButton.classList.add('btn-secondary');
-            }
-            
-            // Bouton Terminer actif uniquement si la tâche est "À faire" ou "En cours"
-            if (currentStatus === 'a_faire' || currentStatus === 'en_cours') {
-                completeButton.disabled = false;
-                completeButton.classList.remove('btn-secondary');
-                completeButton.classList.add('btn-success');
-            } else {
-                completeButton.disabled = true;
-                completeButton.classList.remove('btn-success');
-                completeButton.classList.add('btn-secondary');
-            }
-            
-            // Afficher le modal
-            const taskModal = new bootstrap.Modal(document.getElementById('taskDetailsModal'));
-            taskModal.show();
         });
     });
     
-    // Ajouter l'événement de clic sur les descriptions de tâches
-    document.querySelectorAll('td.col-description').forEach(descCell => {
-        descCell.style.cursor = 'pointer';
-        descCell.addEventListener('click', function(e) {
+    // Événement de clic sur les descriptions pour le modal (cartes)
+    document.querySelectorAll('.task-description').forEach(descElement => {
+        descElement.addEventListener('click', function(e) {
+            e.stopPropagation(); // Empêcher la propagation vers la carte
+            
+            // Récupérer les informations de la tâche
+            const description = this.textContent.trim();
+            const title = this.closest('.task-card').querySelector('.task-title').textContent.trim();
+            
+            // Remplir le modal avec les informations
+            document.getElementById('description-title').textContent = title;
+            document.getElementById('description-content').textContent = description;
+            
+            // Afficher le modal
+            const descModal = new bootstrap.Modal(document.getElementById('descriptionModal'));
+            descModal.show();
+        });
+    });
+    
+    // Événement de clic sur les descriptions pour le modal (nouveau tableau)
+    document.querySelectorAll('#table-view .task-description-table').forEach(descElement => {
+        descElement.addEventListener('click', function(e) {
             e.stopPropagation(); // Empêcher la propagation vers la ligne du tableau
             
             // Récupérer les informations de la tâche
             const description = this.textContent.trim();
-            const title = this.closest('tr').querySelector('td:nth-child(1)').textContent.trim();
+            const title = this.closest('.table-row').querySelector('.task-title-table').textContent.trim();
             
             // Remplir le modal avec les informations
             document.getElementById('description-title').textContent = title;
@@ -2533,12 +2268,14 @@ document.addEventListener('DOMContentLoaded', function() {
         this.disabled = true;
         
         // Envoyer la requête pour mettre à jour le statut
-        fetch('ajax/update_tache_status.php', {
+        const formData = new FormData();
+        formData.append('tache_id', taskId);
+        formData.append('statut', newStatus);
+        formData.append('action', 'changer_statut');
+        
+        fetch('ajax_handlers/tache_commentaires.php', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: `id=${taskId}&statut=${newStatus}`
+            body: formData
         })
         .then(response => {
             if (!response.ok) {
@@ -2576,53 +2313,51 @@ document.addEventListener('DOMContentLoaded', function() {
     // Vérifier si on doit ouvrir le modal automatiquement (venant de la page d'accueil)
     <?php if(isset($_GET['task_id']) && isset($_GET['open_modal']) && $_GET['open_modal'] == '1'): ?>
     const taskId = "<?php echo $_GET['task_id']; ?>";
-    // Trouver la tâche correspondante dans le tableau
-    const taskRow = document.querySelector(`tbody tr td:last-child .btn-group a[href*="id=${taskId}"]`);
-    if (taskRow) {
-        // Simuler un clic sur la ligne de la tâche
-        taskRow.closest('tr').click();
-    }
+    // Ouvrir directement le modal de détails pour cette tâche
+    setTimeout(() => {
+        afficherDetailsTache(taskId);
+    }, 100); // Petit délai pour s'assurer que la page est complètement chargée
     <?php endif; ?>
 });
 
-// Fonction pour afficher les détails d'une tâche via le bouton "Détails"
+// Fonction pour afficher les détails d'une tâche
 function afficherDetailsTache(taskId) {
-    // Empêcher la propagation de l'événement pour éviter que le gestionnaire d'événements de ligne ne soit déclenché
-    event.stopPropagation();
+    // Trouver l'élément correspondant dans la vue active
+    const taskCard = document.querySelector(`.task-card[data-task-id="${taskId}"]`);
+    const taskRow = document.querySelector(`.table-row[data-task-id="${taskId}"]`);
     
-    // Trouver la ligne de la tâche correspondante
-    const taskRow = document.querySelector(`tbody tr td:last-child .btn-group button[onclick*="afficherDetailsTache(${taskId})"]`).closest('tr');
+    let taskData = null;
     
-    if (taskRow) {
-        // Récupérer les informations de la tâche
-        const title = taskRow.querySelector('td:nth-child(1)').textContent.trim();
-        const description = taskRow.querySelector('td:nth-child(2)').textContent.trim();
-        const priority = taskRow.querySelector('td:nth-child(3)').textContent.trim();
-        // Récupérer le statut actuel de la tâche
-        const status = taskRow.querySelector('td:nth-child(4) .badge-status').textContent.trim();
-        let currentStatus = 'a_faire'; // Valeur par défaut
-        if (status.includes('En cours')) {
-            currentStatus = 'en_cours';
-        } else if (status.includes('Terminé')) {
-            currentStatus = 'termine';
+    // Extraire les données selon la vue active
+    if (taskCard && taskCard.closest('#card-view').style.display !== 'none') {
+        taskData = extractTaskDataFromCard(taskCard);
+    } else if (taskRow && taskRow.closest('#table-view').style.display !== 'none') {
+        taskData = extractTaskDataFromRow(taskRow);
+    } else {
+        // Fallback - essayer les deux méthodes
+        if (taskCard) {
+            taskData = extractTaskDataFromCard(taskCard);
+        } else if (taskRow) {
+            taskData = extractTaskDataFromRow(taskRow);
         }
-        
+    }
+    
+    if (taskData) {
         // Remplir le modal avec les informations de la tâche
-        document.getElementById('task-title').textContent = title;
-        document.getElementById('task-description').textContent = description;
-        document.getElementById('task-priority').textContent = priority;
+        document.getElementById('task-title').textContent = taskData.title;
+        document.getElementById('task-description').textContent = taskData.description;
+        document.getElementById('task-priority').textContent = taskData.priority;
         
         // Mettre à jour les attributs data-task-id des boutons
         document.getElementById('start-task-btn').setAttribute('data-task-id', taskId);
         document.getElementById('complete-task-btn').setAttribute('data-task-id', taskId);
-        document.getElementById('edit-task-btn').href = `index.php?page=modifier_tache&id=${taskId}`;
         
         // Gérer l'état actif/inactif des boutons en fonction du statut actuel
         const startButton = document.getElementById('start-task-btn');
         const completeButton = document.getElementById('complete-task-btn');
         
         // Bouton Démarrer actif uniquement si la tâche est "À faire"
-        if (currentStatus === 'a_faire') {
+        if (taskData.currentStatus === 'a_faire') {
             startButton.disabled = false;
             startButton.classList.remove('btn-secondary');
             startButton.classList.add('btn-primary');
@@ -2633,7 +2368,7 @@ function afficherDetailsTache(taskId) {
         }
         
         // Bouton Terminer actif uniquement si la tâche est "À faire" ou "En cours"
-        if (currentStatus === 'a_faire' || currentStatus === 'en_cours') {
+        if (taskData.currentStatus === 'a_faire' || taskData.currentStatus === 'en_cours') {
             completeButton.disabled = false;
             completeButton.classList.remove('btn-secondary');
             completeButton.classList.add('btn-success');
@@ -2646,6 +2381,8 @@ function afficherDetailsTache(taskId) {
         // Afficher le modal
         const taskModal = new bootstrap.Modal(document.getElementById('taskDetailsModal'));
         taskModal.show();
+    } else {
+        console.error('Données de tâche non trouvées pour l\'ID:', taskId);
     }
 }
 
@@ -2655,39 +2392,12 @@ function confirmDelete(id) {
     }
 }
 
-// Ajustement de la taille du conteneur en fonction de la hauteur du contenu
+// Ajustement de la taille du conteneur pour les cartes
 document.addEventListener('DOMContentLoaded', function() {
     // S'assurer que le conteneur a la bonne hauteur sur mobile
     if (window.innerWidth <= 768) {
         const contentHeight = document.querySelector('.taches-content-container').scrollHeight;
         document.body.style.minHeight = (contentHeight + 90) + 'px';
-        
-        // S'assurer que le tableau ne dépasse pas la largeur de l'écran
-        const tableContainer = document.querySelector('.mobile-table-container');
-        if (tableContainer) {
-            tableContainer.style.maxWidth = (window.innerWidth - 30) + 'px'; // 15px de padding de chaque côté
-        }
-    }
-    
-    // Ajouter un indicateur de défilement pour le tableau
-    const tableContainer = document.querySelector('.mobile-table-container');
-    if (tableContainer && window.innerWidth <= 768) {
-        // Vérifier si le contenu est plus large que le conteneur
-        if (tableContainer.scrollWidth > tableContainer.clientWidth) {
-            // Ajouter un indicateur de défilement
-            const scrollIndicator = document.createElement('div');
-            scrollIndicator.className = 'scroll-indicator';
-            scrollIndicator.innerHTML = '<i class="fas fa-arrows-alt-h"></i> Faire défiler horizontalement';
-            tableContainer.parentNode.insertBefore(scrollIndicator, tableContainer);
-            
-            // Cacher l'indicateur après le premier défilement
-            tableContainer.addEventListener('scroll', function() {
-                scrollIndicator.style.opacity = '0';
-                setTimeout(() => {
-                    scrollIndicator.remove();
-                }, 300);
-            }, { once: true });
-        }
     }
 });
 

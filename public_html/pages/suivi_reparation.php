@@ -24,7 +24,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $reparation_id = cleanInput($_POST['reparation_id']);
         
         try {
-            $stmt = $pdo->prepare("
+            $shop_pdo = getShopDBConnection();
+            $stmt = $shop_pdo->prepare("
                 SELECT r.*, c.nom as client_nom, c.prenom as client_prenom, c.telephone as client_telephone, c.email as client_email,
                        s.nom as statut_nom, sc.nom as statut_categorie_nom, sc.couleur as statut_couleur,
                        (SELECT COUNT(*) FROM photos_reparation WHERE reparation_id = r.id) as nb_photos,
@@ -49,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $client_email = cleanInput($_POST['client_email']);
         
         try {
-            $stmt = $pdo->prepare("
+            $stmt = $shop_pdo->prepare("
                 SELECT r.*, c.nom as client_nom, c.prenom as client_prenom, c.telephone as client_telephone, c.email as client_email,
                        s.nom as statut_nom, sc.nom as statut_categorie_nom, sc.couleur as statut_couleur,
                        (SELECT COUNT(*) FROM photos_reparation WHERE reparation_id = r.id) as nb_photos,
@@ -77,9 +78,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 // Fonction pour obtenir le dernier log de réparation
 function getDernierLog($reparation_id) {
-    global $pdo;
+    $shop_pdo = getShopDBConnection();
     try {
-        $stmt = $pdo->prepare("
+        $stmt = $shop_pdo->prepare("
             SELECT rl.*, e.full_name as employe_nom 
             FROM reparation_logs rl
             LEFT JOIN employes e ON rl.employe_id = e.id
@@ -96,9 +97,9 @@ function getDernierLog($reparation_id) {
 
 // Fonction pour obtenir les photos d'une réparation
 function getPhotosReparation($reparation_id) {
-    global $pdo;
+    $shop_pdo = getShopDBConnection();
     try {
-        $stmt = $pdo->prepare("
+        $stmt = $shop_pdo->prepare("
             SELECT * FROM photos_reparation
             WHERE reparation_id = ?
             ORDER BY date_upload DESC
@@ -112,9 +113,9 @@ function getPhotosReparation($reparation_id) {
 
 // Fonction pour obtenir l'historique des statuts
 function getHistoriqueStatuts($reparation_id) {
-    global $pdo;
+    $shop_pdo = getShopDBConnection();
     try {
-        $stmt = $pdo->prepare("
+        $stmt = $shop_pdo->prepare("
             SELECT rl.*, e.full_name as employe_nom 
             FROM reparation_logs rl
             LEFT JOIN employes e ON rl.employe_id = e.id

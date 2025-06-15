@@ -12,7 +12,7 @@ if (!isset($_SESSION['user_id'])) {
 
 try {
     // Récupérer la liste des fournisseurs
-    $stmt = $pdo->query("SELECT id, nom FROM fournisseurs ORDER BY nom");
+    $stmt = $shop_pdo->query("SELECT id, nom FROM fournisseurs ORDER BY nom");
     $fournisseurs = $stmt->fetchAll(PDO::FETCH_ASSOC);
     
     header('Content-Type: application/json');

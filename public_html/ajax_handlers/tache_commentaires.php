@@ -39,22 +39,13 @@ if (!isset($_SESSION['user_id'])) {
 }
 */
 
-// Paramètres de connexion à la base de données
-$db_host = 'srv931.hstgr.io';
-$db_name = 'u139954273_Vscodetest';
-$db_user = 'u139954273_Vscodetest';
-$db_pass = 'Maman01#';
-$db_port = 3306;
+// Inclure les fichiers nécessaires
+require_once '../includes/db.php';
+require_once '../includes/functions.php';
+require_once '../includes/task_logger.php';
 
-// Connexion à la base de données
-try {
-    $pdo = new PDO("mysql:host=$db_host;port=$db_port;dbname=$db_name;charset=utf8mb4", $db_user, $db_pass);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    header('Content-Type: application/json');
-    echo json_encode(['success' => false, 'message' => 'Erreur de connexion à la base de données: ' . $e->getMessage()]);
-    exit;
-}
+// Obtenir la connexion à la base de données du magasin
+$shop_pdo = getShopDBConnection();
 
 // Vérifier la méthode de requête
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -102,7 +93,7 @@ switch ($action) {
                     date_limite = ?, employe_id = ?
                 WHERE id = ?
             ";
-            $stmt = $pdo->prepare($query);
+            $stmt = $shop_pdo->prepare($query);
             $stmt->execute([
                 $titre,
                 $description,
@@ -118,7 +109,7 @@ switch ($action) {
                 echo json_encode(['success' => true, 'message' => 'Tâche modifiée avec succès']);
             } else {
                 // Vérifier si la tâche existe
-                $check = $pdo->prepare("SELECT id FROM taches WHERE id = ?");
+                $check = $shop_pdo->prepare("SELECT id FROM taches WHERE id = ?");
                 $check->execute([$tache_id]);
                 if ($check->fetchColumn()) {
                     echo json_encode(['success' => true, 'message' => 'Aucune modification n\'a été apportée']);
@@ -149,19 +140,79 @@ switch ($action) {
         }
 
         try {
+            // Récupérer l'ancien statut pour le logging
+            $query = "SELECT statut, titre FROM taches WHERE id = ?";
+            $stmt = $shop_pdo->prepare($query);
+            $stmt->execute([$tache_id]);
+            $tache_actuelle = $stmt->fetch(PDO::FETCH_ASSOC);
+            
+            if (!$tache_actuelle) {
+                echo json_encode(['success' => false, 'message' => 'Tâche non trouvée']);
+                exit;
+            }
+            
+            $ancien_statut = $tache_actuelle['statut'];
+            $titre_tache = $tache_actuelle['titre'];
+
             // Mise à jour du statut
             $query = "UPDATE taches SET statut = ? WHERE id = ?";
-            $stmt = $pdo->prepare($query);
+            $stmt = $shop_pdo->prepare($query);
             $stmt->execute([$statut, $tache_id]);
 
             // Si le statut est "termine", mettre à jour la date de fin
             if ($statut === 'termine') {
                 $query = "UPDATE taches SET date_fin = NOW() WHERE id = ?";
-                $stmt = $pdo->prepare($query);
+                $stmt = $shop_pdo->prepare($query);
                 $stmt->execute([$tache_id]);
             }
 
-            echo json_encode(['success' => true, 'message' => 'Statut modifié avec succès']);
+            // 🎯 LOGGING : Enregistrer l'action dans Log_tasks
+            $action_type = '';
+            $details = '';
+            
+            switch ($statut) {
+                case 'en_cours':
+                    $action_type = 'demarrer';
+                    $details = "Tâche démarrée depuis le statut: $ancien_statut";
+                    break;
+                case 'termine':
+                    $action_type = 'terminer';
+                    $details = "Tâche terminée depuis le statut: $ancien_statut";
+                    break;
+                case 'a_faire':
+                    $action_type = 'modifier';
+                    $details = "Statut remis à 'À faire' depuis: $ancien_statut";
+                    break;
+                case 'annule':
+                    $action_type = 'modifier';
+                    $details = "Tâche annulée depuis le statut: $ancien_statut";
+                    break;
+                default:
+                    $action_type = 'modifier';
+                    $details = "Changement de statut de '$ancien_statut' vers '$statut'";
+            }
+            
+            // Enregistrer le log
+            $log_success = logTaskAction($tache_id, $action_type, $ancien_statut, $statut, $details);
+            
+            if (!$log_success) {
+                error_log("TACHE_COMMENTAIRES - Échec de l'enregistrement du log pour la tâche #$tache_id");
+            }
+
+            // Message de succès personnalisé selon l'action
+            $success_message = '';
+            switch ($statut) {
+                case 'en_cours':
+                    $success_message = "✅ Tâche '$titre_tache' démarrée avec succès !";
+                    break;
+                case 'termine':
+                    $success_message = "🎉 Tâche '$titre_tache' terminée avec succès !";
+                    break;
+                default:
+                    $success_message = "✅ Statut de la tâche '$titre_tache' modifié avec succès";
+            }
+
+            echo json_encode(['success' => true, 'message' => $success_message]);
         } catch (PDOException $e) {
             error_log('TACHE_COMMENTAIRES - Erreur SQL: ' . $e->getMessage());
             echo json_encode(['success' => false, 'message' => 'Erreur lors de la modification du statut: ' . $e->getMessage()]);
@@ -187,7 +238,7 @@ switch ($action) {
         try {
             // Mise à jour de la priorité
             $query = "UPDATE taches SET priorite = ? WHERE id = ?";
-            $stmt = $pdo->prepare($query);
+            $stmt = $shop_pdo->prepare($query);
             $stmt->execute([$priorite, $tache_id]);
 
             echo json_encode(['success' => true, 'message' => 'Priorité modifiée avec succès']);
@@ -210,7 +261,7 @@ switch ($action) {
         try {
             // Mise à jour de l'employé assigné
             $query = "UPDATE taches SET employe_id = ? WHERE id = ?";
-            $stmt = $pdo->prepare($query);
+            $stmt = $shop_pdo->prepare($query);
             $stmt->execute([$employe_id, $tache_id]);
 
             echo json_encode(['success' => true, 'message' => 'Assignation modifiée avec succès']);

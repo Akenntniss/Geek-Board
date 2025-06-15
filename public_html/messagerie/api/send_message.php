@@ -8,6 +8,12 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
+// Inclure la configuration de base de données
+require_once '../../config/database.php';
+
+// Obtenir la connexion à la base de données de la boutique
+$shop_pdo = getShopDBConnection();
+
 // Initialiser la session
 session_start();
 
@@ -59,13 +65,13 @@ try {
     }
     
     // Envoyer le message
-    global $pdo;
+    global $shop_pdo;
     
     // Commencer une transaction
-    $pdo->beginTransaction();
+    $shop_pdo->beginTransaction();
     
     // Insérer le message (en utilisant directement PDO au lieu de la fonction)
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         INSERT INTO messages (conversation_id, sender_id, contenu, type, date_envoi)
         VALUES (:conversation_id, :sender_id, :contenu, 'text', NOW())
     ");
@@ -76,10 +82,10 @@ try {
         ':contenu' => $contenu
     ]);
     
-    $message_id = $pdo->lastInsertId();
+    $message_id = $shop_pdo->lastInsertId();
     
     // Mettre à jour la dernière activité de la conversation
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         UPDATE conversations 
         SET derniere_activite = NOW() 
         WHERE id = :conversation_id
@@ -88,7 +94,7 @@ try {
     $stmt->execute([':conversation_id' => $conversation_id]);
     
     // Marquer le message comme lu par l'expéditeur
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         INSERT IGNORE INTO message_reads (message_id, user_id, date_lecture)
         VALUES (:message_id, :user_id, NOW())
     ");
@@ -99,7 +105,7 @@ try {
     ]);
     
     // Valider la transaction
-    $pdo->commit();
+    $shop_pdo->commit();
     
     // Réponse de succès
     header('Content-Type: application/json');
@@ -111,8 +117,8 @@ try {
     
 } catch (Exception $e) {
     // En cas d'erreur, annuler la transaction
-    if (isset($pdo) && $pdo->inTransaction()) {
-        $pdo->rollback();
+    if (isset($shop_pdo) && $shop_pdo->inTransaction()) {
+        $shop_pdo->rollback();
     }
     
     // Journaliser l'erreur

@@ -9,7 +9,8 @@ $client_id = (int)$_GET['client_id'];
 
 // Récupérer les informations du client
 try {
-    $stmt = $pdo->prepare("SELECT nom, prenom, telephone, email FROM clients WHERE id = ?");
+    $shop_pdo = getShopDBConnection();
+$stmt = $shop_pdo->prepare("SELECT nom, prenom, telephone, email FROM clients WHERE id = ?");
     $stmt->execute([$client_id]);
     $client = $stmt->fetch(PDO::FETCH_ASSOC);
     
@@ -24,7 +25,7 @@ try {
 
 // Récupérer l'historique des réparations
 try {
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         SELECT r.*, 
                CASE 
                    WHEN r.statut IN ('termine', 'livre') THEN 'Terminé'

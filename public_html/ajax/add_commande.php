@@ -1,19 +1,81 @@
 <?php
-session_start();
+// Inclure la configuration de session avant de démarrer la session
+require_once dirname(__DIR__) . '/config/session_config.php';
+// La session est déjà démarrée dans session_config.php
+
+// Journalisation détaillée
+error_log("=== Début de add_commande.php ===");
+error_log("POST params: " . print_r($_POST, true));
+error_log("SESSION: " . print_r($_SESSION, true));
+
 require_once dirname(__DIR__) . '/config/database.php';
 require_once dirname(__DIR__) . '/includes/functions.php';
 
-// Déboguer l'état de la session
-error_log("État de la session: " . print_r($_SESSION, true));
-error_log("Session ID: " . session_id());
-error_log("Cookies: " . print_r($_COOKIE, true));
-
-// Vérifier si l'utilisateur est connecté
+// Vérifier que l'utilisateur est connecté
 if (!isset($_SESSION['user_id'])) {
-    error_log("Erreur: Utilisateur non connecté. Session perdue ou non initialisée.");
-    // Continuer pour le débogage au lieu d'arrêter
-    $_SESSION['user_id'] = 1; // Forcer temporairement un ID utilisateur pour tests
-    error_log("ID utilisateur forcé à 1 pour débogage");
+    error_log("Erreur: utilisateur non connecté");
+    header('Content-Type: application/json');
+    echo json_encode([
+        'success' => false,
+        'message' => 'Session expirée - veuillez vous reconnecter',
+        'redirect' => '/pages/login.php?redirect=' . urlencode($_SERVER['HTTP_REFERER'] ?? '/index.php?page=commandes_pieces')
+    ]);
+    exit;
+}
+
+// Vérifier que le shop_id est défini dans la session
+if (!isset($_SESSION['shop_id'])) {
+    error_log("Erreur: shop_id non défini dans la session");
+    header('Content-Type: application/json');
+    echo json_encode([
+        'success' => false,
+        'message' => 'Session invalide. Veuillez vous reconnecter.',
+        'redirect' => '/pages/login.php?redirect=' . urlencode($_SERVER['HTTP_REFERER'] ?? '/index.php?page=commandes_pieces')
+    ]);
+    exit;
+}
+
+// Vérifier que le shop_id est valide
+try {
+    $pdo_main = getMainDBConnection();
+    $stmt = $pdo_main->prepare("SELECT id FROM shops WHERE id = ? AND active = 1");
+    $stmt->execute([$_SESSION['shop_id']]);
+    if (!$stmt->fetch()) {
+        error_log("Erreur: shop_id invalide ou inactif");
+        header('Content-Type: application/json');
+        echo json_encode([
+            'success' => false,
+            'message' => 'Magasin invalide. Veuillez vous reconnecter.',
+            'redirect' => '/pages/login.php?redirect=' . urlencode($_SERVER['HTTP_REFERER'] ?? '/index.php?page=commandes_pieces')
+        ]);
+        exit;
+    }
+} catch (Exception $e) {
+    error_log("Erreur lors de la vérification du shop_id: " . $e->getMessage());
+    header('Content-Type: application/json');
+    echo json_encode([
+        'success' => false,
+        'message' => 'Erreur de vérification du magasin',
+        'redirect' => '/pages/login.php?redirect=' . urlencode($_SERVER['HTTP_REFERER'] ?? '/index.php?page=commandes_pieces')
+    ]);
+    exit;
+}
+
+// Obtenir la connexion à la base de données de la boutique
+try {
+$shop_pdo = getShopDBConnection();
+    if (!$shop_pdo) {
+        throw new Exception("Impossible d'obtenir la connexion à la base de données");
+    }
+    error_log("Connexion à la base de données réussie");
+} catch (Exception $e) {
+    error_log("Erreur de connexion à la base de données: " . $e->getMessage());
+    header('Content-Type: application/json');
+    echo json_encode([
+        'success' => false,
+        'message' => 'Erreur de connexion à la base de données'
+    ]);
+    exit;
 }
 
 // Détection du type de contenu pour supporter JSON et form-data
@@ -72,9 +134,9 @@ if (!isset($data['quantite']) || !is_numeric($data['quantite']) || floatval($dat
     $errors[] = 'La quantité doit être supérieure à 0';
 }
 
-// Vérification du prix estimé
-if (!isset($data['prix_estime']) || !is_numeric($data['prix_estime']) || floatval($data['prix_estime']) <= 0) {
-    $errors[] = 'Le prix estimé doit être supérieur à 0';
+// Vérification du prix estimé (facultatif)
+if (isset($data['prix_estime']) && $data['prix_estime'] !== '' && (!is_numeric($data['prix_estime']) || floatval($data['prix_estime']) < 0)) {
+    $errors[] = 'Le prix estimé doit être un nombre positif';
 }
 
 if (!empty($errors)) {
@@ -95,7 +157,7 @@ try {
         error_log("Client saisi manuellement détecté: " . $data['nom_client_manuel']);
         
         // Vérifier si le client temporaire existe déjà
-        $stmt = $pdo->prepare("SELECT id FROM clients WHERE nom = 'Client Non Enregistré' AND type = 'temporaire' LIMIT 1");
+        $stmt = $shop_pdo->prepare("SELECT id FROM clients WHERE nom = 'Client Non Enregistré' AND type = 'temporaire' LIMIT 1");
         $stmt->execute();
         $temp_client = $stmt->fetch(PDO::FETCH_ASSOC);
         
@@ -105,12 +167,12 @@ try {
             error_log("Utilisation du client temporaire existant: ID " . $client_id);
         } else {
             // Créer un client temporaire
-            $stmt = $pdo->prepare("
+            $stmt = $shop_pdo->prepare("
                 INSERT INTO clients (nom, prenom, type, date_creation)
                 VALUES ('Client Non Enregistré', 'Saisie Manuelle', 'temporaire', NOW())
             ");
             $stmt->execute();
-            $client_id = $pdo->lastInsertId();
+            $client_id = $shop_pdo->lastInsertId();
             error_log("Nouveau client temporaire créé: ID " . $client_id);
         }
         
@@ -128,10 +190,10 @@ try {
     $reference = 'CMD-' . date('Ymd') . '-' . uniqid();
     
     // Démarrer une transaction pour garantir l'intégrité des données
-    $pdo->beginTransaction();
+    $shop_pdo->beginTransaction();
     
     // Préparer la requête SQL pour l'ajout de la commande
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         INSERT INTO commandes_pieces (
             reference, client_id, fournisseur_id, reparation_id, 
             nom_piece, code_barre, quantite, prix_estime, 
@@ -152,7 +214,7 @@ try {
         'nom_piece' => trim($data['nom_piece']),
         'code_barre' => isset($data['code_barre']) ? trim($data['code_barre']) : null,
         'quantite' => floatval($data['quantite']),
-        'prix_estime' => floatval($data['prix_estime']),
+        'prix_estime' => isset($data['prix_estime']) ? floatval($data['prix_estime']) : null,
         'statut' => $data['statut'] ?? 'en_attente',
         'notes' => $note_commande
     ];
@@ -163,14 +225,14 @@ try {
     $success = $stmt->execute($params);
     
     if ($success) {
-        $commande_id = $pdo->lastInsertId();
+        $commande_id = $shop_pdo->lastInsertId();
         error_log("Commande ajoutée avec succès, ID: " . $commande_id);
         
         // Si une réparation est associée, mettre à jour son champ commande_requise
         if ($has_reparation && $reparation_id) {
             error_log("Mise à jour du champ commande_requise pour la réparation ID: " . $reparation_id);
             
-            $update_stmt = $pdo->prepare("
+            $update_stmt = $shop_pdo->prepare("
                 UPDATE reparations 
                 SET commande_requise = 1, 
                     date_modification = NOW() 
@@ -188,7 +250,7 @@ try {
         }
         
         // Valider la transaction
-        $pdo->commit();
+        $shop_pdo->commit();
         
         header('Content-Type: application/json');
         echo json_encode([
@@ -201,16 +263,16 @@ try {
     }
 } catch (PDOException $e) {
     // Annuler la transaction en cas d'erreur
-    if ($pdo->inTransaction()) {
-        $pdo->rollBack();
+    if ($shop_pdo->inTransaction()) {
+        $shop_pdo->rollBack();
     }
     error_log("Erreur PDO lors de l'ajout de la commande: " . $e->getMessage());
     header('Content-Type: application/json');
     echo json_encode(['success' => false, 'message' => 'Erreur lors de l\'ajout de la commande: ' . $e->getMessage()]);
 } catch (Exception $e) {
     // Annuler la transaction en cas d'erreur
-    if ($pdo->inTransaction()) {
-        $pdo->rollBack();
+    if ($shop_pdo->inTransaction()) {
+        $shop_pdo->rollBack();
     }
     error_log("Exception générale lors de l'ajout de la commande: " . $e->getMessage());
     header('Content-Type: application/json');

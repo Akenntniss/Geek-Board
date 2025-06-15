@@ -38,10 +38,10 @@ if (!$partenaire_id || !$description || !$montant) {
 
 try {
     // Démarrer une transaction
-    $pdo->beginTransaction();
+    $shop_pdo->beginTransaction();
 
     // Insérer le service dans la table services_partenaires
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         INSERT INTO services_partenaires 
         (partenaire_id, description, montant) 
         VALUES (?, ?, ?)
@@ -49,7 +49,7 @@ try {
     $stmt->execute([$partenaire_id, $description, $montant]);
 
     // Créer une transaction correspondante
-    $stmt = $pdo->prepare("
+    $stmt = $shop_pdo->prepare("
         INSERT INTO transactions_partenaires 
         (partenaire_id, type, montant, description) 
         VALUES (?, 'SERVICE', ?, ?)
@@ -57,13 +57,13 @@ try {
     $stmt->execute([$partenaire_id, $montant, "Service: " . $description]);
 
     // Mettre à jour le solde du partenaire
-    $stmt = $pdo->prepare("SELECT solde_actuel FROM soldes_partenaires WHERE partenaire_id = ?");
+    $stmt = $shop_pdo->prepare("SELECT solde_actuel FROM soldes_partenaires WHERE partenaire_id = ?");
     $stmt->execute([$partenaire_id]);
     $solde = $stmt->fetch();
 
     if ($solde) {
         // Mettre à jour le solde existant
-        $stmt = $pdo->prepare("
+        $stmt = $shop_pdo->prepare("
             UPDATE soldes_partenaires 
             SET solde_actuel = solde_actuel + ?, 
                 derniere_mise_a_jour = CURRENT_TIMESTAMP 
@@ -72,7 +72,7 @@ try {
         $stmt->execute([$montant, $partenaire_id]);
     } else {
         // Créer un nouveau solde
-        $stmt = $pdo->prepare("
+        $stmt = $shop_pdo->prepare("
             INSERT INTO soldes_partenaires 
             (partenaire_id, solde_actuel) 
             VALUES (?, ?)
@@ -81,14 +81,14 @@ try {
     }
 
     // Valider la transaction
-    $pdo->commit();
+    $shop_pdo->commit();
 
     header('Content-Type: application/json');
     echo json_encode(['success' => true, 'message' => 'Service enregistré avec succès']);
 
 } catch (PDOException $e) {
     // Annuler la transaction en cas d'erreur
-    $pdo->rollBack();
+    $shop_pdo->rollBack();
     
     error_log("Erreur lors de l'ajout du service : " . $e->getMessage());
     header('Content-Type: application/json');

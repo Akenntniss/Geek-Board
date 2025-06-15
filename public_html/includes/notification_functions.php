@@ -28,13 +28,13 @@ function set_flash_message($text, $title = 'Information', $type = 'success') {
  * @return bool Succès ou échec
  */
 function send_notification($user_id, $title, $message, $link = null, $type = 'info') {
-    global $pdo;
+    $shop_pdo = getShopDBConnection();
     
     try {
         $sql = "INSERT INTO notifications (user_id, title, message, link, type, created_at) 
                 VALUES (:user_id, :title, :message, :link, :type, NOW())";
         
-        $stmt = $pdo->prepare($sql);
+$stmt = $shop_pdo->prepare($sql);
         $stmt->execute([
             ':user_id' => $user_id,
             ':title' => $title,
@@ -57,7 +57,7 @@ function send_notification($user_id, $title, $message, $link = null, $type = 'in
  * @return array Tableau de notifications
  */
 function get_unread_notifications($user_id, $limit = 10) {
-    global $pdo;
+    $shop_pdo = getShopDBConnection();
     
     try {
         $sql = "SELECT id, title, message, link, type, created_at, is_read 
@@ -66,7 +66,7 @@ function get_unread_notifications($user_id, $limit = 10) {
                 ORDER BY created_at DESC
                 LIMIT :limit";
         
-        $stmt = $pdo->prepare($sql);
+        $stmt = $shop_pdo->prepare($sql);
         $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
         $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
         $stmt->execute();
@@ -92,14 +92,14 @@ function get_unread_notifications($user_id, $limit = 10) {
  * @return bool Succès ou échec
  */
 function mark_notification_as_read($notification_id, $user_id) {
-    global $pdo;
+    $shop_pdo = getShopDBConnection();
     
     try {
         $sql = "UPDATE notifications 
                 SET is_read = 1 
                 WHERE id = :id AND user_id = :user_id";
         
-        $stmt = $pdo->prepare($sql);
+        $stmt = $shop_pdo->prepare($sql);
         $stmt->execute([
             ':id' => $notification_id,
             ':user_id' => $user_id
@@ -118,14 +118,14 @@ function mark_notification_as_read($notification_id, $user_id) {
  * @return bool Succès ou échec
  */
 function mark_all_notifications_as_read($user_id) {
-    global $pdo;
+    $shop_pdo = getShopDBConnection();
     
     try {
         $sql = "UPDATE notifications 
                 SET is_read = 1 
                 WHERE user_id = :user_id AND is_read = 0";
         
-        $stmt = $pdo->prepare($sql);
+        $stmt = $shop_pdo->prepare($sql);
         $stmt->execute([':user_id' => $user_id]);
         
         return true;
@@ -169,10 +169,10 @@ function format_time_ago($timestamp) {
  * @return int Nombre de notifications non lues
  */
 function count_unread_notifications($user_id) {
-    global $pdo;
+    $shop_pdo = getShopDBConnection();
     
     try {
-        $stmt = $pdo->prepare("SELECT COUNT(*) FROM notifications WHERE user_id = ? AND is_read = 0");
+        $stmt = $shop_pdo->prepare("SELECT COUNT(*) FROM notifications WHERE user_id = ? AND is_read = 0");
         $stmt->execute([$user_id]);
         return (int) $stmt->fetchColumn();
     } catch (PDOException $e) {

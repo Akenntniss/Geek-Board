@@ -14,7 +14,8 @@ $parrains = [];
 if (!empty($search_term)) {
     try {
         // Rechercher les clients inscrits au parrainage correspondant aux critères
-        $stmt = $pdo->prepare("
+        $shop_pdo = getShopDBConnection();
+$stmt = $shop_pdo->prepare("
             SELECT c.* 
             FROM clients c
             WHERE c.inscrit_parrainage = 1 
@@ -35,7 +36,7 @@ if (!empty($search_term)) {
         // Récupérer des informations additionnelles pour chaque parrain
         foreach ($parrains as &$parrain) {
             // Nombre de filleuls
-            $stmt_filleuls = $pdo->prepare("
+            $stmt_filleuls = $shop_pdo->prepare("
                 SELECT COUNT(*) as nb_filleuls 
                 FROM parrainage_relations 
                 WHERE parrain_id = ?
@@ -44,7 +45,7 @@ if (!empty($search_term)) {
             $parrain['nb_filleuls'] = $stmt_filleuls->fetch(PDO::FETCH_ASSOC)['nb_filleuls'] ?? 0;
             
             // Nombre de réductions disponibles
-            $stmt_reductions = $pdo->prepare("
+            $stmt_reductions = $shop_pdo->prepare("
                 SELECT COUNT(*) as nb_reductions 
                 FROM parrainage_reductions 
                 WHERE parrain_id = ? AND utilise = 0

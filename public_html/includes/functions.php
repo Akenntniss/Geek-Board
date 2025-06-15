@@ -112,7 +112,7 @@ function format_date($date) {
     if ($date === null || empty($date)) {
         return 'Non définie';
     }
-    return date('d/m/Y', strtotime($date));
+    return date('d/m', strtotime($date));
 }
 
 /**
@@ -848,5 +848,228 @@ function get_urgence_class($urgence) {
             return 'bg-danger';
         default:
             return 'bg-secondary';
+    }
+}
+
+/**
+ * Fonctions utilitaires globales pour GeekBoard
+ * Fonctions utilisées dans plusieurs parties de l'application
+ */
+
+// S'assurer que les fonctions ne sont définies qu'une seule fois
+if (!function_exists('getSupplierColor')) {
+    /**
+     * Obtenir la couleur associée à un fournisseur
+     * @param int $fournisseur_id ID du fournisseur
+     * @return string Couleur hexadécimale
+     */
+    function getSupplierColor($fournisseur_id) {
+        // Palette de 10 couleurs distinctes
+        $colors = [
+            '#4e73df', // Bleu royal
+            '#36b9cc', // Cyan
+            '#1cc88a', // Vert
+            '#f6c23e', // Jaune
+            '#e74a3b', // Rouge
+            '#8a6d3b', // Brun
+            '#6610f2', // Violet foncé
+            '#20c997', // Turquoise
+            '#fd7e14', // Orange
+            '#6f42c1'  // Violet
+        ];
+        
+        // Utiliser le modulo pour obtenir un index entre 0 et 9
+        $index = $fournisseur_id % 10;
+        
+        return $colors[$index];
+    }
+}
+
+if (!function_exists('getDateColor')) {
+    /**
+     * Obtenir la couleur associée à un jour de la semaine
+     * @param int $day_of_week Jour de la semaine (1-7)
+     * @return string Couleur hexadécimale
+     */
+    function getDateColor($day_of_week) {
+        // Palette de couleurs pour les jours de la semaine
+        $colors = [
+            1 => '#cfe2ff', // Lundi - Bleu clair
+            2 => '#d1e7dd', // Mardi - Vert clair
+            3 => '#f8d7da', // Mercredi - Rose clair
+            4 => '#fff3cd', // Jeudi - Jaune clair
+            5 => '#e7f5ff', // Vendredi - Bleu très clair
+            6 => '#e2e3e5', // Samedi - Gris clair
+            7 => '#e0cffc'  // Dimanche - Violet clair
+        ];
+        
+        return $colors[$day_of_week] ?? '#f8f9fa'; // Couleur par défaut si jour invalide
+    }
+}
+
+if (!function_exists('getDateColorDark')) {
+    /**
+     * Obtenir la couleur associée à un jour de la semaine (mode sombre)
+     * @param int $day_of_week Jour de la semaine (1-7)
+     * @return string Couleur hexadécimale
+     */
+    function getDateColorDark($day_of_week) {
+        // Palette de couleurs plus foncées pour le mode nuit
+        $colors = [
+            1 => '#1e3a8a', // Lundi - Bleu foncé
+            2 => '#166534', // Mardi - Vert foncé
+            3 => '#991b1b', // Mercredi - Rouge foncé
+            4 => '#a16207', // Jeudi - Jaune foncé
+            5 => '#1e40af', // Vendredi - Bleu foncé
+            6 => '#374151', // Samedi - Gris foncé
+            7 => '#6b21a8'  // Dimanche - Violet foncé
+        ];
+        
+        return $colors[$day_of_week] ?? '#374151'; // Couleur par défaut si jour invalide
+    }
+}
+
+if (!function_exists('get_status_label')) {
+    /**
+     * Obtenir le libellé d'un statut
+     * @param string $statut Code du statut
+     * @return string Libellé traduit
+     */
+    function get_status_label($statut) {
+        switch($statut) {
+            case 'en_attente': return 'En attente';
+            case 'commande': return 'Commandé';
+            case 'recue': return 'Reçu';
+            case 'annulee': return 'Annulé';
+            case 'urgent': return 'URGENT';
+            case 'utilise': return 'Utilisé';
+            case 'a_retourner': return 'Retour';
+            default: return $statut;
+        }
+    }
+}
+
+if (!function_exists('formatUrgence')) {
+    /**
+     * Formater le niveau d'urgence avec badge HTML
+     * @param string $urgence Niveau d'urgence
+     * @return string HTML du badge
+     */
+    function formatUrgence($urgence) {
+        $classes = [
+            'normal' => 'secondary',
+            'urgent' => 'warning',
+            'tres_urgent' => 'danger'
+        ];
+        
+        $labels = [
+            'normal' => 'Normal',
+            'urgent' => 'Urgent',
+            'tres_urgent' => 'Très urgent'
+        ];
+        
+        return sprintf(
+            '<span class="badge bg-%s">%s</span>',
+            $classes[$urgence] ?? 'secondary',
+            $labels[$urgence] ?? $urgence
+        );
+    }
+}
+
+if (!function_exists('get_status_class')) {
+    /**
+     * Obtenir la classe CSS pour un statut (version commandes_pieces)
+     * @param string $statut Code du statut
+     * @return string Classes CSS Bootstrap complètes
+     */
+    function get_status_class($statut) {
+        switch($statut) {
+            case 'en_attente': return 'bg-warning text-dark';
+            case 'commande': return 'bg-info text-white';
+            case 'recue': return 'bg-success text-white';
+            case 'annulee': return 'bg-danger text-white';
+            case 'urgent': return 'bg-danger text-white';
+            case 'utilise': return 'bg-primary text-white';
+            case 'a_retourner': return 'bg-secondary text-white';
+            default: return 'bg-secondary text-white';
+        }
+    }
+}
+
+if (!function_exists('get_status_color')) {
+    /**
+     * Obtenir uniquement la couleur d'un statut
+     * @param string $statut Code du statut
+     * @return string Nom de la couleur Bootstrap
+     */
+    function get_status_color($statut) {
+        switch($statut) {
+            case 'en_attente': return 'warning';
+            case 'commande': return 'info';
+            case 'recue': return 'success'; 
+            case 'annulee': return 'danger';
+            case 'urgent': return 'danger';
+            case 'utilise': return 'primary';
+            case 'a_retourner': return 'secondary';
+            default: return 'secondary';
+        }
+    }
+}
+
+if (!function_exists('dbDebugLog')) {
+    /**
+     * Logger les messages de debug avec contexte de magasin
+     * @param string $message Message à logger
+     */
+    function dbDebugLog($message) {
+        $timestamp = date('Y-m-d H:i:s');
+        $shop_id = $_SESSION['shop_id'] ?? 'unknown';
+        error_log("[{$timestamp}] [Shop:{$shop_id}] {$message}");
+    }
+}
+
+if (!function_exists('generateSecureToken')) {
+    /**
+     * Générer un token sécurisé
+     * @param int $length Longueur du token
+     * @return string Token hexadécimal
+     */
+    function generateSecureToken($length = 32) {
+        return bin2hex(random_bytes($length));
+    }
+}
+
+if (!function_exists('formatFileSize')) {
+    /**
+     * Formater une taille de fichier en bytes vers une unité lisible
+     * @param int $bytes Taille en bytes
+     * @return string Taille formatée
+     */
+    function formatFileSize($bytes) {
+        if ($bytes >= 1073741824) {
+            return number_format($bytes / 1073741824, 2) . ' GB';
+        } elseif ($bytes >= 1048576) {
+            return number_format($bytes / 1048576, 2) . ' MB';
+        } elseif ($bytes >= 1024) {
+            return number_format($bytes / 1024, 2) . ' KB';
+        } else {
+            return $bytes . ' bytes';
+        }
+    }
+}
+
+if (!function_exists('sanitizeFilename')) {
+    /**
+     * Nettoyer un nom de fichier
+     * @param string $filename Nom de fichier à nettoyer
+     * @return string Nom de fichier nettoyé
+     */
+    function sanitizeFilename($filename) {
+        // Remplacer les caractères spéciaux par des underscores
+        $filename = preg_replace('/[^a-zA-Z0-9._-]/', '_', $filename);
+        // Éviter les doubles underscores
+        $filename = preg_replace('/_+/', '_', $filename);
+        // Supprimer les underscores en début et fin
+        return trim($filename, '_');
     }
 }

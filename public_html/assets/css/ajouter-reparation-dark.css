@@ -1,0 +1,421 @@
+/* Styles spécialisés pour la page ajouter_reparation en mode nuit */
+
+/* ========== MODE SOMBRE ========== */
+.dark-mode,
+[data-theme="dark"] {
+
+    /* ========== AMÉLIORATION DU BOUTON PRÉCÉDENT ========== */
+    .btn-secondary.prev-step {
+        background: linear-gradient(135deg, #4a5568 0%, #2d3748 100%) !important;
+        border: 2px solid #6b7280 !important;
+        color: #f8fafc !important;
+        font-weight: 600 !important;
+        padding: 0.75rem 1.5rem !important;
+        border-radius: 0.75rem !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), 
+                    0 2px 4px rgba(0, 0, 0, 0.2) !important;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        position: relative !important;
+        overflow: hidden !important;
+    }
+
+    .btn-secondary.prev-step::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+        transition: left 0.6s;
+    }
+
+    .btn-secondary.prev-step:hover {
+        background: linear-gradient(135deg, #5a6578 0%, #3d4758 100%) !important;
+        border-color: #94a3b8 !important;
+        transform: translateY(-2px) !important;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4), 
+                    0 4px 8px rgba(0, 0, 0, 0.3) !important;
+    }
+
+    .btn-secondary.prev-step:hover::before {
+        left: 100%;
+    }
+
+    .btn-secondary.prev-step:active {
+        transform: translateY(0) !important;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+    }
+
+    /* ========== AMÉLIORATION DU BOUTON RECHERCHER ========== */
+    #rep_btn_recherche_client {
+        background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%) !important;
+        border: 2px solid #2563eb !important;
+        color: #ffffff !important;
+        font-weight: 600 !important;
+        padding: 0.75rem 1.25rem !important;
+        border-radius: 0 0.75rem 0.75rem 0 !important;
+        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3), 
+                    0 2px 4px rgba(59, 130, 246, 0.2) !important;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        position: relative !important;
+        overflow: hidden !important;
+    }
+
+    #rep_btn_recherche_client::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        transition: left 0.6s;
+    }
+
+    #rep_btn_recherche_client:hover {
+        background: linear-gradient(135deg, #4f46e5 0%, #3730a3 100%) !important;
+        border-color: #4338ca !important;
+        transform: translateY(-2px) !important;
+        box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4), 
+                    0 4px 8px rgba(59, 130, 246, 0.3) !important;
+    }
+
+    #rep_btn_recherche_client:hover::before {
+        left: 100%;
+    }
+
+    #rep_btn_recherche_client:active {
+        transform: translateY(0) !important;
+        box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3) !important;
+    }
+
+    #rep_btn_recherche_client .fas {
+        font-size: 1.1rem !important;
+        margin-right: 0.5rem !important;
+    }
+
+    /* ========== FOND VERT FONCÉ POUR "CONFIRMATION ENREGISTRÉE" ========== */
+    #rep_confirmation_sans_mdp.alert-success {
+        background: linear-gradient(135deg, #065f46 0%, #047857 100%) !important;
+        border: 2px solid #059669 !important;
+        color: #ffffff !important;
+        border-radius: 0.75rem !important;
+        box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3), 
+                    0 2px 4px rgba(5, 150, 105, 0.2) !important;
+        padding: 1rem 1.5rem !important;
+        margin: 1rem 0 !important;
+        font-weight: 500 !important;
+    }
+
+    #rep_confirmation_sans_mdp.alert-success i {
+        color: #10b981 !important;
+        font-size: 1.2rem !important;
+        margin-right: 0.75rem !important;
+    }
+
+    #rep_confirmation_sans_mdp.alert-success strong {
+        color: #ffffff !important;
+        font-weight: 700 !important;
+    }
+
+    /* ========== AMÉLIORATION DES BOUTONS DE PHOTO ========== */
+    /* Bouton choisir un fichier - Styling complet pour input file */
+    #rep_photo_file {
+        background: linear-gradient(135deg, #7c3aed 0%, #5b21b6 100%) !important;
+        border: 2px solid #8b5cf6 !important;
+        color: #ffffff !important;
+        font-weight: 600 !important;
+        padding: 0.75rem 1rem !important;
+        border-radius: 0.75rem !important;
+        box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3), 
+                    0 2px 4px rgba(124, 58, 237, 0.2) !important;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        cursor: pointer !important;
+        position: relative !important;
+        overflow: hidden !important;
+        width: 100% !important;
+        text-align: center !important;
+    }
+
+    /* Styling pour le texte du bouton file */
+    #rep_photo_file::file-selector-button {
+        background: linear-gradient(135deg, #7c3aed 0%, #5b21b6 100%) !important;
+        border: none !important;
+        color: #ffffff !important;
+        font-weight: 600 !important;
+        padding: 0.75rem 1.5rem !important;
+        border-radius: 0.5rem !important;
+        margin-right: 1rem !important;
+        cursor: pointer !important;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    }
+
+    /* Compatibilité WebKit */
+    #rep_photo_file::-webkit-file-upload-button {
+        background: linear-gradient(135deg, #7c3aed 0%, #5b21b6 100%) !important;
+        border: none !important;
+        color: #ffffff !important;
+        font-weight: 600 !important;
+        padding: 0.75rem 1.5rem !important;
+        border-radius: 0.5rem !important;
+        margin-right: 1rem !important;
+        cursor: pointer !important;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        box-shadow: 0 2px 8px rgba(124, 58, 237, 0.3) !important;
+    }
+
+    #rep_photo_file:hover {
+        background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%) !important;
+        border-color: #a78bfa !important;
+        transform: translateY(-2px) !important;
+        box-shadow: 0 8px 25px rgba(124, 58, 237, 0.4), 
+                    0 4px 8px rgba(124, 58, 237, 0.3) !important;
+    }
+
+    #rep_photo_file:hover::file-selector-button {
+        background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%) !important;
+        transform: translateY(-2px) !important;
+        box-shadow: 0 4px 12px rgba(124, 58, 237, 0.4) !important;
+    }
+
+    #rep_photo_file:hover::-webkit-file-upload-button {
+        background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%) !important;
+        transform: translateY(-2px) !important;
+        box-shadow: 0 4px 12px rgba(124, 58, 237, 0.4) !important;
+    }
+
+    #rep_photo_file:active {
+        transform: translateY(0) !important;
+        box-shadow: 0 2px 8px rgba(124, 58, 237, 0.3) !important;
+    }
+
+    #rep_photo_file:active::file-selector-button {
+        transform: translateY(0) !important;
+        box-shadow: 0 2px 6px rgba(124, 58, 237, 0.3) !important;
+    }
+
+    #rep_photo_file:active::-webkit-file-upload-button {
+        transform: translateY(0) !important;
+        box-shadow: 0 2px 6px rgba(124, 58, 237, 0.3) !important;
+    }
+
+    /* Style alternatif si le file input ne peut pas être stylé - wrapper label */
+    label[for="rep_photo_file"] {
+        background: linear-gradient(135deg, #7c3aed 0%, #5b21b6 100%) !important;
+        border: 2px solid #8b5cf6 !important;
+        color: #ffffff !important;
+        font-weight: 600 !important;
+        padding: 0.75rem 1rem !important;
+        border-radius: 0.75rem !important;
+        box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3), 
+                    0 2px 4px rgba(124, 58, 237, 0.2) !important;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        cursor: pointer !important;
+        display: inline-block !important;
+        text-align: center !important;
+        position: relative !important;
+        overflow: hidden !important;
+    }
+
+    label[for="rep_photo_file"]:hover {
+        background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%) !important;
+        border-color: #a78bfa !important;
+        transform: translateY(-2px) !important;
+        box-shadow: 0 8px 25px rgba(124, 58, 237, 0.4), 
+                    0 4px 8px rgba(124, 58, 237, 0.3) !important;
+    }
+
+    /* Bouton capturer avec la caméra */
+    #rep_capture_photo {
+        background: linear-gradient(135deg, #059669 0%, #047857 100%) !important;
+        border: 2px solid #10b981 !important;
+        color: #ffffff !important;
+        font-weight: 600 !important;
+        padding: 0.75rem 1.5rem !important;
+        border-radius: 0.75rem !important;
+        box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3), 
+                    0 2px 4px rgba(5, 150, 105, 0.2) !important;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        position: relative !important;
+        overflow: hidden !important;
+    }
+
+    #rep_capture_photo::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        transition: left 0.6s;
+    }
+
+    #rep_capture_photo:hover {
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+        border-color: #34d399 !important;
+        transform: translateY(-2px) !important;
+        box-shadow: 0 8px 25px rgba(5, 150, 105, 0.4), 
+                    0 4px 8px rgba(5, 150, 105, 0.3) !important;
+    }
+
+    #rep_capture_photo:hover::before {
+        left: 100%;
+    }
+
+    #rep_capture_photo:active {
+        transform: translateY(0) !important;
+        box-shadow: 0 2px 8px rgba(5, 150, 105, 0.3) !important;
+    }
+
+    #rep_capture_photo .fas {
+        font-size: 1.1rem !important;
+        margin-right: 0.75rem !important;
+    }
+
+    /* ========== FOND VERT FONCÉ POUR "PHOTO CAPTURÉE AVEC SUCCÈS" ========== */
+    .alert-success {
+        background: linear-gradient(135deg, #065f46 0%, #047857 100%) !important;
+        border: 2px solid #059669 !important;
+        color: #ffffff !important;
+        border-radius: 0.75rem !important;
+        box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3), 
+                    0 2px 4px rgba(5, 150, 105, 0.2) !important;
+        padding: 1rem 1.5rem !important;
+        margin: 1rem 0 !important;
+        font-weight: 500 !important;
+        animation: slideInSuccess 0.5s ease-out !important;
+    }
+
+    .alert-success i {
+        color: #10b981 !important;
+        font-size: 1.2rem !important;
+        margin-right: 0.75rem !important;
+    }
+
+    .alert-success strong {
+        color: #ffffff !important;
+        font-weight: 700 !important;
+    }
+
+    /* ========== ANIMATIONS ========== */
+    @keyframes slideInSuccess {
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* ========== EFFETS RESPONSIFS ========== */
+    @media (max-width: 768px) {
+        .btn-secondary.prev-step,
+        #rep_btn_recherche_client,
+        #rep_capture_photo {
+            padding: 0.65rem 1.25rem !important;
+            font-size: 0.95rem !important;
+        }
+
+        #rep_confirmation_sans_mdp.alert-success,
+        .alert-success {
+            padding: 0.875rem 1.25rem !important;
+            font-size: 0.95rem !important;
+        }
+    }
+
+    /* ========== EFFETS SUPPLÉMENTAIRES POUR UNE MEILLEURE UX ========== */
+    .btn-secondary.prev-step:focus,
+    #rep_btn_recherche_client:focus,
+    #rep_capture_photo:focus {
+        outline: none !important;
+        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.4) !important;
+    }
+
+    /* Pulse animation pour les boutons importants */
+    @keyframes pulse {
+        0% {
+            box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4);
+        }
+        70% {
+            box-shadow: 0 0 0 10px rgba(59, 130, 246, 0);
+        }
+        100% {
+            box-shadow: 0 0 0 0 rgba(59, 130, 246, 0);
+        }
+    }
+
+    #rep_btn_recherche_client.pulse {
+        animation: pulse 2s infinite !important;
+    }
+
+    /* Shake animation pour les erreurs */
+    @keyframes shake {
+        0%, 100% { transform: translateX(0); }
+        10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+        20%, 40%, 60%, 80% { transform: translateX(5px); }
+    }
+
+    .btn-shake {
+        animation: shake 0.5s ease-in-out !important;
+    }
+
+    /* ========== AMÉLIORATION DU TRI DU TABLEAU FOURNISSEUR ========== */
+    #fournisseur-header {
+        background: linear-gradient(135deg, #374151 0%, #1f2937 100%) !important;
+        color: #f8fafc !important;
+        font-weight: 600 !important;
+        border: 1px solid #4b5563 !important;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        position: relative !important;
+    }
+
+    #fournisseur-header:hover {
+        background: linear-gradient(135deg, #4b5563 0%, #374151 100%) !important;
+        transform: translateY(-1px) !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+        border-color: #6b7280 !important;
+    }
+
+    #fournisseur-header:active {
+        transform: translateY(0) !important;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2) !important;
+    }
+
+    #sort-icon {
+        transition: all 0.3s ease !important;
+        color: #9ca3af !important;
+    }
+
+    #fournisseur-header:hover #sort-icon {
+        color: #60a5fa !important;
+        transform: scale(1.1) !important;
+    }
+
+    /* Animation de l'icône lors du tri */
+    #sort-icon.fa-sort-up {
+        color: #10b981 !important;
+        animation: sortIconBounce 0.5s ease !important;
+    }
+
+    #sort-icon.fa-sort-down {
+        color: #ef4444 !important;
+        animation: sortIconBounce 0.5s ease !important;
+    }
+
+    @keyframes sortIconBounce {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.3) rotate(5deg); }
+        100% { transform: scale(1.1); }
+    }
+
+    /* Style pour l'en-tête lors du tri actif */
+    #fournisseur-header.sorting-active {
+        background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%) !important;
+        border-color: #3b82f6 !important;
+        box-shadow: 0 0 15px rgba(59, 130, 246, 0.3) !important;
+    }
+} 

@@ -1,57 +1,71 @@
 <?php
-// Inclure la configuration de session avant de démarrer la session
-require_once dirname(__DIR__) . '/config/session_config.php';
-// La session est déjà démarrée dans session_config.php
+/**
+ * Script de diagnostic pour vérifier l'état de la session
+ */
 
-// Configuration des en-têtes
+// Définir le type de contenu comme JSON
 header('Content-Type: application/json');
 
-// Récupérer les informations de session
-$session_info = [
-    'session_id' => session_id(),
-    'session_name' => session_name(),
+// Inclure la configuration de session
+require_once '../config/session_config.php';
+
+// Inclure la configuration de la base de données
+require_once '../config/database.php';
+
+// Diagnostic complet de la session
+$diagnostic = [
     'session_status' => session_status(),
-    'session_data' => $_SESSION,
-    'user_id' => $_SESSION['user_id'] ?? null,
-    'is_valid' => isset($_SESSION['user_id']),
-    'cookies' => $_COOKIE,
-    'server' => [
-        'remote_addr' => $_SERVER['REMOTE_ADDR'] ?? null,
-        'http_user_agent' => $_SERVER['HTTP_USER_AGENT'] ?? null,
-        'request_time' => $_SERVER['REQUEST_TIME'] ?? null,
-        'http_host' => $_SERVER['HTTP_HOST'] ?? null,
-        'request_uri' => $_SERVER['REQUEST_URI'] ?? null,
-        'script_name' => $_SERVER['SCRIPT_NAME'] ?? null,
-        'php_self' => $_SERVER['PHP_SELF'] ?? null,
-        'document_root' => $_SERVER['DOCUMENT_ROOT'] ?? null,
-        'https' => isset($_SERVER['HTTPS']) ? 'on' : 'off',
+    'session_id' => session_id(),
+    'session_data' => $_SESSION ?? [],
+    'cookies' => $_COOKIE ?? [],
+    'server_info' => [
+        'HTTP_HOST' => $_SERVER['HTTP_HOST'] ?? 'non défini',
+        'REQUEST_URI' => $_SERVER['REQUEST_URI'] ?? 'non défini',
+        'HTTP_USER_AGENT' => $_SERVER['HTTP_USER_AGENT'] ?? 'non défini'
     ],
-    'session_save_path' => session_save_path(),
-    'session_cookie_params' => session_get_cookie_params(),
-    'php_info' => [
-        'version' => PHP_VERSION,
-        'os' => PHP_OS,
-        'sapi' => PHP_SAPI,
-        'int_size' => PHP_INT_SIZE,
-    ],
-    'memory_usage' => memory_get_usage(true),
+    'checks' => []
 ];
 
-// Ajouter des informations sur l'existence des fichiers de session
-if (!empty(session_id())) {
-    $session_filename = session_save_path() . '/sess_' . session_id();
-    $session_info['session_file'] = [
-        'path' => $session_filename,
-        'exists' => file_exists($session_filename),
-        'size' => file_exists($session_filename) ? filesize($session_filename) : null,
-        'permissions' => file_exists($session_filename) ? substr(sprintf('%o', fileperms($session_filename)), -4) : null,
-        'contents' => file_exists($session_filename) ? file_get_contents($session_filename) : null,
-    ];
+// Vérifications
+$diagnostic['checks']['session_started'] = (session_status() === PHP_SESSION_ACTIVE);
+$diagnostic['checks']['user_id_exists'] = isset($_SESSION['user_id']);
+$diagnostic['checks']['shop_id_exists'] = isset($_SESSION['shop_id']);
+
+// Si shop_id existe, vérifier sa validité
+if (isset($_SESSION['shop_id'])) {
+    try {
+        $pdo_main = getMainDBConnection();
+        $stmt = $pdo_main->prepare("SELECT id, name FROM shops WHERE id = ? AND active = 1");
+        $stmt->execute([$_SESSION['shop_id']]);
+        $shop = $stmt->fetch();
+        
+        $diagnostic['checks']['shop_id_valid'] = !!$shop;
+        if ($shop) {
+            $diagnostic['shop_info'] = $shop;
+        }
+    } catch (Exception $e) {
+        $diagnostic['checks']['shop_id_valid'] = false;
+        $diagnostic['shop_error'] = $e->getMessage();
+    }
 }
 
-// Journaliser les informations de session dans les logs
-error_log("Debug session info: " . print_r($session_info, true));
+// Tester la connexion à la base de données du magasin si possible
+if (isset($_SESSION['shop_id'])) {
+    try {
+        $shop_pdo = getShopDBConnection();
+        $diagnostic['checks']['shop_db_connection'] = !!$shop_pdo;
+        
+        if ($shop_pdo) {
+            // Tester une requête simple
+            $stmt = $shop_pdo->query("SELECT COUNT(*) as count FROM fournisseurs");
+            $result = $stmt->fetch();
+            $diagnostic['fournisseurs_count'] = $result['count'];
+        }
+    } catch (Exception $e) {
+        $diagnostic['checks']['shop_db_connection'] = false;
+        $diagnostic['shop_db_error'] = $e->getMessage();
+    }
+}
 
-// Envoyer les informations sous forme de JSON
-echo json_encode($session_info);
+echo json_encode($diagnostic, JSON_PRETTY_PRINT);
 ?> 

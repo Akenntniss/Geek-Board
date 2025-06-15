@@ -17,7 +17,7 @@ if (!isset($_POST['categorie']) || !isset($_POST['description']) || !isset($_POS
 try {
     if (isset($_POST['id']) && !empty($_POST['id'])) {
         // Mise à jour
-        $stmt = $pdo->prepare("UPDATE marges_estimees SET categorie = ?, description = ?, prix_estime = ?, marge_recommandee = ? WHERE id = ?");
+        $stmt = $shop_pdo->prepare("UPDATE marges_estimees SET categorie = ?, description = ?, prix_estime = ?, marge_recommandee = ? WHERE id = ?");
         $stmt->execute([
             $_POST['categorie'],
             $_POST['description'],
@@ -27,7 +27,7 @@ try {
         ]);
     } else {
         // Création
-        $stmt = $pdo->prepare("INSERT INTO marges_estimees (categorie, description, prix_estime, marge_recommandee) VALUES (?, ?, ?, ?)");
+        $stmt = $shop_pdo->prepare("INSERT INTO marges_estimees (categorie, description, prix_estime, marge_recommandee) VALUES (?, ?, ?, ?)");
         $stmt->execute([
             $_POST['categorie'],
             $_POST['description'],

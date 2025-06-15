@@ -1,8 +1,10 @@
 <?php
-// Démarrer la session avant la vérification, seulement si aucune session n'est active
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
+// Inclure la configuration de session avant de démarrer la session
+require_once __DIR__ . '/../config/session_config.php';
+// La session est déjà démarrée dans session_config.php
+
+// Inclure la configuration de la base de données
+require_once __DIR__ . '/../config/database.php';
 
 // Vérifier si l'utilisateur est connecté
 if (!isset($_SESSION['user_id'])) {
@@ -10,75 +12,35 @@ if (!isset($_SESSION['user_id'])) {
     exit;
 }
 
-// Fonction pour formater le statut
-function get_status_class($statut) {
-    switch($statut) {
-        case 'en_attente': return 'bg-warning text-dark';
-        case 'commande': return 'bg-info text-white';
-        case 'recue': return 'bg-success text-white';
-        case 'annulee': return 'bg-danger text-white';
-        case 'urgent': return 'bg-danger text-white';
-        case 'utilise': return 'bg-primary text-white';
-        case 'a_retourner': return 'bg-secondary text-white';
-        default: return 'bg-secondary text-white';
+// Vérifier que le shop_id est défini dans la session
+if (!isset($_SESSION['shop_id'])) {
+    error_log("Erreur: shop_id non défini dans la session pour commandes_pieces.php");
+    header('Location: /pages/login.php?redirect=' . urlencode($_SERVER['REQUEST_URI']));
+    exit;
+}
+
+// Vérifier que le shop_id est valide
+try {
+    $pdo_main = getMainDBConnection();
+    $stmt = $pdo_main->prepare("SELECT id FROM shops WHERE id = ? AND active = 1");
+    $stmt->execute([$_SESSION['shop_id']]);
+    if (!$stmt->fetch()) {
+        error_log("Erreur: shop_id invalide ou inactif pour commandes_pieces.php");
+        header('Location: /pages/login.php?redirect=' . urlencode($_SERVER['REQUEST_URI']));
+        exit;
     }
+} catch (Exception $e) {
+    error_log("Erreur lors de la vérification du shop_id dans commandes_pieces.php: " . $e->getMessage());
+    header('Location: /pages/login.php?redirect=' . urlencode($_SERVER['REQUEST_URI']));
+    exit;
 }
 
-// Fonction pour obtenir la couleur du fournisseur
-function getSupplierColor($fournisseur_id) {
-    // Palette de 10 couleurs distinctes
-    $colors = [
-        '#4e73df', // Bleu royal
-        '#36b9cc', // Cyan
-        '#1cc88a', // Vert
-        '#f6c23e', // Jaune
-        '#e74a3b', // Rouge
-        '#8a6d3b', // Brun
-        '#6610f2', // Violet foncé
-        '#20c997', // Turquoise
-        '#fd7e14', // Orange
-        '#6f42c1'  // Violet
-    ];
-    
-    // Utiliser le modulo pour obtenir un index entre 0 et 9
-    $index = $fournisseur_id % 10;
-    
-    return $colors[$index];
-}
-
-// Fonction pour obtenir la couleur de la date
-function getDateColor($day_of_week) {
-    // Palette de couleurs pour les jours de la semaine
-    $colors = [
-        1 => '#cfe2ff', // Lundi - Bleu clair
-        2 => '#d1e7dd', // Mardi - Vert clair
-        3 => '#f8d7da', // Mercredi - Rose clair
-        4 => '#fff3cd', // Jeudi - Jaune clair
-        5 => '#e7f5ff', // Vendredi - Bleu très clair
-        6 => '#e2e3e5', // Samedi - Gris clair
-        7 => '#e0cffc'  // Dimanche - Violet clair
-    ];
-    
-    return $colors[$day_of_week] ?? '#f8f9fa'; // Couleur par défaut si jour invalide
-}
-
-// Fonction pour obtenir le libellé du statut
-function get_status_label($statut) {
-    switch($statut) {
-        case 'en_attente': return 'En attente';
-        case 'commande': return 'Commandé';
-        case 'recue': return 'Reçu';
-        case 'annulee': return 'Annulé';
-        case 'urgent': return 'URGENT';
-        case 'utilise': return 'Utilisé';
-        case 'a_retourner': return 'Retour';
-        default: return $statut;
-    }
-}
+// Toutes les fonctions utilitaires sont maintenant dans includes/functions.php
 
 // Récupérer les commandes de pièces avec les informations associées
 try {
-    $stmt = $pdo->query("
+    $shop_pdo = getShopDBConnection();
+$stmt = $shop_pdo->query("
         SELECT c.*, f.nom as fournisseur_nom, cl.nom as client_nom, cl.prenom as client_prenom, cl.telephone,
          r.type_appareil, r.marque, r.modele
          FROM commandes_pieces c 
@@ -93,26 +55,7 @@ try {
     $commandes = [];
 }
 
-// Fonction pour formater l'urgence
-function formatUrgence($urgence) {
-    $classes = [
-        'normal' => 'secondary',
-        'urgent' => 'warning',
-        'tres_urgent' => 'danger'
-    ];
-    
-    $labels = [
-        'normal' => 'Normal',
-        'urgent' => 'Urgent',
-        'tres_urgent' => 'Très urgent'
-    ];
-    
-    return sprintf(
-        '<span class="badge bg-%s">%s</span>',
-        $classes[$urgence],
-        $labels[$urgence]
-    );
-}
+// La fonction formatUrgence est maintenant dans includes/functions.php
 ?>
 
 <!-- Inclure le header -->
@@ -280,6 +223,7 @@ function formatUrgence($urgence) {
         .table {
             border-radius: var(--card-border-radius);
             overflow: hidden;
+            table-layout: fixed;
         }
         
         .table th {
@@ -303,6 +247,29 @@ function formatUrgence($urgence) {
         
         .table tr:hover {
             background-color: rgba(59, 130, 246, 0.05);
+        }
+        
+        /* Largeurs spécifiques des colonnes */
+        .table th:nth-child(1), .table td:nth-child(1) { width: 12%; } /* Client - réduit */
+        .table th:nth-child(2), .table td:nth-child(2) { width: 8%; }  /* Date */
+        .table th:nth-child(3), .table td:nth-child(3) { width: 12%; } /* Fournisseur */
+        .table th:nth-child(4), .table td:nth-child(4) { width: 25%; } /* Pièce - augmenté */
+        .table th:nth-child(5), .table td:nth-child(5) { width: 8%; }  /* Quantité */
+        .table th:nth-child(6), .table td:nth-child(6) { width: 10%; } /* Prix */
+        .table th:nth-child(7), .table td:nth-child(7) { width: 10%; } /* Statut */
+        .table th:nth-child(8), .table td:nth-child(8) { width: 15%; } /* Actions */
+        
+        /* Gestion du débordement de texte */
+        .table td:nth-child(1) {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        
+        .table td:nth-child(4) {
+            word-wrap: break-word;
+            white-space: normal;
+            max-width: 0;
         }
         
         /* Avatar pour le client */
@@ -647,21 +614,23 @@ function formatUrgence($urgence) {
                         <table class="table align-middle table-hover">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
                                     <th>Client</th>
+                                    <th>Date</th>
+                                    <th id="fournisseur-header" style="cursor: pointer; user-select: none;" title="Cliquez pour trier par ordre alphabétique">
+                                        Fournisseur 
+                                        <i id="sort-icon" class="fas fa-sort ms-1" style="font-size: 0.8em; opacity: 0.6;"></i>
+                                    </th>
                                     <th>Pièce</th>
-                                    <th>Statut</th>
                                     <th>Quantité</th>
                                     <th>Prix</th>
-                                    <th>Date</th>
-                                    <th>Fournisseur</th>
+                                    <th>Statut</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
                                 <tbody id="commandesTableBody">
                                 <?php if (empty($commandes)): ?>
                                 <tr>
-                                    <td colspan="9" class="text-center py-4">
+                                    <td colspan="8" class="text-center py-4">
                                         <div class="alert alert-info mb-0">
                                             <i class="fas fa-info-circle me-2"></i>
                                             Aucune commande de pièces trouvée
@@ -671,7 +640,6 @@ function formatUrgence($urgence) {
                                 <?php else: ?>
                                     <?php foreach ($commandes as $commande): ?>
                                         <tr data-fournisseur-id="<?= $commande['fournisseur_id'] ?>" data-statut="<?= $commande['statut'] ?>" data-date="<?= date('Y-m-d', strtotime($commande['date_creation'])) ?>" data-search="<?= strtolower(htmlspecialchars($commande['client_nom'] . ' ' . $commande['client_prenom'] . ' ' . $commande['nom_piece'] . ' ' . $commande['fournisseur_nom'])) ?>">
-                                        <td>#<?= $commande['id'] ?></td>
                                         <td>
                                             <div class="d-flex align-items-center">
                                                 <div class="avatar-circle me-2">
@@ -693,8 +661,26 @@ function formatUrgence($urgence) {
                                                 </div>
                                             </div>
                                         </td>
+                                        <td>
+                                            <span class="badge date-badge" 
+                                                  data-light-color="<?= getDateColor(date('N', strtotime($commande['date_creation']))) ?>"
+                                                  data-dark-color="<?= getDateColorDark(date('N', strtotime($commande['date_creation']))) ?>"
+                                                  style="background-color: <?= getDateColor(date('N', strtotime($commande['date_creation']))) ?>; color: #333; font-weight: bold; padding: 6px 10px; border-radius: 6px; display: inline-block; width: 100%; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.05);"
+                                                  title="<?= date('d/m/Y', strtotime($commande['date_creation'])) ?>">
+                                                <?= date('d/m', strtotime($commande['date_creation'])) ?>
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span class="badge editable-field" data-field="fournisseur_id" data-id="<?= $commande['id'] ?>" data-current-value="<?= $commande['fournisseur_id'] ?>" data-bs-toggle="modal" data-bs-target="#editFournisseurModal" style="background-color: <?= getSupplierColor($commande['fournisseur_id']) ?>; color: white; font-weight: bold; padding: 6px 10px; border-radius: 6px; display: inline-block; width: 100%; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.1); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.5px; cursor: pointer;">
+                                                <?= htmlspecialchars($commande['fournisseur_nom']) ?>
+                                            </span>
+                                        </td>
                                         <td class="editable-field" data-field="nom_piece" data-id="<?= $commande['id'] ?>" data-bs-toggle="modal" data-bs-target="#editFieldModal">
                                             <?= htmlspecialchars($commande['nom_piece']) ?>
+                                        </td>
+                                        <td><?= $commande['quantite'] ?></td>
+                                        <td class="editable-field" data-field="prix_estime" data-id="<?= $commande['id'] ?>" data-bs-toggle="modal" data-bs-target="#editFieldModal">
+                                            <?= number_format($commande['prix_estime'], 2, ',', ' ') ?> €
                                         </td>
                                         <td>
                                             <span class="badge <?= get_status_class($commande['statut']) ?> status-badge" 
@@ -706,20 +692,6 @@ function formatUrgence($urgence) {
                                                 <?= get_status_label($commande['statut']) ?>
                                             </span>
                                         </td>
-                                        <td><?= $commande['quantite'] ?></td>
-                                        <td class="editable-field" data-field="prix_estime" data-id="<?= $commande['id'] ?>" data-bs-toggle="modal" data-bs-target="#editFieldModal">
-                                            <?= number_format($commande['prix_estime'], 2, ',', ' ') ?> €
-                                        </td>
-                                        <td>
-                                            <span class="badge date-badge" style="background-color: <?= getDateColor(date('N', strtotime($commande['date_creation']))) ?>; color: #333; font-weight: bold; padding: 6px 10px; border-radius: 6px; display: inline-block; width: 100%; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
-                                                <?= date('d/m/Y', strtotime($commande['date_creation'])) ?>
-                                            </span>
-                                        </td>
-                                        <td>
-                                            <span class="badge editable-field" data-field="fournisseur_id" data-id="<?= $commande['id'] ?>" data-current-value="<?= $commande['fournisseur_id'] ?>" data-bs-toggle="modal" data-bs-target="#editFournisseurModal" style="background-color: <?= getSupplierColor($commande['fournisseur_id']) ?>; color: white; font-weight: bold; padding: 6px 10px; border-radius: 6px; display: inline-block; width: 100%; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.1); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.5px; cursor: pointer;">
-                                                <?= htmlspecialchars($commande['fournisseur_nom']) ?>
-                                            </span>
-                                        </td>
                                         <td>
                                             <div class="btn-group">
                                                 <button class="btn btn-outline-primary btn-sm" onclick="editCommande(<?= $commande['id'] ?>)">
@@ -728,7 +700,7 @@ function formatUrgence($urgence) {
                                                 <button class="btn btn-outline-danger btn-sm" onclick="deleteCommande(<?= $commande['id'] ?>)">
                                                     <i class="fas fa-trash"></i>
                                                 </button>
-                                                <a href="https://www.google.com/search?q=<?= urlencode(htmlspecialchars($commande['nom_piece'] . ' ' . ($commande['description'] ? $commande['description'] . ' ' : '') . $commande['fournisseur_nom'])) ?>" target="_blank" class="btn btn-google btn-sm" title="Rechercher '<?= htmlspecialchars($commande['nom_piece']) ?>' sur Google">
+                                                <a href="https://www.google.com/search?q=<?= urlencode(htmlspecialchars($commande['fournisseur_nom']) . ' ' . htmlspecialchars($commande['code_barre'] ?: '') . ' ' . htmlspecialchars($commande['nom_piece'])) ?>" target="_blank" class="btn btn-google btn-sm" title="Rechercher '<?= htmlspecialchars($commande['fournisseur_nom'] . ' ' . $commande['code_barre'] . ' ' . $commande['nom_piece']) ?>' sur Google">
                                                     <i class="fab fa-google"></i>
                                                 </a>
                                             </div>
@@ -842,14 +814,159 @@ function formatUrgence($urgence) {
     font-size: 0.75rem;
 }
 
-/* Styles adaptés pour le mode sombre */
-.dark-mode .status-option-card {
-    background-color: rgba(255, 255, 255, 0.05);
-}
+        /* Styles adaptés pour le mode sombre */
+        .dark-mode .status-option-card {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
 
-.dark-mode .status-option-card:hover {
-    background-color: rgba(13, 110, 253, 0.1);
-}
+        .dark-mode .status-option-card:hover {
+            background-color: rgba(13, 110, 253, 0.1);
+        }
+        
+        /* Styles pour les inputs en mode nuit */
+        .dark-mode input[type="text"],
+        .dark-mode input[type="number"],
+        .dark-mode input[type="email"],
+        .dark-mode input[type="tel"],
+        .dark-mode input[type="search"],
+        .dark-mode input[type="date"],
+        .dark-mode input[type="datetime-local"],
+        .dark-mode select,
+        .dark-mode textarea {
+            color: #ffffff !important;
+            background-color: rgba(255, 255, 255, 0.1) !important;
+            border-color: rgba(255, 255, 255, 0.2) !important;
+        }
+        
+        /* Placeholders en mode nuit */
+        .dark-mode input::placeholder,
+        .dark-mode textarea::placeholder {
+            color: rgba(255, 255, 255, 0.8) !important;
+            opacity: 1 !important;
+        }
+        
+        /* Options des selects en mode nuit */
+        .dark-mode select option {
+            background-color: #2c3e50 !important;
+            color: #ffffff !important;
+        }
+        
+        /* Focus des inputs en mode nuit */
+        .dark-mode input:focus,
+        .dark-mode select:focus,
+        .dark-mode textarea:focus {
+            color: #ffffff !important;
+            background-color: rgba(255, 255, 255, 0.15) !important;
+            border-color: #3b82f6 !important;
+            box-shadow: 0 0 0 0.2rem rgba(59, 130, 246, 0.25) !important;
+        }
+        
+        /* Labels en mode nuit */
+        .dark-mode .form-label {
+            color: rgba(255, 255, 255, 0.9) !important;
+        }
+        
+        /* Input groups en mode nuit */
+        .dark-mode .input-group-text {
+            background-color: rgba(255, 255, 255, 0.1) !important;
+            border-color: rgba(255, 255, 255, 0.2) !important;
+            color: #ffffff !important;
+        }
+        
+        /* Styles du tableau en mode nuit */
+        .dark-mode .table {
+            background-color: #2c3e50 !important;
+            color: #ffffff !important;
+        }
+        
+        .dark-mode .table thead th {
+            background-color: #34495e !important;
+            color: #ffffff !important;
+            border-color: rgba(255, 255, 255, 0.1) !important;
+        }
+        
+        .dark-mode .table tbody tr {
+            background-color: #2c3e50 !important;
+            border-color: rgba(255, 255, 255, 0.1) !important;
+        }
+        
+        .dark-mode .table tbody tr:hover {
+            background-color: #34495e !important;
+        }
+        
+        .dark-mode .table tbody td {
+            color: #ffffff !important;
+            border-color: rgba(255, 255, 255, 0.1) !important;
+        }
+        
+        /* Zone grise claire du tableau en mode nuit - amélioration */
+        .dark-mode .card-footer {
+            background-color: #1a252f !important;
+            border-color: rgba(255, 255, 255, 0.1) !important;
+            color: #ffffff !important;
+        }
+        
+        .dark-mode .text-muted {
+            color: rgba(255, 255, 255, 0.7) !important;
+        }
+        
+        /* Amélioration des badges de date en mode nuit */
+        .dark-mode .date-badge {
+            border: 1px solid rgba(255, 255, 255, 0.2) !important;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5) !important;
+        }
+        
+        /* Amélioration des badges de fournisseur en mode nuit */
+        .dark-mode .badge {
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        }
+        
+        /* Amélioration de la carte principale en mode nuit */
+        .dark-mode .card {
+            background-color: #2c3e50 !important;
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        }
+        
+        .dark-mode .card-header {
+            background: linear-gradient(to right, #1e3a8a, rgba(30, 58, 138, 0.8)) !important;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+        }
+        
+        /* Amélioration des boutons en mode nuit */
+        .dark-mode .btn-outline-primary {
+            color: #60a5fa !important;
+            border-color: #60a5fa !important;
+        }
+        
+        .dark-mode .btn-outline-primary:hover {
+            background-color: #60a5fa !important;
+            border-color: #60a5fa !important;
+            color: #ffffff !important;
+        }
+        
+        .dark-mode .btn-outline-danger {
+            color: #f87171 !important;
+            border-color: #f87171 !important;
+        }
+        
+        .dark-mode .btn-outline-danger:hover {
+            background-color: #f87171 !important;
+            border-color: #f87171 !important;
+            color: #ffffff !important;
+        }
+        
+        /* Texte des modals en mode nuit */
+        .dark-mode .modal-body,
+        .dark-mode .modal-footer {
+            color: #ffffff !important;
+        }
+        
+        /* Amélioration des inputs disabled en mode nuit */
+        .dark-mode input:disabled,
+        .dark-mode select:disabled {
+            background-color: rgba(255, 255, 255, 0.05) !important;
+            color: rgba(255, 255, 255, 0.6) !important;
+        }
 
 /* Animation de chargement dans le bouton */
 .status-option-card.loading {
@@ -892,6 +1009,8 @@ function formatUrgence($urgence) {
 <!-- Scripts spécifiques à la page -->
 <script src="assets/js/commandes.js"></script>
 <script src="assets/js/export-pdf.js"></script>
+<script src="assets/js/client-functions.js"></script>
+<script src="assets/js/reparation-selector.js"></script>
 
 <!-- Script pour le changement de statut -->
 <script>
@@ -916,7 +1035,7 @@ function updateCommandeStatus(commandeId, newStatus) {
     fetch('ajax/update_commande_status.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ commande_id: commandeId, new_status: newStatus }),
+        body: JSON.stringify({ commande_id: commandeId, new_status: newStatus, shop_id: SHOP_ID }),
         credentials: 'same-origin'
     })
     .then(response => {
@@ -1067,53 +1186,157 @@ function showNotification(message, type = 'info') {
     }
 }
 
+// Gestion globale des erreurs JavaScript
+window.addEventListener('error', function(event) {
+    console.error('Erreur JavaScript détectée:', {
+        message: event.message,
+        filename: event.filename,
+        lineno: event.lineno,
+        colno: event.colno,
+        error: event.error
+    });
+});
+
+// Gestion des erreurs de promesses non gérées
+window.addEventListener('unhandledrejection', function(event) {
+    console.error('Promesse rejetée non gérée:', event.reason);
+});
+
 // Initialisation des événements une fois le DOM chargé
+// Variables globales
+const SHOP_ID = <?php echo json_encode($_SESSION['shop_id'] ?? 1); ?>;
+
 document.addEventListener('DOMContentLoaded', function() {
+    // Vérifier que Bootstrap est chargé
+    if (typeof bootstrap === 'undefined') {
+        console.error('Bootstrap n\'est pas chargé !');
+        return;
+    }
+    
     const statusModal = document.getElementById('changeStatusModal');
     
     if (statusModal) {
+        // Variable pour éviter les ouvertures multiples
+        let modalIsProcessing = false;
+        
+        // Variable pour stocker les données de la commande actuelle
+        let currentCommandeData = { id: null, status: null };
+        
+        // Ajouter des gestionnaires d'événements sur tous les boutons de statut
+        document.addEventListener('click', function(event) {
+            const statusBadge = event.target.closest('.status-badge[data-id][data-status]');
+            if (statusBadge) {
+                currentCommandeData.id = statusBadge.getAttribute('data-id');
+                currentCommandeData.status = statusBadge.getAttribute('data-status');
+                console.log('Données de commande stockées:', currentCommandeData);
+            }
+        });
+        
         // Gérer l'ouverture du modal
         statusModal.addEventListener('show.bs.modal', function(event) {
+            // Éviter les ouvertures multiples simultanées
+            if (modalIsProcessing) {
+                console.log('Modal déjà en cours de traitement, ignoré');
+                event.preventDefault();
+                return;
+            }
+            
+            modalIsProcessing = true;
             const button = event.relatedTarget;
-            const commandeId = button.getAttribute('data-id');
-            const currentStatus = button.getAttribute('data-status');
+            
+            let commandeId = null;
+            let currentStatus = null;
+            
+            // Essayer de récupérer les données du bouton déclencheur
+            if (button && typeof button.getAttribute === 'function') {
+                commandeId = button.getAttribute('data-id');
+                currentStatus = button.getAttribute('data-status');
+            }
+            
+            // Si pas de bouton ou données manquantes, utiliser les données stockées
+            if (!commandeId || !currentStatus) {
+                if (currentCommandeData.id && currentCommandeData.status) {
+                    commandeId = currentCommandeData.id;
+                    currentStatus = currentCommandeData.status;
+                    console.log('Données récupérées depuis le stockage:', { commandeId, currentStatus });
+                }
+            }
+            
+            // Vérifier que les données sont présentes
+            if (!commandeId || !currentStatus) {
+                console.error("Impossible de récupérer les données de la commande");
+                modalIsProcessing = false;
+                return;
+            }
             
             console.log("Modal ouvert pour commande:", { id: commandeId, status: currentStatus });
             
             // Mettre à jour les champs cachés
-            document.getElementById('commandeIdInput').value = commandeId;
-            document.getElementById('currentStatusInput').value = currentStatus;
-            document.getElementById('commandeIdText').textContent = '#' + commandeId;
+            const commandeIdInput = document.getElementById('commandeIdInput');
+            const currentStatusInput = document.getElementById('currentStatusInput');
+            const commandeIdText = document.getElementById('commandeIdText');
+            
+            if (commandeIdInput) commandeIdInput.value = commandeId;
+            if (currentStatusInput) currentStatusInput.value = currentStatus;
+            if (commandeIdText) commandeIdText.textContent = '#' + commandeId;
             
             // Afficher le statut actuel
             const statusContext = document.getElementById('statusContext');
-            statusContext.innerHTML = `
-                <span class="current-status-badge ${getStatusClassJS(currentStatus)}">
-                    <i class="fas fa-${getStatusIconJS(currentStatus)}"></i>
-                    ${getStatusLabelJS(currentStatus)}
-                </span>
-            `;
+            if (statusContext) {
+                statusContext.innerHTML = `
+                    <span class="current-status-badge ${getStatusClassJS(currentStatus)}">
+                        <i class="fas fa-${getStatusIconJS(currentStatus)}"></i>
+                        ${getStatusLabelJS(currentStatus)}
+                    </span>
+                `;
+            }
             
             // Animer l'apparition des options
             const optionsGrid = document.querySelector('.status-options-grid');
-            optionsGrid.classList.remove('animated');
-            
-            // Forcer un reflow pour réinitialiser l'animation
-            void optionsGrid.offsetWidth;
-            
-            // Puis ajouter la classe pour lancer l'animation
-            setTimeout(() => {
-                optionsGrid.classList.add('animated');
-            }, 50);
+            if (optionsGrid) {
+                optionsGrid.classList.remove('animated');
+                
+                // Forcer un reflow pour réinitialiser l'animation
+                void optionsGrid.offsetWidth;
+                
+                // Puis ajouter la classe pour lancer l'animation
+                setTimeout(() => {
+                    optionsGrid.classList.add('animated');
+                }, 50);
+            }
+        });
+        
+        // Gérer la fermeture du modal
+        statusModal.addEventListener('hidden.bs.modal', function(event) {
+            modalIsProcessing = false;
+            console.log('Modal fermé, réinitialisation du flag');
         });
         
         // Attacher les événements aux boutons de statut
         document.querySelectorAll('.status-option-card').forEach(button => {
             button.addEventListener('click', function() {
-                const commandeId = document.getElementById('commandeIdInput').value;
+                // Éviter les clics multiples
+                if (this.disabled) return;
+                
+                // Désactiver temporairement le bouton
+                this.disabled = true;
+                this.style.opacity = '0.6';
+                
+                const commandeIdInput = document.getElementById('commandeIdInput');
+                const commandeId = commandeIdInput ? commandeIdInput.value : null;
                 const newStatus = this.getAttribute('data-status');
                 
-                updateCommandeStatus(commandeId, newStatus);
+                if (commandeId && newStatus) {
+                    updateCommandeStatus(commandeId, newStatus);
+                } else {
+                    console.error('Données manquantes pour la mise à jour du statut:', { commandeId, newStatus });
+                }
+                
+                // Réactiver le bouton après un délai
+                setTimeout(() => {
+                    this.disabled = false;
+                    this.style.opacity = '1';
+                }, 1000);
             });
         });
     }
@@ -1155,7 +1378,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                 <option value="">Sélectionner un fournisseur</option>
                                 <?php
                                 try {
-                                    $stmt = $pdo->query("SELECT id, nom FROM fournisseurs ORDER BY nom");
+                                    $stmt = $shop_pdo->query("SELECT id, nom FROM fournisseurs ORDER BY nom");
                                     while ($fournisseur = $stmt->fetch()) {
                                         echo "<option value='{$fournisseur['id']}'>" . 
                                              htmlspecialchars($fournisseur['nom']) . "</option>";
@@ -1189,7 +1412,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         <div class="col-md-6">
                             <label class="form-label">Prix estimé (€)</label>
                             <div class="input-group">
-                                <input type="number" class="form-control" id="edit_prix_estime" name="prix_estime" step="0.01" required>
+                                <input type="number" class="form-control" id="edit_prix_estime" name="prix_estime" step="0.01">
                                 <span class="input-group-text">€</span>
                             </div>
                         </div>
@@ -1274,7 +1497,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     
                     <?php
                     try {
-                        $stmt = $pdo->query("SELECT f.id, f.nom, COUNT(c.id) as count_commandes 
+                        $stmt = $shop_pdo->query("SELECT f.id, f.nom, COUNT(c.id) as count_commandes 
                                           FROM fournisseurs f 
                                           LEFT JOIN commandes_pieces c ON f.id = c.fournisseur_id 
                                           GROUP BY f.id 
@@ -1744,21 +1967,36 @@ window.smsToggle = {
 
 // Mise à jour de la fonction updateCommande pour inclure l'état du SMS
 function updateCommande() {
+    console.log("Début de la mise à jour de la commande...");
+    
     // Récupérer l'ID de la commande
     const id = document.getElementById('edit_id').value;
     if (!id) {
-        alert('Erreur: ID de commande manquant');
+        console.error('ID de commande manquant');
+        showNotification('Erreur: ID de commande manquant', 'danger');
         return;
     }
     
-    // Récupérer toutes les valeurs du formulaire
+    console.log('ID de la commande:', id);
+    
+    // Créer FormData et ajouter l'ID avec le bon nom
     const formData = new FormData(document.getElementById('editCommandeForm'));
+    
+    // *** CORRECTION: Ajouter l'ID avec le nom attendu par le serveur ***
+    formData.delete('id'); // Supprimer l'ancien champ id si présent
+    formData.set('commande_id', id); // Ajouter avec le nom attendu par le serveur
     
     // Si disponible, récupérer également l'état du SMS
     const smsSwitch = document.getElementById('sendSmsSwitch');
     if (smsSwitch) {
         formData.append('send_sms', smsSwitch.value);
         console.log('Mise à jour de la commande avec statut SMS:', smsSwitch.value === '1' ? 'Envoyer' : 'Ne pas envoyer');
+    }
+    
+    // Log des données envoyées pour debug
+    console.log("Données envoyées:");
+    for (let pair of formData.entries()) {
+        console.log(pair[0] + ': ' + pair[1]);
     }
     
     // Afficher un indicateur de chargement
@@ -1772,15 +2010,32 @@ function updateCommande() {
         method: 'POST',
         body: formData
     })
-    .then(response => response.json())
+    .then(response => {
+        console.log("Statut de la réponse:", response.status);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.text().then(text => {
+            console.log("Réponse brute:", text);
+            try {
+                return JSON.parse(text);
+            } catch (e) {
+                console.error("Erreur de parsing JSON:", e);
+                throw new Error("Réponse invalide du serveur");
+            }
+        });
+    })
     .then(data => {
+        console.log("Données reçues:", data);
+        
         // Restaurer le bouton
         saveButton.innerHTML = originalContent;
         saveButton.disabled = false;
         
         if (data.success) {
             // Fermer le modal
-            bootstrap.Modal.getInstance(document.getElementById('editCommandeModal')).hide();
+            const modal = bootstrap.Modal.getInstance(document.getElementById('editCommandeModal'));
+            if (modal) modal.hide();
             
             // Afficher un message de succès
             showNotification('Commande mise à jour avec succès', 'success');
@@ -1790,18 +2045,20 @@ function updateCommande() {
                 location.reload();
             }, 1000);
         } else {
+            console.error("Erreur serveur:", data.message);
             // Afficher un message d'erreur
-            showNotification('Erreur lors de la mise à jour de la commande: ' + data.message, 'danger');
+            showNotification('Erreur: ' + (data.message || 'Erreur inconnue'), 'danger');
         }
     })
     .catch(error => {
+        console.error('Erreur complète:', error);
+        
         // Restaurer le bouton
         saveButton.innerHTML = originalContent;
         saveButton.disabled = false;
         
-        // Afficher un message d'erreur
-        console.error('Erreur:', error);
-        showNotification('Erreur de communication avec le serveur', 'danger');
+        // Afficher un message d'erreur détaillé
+        showNotification('Erreur de communication: ' + error.message, 'danger');
     });
 }
 
@@ -1829,4 +2086,758 @@ function initAllSmsToggleButtons() {
         
         if (toggleButton && smsSwitch) {
             console.log(`Initialisation du bouton SMS: ${pair.button}`);
+            smsSwitch.value = '0';
+            updateSmsButtonAppearance(toggleButton, false);
+        }
+    });
+}
+</script>
+
+<!-- Inclusion du script pour la sélection de fournisseur -->
+<script src="assets/js/fournisseur-selector.js"></script>
+
+<!-- Modal Scanner de Code-Barres -->
+<div class="modal fade" id="barcodeScannerModal" tabindex="-1" aria-labelledby="barcodeScannerModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content border-0 shadow-lg">
+            <div class="modal-header bg-gradient-primary text-white border-bottom-0">
+                <h5 class="modal-title d-flex align-items-center" id="barcodeScannerModalLabel">
+                    <i class="fas fa-camera me-2"></i>
+                    Scanner de Code-Barres
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fermer"></button>
+            </div>
+            <div class="modal-body p-4">
+                <!-- Zone de la caméra -->
+                <div class="scanner-container position-relative mb-4">
+                    <div id="scanner-video-container" class="scanner-video-wrapper">
+                        <video id="scanner-video" autoplay muted playsinline class="w-100 rounded"></video>
+                        <canvas id="scanner-canvas" class="position-absolute top-0 start-0 w-100 h-100 rounded"></canvas>
+                        
+                        <!-- Overlay de visée -->
+                        <div class="scanner-overlay">
+                            <div class="scanner-target">
+                                <div class="scanner-corners">
+                                    <div class="corner corner-tl"></div>
+                                    <div class="corner corner-tr"></div>
+                                    <div class="corner corner-bl"></div>
+                                    <div class="corner corner-br"></div>
+                                </div>
+                                <div class="scanner-line"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Indicateur de statut -->
+                    <div id="scanner-status" class="scanner-status mt-3 text-center">
+                        <div class="spinner-border text-primary me-2" role="status">
+                            <span class="visually-hidden">Chargement...</span>
+                        </div>
+                        <span class="status-text">Initialisation de la caméra...</span>
+                    </div>
+                </div>
+                
+                <!-- Résultat du scan -->
+                <div id="scanner-result" class="d-none">
+                    <div class="alert alert-success d-flex align-items-center">
+                        <i class="fas fa-check-circle me-2 fs-4"></i>
+                        <div>
+                            <strong>Code-barres détecté !</strong>
+                            <div class="mt-1">
+                                <code id="scanned-barcode" class="fs-6"></code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Contrôles -->
+                <div class="scanner-controls d-flex justify-content-center gap-2">
+                    <button type="button" id="toggle-flashlight" class="btn btn-outline-secondary" title="Flash">
+                        <i class="fas fa-flashlight"></i>
+                    </button>
+                    <button type="button" id="switch-camera" class="btn btn-outline-secondary" title="Changer de caméra">
+                        <i class="fas fa-sync-alt"></i>
+                    </button>
+                    <button type="button" id="restart-scanner" class="btn btn-outline-primary" title="Redémarrer">
+                        <i class="fas fa-redo"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="modal-footer border-top-0">
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal">
+                    <i class="fas fa-times me-1"></i> Fermer
+                </button>
+                <button type="button" id="use-scanned-code" class="btn btn-primary d-none">
+                    <i class="fas fa-check me-1"></i> Utiliser ce code
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Styles pour le scanner de code-barres -->
+<style>
+/* Conteneur principal du scanner */
+.scanner-container {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.scanner-video-wrapper {
+    position: relative;
+    aspect-ratio: 4/3;
+    background: #000;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+#scanner-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+#scanner-canvas {
+    pointer-events: none;
+}
+
+/* Overlay de visée */
+.scanner-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+}
+
+.scanner-target {
+    position: relative;
+    width: 250px;
+    height: 150px;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    border-radius: 8px;
+}
+
+/* Coins de visée animés */
+.scanner-corners {
+    position: absolute;
+    inset: -2px;
+}
+
+.corner {
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    border: 3px solid #00ff00;
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+}
+
+.corner-tl {
+    top: 0;
+    left: 0;
+    border-right: none;
+    border-bottom: none;
+    border-radius: 8px 0 0 0;
+}
+
+.corner-tr {
+    top: 0;
+    right: 0;
+    border-left: none;
+    border-bottom: none;
+    border-radius: 0 8px 0 0;
+}
+
+.corner-bl {
+    bottom: 0;
+    left: 0;
+    border-right: none;
+    border-top: none;
+    border-radius: 0 0 0 8px;
+}
+
+.corner-br {
+    bottom: 0;
+    right: 0;
+    border-left: none;
+    border-top: none;
+    border-radius: 0 0 8px 0;
+}
+
+/* Ligne de scan animée */
+.scanner-line {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #00ff00, transparent);
+    box-shadow: 0 0 8px rgba(0, 255, 0, 0.8);
+    animation: scan-line 2s linear infinite;
+}
+
+@keyframes scan-line {
+    0% { transform: translateY(0); opacity: 1; }
+    50% { opacity: 1; }
+    100% { transform: translateY(146px); opacity: 0; }
+}
+
+/* Animation des coins */
+.corner {
+    animation: corner-pulse 2s ease-in-out infinite;
+}
+
+@keyframes corner-pulse {
+    0%, 100% { border-color: #00ff00; box-shadow: 0 0 10px rgba(0, 255, 0, 0.5); }
+    50% { border-color: #88ff88; box-shadow: 0 0 20px rgba(0, 255, 0, 0.8); }
+}
+
+/* Statut du scanner */
+.scanner-status {
+    font-size: 0.9rem;
+    color: var(--bs-text-muted);
+}
+
+.scanner-status.success {
+    color: var(--bs-success) !important;
+}
+
+.scanner-status.error {
+    color: var(--bs-danger) !important;
+}
+
+/* Contrôles */
+.scanner-controls {
+    margin-top: 1rem;
+}
+
+.scanner-controls .btn {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Mode sombre */
+.dark-mode .scanner-target {
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.dark-mode .scanner-status {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* Animation de succès */
+.scanner-success-animation {
+    animation: success-flash 0.5s ease-in-out;
+}
+
+@keyframes success-flash {
+    0% { background-color: transparent; }
+    50% { background-color: rgba(0, 255, 0, 0.2); }
+    100% { background-color: transparent; }
+}
+
+/* Responsive */
+@media (max-width: 576px) {
+    .scanner-target {
+        width: 200px;
+        height: 120px;
+    }
+    
+    .corner {
+        width: 20px;
+        height: 20px;
+    }
+    
+    .scanner-line {
+        animation: scan-line-mobile 2s linear infinite;
+    }
+    
+    @keyframes scan-line-mobile {
+        0% { transform: translateY(0); opacity: 1; }
+        50% { opacity: 1; }
+        100% { transform: translateY(116px); opacity: 0; }
+    }
+}
+</style>
+
+<!-- Bibliothèque QuaggaJS pour le scanner de code-barres -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/quagga/0.12.1/quagga.min.js"></script>
+
+<!-- Script du scanner de code-barres -->
+<script>
+class BarcodeScanner {
+    constructor() {
+        this.isScanning = false;
+        this.stream = null;
+        this.currentCamera = 'environment'; // 'user' pour caméra avant, 'environment' pour arrière
+        this.flashlightSupported = false;
+        this.flashlightOn = false;
+        this.onBarcodeDetected = null;
+        
+        this.initEventListeners();
+    }
+    
+    initEventListeners() {
+        // Bouton pour ouvrir le scanner
+        document.addEventListener('click', (e) => {
+            console.log('Clic détecté sur:', e.target.id, e.target.className);
+            
+            if (e.target.id === 'scanBarcodeBtn' || e.target.closest('#scanBarcodeBtn')) {
+                console.log('Bouton scanner cliqué !');
+                e.preventDefault();
+                this.openScanner();
+            }
+        });
+        
+        // Aussi écouter directement sur le bouton si il existe
+        const scanBtn = document.getElementById('scanBarcodeBtn');
+        if (scanBtn) {
+            console.log('Bouton scanner trouvé dans le DOM');
+            scanBtn.addEventListener('click', (e) => {
+                console.log('Événement direct sur le bouton scanner');
+                e.preventDefault();
+                this.openScanner();
+            });
+        } else {
+            console.log('Bouton scanner NON trouvé dans le DOM au chargement');
+        }
+        
+        // Événements du modal
+        const modal = document.getElementById('barcodeScannerModal');
+        if (modal) {
+            modal.addEventListener('shown.bs.modal', () => this.startScanner());
+            modal.addEventListener('hidden.bs.modal', () => this.stopScanner());
+        }
+        
+        // Contrôles
+        document.getElementById('restart-scanner')?.addEventListener('click', () => this.restartScanner());
+        document.getElementById('switch-camera')?.addEventListener('click', () => this.switchCamera());
+        document.getElementById('toggle-flashlight')?.addEventListener('click', () => this.toggleFlashlight());
+        document.getElementById('use-scanned-code')?.addEventListener('click', () => this.useScannedCode());
+    }
+    
+    openScanner() {
+        console.log('openScanner() appelée');
+        const modalElement = document.getElementById('barcodeScannerModal');
+        console.log('Modal scanner trouvé:', modalElement ? 'OUI' : 'NON');
+        
+        if (modalElement) {
+            const modal = new bootstrap.Modal(modalElement);
+            console.log('Modal Bootstrap créé, tentative d\'ouverture...');
+            modal.show();
+        } else {
+            console.error('Modal scanner non trouvé dans le DOM !');
+            alert('Erreur: Modal scanner non trouvé');
+        }
+    }
+    
+    async startScanner() {
+        try {
+            this.updateStatus('Initialisation de la caméra...', 'loading');
+            
+            // Configuration Quagga
+            const config = {
+                inputStream: {
+                    name: "Live",
+                    type: "LiveStream",
+                    target: document.querySelector('#scanner-video'),
+                    constraints: {
+                        width: 640,
+                        height: 480,
+                        facingMode: this.currentCamera
+                    }
+                },
+                locator: {
+                    patchSize: "medium",
+                    halfSample: true
+                },
+                numOfWorkers: 2,
+                frequency: 10,
+                decoder: {
+                    readers: [
+                        "code_128_reader",
+                        "ean_reader",
+                        "ean_8_reader",
+                        "code_39_reader",
+                        "code_39_vin_reader",
+                        "codabar_reader",
+                        "upc_reader",
+                        "upc_e_reader",
+                        "i2of5_reader"
+                    ]
+                },
+                locate: true
+            };
+            
+            await new Promise((resolve, reject) => {
+                Quagga.init(config, (err) => {
+                    if (err) {
+                        console.error('Erreur initialisation Quagga:', err);
+                        reject(err);
+                    } else {
+                        resolve();
+                    }
+                });
+            });
+            
+            // Démarrer la détection
+            Quagga.start();
+            this.isScanning = true;
+            
+            // Écouter les détections
+            Quagga.onDetected(this.onDetected.bind(this));
+            
+            this.updateStatus('Pointez la caméra vers un code-barres', 'scanning');
+            
+            // Vérifier le support du flash
+            this.checkFlashlightSupport();
+            
+        } catch (error) {
+            console.error('Erreur démarrage scanner:', error);
+            this.updateStatus('Erreur: Impossible d\'accéder à la caméra', 'error');
+        }
+    }
+    
+    stopScanner() {
+        if (this.isScanning) {
+            Quagga.stop();
+            this.isScanning = false;
+        }
+        
+        // Réinitialiser l'interface
+        document.getElementById('scanner-result').classList.add('d-none');
+        document.getElementById('use-scanned-code').classList.add('d-none');
+        this.updateStatus('Scanner arrêté', 'stopped');
+    }
+    
+    onDetected(result) {
+        if (!this.isScanning) return;
+        
+        const code = result.codeResult.code;
+        console.log('Code-barres détecté:', code);
+        
+        // Animation de succès
+        const container = document.querySelector('.scanner-video-wrapper');
+        container.classList.add('scanner-success-animation');
+        setTimeout(() => container.classList.remove('scanner-success-animation'), 500);
+        
+        // Vibration pour feedback tactile
+        if ('vibrate' in navigator) {
+            navigator.vibrate([100, 50, 100]);
+        }
+        
+        // Son de notification
+        this.playBeepSound();
+        
+        // Afficher le résultat
+        document.getElementById('scanned-barcode').textContent = code;
+        document.getElementById('scanner-result').classList.remove('d-none');
+        document.getElementById('use-scanned-code').classList.remove('d-none');
+        
+        this.updateStatus('Code-barres détecté avec succès !', 'success');
+        
+        // Stocker le code pour utilisation
+        this.lastScannedCode = code;
+        
+        // Arrêter temporairement le scan pour éviter les détections multiples
+        setTimeout(() => {
+            if (this.isScanning) {
+                Quagga.start();
+            }
+        }, 1000);
+    }
+    
+    useScannedCode() {
+        if (this.lastScannedCode) {
+            // Remplir le champ code-barres dans le modal principal
+            const codeBarreField = document.getElementById('code_barre');
+            if (codeBarreField) {
+                codeBarreField.value = this.lastScannedCode;
+                codeBarreField.dispatchEvent(new Event('input'));
+            }
+            
+            // Fermer le modal scanner
+            const modal = bootstrap.Modal.getInstance(document.getElementById('barcodeScannerModal'));
+            if (modal) {
+                modal.hide();
+            }
+            
+            // Notification de succès
+            this.showNotification('Code-barres ajouté avec succès !', 'success');
+        }
+    }
+    
+    async restartScanner() {
+        this.stopScanner();
+        await new Promise(resolve => setTimeout(resolve, 500));
+        this.startScanner();
+    }
+    
+    async switchCamera() {
+        this.currentCamera = this.currentCamera === 'environment' ? 'user' : 'environment';
+        await this.restartScanner();
+        
+        const cameraType = this.currentCamera === 'environment' ? 'arrière' : 'avant';
+        this.showNotification(`Caméra ${cameraType} activée`, 'info');
+    }
+    
+    async toggleFlashlight() {
+        if (!this.flashlightSupported) {
+            this.showNotification('Flash non supporté sur cet appareil', 'warning');
+            return;
+        }
+        
+        try {
+            const track = this.stream?.getVideoTracks()[0];
+            if (track && track.getCapabilities) {
+                const capabilities = track.getCapabilities();
+                if (capabilities.torch) {
+                    this.flashlightOn = !this.flashlightOn;
+                    await track.applyConstraints({
+                        advanced: [{ torch: this.flashlightOn }]
+                    });
+                    
+                    const button = document.getElementById('toggle-flashlight');
+                    button.classList.toggle('btn-warning', this.flashlightOn);
+                    button.innerHTML = this.flashlightOn ? 
+                        '<i class="fas fa-lightbulb"></i>' : 
+                        '<i class="fas fa-flashlight"></i>';
+                }
+            }
+        } catch (error) {
+            console.error('Erreur flash:', error);
+            this.showNotification('Impossible de contrôler le flash', 'error');
+        }
+    }
+    
+    async checkFlashlightSupport() {
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+            const track = stream.getVideoTracks()[0];
+            
+            if (track.getCapabilities) {
+                const capabilities = track.getCapabilities();
+                this.flashlightSupported = !!capabilities.torch;
+                
+                if (!this.flashlightSupported) {
+                    document.getElementById('toggle-flashlight').style.display = 'none';
+                }
+            }
+            
+            // Arrêter le stream de test
+            stream.getTracks().forEach(track => track.stop());
+        } catch (error) {
+            console.log('Vérification flash échouée:', error);
+        }
+    }
+    
+    updateStatus(message, type = 'info') {
+        const statusElement = document.getElementById('scanner-status');
+        const spinner = statusElement.querySelector('.spinner-border');
+        const textElement = statusElement.querySelector('.status-text');
+        
+        textElement.textContent = message;
+        
+        // Gestion des classes CSS
+        statusElement.className = 'scanner-status mt-3 text-center';
+        
+        switch (type) {
+            case 'loading':
+                statusElement.classList.add('text-primary');
+                spinner.style.display = 'inline-block';
+                break;
+            case 'scanning':
+                statusElement.classList.add('text-info');
+                spinner.style.display = 'none';
+                break;
+            case 'success':
+                statusElement.classList.add('text-success');
+                spinner.style.display = 'none';
+                break;
+            case 'error':
+                statusElement.classList.add('text-danger');
+                spinner.style.display = 'none';
+                break;
+            default:
+                statusElement.classList.add('text-muted');
+                spinner.style.display = 'none';
+        }
+    }
+    
+    playBeepSound() {
+        try {
+            // Créer un bip audio synthétique
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            oscillator.frequency.value = 800;
+            oscillator.type = 'square';
+            
+            gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.2);
+            
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + 0.2);
+        } catch (error) {
+            console.log('Impossible de jouer le son:', error);
+        }
+    }
+    
+    showNotification(message, type = 'info') {
+        // Réutiliser la fonction showNotification existante si elle existe
+        if (typeof showNotification === 'function') {
+            showNotification(message, type);
+        } else {
+            console.log(`[${type.toUpperCase()}] ${message}`);
+        }
+    }
+}
+
+// Fonction pour mettre à jour les couleurs des dates selon le mode
+function updateDateColors() {
+    const isDarkMode = document.body.classList.contains('dark-mode');
+    const dateBadges = document.querySelectorAll('.date-badge');
+    
+    dateBadges.forEach(badge => {
+        const lightColor = badge.getAttribute('data-light-color');
+        const darkColor = badge.getAttribute('data-dark-color');
+        
+        if (isDarkMode) {
+            badge.style.backgroundColor = darkColor;
+            badge.style.color = '#ffffff';
+            badge.style.boxShadow = '0 2px 4px rgba(0,0,0,0.3)';
+        } else {
+            badge.style.backgroundColor = lightColor;
+            badge.style.color = '#333';
+            badge.style.boxShadow = '0 2px 4px rgba(0,0,0,0.05)';
+        }
+    });
+}
+
+// Fonction de tri alphabétique pour la colonne Fournisseur
+function sortTableByFournisseur() {
+    const table = document.querySelector('.table');
+    const tbody = table.querySelector('tbody');
+    const rows = Array.from(tbody.querySelectorAll('tr'));
+    const sortIcon = document.getElementById('sort-icon');
+    
+    // Déterminer l'ordre de tri actuel
+    const isCurrentlyAsc = sortIcon.classList.contains('fa-sort-up');
+    const isCurrentlyDesc = sortIcon.classList.contains('fa-sort-down');
+    
+    // Définir le nouvel ordre
+    let sortAsc = true; // Par défaut, tri croissant
+    if (isCurrentlyAsc) {
+        sortAsc = false; // Si déjà croissant, passer en décroissant
+    } else if (isCurrentlyDesc) {
+        sortAsc = true; // Si déjà décroissant, passer en croissant
+    }
+    
+    // Filtrer les lignes non vides (ignorer la ligne "Aucune commande trouvée")
+    const validRows = rows.filter(row => {
+        const fournisseurCell = row.cells[2]; // 3ème colonne (index 2)
+        return fournisseurCell && fournisseurCell.textContent.trim() !== '';
+    });
+    
+    // Trier les lignes
+    validRows.sort((a, b) => {
+        const fournisseurA = a.cells[2].textContent.trim().toLowerCase();
+        const fournisseurB = b.cells[2].textContent.trim().toLowerCase();
+        
+        if (sortAsc) {
+            return fournisseurA.localeCompare(fournisseurB, 'fr', { numeric: true });
+        } else {
+            return fournisseurB.localeCompare(fournisseurA, 'fr', { numeric: true });
+        }
+    });
+    
+    // Mettre à jour l'icône de tri
+    sortIcon.className = sortAsc ? 'fas fa-sort-up ms-1' : 'fas fa-sort-down ms-1';
+    sortIcon.style.opacity = '1';
+    sortIcon.style.color = sortAsc ? '#28a745' : '#dc3545';
+    
+    // Réorganiser les lignes dans le tableau
+    validRows.forEach(row => tbody.appendChild(row));
+    
+    // Ajouter un effet visuel temporaire
+    const header = document.getElementById('fournisseur-header');
+    header.style.backgroundColor = sortAsc ? 'rgba(40, 167, 69, 0.1)' : 'rgba(220, 53, 69, 0.1)';
+    header.style.transition = 'background-color 0.3s ease';
+    
+    // Notification
+    const direction = sortAsc ? 'croissant (A→Z)' : 'décroissant (Z→A)';
+    showNotification(`Tableau trié par fournisseur en ordre ${direction}`, 'success');
+    
+    // Réinitialiser le style après l'animation
+    setTimeout(() => {
+        header.style.backgroundColor = '';
+        sortIcon.style.color = '';
+        sortIcon.style.opacity = '0.8';
+    }, 1000);
+    
+    // Mettre à jour le compteur de lignes visibles
+    updateRowCounts();
+}
+
+// Observer pour détecter les changements de mode nuit
+const themeObserver = new MutationObserver(function(mutations) {
+    mutations.forEach(function(mutation) {
+        if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+            updateDateColors();
+        }
+    });
+});
+
+// Initialiser le scanner au chargement de la page
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM chargé, initialisation du scanner...');
+    window.barcodeScanner = new BarcodeScanner();
+    console.log('Scanner initialisé:', window.barcodeScanner);
+    
+    // Initialiser les couleurs des dates
+    updateDateColors();
+    
+    // Ajouter l'événement de clic pour le tri des fournisseurs
+    const fournisseurHeader = document.getElementById('fournisseur-header');
+    if (fournisseurHeader) {
+        fournisseurHeader.addEventListener('click', sortTableByFournisseur);
+        console.log('Événement de tri des fournisseurs ajouté');
+    }
+    
+    // Observer les changements de classe sur le body pour détecter le changement de mode
+    themeObserver.observe(document.body, {
+        attributes: true,
+        attributeFilter: ['class']
+    });
+    
+    // Vérifier si les éléments existent
+    setTimeout(() => {
+        const scanBtn = document.getElementById('scanBarcodeBtn');
+        const scanModal = document.getElementById('barcodeScannerModal');
+        const commandModal = document.getElementById('ajouterCommandeModal');
+        
+        console.log('Vérification des éléments:');
+        console.log('- Bouton scanner:', scanBtn ? 'EXISTE' : 'MANQUANT');
+        console.log('- Modal scanner:', scanModal ? 'EXISTE' : 'MANQUANT');
+        console.log('- Modal commande:', commandModal ? 'EXISTE' : 'MANQUANT');
+        
+        if (scanBtn) {
+            console.log('Bouton scanner classes:', scanBtn.className);
+            console.log('Bouton scanner parent:', scanBtn.parentElement);
+        }
+    }, 1000);
+});
 </script>

@@ -17,7 +17,8 @@ try {
     $debut_periode = sprintf('%04d-%02d-01', $annee_selectionnee, $premier_mois);
     $fin_periode = sprintf('%04d-%02d-%02d', $annee_selectionnee, $dernier_mois, date('t', strtotime(sprintf('%04d-%02d-01', $annee_selectionnee, $dernier_mois))));
     
-    $stmt = $pdo->prepare("SELECT date FROM conges_jours_disponibles WHERE date BETWEEN ? AND ? AND disponible = 1");
+    $shop_pdo = getShopDBConnection();
+$stmt = $shop_pdo->prepare("SELECT date FROM conges_jours_disponibles WHERE date BETWEEN ? AND ? AND disponible = 1");
     $stmt->execute([$debut_periode, $fin_periode]);
     $jours_disponibles = $stmt->fetchAll(PDO::FETCH_COLUMN);
     

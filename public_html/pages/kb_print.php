@@ -1,5 +1,7 @@
 <?php
+require_once __DIR__ . '/../config/database.php';
 // Vérifier si l'utilisateur est connecté
+$shop_pdo = getShopDBConnection();
 if (!isset($_SESSION['user_id'])) {
     header("Location: index.php?page=login");
     exit;
@@ -17,7 +19,7 @@ $article_id = intval($_GET['id']);
 require_once 'includes/db.php';
 
 // Récupérer l'article
-$stmt = $db->prepare("SELECT a.*, c.name as category_name 
+$stmt = $shop_pdo->prepare("SELECT a.*, c.name as category_name 
                       FROM kb_articles a 
                       LEFT JOIN kb_categories c ON a.category_id = c.id 
                       WHERE a.id = ?");
