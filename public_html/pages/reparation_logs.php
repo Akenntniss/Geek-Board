@@ -2068,8 +2068,7 @@ function calculate_total_work_time_from_interventions($repairs) {
                                         <div class="col-lg-12 mb-4">
                                             <div class="card employee-card shadow-sm employee-card-clickable" 
                                                  data-employee-id="<?php echo $emp_id; ?>" 
-                                                 data-employee-name="<?php echo htmlspecialchars($employee['name'], ENT_QUOTES); ?>"
-                                                 onclick="openEmployeeTimeline(<?php echo $emp_id; ?>, this.getAttribute('data-employee-name'))">
+                                                 data-employee-name="<?php echo htmlspecialchars($employee['name'], ENT_QUOTES); ?>">
                                                 <div class="card-header <?php echo get_employe_background_color($employee['name']); ?> position-relative">
                                                     <div class="d-flex justify-content-between align-items-center">
                                                         <h5 class="mb-0 fw-bold">
