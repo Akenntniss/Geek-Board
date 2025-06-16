@@ -2066,12 +2066,19 @@ function calculate_total_work_time_from_interventions($repairs) {
                                 <div class="row">
                                     <?php foreach ($employees as $emp_id => $employee): ?>
                                         <div class="col-lg-12 mb-4">
-                                            <div class="card employee-card shadow-sm">
-                                                <div class="card-header <?php echo get_employe_background_color($employee['name']); ?>">
+                                            <div class="card employee-card shadow-sm employee-card-clickable" 
+                                                 data-employee-id="<?php echo $emp_id; ?>" 
+                                                 data-employee-name="<?php echo htmlspecialchars($employee['name'], ENT_QUOTES); ?>"
+                                                 onclick="openEmployeeTimeline(<?php echo $emp_id; ?>, this.getAttribute('data-employee-name'))">
+                                                <div class="card-header <?php echo get_employe_background_color($employee['name']); ?> position-relative">
                                                     <div class="d-flex justify-content-between align-items-center">
                                                         <h5 class="mb-0 fw-bold">
                                                             <i class="fas fa-user me-2"></i>
                                                             <?php echo htmlspecialchars($employee['name']); ?>
+                                                            <span class="timeline-indicator">
+                                                                <i class="fas fa-chart-line ms-2"></i>
+                                                                <small class="ms-1">Voir timeline</small>
+                                                            </span>
                                                         </h5>
                                                         <?php
                                                         $total_interventions = 0;
@@ -2248,11 +2255,15 @@ function calculate_total_work_time_from_interventions($repairs) {
                                                                 <tr class="<?php echo $row_class; ?>">
                                                                     <td>
                                                                         <?php if ($is_repair): ?>
-                                                                            <a href="index.php?page=details_reparation&id=<?php echo $item['id']; ?>" class="btn btn-sm btn-outline-<?php echo get_employe_color($employee['name']); ?>">
+                                                                            <a href="index.php?page=details_reparation&id=<?php echo $item['id']; ?>" 
+                                                                               class="btn btn-sm btn-outline-<?php echo get_employe_color($employee['name']); ?>"
+                                                                               onclick="event.stopPropagation();">
                                                                                 #<?php echo $item['id']; ?>
                                                                             </a>
                                                                         <?php else: ?>
-                                                                            <a href="index.php?page=taches&task_id=<?php echo $item['id']; ?>&open_modal=1" class="btn btn-sm btn-outline-<?php echo get_employe_color($employee['name']); ?>">
+                                                                            <a href="index.php?page=taches&task_id=<?php echo $item['id']; ?>&open_modal=1" 
+                                                                               class="btn btn-sm btn-outline-<?php echo get_employe_color($employee['name']); ?>"
+                                                                               onclick="event.stopPropagation();">
                                                                                 T#<?php echo $item['id']; ?>
                                                                             </a>
                                                                         <?php endif; ?>
@@ -2549,6 +2560,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const filterForm = document.getElementById('filterForm');
     console.log('Formulaire filterForm trouvé:', !!filterForm);
     
+
+    
     // Animation pour les éléments de la timeline
     const timelineItems = document.querySelectorAll('.timeline-item');
     
@@ -2840,29 +2853,28 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log('Filtres rapides trouvés:', quickFilterButtons.length);
     
     quickFilterButtons.forEach(button => {
-        button.addEventListener('change', function() {
-            console.log('Changement de filtre rapide:', this.value);
-            if (this.checked) {
-                // Vider les champs de dates personnalisées
-                const dateDebut = document.getElementById('date_debut');
-                const dateFin = document.getElementById('date_fin');
-                if (dateDebut) dateDebut.value = '';
-                if (dateFin) dateFin.value = '';
+        // Utiliser 'click' au lieu de 'change' pour une meilleure compatibilité
+        button.addEventListener('click', function() {
+            console.log('Clic sur filtre rapide:', this.value);
+            // Vider les champs de dates personnalisées
+            const dateDebut = document.getElementById('date_debut');
+            const dateFin = document.getElementById('date_fin');
+            if (dateDebut) dateDebut.value = '';
+            if (dateFin) dateFin.value = '';
+            
+            // Ajouter un indicateur de chargement
+            const form = document.getElementById('filterForm');
+            if (form) {
+                // Afficher un indicateur de chargement
+                showLoadingIndicator();
                 
-                // Ajouter un indicateur de chargement
-                const form = document.getElementById('filterForm');
-                if (form) {
-                    // Afficher un indicateur de chargement
-                    showLoadingIndicator();
-                    
-                    // Soumettre automatiquement le formulaire
-                    setTimeout(() => {
-                        console.log('Soumission du formulaire pour filtre rapide:', this.value);
-                        form.submit();
-                    }, 100);
-                } else {
-                    console.error('Formulaire filterForm non trouvé !');
-                }
+                // Soumettre automatiquement le formulaire
+                setTimeout(() => {
+                    console.log('Soumission du formulaire pour filtre rapide:', this.value);
+                    form.submit();
+                }, 100);
+            } else {
+                console.error('Formulaire filterForm non trouvé !');
             }
         });
     });
@@ -2872,11 +2884,11 @@ document.addEventListener('DOMContentLoaded', function() {
         window.location.href = 'index.php?page=reparation_logs';
     });
 
-    // Auto-soumission pour certains champs
-    const autoSubmitFields = ['view_mode', 'group_by', 'sort_by', 'sort_order', 'log_type', 'quick_filter'];
+    // Auto-soumission pour les champs select (non radio)
+    const autoSubmitFields = ['view_mode', 'group_by', 'sort_by', 'sort_order'];
     autoSubmitFields.forEach(fieldName => {
         const field = document.getElementById(fieldName);
-        if (field) {
+        if (field && field.type !== 'radio') {
             field.addEventListener('change', function() {
                 console.log('Auto-soumission pour le champ:', fieldName, 'valeur:', this.value);
                 showLoadingIndicator();
@@ -3029,4 +3041,469 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
-</script> 
+
+// Test simple pour vérifier que JavaScript fonctionne
+console.log('JavaScript chargé dans reparation_logs.php');
+
+// Ajouter un gestionnaire d'événements alternatif au chargement de la page
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM chargé, ajout des gestionnaires d\'événements');
+    
+    // Ajouter des gestionnaires d'événements pour toutes les cartes d'employés cliquables
+    const employeeCards = document.querySelectorAll('.employee-card-clickable');
+    console.log('Cartes d\'employés trouvées:', employeeCards.length);
+    
+    employeeCards.forEach((card, index) => {
+        console.log(`Carte ${index}:`, card);
+        
+        // Ajouter un gestionnaire d'événements de clic
+        card.addEventListener('click', function(e) {
+            // Vérifier si le clic provient d'un lien interne (avec stopPropagation)
+            if (e.target.closest('a[onclick*="stopPropagation"]')) {
+                console.log('Clic sur un lien interne, ignorer');
+                return;
+            }
+            
+            console.log('Clic détecté sur la carte employé');
+            
+            const employeeId = this.getAttribute('data-employee-id');
+            const employeeName = this.getAttribute('data-employee-name');
+            
+            console.log('Données extraites:', { employeeId, employeeName });
+            
+            if (employeeId && employeeName) {
+                openEmployeeTimeline(employeeId, employeeName);
+            } else {
+                alert('Erreur: Données employé manquantes');
+            }
+        });
+        
+        // Ajouter un gestionnaire pour le survol pour le débogage
+        card.addEventListener('mouseenter', function() {
+            console.log(`Survol de la carte ${index}`);
+        });
+    });
+});
+
+// Fonction pour ouvrir la timeline d'un employé
+function openEmployeeTimeline(employeeId, employeeName) {
+    console.log('openEmployeeTimeline appelée avec:', employeeId, employeeName);
+    
+    // Test simple d'abord
+    if (!employeeId) {
+        alert('Erreur: ID employé manquant');
+        return;
+    }
+    
+    // Vérifier que les éléments existent
+    const modalBody = document.getElementById('employeeTimelineBody');
+    const modalLabel = document.getElementById('employeeTimelineModalLabel');
+    const modalElement = document.getElementById('employeeTimelineModal');
+    
+    if (!modalBody || !modalLabel || !modalElement) {
+        console.error('Éléments du modal non trouvés:', {
+            modalBody: !!modalBody,
+            modalLabel: !!modalLabel,
+            modalElement: !!modalElement
+        });
+        alert('Erreur: Éléments du modal non trouvés');
+        return;
+    }
+    
+    // Afficher un indicateur de chargement
+    modalBody.innerHTML = `
+        <div class="text-center py-5">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Chargement...</span>
+            </div>
+            <p class="mt-3">Chargement de la timeline de ${employeeName}...</p>
+        </div>
+    `;
+    
+    // Mettre à jour le titre du modal
+    modalLabel.textContent = `Timeline de ${employeeName}`;
+    
+    // Ouvrir le modal
+    const modal = new bootstrap.Modal(modalElement);
+    modal.show();
+    
+    // Charger les données via AJAX
+    fetch(`ajax_handlers/get_employee_timeline.php?employee_id=${employeeId}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Erreur HTTP: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.success) {
+                displayEmployeeTimeline(data);
+            } else {
+                throw new Error(data.message || 'Erreur lors du chargement des données');
+            }
+        })
+        .catch(error => {
+            console.error('Erreur:', error);
+            modalBody.innerHTML = `
+                <div class="alert alert-danger">
+                    <i class="fas fa-exclamation-triangle me-2"></i>
+                    Erreur lors du chargement de la timeline: ${error.message}
+                </div>
+            `;
+        });
+}
+
+// Fonction pour afficher la timeline dans le modal
+function displayEmployeeTimeline(data) {
+    const modalBody = document.getElementById('employeeTimelineBody');
+    const { employee, timeline, stats } = data;
+    
+    let html = `
+        <!-- Statistiques globales -->
+        <div class="row mb-4">
+            <div class="col-md-3">
+                <div class="card bg-primary text-white">
+                    <div class="card-body text-center">
+                        <i class="fas fa-clock fa-2x mb-2"></i>
+                        <h5>${stats.total_work_time}</h5>
+                        <small>Temps de travail total</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card bg-warning text-white">
+                    <div class="card-body text-center">
+                        <i class="fas fa-pause fa-2x mb-2"></i>
+                        <h5>${stats.total_inactive_time}</h5>
+                        <small>Temps d'inactivité</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card bg-success text-white">
+                    <div class="card-body text-center">
+                        <i class="fas fa-check-circle fa-2x mb-2"></i>
+                        <h5>${stats.completed_tasks}</h5>
+                        <small>Tâches terminées</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card bg-info text-white">
+                    <div class="card-body text-center">
+                        <i class="fas fa-percentage fa-2x mb-2"></i>
+                        <h5>${stats.efficiency_rate}%</h5>
+                        <small>Taux d'efficacité</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Timeline -->
+        <div class="timeline-container">
+            <h5 class="mb-3">
+                <i class="fas fa-history me-2"></i>
+                Timeline détaillée (${timeline.length} activités)
+            </h5>
+    `;
+    
+    if (timeline.length === 0) {
+        html += `
+            <div class="alert alert-info">
+                <i class="fas fa-info-circle me-2"></i>
+                Aucune activité trouvée pour cet employé.
+            </div>
+        `;
+    } else {
+        timeline.forEach((item, index) => {
+            const isTask = item.type === 'task';
+            const iconClass = isTask ? 'fa-tasks' : 'fa-tools';
+            const badgeClass = isTask ? 'bg-success' : 'bg-primary';
+            const typeLabel = isTask ? 'Tâche' : 'Réparation';
+            
+            // Afficher le temps d'inactivité avant cette activité (sauf pour la première)
+            if (index > 0 && item.inactive_time) {
+                const inactiveClass = item.inactive_duration_minutes > 60 ? 'text-danger' : 
+                                    (item.inactive_duration_minutes > 30 ? 'text-warning' : 'text-info');
+                
+                html += `
+                    <div class="timeline-item inactive-period mb-3">
+                        <div class="timeline-marker bg-secondary">
+                            <i class="fas fa-pause"></i>
+                        </div>
+                        <div class="timeline-content">
+                            <div class="card border-secondary">
+                                <div class="card-body text-center py-2">
+                                    <span class="${inactiveClass}">
+                                        <i class="fas fa-clock me-1"></i>
+                                        Pause de ${item.inactive_time}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            html += `
+                <div class="timeline-item mb-3">
+                    <div class="timeline-marker ${badgeClass}">
+                        <i class="fas ${iconClass}"></i>
+                    </div>
+                    <div class="timeline-content">
+                        <div class="card">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <div>
+                                    <span class="badge ${badgeClass} me-2">${typeLabel} #${item.entity_id}</span>
+                                    <strong>${item.title}</strong>
+                                </div>
+                                <div class="text-end">
+                                    ${item.is_completed ? 
+                                        `<span class="badge bg-success"><i class="fas fa-check me-1"></i>Terminé</span>` :
+                                        `<span class="badge bg-warning"><i class="fas fa-clock me-1"></i>En cours</span>`
+                                    }
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <p class="mb-2">${item.description || 'Aucune description'}</p>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <small class="text-muted">Début:</small><br>
+                                        <strong>${item.start_time}</strong>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <small class="text-muted">Fin:</small><br>
+                                        <strong>${item.end_time || 'En cours...'}</strong>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <small class="text-muted">Durée:</small><br>
+                                        <strong class="text-primary">${item.work_duration || 'En cours...'}</strong>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
+    }
+    
+    html += '</div>';
+    modalBody.innerHTML = html;
+}
+</script>
+
+<!-- Modal Timeline Employé -->
+<div class="modal fade" id="employeeTimelineModal" tabindex="-1" aria-labelledby="employeeTimelineModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="employeeTimelineModalLabel">
+                    <i class="fas fa-user-clock me-2"></i>
+                    Timeline Employé
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+            </div>
+            <div class="modal-body" id="employeeTimelineBody">
+                <!-- Le contenu sera chargé dynamiquement -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    <i class="fas fa-times me-2"></i>Fermer
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+/* Styles pour la carte employé cliquable */
+.employee-card-clickable {
+    cursor: pointer !important;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    position: relative;
+}
+
+.employee-card-clickable::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, rgba(0, 123, 255, 0.1), rgba(0, 123, 255, 0.05));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.employee-card-clickable:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 123, 255, 0.2) !important;
+    border-color: rgba(0, 123, 255, 0.3);
+}
+
+.employee-card-clickable:hover::before {
+    opacity: 1;
+}
+
+.employee-card-clickable:hover .timeline-indicator {
+    opacity: 1;
+    transform: translateX(5px);
+}
+
+.employee-card-clickable:hover .card-header {
+    background: linear-gradient(135deg, var(--header-bg-color, #007bff), rgba(0, 123, 255, 0.8)) !important;
+}
+
+.timeline-indicator {
+    opacity: 0.7;
+    transition: all 0.3s ease;
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 500;
+}
+
+.timeline-indicator i {
+    animation: pulse 2s infinite;
+}
+
+.timeline-indicator small {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+@keyframes pulse {
+    0% { opacity: 0.7; }
+    50% { opacity: 1; }
+    100% { opacity: 0.7; }
+}
+
+/* Indicateur visuel pour montrer que c'est cliquable */
+.employee-card-clickable .card-header::after {
+    content: "👆 Cliquer pour voir la timeline";
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: rgba(255, 255, 255, 0.9);
+    color: #333;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+    z-index: 2;
+}
+
+.employee-card-clickable:hover .card-header::after {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Styles pour la timeline dans le modal */
+.timeline-container {
+    position: relative;
+    max-height: 60vh;
+    overflow-y: auto;
+    padding-right: 15px;
+}
+
+.timeline-item {
+    position: relative;
+    padding-left: 50px;
+}
+
+.timeline-item:not(:last-child)::before {
+    content: '';
+    position: absolute;
+    left: 20px;
+    top: 40px;
+    bottom: -20px;
+    width: 2px;
+    background: #dee2e6;
+}
+
+.timeline-marker {
+    position: absolute;
+    left: 0;
+    top: 10px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 16px;
+    z-index: 1;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.timeline-content {
+    margin-left: 10px;
+}
+
+.timeline-item.inactive-period .timeline-marker {
+    width: 30px;
+    height: 30px;
+    font-size: 12px;
+    top: 15px;
+}
+
+.timeline-item.inactive-period .timeline-content .card {
+    background-color: #f8f9fa;
+    border-style: dashed;
+}
+
+/* Animation pour les éléments de timeline */
+.timeline-item {
+    opacity: 0;
+    transform: translateX(-20px);
+    animation: slideInTimeline 0.5s ease forwards;
+}
+
+.timeline-item:nth-child(1) { animation-delay: 0.1s; }
+.timeline-item:nth-child(2) { animation-delay: 0.2s; }
+.timeline-item:nth-child(3) { animation-delay: 0.3s; }
+.timeline-item:nth-child(4) { animation-delay: 0.4s; }
+.timeline-item:nth-child(5) { animation-delay: 0.5s; }
+.timeline-item:nth-child(n+6) { animation-delay: 0.6s; }
+
+@keyframes slideInTimeline {
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Responsive pour mobile */
+@media (max-width: 768px) {
+    .timeline-item {
+        padding-left: 40px;
+    }
+    
+    .timeline-marker {
+        width: 30px;
+        height: 30px;
+        font-size: 14px;
+    }
+    
+    .timeline-item:not(:last-child)::before {
+        left: 15px;
+    }
+}
+
+/* Mode sombre pour la timeline */
+.dark-mode .timeline-item:not(:last-child)::before {
+    background: #495057;
+}
+
+.dark-mode .timeline-item.inactive-period .timeline-content .card {
+    background-color: #343a40;
+    border-color: #495057;
+}
+</style> 
