@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Debug Recherche Universelle</title>
+    <script>
+        // Test simple pour voir si on peut récupérer les éléments
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('=== DEBUG RECHERCHE UNIVERSELLE ===');
+            
+            // Simuler les données de l'API
+            const testData = {
+                "clients": [
+                    {
+                        "id": 732,
+                        "nom": "iuygt",
+                        "prenom": "fghuj",
+                        "telephone": "0123456789",
+                        "email": ""
+                    }
+                ],
+                "reparations": [],
+                "commandes": [],
+                "total": 1,
+                "terme": "iu"
+            };
+            
+            console.log('📊 Données de test :', testData);
+            
+            // Essayer de récupérer les éléments
+            const clientsTableBody = document.getElementById('clientsTableBody');
+            const clientsCount = document.getElementById('clientsCount');
+            
+            console.log('📋 clientsTableBody trouvé :', !!clientsTableBody);
+            console.log('🔢 clientsCount trouvé :', !!clientsCount);
+            
+            if (clientsTableBody && clientsCount) {
+                // Tester l'affichage
+                clientsCount.textContent = testData.clients.length;
+                
+                clientsTableBody.innerHTML = '';
+                testData.clients.forEach(client => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td><strong>${client.nom}</strong><br><small>${client.prenom}</small></td>
+                        <td>${client.telephone}</td>
+                        <td>${client.email || 'N/A'}</td>
+                        <td><button>Test</button></td>
+                    `;
+                    clientsTableBody.appendChild(row);
+                });
+                
+                console.log('✅ Test d\'affichage réussi !');
+            } else {
+                console.error('❌ Éléments non trouvés !');
+            }
+        });
+    </script>
+</head>
+<body>
+    <h1>Test Debug - Recherche Universelle</h1>
+    
+    <!-- Simulation du modal -->
+    <div>
+        <h3>Clients <span id="clientsCount">0</span></h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Téléphone</th>
+                    <th>Email</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="clientsTableBody">
+                <!-- Les résultats seront insérés ici -->
+            </tbody>
+        </table>
+    </div>
+</body>
+</html> 

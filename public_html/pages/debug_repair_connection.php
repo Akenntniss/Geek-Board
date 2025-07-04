@@ -222,7 +222,7 @@ if (!isset($_SESSION['shop_id'])) {
 }
 
 if (isset($shop_pdo) && $shop_pdo && isset($result['db_name'])) {
-    $is_main_db = (strpos($result['db_name'], 'u139954273_') === 0);
+            $is_main_db = (strpos($result['db_name'], 'geekboard_') === 0);
     if ($is_main_db) {
         echo "<li class='error'>getShopDBConnection() retourne la base principale au lieu de la base du magasin.</li>";
     }

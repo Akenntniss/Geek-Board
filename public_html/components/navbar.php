@@ -33,10 +33,12 @@ $shop_pdo = null;
 try {
     if (isset($_SESSION['shop_id'])) {
         $shop_pdo = getShopDBConnection();
-        $query = $shop_pdo->query("SELECT DATABASE() as db_name");
-        $result = $query->fetch(PDO::FETCH_ASSOC);
-        if ($result && isset($result['db_name'])) {
-            $db_name = $result['db_name'];
+        if ($shop_pdo !== null) {
+            $query = $shop_pdo->query("SELECT DATABASE() as db_name");
+            $result = $query->fetch(PDO::FETCH_ASSOC);
+            if ($result && isset($result['db_name'])) {
+                $db_name = $result['db_name'];
+            }
         }
     }
 } catch (Exception $e) {

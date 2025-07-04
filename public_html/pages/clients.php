@@ -922,7 +922,18 @@ document.addEventListener('DOMContentLoaded', function() {
             `;
             
             // Requête AJAX pour récupérer l'historique avec gestion d'erreur améliorée
-            fetch(`ajax/get_client_history.php?client_id=${clientId}`)
+            // Toujours transmettre le shop_id actuel de la session
+            const shopId = '<?php echo $_SESSION["shop_id"] ?? ""; ?>';
+            const ajaxUrl = shopId ? 
+                `ajax/get_client_history.php?client_id=${clientId}&shop_id=${shopId}` :
+                `ajax/get_client_history.php?client_id=${clientId}`;
+            
+            console.log('🔍 [HISTORIQUE] Début du chargement');
+            console.log('📊 [HISTORIQUE] Client ID:', clientId);
+            console.log('🏪 [HISTORIQUE] Shop ID:', shopId);
+            console.log('🌐 [HISTORIQUE] URL AJAX:', ajaxUrl);
+            
+            fetch(ajaxUrl)
                 .then(response => {
                     if (!response.ok) {
                         throw new Error(`Erreur HTTP: ${response.status}`);

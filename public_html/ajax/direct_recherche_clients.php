@@ -27,8 +27,8 @@ try {
     // Paramètres de connexion directs (constants de database.php)
     $db_host = 'srv931.hstgr.io';
     $db_port = '3306';
-    $db_name = 'u139954273_cannesphones'; // Utiliser la bonne base selon votre configuration
-    $db_user = 'u139954273_Vscodetest';
+    $db_name = 'geekboard_cannesphones'; // Utiliser la bonne base selon votre configuration
+$db_user = 'root';
     $db_pass = 'Maman01#';
     
     // Création d'une connexion PDO directe

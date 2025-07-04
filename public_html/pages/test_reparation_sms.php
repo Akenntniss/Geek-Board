@@ -225,15 +225,14 @@ try {
     if (isset($_POST['send_sms'])) {
         log_message("Tentative d'envoi du SMS...");
         
-        // Configuration de l'API SMS Gateway
-        $API_URL = 'https://api.sms-gate.app/3rdparty/v1/message';
-        $API_USERNAME = '-GCB75';
-        $API_PASSWORD = 'Mamanmaman06400';
+        // Configuration de l'API SMS Gateway - votre API personnalisée
+        $API_URL = 'http://168.231.85.4:3001/api/messages/send';
         
         // Préparation des données JSON pour l'API
         $sms_data = json_encode([
+            'recipient' => $_POST['telephone'],
             'message' => $_POST['message'],
-            'phoneNumbers' => [$_POST['telephone']]
+            'priority' => 'normal'
         ]);
         
         log_message("Données JSON pour l'API: " . $sms_data);
@@ -244,13 +243,8 @@ try {
         curl_setopt($curl, CURLOPT_POST, true);
         curl_setopt($curl, CURLOPT_POSTFIELDS, $sms_data);
         curl_setopt($curl, CURLOPT_HTTPHEADER, [
-            'Content-Type: application/json',
-            'Content-Length: ' . strlen($sms_data)
+            'Content-Type: application/json'
         ]);
-        
-        // Configuration de l'authentification Basic
-        curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-        curl_setopt($curl, CURLOPT_USERPWD, "$API_USERNAME:$API_PASSWORD");
         
         // Ajouter des options pour le débogage
         curl_setopt($curl, CURLOPT_VERBOSE, true);

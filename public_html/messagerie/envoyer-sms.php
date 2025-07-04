@@ -333,7 +333,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 recipient: recipient,
                 message: message,
                 // URL correcte selon la documentation
-                gateway_url: 'https://api.sms-gate.app/3rdparty/v1/message'
+                gateway_url: 'http://168.231.85.4:3001/api/messages/send'
             })
         })
         .then(response => response.json())

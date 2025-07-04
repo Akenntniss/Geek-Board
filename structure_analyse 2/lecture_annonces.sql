@@ -1,0 +1,2 @@
+Table	Create Table
+lecture_annonces	CREATE TABLE `lecture_annonces` (\n  `message_id` int(11) NOT NULL,\n  `user_id` int(11) NOT NULL,\n  `date_lecture` datetime DEFAULT current_timestamp(),\n  PRIMARY KEY (`message_id`,`user_id`),\n  KEY `user_id` (`user_id`),\n  CONSTRAINT `lecture_annonces_ibfk_1` FOREIGN KEY (`message_id`) REFERENCES `messages` (`id`) ON DELETE CASCADE,\n  CONSTRAINT `lecture_annonces_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci

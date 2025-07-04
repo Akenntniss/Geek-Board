@@ -1,0 +1,2 @@
+Table	Create Table
+conges_solde	CREATE TABLE `conges_solde` (\n  `id` int(11) NOT NULL AUTO_INCREMENT,\n  `user_id` int(11) NOT NULL,\n  `solde_actuel` decimal(5,2) NOT NULL DEFAULT 0.00,\n  `date_derniere_maj` date NOT NULL,\n  PRIMARY KEY (`id`),\n  KEY `user_id` (`user_id`),\n  CONSTRAINT `conges_solde_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci

@@ -12,8 +12,8 @@ header('Expires: 0');
 try {
     // Créer la connexion à la base de données directement
     $db_pdo = new PDO(
-        "mysql:host=srv931.hstgr.io;port=3306;dbname=u139954273_Vscodetest;charset=utf8mb4",
-        "u139954273_Vscodetest",
+            "mysql:host=localhost;port=3306;dbname=geekboard_main;charset=utf8mb4",
+    "root",
         "Maman01#",
         [
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,

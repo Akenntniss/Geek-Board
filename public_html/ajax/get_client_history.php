@@ -13,19 +13,34 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// Initialiser shop_id si non défini (pour les tests et l'accès direct)
+// Inclusion de la configuration de base de données
+require_once '../config/database.php';
+
+// Priorité à l'URL si shop_id est fourni en paramètre
+if (isset($_GET['shop_id']) && (int)$_GET['shop_id'] > 0) {
+    $_SESSION['shop_id'] = (int)$_GET['shop_id'];
+}
+
+// Log pour débogage (peut être supprimé en production)
+error_log("get_client_history.php - shop_id utilisé: " . ($_SESSION['shop_id'] ?? 'non défini'));
+
+// Initialiser shop_id si non défini
 if (!isset($_SESSION['shop_id'])) {
     // Essayer de récupérer depuis l'URL
     if (isset($_GET['shop_id'])) {
         $_SESSION['shop_id'] = (int)$_GET['shop_id'];
     } else {
-        // Valeur par défaut pour les tests
-        $_SESSION['shop_id'] = 1;
+        // Essayer de détecter automatiquement depuis la base principale
+        try {
+            $main_pdo = getMainDBConnection();
+            $stmt = $main_pdo->query("SELECT id FROM shops WHERE active = 1 ORDER BY id ASC LIMIT 1");
+            $first_shop = $stmt->fetch();
+            $_SESSION['shop_id'] = $first_shop['id'] ?? 1;
+        } catch (Exception $e) {
+            $_SESSION['shop_id'] = 1; // Fallback standard
+        }
     }
 }
-
-// Inclusion de la configuration de base de données
-require_once '../config/database.php';
 
 // Vérification de la méthode et des paramètres
 if ($_SERVER['REQUEST_METHOD'] !== 'GET' || !isset($_GET['client_id'])) {

@@ -6,10 +6,10 @@
 
 // Configuration de base de données (mise à jour avec vos informations)
 $db_config = [
-    'host' => '191.96.63.103',
-    'user' => 'u139954273_Vscodetest',
-    'pass' => 'Maman01#',
-    'name' => 'u139954273_Vscodetest'
+    'host' => 'localhost',
+    'user' => 'root',
+    'pass' => '',
+    'name' => 'geekboard_main'
 ];
 
 // Informations du superadmin à créer
@@ -245,16 +245,16 @@ try {
     if (file_exists($config_file)) {
         $config_content = file_get_contents($config_file);
         
-        if (strpos($config_content, '191.96.63.103') !== false) {
-            echo "<div class='success'>✅ Le fichier database.php utilise la bonne adresse IP (191.96.63.103)</div>";
+        if (strpos($config_content, 'localhost') !== false) {
+            echo "<div class='success'>✅ Le fichier database.php utilise la bonne adresse IP (localhost)</div>";
         } else {
             echo "<div class='error'>❌ Le fichier database.php n'utilise pas la bonne adresse IP !</div>";
             echo "<div class='warning'>⚠️ Vous devez mettre à jour public_html/config/database.php avec :</div>";
             echo "<pre style='background: #f8f9fa; padding: 10px; border-radius: 5px;'>";
-            echo "define('MAIN_DB_HOST', '191.96.63.103');\n";
-            echo "define('MAIN_DB_USER', 'u139954273_Vscodetest');\n";
-            echo "define('MAIN_DB_PASS', 'Maman01#');\n";
-            echo "define('MAIN_DB_NAME', 'u139954273_Vscodetest');";
+            echo "define('MAIN_DB_HOST', 'localhost');\n";
+            echo "define('MAIN_DB_USER', 'root');\n";
+            echo "define('MAIN_DB_PASS', '');\n";
+            echo "define('MAIN_DB_NAME', 'geekboard_main');";
             echo "</pre>";
         }
     } else {

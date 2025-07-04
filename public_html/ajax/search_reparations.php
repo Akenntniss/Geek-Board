@@ -41,8 +41,8 @@ try {
         // Paramètres de connexion
         $host = 'srv931.hstgr.io';
         $port = '3306';
-        $db = 'u139954273_Vscodetest';
-        $user = 'u139954273_Vscodetest';
+        $db = 'geekboard_main';
+$user = 'root';
         $pass = 'Maman01#';
         $charset = 'utf8mb4';
         

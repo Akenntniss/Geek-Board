@@ -1,0 +1,2 @@
+Table	Create Table
+fournisseurs	CREATE TABLE `fournisseurs` (\n  `id` int(11) NOT NULL AUTO_INCREMENT,\n  `nom` varchar(255) NOT NULL,\n  `contact_nom` varchar(100) DEFAULT NULL,\n  `email` varchar(255) DEFAULT NULL,\n  `url` varchar(20) DEFAULT NULL,\n  `adresse` text DEFAULT NULL,\n  `created_at` timestamp NULL DEFAULT current_timestamp(),\n  PRIMARY KEY (`id`)\n) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci

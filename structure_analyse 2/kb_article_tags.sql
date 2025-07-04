@@ -1,0 +1,2 @@
+Table	Create Table
+kb_article_tags	CREATE TABLE `kb_article_tags` (\n  `article_id` int(11) NOT NULL,\n  `tag_id` int(11) NOT NULL,\n  PRIMARY KEY (`article_id`,`tag_id`),\n  KEY `tag_id` (`tag_id`),\n  CONSTRAINT `kb_article_tags_ibfk_1` FOREIGN KEY (`article_id`) REFERENCES `kb_articles` (`id`) ON DELETE CASCADE,\n  CONSTRAINT `kb_article_tags_ibfk_2` FOREIGN KEY (`tag_id`) REFERENCES `kb_tags` (`id`) ON DELETE CASCADE\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci

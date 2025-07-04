@@ -5,10 +5,10 @@
  */
 
 // Configuration de la base de données
-$db_host = '191.96.63.103';
-$db_user = 'u139954273_Vscodetest';
-$db_pass = 'Maman01#';
-$db_name = 'u139954273_Vscodetest';
+$db_host = 'localhost';
+$db_user = 'root';
+$db_pass = '';
+$db_name = 'geekboard_main';
 
 // Informations du superadmin à créer
 $superadmin_data = [
@@ -174,10 +174,10 @@ try {
     echo "<p style='color: red;'>" . htmlspecialchars($e->getMessage()) . "</p>\n";
     echo "<h4>Vérifiez :</h4>\n";
     echo "<ul>\n";
-    echo "<li>L'adresse IP du serveur : 191.96.63.103</li>\n";
-    echo "<li>Le nom d'utilisateur : u139954273_Vscodetest</li>\n";
-    echo "<li>Le mot de passe</li>\n";
-    echo "<li>Le nom de la base de données : u139954273_Vscodetest</li>\n";
+    echo "<li>L'adresse IP du serveur : localhost</li>\n";
+    echo "<li>Le nom d'utilisateur : root</li>\n";
+    echo "<li>Le mot de passe : (vide)</li>\n";
+    echo "<li>Le nom de la base de données : geekboard_main</li>\n";
     echo "<li>Que la base de données autorise les connexions externes</li>\n";
     echo "</ul>\n";
 } catch (Exception $e) {

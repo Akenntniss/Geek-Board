@@ -38,10 +38,8 @@ function send_sms_direct($telephone, $message) {
     log_message("Envoi direct d'un SMS à: $telephone");
     log_message("Message: $message");
     
-    // Configuration de l'API SMS Gateway
-    $API_URL = 'https://api.sms-gate.app/3rdparty/v1/message';
-    $API_USERNAME = '-GCB75';
-    $API_PASSWORD = 'Mamanmaman06400';
+    // Configuration de l'API SMS Gateway - votre API personnalisée
+    $API_URL = 'http://168.231.85.4:3001/api/messages/send';
     
     // Formatage du numéro de téléphone
     $recipient = preg_replace('/[^0-9+]/', '', $telephone);
@@ -59,8 +57,9 @@ function send_sms_direct($telephone, $message) {
     
     // Préparation des données JSON pour l'API
     $sms_data = json_encode([
+        'recipient' => $recipient,
         'message' => $message,
-        'phoneNumbers' => [$recipient]
+        'priority' => 'normal'
     ]);
     
     log_message("Données JSON: $sms_data");
@@ -71,13 +70,8 @@ function send_sms_direct($telephone, $message) {
     curl_setopt($curl, CURLOPT_POST, true);
     curl_setopt($curl, CURLOPT_POSTFIELDS, $sms_data);
     curl_setopt($curl, CURLOPT_HTTPHEADER, [
-        'Content-Type: application/json',
-        'Content-Length: ' . strlen($sms_data)
+        'Content-Type: application/json'
     ]);
-    
-    // Configuration de l'authentification Basic
-    curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-    curl_setopt($curl, CURLOPT_USERPWD, "$API_USERNAME:$API_PASSWORD");
     
     // Ajouter des options pour le débogage
     curl_setopt($curl, CURLOPT_VERBOSE, true);

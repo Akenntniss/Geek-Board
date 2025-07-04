@@ -1,0 +1,2 @@
+Table	Create Table
+colis_retour	CREATE TABLE `colis_retour` (\n  `id` int(11) NOT NULL AUTO_INCREMENT,\n  `numero_suivi` varchar(100) NOT NULL,\n  `date_creation` datetime DEFAULT current_timestamp(),\n  `date_expedition` datetime DEFAULT NULL,\n  `statut` enum('en_preparation','en_expedition','livre') DEFAULT 'en_preparation',\n  `notes` text DEFAULT NULL,\n  PRIMARY KEY (`id`),\n  KEY `statut` (`statut`)\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci

@@ -567,84 +567,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 }
             }
 
-            // Si une commande est requise, créer la commande de pièces
-            if (isset($_POST['commande_requise'])) {
-                try {
-                    // Vérifier que $shop_pdo n'est pas null avant d'insérer la commande
-                    if ($shop_pdo === null) {
-                        error_log("ALERTE: $shop_pdo est null avant l'insertion de la commande. Tentative de reconnexion.");
-                        $shop_pdo = getShopDBConnection();
-                        
-                        // Vérifier à nouveau après la tentative de reconnexion
-                        if ($shop_pdo === null) {
-                            error_log("ERREUR: Impossible de rétablir la connexion pour l'insertion de la commande.");
-                            // Ne pas continuer si la connexion n'est pas disponible
-                            set_message("La réparation a été créée mais la commande de pièces n'a pas pu être enregistrée. Veuillez la créer manuellement.", "warning");
-                            redirect('reparations');
-                            exit;
-                        }
-                    }
-
-                    // Générer une référence unique
-                    $reference = 'CMD-' . date('Ymd') . '-' . uniqid();
-                    
-                    $stmt = $shop_pdo->prepare("
-                        INSERT INTO commandes_pieces (
-                            reference,
-                            client_id,
-                            reparation_id,
-                            fournisseur_id,
-                            nom_piece,
-                            description,
-                            quantite,
-                            prix_estime,
-                            statut,
-                            date_creation
-                        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'en_attente', NOW())
-                    ");
-                    
-                    $stmt->execute([
-                        $reference,
-                        $client_id,
-                        $reparation_id,
-                        $_POST['fournisseur_id'],
-                        $_POST['nom_piece'],
-                        $_POST['reference_piece'],
-                        $_POST['quantite'],
-                        $_POST['prix_piece']
-                    ]);
-                    
-                    $commande_id = $shop_pdo->lastInsertId();
-                    
-                    // Ajouter un log pour la création de commande si la connexion est valide
-                    if ($shop_pdo !== null) {
-                        try {
-                            $log_commande_stmt = $shop_pdo->prepare("
-                                INSERT INTO reparation_logs 
-                                (reparation_id, employe_id, action_type, statut_avant, statut_apres, details) 
-                                VALUES (?, ?, ?, ?, ?, ?)
-                            ");
-                            
-                            $log_commande_stmt->execute([
-                                $reparation_id,
-                                $_SESSION['user_id'],
-                                'autre', // Type d'action pour une commande
-                                $statutForDB,
-                                $statutForDB, // Le statut ne change pas
-                                'Commande de pièces créée: ' . $_POST['nom_piece'] . ' (Réf: ' . $reference . ')'
-                            ]);
-                            
-                            error_log("Log de création de commande ajouté avec succès");
-                        } catch (PDOException $e) {
-                            error_log("Erreur lors de l'ajout du log de commande: " . $e->getMessage());
-                        }
-                    }
-                } catch (PDOException $e) {
-                    error_log("Erreur lors de la création de la commande de pièces: " . $e->getMessage());
-                    set_message("La réparation a été créée mais une erreur est survenue lors de la création de la commande de pièces.", "warning");
-                }
-            }
-            
             set_message("Réparation ajoutée avec succès!", "success");
             
             // NOUVELLE APPROCHE POUR L'ENVOI DE SMS - Bypass du problème de lastInsertId()
@@ -660,6 +582,67 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $real_repair_id = $query_id->fetchColumn();
                 
                 error_log("ID réparation récupéré via requête directe: " . ($real_repair_id ?: 'Non trouvé'));
+                
+                // Si une commande est requise, créer la commande de pièces MAINTENANT qu'on a l'ID
+                if ($real_repair_id && isset($_POST['commande_requise'])) {
+                    error_log("DEBUG COMMANDE: Création de la commande avec real_repair_id: $real_repair_id");
+                    try {
+                        // Générer une référence unique
+                        $reference = 'CMD-' . date('Ymd') . '-' . uniqid();
+                        
+                        $stmt = $shop_pdo->prepare("
+                            INSERT INTO commandes_pieces (
+                                reference,
+                                client_id,
+                                reparation_id,
+                                fournisseur_id,
+                                nom_piece,
+                                description,
+                                quantite,
+                                prix_estime
+                            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                        ");
+                        
+                        $stmt->execute([
+                            $reference,
+                            $client_id,
+                            $real_repair_id, // Utiliser $real_repair_id au lieu de $reparation_id
+                            $_POST['fournisseur_id'],
+                            $_POST['nom_piece'],
+                            $_POST['reference_piece'],
+                            $_POST['quantite'],
+                            $_POST['prix_piece']
+                        ]);
+                        
+                        $commande_id = $shop_pdo->lastInsertId();
+                        error_log("DEBUG COMMANDE: Commande créée avec succès, ID: $commande_id, Réf: $reference");
+                        
+                        // Ajouter un log pour la création de commande
+                        try {
+                            $log_commande_stmt = $shop_pdo->prepare("
+                                INSERT INTO reparation_logs 
+                                (reparation_id, employe_id, action_type, statut_avant, statut_apres, details) 
+                                VALUES (?, ?, ?, ?, ?, ?)
+                            ");
+                            
+                            $log_commande_stmt->execute([
+                                $real_repair_id,
+                                $_SESSION['user_id'],
+                                'autre', // Type d'action pour une commande
+                                'nouvelle_intervention',
+                                'nouvelle_intervention', // Le statut ne change pas
+                                'Commande de pièces créée: ' . $_POST['nom_piece'] . ' (Réf: ' . $reference . ')'
+                            ]);
+                            
+                            error_log("DEBUG COMMANDE: Log de création de commande ajouté avec succès");
+                        } catch (PDOException $e) {
+                            error_log("DEBUG COMMANDE: Erreur lors de l'ajout du log de commande: " . $e->getMessage());
+                        }
+                    } catch (PDOException $e) {
+                        error_log("DEBUG COMMANDE: ERREUR lors de la création de la commande de pièces: " . $e->getMessage());
+                        error_log("DEBUG COMMANDE: Trace de l'erreur: " . $e->getTraceAsString());
+                    }
+                }
                 
                 if ($real_repair_id) {
                     // Configuration pour les logs
@@ -740,17 +723,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                     $log_message("Message préparé: $message");
 
-                    // Envoyer le SMS via l'API
-                    $ch = curl_init('https://api.sms-gate.app/3rdparty/v1/message');
+                    // Envoyer le SMS via votre API personnalisée
+                    $ch = curl_init('http://168.231.85.4:3001/api/messages/send');
                     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
                     curl_setopt($ch, CURLOPT_POST, true);
                     curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode([
+                        'recipient' => $telephone,
                         'message' => $message,
-                        'phoneNumbers' => [$telephone]
+                        'priority' => 'normal'
                     ]));
                     curl_setopt($ch, CURLOPT_HTTPHEADER, [
-                        'Content-Type: application/json',
-                        'Authorization: Basic ' . base64_encode('-GCB75:Mamanmaman06400')
+                        'Content-Type: application/json'
                     ]);
 
                     $response = curl_exec($ch);
@@ -760,7 +743,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                     $log_message("Réponse API (HTTP $http_code): $response");
 
-                    if ($http_code >= 200 && $http_code < 300) {
+                    // Décoder la réponse JSON
+                    $response_data = json_decode($response, true);
+                    
+                    if ($http_code >= 200 && $http_code < 300 && isset($response_data['success']) && $response_data['success']) {
                         // Enregistrer l'envoi dans la base de données
                         $stmt = $shop_pdo->prepare("
                             INSERT INTO reparation_sms (reparation_id, template_id, telephone, message, date_envoi)
@@ -772,10 +758,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             $telephone,
                             $message
                         ]);
+                        $log_message("SMS envoyé avec succès ! ID: " . ($response_data['data']['id'] ?? 'N/A'));
                         $log_message("SMS enregistré dans la base de données");
                     } else {
-                        $log_message("ERREUR: Échec de l'envoi du SMS - Code HTTP: $http_code, Erreur: $curl_error");
-                        throw new Exception("Échec de l'envoi du SMS");
+                        $error_message = $response_data['message'] ?? 'Erreur inconnue';
+                        $log_message("ERREUR: Échec de l'envoi du SMS - Code HTTP: $http_code, Erreur: $curl_error, Message: $error_message");
+                        throw new Exception("Échec de l'envoi du SMS: $error_message");
                     }
                 } else {
                     error_log("Impossible de récupérer l'ID de réparation pour l'envoi du SMS");
@@ -787,7 +775,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             
             // Rediriger directement vers la page d'impression d'étiquette
             if (isset($real_repair_id) && is_numeric($real_repair_id) && $real_repair_id > 0) {
-                $redirect_url = "https://mdgeek.top/index.php?page=imprimer_etiquette&id=" . $real_repair_id;
+                // Utiliser le domaine actuel au lieu de mdgeek.top en dur
+                $current_domain = $_SERVER['HTTP_HOST'];
+                $redirect_url = "https://" . $current_domain . "/index.php?page=imprimer_etiquette&id=" . $real_repair_id;
+                error_log("REDIRECTION: Vers $redirect_url");
                 // Remplacer la redirection directe par une redirection JavaScript
                 echo "<script>window.location.href = '$redirect_url';</script>";
                 // Ajouter également une solution de secours au cas où JavaScript est désactivé

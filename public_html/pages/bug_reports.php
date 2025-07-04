@@ -9,10 +9,10 @@ if (!isset($_SESSION['user_id'])) {
 // Vérifier si la connexion à la base de données est déjà établie
 if (!isset($conn) || $conn === null) {
     // La connexion n'est pas établie, on la crée ici
-    $host = 'srv931.hstgr.io';
-    $db_name = 'u139954273_Vscodetest';
-    $username = 'u139954273_Vscodetest';
-    $password = 'Maman01#';
+    $host = 'localhost';
+    $db_name = 'geekboard_main';
+    $username = 'root';
+    $password = '';
     
     $shop_pdo = getShopDBConnection();
     

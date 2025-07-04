@@ -272,10 +272,8 @@ function completeActiveRepair($shop_pdo, $user_id, $repair_id, $new_status = 're
                         $message = str_replace($placeholder, $value, $message);
                     }
                     
-                    // Configuration de l'API SMS Gateway
-                    $API_URL = 'https://api.sms-gate.app/3rdparty/v1/message'; // URL CORRECTE selon la documentation
-                    $API_USERNAME = '-GCB75';
-                    $API_PASSWORD = 'Mamanmaman06400';
+                    // Configuration de l'API SMS Gateway - votre API personnalisée
+                    $API_URL = 'http://168.231.85.4:3001/api/messages/send';
                     
                     // Formatage du numéro de téléphone si nécessaire
                     $recipient = $client_info['client_telephone'];
@@ -297,8 +295,9 @@ function completeActiveRepair($shop_pdo, $user_id, $repair_id, $new_status = 're
                     
                     // Préparation des données JSON pour l'API
                     $sms_data = json_encode([
+                        'recipient' => $recipient,
                         'message' => $message,
-                        'phoneNumbers' => [$recipient]
+                        'priority' => 'normal'
                     ]);
                     
                     // Envoi du SMS via l'API SMS Gateway
@@ -307,13 +306,8 @@ function completeActiveRepair($shop_pdo, $user_id, $repair_id, $new_status = 're
                     curl_setopt($curl, CURLOPT_POST, true);
                     curl_setopt($curl, CURLOPT_POSTFIELDS, $sms_data);
                     curl_setopt($curl, CURLOPT_HTTPHEADER, [
-                        'Content-Type: application/json',
-                        'Content-Length: ' . strlen($sms_data)
+                        'Content-Type: application/json'
                     ]);
-                    
-                    // Configuration de l'authentification Basic
-                    curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-                    curl_setopt($curl, CURLOPT_USERPWD, "$API_USERNAME:$API_PASSWORD");
                     
                     // Ajouter des options pour le débogage
                     curl_setopt($curl, CURLOPT_VERBOSE, true);
@@ -341,22 +335,23 @@ function completeActiveRepair($shop_pdo, $user_id, $repair_id, $new_status = 're
                         // Traitement de la réponse
                         $response_data = json_decode($response, true);
                         
-                        // Le code 202 indique une acceptation (Accepted) pour traitement asynchrone
-                        if (($status == 200 || $status == 202) && $response_data) {
+                        // Vérifier le succès selon le format de votre API
+                        if (($status == 200 || $status == 202) && $response_data && isset($response_data['success']) && $response_data['success']) {
                             $sms_result = [
                                 'success' => true, 
                                 'message' => 'SMS envoyé avec succès',
                                 'response' => $response_data
                             ];
                             $sms_sent = true;
-                            error_log("SMS: Envoyé avec succès - Code $status");
+                            error_log("SMS: Envoyé avec succès - Code $status - ID: " . ($response_data['data']['message_id'] ?? 'N/A'));
                         } else {
+                            $error_message = $response_data['message'] ?? 'Erreur inconnue';
                             $sms_result = [
                                 'success' => false,
-                                'message' => "Erreur lors de l'envoi du SMS: Code $status",
+                                'message' => "Erreur lors de l'envoi du SMS: $error_message",
                                 'response' => $response_data
                             ];
-                            error_log("SMS: Échec - Code $status - Réponse: " . json_encode($response_data));
+                            error_log("SMS: Échec - Code $status - $error_message");
                         }
                     }
                     

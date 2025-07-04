@@ -4,8 +4,8 @@ header('Content-Type: application/json');
 
 // Configuration de la base de données (même config que recherche_universelle.php)
 $host = '191.96.63.103';
-$dbname = 'u139954273_pscannes';
-$username = 'u139954273_pscannes';
+$dbname = 'geekboard_pscannes';
+$username = 'root';
 $password = 'Merguez01#';
 
 // Lire les données JSON

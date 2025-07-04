@@ -1,4 +1,11 @@
 <?php
+// Vérifier si on accède directement à cette page
+if (basename($_SERVER['PHP_SELF']) === 'accueil.php') {
+    // Rediriger vers l'index principal
+    header('Location: ../index.php?page=accueil');
+    exit();
+}
+
 // Fonction pour obtenir la couleur en fonction de la priorité
 function get_priority_color($priority) {
     switch(strtolower($priority)) {

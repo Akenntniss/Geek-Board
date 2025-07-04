@@ -1,0 +1,2 @@
+Table	Create Table
+kb_articles	CREATE TABLE `kb_articles` (\n  `id` int(11) NOT NULL AUTO_INCREMENT,\n  `title` varchar(255) NOT NULL,\n  `content` longtext NOT NULL,\n  `category_id` int(11) NOT NULL,\n  `created_at` datetime NOT NULL,\n  `updated_at` datetime NOT NULL,\n  `views` int(11) NOT NULL DEFAULT 0,\n  PRIMARY KEY (`id`),\n  KEY `category_id` (`category_id`),\n  CONSTRAINT `kb_articles_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `kb_categories` (`id`) ON DELETE CASCADE\n) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci

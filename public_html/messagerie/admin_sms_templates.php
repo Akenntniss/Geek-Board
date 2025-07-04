@@ -95,7 +95,7 @@ $templates = get_all_sms_templates();
 // Récupérer la configuration SMS
 $sms_enabled = get_sms_config('sms_notifications_enabled', 'false');
 $sms_signature = get_sms_config('sms_signature', '');
-$sms_gateway_url = get_sms_config('sms_gateway_url', 'https://api.sms-gate.app/3rdparty/v1/message');
+$sms_gateway_url = get_sms_config('sms_gateway_url', 'http://168.231.85.4:3001/api/messages/send');
 $sms_gateway_username = get_sms_config('sms_gateway_username', '');
 
 // Récupérer l'historique des SMS envoyés

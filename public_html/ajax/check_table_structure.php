@@ -8,8 +8,8 @@ try {
     // Connexion à la base de données
     $host = '191.96.63.103';
     $port = '3306';
-    $dbname = 'u139954273_pscannes';
-    $username = 'u139954273_pscannes';
+    $dbname = 'geekboard_pscannes';
+$username = 'root';
     $password = 'Merguez01#';
     
     $dsn = "mysql:host=$host;port=$port;dbname=$dbname;charset=utf8mb4";

@@ -5,11 +5,11 @@ require_once __DIR__ . '/../config/database.php';
  */
 
 // Configuration de la base de données
-$db_host = 'srv931.hstgr.io';
+$db_host = 'localhost';
 $db_port = '3306';
-$db_name = 'u139954273_Vscodetest';
-$db_user = 'u139954273_Vscodetest';
-$db_pass = 'Maman01#';
+$db_name = 'geekboard_main';
+$db_user = 'root';
+$db_pass = '';
 $db_charset = 'utf8mb4';
 
 // Définir si on est en mode développement ou non

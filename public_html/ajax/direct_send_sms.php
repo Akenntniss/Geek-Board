@@ -45,10 +45,8 @@ try {
     $stmt->execute();
     $settings = $stmt->fetchAll(PDO::FETCH_KEY_PAIR);
     
-    // Configuration de l'API SMS Gateway - utiliser les mêmes valeurs que send_sms.php
-    $API_URL = 'https://api.sms-gate.app/3rdparty/v1/message'; // URL CORRECTE selon la documentation
-    $API_USERNAME = '-GCB75';
-    $API_PASSWORD = 'Mamanmaman06400';
+    // Configuration de l'API SMS Gateway - votre API personnalisée
+    $API_URL = 'http://168.231.85.4:3001/api/messages/send';
     
     // Formatage du numéro de téléphone
     $recipient = $telephone;
@@ -70,7 +68,8 @@ try {
     // Construire les données pour l'API
     $sms_data = json_encode([
         'recipient' => $recipient,
-        'message' => $message
+        'message' => $message,
+        'priority' => 'normal'
     ]);
     
     // Initialiser cURL
@@ -79,13 +78,8 @@ try {
     curl_setopt($curl, CURLOPT_POST, true);
     curl_setopt($curl, CURLOPT_POSTFIELDS, $sms_data);
     curl_setopt($curl, CURLOPT_HTTPHEADER, [
-        'Content-Type: application/json',
-        'Content-Length: ' . strlen($sms_data)
+        'Content-Type: application/json'
     ]);
-    
-    // Configuration de l'authentification Basic
-    curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-    curl_setopt($curl, CURLOPT_USERPWD, $API_USERNAME . ':' . $API_PASSWORD);
     
     // Activer le débogage verbeux
     $verbose = fopen('php://temp', 'w+');
@@ -116,9 +110,9 @@ try {
         // Traitement de la réponse
         $response_data = json_decode($response, true);
         
-        // Le code 202 indique une acceptation (Accepted) pour traitement asynchrone
-        if (($status == 200 || $status == 202) && $response_data) {
-            error_log("Envoi SMS réussi");
+        // Vérifier le succès selon le format de votre API
+        if (($status == 200 || $status == 202) && $response_data && isset($response_data['success']) && $response_data['success']) {
+            error_log("Envoi SMS réussi - ID: " . ($response_data['data']['message_id'] ?? 'N/A'));
             $result = [
                 'success' => true, 
                 'message' => 'SMS envoyé avec succès',
@@ -153,10 +147,11 @@ try {
                 }
             }
         } else {
-            error_log("Échec de l'envoi SMS: Code $status");
+            $error_message = $response_data['message'] ?? 'Erreur inconnue';
+            error_log("Échec de l'envoi SMS: Code $status - $error_message");
             $result = [
                 'success' => false,
-                'message' => "Erreur lors de l'envoi du SMS: Code $status",
+                'message' => "Erreur lors de l'envoi du SMS: $error_message",
                 'response' => $response_data
             ];
         }

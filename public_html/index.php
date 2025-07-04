@@ -1,4 +1,41 @@
 <?php
+// DÉTECTION PRÉALABLE DE LA PAGE DE LANDING
+// On vérifie AVANT tout si on doit afficher la landing page
+$host = $_SERVER['HTTP_HOST'] ?? '';
+
+// Nettoyer le host (enlever le port s'il y en a un)
+$host = preg_replace('/:\d+$/', '', $host);
+
+// Si on est sur le domaine principal (mdgeek.top ou www.mdgeek.top), vérifier si on doit afficher la landing page
+if ($host === 'mdgeek.top' || $host === 'www.mdgeek.top') {
+    // Démarrer une session minimale pour vérifier les variables
+    if (session_status() == PHP_SESSION_NONE) {
+        session_start();
+    }
+    
+    // LOGGING pour debug
+    error_log("LANDING PAGE DEBUG: Host=$host, shop_id=" . (isset($_SESSION['shop_id']) ? $_SESSION['shop_id'] : 'non défini') . ", superadmin_id=" . (isset($_SESSION['superadmin_id']) ? $_SESSION['superadmin_id'] : 'non défini'));
+    
+    // Si aucun shop_id n'est défini ET qu'on n'est pas un super admin
+    // OU si on force l'affichage de la landing page
+    if ((!isset($_SESSION['shop_id']) && !isset($_SESSION['superadmin_id'])) || isset($_GET['force_landing'])) {
+        error_log("LANDING PAGE: Affichage de la landing page pour $host");
+        
+        // Nettoyer complètement la session pour éviter les interférences
+        if (isset($_GET['force_landing'])) {
+            unset($_SESSION['shop_id']);
+            unset($_SESSION['shop_name']);
+        }
+        
+        // Afficher la page de landing directement sans charger l'application
+        include __DIR__ . '/pages/landing.php';
+        exit;
+    } else {
+        error_log("LANDING PAGE: Chargement de l'application normale pour $host (shop_id=" . ($_SESSION['shop_id'] ?? 'non défini') . ")");
+    }
+}
+
+// Si on arrive ici, on charge l'application normale
 // Inclure la configuration de session avant de démarrer la session
 require_once __DIR__ . '/config/session_config.php';
 // La session est déjà démarrée dans session_config.php, pas besoin de session_start() ici

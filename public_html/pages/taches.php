@@ -1929,24 +1929,24 @@ body.pwa-mode .taches-content-container {
 }
 
 .dark-mode .status-in-progress {
-    background-color: #3b82f6;
+    background-color: #2563eb;
 }
 
 .dark-mode .status-completed {
-    background-color: #10b981;
+    background-color: #059669;
 }
 
 .dark-mode .status-high {
-    background-color: #ef4444;
+    background-color: #dc2626;
 }
 
 .dark-mode .status-medium {
-    background-color: #f59e0b;
-    color: #111827;
+    background-color: #1e40af;
+    color: #f8fafc;
 }
 
 .dark-mode .status-low {
-    background-color: #0ea5e9;
+    background-color: #0891b2;
 }
 
 .dark-mode .employee-badge {
@@ -1961,12 +1961,161 @@ body.pwa-mode .taches-content-container {
 }
 
 .dark-mode .search-card {
+    background-color: #1f2937;
     border-color: #374151;
     box-shadow: 0 2px 6px rgba(0,0,0,0.2);
 }
 
 .dark-mode .table-row-hover:hover {
     background-color: #2d3748;
+}
+
+/* Amélioration des couleurs pour les cartes de tâches en mode nuit */
+.dark-mode .task-card {
+    background-color: #1f2937;
+    border-color: #374151;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.dark-mode .task-card:hover {
+    background-color: #1f2937;
+    border-color: #60a5fa;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+}
+
+.dark-mode .task-card-header {
+    border-bottom-color: #374151;
+}
+
+.dark-mode .task-title {
+    color: #f8fafc;
+}
+
+.dark-mode .task-description {
+    color: #9ca3af;
+}
+
+/* Amélioration des couleurs pour les tableaux en mode nuit */
+.dark-mode .table-row {
+    background-color: #1f2937;
+    border-color: #374151;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.dark-mode .table-row:hover {
+    background-color: #1f2937;
+    border-color: #60a5fa;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+}
+
+.dark-mode .task-title-table {
+    color: #f8fafc;
+}
+
+.dark-mode .task-description-table {
+    color: #9ca3af;
+}
+
+/* Amélioration des badges en mode nuit */
+.dark-mode .priority-badge.priority-haute {
+    background-color: #1f2937;
+    color: #dc2626;
+    border-color: #374151;
+}
+
+.dark-mode .priority-badge.priority-moyenne {
+    background-color: #1f2937;
+    color: #1e40af;
+    border-color: #374151;
+}
+
+.dark-mode .priority-badge.priority-basse {
+    background-color: #1f2937;
+    color: #059669;
+    border-color: #374151;
+}
+
+.dark-mode .task-status-badge.status-a_faire {
+    background-color: #1f2937;
+    color: #9ca3af;
+    border-color: #374151;
+}
+
+.dark-mode .task-status-badge.status-en_cours {
+    background-color: #1f2937;
+    color: #2563eb;
+    border-color: #374151;
+}
+
+.dark-mode .task-status-badge.status-termine {
+    background-color: #1f2937;
+    color: #059669;
+    border-color: #374151;
+}
+
+/* Amélioration des indicateurs de priorité en mode nuit */
+.dark-mode .priority-indicator.priority-haute {
+    background: linear-gradient(135deg, #374151, #4b5563);
+    color: #dc2626;
+}
+
+.dark-mode .priority-indicator.priority-moyenne {
+    background: linear-gradient(135deg, #374151, #4b5563);
+    color: #1e40af;
+}
+
+.dark-mode .priority-indicator.priority-basse {
+    background: linear-gradient(135deg, #374151, #4b5563);
+    color: #059669;
+}
+
+/* Amélioration des boutons d'action en mode nuit */
+.dark-mode .action-btn {
+    background-color: #374151;
+    color: #f8fafc;
+}
+
+.dark-mode .edit-btn {
+    background-color: #1e40af;
+    color: #f8fafc;
+}
+
+.dark-mode .edit-btn:hover {
+    background-color: #2563eb;
+}
+
+.dark-mode .details-btn {
+    background-color: #0f766e;
+    color: #f8fafc;
+}
+
+.dark-mode .details-btn:hover {
+    background-color: #0d9488;
+}
+
+.dark-mode .delete-btn {
+    background-color: #991b1b;
+    color: #f8fafc;
+}
+
+.dark-mode .delete-btn:hover {
+    background-color: #dc2626;
+}
+
+/* Amélioration des sélecteurs de vue en mode nuit */
+.dark-mode .view-selector .btn-group {
+    background: #1f2937;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.dark-mode .view-selector .btn-group .btn:not(.active) {
+    color: #9ca3af;
+    background: #1f2937;
+}
+
+.dark-mode .view-selector .btn-group .btn:not(.active):hover {
+    color: #60a5fa;
+    background: #374151;
 }
 
 .dark-mode #taskDetailsModal .modal-content,
@@ -1999,6 +2148,48 @@ body.pwa-mode .taches-content-container {
 .dark-mode #changeStatusModal .btn-outline-primary:hover,
 .dark-mode #changeStatusModal .btn-outline-success:hover {
     background-color: #374151;
+}
+
+/* Amélioration des formulaires de recherche en mode nuit */
+.dark-mode .search-form .form-control {
+    background-color: #374151;
+    border-color: #4b5563;
+    color: #f8fafc;
+}
+
+.dark-mode .search-form .form-control:focus {
+    background-color: #374151;
+    border-color: #60a5fa;
+    color: #f8fafc;
+    box-shadow: 0 0 0 0.25rem rgba(96, 165, 250, 0.25);
+}
+
+.dark-mode .search-form .form-control::placeholder {
+    color: #9ca3af;
+}
+
+.dark-mode .search-form .input-group-text {
+    background-color: #374151;
+    border-color: #4b5563;
+    color: #f8fafc;
+}
+
+.dark-mode .search-form .btn {
+    background-color: #3b82f6;
+    border-color: #3b82f6;
+    color: #f8fafc;
+}
+
+.dark-mode .search-form .btn:hover {
+    background-color: #2563eb;
+    border-color: #2563eb;
+}
+
+/* Amélioration des descriptions de tâches en mode nuit */
+.dark-mode #description-content {
+    background-color: #374151;
+    color: #f8fafc;
+    border: 1px solid #4b5563;
 }
 
 /* Garantir que la barre n'apparaît pas sur les grands écrans (PC) */

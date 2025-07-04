@@ -2,9 +2,9 @@
 // Paramètres de base de données
 define('DB_HOST', 'localhost');
 define('DB_PORT', '3306');
-define('DB_USER', 'u139954273_Vscodetest');
-define('DB_PASS', 'Maman01#');
-define('DB_NAME', 'u139954273_Vscodetest');
+define('DB_USER', 'root');
+define('DB_PASS', '');
+define('DB_NAME', 'geekboard_main');
 
 // Paramètres de l'application
 define('APP_NAME', 'GeekBoard - Gestion des Réparations');
